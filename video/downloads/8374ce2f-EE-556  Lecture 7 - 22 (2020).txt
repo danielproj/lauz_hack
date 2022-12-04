@@ -1,0 +1,387 @@
+~EE-556 / Lecture 7 - 2/2 (2020)
+~2020-10-20T11:15:40.463+02:00
+~https://tube.switch.ch/videos/8374ce2f
+~EE-556 Mathematics of data: from theory to computation
+[0.0:7.44] Hello back.
+[7.44:11.4] Now I think there were some questions in the...
+[11.4:15.32] I don't see the question.
+[15.32:17.72] Okay, it's in the chat.
+[17.72:21.400000000000002] I have a question about that example.
+[21.400000000000002:26.400000000000002] The stop sign classifier, they looked at the activation heat map in order to make the
+[26.4:30.32] class of R some misclassify rights.
+[30.32:44.16] So the way they do the misclassification typically is that you try to look...
+[44.16:50.239999999999995] Let's say here F is your aggregate lost classification lost.
+[50.24:63.760000000000005] You try to find a perturbation within some small number that increases your loss maximally.
+[63.760000000000005:69.0] So they did not necessarily look at the heat map to do this, but they actually have to
+[69.0:75.16] write down an optimization problem and then find the perturbation as a result of this
+[75.16:77.4] optimization problem.
+[77.4:82.12] Now neural networks should be pretty resilient to perturbation because it learns generic
+[82.12:85.4] features otherwise it would not recognize a cat as a cat.
+[85.4:89.12] If that particular breed was not part of the training test.
+[89.12:93.80000000000001] Now they are not resilient is exactly the point we're making and I think Fabiannichli
+[93.80000000000001:97.76] answered your question well.
+[97.76:105.0] The issue at stake is that you're not trying to just learn the things in your training
+[105.0:106.0] test.
+[106.0:114.72] As I said sorry, you're trying to generalize which you will talk in this particular hour
+[114.72:123.12] and neural networks in order to fit some complicated decision boundaries may have gradients
+[123.12:129.4] that also do the training maybe high and tiny perturbations can actually lead to radically
+[129.4:131.52] different results.
+[131.52:138.44] In the case of the unit ball example you may think that another decision boundary other
+[138.44:141.64000000000001] than the equator could make things better.
+[141.64000000000001:144.04000000000002] It's actually a pool of leaf falls.
+[144.04000000000002:147.4] Any other decision boundary like you can make a in-yang boundary.
+[147.4:151.48000000000002] It will be pool of leaf worse than the example I gave.
+[151.48000000000002:158.08] So by making a decision boundary not that flat surface but something big leaf then your
+[158.08:166.08] epsilon can be even smaller to be able to get most of your data point switch to decision.
+[166.08:167.08] These are counterintuitive.
+[167.08:172.56] It will take a while to digest but hopefully I'll repeat some of these messages again
+[172.56:176.36] next lecture and the next lecture so that we have a bit of understanding.
+[176.36:189.68] So I'll continue with the challenges.
+[189.68:199.4] In particular there are certain societal concerns.
+[199.4:209.56] For example there are these auto encoders that you take some data, you train in neural
+[209.56:215.32] network and then somehow the identity of the data should be lost.
+[215.32:217.28] It learns a function.
+[217.28:224.4] It turns out that many of the neural networks actually memorize the data and one thing that
+[224.4:230.20000000000002] you learn is that you can take for example an auto encode train, you feed in noise back
+[230.20000000000002:236.6] and forth back and forth and then you end up just discovering one of the data points.
+[236.6:243.92000000000002] So suppose you were in this data set that they use like your face may appear from the
+[243.92000000000002:249.28] neural network they can just discover you.
+[249.28:255.56] So this is yet another weakness, there are other things you can do.
+[255.56:263.48] Like once you learn a function they recommend their systems or so this is a privacy issue.
+[263.48:265.56] You can actually manipulate information.
+[265.56:270.12] You can try to push people into certain classification boundaries and so on and so forth.
+[270.12:274.92] So this is very important.
+[274.92:275.92] There are biases.
+[275.92:278.28] There are ethical issues that are at stake.
+[278.28:287.23999999999995] This is actually again a very active research area and the one that I would like to highlight
+[287.23999999999995:293.76] this fairness of bias example is the following so that you're all there of some of the use
+[293.76:297.79999999999995] of neural networks.
+[297.79999999999995:306.32] So here is the basic classifier.
+[306.32:316.28] So here in the US law system they start using recommenders to help guide decisions of
+[316.28:326.15999999999997] judges and the system what people realize is a bit racist in the following sense.
+[326.15999999999997:333.64] So here if you look at this particular cases what the system does it assigns a risk score.
+[333.64:343.15999999999997] So here is a person with prior offenses to armed rubbers one attempted armed rubbery and
+[343.15999999999997:349.96] subsequent offense one grand death and this person is class on his low risk.
+[349.96:358.84] Whereas this person has four juvenile misdemeanors juvenile is in young 18 misdemeanors meaning
+[358.84:361.4] not serious crime.
+[361.4:368.76] No subsequent offense but this person is a high risk person similarly here.
+[368.76:372.32] And this is actually explained by the following picture.
+[372.32:376.23999999999995] All right so suppose I give you this data set.
+[376.23999999999995:383.91999999999996] So these square versus dots the data set is equal number of points and if you set up
+[383.91999999999996:389.47999999999996] a neural network and you train with the stochastic gradient descent this is actually the decision
+[389.47999999999996:391.28] boundary that you get.
+[391.28:399.03999999999996] So what we did here one of my students little prepared this particular figure you literally
+[399.03999999999996:407.03999999999996] set up a radius for this data set you put the data points you put the interior dots and
+[407.03999999999996:411.84] then you put a single hidden layer neural network you put your classification or sing those
+[411.84:417.96] I think and you run stochastic gradient descent and then after training for a while you
+[417.96:422.44] get this very nice decision boundary that kind of interplay in between.
+[422.44:426.44] So it's like in the middle.
+[426.44:432.79999999999995] Then if I give you this new data point I can ask you which class it belongs to.
+[432.79999999999995:442.67999999999995] Well you know it belongs to the circle once right because it is closer to the circle.
+[442.68:449.28000000000003] Here is the issue in this particular case suppose the data set is in balance.
+[449.28000000000003:456.40000000000003] So there's less good guys than bad guys.
+[456.40000000000003:461.68] In this case what you do when you train the stochastic gradient descent is remember let's
+[461.68:466.36] say you're doing a single batch version like you pick an example and then you use this
+[466.36:470.28000000000003] example to change your solution.
+[470.28:476.23999999999995] Because there's more data points as you're running stochastic gradient descent your decision
+[476.23999999999995:483.32] boundary will be pushed towards closer to the good guys.
+[483.32:488.47999999999996] And that's an issue because in this particular I mean even in this case visually speaking you
+[488.47999999999996:495.11999999999995] may want to put this middle ground as the decision boundary.
+[495.12:500.32] Because your neural network will put something closer.
+[500.32:508.24] So this particular guy which was a good guy now is a bad guy.
+[508.24:512.52] And what is interesting is that so suppose you do this next year you retraining your
+[512.52:513.52] neural network.
+[513.52:520.84] Now all of these guys are classified as bad guys so your decision boundary will get even
+[520.84:530.4] closer to the good guys further biasing the decisions for the next year.
+[530.4:534.64] So if you think about it this is just like terrible news.
+[534.64:541.08] Just the way we set up the problem the algorithm we use we biased it and made it worse for
+[541.08:543.32] just the particular group of people.
+[543.32:545.32] So this is important.
+[545.32:551.6800000000001] Okay so this is actually a very important search area.
+[551.6800000000001:553.7600000000001] I give you some citations here.
+[553.7600000000001:557.7600000000001] And then there's also the issue of interpretability.
+[557.7600000000001:566.0] When we write papers and submit the conferences we don't write like oh you know here is some
+[566.0:570.2800000000001] setting and a miracle occurs here is our results.
+[570.2800000000001:571.96] The paper would not be accepted.
+[571.96:579.36] You have to explain your reasoning you show your work and now say I reach to a solution
+[579.36:584.44] or decision or a property in this particular fashion.
+[584.44:594.88] It's interesting that with neural networks your interpretability goes down the drain.
+[594.88:599.64] Excuse me.
+[599.64:606.8] So as if there is an inverse tradeoff between how accurate you are and how interpretable
+[606.8:608.64] you are.
+[608.64:613.28] And for humans interpretability is important because if you think about it it's not used
+[613.28:619.4] things like neural networks for systems C.V.
+[619.4:625.64] So you can think of an adversarial tiny perturbation in your C.V. that can basically pull you
+[625.64:633.52] out of everybody and put you into this at least an interview stage.
+[633.52:638.4] And a human wouldn't understand why but the neural network would just give this decision.
+[638.4:645.52] And one of the important topics here is how interpret these highly accurate decisions.
+[645.52:648.84] How I mean what do you attribute them to?
+[648.84:651.96] This is an important problem.
+[651.96:654.96] Active research area.
+[654.96:658.4000000000001] There are other challenges.
+[658.4000000000001:665.08] One of them is that the amount of data we are producing now is currently outpaced in
+[665.08:666.4000000000001] the computation.
+[666.4000000000001:676.52] So as a result if you think about it the computational dogma is that with so in algorithm's runtime
+[676.52:679.84] increases the input size.
+[679.84:686.5600000000001] And if the computational power is growing slower than the amount of data which is the input
+[686.5600000000001:693.6800000000001] our algorithms then important problems are going to take increasingly longer to solve.
+[693.6800000000001:701.5600000000001] And not only that, you know increasing the computation now takes even more energy.
+[701.5600000000001:707.5600000000001] So we lost what is called as the banner scaling for power.
+[707.56:713.4799999999999] Interestingly enough the Moore's law is still in place that we can double our number
+[713.4799999999999:720.68] of transistors every 18 months but it comes at the cost of too much energy packing in
+[720.68:723.8] a unit area.
+[723.8:728.28] So our energy efficiency is not that great.
+[728.28:731.3599999999999] So you have this energy, time and data trade-offs.
+[731.3599999999999:736.1199999999999] It's a very interesting topic.
+[736.12:738.12] All right.
+[738.12:742.04] Now what I would like to do is tell you a little bit about theory in the next half hour.
+[742.04:748.32] And I remember that I kind of missed to talk about this peeling the Onions lies in lecture
+[748.32:756.04] one so I will bring that back in and give you a little bit of an error at the composition
+[756.04:759.96] and then we'll talk more about this.
+[759.96:765.28] So if you remember in the statistical learning framework we hit the generator giving us
+[765.28:772.0] these data and the supervisor giving us these labels and we want to learn a function that
+[772.0:775.92] maps this data to the label.
+[775.92:783.92] So let's say we have a true function class.
+[783.92:789.16] And let's say there exists a true function within this true function class that minimizes
+[789.16:793.1999999999999] our population risk.
+[793.2:799.4000000000001] And now let's say as the learning machine we assume a function class that we optimize
+[799.4000000000001:809.24] it and let's say this h natural is the solution under this assumed function class.
+[809.24:816.24] And let's say this function class is a subset of the true function class.
+[816.24:817.76] Okay.
+[817.76:820.88] Now we set up an estimator given the data.
+[820.88:823.8] This could be the empirical disk minimization solution.
+[823.8:827.4] And this denote this as h star.
+[827.4:833.4] And then think about running an algorithm to estimate the estimator solution.
+[833.4:834.4] Okay.
+[834.4:840.56] And let's call this h superscript t which is our numerical approximation of the algorithm
+[840.56:841.56] at time t.
+[841.56:848.8] Now as you can see the slide is aptly named peeling the Onions because it puts tears
+[848.8:853.3599999999999] into your eyes when you talk about it and you listen to it.
+[853.3599999999999:859.0] There's just layers and layers on top of each other.
+[859.0:863.28] But what I'll do now is give them this particular setting.
+[863.28:868.12] I'll show this area decomposition.
+[868.12:871.0799999999999] So what we care about is this distance.
+[871.0799999999999:878.12] So d here is a distance function.
+[878.12:881.04] So our algorithms are to the true function.
+[881.04:883.48] This is what we care about in real life.
+[883.48:889.28] So we run optimization algorithms of figure out what the true function is.
+[889.28:895.5600000000001] And with some triangle inequality we know that this h t is trying to minimize the distance
+[895.5600000000001:899.72] to the optimization is the estimator solution, right?
+[899.72:904.84] Which is the argument of whatever we set up.
+[904.84:910.12] And the reason why we set up that estimator is to figure out this parameter under the
+[910.12:911.72] assumed function class.
+[911.72:915.0] So this is important.
+[915.0:921.44] And then ideally I picked this function class so that this is closer to the true function.
+[921.44:929.96] So if you recall this convolutional network example, you know, so you could have the fully
+[929.96:936.96] dense neural network, right? So this could be convolutional.
+[936.96:937.96] Right?
+[937.96:941.64] And let's say this is the true function.
+[941.64:943.64] This could be our.
+[943.64:954.84] So this could be our h natural.
+[954.84:960.72] This could be our h natural.
+[960.72:966.08] This is our two primary spaces.
+[966.08:980.32] You know, so what we do, you know, we use computation to reduce this.
+[980.32:982.32] Okay?
+[982.32:986.2] Now we can try to reduce this one with more data samples.
+[986.2:993.1600000000001] You can set up better estimators or buying information like putting convolutional layers
+[993.1600000000001:996.6400000000001] and using inductive biases.
+[996.6400000000001:1002.6400000000001] And then we try to reduce the model layer with flexible or universal representations which
+[1002.6400000000001:1006.24] new networks are.
+[1006.24:1010.1600000000001] So let's talk more about this.
+[1010.16:1022.28] Now here what we will do is we'll also think about the following distinction.
+[1022.28:1029.8799999999999] So in this particular statistical learning framework, we also talked about beyond just
+[1029.8799999999999:1035.24] non-parametric function estimation to parametric function estimation.
+[1035.24:1040.96] In this particular case, we focused on finding the true parameters.
+[1040.96:1043.24] But this does not need to be the case.
+[1043.24:1050.16] What you may want is not necessarily what the parameters are, but whether or not you perform
+[1050.16:1053.0] well in the risk.
+[1053.0:1054.0] Right?
+[1054.0:1060.16] So just to give you this example, I mean, here's an example that I like to give.
+[1060.16:1068.88] So to make this particular case, so imagine you're working in brain computing interfaces
+[1068.88:1082.88] where you try to get signals out of the brain to control, let's say, some wheelchair.
+[1082.88:1088.8000000000002] In this particular case, you know, what you think about the input output is that the output
+[1088.8:1093.04] is the decision where the chair needs to go and the input is, let's say, the brain signals
+[1093.04:1094.72] that you collected the sensors.
+[1094.72:1095.72] Right?
+[1095.72:1098.3999999999999] Now you may try to learn this function.
+[1098.3999999999999:1102.3999999999999] I'd brain signals to control input.
+[1102.3999999999999:1109.76] And arguably, this is a bit harder than just simply trying to predict if the person wants
+[1109.76:1113.8] to go at a certain direction.
+[1113.8:1119.6] The distinction is you don't need to know this function to be able to predict like the
+[1119.6:1121.6399999999999] true function.
+[1121.6399999999999:1126.84] What you need is learn some parameters that perform just as well as the true parameters
+[1126.84:1128.12] themselves.
+[1128.12:1131.72] And these parameters may be very far away from each other.
+[1131.72:1134.04] They may be very different.
+[1134.04:1137.28] But yet, they may perform the same.
+[1137.28:1142.72] You don't need to know the internal thinking structure of the person to be able to predict
+[1142.72:1146.3600000000001] if the person wants to go forward, backward, left and right.
+[1146.3600000000001:1152.04] Because your hypothesis class is much smaller and maybe there's a lower dimensional or
+[1152.04:1155.28] easier way of finding this.
+[1155.28:1161.2] So in this case, what I would like to do is highlight certain properties.
+[1161.2:1163.4] So let's say here's our risk function.
+[1163.4:1164.4] Right?
+[1164.4:1167.96] So this is our population risk.
+[1167.96:1171.76] Here's our empirical risk that has n data points.
+[1171.76:1172.76] Okay.
+[1172.76:1176.6] So in this case, I'm going to use this notation for the parameter spaces.
+[1176.6:1184.16] So x degree will be the true parameter space and we'll again have some subset of subspace
+[1184.16:1188.04] or subset of this space that where we do optimization.
+[1188.04:1189.04] Right?
+[1189.04:1192.96] So let's say this is our true risk minimizing model.
+[1192.96:1199.44] Again, this is our assumed minimum risk model.
+[1199.44:1208.72] This is our empirical risk minimization solution and this is our numerical approximation.
+[1208.72:1212.6000000000001] So in this case, it is important to explain the non-manclature.
+[1212.6000000000001:1213.6000000000001] Right?
+[1213.6000000000001:1217.8400000000001] So with r sub n, we train on this empirical risk.
+[1217.8400000000001:1219.48] This is called the training error.
+[1219.48:1220.48] Right?
+[1220.48:1223.8] The true risk function.
+[1223.8:1224.8] Right?
+[1224.8:1229.52] So you run things, you train, and then you test on things that you haven't seen.
+[1229.52:1231.6399999999999] That is exactly your test error.
+[1231.6399999999999:1232.6399999999999] Right?
+[1232.6399999999999:1236.8799999999999] By restricting the model class, right?
+[1236.8799999999999:1240.6] So this is our modeling error in terms of the risk.
+[1240.6:1242.1599999999999] Right?
+[1242.1599999999999:1250.0] And then when we actually have some amount of, so when we write down the empirical risk
+[1250.0:1253.12] minimization solution, for example, right?
+[1253.12:1257.84] We obtain some risk value that we can evaluate.
+[1257.84:1258.84] Right?
+[1258.84:1262.4399999999998] We unfortunately do not know this, but this is called the excess risk.
+[1262.4399999999998:1263.4399999999998] Right?
+[1263.4399999999998:1266.8799999999999] This risk is ideally higher.
+[1266.8799999999999:1270.04] Right?
+[1270.04:1279.52] And what is interesting is that the difference between our test error and our empirical
+[1279.52:1284.4] risk, this is called the generalization error.
+[1284.4:1287.8] So this is the maximal distance, right?
+[1287.8:1298.56] And then this distance between the estimator solution and the algorithms iterate on the
+[1298.56:1302.24] empirical risk, this called the optimization error.
+[1302.24:1310.08] And here is some trade-offs that are at play.
+[1310.08:1319.68] We know that as our two parameters set approaches the two parameters, that ideally you're going
+[1319.68:1323.44] to a bigger space, so your training error should decrease.
+[1323.44:1329.4] But then you can overfit, so your excess risk would increase, your generalization errors,
+[1329.4:1331.56] likely to increase.
+[1331.56:1337.08] Your modeling error is going to decrease because then you can actually get the risk closer
+[1337.08:1343.28] to the true parameter levels and your optimization time typically increases.
+[1343.28:1353.0] If you fix the parameter set and the dimension with more data, I mean, you would need to
+[1353.0:1358.52] get more training error, but your excess risk goes down because you approximate true risk
+[1358.52:1359.9199999999998] better and better.
+[1359.92:1362.92] Your generalization errors should also go down.
+[1362.92:1366.92] Your modeling error because the parameter space is not changing, does not necessarily change.
+[1366.92:1374.64] With more data, the algorithm is longer typically, unless you do this trade-offs algorithm
+[1374.64:1379.4] weakening that I talked about two lectures ago.
+[1379.4:1385.72] And here is when you fix the parameter and the number of data points is the dimensions increase,
+[1385.72:1386.72] you can fit better.
+[1386.72:1393.72] Your training error goes down, your excess risk goes up because you can easily overfit.
+[1393.72:1397.72] Your generalization error also increases.
+[1397.72:1404.72] It's unclear what happens with the modeling error and your time typically increases.
+[1404.72:1405.72] Good.
+[1405.72:1413.72] Now, so let's think of this in the deep learning context.
+[1413.72:1418.72] Now, the function that we fixed, it's again parametric.
+[1418.72:1424.32] So this is a type we're here.
+[1424.32:1425.72] And we're going to use neural networks.
+[1425.72:1430.56] And the neural networks will be parameterized by this little x.
+[1430.56:1435.96] In this case, the error, the composition, has this particular form.
+[1435.96:1439.72] How we get here is in at the end of the lecture.
+[1439.72:1446.72] There's a nice neat derivation to obtain how the generalization error appears in this particular
+[1446.72:1447.72] decomposition.
+[1447.72:1451.72] What we care about is how well we perform on the risk.
+[1451.72:1456.72] Remember, we're not thinking about approximating the parameters now.
+[1456.72:1460.72] We're caring about how well we do in classification error.
+[1460.72:1465.72] That's the distinction, which is really, really important.
+[1465.72:1470.72] So what you care about is in the true risk.
+[1470.72:1473.72] Is we run our algorithm?
+[1473.72:1480.72] How much we perform worse than the true parameters of the neural networks and so on so forth?
+[1480.72:1482.72] We respect to the true risk.
+[1482.72:1486.72] That has this optimization error decomposition.
+[1486.72:1488.72] This is measurable.
+[1488.72:1493.72] There is this generalization error and then there is the modeling error.
+[1493.72:1500.72] Now, what we're going to do is in lecture 9, we're going to explain with neural networks
+[1500.72:1503.72] how this optimization error is almost zero.
+[1503.72:1511.72] So if you set up your neural networks in the right way and if you use a particular algorithm,
+[1511.72:1517.72] let's say, that you can actually make this optimization error almost zero.
+[1517.72:1525.72] And the generalization error turns out to be usually small.
+[1525.72:1534.72] But the theory is a bit lacking, but we'll do our best to explain the key ingredients.
+[1534.72:1540.72] So in this lecture in the next few slides and the next lecture you will hear quite a bit.
+[1540.72:1548.72] And for the modeling error, you can use large architectures and the inductive bias may help out.
+[1548.72:1553.72] Now, one of the key things that I would like to tell you here is that while I give you this error, the composition,
+[1553.72:1560.72] the key thing is that with neural networks, you can treat all of these elements jointly.
+[1560.72:1563.72] That's where the success comes.
+[1563.72:1567.72] So you set up a particular neural network.
+[1567.72:1573.72] You don't think of the architecture or the neural networks separately from an algorithm.
+[1573.72:1578.72] You think about it especially of initialization, the zavier initialization or the hay initialization.
+[1578.72:1585.72] You think about a particular architecture, then you think about a particular algorithm when you put them together,
+[1585.72:1590.72] only when they're interacting or they carefully set up jointly.
+[1590.72:1596.72] Then you hit all of these three simultaneously.
+[1596.72:1605.72] So it makes it interpretable for us to understand, but no less that this understanding is,
+[1605.72:1617.72] it took us a while to have this understanding that you don't separate a neural network architecture from its initialization or the algorithm that trains it.
+[1617.72:1626.72] You will see that how much the waste change during optimization tells you quite a bit about its generalization capability.
+[1626.72:1634.72] And that even though the optimization problems are non-commex, you can actually find the global optimum solution zero training involves for example.
+[1634.72:1642.72] When you set up the architecture, the initialization and the algorithm correctly.
+[1642.72:1651.72] So let's talk more about this. So for this what we're going to do is we're going to talk about a generalization error bound.
+[1651.72:1666.72] Now the bomb we will get is maybe more or less the sharper characterization, but.
+[1666.72:1673.72] So how we get there is actually understandable maybe the bond itself is not necessarily that.
+[1673.72:1678.72] Beautiful, but let's let's try this.
+[1678.72:1689.72] So remember what we care is how well this empirical risk compares to the true risk for the parameters that they're interested in.
+[1689.72:1701.72] Alright, if these things are close and if they do well a great job with minimizing the empirical risk, then we generalize all for the true risk.
+[1701.72:1710.72] Again, the setting here is that the data this a b pairs come from some unknown distribution p.
+[1710.72:1719.72] Right, and that we have some IID data from this that we trained we trained with respect to this empirical risk.
+[1719.72:1726.72] And when we tested the again tested on data points that we have not seen before, right, but they still are driven from this key.
+[1726.72:1739.72] Now arguably the IID assumption is extremely key here and that it's actually a grand challenge in learning theory to try to do this characterization with a non-ID assumption.
+[1739.72:1756.72] But what people do today is going to rely on the IID assumption and we're going to use something called the concentration of measure inequalities as the way of obtaining such key results.
+[1756.72:1772.72] Alright, but remember in real life you may not have IID data. So this is again a bit idealized way of seeing things and maybe the initial result will not be as satisfactory as you may expect.
+[1772.72:1779.72] So concentration inequalities try to characterize what is called as the listing of dimensionality.
+[1779.72:1796.72] So if you think about it, you know, pollsters go and collect polling data from a small population and then they try to generalize how well the general population is going to vote.
+[1796.72:1809.72] So think about it this way they take a few sample data and then they stay with some certain level of confidence that they can predict what the population vote is going to be.
+[1809.72:1825.72] And there's even a very nice blog by Terry Tal, this particular case where he uses some macros in quality to explain how the pollsters for example or channels found how the pollsters predicting the general population is.
+[1825.72:1837.72] Right, so the concept is the same here what we're going to do is suppose we have some bounded random variables and we're looking at the average.
+[1837.72:1846.72] Now in terms of the risk if you had let's say the zero one loss it is bounded between zero and one.
+[1846.72:1855.72] Right, so you take random value variable between zero and one.
+[1855.72:1866.72] So maybe we change this notation to upper and lower or something like this because AI's so for the only two take a note.
+[1866.72:1887.72] So there's an upper and lower values right what herf things inequality says is that the the average how much is to deviate from the expectation by a value T.
+[1887.72:1907.72] And then negative value T will be will decrease exponentially with T square right and the amount of data will show up here.
+[1907.72:1922.72] So you have n samples so the more number of samples you have the better the probability will be and then it will depend on the gap between the upper and lower bounds.
+[1922.72:1936.72] So typically you know if this is one this is n these n squared will cancel with n and this will behave like two times exponential minus two and T squared.
+[1936.72:1941.72] So with enough data we can make this probability very small.
+[1941.72:1958.72] There's additional variance along the theme this burns fine so on so forth maybe I can actually make a supplementary material on on concentration of measuring qualities for this course later if there is interest.
+[1958.72:1980.72] Okay so what we're going to do is we're going to apply this idea to a given fix parameter right so we what we're going to do is we're going to look at this particular character station but we're going to say that the set in fact consists of one parameter right.
+[1980.72:1994.72] So if you fix your neural network and you looking at the differences between true and the empirical risk okay so here we're using the binary information so there's a balance zero one loss okay.
+[1994.72:2017.72] In this particular case what you can show is that you know so you you use this inequality so this two and T squared right it's zero one loss you plug it in you will get the deviation from the expectation okay so this is our end.
+[2017.72:2046.72] Okay so we know that it will with the deviation from T goes down like this okay so if you fix the probability to one minus delta then all you need to do is just inverse test what you get is exponential so delta gets divided by so two gets divided by delta you take the log you divided by two and you take the square root.
+[2046.72:2071.7200000000003] So the deviation for fixed parameter set the population to the empirical is small right it goes down with square of n or the square of n okay.
+[2071.72:2099.72] Now what you can do is generalize this to a bigger parameter set right so suppose you have a bunch of parameters in this case the cardinality of this set appears and this comes from a simple union bound right so you we can rise a given parameter the deviation and now what we want to do is look at.
+[2099.72:2128.72] Given a set what is the probability that they all will deviate right which is trivially up or bounded by the summation of the individual probabilities right this is our handout one exercise one which is the most useful rule in probability query example right so you do the same kind of exercise and.
+[2128.72:2155.72] The cardinality of the parameter set clip here okay now what we do though when we do optimization things like neural networks you look at continuous spaces not just the split spaces okay and in this case there's something called a rather marker complexity
+[2155.72:2183.72] which basically sees how well we can fit random signs with the functions that you're interested okay so this is actually on a first look this is a counter intuitive so I'll try to do my best in explaining what the high level messages are and then we'll see what we do from here okay so let's say we are interested in a function.
+[2183.72:2207.72] We are optimizing over some function plus right and we're given some data points in the dimensions right now what you try to do is you try to see how well these data points are correlated so this is not the activation function but just some random plus and minus
+[2207.72:2236.72] numbers right what you do is you take in inner product between your guests with data points and which is random labels and what you can do is normally if you just take an expectation the random labels are independent from age there are minus one and one with equal probability so this would give you a
+[2236.72:2250.72] expectation okay but in general what you're interested in is that you're given random labels you see how well you're correlated you look at the maximal correlation that you can achieve and then you take the expectation which is
+[2250.72:2268.72] randomness of the labels now if this particular number is large that means given any random label with your function you can actually fit an age to get the same sign right this is what we call
+[2268.72:2289.72] a random marker complexity here the notation is that this a is like our a i's a one a n and what you're doing is you're looking at the set the function class h you respect to this data this is what you call as the
+[2289.72:2310.72] random marker complexity okay so maybe this should have been s and not a okay so maybe a type we're here I'm going to put a here because it makes the rest of the slide the consistent so sorry about this type of
+[2310.72:2322.72] okay now here's the deal okay so if you think about it let's say we have plus ones and minus ones right you can think of any
+[2322.72:2339.72] electrographical reordering of the data points so you can put a one here a five here a 10 here that you can put a three a two a six here and what the function is going to do is it's going to
+[2339.72:2356.72] somehow it's time everything if you have a very rich function class it will twist itself in such a way to to fit any label right because you know you can you can try to fit
+[2356.72:2378.72] literally random data if you have rich enough function so that's a deal here right so in this particular case if you have functions that can fit any random plus and minus sign so here you know this a one a three a 10
+[2378.72:2400.72] whatever this is a two a 11 so on so forth you can make any of the orderings of the data then this particular inner product is going to be large and if you cannot then that particular inner product of sigma and age some
+[2400.72:2411.72] that supreme and then expectation will not be that large okay so in this case the function class a large function class will have a high
+[2411.72:2425.72] market complexity because it has the ability to fit even random labels right and if you have let's say less capable or simpler function class then you will have low
+[2425.72:2437.72] rather market complexity and if you think about dramatically in terms of the decision boundary right so you can have a function class that will kind of like go all of these things and give you perfect separation
+[2437.72:2462.72] whereas you can have a smaller one that will give you some errors in the training but what you will show is that the higher the market complexity will be inversely correlated with the generalization meaning if you if you have lower the market complexity and if you
+[2462.72:2482.72] fit the data well still you will generalize better whereas if you have a higher the market complexity you fit the data well that does not necessarily mean that you will generalize well okay so here's the the fundamental theorem about the other market complexity
+[2482.72:2502.72] the proof here uses some cover ideas which I will not get too much into but it turns out that the generalization error okay has the nice dependence on the market complexity so here's this is the expectation taken over data
+[2502.72:2528.72] this is correct here's the deviation bound I mean that data makes the generalization error go down whereas the market complexity makes the generalization error bound go up but at the same time remember these are upper bounds they're not
+[2528.72:2549.72] they're not so this particular decomposition is not necessarily a tight one okay good the way you get there the proof is actually quite easy so for the linear function I can show this fairly quickly so here are
+[2549.72:2569.72] random numbers let's say this is our function class because of the linearity I will just take this into the inner products this is the supremum over the two ball this is basically two balls you take an expectation
+[2569.72:2591.72] to take the expectation you can use the chance in quality and you get a simple bound right this is so it just takes just looking at it it's not that complicated for the sake of time I'm going to continue here
+[2591.72:2609.72] right this is where the ugly bound comes in and unfortunately so the purpose of this slide maybe we make this a star slice so you will not be asking the exam is that you can actually obtain a rather
+[2609.72:2626.72] micro complexity for the neural network and I think we should change the notation about the random numbers because here is the actual the activation function and not a random number okay so here's the bond you can obtain this bond using the
+[2626.72:2646.72] contaction some very smart people did this I'm just showing you the result here no fortunately it's not too interpretable but what I would like to say is the following okay so there is a paper that is a fantastic name right that looked at the correlation
+[2646.72:2661.72] between generalization and certain quantities so this particular bond is there and apparently this bound negatively correlates with generalization okay there are other quantities here which we can maybe talk about in the
+[2661.72:2671.72] the rest of the nation this Friday or if you're interested in the research parts send me a message and I can tell you there are other quantities that correlate better with the generalization
+[2671.72:2686.72] but the purpose of this exercise was that the rather market complexity is a classical tool that gives us how well we generalize and unfortunately in the deep learning case it does not give us a good
+[2686.72:2705.72] pound and this is the puzzling part this is where around 2010 we started throwing out our old tools and conventional wisdom and started becoming a code and called believer in deep learning it just works but our classical tools don't explain why okay so at this
+[2705.72:2726.72] point I would like to say that there is the deep learning tricks of the trade recitation on Friday will even talk more about the convolutions there is a bit of high torch introduction I suggest you to attend this and interact with the TAs I hope the
+[2726.72:2740.72] first session went well so have a great week if you have further questions feel free to email me and we'll try to answer as quickly as we can all right have a great
+[2740.72:2757.72] week and I'll see you guys later.

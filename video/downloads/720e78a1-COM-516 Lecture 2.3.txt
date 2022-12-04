@@ -1,0 +1,94 @@
+~COM-516 Lecture 2.3
+~2020-07-28T19:03:37.151+02:00
+~https://tube.switch.ch/videos/720e78a1
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:7.0] So in this last video I would like to tell you about positive and null recurrence.
+[7.0:15.0] Remember what a recurrent state is, right? A recurrent state is a state to which you come back with priority 1.
+[15.0:30.0] So one way to write it is to alter the way of writing it and contrary to what we have seen before.
+[30.0:44.0] You could define a time TI, be the first time in the whole values of n-gulls and n-gulls to 1, such that xn is equal to i.
+[44.0:58.0] This is what we called the first written time or recurrence time to state i.
+[58.0:77.0] And FII, this probability that we had before can be written with this TI as the probability that TI is less than plus infinity.
+[77.0:92.0] Even the x0 is equal to i. So that's the probability that the first time you come back to state i happens before infinity.
+[92.0:105.0] So remember this FII, we saw that it could be written as the sum of n greater than or equal to 1 of FII of n.
+[105.0:124.0] And FII of n was the probability that you return to state i for the first time after n steps, which can be written here as the sum of the probability that TI is equal to n, given that x0 is equal to i.
+[124.0:136.0] So I'm not introducing anything new here, just this notation of the first recurrence or first written time to state i.
+[136.0:156.0] And remember that what I've written here, FII is equal to 1, even if state i is recurrent.
+[156.0:169.0] So now we talk here just about the probability to come back to state i. And we ask that this for this equal to 1 to say that the state is recurrent.
+[169.0:180.0] But we could ask ourselves, yes, okay, when we come back to state i with FII 1, on average how much time does it take to come back to state i?
+[180.0:200.0] Okay, which is a finer type of information. And so here we will define a new quantity called mu i, which is this average written time to state i.
+[200.0:217.0] So this is what we call the mean recurrence time. How much time does it take on average until you come back? Okay.
+[217.0:231.0] And one thing is clear that if i is transient, then in this case, what does that mean? What does that mean? What does it mean?
+[231.0:249.0] That there is a positive probability that ti is plus infinity. That's an if and only if actually.
+[249.0:266.0] So in this case clearly mu i is plus infinity because if you have a random variable who can take the value plus infinity with positive probability, then the average of this probability has to be plus infinity.
+[266.0:287.0] Now, if i is recurrent, what could perhaps think that you know mu i, which is what what is mu i? So it's this expectation of ti even x0 is equal to i.
+[287.0:311.0] So this can be written as the sum of all possible values of n greater or equal to 1 of the probability that t of n times the probability that ti is equal to n, given the definition of expectation.
+[311.0:323.0] And so because in this case, we know that ti never takes the value plus infinity. So we are summing over all finite values of n and we get this.
+[323.0:337.0] And so mu i in this case is the sum of all n greater than or equal to 1 of n times fi of n.
+[337.0:347.0] So because we know that the state is recurrent, then we know that the sum of the fi of n alone, the sum up to 1.
+[347.0:353.0] The state is recurrent according to what I have written here.
+[353.0:358.0] But now what about this new sum here? What about this sum of n times fi of n?
+[358.0:375.0] So here it is something to realize that it's a general thing that if you have a random variable which takes finite value with the probability 1, this does not mean that the expectation of this random variable has to be less than infinity.
+[375.0:388.0] You could think of fi of n such that fi of n decreases sufficiently fast so that the sum of the fi of n is equal to 1. But now you multiply each fi of n by n.
+[388.0:398.0] So this sum may diverge. So this is a number that will belong to perhaps the least is one.
+[398.0:408.0] You need at least one step to come back to state i but could be plus infinity. And there is nothing that prevents this number to be plus infinity.
+[408.0:417.0] So there are recurrent states for which on average it takes a new infinite amount of time before you come back to the state.
+[417.0:438.0] As contouring tweetives this sound this might happen. So it says that with probability 1 you will come back. You know that you will come back. But if you average over all possible trajectories that you make in your random mark of chain, then on average the time becomes just infinity.
+[438.0:452.0] Okay, and these are the states that we call null recurrent and the one for which this average return time is finite. Then we call these states positive recurrent.
+[452.0:473.0] So let me let me add the definition here. I is positive recurrent. If mu i is finite.
+[473.0:500.0] And i is null recurrent. Even only if it is not positive recurrent. So if mu i is equal to plus infinity.
+[500.0:509.0] So again this does not mean the state is not recurrent. This does not mean that you don't come back to the state.
+[509.0:526.0] You come back to the state. But now if you compute on average how much time it takes to come back to the state. Then it turns out that this average, which is by the way a theoretical average by this expectation is just plus infinity.
+[526.0:536.0] Okay.
+[536.0:565.0] So I can state a fact which is improvement over what I said before that in a given class in a given, well, it would be too fact actually in a given equivalent class.
+[565.0:591.0] We have three things. So either all states are transient or all states are positive recurrent.
+[591.0:615.0] So it cannot be that they get in a recurrent class. Some states are positive recurrent and some states are not recurrent.
+[615.0:637.0] And therefore in a finite irreducible train what happens? Well, a final irreducible train is always positive recurrent.
+[637.0:648.0] And this you can see easily actually that there is no way for a finite train to be null recurrent.
+[648.0:656.0] To be null recurrent, to have an infinite expected time to come back to the state.
+[656.0:667.0] You need an infinite number of states to be able to visit an infinite number of states so that this expected time is infinite.
+[667.0:672.0] Because if the number of states is finite, this is just impossible.
+[672.0:677.0] Okay, well, this needs a formal proof, but I hope you agree with me.
+[677.0:692.0] So in a finite chain, things are very intuitive. Right? Again, right? In a finite chain, we can decide very easily if a state is transient or recurrent by just looking at the transition graph.
+[692.0:701.0] And like, why so if state is transient, if a state is recurrent, sorry, then it is necessarily positive recurrent.
+[701.0:716.0] Okay. So, so now a few examples and I will go back to the random more example.
+[716.0:733.0] So again, my random book example with states minus two, minus one, zero, one, two, and so on.
+[733.0:748.0] And then I have POLITIC P to go right, POLITIC P to go left, and it goes on, driver.
+[748.0:768.0] Okay. Okay. Okay. It's in such a chain. Remember that here it has to be that P plus Q is equal to one.
+[768.0:784.0] Okay. So we saw that if P is not equal to Q, then we had this computation in the previous video, then we have a transient chain.
+[784.0:802.0] And essentially, I didn't mention this before, why is it transient? Because if you have a tendency to go either right or left, then you know what happens is that you escape at infinity, either on the right hand side or the left hand side.
+[802.0:815.0] You really have a positive probability starting from state zero. Of course, you might come back to this state a few times, but then there is always a trajectory that brings you very far away, either on the right or on the left.
+[815.0:830.0] And so in Newstice, if you don't come back again, then new zero, which is the expected return time starting from position zero, we'll just be plus infinity.
+[830.0:839.0] Because here again, there is a positive probability that you live for code, right, and never come back to zero.
+[839.0:862.0] And so because probability that T zero is plus infinity, even that X zero is equal to zero, this probability is positive. And you don't need this to be one for this to happen, right? The probability is just strictly positive, which makes the chain transient.
+[862.0:871.0] And I have seen that if P is equal to Q is equal to one half, then you do the computation of the sum of the P zero zero m, right?
+[871.0:882.0] And you discover that in this case, the sum is infinite. Therefore, we have a recurrent chain.
+[882.0:897.0] Now, so now the probability, excuse me, this, now the probability that T zero is plus infinity, given that X zero is equal to zero, is really zero.
+[897.0:906.0] You know that you will come back. And by the way, in this symmetric case, where P is equal to Q is equal to half, there is another intuitive argument about this.
+[906.0:921.0] Since the chain is completely symmetric, it will go less than right with equal probability is, and this implies that it has to cross zero and infinite number of times. Therefore zero is a recurrent state.
+[921.0:935.0] But in this case, one can show that mu zero is equal to plus infinity. So it's a null recurrent state.
+[935.0:947.0] And you know, again, it says for the probability to come back to zero is one. And in the multiple times, you will just go, you know, from zero, you'll go to plus one and then come back to zero.
+[947.0:955.0] For example, that's a very frequent trajectory that can happen a quarter of the time. This will be a trajectory, right?
+[955.0:966.0] But and then sometimes you'll go to plus one plus two minus go back to plus one, go back to zero, right? And so in four steps, you will be back to the starting point.
+[966.0:974.0] But there will be some exceptional cases where you will go quite far away on the right before coming back to zero.
+[974.0:989.0] And these exceptional cases have a small probability of a very tiny probability, but this probability is not so small. And therefore this contributes to making the expected recent time to be infinite.
+[989.0:1000.0] And one can compute this precisely. I'm doing it here, but one can show that indeed mu zero is plus infinity. Therefore the chain is null recurrent in this case.
+[1000.0:1010.0] And so for the random walk on on the line, there is no hope to get the positive recurrence. This is not the positive recurrent chain, right?
+[1010.0:1023.0] It has no, it has the expected time to come back in any state will be always infinite and not finite.
+[1023.0:1037.0] Another example I would like to show you is an example for which the answer is easy to get, but still this will allow me to introduce next week's lecture.
+[1037.0:1042.0] Is the following is the cyclic random walk?
+[1042.0:1059.0] It's an interesting example that will come back for multiple reasons. So we have the same random walk as before, just that now we start in zero and let's see, we moved one and then to two and on purpose.
+[1059.0:1067.0] I draw this like a circle.
+[1067.0:1087.0] Because now when you're in state and minus one, you go back to zero is for TP. So now there is a pretty P to go clockwise and a probability one minus P or Q to go counterclockwise.
+[1087.0:1102.0] So here we close the, instead of having a one or more on the line, we just close it for some value of N.
+[1102.0:1104.0] Capital N.
+[1104.0:1119.0] So here P plus Q should be equal to one and of course in order to have this interesting, let me assume that both P and Q are less than one.
+[1119.0:1132.0] So this is a finite state chain. So the state space here is zero up to capital N minus one. So of course it's finite.
+[1132.0:1139.0] Also the chain is irreducible.
+[1139.0:1152.0] So all states are positive recurrent.
+[1152.0:1166.0] Because we are in the finite chain, right? So this is saying that for example in particular, mu zero is less than plus infinity.
+[1166.0:1172.0] But now we could ask ourselves what is the value of mu zero?
+[1172.0:1182.0] So here is a new question. How can I compute the value of mu zero? That is the average returns are into state zero.
+[1182.0:1189.0] And we will see next week that we will have an easy answer to that.
+[1189.0:1197.0] You know, if a priori if you want to compute this mu zero, you would have to do quite a lot of combinatorics to get the answer.
+[1197.0:1211.0] So of course that's doable. But we will see something next week that we will allow us to answer this question much more rapidly than doing lots of computations.
+[1211.0:1236.0] So this is what I wanted to tell you for this week.

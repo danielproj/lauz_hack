@@ -1,0 +1,334 @@
+~COM-516 Lecture 7.2
+~2020-09-30T00:33:41.445+02:00
+~https://tube.switch.ch/videos/e0d69cab
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:10.88] Okay, so here is now the second example, which is actually the random mark on the hypercube
+[10.88:20.080000000000002] s, which is 0, 1 to the d.
+[20.08:29.64] So you have to think of, yeah, so you have a discrete hypercube, right?
+[29.64:40.599999999999994] And the thing is, so when d is equal to 3, right, you just draw the corners of a cube, and
+[40.599999999999994:50.04] the picture is this, so you have on this cube, you have a walk that's
+[50.04:61.48] going to essentially at each time the walk moves from one corner to the next one, so actually
+[61.48:72.4] the walk does this either it goes up or it goes right or it goes there, and or it stays
+[72.4:75.64] where it is.
+[75.64:83.12] And so that's that's a random walk, so it's a walk that is doing a move in one direction
+[83.12:85.12] at a time only.
+[85.12:90.64] Okay, and of course, after a certain number of steps, it can explore the whole cube,
+[90.64:93.96000000000001] the whole hypercube in general.
+[93.96000000000001:99.8] And we are going to see that, well, if we stay with the cube or even with a square right
+[99.8:105.44] in dimension 2 or 3, so this is the dimension of the problem, here is equal to 3.
+[105.44:118.4] And when the dimension gets large, the number of states of this mark of chain gets larger,
+[118.4:123.56] so right, the number of states is actually 2 to the d, exactly.
+[123.56:134.36] And that's one of the reasons why the bounds we obtain on the contagion rate of this
+[134.36:138.28] mark of chain become kind of loose.
+[138.28:141.44000000000003] Okay, and so I'm going to explain this.
+[141.44000000000003:148.4] And first I'm going to formally define this mark of chain.
+[148.4:163.60000000000002] So the states in s are denoted as little x, so instead of ij, we will use little x,
+[163.6:165.51999999999998] little y.
+[165.51999999999998:174.64] And so each little x is an element of 0, 1 to the d.
+[174.64:181.24] Actually you can view this as a vector of 0 than 1.
+[181.24:191.72] Okay, a sequence of bits of d bits, if you want.
+[191.72:198.84] And here is the model for the transition matrix of the chain.
+[198.84:216.2] So the probability pxy to move from state x to state y will be equal to 1 over d plus 1,
+[216.2:223.88] if either y is simply equal to x, so there is always a probability that the chain stays
+[223.88:244.67999999999998] at the same place, or y is equal to x plus et for some t between 1 and d.
+[244.68:261.76] And what is et, this is the vector which is equal to 0 everywhere except in position t.
+[261.76:270.08] And what is this plus here is the addition modulo 2.
+[270.08:279.64] So if you have 0 plus 0 is 0, 0 plus 1 is 1, 1 plus 0 is 1, and 1 plus 1 is again 0.
+[279.64:286.2] So these really models, so either you make a move in one of these directions t from 1 to
+[286.2:289.12] d, or you stay at the same place.
+[289.12:292.79999999999995] And so you have d plus 1 possible moves.
+[292.79999999999995:297.79999999999995] And so you take a uniform probability distribution over this d plus 1 move.
+[297.8:304.24] So the probability of moving from x to each of these y is simply 1 over d plus 1.
+[304.24:314.56] So and of course, if y is further apart from x, then the probability to move from x to
+[314.56:316.48] y is 0.
+[316.48:320.16] So again for the gsd is equal to 3, 4 possible moves, right?
+[320.16:331.20000000000005] Either you stay at your place or you move up or right or you move in the third direction.
+[331.20000000000005:334.16] Each time with 40, 1 over 4.
+[334.16:340.24] And so there is no, for example, there is no movement possible from the position 0, 0,
+[340.24:343.24] 0 to position 1, 1, 1.
+[343.24:351.32] There is no way that you move from 0, 0, 0, sorry, to 1, 1, 1, in one move.
+[351.32:356.6] Of course, in three moves, you can get there.
+[356.6:358.88] Okay.
+[358.88:364.64] So equivalently, we can write when we write this pxy.
+[364.64:369.28000000000003] So let me just repeat a little what I was saying early.
+[369.28:394.88] So equivalently, the random mark does the following, does the following.
+[394.88:420.15999999999997] And each time step, draw a number t in the set of number 0, 1 to d uniformly at random.
+[420.16:429.16] And if t equal 0, do not move.
+[429.16:452.36] If t is greater than 1, flip the t component of the vector x.
+[452.36:461.48] So if you think of x as a sequence of bits, then you'd run them bit flip of one of the bits
+[461.48:466.48] of the sequence.
+[466.48:468.12] Okay.
+[468.12:476.36] The, this chain is, okay, let me write it here.
+[476.36:482.2] We have a finite state chain, of course, here.
+[482.2:489.59999999999997] Moreover, it's kind of clear that it's irreducible because from any place, you can, on the cube,
+[489.59999999999997:496.2] you can go to any other place on the cube, taking sufficiently large number of moves.
+[496.2:499.0] And it's a periodic because there are cell flops, right?
+[499.0:506.56] We, actually, we could have defined random work that doesn't stay put, right?
+[506.56:512.88] We could have used one direction d, from 1 to d, it was probability 1 over d, and always
+[512.88:513.88] moves.
+[513.88:519.88] But if we do that, then the chain is periodic because you can only come back to a state in
+[519.88:522.28] even number of states.
+[522.28:527.04] So because it's finite state, irreducible and a periodic, this implies that it's positive
+[527.04:529.56] recurrent, therefore, a periodic chain.
+[529.56:537.04] So we have an periodic chain, and we have, therefore, a unique stationary and limiting distribution.
+[537.04:545.3599999999999] So we have a unique limiting and stationary distribution.
+[545.3599999999999:552.1199999999999] And what is this distribution?
+[552.1199999999999:557.88] Well, it's quite a symmetric process.
+[557.88:567.64] And you can check that this transition matrix that we have is actually double-stochastic.
+[567.64:569.96] So P is double-stochastic.
+[569.96:580.0] The raw sums are equal to 1, but the columns are also equal to 1.
+[580.0:583.96] So P is uniform.
+[583.96:593.88] P x is equal to 1 over 2 to the d for every x in 0, 1 to the d.
+[593.88:598.44] So really here, what changes with respect to what I had?
+[598.44:605.12] Until then, I was always numerating the states as i's, right?
+[605.12:610.64] You could think of i being integer numbers, but okay, so these i's are actually anything.
+[610.64:617.52] So now I denote these i's by a little x, because now my x is each time a vector, but it's
+[617.52:622.1999999999999] still a discrete state space, I mean, finite state space.
+[622.1999999999999:623.1999999999999] Okay.
+[623.1999999999999:630.6] Okay, so now, of course, this is the stationary distribution, this pi, and the organic theorem
+[630.6:639.3199999999999] tells us that if you iterate the chain for long enough, you're going to get to this
+[639.32:641.44] stationary distribution.
+[641.44:650.1600000000001] But now, of course, the important question here is what about the convergence rate?
+[650.1600000000001:653.5600000000001] So what about the total variation distance?
+[653.5600000000001:660.1600000000001] P0 and minus pi, Tv for a given name.
+[660.1600000000001:667.6800000000001] We know that this will go to 0 as n goes to infinity, but how fast?
+[667.68:677.04] And here, this is 0, I'll just use it a notation for the all 0 state.
+[677.04:685.04] So this is just the 0, 0, 0 position, start from all 0s.
+[685.04:691.8399999999999] And of course, we can apply the theorem, and the theorem will tell us, well, actually
+[691.84:705.08] the two theorems that we have seen before, will tell us that we have 1 over 2, down the
+[705.08:719.6800000000001] star to the power n is less than p0n minus pi, Tv is less than 1 over 2 square root of
+[719.68:724.76] pi 0, down the star to the n.
+[724.76:730.4] Pro every n, greater than 1.
+[730.4:733.4] There are these additional assumptions.
+[733.4:738.5999999999999] Yeah, I haven't, I have forgotten, of course, to mention that detailed balance is satisfied
+[738.5999999999999:739.5999999999999] here.
+[739.5999999999999:744.28] Well, that's kind of clear from the shape of the transition matrix and the fact that we
+[744.28:751.4399999999999] have a uniform distribution, actually we have a symmetric matrix p.
+[751.4399999999999:756.28] And so when we have a uniform distribution, symmetric matrix p, and detailed balance
+[756.28:758.68] is always satisfied.
+[758.68:764.1999999999999] And there are these other technical assumptions about the eigenvectors of the matrix p, but
+[764.1999999999999:768.64] these hold, I'm going to show it in a second.
+[768.64:774.4399999999999] In order to get the lower bound here, we need to have extra assumptions, as I mentioned
+[774.4399999999999:781.92] in previous video, we need to have extra assumptions on the eigenvectors that there should be
+[781.92:786.3199999999999] in absolute value less than each component should be less than 1, but it turns out that
+[786.3199999999999:791.68] this is exactly the case here, so we can write down this theorem.
+[791.68:792.68] Good.
+[792.68:800.16] So now, of course, if we want to move on and be able to say whether these two inequalities
+[800.16:807.4399999999999] are sharp or in the sense that they are tight, they characterize the long term behavior
+[807.4399999999999:818.16] of this total variation distance, increasing n, then we have to compute an understar.
+[818.16:828.8] So here we need to compute, we need to compute an understar.
+[828.8:836.4399999999999] And okay, so this is where the thing becomes a little technical, but not too much.
+[836.4399999999999:842.4] Actually, what I'm going to do, I'm going to do kind of proof, you know the results in
+[842.4:852.0] advance, I'm going to tell you what the eigenvalues of these matrix PR, what the eigenvectors
+[852.0:857.88] of these matrix PR also, and then I'm going to check that we have the eigenvalue, eigenvalue
+[857.88:859.9599999999999] eigenvector relation.
+[859.9599999999999:866.3199999999999] So here is the lemma.
+[866.32:874.0] The lemma is saying the following about actually this is just the computation of eigenvectors
+[874.0:876.0] and eigenvalues.
+[876.0:896.2800000000001] So the eigenvalues and eigenvectors of k are given by, so we will, we will, we will
+[896.28:905.92] index, like we index the states with a little x, now we will index these eigenvalues as
+[905.92:910.52] for those, that's perhaps the most complicated thing here.
+[910.52:916.6] We index these eigenvalues by a little z, you know, before we had lambda k, right, where
+[916.6:924.92] k was again a number between 0 and n minus 1, and the state space was number between 0
+[924.92:933.0] and n minus 1, so here same story, just that the state space is little x in 0, 1 to the
+[933.0:942.68] power d, so now the lambda z, the lambda will be indexed by z, where z belongs to this
+[942.68:948.4] 0, 1 to the d, so if you want the number of eigenvalues is the same as the number of states
+[948.4:951.56] again, okay?
+[951.56:959.5999999999999] And what is, what does absolute value of z here mean?
+[959.5999999999999:973.92] It means the number of non-zero components of z, to non-zero components of z, okay,
+[973.92:980.3199999999999] so these are the eigenvalues and the eigenvectors, so an eigenvectors associated with a little
+[980.32:995.9200000000001] z, hands for components, simply minus 1 times z, product x, where, yeah, we could write
+[995.9200000000001:1001.8000000000001] it, that's how I write it in the notes, actually it's really the scalar product of z and
+[1001.8000000000001:1006.0400000000001] x, so simply this, okay?
+[1006.04:1023.48] And here, little x, little z are elements of s, which is the state space, 0, 1 to the
+[1023.48:1030.36] d, let me recall, the state space here is 0, 1 to the d.
+[1030.36:1050.6799999999998] So let me show this, let me show this lemma, we have to compute the, what do we have to
+[1050.6799999999998:1051.6799999999998] compute?
+[1051.6799999999998:1059.4799999999998] We have to simply compute the eigenvalue, eigenvalue, eigenvector relation, so to be proven,
+[1059.48:1069.44] we just need to prove that p times fizzy is equal to lambda z times fizzy for every z in
+[1069.44:1072.84] s, okay?
+[1072.84:1079.3600000000001] That's the, this will prove what we need.
+[1079.3600000000001:1087.84] I'd like to mention that by the definition of this fizzy, right, we have minus 1 to some
+[1087.84:1095.12] power of minus 1 to some power, and therefore this minus 1 to some power, here is either
+[1095.12:1102.8] minus 1 or plus 1, and therefore this is always, this is always the number, which is, whose
+[1102.8:1104.56] absolute value is 1.
+[1104.56:1110.12] So we are in the situation, which is even more symmetrical than what we had in these
+[1110.12:1111.6799999999998] extra assumptions, right?
+[1111.68:1119.8] We have the situation where the eigenvectors, all their components are have value 1 in absolute
+[1119.8:1126.6000000000001] value, so they are, they are certainly satisfied, the hypothesis for getting the lower part,
+[1126.6000000000001:1127.6000000000001] right?
+[1127.6000000000001:1136.1200000000001] Okay, so now we need to do this computation, so let me, let me compute simply p fizzy, the
+[1136.12:1155.76] x component of this, which will be given by sum over y in s of p xy times fizzy, and
+[1155.76:1167.2] this is actually, well, we only have non-zero p xy when we have either, when either the y
+[1167.2:1173.92] is equal to p x, so in this case we have this, right?
+[1173.92:1189.44] Or we have, again, p xy, which are non-zero when y is a neighbor if you want of x, and
+[1189.44:1196.6000000000001] this is saying that you have moved, you have chosen one of the direction 1 to d, and the
+[1196.6:1206.3999999999999] move is that now you get p x plus et, okay?
+[1206.3999999999999:1213.7199999999998] So you, you, you have moved to this position x plus et, and all these moves have the same
+[1213.7199999999998:1219.08] probability, one of the d plus 1, and there is the probability of not moving, which is also
+[1219.08:1221.28] one of the d plus 1.
+[1221.28:1230.52] Okay, and now I'm going to replace p xz and p x plus et z by the expression I propose
+[1230.52:1234.36] for it, and we are going to see that it leads to what we want.
+[1234.36:1248.2] So we get 1 over d plus 1 times, so minus 1 to the power z times x plus sum over i equal,
+[1248.2:1263.24] or t equal 1 to d of minus 1 to the power z times x plus et.
+[1263.24:1273.1200000000001] And okay here I can distribute this product, and I end up with, so minus 1 to the z times
+[1273.1200000000001:1277.2] x, I can take it out of the sum, it's a common term.
+[1277.2:1288.4] So I get 1 over d plus 1 times minus 1 to the z times x times in parenthesis 1 plus
+[1288.4:1297.8] sum of t equal 1 to d of minus 1 z times et.
+[1297.8:1300.3600000000001] And what is this z times et?
+[1300.36:1310.32] Remember et is this vector, which is all 0 except in position t, so simply this is zt,
+[1310.32:1317.8] the value of the vector z in position t.
+[1317.8:1332.96] And this thing, therefore, becomes 1 plus d minus 2 times the number of non-zero component
+[1332.96:1335.76] of z.
+[1335.76:1343.08] So here you have to write this down and convince yourself that this is correct.
+[1343.08:1352.52] Indeed if zt is plus 1, you will get a minus here, and if zt is equal to 0, you will get
+[1352.52:1354.6] a plus, right?
+[1354.6:1363.12] So and then you have to convince yourself at the end this sum here becomes simply d minus
+[1363.12:1368.36] 2, the number of non-zero components of z.
+[1368.36:1380.6399999999999] And once we have written this, we get that this is equal to d plus 1 minus 2 absolute
+[1380.6399999999999:1390.3999999999999] value of z divided by d plus 1 times minus 1 z times x.
+[1390.4:1401.16] And what is this again, it's 1 minus 2 absolute value of z divided by d plus 1 times phi
+[1401.16:1406.0400000000002] x z.
+[1406.0400000000002:1417.4] And that's exactly what is in the lemma, so we have an eigenvalue, eigenvector equation
+[1417.4:1423.6000000000001] where now the values for the eigenvalues are these ones, which are exactly the lambda
+[1423.6000000000001:1426.2800000000002] z we are proposing.
+[1426.2800000000002:1435.5600000000002] So this ends the proof of the lemma.
+[1435.5600000000002:1442.16] So please observe that again in this case, if we plot here z is the all-zero state, the
+[1442.16:1449.96] all-zero vector, then the phi zero corresponding to that is the all-one vector, the eigenvector
+[1449.96:1454.4] is the all-one vector, and lambda zero will be equal to 1.
+[1454.4:1462.1200000000001] Okay, so same situation as before, of course, this we have it for every mark of change.
+[1462.1200000000001:1472.0400000000002] Okay, now among these eigenvalues, which are the ones, which are the closest to the
+[1472.04:1479.04] least, to either plus 1 or minus 1.
+[1479.04:1487.04] It turns out that you can check that, but the one which is the closest to minus 1 or plus
+[1487.04:1490.68] 1 is, I mean, it's a symmetric situation.
+[1490.68:1497.2] If we are on the, we will have the gap, the spectral gap will be determined by, will
+[1497.2:1506.1200000000001] be equal on both sides, and here you can check that actually lambda star of, lambda star
+[1506.1200000000001:1513.48] is simply the one you get by taking z with only 1 non-zero component.
+[1513.48:1525.72] Okay, so lambda star is equal to 1 minus 2 over the de plus 1.
+[1525.72:1538.44] And, yeah, because, and if you would take, so, so, perhaps let me just say it here, this
+[1538.44:1551.68] is obtained by taking either z is equal to 1, so the number of non-zero components is equal
+[1551.68:1560.4] to 1, or actually the other extreme where z is equal to d.
+[1560.4:1565.4] Because then we have something very close to minus 1, you do the subtraction and you get,
+[1565.4:1567.8] you get the same value for lambda star.
+[1567.8:1572.04] Actually, it takes the absolute value of that and you will get, you will get the same
+[1572.04:1573.04] value.
+[1573.04:1581.2] Okay, so now I can write my inequality, I have computed my lambda star, and when do
+[1581.2:1593.2] we get, we get 1 half times 1 minus 2 over the de plus 1 to the power n is less than p
+[1593.2:1605.16] 0 n minus pi t v, which is less than 1 over 2 square root of pi 0 times 1 minus 2 over
+[1605.16:1611.24] d plus 1 to the power n. And now what is pi 0?
+[1611.24:1626.0] Remember, pi is uniform, so, but pi 0 is 1 over 2 to the d, because, because the
+[1626.0:1634.68] distribution is uniform over 2 to the d states, so this thing here is equal, when this upper
+[1634.68:1650.08] bound is equal to 2 to the d over 2 divided by 2 times 1 minus 1 over d plus 1 times n.
+[1650.08:1662.08] And we compared before, you know, what we had before, with the other example of the cyclic
+[1662.08:1663.4399999999998] work, right?
+[1663.4399999999998:1671.28] We had lambda star, which was of the order of 1 minus something over n, capital N squared,
+[1671.28:1672.28] right?
+[1672.28:1678.8] So here, kind of d plays the role of, d plays the role of capital N, if you want.
+[1678.8:1683.84] So the dimension of the problem, you know, the spectral gap is of the same order, but
+[1683.84:1689.28] instead of having 1 over d squared, we have 1 over d plus 1, but okay, it's a similar
+[1689.28:1696.96] thing. But here, the main difference is that at the numerator here, we have 2 to the
+[1696.96:1705.6] d. And you know, as d gets large, this term now obviously becomes very, very high.
+[1705.6:1711.9199999999998] So the lower bound, if there was not this term, then the lower an upper bound would perfectly
+[1711.9199999999998:1714.1999999999998] match, but here we have this term.
+[1714.1999999999998:1721.32] And this term is exponential in d. So now, if you want to characterize when the lower
+[1721.32:1728.36] bound is small and when the upper bound is small, so here the lower bound, in order to
+[1728.36:1736.4799999999998] have this small, you should take probably n of the order of a bit more than d. Okay,
+[1736.4799999999998:1750.6799999999998] if you take so, perhaps so, so lower bound is small when n is roughly, you know, it's
+[1750.68:1767.76] a bit bigger than 1 over d. Okay, but now the up in order to get the upper bound small,
+[1767.76:1773.24] well, if you want to compensate, so of course it doesn't suffice to get this small, right?
+[1773.24:1780.1200000000001] You have to make 2 to the d over 2 times this term small, right? So here you absolutely
+[1780.12:1796.1999999999998] need to take an n which is much larger, when n is much larger than that. Okay.
+[1796.1999999999998:1803.9199999999998] And here, well, you would definitely need this to be, you have to compensate for, okay,
+[1803.92:1812.24] so let me do the computation. So you have, so this will be roughly of the other e to the
+[1812.24:1825.24] minus n over d plus 1, okay? And now you want 2 to the d over 2 times e to the minus
+[1825.24:1832.64] n over d plus 1 to be small, right? So if you take, if you take, you should now compensate
+[1832.64:1840.3200000000002] for this 2 over d plus 2. So you should take n, certainly, you should take n, certainly
+[1840.3200000000002:1850.0800000000002] much larger than d squared. And even, sorry, sorry, I said n much bigger than 1 over
+[1850.0800000000002:1856.1200000000001] d that doesn't make any sense, it's n much bigger than d, okay? Lower bound is small when
+[1856.1200000000001:1862.2] n is much bigger than d, but here if you want to get this term here small, you should
+[1862.2:1871.92] certainly pick n much larger than d squared. And bottom line is that if you draw these
+[1871.92:1879.72] upper bound and lower bound, this is what you're going to get. So of course, both the lower
+[1879.72:1885.96] bound and upper bound are exponentially in little n, but what happens is that the upper
+[1885.96:1894.16] bound is somewhere here. That's where the upper bound is. And the lower bound is probably
+[1894.16:1902.2] somewhere here. That's where the lower bound is. And so there is a big gap, okay? There
+[1902.2:1910.68] is really a big gap. And actually in between what does the total variation distance do,
+[1910.68:1917.68] we have absolutely no clue. We know that it's something decreasing, but okay, you know
+[1917.68:1924.3600000000001] like this is if you want the truth, the function of n. And here there is a big question mark.
+[1924.3600000000001:1931.2] Because the two bounds do not match, there is this factor 2 to the d, 2 to the d over
+[1931.2:1940.64] 2, that creates a huge discrepancy if you think of d being large. And therefore, even
+[1940.64:1953.2800000000002] though we have this exponential decay, here we don't have any, we don't have actually any
+[1953.2800000000002:1960.5600000000002] information as to how does this total variation distance decay with n in a precise manner.
+[1960.5600000000002:1970.44] Because the single square root of pi 0 term, rooms the thing, right? And so we are going
+[1970.44:1982.56] to see in the next video how we, what we can do to fix that and what result we can get.
+[1982.56:1988.52] Actually what I can do, I can give you a preview now. Let me just give you a preview.
+[1988.52:1995.24] So, and then in the last video I'll explain, I'll give you the main arguments that allow
+[1995.24:2005.14] you to obtain the results. So, let me give you this result, which is called the Kataf
+[2005.14:2019.52] Pename N'on. It's a quite interesting result. So, this answers the question that I left open
+[2019.52:2028.6] before. Okay, let me state how many what this result is and then I'll show you picture.
+[2028.6:2042.8799999999999] Okay, so let's see, be a large constant. Positive, I should say large, positive constant.
+[2042.88:2051.1600000000003] And, okay, and I'm going to put the quotes here because, yeah, you will see. Then what
+[2051.1600000000003:2069.48] happens? If on the one hand n is d plus 1 over 4 times log d plus c, then the total variation
+[2069.48:2087.76] distance between p0 and pi goes to 0 as c increases. So, so if you take n a bit bigger than
+[2087.76:2095.96] d plus 1, actually d plus 1 times log d and you expand this n, you know, you, you expand
+[2095.96:2103.84] this n by a factor c in addition, you write it as log d plus c, as you increase c, your
+[2103.84:2109.12] total variation distance goes to 0. So, this is saying essentially that the mixing time
+[2109.12:2118.52] is of the other of d log d. Okay, after d log d, you get something that approaches 0. Okay,
+[2118.52:2123.2] that's one thing. So, this is already a better statement that what I had before because
+[2123.2:2128.72] the statement before was saying, oh, the upper bound was getting small when little n was
+[2128.72:2135.16] bigger than d squared. Certainly, we don't need d squared. This is showing that the total
+[2135.16:2142.52] variation distance is actually small when n is essentially d log d plus a count, if you
+[2142.52:2149.12] just push this a little further than d log d, then you get, you get to 0. But the remarkable
+[2149.12:2159.08] fact is that just before that, so if you take the same expression d plus 1 over 4 times
+[2159.08:2166.96] log d minus c, so you take again n is d log d, but now you decrease it a little by a factor
+[2166.96:2184.16] of c, then the total variation distance goes as c gets large. This goes to 1 as c increases.
+[2184.16:2192.12] So you increase c, but now you have a minus c, so it is saying that if you're at position
+[2192.12:2199.12] d log d, essentially, and now you reduce a bit this threshold and go move to the left,
+[2199.12:2206.04] then suddenly at some point the total variation distance gets close to 1. And remember, this
+[2206.04:2211.04] total variation distance is a very interesting notion because it says, when the total variation
+[2211.04:2217.08] distance is 0, it's essentially saying the two distributions are very close. When the
+[2217.08:2221.6] total variation distance is 1 on the contrary, this is saying they are super far apart from
+[2221.6:2226.8399999999997] the other, the most far apart from each other, they have essentially disjoint support,
+[2226.8399999999997:2233.56] so nothing to do with each other. So now what is the picture? The picture is the following.
+[2233.56:2248.16] So you have this, let me draw again this graph, this is n, and it is saying, so here we
+[2248.16:2259.7599999999998] have a position called d plus 1 over 4 times log d, when n is that much. Okay, you have
+[2259.7599999999998:2268.08] an interesting position where if you're a little after, so let me draw here this p0n minus
+[2268.08:2274.68] pi tv, so this is what we want to draw as a function of n, here we have 0. So if we are
+[2274.68:2287.0] little after, okay, yes, reasonably after, actually, here we have, so from here you move
+[2287.0:2295.2] by a factor, the small window, okay, which would be, you know, so here you move by a factor
+[2295.2:2305.0] c times d to the right, then essentially from this point onwards, the total variation distance
+[2305.0:2315.3199999999997] is very close to 0. But now if you go to the left, so you do a little less steps in the
+[2315.32:2326.6800000000003] chain, okay, then it says that the total variation distance is essentially close to 1, so what
+[2326.6800000000003:2337.28] is, what the picture is, is this, is that you have a chain doing something like this,
+[2337.28:2354.5600000000004] okay, and in between, then probably something like this happens, okay. So this is saying that
+[2354.5600000000004:2364.2000000000003] the mixing time, instead of, you know, instead of having this gradual exponential decay of
+[2364.2:2371.04] the chain, we have a actually completely different picture here where we have something, you
+[2371.04:2379.4399999999996] know, you start the chain from position 0, and for quite some time, you know, you mix
+[2379.4399999999996:2386.3199999999997] the chain, you do moves, but somehow you remain very, very far from equilibrium. And there
+[2386.32:2394.2400000000002] is a small window, this window that I have written here, and during this small window everything
+[2394.2400000000002:2402.88] happens. You move from a kind of ordered state to completely uniformly distributed state
+[2402.88:2410.6000000000004] in the whole chain, okay. So the size of the window, of course, so the position here, the
+[2410.6:2418.08] position here is this D plus 1 over 4 times log D, so it's of the order of D log D, and
+[2418.08:2426.36] the size of the window is of order D. So you might say, okay, well, the size of the
+[2426.36:2435.2799999999997] window is quite high, yes, but when D increases, it's a fact, when D increases, then you have
+[2435.28:2444.88] a window that gets smaller and smaller compared to its position, okay. And so here, this
+[2444.88:2449.6800000000003] is saying that actually what we had found before, right, we had this upper bound that was
+[2449.6800000000003:2454.6000000000004] probably looking something like this, and this lower bound that was probably looking like
+[2454.6000000000004:2463.44] this, okay, and none of these lower bound or upper bound was telling us the right thing.
+[2463.44:2471.64] So here we have a much more precise result, and this is what is called this cut of phenomenon
+[2471.64:2482.76] because it says you know that the chain kind of first remains very far from equilibrium,
+[2482.76:2489.76] and then in a very few, in few steps it gets to equilibrium. Again, here the window size
+[2489.76:2497.4] for where everything happens is quite high, but in general, this is a phenomenon that
+[2497.4:2505.0800000000004] has been identified in many situations for Markov chains where this happens. For example,
+[2505.0800000000004:2512.4] another famous example, so this is what I'm telling you is due to Per City Aconis and
+[2512.4:2522.0] Coaters, and they have notably exhibited that the same thing happens when you shuffle a
+[2522.0:2527.64] deck of cards. So if you shuffle a deck of cards, and you know, if you start from a completely
+[2527.64:2534.7200000000003] order deck, you shuffle it for a while. If you don't shuffle it enough, then you haven't
+[2534.7200000000003:2539.56] really mixed the deck of cards, and there is a point where after a few shuffles, where
+[2539.56:2545.92] suddenly you get close to uniform distribution over all possible decks, and therefore you
+[2545.92:2555.92] have a reasonably well mixed deck of cards. And so, okay, so this is for the Pordianic
+[2555.92:2563.04] Todd, but of course this doesn't only apply to deck of cards, it applies to all kinds
+[2563.04:2572.24] of processes. And here we see that even though this spectral gap analysis seems, you know,
+[2572.24:2579.04] something very powerful at first. Here we see that taking Mark here, we can get to a
+[2579.04:2586.96] much, much more precise result than what we had with the general theorem. Okay, so in
+[2586.96:2590.84] the last video, I'm stop here, but in the last video, I'm trying to give you ideas as
+[2590.84:2593.6400000000003] well how can we prove such a result?

@@ -1,0 +1,567 @@
+~CS-451 / Project session '21 #01
+~2021-09-28T11:57:55.824+02:00
+~https://tube.switch.ch/videos/JHGufVYKZR
+~CS-451 Distributed algorithms
+[0.0:11.0] So, hello everybody. Welcome to the district of Algorithms project session. And so today's
+[11.0:17.16] the first session of the project session in SAMHSA. So let me introduce myself first.
+[17.16:24.64] My name is Darce Enigirvis and I'm one of the TAs for the project in SAMHSA. We have
+[24.64:30.8] also Athanasios, the second TA and we have also a student assistant, Julian. Just before
+[30.8:35.68] starting maybe you have already recognized that I'm recording this session and it will
+[35.68:45.56] be available shortly after the session on the on the module page. So the format of the
+[45.56:52.68] project session in general will not be a presentation every time. So usually it's a Q&A
+[52.68:58.68] session. So you work on the project in this session and then if you have any questions
+[58.68:70.2] you'll find the TA in this session. It's a three hour slot from 815 to 11 every Tuesday.
+[70.2:77.52] And starting from next week it will be in person and you know our room is CE2. Only
+[77.52:85.92] this week is on Zoom. From next you can be in person. So today I'm going to give an
+[85.92:93.0] introduction to the project and also an introduction on how we are going to grade the project.
+[93.0:97.88] These two presentations are already recorded from last year. So you can and they are already
+[97.88:104.36] on the module so you can check them. Last year presentations I would say are more details.
+[104.36:110.56] They have more details and they have more hands on experience on how to like how to run
+[110.56:116.12] the project. I would repeat build it practical stuff like this. I'm not going to go into
+[116.12:119.96] these details today because they are already there on the module. You can check the other
+[119.96:127.96000000000001] videos. I'm going to give high level quick overview for the project and yeah and I think
+[127.96000000000001:133.04] after today's presentation you can get started already and then you can start with the
+[133.04:140.95999999999998] project and I mean you will have all the tools to start the project. Yeah okay so one
+[140.95999999999998:147.2] one thing about the project session as you know I said it's physical in CE2 but that
+[147.2:153.48] year is possible for an accession. We'll be also on Zoom on this link to get your questions
+[153.48:160.23999999999998] or you can be I don't know if you prefer to be at home or if you don't have the COVID certificate.
+[160.24:165.20000000000002] You can stay at home, you can open the Zoom link and then ask questions by chat and then
+[165.20000000000002:172.96] the TA can answer your questions. So I will be asking the questions. One way is to come
+[172.96:179.32000000000002] to the project session and ask this is one way. A second way which we encourage a lot
+[179.32000000000002:186.8] is to ask on module and that's how maybe your colleagues can help you and also TA's
+[186.8:195.04000000000002] funds would be available to everybody else or whoever has a similar question and we have
+[195.04000000000002:201.60000000000002] also office hours. We are on the course page so you can come as office hours, you can
+[201.60000000000002:208.4] contact us during these hours to ask for questions. Yeah so speaking about the course page
+[208.4:224.44] I hope all of you know okay yeah so this is the this is the official course page if you
+[224.44:230.92000000000002] don't have it please notice site down it's this the L. T. P. F. L. TH slash nice
+[230.92:238.72] Latin education slash D. A. and this is official one so the information here is the most
+[238.72:248.76] updated and there's official ones right so like where do we do our sessions and what time
+[248.76:259.2] everything about like the news information about the project and here you can find yeah
+[259.2:266.03999999999996] this is the office hours times and our emails everything you find in this page so it's
+[266.03999999999996:274.52] very important please note it down and the other page is the module page I already hope
+[274.52:281.64] that you are you can access this module page so for module page you can access the course
+[281.64:290.58] page and the other way around also so yeah you'll have also all the timings and like the
+[290.58:299.47999999999996] deadlines for the project session and so forth so like following regularly these two pages
+[299.48:313.72] is crucial so that you don't miss any announcement or anything okay yeah so one okay yeah so this
+[313.72:320.16] is all I have what I have been in the intro now let's start with the first presentation
+[320.16:332.6] so I hope you can see can you see much lights moving okay good so yeah sure yeah also feel
+[332.6:342.68] free to ask any questions of course while I'm presenting the slides okay so the project
+[342.68:349.96] this year will be about a fundamental bidding block of distributed systems algorithms which
+[349.96:356.64] is broadcast so when we say a machine one broadcast a message to machine two and three
+[356.64:362.96000000000004] this means that this machine sends some message and to all the other machines and hopefully
+[362.96000000000004:367.24] I mean this message we will be delivered by the application layer on these other machines
+[367.24:374.48] this is in a nutshell what broadcast means and broadcast in the perfect word would be would
+[374.48:378.72] be perfect no problem to do this it would be very very easy but we have some challenges
+[378.72:386.36] that we deal with in in in in real world environments which which are going also to to consider
+[386.36:393.28000000000003] in our project so the first one is a thing and I think really means that there is no bounds
+[393.28:398.44] on the message and the process execution delays this means that you cannot really stay
+[398.44:405.0] I'm expecting this message to arrive in X minutes or X seconds basically cannot say
+[405.0:410.2] that you cannot know when the message will arrive so if the message is not arrived your
+[410.2:414.91999999999996] your best hope is to wait until it it arrives you will never know when exactly it will
+[414.91999999999996:421.15999999999997] arrive the second thing is failures and this means that some processes or some machines
+[421.16:427.64000000000004] can fail by crashing simply they crash and once you crash instead of executing and they
+[427.64000000000004:434.6] they do nothing and this can happen at any point of time and I mean you you typically you
+[434.6:438.56] don't you don't have you don't have some way to know who who's crashing it who's who's
+[438.56:445.0] not and the third one is the communication failures which means that the message that
+[445.0:451.36] you send or some machine broadcast maybe lost maybe maybe maybe maybe delayed or maybe
+[451.36:457.92] reordered or maybe even duplicate for some from some for some noise or some vision.
+[457.92:468.0] So for this for these issues the broadcast problem is a bit hard yeah somebody have a question
+[468.0:475.48] you know good so in this project you are going to use the UDP as our underlying transport
+[475.48:482.48] layer and as a quick recap the difference between TCP and UDP in a nutshell TCP is a reliable
+[482.48:487.6] transport mechanism but UDP is not reliable which which are going to use we are going
+[487.6:496.04] to build over UDP so how how the TCP ensure reliability the most important thing of it is
+[496.04:504.6] that it creates a connection before transferring the message itself so assume we have two machines
+[504.6:511.28000000000003] M1 and M2 and then M1 wants to send something to M2 before sending the actual data M1 creates
+[511.28000000000003:517.76] a connection with M2 it does a handshake with M2 to make sure that the connection is established
+[517.76:523.52] and after after that it starts sending the messages UDP does not act like this when M1 wants
+[523.52:530.04] to send some messages to M2 it sends a message directly with no connection with nothing.
+[530.04:535.3199999999999] Also TCP is the reliable so it guarantees few things it guarantees delivery first of all
+[535.3199999999999:542.84] so if M1 sends some message by TCP it will surely arrive to M2 I mean if M2 is healthy
+[542.84:552.28] of course if not scratch and it also guarantees the order of the messages it guarantees
+[552.28:557.0] like it's okay I mean so the message will not be lost will not be reordered will not
+[557.0:565.48] be obligated all these things are guaranteed by TCP now this is guaranteed by UDP another
+[565.48:572.1999999999999] thing is that flow control so if the receiver is overwhelmed by the packets sent by the
+[572.1999999999999:581.48] sender the receiver can the TCP can reduces amount of packets sent so that it can be received
+[581.48:588.76] normally with the receiver with any of them are lost and yeah the order thing also I
+[588.76:594.6800000000001] talked about it so we are going to use the UDP so on the transport layer and layer beneath
+[594.6800000000001:600.48] you don't have any guarantees and in this project as we are going to see you will need
+[600.48:606.6] to implement the techniques to guarantees these guarantees basically to reliable transmission
+[606.6:619.76] but with UDP so we need to build some building blocks and we have three deliverables for the
+[619.76:628.9200000000001] sender the first one is perfect links and this is we call the zero deliverable and as
+[628.92:636.4399999999999] as a perfect link we'll ensure reliable transmission its point point transmission it's before the
+[636.4399999999999:643.36] broadcast one the level transmission from M1 to M2 machine one to machine based on UDP as
+[643.36:647.8399999999999] the second deliverable is called fee for broadcast which is first in first out broadcast you
+[647.8399999999999:652.36] are going to I mean during the semester you will learn in the class what is a fee for broadcast
+[652.36:656.92] what are its properties what should it guarantee all these stuff but it's kind of
+[656.92:664.8399999999999] all that is some properties and you build this over another broadcast which is omitted here
+[664.8399999999999:672.36] it's not one of the deliverables which calls uniform reliable broadcast and the last deliverable
+[672.36:678.68] is the local cause of broadcast it's again some other type of broadcast with some properties
+[678.68:686.88] that you also learn about in the class so as you can see these blocks are
+[686.88:694.32] based on each other so you are required in this project to build a modular code so that's
+[694.32:700.96] when you build something you can build upon it is a second deliverable so you build for instance
+[700.96:708.4] perfectly right you need to make it standalone module so that's when you implement the other
+[708.4:714.56] broadcast types like uniform reliable broadcast or best effort broadcast you can use this module
+[714.56:724.16] as is without modification of it and like without without without without being inclusive let's say
+[726.3199999999999:734.8] so this is very important and we make it explicit in the problem statements that we are going to
+[734.8:741.1999999999999] penalize those who don't use a modular code and this will be we will make also your project very
+[741.2:749.84] very music like it will it will help it will help you during the implementation so let's talk
+[750.5600000000001:757.9200000000001] bit about the setup of the project so as I said you are going to only use UDP packets
+[758.5600000000001:763.2800000000001] and only point to point and everything else you you have to implement your shot you have to
+[763.2800000000001:767.9200000000001] implement all techniques of reliability you have to implement yourself the broadcast
+[767.92:776.0] techniques everything you you have you have to implement so you are not allowed to use any third
+[776.0:783.92] party libraries you need to implement everything only using the UDP packets and for this
+[785.4399999999999:793.76] we have provided virtual machine I'm going to talk about this later which includes the libraries
+[793.76:798.4] basically the native libraries that you you will need to use I mean you are not allowed to add any
+[798.4:802.0] libraries out of this virtual machine I'm going to talk about this virtual machine later
+[804.08:814.3199999999999] so one question we we we are usually asked how many messages can can be transferred or
+[814.3199999999999:821.2] or broadcasted so these messages are at at most max int which is this big number here's
+[821.2:829.12] billions and the typical is the messages in these projects are only sequential numbers like
+[829.12:834.08] and the message the first message we hold number one second message you hold number two third
+[834.08:837.6800000000001] message you hold number three this is basically the payload it's only the sequence number
+[838.72:846.48] but your your code should not leverage this information like we we make this as a payload just
+[846.48:853.04] for for testing or for prototyping but your your code should be agnostic to the payload okay so
+[853.04:859.9200000000001] the payload may be arbitrarily text and your code should work directly but it will be only
+[859.9200000000001:874.32] as some sequence numbers okay so you can build this project using Cercit as class or Java
+[874.32:881.84] and we have already we we have already C-make files and for first-dead plus plus and
+[881.84:890.24] now then for to build Java and we also provided a template so maybe let me let me let me go to
+[890.24:898.4000000000001] the repo so in either the course page is the project session you can find the link to all get
+[898.4:908.16] a repo here or on the model page the model page you can also have the link to to a repo this
+[908.16:919.28] is a public repo for for our project it's here so this repo all the information you need for
+[919.28:929.52] the project so you can treat problem statement you can read like everything I will I will give
+[929.52:936.8] today presentation is here you can know how to how to run how to build how to do everything
+[938.72:944.16] some specifications about each and every deliverable we are targeting this semester
+[944.16:952.48] information also about grading I'm going to give a high level overview of this also today and
+[952.48:959.6] also some frequently asked questions that students usually ask so here up up you can find this
+[960.4:968.88] virtual machine I told you about so in this next slide we give links for for virtual machines we have
+[968.88:976.24] two links but we we encourage you to use the first one I mean if you use the first one it does not work
+[976.24:985.36] for you it works for most students but it works for you it's the second one and with this virtual
+[985.36:990.88] machine we have we have everything installed for you like you you have the environment set already set
+[990.88:1000.24] up and you need to make sure that your code compiles with virtual machine without changing anything in
+[1002.4:1006.32] before submission so if it doesn't compile with with the virtual machines and it has a problem
+[1006.32:1012.32] and it will it will not compile in our environment and it will not work and so your project will
+[1012.32:1021.5200000000001] be distributed right I mean we cannot use it I can I can here some nice so please all make
+[1021.5200000000001:1030.56] sure that you are muted this would be easier so yeah as it says this three points very important
+[1031.76:1036.0] please make sure that you you know how to how to access it
+[1036.0:1041.68] so back to the presentation
+[1046.24:1055.84] so we we we provide an interface for you to run the project it's it's called around the
+[1055.84:1065.6] test page on some run script and with this run with this transcript you can't run broadcast process
+[1065.6:1071.4399999999998] or whatever it depends on the developer maybe a perfect link process on one machine so you need
+[1071.4399999999998:1079.4399999999998] to run this on each and every machine that participates in the broadcast so it has a following
+[1079.44:1085.2] arguments command line either the first one is the idea of the process which which run on
+[1085.2:1090.96] on the machine the second one is the is a path of files that contains the information about
+[1090.96:1099.92] the the process about the processes contributing to to to the broadcast and the first argument
+[1099.92:1110.24] output is the path to to the directory in which or to to the output file which this machine or
+[1110.24:1117.2] this process will output it's output and and also the config file which includes some specific
+[1117.2:1123.68] information related to the broadcast type because some some kinds of broadcast requires additional
+[1123.68:1133.04] information to work so again if you go to to the report so for so if you go to the repo you'll
+[1133.04:1138.0] find templates here feet is it is a template for a C++ and there is a template for Java so if
+[1138.0:1143.8400000000001] you go for template for C++ for instance you find this to undo system to the sh which which
+[1143.8400000000001:1152.48] which run the code right and we already have some code inside here so in source this this main
+[1152.48:1158.16] this this code does the parsing for you with the thumb parsing and it's thought it's thought
+[1158.96:1164.08] like execution of something but of course nothing is executed here for now and this is this
+[1164.08:1173.84] would be your job to fill in the blanks you see two messages in the case of reliable link
+[1173.84:1184.1599999999999] the action of delivery just writing an output yes yes so when you deliver something you need to
+[1184.1599999999999:1189.6] write something to the output I'm going to say what exactly you will you're writing the output but
+[1189.6:1204.9599999999998] yes writing to the output is our end goal so this is the interface you're going to use okay so
+[1204.9599999999998:1214.1599999999999] as I said before we are going to we are going to we are going to consider crashes so machines
+[1214.16:1222.72] or processes that participate in the broadcast could crash and to simulate this in our environment
+[1222.72:1231.0400000000002] we are going to use some some signals like stick term or stick end these are used to make the
+[1231.0400000000002:1238.5600000000002] process just stop execution so when when your process receives this either of these signals
+[1238.56:1244.72] it must immediately stop all the execution which means that it cannot send any message and it
+[1244.72:1250.24] cannot receive any messages the only thing that's allowed after receiving this signal is
+[1251.04:1256.8799999999999] writing writing the output so you should not send anything you should not receive anything
+[1256.8799999999999:1265.2] the only things that you can do is write your output and then basically exit so for for our
+[1265.2:1271.3600000000001] project you can assume that only a minority of the processes will be crashed so if you have
+[1271.3600000000001:1276.48] three processes at most to one can crash this is a minority minority means less than 50 percent
+[1277.2:1287.92] so if you have six then less than three less than three processes will crash if you have five then
+[1287.92:1297.1200000000001] at most two again less than three and so on so forth so about the output each process should output
+[1297.1200000000001:1306.0800000000002] the events that happen I mean during in slide time we have two kinds of events either you broadcast
+[1306.0800000000002:1314.0] some message or you receive the message right so the broadcast events will be in this format
+[1314.0:1320.4] be and then the sequence number of the message that you're going to send recall that the messages
+[1320.4:1329.12] will will hold only the sequence number in their payload so for instance here these these forces
+[1329.12:1333.52] for the state broadcast message one and then broadcast message two and then broadcast
+[1333.52:1339.84] message three and so forth and then the second kind of event is when you deliver some message
+[1339.84:1348.24] and delivers is in this format D and then two numbers D is delivered of course and then the
+[1348.24:1354.8799999999999] first number is the process that originally sends a message so and the second number is the
+[1354.8799999999999:1362.3999999999999] sequence number of the message so this means that at this time process K delivers message two
+[1362.4:1370.4] from process four so it's D for two okay so it's one important notion here that a stat which is
+[1370.4:1377.52] delivered deliver is a bit different from receive so a process might receive a message but not
+[1377.52:1383.68] deliver it to satisfy some some property of the broadcast that we are going to I mean you're
+[1383.68:1388.88] going to learn about this in detail in the class so you can receive some message but not yet
+[1388.88:1397.92] delivered so when does this output to the file is when the application delivers this this message okay
+[1400.88:1412.0] okay so again these are the templates this this part is provided already by us and if you are
+[1412.0:1418.72] not allowed to change it so please do not change the content of build.sh cleanup with this
+[1418.72:1429.44] edge front test hmcmexist.txt but you're going to put your code in here okay so build.sh is
+[1429.44:1437.84] used to compile the project run to test h run the process and then cleanup is used to to
+[1437.84:1445.1999999999998] delete all the artifacts here in bin and in the output files and you are encouraged to to use
+[1445.1999999999998:1454.3999999999999] this clean up to the stage script before before you submit your project yes so when you submit
+[1454.3999999999999:1462.48] your project you you will have your hands this directly as is put in a zip file and and and
+[1462.48:1470.24] also named with your stp number this is very important because we are going to run automatic test
+[1471.2:1478.72] test cases for your for your project so if your submission does not follow this structure
+[1479.6:1484.24] basically you cannot parse it and you cannot grade it and in this case you are not going to
+[1484.24:1490.72] manually inspect it and fix fix the issues with the structure and in this case basically
+[1490.72:1498.08] unfortunately you will let you get no grade you'll get zero grade so this is crucial please
+[1498.08:1504.8] before you submit the project before you do any submission please make sure that
+[1506.24:1512.96] the structure of your submission follows this exact structure and of course again you should not
+[1512.96:1518.16] change anything in this in this form I see two questions which are that
+[1518.16:1523.92] is there an output file for each process or one common there is one output file for each process
+[1523.92:1529.52] because in real life each process run on a different machine right so each process should
+[1529.52:1538.4] lock its own it's own events so the answer is there is one output file for each process there is
+[1538.4:1543.8400000000001] one for each yes okay right could we have a script that baritites the files to actually correct
+[1543.84:1550.72] no there is no script to vary that this I mean your only job is not to change it I mean
+[1550.72:1555.4399999999998] it is it is correct by default if you don't change it it will be correct
+[1559.4399999999998:1566.72] yeah okay for each other people we have also also the same we prepare the same the same things
+[1566.72:1574.8] a third thing here is that this is the form to the XML please do not alter it because I mean do not
+[1574.8:1581.52] do not change it to add your to add some library we are not going to accept that okay so please
+[1581.52:1589.28] do not again alter this part and you put this your code in in this you are free to use whatever
+[1589.68:1594.16] environment you want you can use the clips you can use whatever you want but at the end of the day
+[1594.16:1601.76] you make sure that the good compiles in its basic form in this structure can we have a script
+[1601.76:1609.28] that baritites that what we did actually works as an event okay good question so we have a script
+[1609.28:1616.0] we we provide for you a script to validate the fee for properties for the second delivery
+[1616.0:1622.5600000000002] but the last delivery there is no script to do this this is not one of the artifacts of the project
+[1622.56:1629.12] you're you're not requested to to build this script but you can you can build it to validate your work
+[1629.84:1637.12] so testing is an important part of development right to help you we provide the testing for
+[1637.12:1644.6399999999999] the second delivery rule the first delivery was very easy so I don't think we then for the third one
+[1644.64:1656.64] we we outsource this to you so I hope this answers your question so again as these are the
+[1656.64:1662.16] combination environments that we're going to use it's for your reference and if you if you use
+[1662.16:1668.48] the virtual machine this environment is already there so it's actually if you want to develop
+[1668.48:1674.32] on your machine or on the virtual machine if you use the virtual machine then you you don't have this
+[1674.32:1682.0] headache if you use your own machine it's also not hard but for you these are the environments
+[1682.0:1689.84] that we are going to use again you are going to find this in the in the model page and in the course
+[1689.84:1695.92] page so again you are going to use the template this is mandatory and it's a responsibility to
+[1695.92:1702.72] make it compiled with this template and if it doesn't compile with this template or if it doesn't
+[1702.72:1708.72] produce any output files for instance this this submission will not be considered unfortunately
+[1708.72:1714.0] again we cannot go and inspect manually each and every submission this is very hard
+[1715.76:1722.72] it's actually impossible so we are going to run some scripts to test your submission so please
+[1722.72:1729.3600000000001] make sure that you do everything as intended yeah this is one of the virtual machine which I
+[1729.3600000000001:1736.48] already talked about and this is marks the end of the first presentations any questions so far
+[1738.64:1747.28] feel free to raise your hand or ask questions on chat I'm going to give a couple of minutes
+[1747.28:1760.24] before starting the second presentation yeah it can also unmute yourself and ask directly if you want
+[1766.24:1771.92] okay when we start can we go to individual rooms to get help
+[1771.92:1780.64] what's individual rooms you mean you mean in the room you can ask here
+[1783.8400000000001:1788.4] I'm not sure we can do this room thing because I'm alone here so
+[1791.52:1796.72] yeah I can still ask in the chat you can I mean you can speak up that's fine
+[1796.72:1803.2] can unmute yourself and speak if you want do you have only one chance to submit
+[1803.2:1809.2] good question I'm going to look about this also in the second presentation so this is a red line
+[1809.2:1814.32] of course for the submission oh you mean one chance okay I'm not sure I get your question so
+[1814.32:1820.16] you have a red line and you can submit infinite number of times until this deadline
+[1820.16:1826.32] but we're going to take only the last submission right we're not going to grade all your submissions
+[1826.32:1831.84] so it's basically overrides so if you if you have submission one and then submission to submission
+[1831.84:1837.84] one will be lost because you submit submission to after you submit submission one this is if you
+[1837.84:1845.12] submit before the deadline if you hit the deadline you can still submit late but this will be for
+[1845.12:1857.28] for for a penalty so for each one day one extra day so for each one extra day you lose 25
+[1857.28:1862.8799999999999] percent of the grade so basically after four days you'll get zero I mean you are not allowed
+[1862.8799999999999:1870.56] to submit four days I hope we I hope this has to be possible can we use local files to build
+[1870.56:1879.04] the environment yes you can but make sure that everything is in place right on model we have
+[1879.04:1883.04] all kinds of questions the description is by your for example yeah so barrier this barrier I
+[1883.04:1889.28] think we had last year we don't have it this year because it create like many it creates
+[1889.28:1895.6] some fuss and it was a bit obscure we we realized that it's not also crucial so we removed it
+[1895.6:1900.7199999999998] this year so we don't have the exist barriers here but shouldn't affect anything on your site
+[1902.7199999999998:1904.1599999999999] but yeah
+[1910.56:1912.1599999999999] okay
+[1912.16:1927.92] where is the VM if you go to the repo you can find some file called the end of text here
+[1930.24:1931.44] and then you can find the link
+[1931.44:1946.0] and here is your VM you can download it and then you can you can use it's built with with
+[1946.0:1955.6000000000001] the virtual box so please download yeah download an install virtual box 6.1 to use it you'll have
+[1955.6:1964.56] also some information here
+[1972.0:1975.6] so please if you are not asking questions please see your channel
+[1978.08:1982.3999999999999] so basically our first deliverable is to make a reliable link which sends to UDP it
+[1982.4:1988.0800000000002] sees UDP delivery the message was in previous it delivered is there anything that we should verify
+[1988.0800000000002:1996.64] your property we should guarantee you are going to there is there is a formal abstraction called
+[1996.64:2004.24] perfecting this is what you want to guarantee basically it does yeah the same things that you
+[2004.24:2012.4] described here but yeah I mean you have to only guarantee the properties of the perfectly
+[2013.36:2018.56] which is basically notification so it's not revertised and no creation it will not create it unless
+[2019.6:2024.72] one I mean a message will not be created on its own there should be some process that sends
+[2024.72:2030.48] this message and of course it should run reliably I think this is it
+[2030.48:2035.44] but yeah formally are going to build a perfecting
+[2043.44:2046.8] more questions before we go to the second presentation
+[2046.8:2060.08] so again both presentations are already on the module page but from last year course
+[2069.7599999999998:2072.48] yeah so project recording introduction to the project
+[2072.48:2077.2] and then there is another project recording if I'm not mistaken
+[2082.4:2085.92] yes the validation of the project these are from last year so
+[2094.72:2095.36] okay good
+[2095.36:2102.8] we are done going to check the sharing privileges
+[2109.44:2114.0] yes of course yes I will I will put the updated slides they are not very different from
+[2114.0:2116.1600000000003] from last year's slides but yes I'm going to put them
+[2119.76:2124.7200000000003] can we use the drug and status at the VM yes you can yes VM is not okay using the VM is for
+[2124.72:2133.8399999999997] your guidance it's not mandatory right because VM has the has the VM has like the environment we're
+[2133.8399999999997:2140.0] going to test with has like the libraries you are allowed to use so it's for your guidance you
+[2140.0:2145.8399999999997] can do whatever you want it's not mandatory but you should make sure that it compiles the VM
+[2145.8399999999997:2150.3999999999996] because if it doesn't compiles the VM if it doesn't work with the VM it's not going to work with
+[2150.4:2157.36] our environment and this would be unfortunate
+[2168.8:2173.76] okay this is a very important question perfect link is implemented by stubborn link
+[2173.76:2178.08] so it contains infinite loops can we modify it or just follow the algorithm
+[2178.08:2186.24] okay there is a difference between the like the algorithm in the book which is used to
+[2188.0:2194.7999999999997] to prove formal properties and the implementation you are going to implement the thing you
+[2195.68:2201.68] may deviate from the algorithm in the book so if you see if you think that
+[2201.68:2207.8399999999997] implementing these infinite loops is bad for the performance and you have another idea is
+[2207.8399999999997:2214.0] if you want to implement you are free to do this you can do this so you are not expected to
+[2214.72:2220.16] follow the book like just line by line or the algorithm in the book line by line you're going to
+[2220.72:2227.68] you are going to put all of your implementation tricks in your code to make it fast and to make it
+[2227.68:2232.7999999999997] of course it should work correctly but also to make it fast and to do whatever you want so the
+[2232.7999999999997:2238.96] short answer for your question is yes you can modify it you are allowed to deviate a bit from
+[2238.96:2245.12] the algorithm as long as your execution or the execution of your of your module
+[2246.64:2254.0] follows the properties of the selection you are building and also you need to make it modular
+[2254.0:2262.64] right as we said in the beginning I hope this answers your question
+[2267.04:2276.88] okay so yeah so let's go for the second part or the second presentation which is about
+[2276.88:2282.96] project validation grading I think this is important for you and most of the questions we
+[2282.96:2288.7200000000003] received usually is about grading so this is how we are going to grade your projects and
+[2288.7200000000003:2295.52] these are practical information about grading so first of all the project accounts for only 30
+[2295.52:2302.08] percent of the final page you have 70 percent for the final written exam which is typically
+[2302.08:2309.2] in January and you have 30 percent of the project you will work alone this project is
+[2309.2:2314.72] individual you can still discuss problems and solutions with with with your colleagues but only
+[2314.72:2322.72] on an available level like you're not allowed to you're not allowed to share codes okay at the end
+[2322.72:2329.4399999999996] of the semester there is an oral exam in which you can explain what you did but with a huge
+[2329.4399999999996:2336.8799999999997] number of students and huge number of submissions we are not going to order the exam in each and
+[2336.88:2344.08] every student we are going to select like select some students based on their submissions
+[2346.8:2354.88] I mean the criteria is is not public of this children but anyway this oral exam does not
+[2354.88:2363.44] contribute really to the grade it contributes to for us to verify some things okay so if you
+[2363.44:2369.36] are not invited to the exam you can still get takes right you can you can still the full grade
+[2370.2400000000002:2376.88] so this shouldn't be a problem but we might invite some of you to this to this oral exam and
+[2376.88:2384.2400000000002] usually it is the last session in the semester we'll have this this exam so it's important that
+[2384.2400000000002:2390.8] we prioritize correctness over performance so because some students start asking many many
+[2390.8:2394.0800000000004] questions in the beginning with a semester about the performance should I do this should I do
+[2394.0800000000004:2399.52] that and how to use this performance acceptable so performance shouldn't be your first worry
+[2399.52:2405.1200000000003] right you should make sure that the project is correct and if it's correct now check if it's
+[2405.1200000000003:2411.92] if it performs well a correct submission will get at least four out of six a performance but not
+[2411.92:2419.44] correct submission will get zero of course a correct and very performance submission will get six
+[2419.44:2426.4] of six a blast and the very important thing is that we have zero tolerance to cheating okay
+[2427.36:2433.76] so if we if we find two copies of same code and or there is some intersection between these codes
+[2434.88:2438.48] both of them are going to get zero and we are not going to
+[2440.0:2447.2000000000003] inspect which like who is the original one and who is one that's copyright one we we have zero
+[2447.2:2453.8399999999997] tolerance to this it's still fine to to get some code from the internet from from stack overflows
+[2453.8399999999997:2461.7599999999998] that's fine but I mean to to be safe it's it's better to give credit to anything that you include
+[2461.7599999999998:2469.3599999999997] in the in the codes that that you that you that you have not offered can you add access to stop
+[2469.3599999999997:2476.8799999999997] the infinite loop yes you can do we need to take care of malicious machines no we don't we don't
+[2476.88:2485.04] assume malicious machine in this project we the failures that we have is already is is only cash
+[2488.4:2493.6] yes cash is and of course the network can also drop some packets and stuff like this so what's
+[2493.6:2498.6400000000003] the quantity of students taking the exam so from from from experience it's usually
+[2498.64:2506.56] I don't 30% something like this yeah 30% yeah but I mean it's this is not
+[2506.56:2513.2799999999997] a defined a priority this again depends on the submissions so give or take but yeah
+[2513.28:2527.6800000000003] so again it's 30% of the project out of this 30% 10% of the grades will be
+[2529.52:2533.76] will be based on your perfecting submission and 40% for fee for broadcast the
+[2533.76:2539.0400000000004] confirmation which which is which we call the first deliverable and then 50% for the local
+[2539.04:2544.8] cause of the broadcast and for evaluation again we're going to check correctness and this
+[2547.2799999999997:2553.7599999999998] this will be like 66% of the grade and then the performance which is the rest like 34%
+[2553.7599999999998:2561.2] of all the grade so how we are going to check both performance and correctness so for correctness
+[2561.2:2566.08] we have test cases we are going to run your submission against some test cases and then basically
+[2566.08:2572.64] we check that your output logs follow is the correct output logs so there is some properties and
+[2573.92:2581.84] we will make sure that your submission guarantees its properties or follows this project does not
+[2581.84:2588.88] break any property of that deliverable for performance what we're going to do is that we're going to
+[2588.88:2598.7200000000003] run your machine your your deliverable with huge number of processes and wait for some x amount
+[2598.7200000000003:2607.6] of time and then we stop and then we check how many how many messages how many messages do your
+[2607.6:2614.7200000000003] processes deliver during this x time and then we are going positions basically throughputs and we
+[2614.72:2621.7599999999998] are going to rank all submissions based on throughput and then we will give grades based on this so
+[2621.7599999999998:2629.3599999999997] let's say first the top 21st and we'll get 6 out of 6 and then just a second let's say 20
+[2629.3599999999997:2634.72] percent this is not exact numbers right this is an example second 20 percent we'll get
+[2636.56:2641.4399999999996] sorry the performance is out of two so the first 20 percent gets two out of two second 20 percent
+[2641.44:2647.12] gets I don't know 1.75 out of two and so forth something like this so the performance will be
+[2649.76:2657.92] like relative so with for correctness we are going to put some network issues because you
+[2657.92:2664.7200000000003] have to deal with this like we have delays and losses and reordering but we are not going to do
+[2664.7200000000003:2668.96] packet corruption like we are not going to again this is the related to the questions that was asked
+[2668.96:2677.52] just now we are not going to consider malicious machines or any kind of Byzantine failures or
+[2677.52:2686.32] corruption successes yeah or slow process or test causes but performance we are not going we
+[2686.32:2691.68] are not going to put any delays or losses or anything we are we are going to assume
+[2691.68:2698.72] the perfect environment while testing performance we are going of course to use a varying number
+[2698.72:2704.3199999999997] of broadcasting processes and varying number of of messages while testing performance
+[2705.8399999999997:2708.96] so what is the design of the resubmissions this is coming in a bit
+[2712.96:2720.48] just wait for for two minutes so can I use multithreading yes but you cannot use multiple processes
+[2720.48:2730.08] okay how many processes can class during tests again only minority can fail less than 50 percent
+[2730.08:2736.2400000000002] of the processes so majority of processes should be correct when we implement before broadcast
+[2736.2400000000002:2741.6] should we implement it over reliable or uniform reliable broadcast so these are two abstractions
+[2741.6:2747.2] that you are going to study in the lectures and we are going to use uniform reliable broadcast as
+[2747.2:2752.56] the same goes for the local causal broadcast so if you go here to the repo
+[2754.24:2759.52] basically are going to build this I'm not I don't want to tire you with with this but
+[2760.16:2765.68] as the first abstractions as you are going to build this perfecting and about perfecting you are
+[2765.68:2770.16] going to implement best effort broadcast which is very very simple to implement if you have
+[2770.16:2775.8399999999997] perfecting and about best effort broadcasts you will implement any from reliable broadcast
+[2775.84:2780.48] directly over the best effort broadcast and then using uniform reliable broadcast you are
+[2780.48:2785.1200000000003] required to implement both fee for broadcasts and localize causal broadcasts so it's important
+[2785.1200000000003:2790.08] to know that localize causal broadcasts is not built on top of fee for it's built on top of
+[2790.08:2797.52] uniform reliable broadcast but yeah you're going to study each of these abstractions in detail
+[2797.52:2806.8] in the lectures should processes be able to detect that another cache that's a good question
+[2807.52:2812.4] the answer is no for this project and simply because we ask you on a synchronic
+[2812.88:2819.92] which means that basically you do not you don't have any clue on when you receive some
+[2819.92:2825.2] message or some reply from from other message so if you don't guarantee this basically cannot
+[2825.2:2829.68] implement the perfect failure detector this is called the perfect failure detector what you
+[2829.68:2837.52] described to to detect who failed and who's not so because you assume a synchronic you cannot
+[2837.52:2843.9199999999996] implement the perfect failure detectors so basically processes cannot cannot make sure that
+[2843.9199999999996:2849.4399999999996] processes crash or not and this is an important question because in some cases in our test cases
+[2849.44:2857.52] we will stop some machine and then after a while we are going to run it again and this is to
+[2858.4:2866.96] to simulate maybe some network partition or maybe simulate some huge delay in the network right
+[2866.96:2872.7200000000003] so in this case when the machine resumes which has stopped when it resumes it should continue
+[2872.72:2881.12] like normally it should be able to broadcast messages and its messages should arrive safely
+[2881.12:2889.12] to other machines and it should be able to also receive messages so if you assume that some
+[2889.12:2895.4399999999996] processed fail because it does not respond for X amount of time whatever exit in your code this
+[2895.44:2904.64] will be wrong so you cannot you cannot do perfect failure detector I hope this is clear please let me know
+[2904.64:2918.48] if it's not so the red lines here is the red lines the first line is perfect thing is in October
+[2918.48:2925.44] 24 this is like four weeks from now and the second line is four weeks after the first
+[2925.44:2930.48] submission is November 21 and this is the last one is December 21
+[2932.8:2938.88] there is submission websites that will be available very very soon we are going to use to put
+[2938.88:2944.64] your submissions of course before the deadline of the first submission so again there is the penalty
+[2944.64:2954.48] for the late submission so 25% for every 24 hours of delay or like number of hours module
+[2956.96:2963.68] not module okay number of hours divided by 24 hours so if you submit after 25 hours this is
+[2963.68:2972.48] considered as two days okay so it is okay you would yes for for the submissions this is a website
+[2972.48:2981.04] that you will use to submit and to I mean to identify yourself you will need some passphrase
+[2981.04:2990.32] and each one of you is going to receive of course a different passphrase and please do not share
+[2990.32:2996.96] it with each other because this is like your password for submissions it will be announced soon
+[2996.96:3010.2400000000002] so again we want your code to be modular so these are some tips for the modules so let's check
+[3010.2400000000002:3016.0] this question chance any report to write no only the code and comments there is no report to write
+[3018.32:3023.44] the first one is the first click and for this you need to device some retransmission strategy
+[3023.44:3030.08] to decrease the network issues right and then uniform reliable broadcast this is built on top of
+[3030.7200000000003:3034.8] best effort broadcast which is very easy to parameterize perfecting again so for your
+[3034.8:3041.6] uniform reliable broadcast you will have a few algorithms in the class you are allowed to use
+[3041.6:3047.84] whatever but you need to keep I mean for performance you need to keep the payload or the size of
+[3047.84:3054.0] the packet small and then the free full broadcast and look across the broadcast again focus again
+[3054.0:3059.92] focus more on collectments and then try to improve the performance later so we can stop
+[3059.92:3064.48] meet as many times as we want and only the most three things taken into account yes
+[3066.08:3070.6400000000003] or is it another system I don't understand what you mean by is it another system but
+[3071.28:3077.6000000000004] the answer for your first question yet you can submit as many times as you want and we are going
+[3077.6:3086.7999999999997] to use only the most three things one so this is also an important point so if you submit something
+[3088.08:3092.24] submit some submission okay and then after the deadline you submit another one
+[3093.36:3101.04] and then of course this other one will be created with penalty right so in this case unfortunately
+[3101.04:3106.56] you will get the penalty even if the first submission is correct because basically the first
+[3106.56:3113.6] submission is now lost we are not going to to grade it we cannot find it anyway okay and we have
+[3113.6:3122.24] seen this many times that students come and say hey but look at my like they bring the dip
+[3122.24:3127.6] between both submissions and they say hey I only added the comment or I only added the print line
+[3128.32:3134.24] or this or that it is very hard to accept this stuff make sure that you submit everything
+[3134.24:3139.68] correct before the deadline because if you submit another thing after the deadline the first
+[3139.68:3148.0] submission will be overrided and we will not have any chance to get it back and unfortunately you
+[3148.0:3154.72] will get the penalty I hope this is clear for you so make sure that you submit everything correct
+[3154.72:3162.16] with the correct structure with everything before the deadline so question
+[3162.16:3167.7599999999998] are there any good quantity requirements be modular this is the one that we
+[3169.44:3176.0] that we we we we take into consideration while grading it's very important to have modules
+[3176.64:3182.16] if your code is monolithic you are going to be penalized okay I'm repeating this again if
+[3182.16:3187.92] your code is monolithic if everything of the code is in one file and there is no modularity you are
+[3187.92:3194.2400000000002] going to be penalized I hope this is also clear no other qualities are required like I mean
+[3195.28:3200.32] putting commands is good for you but we're not going to I mean documentation all this stuff
+[3200.32:3205.92] we're not going to look at this while grading only the modularity and of course
+[3207.6:3214.4] you need also to keep signatures and templates as we as we provide
+[3214.4:3224.7200000000003] so we are going to use imperfect environment for for as a network and this means that the
+[3224.7200000000003:3229.84] messages could be lost could be delayed could be ordered could be complicated all all all all
+[3229.84:3239.6] kinds of stuff and of course you are not required to run the project on multiple machines
+[3239.6:3244.7999999999997] because we assume that we you don't have multiple machines so you are you are going to for
+[3244.7999999999997:3250.88] simulation you're going to run all the processes participating in broadcast on the same machine
+[3251.6:3258.3199999999997] so we are they are going to exchange messages over the over the loop background over I mean
+[3258.3199999999997:3263.36] they will send to local host all of the time and for this of course it's very hard to find
+[3263.36:3268.96] any lossless or delays or so so what we are going to do is we are going to use this Linux
+[3268.96:3274.4] traffic control tool it's a utility to change some network characteristics it's used to
+[3276.48:3280.48] put some virtual delays lossless or the orderings stuff like this
+[3282.96:3290.08] so this is an example on how to use it using these two two commands line and this is like an
+[3290.08:3296.48] example so the second what does the second one what does this lines do basically we add some
+[3296.48:3306.16] package delay of 200 milliseconds give or take 50 milliseconds follow some the follow the
+[3306.16:3312.32] uniform distribution and they are also going to drop some packets 10% of the packets with some
+[3312.32:3322.0] probability and also some some packets will be will be reordered so if you want to send three
+[3322.0:3330.48] messages m1 m2 m3 with this line maybe m3 is sent before m1 and m2 for convenience
+[3331.84:3339.76] we provide some scripts called tc.py it will be in tools in the in the label you can you you find
+[3339.76:3355.0400000000004] here so in GitHub the repo you find tools and then this tc.py with this one you can basically you can
+[3358.0:3362.8] you can introduce some delays from losses stuff like this so you you'll find
+[3362.8:3370.48] getting config what is the delay what is the loss what is the reordering and we encourage you to
+[3370.48:3374.32] play with this to have different like different configurations of or different
+[3375.6000000000004:3380.5600000000004] yeah different configurations of the network environment so I see four questions
+[3381.76:3387.44] we'd perform as fast to be the same for C++ on Java no there will be separate yes it's
+[3387.44:3398.96] been fact on beta thank you okay so for testing now as soon as you have learned something that
+[3398.96:3405.6] you want to test it you have you have two ways of testing it so first one is manual and all these
+[3406.64:3409.6] steps are already in the
+[3409.6:3415.44] oh thank you
+[3419.68:3428.7999999999997] so again so you need one way is to run manually the processes so for instance you want to run
+[3428.7999999999997:3432.56] three machines and for this you need to open three terminals because each terminal
+[3432.56:3440.64] corresponds to one machine and for each you first you need to build you build the application and then you
+[3440.64:3444.7999999999997] run each one using these commands that we we described before it includes where is the host
+[3444.7999999999997:3450.88] where where do you want to put the output and what is the config file for this for instance and then
+[3451.68:3457.2799999999997] you run three processes in three different terminals and when and then you wait some time and then
+[3457.28:3463.76] you stop the processes after after sometimes those are the these and their messages
+[3465.1200000000003:3471.0400000000004] basically is with controls right a second way is that you can use some scripts that we prepared
+[3471.0400000000004:3476.32] for use called stress.py it's again in tools and for this you can you can run in this way
+[3476.32:3484.48] it's the point and then you point to your runscript which is run with sh which you run the project of
+[3484.48:3490.72] course you need to build the project beforehand and then the second one is you specify which
+[3490.72:3497.12] the availability is this is the perfect link or people or code and broadcast and then you need also
+[3498.88:3504.56] to specify where is the logs directory you need to create this directory before passing it
+[3504.56:3510.2400000000002] to the to the script it's not created by the script it's created by you after you're in
+[3510.24:3517.6] and then you specify with minus p number of processes that you want to participate in this
+[3519.3599999999997:3525.7599999999998] in this run and then how many messages you need to participate with with minus c we need to
+[3525.7599999999998:3532.64] be sure so again for stress dot font you can down with with the test config
+[3532.64:3543.2799999999997] you you have some configuration for crashing the processes and crashing and stopping and posing
+[3543.2799999999997:3550.16] stuff like this and for this we run multiple threads and with this with this test config you can
+[3550.16:3557.04] specify how many threads running and for each thread how many attempt how many a signal it
+[3557.04:3563.04] it passes and what is the distribution of the signals we have here three signals stop
+[3563.04:3570.48] continue and terminate okay stop is basically when you pose some process right so if you want to
+[3570.48:3577.44] submit a pose signal to to one process so that it's it again it simulates some network crashing or
+[3577.44:3585.7599999999998] whatever you submit this with let's say 48% or 0.48 probability and then continue is when when
+[3585.76:3590.88] some process stopped you can continue so the process continue processing and terminate is like
+[3590.88:3597.1200000000003] crashing the processes so with this test configuration you can you can specify also
+[3598.4:3602.88] different sort of configurations for processes stopping crashing continuing
+[3604.6400000000003:3613.2000000000003] we also encourage you to to play with this tool to to test your submission of your code with
+[3613.2:3622.16] different environments let's check the questions do we need to reorder the message with the
+[3622.16:3626.7999999999997] request number or do we have to add some kind of app header well yeah very ordering you don't
+[3626.7999999999997:3634.0] implement the ordering I mean you have to deal with the reordering very ordering is
+[3634.0:3643.28] implemented again by by TC right I mean it's it's can be introduced by this TC so I'm not sure but
+[3643.28:3652.24] by yeah and also you shouldn't yes you shouldn't rely on the payload yeah okay I see okay I now
+[3652.24:3658.8] understand your question okay yes okay so your payload or your message should be agnostic
+[3658.8:3664.8] to what happens in the network okay reordering is some network some some some some mess in the
+[3664.8:3670.8] network right your code shouldn't shouldn't have anything to do with with what's happening in the
+[3670.8:3678.4] network in terms of the payload the failure should be the same right but of course when you when you
+[3678.4:3684.2400000000002] when you send and message one and then message two if if the network clear orders your packets M2
+[3684.24:3692.08] and that M1 your your your your packets should arrive in order I mean for some for some
+[3693.3599999999997:3698.7999999999997] so for instance this reordering thing is not one of the properties of the perfecting so perfect
+[3698.7999999999997:3706.0] link can allow reordering right because perfect link it it only guarantees a reliable transmission
+[3706.0:3714.56] of one message right it doesn't look at sequence of messages but if if you look at people broadcast
+[3714.56:3723.76] now this people one guarantees that messages arrive in order so if you send M1 and then M2 and
+[3723.76:3731.44] then your network reorders these messages and and then the receiver receives M2 and then M1 it could
+[3731.44:3737.12] be delivered by the perfect link abstraction but it shouldn't be delivered by people abstraction in
+[3737.12:3746.64] this order but again it shouldn't depend on the payload I hope this answers your questions
+[3748.48:3757.68] so for yeah again for stress.find if you want to include some network reordering or or losses
+[3757.68:3763.8399999999997] you can use a tc.find and how it works is that your auntie c.find and then you keep it running
+[3763.8399999999997:3771.7599999999998] and then you start stress.find and after after you finish your tests or your run now you can
+[3771.7599999999998:3780.08] close tc.find it's important to know that when tc.find closes we do cleanup so when tc.find
+[3780.08:3787.2799999999997] closes any reordering or any loss set was introduced to the network will be removed so if you
+[3787.28:3792.48] run tc.find and then close it and then your auntie c.find now stress.find runs in a perfect
+[3792.48:3800.32] environment which no losses no duplicates nothing this is crucial to understand you can
+[3800.32:3805.6000000000004] you see that also some notice that can change the rate of the interfering threads with this time
+[3805.6000000000004:3812.32] to slip you are you are free to play with this I mean this stress.find is for your convenience
+[3812.32:3818.32] we are not going to do anything with it so you are free to to change it to play with it to do
+[3818.32:3825.44] whatever you want with this so again for performance you are not going to put any crashes or delays
+[3826.0:3831.28] and we are going to measure aggregate throughput basically we are going to check the output of each
+[3831.28:3840.48] process and see how many messages this this output record I mean how many messages delivered by
+[3840.48:3846.08] this process and then we calculate throughput and then we sum all throughput of all processes
+[3846.08:3850.64] and this is the aggregate throughput this is your score and we are going to rank as I said before
+[3850.64:3857.36] the aggregate throughput among everybody and then we yes based on the aggregate throughput
+[3857.36:3862.64] we give score. Each process will broadcast a very large number of messages
+[3862.64:3872.3199999999997] so basically I mean with this large number of messages the processes will not be able to
+[3872.3199999999997:3877.52] deliver all of them so we are going that's why that's how we are going to take I mean to expect
+[3877.52:3887.8399999999997] the largest number of messages that but you can you can do. Okay this is the last slide of
+[3887.84:3894.88] the presentation I hope this gives you an overview of how we are going to validate and create
+[3895.6800000000003:3903.36] your project the question here if we send a big message that we get divided by IP we don't
+[3903.36:3911.36] reorder anything this will not happen because the messages in our case is only sequence number
+[3911.36:3916.8] right it's it's an integral right so it's very small the payload is only one integral so it's very
+[3916.8:3924.5600000000004] small so we are not going to consider consider big messages in this in these projects
+[3927.2000000000003:3933.28] so the answer is no trans. Since the complexity is measured okay since the complexity is measured
+[3933.28:3937.84] by the number of messages exchange I guess as a transport level why is the plus plus and
+[3937.84:3946.96] Java are graded separately okay it's not as a transport level a transport level again so
+[3949.28:3956.4] we are going to see the messages recorded by the log and the messages that are recorded by the
+[3956.4:3963.28] log are delivered right at at this event GE something something right and this delivery as
+[3963.28:3970.0800000000004] they said before is delivery is different from receive receiving so some process might receive
+[3970.0800000000004:3975.44] some message but might not deliver it to the upper layer because it does not stop
+[3975.44:3980.1600000000003] flies some property for instance for people let's let's take an example for people people is fast
+[3980.1600000000003:3984.88] in first and out right so if we submit message one and the message two this should arrive in
+[3984.88:3992.2400000000002] the same order so one receiver can receive message two but not yet received message one what
+[3992.24:3997.7599999999998] what it what it should do with with message two is that it should cue it or put it in some storage
+[3997.7599999999998:4003.7599999999998] right some whatever in memory save it somewhere until it receives message one and then when message
+[4003.7599999999998:4008.3199999999997] one is received it delivers message one and then message two this is an example of
+[4010.7999999999997:4017.2] why a process might receive a message but not delivery so the delivery is not in the transport
+[4017.2:4025.52] level but it is in the application level so C++ and Java has like since they have different
+[4027.7599999999998:4035.6] speed that's same so for fairness we are going to create or rank each of them on the
+[4035.6:4042.08] on so we encourage you to use the language that you are comp more more complicated I mean you're
+[4042.08:4048.88] not going to lose anything by using either of them if you are experts I mean with the language
+[4048.88:4058.7999999999997] that you are using more questions
+[4065.68:4069.2799999999997] can we consider that payload will also be just integrated these future projects
+[4069.28:4078.2400000000002] I think you mean the submissions or deliverables like permission zero one and two and then the answer
+[4078.2400000000002:4085.28] is yes right I mean the the payload is also an integral but but your code should not leverage
+[4085.28:4091.28] this property like it should not do anything special because you know that the payload is on
+[4091.28:4100.4800000000005] the an integral so the exact same code can should should run again with with with no
+[4101.6:4109.76] change in the like with if the payload is changed if the payload is only is arbitrary text text it
+[4109.76:4125.360000000001] should it should run with no errors so I'm not I'm going to stop sharing and
+[4125.36:4139.2] stop recording so we still have so before stopping recording so anyway so we still have
+[4140.88:4148.08] what like about hour and a half in the session I will be here on zoom to answer any of your questions
+[4148.08:4158.64] so feel free to to write your messages in the chat or you can speak up also it's up to you
+[4158.64:4175.360000000001] you still have one hour and a half um

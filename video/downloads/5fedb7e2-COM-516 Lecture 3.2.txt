@@ -1,0 +1,192 @@
+~COM-516 Lecture 3.2
+~2020-07-29T21:55:59.113+02:00
+~https://tube.switch.ch/videos/5fedb7e2
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:13.0] So let's go and visit some examples where we can apply the above theorem.
+[13.0:16.0] So first example will be the static run the mock.
+[16.0:25.0] I already mentioned last time.
+[25.0:35.0] So this run the mock has four state space S which goes from 0 to capillary n minus 1.
+[35.0:47.0] And you know it's the chain that looks like this.
+[47.0:62.0] Yes, we have a probability p to go clockwise in this chain and a probability q to go counterclockwise.
+[62.0:68.0] And in order for this chain to be well defined, we need that p plus q is equal to 1.
+[68.0:75.0] And we assume that p both p and q are between 0, strictly between 0 and 1 or the wise.
+[75.0:83.0] You just have a trivial process.
+[83.0:87.0] Okay.
+[87.0:93.0] So this chain is finite clearly.
+[93.0:105.0] And it's also irreducible because it's clear here that all states communicate.
+[105.0:115.0] So it is positive recurrent because there is no dot tries for this chain.
+[115.0:133.0] And by the theorem it admits a unique stationary distribution pi.
+[133.0:136.0] Okay.
+[136.0:144.0] Now let me just write explicitly what the transition matrix of the chain is because we are going to see that here we have a probability of the chain.
+[144.0:150.0] We are going to see that here we have a quite particular example of chain.
+[150.0:156.0] If I write down what p is.
+[156.0:158.0] So there is this chain never stays put.
+[158.0:163.0] So there is no probability to go from i to i in one step.
+[163.0:167.0] But there is a probability p to go to the next step.
+[167.0:171.0] So on the first line that's what you're going on the next state.
+[171.0:182.0] And at the end of the, so this is from the line corresponding to state 0, you have a probability q to go to the last state.
+[182.0:191.0] For the second state it has a probability q to go to the first, sorry, for state 1 it has a probability q to go to 0,
+[191.0:200.0] for t 0 to state put and for tp to go to state 2 and then all zeros.
+[200.0:213.0] And for state 3, for state 2, sorry, it has for t 0 to go directly to 0, for t q to go to 1, for t 0 to state put, p and so on.
+[213.0:227.0] And so you see that you have kind of a nice structure here, so the p's and the q's form like upper and lower diagonal of the matrix.
+[227.0:250.0] And for the last row, for state n minus 1, state n minus 1, we have a probability p to go to state 0 and then all zeros here and then q to go to state n minus 2 and then 0 to state put.
+[250.0:260.0] Okay, and then here it's all, you know, these dots here, they are all zeros.
+[260.0:265.0] Okay.
+[265.0:284.0] So if you look at one row of the matrix, like this one, what do you see is that of course it's a stochastic matrix, it has q plus p is equal to 1,
+[284.0:292.0] so the sum, the row sum is equal to 1 and that's true for every column, including the last one, the first one is always the same thing.
+[292.0:303.0] But what's interesting here is that if you look at the column of the matrix, let me take this one, for example, then you see that it's the same thing for columns.
+[303.0:309.0] There is only a single p and a single q in every column and so p plus q is always equal to 1.
+[309.0:325.0] So here we have a specific matrix because we have some over j in s of p i j which is equal to 1, which is true for every matrix, which is a transition matrix of a mark of chain.
+[325.0:330.0] So this is true for every i in s, so that's normal.
+[330.0:346.0] But if we sum over the row, the columns, so for a given column, we sum over all the i's, okay, then we get also 1.
+[346.0:350.0] And this will be true for every column j.
+[350.0:363.0] So this is what we call a doubly stochastic matrix. And remember, I say that the beginning, right, there is absolutely no reason why this should happen in general.
+[363.0:370.0] Right, for a general mark of chain, we don't have that p has this property.
+[370.0:381.0] But here we have a specific mark of chain and we have this doubly stochastic matrix property.
+[381.0:395.0] And the chain is finite. And what I want to argue is that for every mark of chain whose transition matrix p is doubly stochastic, there is a unique and who is finite.
+[395.0:402.0] There is a unique stochastic distribution and this stochastic distribution is simply the uniform distribution.
+[402.0:414.0] So let me state it as a small proposition.
+[414.0:443.0] If x is a finite, irreducible chain whose transition matrix p is doubly stochastic,
+[443.0:463.0] then it admits a unique stationary distribution pi.
+[463.0:492.0] And pi is uniform, which is to say that pi i is equal to 1 over n for every i in s.
+[492.0:499.0] And here we assume that the state space has size capital N.
+[499.0:512.0] And the proof is really short. Just try to plug this into the equation.
+[512.0:530.0] So plug pi i equal 1 over n into the equation pi is equal to pi p.
+[530.0:550.0] And what do you see? Well, you see that you will get. So the question is now is 1 over n equal to sum over j in s of 1 over n times pi j.
+[550.0:561.0] This should hold for every i. That's the equation pi is equal to pi p written in components.
+[561.0:575.0] And okay here, well, just simplify by n. And what do we get? We get this.
+[575.0:587.0] And yes, this is correct because pi is doubly stochastic.
+[587.0:597.0] So the columns on are equal to zero. Proof.
+[597.0:605.0] The fact that it's unique is guaranteed by the theorem. We have a finite irreducible chain. So the theorem tells us it's unique.
+[605.0:614.0] If the chain is not irreducible, then we might find multiple distribution that's not only the uniform distribution.
+[614.0:627.0] But here we show that the uniform distribution is a solution to the equation. And the theorem then guarantees that this distribution is unit.
+[627.0:651.0] Okay. So perhaps I should add it here. Unicness. Granted by the theorem. So of course, there were two very important words here is finite irreducible.
+[651.0:659.0] We have the assumption that p is doubly stochastic. But if the chain is infinite, then of course you will be a little annoyed.
+[659.0:664.0] What is the uniform distribution on an infinite chain? This does not exist.
+[664.0:671.0] So it's important that x is finite irreducible for these two hold.
+[671.0:681.0] Okay. So if I go back to my example here, now it is saying that the uniform distribution for this chain is just one over n for every state.
+[681.0:688.0] So I have equal probability to be in every state.
+[688.0:707.0] But let me mention so this has an interesting consequence.
+[707.0:734.0] So pi i is equal to one over n for every i in 0 up to capital N minus 1. But the theorem also says that pi i is equal to 1 over new i.
+[734.0:744.0] So new i here is equal to n for every i. And that's interesting because this is perhaps not too intuitive.
+[744.0:754.0] The fact that you have equal probability to be you know you're turning around in circles in this chain and there is no specific preferred state.
+[754.0:773.0] So the fact that you have uniform distribution as a station distribution is somehow intuitive. But what's less intuitive is that the if you start from state i, the average time you need to come back to state i is n, whatever the values of p and q.
+[773.0:784.0] So this doesn't depend on the values of q and that perhaps a little less intuitive. Of course there is one case which where this would be intuitive.
+[784.0:792.0] If I go back to my example here, if we were to consider the extreme case p is equal to 1 and q is equal to 0.
+[792.0:808.0] Then in this case, yes indeed in this case we could consider this case although it's less interesting. So if because the process becomes just deterministic. But if p is equal to 1 and q is equal to 0, then indeed it takes exactly n steps to come back to 0.
+[808.0:811.0] Because you just to have a full turn before coming back.
+[811.0:824.0] So here, new i for every i would be equal to n that would be clear. But for general values of p and q, the fact that this does not depend on n is counter intuitive to me.
+[824.0:832.0] But it's provided by the theorem. Well remember this was the consequence of the theorem that pi i is one of the new i.
+[832.0:851.0] The other thing I wanted to mention about this example. So pi equal uniform is the stationary distribution of the chain.
+[851.0:868.0] But here I would like to mention something that we will come back to this later. Is that actually this is a chain with a stationary distribution.
+[868.0:886.0] But if you think of p is being 0.99 and q being 0.01. This chain, yes, is stationary. But if you look at what the chain does of the time, it rotates without end.
+[886.0:906.0] It rotates completely. So if p is equal to q is equal to half, then you have the impression that the chain with kind of stabilized. But when p is equal to q, when p is much bigger than q, then you don't have really the impression that there is something really stationary here.
+[906.0:929.0] So here we will come back to this when p is not equal to q. If you want a rotation occurs permanently in one direction or the other.
+[929.0:952.0] And so in this case, it's not truly stationary. But of course it fits the definition.
+[952.0:970.0] It fits the definition of what stationary mean, but we will see we will have another definition of stationary, a more restrictive definition of stationary distributions that doesn't fit into this case.
+[970.0:982.0] So we will be able to classify this as not truly stationary at the end, but it fits the stationary distribution equation for sure.
+[982.0:993.0] I'm not putting this in question, but just to mention that in this case, we don't have the impression of a truly stationary mark of j.
+[993.0:1020.0] Now perhaps a completely more of a counter example is the case of the symmetric round the mark.
+[1020.0:1041.0] The symmetric simple round the mark on z, the set of integers. So now I'm not talking about the sake on the mark where the mark on all the integers.
+[1041.0:1052.0] What do we know about this one? We know that it's irreducible. It's only one. There is all states coming in case.
+[1052.0:1058.0] We know that is this recurrent.
+[1058.0:1072.0] But actually I told you that it is recurrent, but not recurrent. Not positive recurrent.
+[1072.0:1090.0] So well, we can just take this for a fact, but I can now with the theorem, if you accept the theorem, I can prove you that the chain is not recurrent.
+[1090.0:1119.0] So let us prove that the chain is not recurrent using the theorem.
+[1119.0:1128.0] And how do we do that? We will be looking for a stationary distribution.
+[1128.0:1142.0] So look for a stationary distribution for a stationary distribution of the chain.
+[1142.0:1165.0] If this one exists, we must have pi is equal to pi p, which is saying that for every i in v pi i is equal to half times pi i minus 1 plus pi i plus 1.
+[1165.0:1175.0] Okay, that's the p puts weight, 1 half to go on the right or 1 half to go on the left.
+[1175.0:1186.0] Okay, and it doesn't take so long to realize that if this holds, then the only option for a pi.
+[1186.0:1203.0] If this has to hold for every i in z, the only option for pi is to have that pi i is equal to pi j for every i j in z.
+[1203.0:1210.0] Actually, in this case, also the matrix p is doubly stochastic, but now the problem is that we have an infinite chain.
+[1210.0:1220.0] We have an infinite chain. So technically speaking, the pi that would satisfy the equation pi is equal to pi p would be the uniform distribution.
+[1220.0:1231.0] But here we have a problem because the uniform distribution does not exist on z.
+[1231.0:1248.0] Because z is infinite. The uniform distribution does not exist on z.
+[1248.0:1261.0] And so pi does not exist because pi has to satisfy pi i is equal to pi j for every i in j in order for it to be the solution of the equation.
+[1261.0:1271.0] Okay, and so pi does not exist.
+[1271.0:1278.0] So using the control opposition of the theorem, if pi does not exist, remember there was an infinite only if in the theorem.
+[1278.0:1285.0] Let me go back to the theorem, right, which was here.
+[1285.0:1290.0] The theorem says x is positive recurrent, even only if x admits a stationary distribution.
+[1290.0:1294.0] Now we see that x does not admit a stationary distribution.
+[1294.0:1302.0] Hence x cannot be positive recurrent. And okay, we computed that it is recurrent.
+[1302.0:1317.0] So by the theorem, we get that x is not positive recurrent, but we know that it is recurrent.
+[1317.0:1323.0] So x is not recurrent.
+[1323.0:1336.0] So the theorem can be used both ways. It can be used either for proving that you have something positive recurrent.
+[1336.0:1340.0] You know that it will satisfy a stationary distribution.
+[1340.0:1348.0] And reciprocally, you can prove that it has a stationary distribution and this implies that the chain is positive recurrent.
+[1348.0:1354.0] Here we use the control opposition. We show that it does not have a stationary distribution.
+[1354.0:1359.0] Therefore it cannot be positive recurrent.
+[1359.0:1366.0] Here is what we have for this example.
+[1366.0:1374.0] Now, finally in this video, I would like to finish with mentioning you the marginal cases.
+[1374.0:1386.0] I won't be exhaustive here, but I want to tell you what happens, what if the chain is not irreducible?
+[1386.0:1409.0] And I will not be exhaustive here, but I'll just draw a few drawings and to give you some intuition.
+[1409.0:1419.0] The first case is, let's say we have two recurrent classes.
+[1419.0:1434.0] Oh, two positive recurrent classes.
+[1434.0:1441.0] So this is typically the case where you have a chain here with states.
+[1441.0:1446.0] I don't know, 0, 1. You do have something like this.
+[1446.0:1452.0] And then you have another state, 2, 3.
+[1452.0:1459.0] And the two chains do not communicate.
+[1459.0:1478.0] So in this case, what happens? So in this case, a stationary distribution exists,
+[1478.0:1489.0] but it's not unique.
+[1489.0:1493.0] For example, you could have...
+[1493.0:1500.0] So let's say here the stationary distribution of this chain, let me say this is pi 1,
+[1500.0:1509.0] which would be pi a, which is 1,5,1,5.
+[1509.0:1511.0] Let me take the simple case.
+[1511.0:1519.0] Let me assume also that the stationary distribution of this or the chain is 1,5,1,5.
+[1519.0:1531.0] Then actually, pi is equal to 1,5,0,0.
+[1531.0:1535.0] Is a stationary distribution for the whole chain.
+[1535.0:1537.0] You can check that.
+[1537.0:1540.0] So this is a stationary distribution.
+[1540.0:1545.0] And in this stationary distribution, you're never in the second part of the chain.
+[1545.0:1553.0] But you can also show that this one will be a stationary distribution of the chain.
+[1553.0:1557.0] So this is the stationary distribution where you're never in the first part of the chain.
+[1557.0:1564.0] And actually, you could now take a mix of these, like 1,4,1,4,1,4,1,4.
+[1564.0:1570.0] So half of the weight of the distribution is in the first part.
+[1570.0:1573.0] Half of the weight is in the second part.
+[1573.0:1576.0] And you will still have a stationary distribution.
+[1576.0:1592.0] And actually, you could generalize this to alpha over 2,1 minus alpha over 2,1 minus alpha over 2,
+[1592.0:1600.0] which is, by the way, convex combination of this one and this one, this coefficient alpha.
+[1600.0:1608.0] So all these pi's here are for alpha between 0 and 1.
+[1608.0:1620.0] All these pi's are stationary distributions of the chain.
+[1620.0:1631.0] So when you have non-eregistable chain, a non-eregistable chain with two positive recurrent classes,
+[1631.0:1634.0] you have really lots of stationary distributions.
+[1634.0:1641.0] You do have a stationary distribution, but you can have with the infinitely many, actually.
+[1641.0:1653.0] At least two, and then any convex combination of the two leads to a yet another stationary distribution of the chain.
+[1653.0:1656.0] Okay.
+[1656.0:1660.0] Another case.
+[1660.0:1682.0] Let me take two positive recurrent classes and one's ranging.
+[1691.0:1701.0] So this could be the situation here where you have a chain like this.
+[1701.0:1710.0] And now you have an arrow here that leads to a chain like this.
+[1710.0:1718.0] And you have an arrow here that goes to a chain like this.
+[1718.0:1723.0] So if we draw again, so this will be one class where the state's communicate.
+[1723.0:1725.0] It is recurrent.
+[1725.0:1732.0] This will be another class where the state communicate, but this is transient because there are arrows leading up out of it.
+[1732.0:1738.0] And this is one class where again, which is recurrent.
+[1738.0:1743.0] So in this case, it's a generalization of what we just saw.
+[1743.0:1749.0] We will have again multiple stationary distribution actually the stationary distribution.
+[1749.0:1759.0] There will be one which is focused on the left recurrent part, one which is focused on the right recurrent part.
+[1759.0:1765.0] And the the other one which are just convex combination of these two.
+[1765.0:1774.0] And for stationary distribution here, we can show that for the transient part, the transient part will just have zero square efficient.
+[1774.0:1780.0] So if you write it, you know, the pie in general here will be of this form.
+[1780.0:1788.0] So pie exists, but it's not unique.
+[1788.0:1797.0] And will be something like pie is equal to, so we will again have alpha over perhaps, you know, undertaking a simple example here.
+[1797.0:1807.0] So we'll have alpha over to alpha over two for the left hand side, then zero zero, one minus alpha over two, one minus alpha over two.
+[1807.0:1816.0] So here we have zeros because we have a transient part of the chain where by definition of what transient means that you're not on the long run, you're not going to stay there.
+[1816.0:1824.0] So you just disappear from this is a kind of interesting mark of chains where you have two absorbing classes.
+[1824.0:1830.0] And the question this leads to very interesting question. So you're in a transient state at the beginning.
+[1830.0:1840.0] And of course, you would like to have a guess of what's your likelihood to go to the left hand side or the right hand side.
+[1840.0:1856.0] Okay. Yet another example. Now the opposite of this, let's say we have two transient classes.
+[1856.0:1877.0] And one positive recurrent class. So here, what is the picture here? Well, we do have again, you know, some perhaps something like this.
+[1877.0:1886.0] And then we have a narrow that goes here and something like this here, perhaps we said, flops.
+[1886.0:1900.0] And then another arrow that goes here and we have something like this. Okay. So now if I draw again, I have three classes.
+[1900.0:1911.0] But no, the arrows point in one. So I have on the left hand side, I have a transient class in the middle.
+[1911.0:1916.0] I have a recurrent class and on the right hand side, I have a transient class.
+[1916.0:1929.0] Because once in the middle, I don't leave the middle anymore. So in this case, if you have actually multiple transient class all leading to a single recurrent class, then pi exists in this unit.
+[1929.0:1950.0] And here it will be pi is 0, 0, half, half. Again, assuming that, you know, that the weight of the arrows are such that the weight is half, half for the middle chain.
+[1950.0:1959.0] So in the long run, you will escape from the transient classes and you stay in the middle. Of course, these are only examples.
+[1959.0:1972.0] But just to show that, you know, beyond the irreducible case, you can think of various other cases where actually you can apply the theorem to the recurrent class in the middle.
+[1972.0:1990.0] So bottom line is if you have a single positive recurrent class and multiple transient classes that lead to this positive recurrent class, then you can essentially apply the theorem by putting zeros to pi everywhere in the transient states.
+[1990.0:2010.0] I always talked here about positive recurrent classes. Of course, well, here it always define I case, perhaps in the infinite case, you have more complicated situations. But of course, as soon as you have a null recurrent class, then suddenly the, the, the stationery distribution does not exist there.
+[2010.0:2022.0] So in terms of stationery distribution, as soon as you have something, which is null recurrent, as if you have something which is transient, right? It's the case where you don't have a stationery distribution.
+[2022.0:2049.0] Okay, in the last video, I'll talk about limiting distributions.

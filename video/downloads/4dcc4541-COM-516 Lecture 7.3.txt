@@ -1,0 +1,132 @@
+~COM-516 Lecture 7.3
+~2020-09-30T11:49:13.444+02:00
+~https://tube.switch.ch/videos/4dcc4541
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:11.4] Okay, so now let's try to go for the proof of some ideas about the proof of this cutoff phenomenon.
+[11.4:29.900000000000002] For this, I would first like to go back to the proof of the spectral gap, you know, the proof of the exponential decay of the total variation distance that we did last time.
+[29.9:50.8] And to pinpoint on places where we were possibly loose, okay, where we got another bound and we have to see where we possibly lose something so that all bound was not the representing reality, was far off.
+[50.8:64.7] So in the proof when we computed the total variation distance, as you see here, there was definitely one inequality here, okay, which was this koschichfatz inequality.
+[64.7:73.7] Okay, so you move from an L1 distance to an L2 distance and here, by the way, afterwards, this is not an inequality anymore, it's just an equality.
+[73.7:93.60000000000001] Okay, so here, indeed, perhaps we lose a little something, but without moving to this square, to this square, then you remember, then you cannot, if you don't go there, then you cannot use the orthogonality relations between the eigenvectors.
+[93.6:106.0] And so, bounding directly, the L1 distance seems to be difficult. So perhaps here, there is something to improve, but we don't know quite know the technique to improve this.
+[106.0:115.5] And what happened afterwards? So afterwards, we were, after, you know, the first thing was to evaluate this expression here.
+[115.5:128.4] So the one you have here, right? And there was this lemma, but this lemma is pure equality, so here no inequality at all.
+[128.4:136.4] And then we replace this expression in the expression for the total variation distance.
+[136.4:149.3] And here we have, well, this inequality here is the one we had, we had this L1 and L2 inequality with scotchess shorts again, right?
+[149.3:157.3] And then equality, equality, everything is equality and here is a second inequality that we used.
+[157.3:173.20000000000002] And that's the one where probably we can do better if we are a little more careful. So here what we did, we took all the eigenvalues, which are between lambda n minus 1 and lambda 1, and we other down them, all of them by lambda star.
+[173.20000000000002:185.20000000000002] So of course, there are scenarios where these eigenvalues will be probably much more closer to the center, close to 0 than each of them being equal to lambda star.
+[185.2:205.2] So that's the place where we potentially lose a lot. And so if we want to get a better bound, we should analyze the expression above this inequality a little more in detail and see what and see what we can get here.
+[205.2:222.2] Okay, so that's for the technical part. So this is the place where we are going to focus. Okay, and try to try to improve, try to skip this inequality and try to see what we can get to improve the upper bound.
+[222.2:242.2] But we also, by the way, need to check the lower bound, right? Because we had for the lower bound technique, we had also some some inequalities. And so this where, you know, when we when we looked for the lower bound, this was at the beginning of today's lecture.
+[242.2:256.2] And so of course, there are also there is also here as an inequality here, right, which is that instead of taking any function fee, you restrict yourselves to eigenvectors.
+[256.2:262.2] And okay, and so here potentially we also lose something here.
+[262.2:277.2] Good, so we have to see how we can improve this in the particular case of the random walk on the hyper queue. Let me go back now to the where we were.
+[277.2:283.2] Let me let me try to give you some proof ideas. I won't be long on this. This is not going to be a long video.
+[283.2:293.2] The first thing I want to do is try to give you some intuition about what happens. So I mentioned already you can view this random walk on the hyper cube.
+[293.2:304.2] You can think of this as something quite abstract, right? It's a process on the hyper cube in the dimensions of who there is no way to picture yourself what the dimensional cube is.
+[304.2:318.2] And you can think of this process to be a random walk on this hyper cube. But I also mentioned that you can view this as a process you have a sequence of bits of the bits.
+[318.2:325.2] And what you're doing when you're progressing along this mark of change is actually to flip random bits.
+[325.2:344.2] So what happens actually is that the initial state x0 is the all 0 vector. It's the it's a the dimensional vector and will be will be the all 0 vector.
+[344.2:358.2] Okay, you start with bits, which are all 0 and from state 1 to state 2, you move with the yeah, actually this I should write capital X 0.
+[358.2:370.2] So this is my initial state. Okay, and capital X 1 will be a random flip of one of these bits. Right. So let's say perhaps this one.
+[370.2:382.2] Okay, and X2 is another random clip of one of these bits. Perhaps there is no flip, right? Because we have this option to stay where we are.
+[382.2:396.2] But okay, let's say perhaps we move here. Okay, let me do yet another step. Perhaps the next step X3 is you go to perhaps you flip again, the bit number 4.
+[396.2:409.2] So this goes back to this state. Okay, so this is the flip here, here is the flip and here is again another flip here.
+[409.2:421.2] Okay, and it goes on and on like this. So this is my mark of change. So probably more concrete than viewing this is a runner more on the hyper cube. Right.
+[421.2:436.2] And so the question we are asking is what here is when we do these random flips, how much time does it take until we get to the the stationery distribution.
+[436.2:451.2] What is the stationery distribution, sorry, when we talk about seconds of bits. Okay, here we have, remember we have general, the bits.
+[451.2:464.2] Okay, so the stationery distribution as a stationery distribution on the hyper cube is one over 2 to the d. So each position in hyper cube has equal probability.
+[464.2:473.2] The stationery distribution, so it's a uniform distribution on the hyper cube. So here it will be the uniform distribution on the sequence of the bits.
+[473.2:481.2] And what is this uniform distribution? Well, it corresponds actually to the distribution where you choose each bit at random was for a t half.
+[481.2:498.2] Okay, so a typical, so perhaps I should move all these to the left. So now, you know, this is what the process is doing when we start the process from the all zero sequence.
+[498.2:518.2] And now if we talk about the typical sequence, a typical sequence, so distributed according to pi.
+[518.2:538.2] So, what is that? It will be something, you know, so it will be each bit equal zero or one with the policy, half and all bits are independent.
+[538.2:553.2] Okay, okay, so here this is a very common situation in probability. You have a sequence of the bits which are independent.
+[553.2:566.2] And there are things we can say about typical sequences, right? Typically, if you compute the average number of bits which are equal to one, then you would get that.
+[566.2:576.2] And the average will be n over 2. Okay, or the or 2, sorry, because we have the bits.
+[576.2:595.2] So the expected number of 1. So let me, let me call this x, this typical sequence x. So the expected number of of 1s in x will be typically the over 2.
+[595.2:612.2] And the deviations from this expected number, you know, so this, this expected number relates to low-class numbers. So if you, if you take the number of non zero component of x divided by d, you approach one half as d gets lunch.
+[612.2:627.2] But also the variance of this number of non zero component of x, the variance is of order d is also d.
+[627.2:648.2] So this is saying that the number of non zero component of x is roughly typically between d over 2 minus square root of d and d over 2 plus square root of d.
+[648.2:661.2] Okay, so remember, so this is, this is really the number of 1s in the sequence x.
+[661.2:682.2] And so it's quite concentrated around the middle, right? It's when d gets large, of course, if d is small, then then everything that I'm telling you doesn't, doesn't matter, right? If you have, if you have d equal to 10, then of course, we cannot say much.
+[682.2:703.2] But now let's say that this is very large, we want to, we will, we will observe this cut of phenomenon in high dimensions. Okay, when this large, you get that the number of 1s in the typical sequence x is roughly around the middle, right?
+[703.2:720.2] The over 2. And so of course, if you start from x zero to process, which has all zeroes, it takes quite some time until you get there, right? It takes quite some time because, because as you see here, well, you, you do run on flips.
+[720.2:735.2] And it's not only that you have to do of the order of d flips, right? Because if you do d flips among the flips, some of them just river back to zero. As when we move from x to 2x3 on the left here, we see that we, we go back to, we go back to zero.
+[735.2:749.2] So the number, the number of times you have to, you have to, to do random flips to get to a state, which has a number of ones, which is close to the over 2 is quite high.
+[749.2:773.2] And it's a kind of a coupon collector argument that actually, if you want to get all these panini figures, the whole collection of panini figures, it's not like there are 100 of them to collect, then you buying 100 of them is definitely not enough.
+[773.2:783.2] You should typically buy 100 times log 100 of them to be sure that you will get an example of all of them, right?
+[783.2:798.2] And so here, it's a bit the same thing, you're doing random flips with no other. And so you will have to wait some time before you, you can be sure that you have sampled all the possible bits.
+[798.2:809.2] And therefore that you're kind of close to a well mixed state, so something which has the stationery distribution pipe.
+[809.2:822.2] Okay, just to give you, you know, the rough ID and so, so what I just said, say that, okay, so typically, deal of these steps will be needed until you get there.
+[822.2:840.2] Okay, you will, it will take at least the deal of these steps and and okay, so now I have a whole proof in the in the lecture notes that you can read that that are really, really precise and detailed.
+[840.2:849.2] I would like to give you the main ideas here, not really, you know, telling you the whole all these details, you can welcome to read them.
+[849.2:860.2] So if we, if we want to do to go through this proof, then I'll mention first the upper bound.
+[860.2:869.2] So for the upper bound, we have, you know, if I go back to the expression.
+[869.2:884.2] I had before, so this was remember over there. So instead of going for this inequality at the bottom here, I'm going to stop before and what do I get?
+[884.2:889.2] I get the following.
+[889.2:899.2] I will get that this total variation distance is less than the square root.
+[899.2:917.2] And remember what we have a sum over K in the original proof. So now my case have been replaced by Z. I indexed my eigenvalue with elements of elements of of the state space S.
+[917.2:928.2] And in the original proof, I have the sum for K running from one to capital and minus one. Here I will, I will sum over all disease except Z equals zero.
+[928.2:938.2] And I get lambda Z to the 2N as before and F zero Z squared.
+[938.2:947.2] So I hope you're convinced with what I just brought. Let me just again go back to the former proof. That's the expression that we have here.
+[947.2:954.2] Just that now I translated the K into Z. And I now is my initial state is zero.
+[954.2:967.2] Okay. Good. So since this is zero. So here we are in a very simple situation because these Ph0's are just plus or minus one because they are in the shape of the eigenvectors.
+[967.2:973.2] So all these terms are equal to one here. Okay.
+[973.2:985.2] And so that's where you have to do some work and analyze in detail what is this sum? What do you get with this sum?
+[985.2:1000.2] So remember the lambda Z are given by one minus two Z over D plus one where this absolute value of Z which is the number of non zero component component of Z.
+[1000.2:1003.2] Okay.
+[1003.2:1032.2] And here you have to do some analysis with it's mainly a combinatorial computation here. And what do you get if you do this computation you you get that this expression at the end is of the order of one over square out of two e to the minus C over two if N is equal to D plus one over
+[1032.2:1039.2] four times log D plus C.
+[1039.2:1044.2] Okay. So you can definitely read so.
+[1044.2:1056.2] So we are using here this expression for Z for lambda Z. And with this expression you do this computation and you get there.
+[1056.2:1071.2] Okay. So here really this is implying of course that if C gets large then this expression here will just go to zero as C increases.
+[1071.2:1079.2] And so this proves so this shows that instead of replacing every lambda Z by a lambda star.
+[1079.2:1092.2] If we do the analysis of this sum carefully we get a bunch better result. If you replace everything by lambda star then you get that this whole expression will be small when N is much bigger than D squared.
+[1092.2:1101.2] Now doing the finer analysis keeping all the eigenvalues to you know keeping the expression for all the eigenvalues.
+[1101.2:1114.2] We get something that tells us that the total variation distance will be small if N is of other deal of so much before this squared.
+[1114.2:1124.2] And so let me try again to illustrate where we have gained something here if you draw the the axis with the eigenvalues.
+[1124.2:1132.2] Remember we had so here is the eigenvalue one right lambda zero is always there and we have minus one.
+[1132.2:1140.2] And we have a whole bunch of eigenvalues in this spectrum and these eigenvalues are actually in this situation quite well separated right.
+[1140.2:1150.2] If you just draw them their multiplicities will be different right that would be well one or two eigenvalues at the extreme points.
+[1150.2:1162.2] And then inside the bulk of the spectrum in the middle there will be lots of eigenvalues because you you find lots of vectors Z that have a small number of ones right for example.
+[1162.2:1168.2] Okay or so when the number of ones is exactly half then that's where you have the most combinations right.
+[1168.2:1180.2] So the eigenvalues are well spread among the among the interval minus one plus one but of course in the middle so let me let's call it on the N minus one.
+[1180.2:1184.2] Let me not give names to these eigenvalues.
+[1184.2:1190.2] But here on the boundary you have multiplicity one.
+[1190.2:1206.2] And on the inside you have a high multiplicity for the eigenvalues right because there will be many eigenvectors or many these for which we have the same eigenvalue.
+[1206.2:1218.2] So the eigenvalue profile if you want you know if you're talking about the density of eigenvalues in this in this setup you'll get something like this right there will be many eigenvalues in the middle of the spectrum.
+[1218.2:1232.2] And with the first approach with the first general approach using the spectral gap we are just completely ignoring this and just replacing all the eigenvalues with lambda star.
+[1232.2:1246.2] Okay so so here you see that this approximation that we make by saying lambda Z is less than lambda star for every Z is a crude approximation because
+[1246.2:1260.2] we might lose a lot because of course here we are close to zero right so let's say zero is probably here right some eigenvalues might even know they won't be an eigenvalue which is equal to zero.
+[1260.2:1270.2] So I should write it well depending whether D is odd or even sorry yeah no there might be a good values which are equal to zero.
+[1270.2:1286.2] Let's say let's say zero is here okay and okay so if you do this detailed computation you get this much finer result.
+[1286.2:1298.2] Good so that shows the other bound and the lower bound is actually a similar ID no sorry it's a different ID that's one I wanted to say.
+[1298.2:1314.2] So how can we show that the low bound matches that so we have to be so it's always about the matter of defining this total variation distance you have always multiple choices for this total variation distance.
+[1314.2:1332.2] So let me choose one here which is one of the formulation it's a supremum of all a included in S of p0n of a minus pi of a.
+[1332.2:1347.2] So beforehand in order to compute this lower bound I used the formulation the variation formulation with functions fee now I'm using the variation of the formulations with sets a okay for the total variation distance.
+[1347.2:1363.2] So let's put it as before if you want to find a lower bound it's a matter of the thing which of these sets will provide you good estimator you know this is a triviality that I'm writing here.
+[1363.2:1380.2] The same the supremum of all a is greater than the expression for each individual a okay and now if I choose correctly my a then I will have a good lower bound on my total variation distance.
+[1380.2:1408.2] And the idea here is to choose so the idea here is to choose your a such that on the one hand so in order to make this big right this expression big you need you need to you need to choose your can either you're going to make p0n of a big or you're going to make
+[1408.2:1425.2] pie of a big and the other one small respectively right because if there are both large I should say that of big if there are both large then they will cancel each other if there are both small then they will cancel each other in in in the case I will just get a poor lower bound.
+[1425.2:1442.2] So I have to choose an a and I'm going to choose this I'm going I have to choose an a such that p0n of a is close to zero and pie of a is close to one.
+[1442.2:1461.2] So what kind of a so what subset of S should I should I choose here well if you go back to the intuitive argument I was providing you before and that I told you the typical sequence will typically have a number of ones which is between D over two minus
+[1461.2:1490.2] D over D and you're a two plus square root of D so if I want pie of a to be big I will choose these sequence in the set of these typical sequence that have this this number of ones and with the hope that the probability that you're starting from the all zero sequence the probability that you get to such a sequence in little and
+[1490.2:1495.2] steps is small if you don't perform enough steps.
+[1495.2:1515.2] Okay and so that's exactly what's happening here is that we are going to choose a which is the set of all X in S such that the number of zeros in the sequence X minus D over two.
+[1515.2:1538.2] In absolute value is less than beta over two times growth of the so I introduce an extra factor beta and okay well you can yeah okay this is a detail from the proof you have to be careful how you do things and it turns out that
+[1538.2:1564.2] if you choose you know whatever the value of beta that you're going to choose then indeed you're going to get on the one hand that pie of A will be close to one because you have a typical sequence or you have a high probability that to pick a sequence according to the uniform distribution you have a high probability to pick a sequence that satisfies this.
+[1564.2:1583.2] But on the other hand you can prove that P and zero of A will be indeed close to zero if if N is D plus one over four times log D minus C.
+[1583.2:1602.2] So somehow if you if you don't perform enough steps or if C is you know you have this minus C now so you are you're before the so you know that if you're at the same expression with a plus here with plus C if you take C large enough the total variation will be close to zero.
+[1602.2:1630.2] But if you step back a little if you if you look at what happens in the steps before that then if you take C large enough but in the other direction then you can make sure that your N is small enough so that starting from this all zero sequence you haven't made enough steps to get to one of these typical sequence and therefore your probability to to have a typical sequence is close to zero.
+[1630.2:1650.2] And combining these two LDS well of course there are details here there is this beta factor you have to tune a little the parameters to to get to what you want again all this is in the is in the is in the detailed lecture notes.
+[1650.2:1666.2] You get to the to what you want that is you prove that the total variation distance actually remains close to one because pie of you you'll get as close as possible to one by taking C as large as you want.
+[1666.2:1686.2] And so you prove that before this time before this number of flips which is deal of D essentially before deal of the flips you're you're kind of in this order state which is far away from the uniform distribution on the set of all possible sequence.
+[1686.2:1705.2] And therefore you're not in equilibrium in the total variation distance between where you are and where you want to go is for the one thing that you're the most separated from from the equilibrium and you have therefore this cutoff phenomenon.
+[1705.2:1722.2] Okay this is a bit quick and again if you're interested please go ahead and read the read the details in the in the lecture notes I'll be I'll be happy to answer your questions about this.
+[1722.2:1728.2] So this is a QED but with some course here of course.
+[1728.2:1750.2] Okay so that ends what I wanted to tell you about this cutoff phenomenon which could of course you know this is one example the random walk on the hyper cube I mentioned the deck of cards that follows depending the sharpening you get different cutoffs at different times and you can of course talk about much more general mark of change.
+[1750.2:1775.2] In general in order to prove things in a neat way you need a mark of change with some symmetry if there is no symmetry things are more complicated actually perceive the icon is encosers the developed the story to general mark of change on groups and they show that for why by the tea of mark of change on groups you have this cutoff phenomenon.
+[1775.2:1797.2] Okay so when one could say more things about this. Of course when we will with the continuation of the course this is perhaps less less crucial to what comes next in the course which is the metropolis algorithm and the sampling methods but I found it like an interesting curiosity to explore.
+[1797.2:1810.2] Okay so from now on I will leave you in the good hands of Nicola for the for the rest of the class and yes so good luck with the continuation of this course.

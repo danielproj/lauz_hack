@@ -1,0 +1,324 @@
+~Exercises: 3rd session
+~2020-10-13T09:27:15.433+02:00
+~https://tube.switch.ch/videos/a31fc8ba
+~CS-451 Distributed algorithms
+[0.0:7.2] recording and we should we should we should start the discussion. Okay guys so
+[7.2:12.56] welcome again. Today we are going to talk about reliable and causal broadcast
+[12.56:17.52] specifically we are going to talk about the solutions to the exercises we
+[17.52:22.64] gave you last week and then Mattel will take over and talk about
+[22.64:32.24] the broadcast. So I hope you had time to work on the problems we we we gave you
+[32.24:38.08] last week and yes if you have any questions during during today's session please
+[38.08:45.2] let us know and we will be more than happy to to answer to answer to you. Okay so
+[45.2:53.84] let's start. Again I guess you heard this like you heard this like a million
+[53.84:59.52] times so far but just to recap what the reliable broadcast is is basically
+[59.52:64.0] reliable broadcast is a broadcast obstruction communication obstruction that
+[64.0:71.84] ensures that every any two correct processes see the received deliver the same
+[71.84:78.64] set of messages. So the crucial property of reliable broadcast is that if a
+[78.64:83.2] correct process delivers a message then every other correct process will also
+[83.2:89.2] eventually deliver the message. So we here presented a lazy reliable broadcast
+[89.2:94.80000000000001] implementation that uses a perfect failure detector and the first exercise was
+[94.80000000000001:100.24000000000001] we asked you to implement now this reliable regular reliable broadcast algorithm
+[100.24:106.0] without using any failure detector. So I hope you didn't have I hope you didn't
+[106.0:111.83999999999999] have problems with this one because it should be pretty easy and here we give you
+[111.83999999999999:118.16] the solutions. So if you have any questions again please let let us know. So what
+[118.16:122.88] is the solution to this exercise? Well it is extremely simple instead of
+[124.72:130.0] using reliable broadcast sorry instead of using perfect failure detector
+[130.0:136.32] to let us know to inform us when a process has crashed we simply always
+[136.32:140.24] assume the worst case we always assume that the process from which we receive
+[140.24:144.96] the message is crashed and what we do we just simply re-broadcast the message
+[144.96:152.32] to everyone. So here as you can see when upon broadcasting a message what do
+[152.32:156.72] you do you just send a message to everyone using perfect links or using best
+[156.72:159.68] effort broadcast whatever you like because it's pretty much the same and not
+[159.68:165.04000000000002] pretty much it's the same. And then you deliver the message right away and
+[167.84:173.36] upon receiving a message from the best effort broadcast delivering a message from the best
+[173.36:180.4] effort broadcast from some standard queue if this message was not delivered yet what you do
+[180.4:186.32] is simply relay it to everyone simply send it to to everyone and then only then deliver
+[186.32:191.12] deliver the message from the reliable broadcast abstraction. Why does this work? So why
+[191.12:197.84] do how do we gain agreement here? Well it's simple if I'm a correct process and I deliver a
+[197.84:209.12] message I do that either here or here since always in any of these two places before I deliver
+[209.12:216.24] a message I relay the message to every single other process so I do that here or here that means
+[216.24:221.28] that if I'm a correct process all the other correct processes will also receive this message
+[221.28:225.76000000000002] to deliver it from the best effort broadcast and thus deliver it from the reliable broadcast in
+[225.76000000000002:232.48000000000002] the same way. And of course validity is validity validity which says simply that if I'm a correct
+[232.48000000000002:238.16000000000003] process and I broadcast a message every single correct process will eventually deliver the message
+[238.16:248.64] is insured by the validity property of best effort broadcast or by the reliable properties that
+[249.92:255.51999999999998] perfect perfect links give us that says that if I am a correct process and I send a message to
+[255.51999999999998:260.88] a correct process that correct process will eventually eventually receive the message. So I hope
+[260.88:270.32] you didn't have problems with this one so is it fine for us to continue? Yes okay so the next
+[270.32:277.6] exercise was we were we asked you to kind of modify and optimize this algorithm that is given
+[277.6:282.4] here and this is the algorithm for implementing regular reliable broadcast using perfect failure
+[282.4:291.12] detect. So here we have this set from if you see the this set from is initialized to to an empty set
+[291.12:299.2] here and then here we use it to we we append or not really append we add messages to the
+[299.2:308.0] from set here and we use it we use it here to when someone crashed to see which are the messages
+[308.0:314.96] received delivered from this guy in order to relay that. So the question is can we optimize
+[315.84:321.28] usage of this from set so can we cut it sometimes can we garbage collect messages from the
+[322.16:330.24] from this buffer from this from this set and the same for the delivered set. So what is the answer?
+[330.24:339.04] So the answer is that we can indeed do something with this from buffer why? Well because we use
+[339.04:346.48] that from buffer buffer simply to broadcast a message to to know which messages we have delivered
+[346.48:356.24] so far received so far by a process. So once we relay this message we can be sure and we can
+[356.24:362.0] safely just remove this message from the from the buffer. Why is this indeed the case? Well
+[362.0:367.92] because if you are a correct guy this message will if I am a correct guy and I relay the message
+[367.92:372.8] this message will eventually reach every single correct guy. I hope this is this is clear.
+[374.64:381.2] As for the messages from the delivered the ray delivered set it's a bit more tricky and the answer
+[381.2:390.0] here is that we cannot really deal with this. Why can't we deal with this? Well you cannot deal
+[390.0:396.15999999999997] with this because what can always happen is that we will violate the no duplication property.
+[397.2:404.96] So suppose that I have delivered the message and I have a smart optimization algorithm and what
+[404.96:413.68] I do is at some point at time I say okay now I can safely remove this message. But at that point
+[413.68:421.28] in time if I receive now another message from from Mattel who relayed this message to you to me
+[421.28:427.59999999999997] I will not have a knowledge that I have already delivered message and before and I will deliver it
+[427.6:437.12] again I must deliver it again and thus I violated the no duplication property. So of course
+[438.16:443.20000000000005] when we say delivered set we just we don't necessarily mean delivered set in the way it is
+[443.20000000000005:449.36] presented in the algorithm but in a is a structure that says okay these are the messages that you
+[449.36:455.44] have delivered so far. So you can of course you can remove delivered array and just I don't know
+[455.44:463.36] rename it or whatever but we do not consider that as an answer. So I hope this is clear this is
+[464.16:472.0] this is a understandable are there any questions? Okay then we are going forward okay now we have
+[472.0:478.72] this unit for reliable broadcast as we talk class week the only difference from the regular reliable
+[478.72:485.28] broadcast or just reliable broadcast is that now it is insured that if any process whether it
+[485.28:491.44] is correct or faulty delivers a message then every other correct process delivers a message.
+[491.44:497.76] So the crucial difference here is that in regular reliable broadcast is if I am a process I deliver
+[497.76:504.55999999999995] message and I crash in million years from now then it is not insured that Mattel for example
+[504.55999999999995:509.03999999999996] who is correct and who is going to live forever will indeed receive and deliver this message
+[509.03999999999996:514.9599999999999] but with unit from reliable broadcast if I deliver a message and then crash in million years
+[514.96:521.76] or tomorrow or like a second after I deliver a message then it is insured that Mattel will
+[522.32:527.2800000000001] also deliver this message. So this is the crucial difference I hope you get.
+[528.24:534.08] Okay so the first question okay so we here present you this all acknowledgement unit from
+[534.08:541.76] reliable broadcast that again uses perfect period detect. So the first question is what happens
+[541.76:548.48] if the reliable broadcast and regular reliable broadcast in uniform reliable broadcast uses
+[549.36:555.04] use a perfect failure detector that is not perfect in a sense that accuracy is violated.
+[555.04:562.08] So if you remember accuracy simply says that no correct process is ever detected by a process.
+[562.88:568.16] So if a process is indeed detected by a process then that process has crashed.
+[568.16:574.64] And then we ask you the same for completeness and completeness simply says if I am if
+[574.64:582.7199999999999] if eventually every correct process will notice that every process that crash crash has indeed
+[582.7199999999999:589.76] crashed. So every crash process will eventually be detected by every correct process. Okay so
+[590.4:597.6] what happens if we violate accuracy? So if we violate accuracy it means that maybe we will
+[597.6:606.4] detect some process that is correct that has not crashed as crash process. And then if you see this
+[606.4:614.0] algorithm here if you see this algorithm here sorry if you see the regular reliable broadcast
+[614.0:622.0] algorithm we have here what is going to happen is that I will just relay messages I have delivered
+[622.0:628.64] so far from that guy. And we can see that this really doesn't influence correctness. What it
+[628.64:635.28] influences is performance for sure because we will eventually we will potentially relay much more
+[635.28:639.84] messages that we are indeed needed to but nevertheless correctness is still there. So
+[641.84:647.2] so accuracy is not a problem. Okay I'll get back to the to the original five and I guess I
+[647.2:652.8000000000001] suppose that you all know the regular reliable implementation with perfect failure detect.
+[652.8000000000001:658.8000000000001] But what happens if completeness is what happens if completeness is what completeness is violered?
+[659.5200000000001:665.44] Well that is a bit of a problem right because maybe there is a correct guy maybe there is a
+[665.44:672.24] crash guy a crash process such that I as the correct process never detect never detect that this
+[672.24:678.64] guy has crashed which simply means that if I have delivered the message from from from a tell who
+[678.64:686.24] crashed and I don't detect him as a as being the crash process I will never relay the message
+[686.24:692.0] and I delivered from a tell to other processes which means that potentially other correct processes
+[692.0:701.84] will never see this message. Hence what can be violated is agreement. So this is pretty much
+[701.84:710.64] summarized summarized here. Okay now we are talking about slightly thicker scenario where we consider
+[711.6:715.84] uniform reliable broadcast. So what happens if accuracy is
+[717.2800000000001:725.12] violated in uniform reliable broadcast? Well if accuracy is violated in the uniform reliable broadcast
+[725.12:731.6] uniform agreement could be potentially violated. So as it is written here as
+[731.6:740.4] unit we have process P1 that falsely suspects P2 to have crashed and P1 eventually delivers
+[740.4:747.6] message jam from uniform reliable broadcast. But as you know that P1 crashes and it may happen
+[747.6:757.6800000000001] that P2 the process who falsely suspected never see the message jam. Never have any knowledge
+[757.68:763.76] about message jam that message jam was was ever exchanged sent or delivered in our system
+[763.76:771.04] which that means that potentially P2 could never could never deliver message jam which is
+[771.04:776.0799999999999] problematic which means that we do not have uniform agreement. As for the completeness
+[778.8:784.9599999999999] if that is indeed the case validity property could be could be violated. Why? Because if we have a
+[784.96:790.48] process that is never suspected and the process the process crashed what can potentially
+[790.48:796.0] potentially happen is that that process never acknowledges the message and in our can deliver
+[796.0:801.0400000000001] function we will always waiting for that guy to deliver a message to acknowledge a message to send
+[801.0400000000001:808.8000000000001] an acknowledgement message. What can happen is that we indeed never collect enough acknowledgement
+[808.8:816.24] messages because we do not detect that there is a faulty guy a crash process that indeed has crashed.
+[817.1999999999999:820.16] Okay so I hope everything is clear here any questions?
+[824.56:832.16] Okay so okay okay then the next question is similar to the regular reliable broadcast.
+[832.16:838.3199999999999] We ask you to implement uniform reliable broadcast without using any failure detector.
+[839.68:848.0] So if you want to do this without failure detector what you must do is introduce a limit on
+[848.0:855.52] number of faulty processes in the system. So if we have n processes in the system we will say
+[855.52:862.88] then less than one half or four processes good good crash. And then what is the difference is that
+[862.88:868.3199999999999] we will just modify the can deliver function and can deliver function we'll now simply say
+[869.76:876.56] okay you're able you're you're allowed to deliver a message once you see that more than one
+[876.56:882.48] more than a half of four processes in the system have delivered have acknowledged a message.
+[882.48:892.48] Let me explain how this works so how is uniform agreement insured by this? Well suppose the time
+[892.48:899.6] on process and I deliver a message. This means that I have seen more than one half of all the
+[899.6:906.08] processes acknowledge that all that more than one half of all processes acknowledge this message.
+[906.08:912.96] Among these set of processes that acknowledge message and there must be at least one correct
+[912.96:919.0400000000001] guy why because we say that there is at most there is there is less than there are less than one
+[919.0400000000001:927.6] half of all the processes that could be indeed fault. And this correct process it's sent it broadcast
+[927.6:932.88] message an acknowledgement message to every single processing the system given that we have
+[932.88:937.4399999999999] best effort broadcast and given the validity of best effort broadcast that means that every correct
+[937.4399999999999:944.0] processing the system will also receive delivered this acknowledgement message which then means that
+[944.0:951.68] if those processes haven't broadcast an acknowledgement message for message them they will do
+[951.68:956.72] they will do so at the moment of receiving this message from this one correct guy who is there
+[956.72:964.64] to pretty much hold the fortress. And this will ensure that at least that more than half of all
+[964.64:970.72] processes will broadcast an acknowledgement message which then means that if my terrorist for
+[970.72:978.96] example correct he will eventually receive those those he will eventually receive enough of those
+[978.96:985.52] acknowledgement messages when I say enough I mean more than one half of all processes in the
+[985.52:994.0799999999999] system and thus deliver the does deliver the message. So this is how the how the uniform agreement
+[994.0799999999999:1004.0] is is insured. Okay I see we have no questions now so I'll just continue then we talked about
+[1004.0:1013.76] causal broadcast and the excerpts is right has an interesting question so the question is can
+[1013.76:1020.48] we device about the algorithm that does not ensure the causal delivery property but only it's
+[1020.48:1031.12] non-uniform variant. So the answer is no why is the answer no so let just let just remind
+[1031.12:1040.48] ourselves what the causal delivery property is. So if we have messages m1 and m2 such that message
+[1040.48:1052.24] m1 causally precedes message m2 then no process delivers m2 unless it has delivered m1 but non-uniform
+[1052.24:1059.6] variant of this would be that for any two messages m1 and m2 no correct process delivers m2 unless
+[1059.6:1066.0] it has already delivered m1. So what is the difference? Well the difference is that
+[1066.0:1076.24] some process a faulty process could then potentially deliver m2 without having delivered m1 why is
+[1076.24:1080.72] that the case? Well that is the case because it is as the no correct process delivers
+[1081.68:1087.84] these two messages in the wrong order but if a process is faulty then it could do it could do
+[1087.84:1099.76] so right? Well the answer on this question is no because a process never knows whether it is fault
+[1099.76:1109.1999999999998] you're not because the only way for us to implement an algorithm like this is such as this is if
+[1109.1999999999998:1115.6] we knew that a process has an ability to know whether it is faulty so whenever I receive a
+[1115.6:1123.36] message m2 for example and I know that in a million years I'll die then yeah I can safely just
+[1123.9199999999998:1129.04] deliver message m2 without having delivered m1 because now I'm not correct guy so everything is
+[1129.04:1136.0] fine by this non-uniform causal broadest abstraction but since I cannot really know that
+[1136.8799999999999:1142.6399999999999] I cannot deliver m2 because it can turn out the time of correct guy and thus I will be violating
+[1142.64:1150.48] the the the specification of the of the of the problem so yeah one question
+[1151.92:1158.16] they have handy trigger and trash to keep the condition ourselves like can we just write
+[1158.16:1168.4] on a point process about explode and well yeah I guess we can but what is the point in doing so I
+[1168.4:1174.5600000000002] mean just doesn't make sense I would rather say that that's not a crash then
+[1175.3600000000001:1180.96] the solution and that's also true yeah I know that no longer implement what you think you're going
+[1180.96:1192.4] yes yes that's also true that's a good point okay okay so is this is this clear because this
+[1192.4:1205.1200000000001] question is a bit exotic interesting it's okay then I'll go go on and now here we have
+[1206.16:1214.0800000000002] this no-waiting causal broadcast and that is an implementation of causal broadcast like algorithm
+[1214.72:1219.8400000000001] that pretty I mean that's extremely simple in a way that whenever I broadcast a message I will
+[1219.84:1226.32] also put my entire past in it so whenever a material sees my message it will also see the
+[1227.04:1235.4399999999998] my my entire past and will be able to deliver message by message everything in a correct order
+[1235.4399999999998:1243.52] so then we here present a slight optimization of this algorithm where we will be able to
+[1243.52:1252.16] sum to at some points trim this past variable so what do we want we want to for for this past
+[1252.16:1258.8] variable where a process stores its entire past up to the point up to to a point in execution
+[1258.8:1264.0] we want to sometimes just remove some of the messages here and we do not want to allow this
+[1264.0:1270.96] variable to grow indefinitely so how do we do this we simply do this by whenever a process
+[1270.96:1275.92] whenever a process delivers a message it but has this acknowledgement which means simply me and say
+[1275.92:1282.64] I'm young I delivered this message so if and what we do then is that if every correct process has
+[1283.3600000000001:1288.48] has delivered the same message then we can easily just remove it from the past because no correct
+[1288.48:1293.76] process will be like say no collect process will miss this message that we want to just
+[1293.76:1303.76] cut and this is done by so we we do this acknowledgement send this acknowledgement put whenever we
+[1303.76:1309.2] receive we see an acknowledgement we put it in a in some acknowledgement set and once all the
+[1309.2:1316.8] correct processes has acknowledge or have acknowledge a message and what we use is just remove it from the past
+[1316.8:1325.04] okay yeah one of the questions we asked for exercise five I thought that was just
+[1325.68:1333.52] a causal reliable test what is the difference here sorry can you read it again for exercise five I
+[1333.52:1341.2] though I didn't thought that was just causal reliable process what is the difference here
+[1341.2:1349.2] do we just ask them to do the question yeah if you can what is what is here and yeah please thank
+[1349.2:1356.32] you okay so I'll get back to this question and then I'll once we pin we are done with this
+[1356.32:1363.2] question I'll answer to to the to the zoom question okay so I guess everything is clear here so
+[1363.2:1373.1200000000001] we now ask you to slightly just optimize this right algorithm here so can we maybe
+[1375.68:1382.8] remove some message and prime from the past without collecting enough acknowledgements from
+[1382.8:1390.8] this message for this message and this is also very interesting question and the answer is
+[1390.8:1399.84] that we can what is the logic behind behind behind our behind our optimization it's extremely simple
+[1399.84:1407.28] so if we see enough acknowledgements for message for a message and that simply means that since we
+[1407.68:1414.32] since we have reliable broadcast sorry causal broadcast that simply means that all of these
+[1414.32:1421.6799999999998] processes has also have also delivered all the messages that precede causally precede this
+[1421.6799999999998:1430.56] message and so that simply means that we can remove all of these messages as well because all of
+[1430.56:1441.36] these messages were also seen and delivered by correct process so is this clear okay I hope it is
+[1441.36:1452.56] so I can I guess get back to the question of the from the zoom is there okay okay another
+[1452.56:1458.4799999999998] exotic question is can we device the best effort broadcast algorithm that's actually causal broadcast
+[1458.4799999999998:1465.84] property without being indeed a causal broadcast algorithm which means that we do not want to have
+[1465.84:1473.1999999999998] agreement property so we want to have causal order property which means that if message M1
+[1473.1999999999998:1480.0] causes message M2 precedes message M2 then you will not deliver M2 unless you have already delivered
+[1480.0:1486.9599999999998] them so but we also don't want to have agreement so we don't want to have that if a correct process
+[1486.9599999999998:1492.6399999999999] delivers a message M then every correct delivers message M or it's your non uniform variant or
+[1492.64:1498.5600000000002] it's uniform variant just a second please yes M2 so they are asking does it exist a version of
+[1498.5600000000002:1510.88] double collection but we do not have a focus data that's exercise which one yes well not
+[1510.88:1523.44] not really or yes let's think about it well so pretty much we need we use this set that are in
+[1523.44:1531.6000000000001] the part this sets from and delivered once we do not know who once we do not have a threshold
+[1531.6000000000001:1538.16] the number of faulty processes in the system so that would mean that we cannot have we cannot
+[1538.16:1545.92] do anything if we do not have a we cannot garbage collect things unless we have perfect value of
+[1545.92:1552.48] the detector but let us think about this a bit and then we can then we'll get back to this
+[1553.52:1562.0800000000002] it's a very good question I would say so I'll then finish the exercises and then we can
+[1562.08:1568.96] we can we can we we will answer the question we will think about it a bit okay so exercise 7
+[1568.96:1577.12] can we can we can we can we can we have what we so can we design an algorithm that has this
+[1577.12:1587.6] cause a lot of broadcast property but it's not it doesn't have agreement well we cannot why because
+[1587.6:1596.6399999999999] suppose that we have such an algorithm and let's say that c o is an instance of the corresponding
+[1596.6399999999999:1604.3999999999999] attraction and what is the what is the problem is that we have caused a lot of the broadcast
+[1604.3999999999999:1611.6] which means that if I am a correct process I will deliver message m1 before delivering
+[1611.6:1618.56] message messages m2 and also for example if matau is a correct guy it will also deliver message
+[1620.24:1628.8799999999999] m2 only after it has delivered message m1 but if we want to have this causal order causal property
+[1630.8:1639.04] in our abstraction that simply means that matau needs to also deliver message m1 before
+[1639.04:1646.24] delivering message m2 because otherwise the causal property would not hold and in a sense because
+[1646.24:1657.28] it also has to deliver m1 it is a reliable broadcast so as I said here we have rewritten the
+[1657.28:1664.56] what they just said but that is the just the just is that in order for causal broadcast causal
+[1664.56:1671.12] property to be insured what we must have is that we must have also the agreement because if we
+[1671.12:1679.04] have causal property that means that you cannot I cannot deliver m2 before delivering m1 but
+[1679.9199999999998:1687.52] if I am not able to ever deliver m1 then this is never going to happen and then I will never
+[1687.52:1693.52] deliver message m2 and then for example validity property could be could be violated because there
+[1693.52:1700.8799999999999] is a correct guy who brought this message m2 is this clear yes for another question about exercise
+[1700.8799999999999:1708.96] say yeah so they are asking when we remove m1 from the path yeah we only require the correct
+[1708.96:1715.12] processes to have given an acknowledgement yes so there could be some incorrect process which does
+[1715.12:1723.1999999999998] not receive a path of a path and can therefore violate causal order there can be an incorrect process
+[1724.0:1731.76] that does not that is not what they say do not sign incorrect positive which do not receive a path
+[1731.76:1751.68] of the path and so violate causal order okay so that does not well if the okay so if the guy
+[1751.68:1760.08] since this is this is also a good question so if the incorrect process it can happen that it will
+[1760.08:1773.28] never receive the it will never receive the path but yeah but I mean yeah but this is the this is
+[1773.28:1779.52] the thing of ordering so since we have detected that the guy has the guy is crashed because of the
+[1779.52:1784.48] properties of perfect failure detector that simply means that this guy has crashed he's already
+[1784.48:1790.56] he's already dead which simply means that if I now remove some message from my past some message
+[1790.56:1797.2] m prime for example and then brought just a message without now this message m prime as a part
+[1797.2:1803.76] of the past that doesn't make any problems because this guy has already died and he will never
+[1803.76:1809.3600000000001] see my message m and never he will never miss my message m prime do you see the point here
+[1809.36:1827.12] okay thank you make that yeah thank you okay so we we so XF7 is it is it fine I hope it is and then
+[1827.12:1837.36] the last XF7 and I would say also not that hard is so here we we tried to implement this causal
+[1837.36:1848.3999999999999] order broadcast right but without using this past variable but with using vertical blocks and here
+[1850.24:1860.4799999999998] as you can see we have this we use here this less or equal to between relation between two vectors
+[1860.4799999999998:1866.8] so our question is in in end of course in implementation in really definition of this relation we say
+[1866.8:1875.6] that for every i that is from one to n it holds that b of i is smaller or equal to
+[1876.3999999999999:1885.36] double way of r so our question is why do we use smaller or equal and why don't we use just smaller
+[1885.36:1892.72] this should be I would say pretty pretty simple just second yeah and the answer is that
+[1892.72:1900.4] it's simply wouldn't for so let's say that we have that we is an encoding of the past of some
+[1900.4:1909.2] process q and w is the encoding of the past of some standard as at the moment of sending a messenger
+[1910.0:1918.4] so v of p is equal to omega of p simply means that q is not missing any messages from p the
+[1918.4:1926.48] task has delivered before it sent that so hence q process q should not wait for any other
+[1926.48:1931.1200000000001] messages with standard p and should write away deliver message that so let me just explain
+[1931.1200000000001:1936.0800000000002] in a trivial scenario why this wouldn't work so suppose that that broadcasts message time
+[1936.0800000000002:1941.92] with the vector clock of 0 0 0 0 then simply no process several delivers them because
+[1941.92:1950.8000000000002] this checking of just great it does less or smaller smaller than will not pass and thus thus
+[1951.28:1958.88] no process ever delivers this message and thus you have validity, violation and stuff on that
+[1960.0800000000002:1960.8000000000002] is this clear?
+[1960.8:1970.0] okay guys then did you might try to answer to the question or
+[1970.0:1977.52] yes I was on it a few okay then yeah then I'm gonna leave you to
+[1977.52:1996.72] material you'll present the totally broadcast right okay let's see okay let me see let me see
+[2000.08:2001.2] we need the
+[2001.2:2005.3600000000001] there we go
+[2008.96:2018.16] yeah okay here it goes so yes now we're gonna give you some exercises and total order broadcast
+[2018.16:2023.3600000000001] this new set of exercises should be it's very small and it should be quite easy
+[2023.36:2031.9199999999998] so just a relaxed round for you guys so the first question is so we have the total order
+[2031.9199999999998:2037.1999999999998] property right so where you have that every message that is delivered is delivered in the same
+[2037.1999999999998:2046.56] order or correct processes we want to ask you would it make sense to add this condition to
+[2046.56:2052.0] just best out for broadcast where you don't have any significant guarantee on you know what happens
+[2052.0:2057.52] you know you can have some messages that are delivered that all correct processes in some that
+[2057.52:2063.36] are not so this is the first question second questions and to a little bit more in the detail
+[2063.92:2074.0] of how total order broadcast is implemented you have seen how to implement total order broadcast
+[2074.0:2083.68] in this round based fashion using consensus right now when we when we go in this round based
+[2083.68:2089.52] algorithm essentially you know whenever you want to broadcast something you just you just tell
+[2089.52:2094.8] everyone in the system and then they're gonna everyone is gonna put is gonna maintain a
+[2095.52:2103.36] set on a norbert set of messages that still did not enter the total order broadcast and you know
+[2103.36:2110.2400000000002] at every round everybody's gonna propose their own unordered set and knowing that eventually you
+[2110.2400000000002:2114.48] know event I mean at every round eventually every correct process decides in one of the
+[2114.48:2119.6800000000003] in order sets and given that eventually every message from a correct process enters
+[2121.1200000000003:2126.88] the unordered sets of everyone we know that eventually every message is gonna end up in the total
+[2126.88:2131.52] order broadcast now total order is guaranteed in two steps the first one is the total order
+[2131.52:2138.08] running among the sets this is because we're going around based fashion every every round is
+[2138.08:2142.8] unique to identified by a random study by a round number and we have that consensus provides
+[2143.44:2151.2] the same decided set a local correct processes however within the set we we said that we can
+[2151.2:2159.68] you know as soon as the set comes out of the of the consensus for a specific round we
+[2159.68:2166.0] um ordered it in an arbitrary fashion that just needs to be consistent and all of the processes
+[2166.0:2173.52] and you know everybody decides sorry everybody's already delivers in that order right now the we
+[2173.52:2179.2] have two questions ready to possible authorizations to this algorithm the first one is what happens is
+[2179.9199999999996:2189.2799999999997] what happens if instead of ordering the unordered set when it comes out of the decide part
+[2189.28:2197.76] of um of consensus we rather order it in the proposed part so before proposing that own unordered
+[2197.76:2206.0] set of a correct process um you know orders it arbitrarily and then pushes it order to really
+[2206.0:2212.32] ordered in in the propose of their of their consensus and then everybody whenever they decide
+[2212.32:2217.44] something they decide on a list and they just you know deliver everything so this this is the first
+[2217.44:2224.48] uh variant and the second variant is what happens we ask you to tell us what happens if they just
+[2224.48:2232.48] don't order anything at all like everybody pushes a set there is an order and they get a set out
+[2232.48:2237.04] and they also said there's an order what we do this is still work we still have to talk about that
+[2239.36:2246.32] okay so in exercise three this is the last exercise um so you have we have literally just
+[2246.32:2252.8] discussed how you can build uh consensus out of sorry how you can build total order broadcast out
+[2252.8:2258.56] of consensus right we go around and we propose sets and so the question that we have for you guys is
+[2260.0:2266.1600000000003] is there a way to do the opposite right um can we build total order broadcast so I can
+[2266.1600000000003:2273.28] we build consensus out of total order broadcast now this kind of reasoning is not only interesting
+[2273.28:2279.36] per say but it's also extremely useful when um when understanding the relationship between
+[2280.0:2284.8] abstractions this is something that I've seen might have mentioned to you um essentially if you
+[2284.8:2290.32] can build a an abstraction out of out of another one that means the first abstraction necessarily
+[2290.32:2294.2400000000002] must be stronger than the second one right because the moment you achieve the second year also
+[2294.2400000000002:2298.6400000000003] necessarily uh sorry the moment you have the the first thing you necessarily also have the second
+[2298.64:2304.48] right so for example we know that whatever consensus does um it must be at least as powerful as
+[2304.48:2309.12] total order broadcast because the moment you get consensus then you also get total order broadcast
+[2309.12:2317.6] right so now if we um prove that uh you can build consensus out of total order broadcast then it
+[2317.6:2322.56] means that you know consensus and total order broadcast as counter intuitively as in my field
+[2323.12:2327.44] they just represent the same object they they are functioning the same thing because you can build
+[2327.44:2334.8] one out of the other ambassadors so these are all the questions that we have for today and
+[2335.52:2342.7200000000003] unless anybody has anything to say we're gonna catch you guys on the next um the next
+[2342.72:2360.0] the next session on the next session goodbye

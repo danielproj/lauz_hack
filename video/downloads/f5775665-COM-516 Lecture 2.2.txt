@@ -1,0 +1,254 @@
+~COM-516 Lecture 2.2
+~2020-07-28T18:57:10.991+02:00
+~https://tube.switch.ch/videos/f5775665
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:10.56] Okay, so let no state the proposition that gives us an easy criterion for proving recurrent
+[10.56:13.64] in an infinite state mark of change.
+[13.64:15.48] So the proposition is the following.
+[15.48:41.28] The state i belongs to S, which is saying that f i is equal to 1, even only if the sum
+[41.28:52.58] over n greater than 1 of pi i of n is equal to plus infinity.
+[52.58:59.040000000000006] So here you might object that we have to compute an infinite sum of probabilities here and
+[59.040000000000006:64.52000000000001] that no simpler than just computing one probability, which is f i i.
+[64.52:69.64] The thing is that in general, computing f i i is a difficult task.
+[69.64:76.47999999999999] Riots, computing pi i of n for every n is a relatively easy task and then summing
+[76.47999999999999:82.8] is just a calculus question.
+[82.8:97.72] And of course, I would like to mention straight away that so as state i in S is transient, even
+[97.72:106.47999999999999] only if the sum is finite.
+[106.48:116.48] Okay, because a state is transient, even only if it is not recurrent.
+[116.48:130.4] Okay, so let me prove this now.
+[130.4:140.28] So we'll start with a simple observation and we'll of course use the lemma that we
+[140.28:146.04000000000002] have proven before.
+[146.04000000000002:158.08] So remember f i i is the probability there exists some value of n such that x n is equal
+[158.08:164.32000000000002] to i given that x 0 is equal to i.
+[164.32000000000002:169.12] That's the definition of this f i i.
+[169.12:184.64000000000001] So this is also the same as the probability that there exists some value of n such that
+[184.64:190.72] x n is equal to i for the first time.
+[190.72:198.88] See, given that x 0 is equal to i.
+[198.88:204.95999999999998] Okay, and writing this, what I'm writing here is actually the same thing.
+[204.95999999999998:211.04] So here, perhaps I should just write it in a different way.
+[211.04:216.0] We're referring to these sets, you know, we had these sets before, we had these sets
+[216.0:218.64] n and b n.
+[218.64:227.72] Okay, so the first equality here is the probability of the union over all n greater than
+[227.72:233.04] one of n, even that x 0 is equal to i.
+[233.04:238.2] And this second probability here that I'm writing is the probability of the union of
+[238.2:245.88] all n greater than one of the b n, even x 0 is equal to i.
+[245.88:253.39999999999998] And it turns out indeed that the union over all a n is the same as the union over all b n.
+[253.39999999999998:261.36] You just have to think, you know, if it is the case that you will come back after a certain
+[261.36:265.96] time, then it is also the case that you will come back for the first time after a certain
+[265.96:266.96] time.
+[266.96:275.71999999999997] So these two unions indeed are the same.
+[275.71999999999997:281.4] And so what is the advantage of writing with now the union of b n rather than the union
+[281.4:287.28] of a n is that these b ns are distinct.
+[287.28:303.08] So the probability of the union is the sum of their probabilities, which we cannot write
+[303.08:305.2] with the n, of course, right?
+[305.2:309.28] If you could write this with the n, then you would get that the fi is the sum of the
+[309.28:310.79999999999995] pi i of n.
+[310.79999999999995:314.84] And this is not, this is certainly not what we want, right here we want to prove actually
+[314.84:319.88] that fi i is equal to one, if and only if the sum of pi i of n is plus infinity.
+[319.88:324.47999999999996] So the two things cannot be equal for sure, because the n are not disjoint.
+[324.47999999999996:327.32] But the b ns are.
+[327.32:330.56] And what are these?
+[330.56:338.84] This is nothing but fi i of n.
+[338.84:352.79999999999995] So this fi that we want to compute is the sum, is an infinite sum of fi i of n.
+[352.79999999999995:362.23999999999995] So to be proven is that this sum over n greater than one of fi i of n is equal to plus
+[362.24:372.24] infinity.
+[372.24:380.24] And of course, this makes sense because this is not the sum of pi i of n.
+[380.24:385.24] And this is not the sum of pi i of n.
+[385.24:394.8] And of course, this makes sense because you know the pi i of n in general are greater
+[394.8:398.44] than or equal to the fi i of n.
+[398.44:403.52] And now we have for phi and bodies of n, we have a relation between this fi and the
+[403.52:405.0] pi i.
+[405.0:414.24] And we will try to use this relation in order to show this statement below here.
+[414.24:416.84000000000003] Okay.
+[416.84000000000003:423.40000000000003] So let me recall what was the lemma that we've just proven.
+[423.40000000000003:441.2] So the lemma was saying sum, sorry, pi i of n is sum over i ranging from one to n, sorry
+[441.2:457.8] m ranging from one to n of fi i of n times pi i of n minus m for every n greater than
+[457.8:458.8] one.
+[458.8:463.52] That was what we proved.
+[463.52:465.44] So what kind of relation is that?
+[465.44:467.12] I already mentioned this before.
+[467.12:471.76] It's a convolution relation between the f's and the piece.
+[471.76:472.76] Okay.
+[472.76:489.96] So once you have a convolution, there is a natural thing to do.
+[489.96:494.36] You have a convolution between two sequence of numbers, right?
+[494.36:505.88] And this convolution, if you want to transform it into a simpler relation, you can do it using
+[505.88:510.16] generating functions.
+[510.16:518.5600000000001] This implies the use of generating functions because whenever you have generating functions,
+[518.5600000000001:522.76] this convolution will turn into a product.
+[522.76:528.92] And the product relation is certainly easier to handle than a convolution.
+[528.92:537.72] So let me define these generating functions.
+[537.72:548.52] So p, capital pi i of s will be the sum over all m greater than or equal to zero of s
+[548.52:553.84] to the n times pi i of n.
+[553.84:557.88] This will be defined for numbers s between zero and one.
+[557.88:560.12] Okay.
+[560.12:569.96] And equivalently we define capital fi of s, which is the sum over all m greater than or
+[569.96:575.28] equal to zero of s to the n times fi i of n.
+[575.28:581.24] Well, of course, here I could sum from one because I have the convention that fi i of
+[581.24:582.76] zero is zero.
+[582.76:586.9599999999999] But let me just leave it as it is.
+[586.9599999999999:587.9599999999999] Okay.
+[587.9599999999999:595.9599999999999] So here we will need a small fact.
+[595.9599999999999:599.3199999999999] And I don't want to go into too much into details about this.
+[599.3199999999999:604.8399999999999] We could be quite precise here, but let me state something simple here.
+[604.84:624.72] Known as a del theorem that if you have a sequence of numbers, and of course not here
+[624.72:629.72] we don't have arbitrary numbers.
+[629.72:639.08] We have numbers which are actually probabilities, right, between zero and one.
+[639.08:642.8000000000001] So in particular, our positive, which makes things nice.
+[642.8000000000001:648.08] And you let a of s be the transform or the generating function of these numbers.
+[648.08:656.96] So exactly what we have defined before or both the p's and the s, sum of s to the n times
+[656.96:660.48] the n.
+[660.48:662.6] Okay.
+[662.6:671.72] Then we can say that this sequence converges as soon as s in absolute value is less than
+[671.72:672.72] one.
+[672.72:674.88] Actually, you can define it for a positive negative here.
+[674.88:677.64] We won't need it for this negative, but okay.
+[677.64:683.2800000000001] So this sequence is converging for every s strictly less than one.
+[683.2800000000001:684.2800000000001] Okay.
+[684.28:689.24] But this is because the n's are between zero and one and okay, we have an exponential
+[689.24:690.24] here.
+[690.24:693.16] So things are fine.
+[693.16:698.24] And on top of that, you have the following.
+[698.24:702.9599999999999] So two things can happen when we get close to s equals one.
+[702.96:721.5600000000001] So either the limit as s approaches one of a of s is equal to the sum of the n.
+[721.5600000000001:728.0] And this will be a number, which is a finite number.
+[728.0:739.56] Or it is the case that both the limit as s goes to one of a of s is equal to plus infinity.
+[739.56:746.56] Indeed, it could be when s equals one, it could be that the sum of these numbers go to plus
+[746.56:751.04] infinity because when s goes to one, we don't have any more the exponential decay of s to
+[751.04:752.04] the n.
+[752.04:753.04] Okay.
+[753.04:759.64] But in this case, it's also the case that the sum of n greater than or equal to zero
+[759.64:768.8399999999999] of the n is equal to plus infinity, which is very intuitive, but this kind of needs to
+[768.8399999999999:770.88] be proven formally.
+[770.88:771.88] Okay.
+[771.88:781.9599999999999] Well, because indeed when s is equal to one, a of one is the sum of n greater than or equal
+[781.96:783.96] to zero of the n.
+[783.96:784.96] Okay.
+[784.96:785.96] Okay.
+[785.96:799.8000000000001] Using this, now we will first use the first part about s being less than one and use the
+[799.8000000000001:807.4000000000001] lemma that we have above to deduce a relation between the capital P and the capital F. Okay.
+[807.4:812.9599999999999] And so for s, strictly less than one, okay.
+[812.9599999999999:820.24] And perhaps, you know, since we define it only for s between zero and one, so I take
+[820.24:825.64] s greater than or equal to zero, but strictly less than one.
+[825.64:828.72] We have the following.
+[828.72:836.52] So I want to compute now the capital relation between capital F and capital P. So capital
+[836.52:845.68] P i i of s will be by convention, remember that for P i i of zero is always one.
+[845.68:853.76] So I can write this as one plus some other n greater than or equal to one of s to the
+[853.76:860.76] n times P i i of n.
+[860.76:867.4] Now I can use the lemma, I can use the lemma that I have before and replace the value
+[867.4:869.52] of P i i of n.
+[869.52:881.2] So I get one plus sum of n greater than one is to the n times sum of m equal one to n of
+[881.2:891.08] F i i of m times P i i of n minus m.
+[891.08:897.6400000000001] And now it's a bit about reordering the sums, okay.
+[897.6400000000001:904.0400000000001] First of all, what I will do, I just, you know, write here double sum.
+[904.04:912.48] So I have sum over all the values of n greater than or equal to one times sum over all
+[912.48:916.4] the values of m ranging from one to n.
+[916.4:922.68] And let me write s to the n as s to the m times s to the n minus m.
+[922.68:929.8] Okay, of course, that's because we have this nice power s to the power n that we can
+[929.8:940.0] do that in that things are nice here times F i i of m times P i i of n minus m.
+[940.0:948.0] And now here this thing here, the sum over all values of n greater than or equal to one
+[948.0:950.12] in m going from one to m.
+[950.12:957.28] So here I'm summing over all sums of m in n such that m is less than or equal to n.
+[957.28:963.24] So this I can swap the order of the sum and first sum over all the possible values of
+[963.24:964.9599999999999] m.
+[964.9599999999999:970.12] And then I will sum over all values n which are greater than or equal to m.
+[970.12:979.76] Okay, so I'm, I again have the double sum over n and m and now I just wrote it differently.
+[979.76:989.36] Okay, times s to the m times s to the n minus m times F i i of m times P i i of n minus
+[989.36:990.6] m.
+[990.6:997.2] And now this double sum I can separate it because I will have sum over m greater than
+[997.2:1005.3199999999999] or equal to one of s to the m times F i i of m times the sum over all n greater than
+[1005.32:1012.84] or equal to m of s to the n minus m times P i i of n minus m.
+[1012.84:1017.48] But now of course on the right hand side here I still have something that depends on m.
+[1017.48:1025.04] But now I can rename the indices and this becomes equal to the sum over k greater than
+[1025.04:1033.16] or equal to zero as to the k times P i i of k.
+[1033.16:1040.0] And what do I see here? Well this is actually capital P i i of s.
+[1040.0:1041.52] And what is this first thing here?
+[1041.52:1045.4] So this does not even on m at all anymore.
+[1045.4:1051.0400000000002] And so this thing here, well the sum starts in one but F i i of zero is by convention zero.
+[1051.0400000000002:1061.28] So this is actually equal to F i i of s.
+[1061.28:1076.6399999999999] What is P i i of s is nothing but one plus F i i of s times P i i of s.
+[1076.64:1105.5200000000002] Which can be written differently as P i i of s is equal to one over one gain over
+[1105.52:1112.4] one minus P i i of one minus F i i of s.
+[1112.4:1118.96] In order to get that I take F i i, I put it on the other side of the equality, I get one
+[1118.96:1122.2] minus F i i, I divide by one minus F i i.
+[1122.2:1124.04] And this is what I get.
+[1124.04:1131.76] For every x between zero and one strictly.
+[1131.76:1137.0] So indeed what is the convolution relation between two sequences, the little P i i of
+[1137.0:1138.92] n and little F i i of n.
+[1138.92:1151.24] Now becomes a multiplicative relation and we get the very nice equation for these two
+[1151.24:1154.8] generating functions.
+[1154.8:1169.72] So using the other theorem, perhaps let me just do this on the same page here, a bit
+[1169.72:1186.16] of F i i of s.
+[1186.16:1206.8000000000002] So I have that the sum over all n greater than one of P i i of n is the limit as s goes
+[1206.8:1211.8799999999999] to one of capital P i i of s.
+[1211.8799999999999:1221.36] And this thing will be plus infinity, let me finish here.
+[1221.36:1235.6] If and on if F i i, which is the sum of the F i i of n greater than one.
+[1235.6:1244.6] Sorry, I rather than should have greater than zero of those cases.
+[1244.6:1258.48] Even only this thing, which is the limit as s goes to one of F i i of s is equal to one.
+[1258.48:1265.48] Because in this case, what is P i i of one, then it will be one over one minus one, which
+[1265.48:1270.16] is plus infinity.
+[1270.16:1278.88] So you see here that with these generating functions, we are able to relate on the one
+[1278.88:1286.92] hand that's sum of B i i of n with the value of F i i.
+[1286.92:1301.8000000000002] And that's the end of the proof of the proposition.
+[1301.8:1313.8] I also would like to mention a few more things about this proposition and some examples.
+[1313.8:1331.6] So first of remark, the sum over n greater than zero of P i i of n, they can
+[1331.6:1351.8] actually be viewed as the expected number of visits in state i, given that x zero started
+[1351.8:1352.8] in i.
+[1352.8:1355.9199999999998] That's a bit informal here, but okay.
+[1355.92:1363.48] So P i i of n is the probability that you come back after n steps or that you're back
+[1363.48:1366.44] after n steps in state i.
+[1366.44:1374.92] And therefore, you know, this is saying, this is actually the explanation for the word
+[1374.92:1376.3600000000001] recurrent, right?
+[1376.3600000000001:1382.5600000000002] If you recurrent, that means that you're going to come back, come back, come back to a
+[1382.5600000000002:1383.5600000000002] state.
+[1383.56:1391.84] And then, if there is a probability of 1, that you come back once, then indeed once you've
+[1391.84:1396.6399999999999] come back, you're going to do another move, go somewhere else, but then there is again
+[1396.6399999999999:1398.8799999999999] a probability of 1 that you come back.
+[1398.8799999999999:1402.8799999999999] And since everything is time homogeneous, then this is saying that you will eventually
+[1402.8799999999999:1404.28] come back and influence the broad time.
+[1404.28:1409.32] So if you come back with only one in a state, then you indeed come back with a probability
+[1409.32:1414.04] 1 and infinite number of times, okay?
+[1414.04:1415.8799999999999] Therefore, the word recurrent, okay.
+[1415.8799999999999:1417.2] First remark.
+[1417.2:1422.6] Now examples.
+[1422.6:1437.6799999999998] So in the homework one, you have seen that for the simple random walk, for the simple
+[1437.68:1440.72] random walk.
+[1440.72:1447.8400000000001] So you know, let me just specify in one dimension.
+[1447.8400000000001:1458.92] So one on a block on a line, with parameter p and q, okay?
+[1458.92:1461.68] The one I've drawn before.
+[1461.68:1462.76] What do we have?
+[1462.76:1478.8799999999999] We have that p00 of 2n can be approximated as 4pq to the power n divided by the square
+[1478.8799999999999:1482.84] of pi n.
+[1482.84:1489.48] So when is this state recurrent?
+[1489.48:1493.1200000000001] Right?
+[1493.1200000000001:1500.72] Just to consider one state to decide whether the chain is recurrent or not, we have to check
+[1500.72:1510.8] so the question is, when is this sum over n greater than or equal to 0 p00 to n?
+[1510.8:1514.6] Is this sum equal to plus infinity or not?
+[1514.6:1522.4399999999998] Okay, that according to our proposition that we just had.
+[1522.4399999999998:1530.56] And for this to happen, this will be the case, actually, if and only if p is equal to q
+[1530.56:1532.8799999999999] is equal to 1 half.
+[1532.8799999999999:1543.52] Indeed, if p is equal to q is equal to 1 half, then p00 of 2n is roughly of the order
+[1543.52:1546.76] of, actually, 4pq then is 1.
+[1546.76:1552.72] So it's roughly of the order of 1 over square root of pi n.
+[1552.72:1564.6] So the sum diverges because we have sum of 1 over square root as n goes to infinity and
+[1564.6:1568.08] so this diverges.
+[1568.08:1579.84] If it's not, then what happens then 4pq will be less than 1 because p or nq are not equal
+[1579.84:1582.36] to half.
+[1582.36:1594.1599999999999] So this sum now has an exponentially decaying term and so this converges.
+[1594.16:1603.0400000000002] And that's the proof of what I have stated above.
+[1603.0400000000002:1608.88] Now you could talk also about the simple random walk in two dimensions.
+[1608.88:1618.92] And that was also in the first homework, simple random walk in two dimensions.
+[1618.92:1628.52] And there was a way to see that for the simple random walk in two dimensions p00 of 2n is
+[1628.52:1633.4] of the order of the square of what we have in 1d.
+[1633.4:1636.4] And so this is of other 1 over pi n.
+[1636.4:1641.0800000000002] Of course, this is the simple symmetric random walk.
+[1641.0800000000002:1646.24] Simple symmetric random walk in two dimensions.
+[1646.24:1663.76] And in this case, therefore, so in this case, the sum of p00 of 2n diverges.
+[1663.76:1672.88] So it is recurrent.
+[1672.88:1677.5200000000002] And you can ask yourself what happens in three dimensions.
+[1677.5200000000002:1681.8000000000002] And this will be subject of another homework.
+[1681.8000000000002:1685.2] Okay, so let me stop here.
+[1685.2:1693.5600000000002] And in the final video, I will tell you about two different, we will make a separation
+[1693.5600000000002:1694.8000000000002] in the definition of a recurrent.
+[1694.8000000000002:1698.4] We will talk about, there are actually states which are truly recurrent, that we will
+[1698.4:1702.96] call positive recurrent and the states which are non-reference.
+[1702.96:1729.72] So we will talk about this in the last video.

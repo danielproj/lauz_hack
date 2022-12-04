@@ -1,0 +1,288 @@
+~EE-556 / Lecture 11 - 1/2 (2020)
+~2020-11-17T10:53:48.691+01:00
+~https://tube.switch.ch/videos/f190deda
+~EE-556 Mathematics of data: from theory to computation
+[0.0:4.6000000000000005] I think we can actually maybe slowly begin.
+[4.6000000000000005:9.0] I see the usual people in the attendees.
+[12.5:16.0] So today, all right.
+[20.0:25.6] Okay, so today we're going to talk about a very important topic,
+[25.6:28.8] primal dual optimization.
+[28.8:33.8] So we can start the recording if we haven't already.
+[33.8:37.8] Yeah, I think we are recording good.
+[44.8:49.3] So what we will do is we're going to focus.
+[49.3:53.8] We're going to continue on our focus on minimax optimization today.
+[53.8:57.8] And we'll talk about some of the fundamentals.
+[57.8:65.8] If you recall this minimax formulation that's seemingly innocuous minimax formulation,
+[65.8:70.8] where we have a function that couples two variables x and y.
+[70.8:74.8] So maybe there's some constraints.
+[74.8:81.8] And for the simplified case, we assume that this function is the frisable,
+[81.8:83.8] but we assume the most difficult case.
+[83.8:86.8] It is non-convexed in x, which we are minimizing.
+[86.8:91.8] And non-concave in y, which we're maximizing.
+[91.8:93.8] Very difficult problem.
+[93.8:97.8] And in the last lecture, we talked about things like,
+[97.8:103.8] you know, where do algorithms converge if you run algorithms.
+[103.8:106.8] And when do algorithms converge?
+[106.8:110.8] Meaning you have certain oracles that you run with.
+[110.8:115.8] And you would like to figure out if they go to good places.
+[115.8:122.8] And I just want to recall the the phase of negative results.
+[122.8:125.8] So here's the issue in the minimax optimization,
+[125.8:129.8] even if the objective is lip sheets smooth and defrainsurable.
+[129.8:140.8] Whether or not a minimax point exists or an approximate minimax point exists is hard.
+[140.8:147.8] And there's no thing like glitzberg's theorem that guarantees the existence of a minimax point.
+[147.8:155.8] And even if it exists, finding it is hard.
+[155.8:161.8] And then it is also difficult to argue about the dynamics of the algorithms in this particular case.
+[161.8:167.8] So just overall, in the worst cases, this is difficult.
+[167.8:174.8] And even in some simple cases, I will show again that this is difficult.
+[174.8:176.8] All right.
+[176.8:182.8] Now, just to take a step back, we know that non-comics optimization is hard.
+[182.8:188.8] Right? So minimization of a non-comics function is already hard.
+[188.8:194.8] And if you think about this particular problem, then a special case is,
+[194.8:199.8] let me just say, phi x phi is just f of x.
+[199.8:215.8] So this problem of finding a minimax point is just equivalent to finding an x such that it is locally, maybe even locally.
+[215.8:226.8] Oh, sorry. So finding a stretch of point means that you find the global optimal.
+[226.8:232.8] I think in general, actually, maybe we keep the boundary.
+[232.8:235.8] So this is the type of.
+[235.8:237.8] But this is empty heart.
+[237.8:242.8] So if you look at the complexity supplementary lecture that I, we have on the,
+[242.8:248.8] we have a model, then what you will see is that this.
+[248.8:253.8] Three subset problem can be cast in this particular fashion.
+[253.8:256.8] Three subset problem is empty complete.
+[256.8:260.8] And this continues to origin. So it's empty heart.
+[260.8:267.8] And what I will argue in a little bit is that finding solutions to non-comics, non-comics, non-comics, cave is even harder.
+[267.8:273.8] Just finding the global minimum of an on-comics function.
+[273.8:285.8] So in general, what we want is to figure out a point that is locally Nash equilibrium.
+[285.8:289.8] All right. So if you think about in the minimax, none of the players.
+[289.8:296.8] All right. So let's think about this in a game theoretic fashion where you have a player x and a player y.
+[296.8:300.8] That are kind of playing as a starly against each other.
+[300.8:304.8] None of the players gets an optimal point.
+[304.8:308.8] They have to live with what is called an equilibrium.
+[308.8:312.8] All right. So like you come to a point where you cannot improve.
+[312.8:317.8] Then at the point, let's say your opponent cannot improve.
+[317.8:321.8] And you reach an equilibrium. It's like, you know, pushing each other.
+[321.8:332.8] When an unmovable object meets an unstoppable force, they have to reach an equilibrium.
+[332.8:340.8] So here, the concept in which we characterize solutions is a saddle point or local Nash equilibrium.
+[340.8:349.8] In the sense that you are looking for points where locally speaking, you know.
+[349.8:354.8] Some x player cannot further minimize.
+[354.8:358.8] And a y player cannot further maximize.
+[358.8:365.8] And hence you reach an equilibrium. So here in this particular case, somewhere like this would be a minimax point.
+[365.8:369.8] Because in terms of x.
+[369.8:373.8] It's some local minimum. And in terms of y.
+[373.8:383.8] It's some local maximum. Both cannot improve any further than their local conditions.
+[383.8:392.8] So by using some Taylor expansion, you need to see that, you know, the gradients at this point needs to be zero.
+[392.8:395.8] And the x curvature needs to be positive.
+[395.8:398.8] And the y curvature needs to be negative.
+[398.8:407.8] That means the Hessians would be in every x positive definite, same definite and y negative.
+[407.8:411.8] Alright, I hope this is clear.
+[411.8:418.8] Okay. Now, our question to when to algorithms converge.
+[418.8:425.8] So we're going to put a bit of a twist. We're going to think about these scalable algorithms, a subset of all possible algorithms.
+[425.8:432.8] Alright, so if you look at the gradients of this function, right?
+[432.8:437.8] So we call this, let's say, V of z and z is a completed variable.
+[437.8:442.8] You can think of this as just an optimization over.
+[442.8:444.8] Z. Right?
+[444.8:457.8] Because we want the gradient to be zero. Somehow we can do a gradient updates on the z. I like something like zk is equal to.
+[457.8:462.8] Or plus one. Zk minus some step signs. Easy.
+[462.8:467.8] Okay. So it's okay.
+[467.8:472.8] Now, let's say. So here, you know,
+[472.8:477.8] for scalable algorithms, let's think about the casted variance. Let's say we have a bias term.
+[477.8:485.8] So the bias term is usually zero, but there are variety of algorithms where this bias term is non zero, but goes down to zero.
+[485.8:494.8] You can characterize it. Things like extra gradient method that I briefly mentioned that people see in the next lecture in detail.
+[494.8:508.8] So I want to say that, you know, the noise also has some bounded moments, particular bounded tangents is an important condition.
+[508.8:514.8] And we can think about all these algorithms. And there's a negative result. Right?
+[514.8:523.8] So if you look at when the algorithms don't diverge, you can prove that they converge for something called internally chain transitive sets.
+[523.8:538.8] And I'll talk more about this next slide. And these sets typically have serious points that do not correspond to any solution at all.
+[538.8:551.8] And this is the dessert section because it includes things like stochastic gradient, stochastic descent, alternating versions, stochastic extra gradient sound, optimistic mirror the sound, all kinds of algorithms that fall into this category.
+[551.8:563.8] All right. So these ice key sets characterize the converting kinds of dynamical systems. I don't know if anybody in the audience have taken control classes.
+[563.8:568.8] It's an important concept in control.
+[568.8:590.8] So if you think about this, what I would like to argue is that the minimax in general is more difficult than just optimization because if you think about this optimization, these sets that attract these algorithms when they move about.
+[590.8:608.8] So you can actually look at PDEs that characterize things like gradient percent and you look at their continuous limits, you look at their discretizations, you can figure out where they will go and they will say it's a system, the dynamical system.
+[608.8:628.8] For optimization, when you have an ICT set the tracks for solution like local minima, that typically include solutions. We talked about stochastic gradient descent, avoiding things like saddle points in minimization, not many max problems.
+[628.8:645.8] So they typically go to local minima, this is like chess, they go that we discussed. But for minimax problems, the attracting ICT actually has solutions and some serious sets and this is terrible.
+[645.8:674.8] So here's a problem, this is almost filenier with the non-miniarity on top. Here is our minimax point, local national equilibrium that we would like to land on. But if you start the CDA extra graded method, stochastic extra graded method anywhere on this and the algorithm will basically go here and then start turning around in this ICT set.
+[674.8:681.8] It will not go to the solution.
+[681.8:691.8] In fact, you can come up with interesting pathological cases where if you're within certain radius, the algorithm will get to a minimax point for example.
+[691.8:703.8] If you're outside, you could just go to this ICT set. And typically average in, so one might think that you take these sequence and you average and you nicely fall into this.
+[703.8:712.8] The issue with this type of thing is that typically what happens is that the rotational speed is not the same here.
+[712.8:722.8] So when you average something like this, for example, you may not go here. Same here.
+[722.8:736.8] The speed in which you turn around for example is a bit different. So when you take uniform samples and average things are a bit not so cool.
+[736.8:756.8] So what we're going to do is we're going to restrict our styles to a more specific case because we kind of know that general non-comics on concave is four plus.
+[756.8:767.8] So here it's the same template, but now we assume that the function is convex and X and concave in mind.
+[767.8:777.8] The natural question is what problems does this template capture? I'd like to ask you to care. So I'll talk about that and then we'll go over the same issues.
+[777.8:795.8] Now what I will do is if you recall this composite minimization problems, I'm going to argue that this minimac's template already captures these composite problems.
+[795.8:807.8] So you have a smooth term or in this case it will be even more general. You can have a non smooth term or smooth term. So here is an operator X is our decision variable.
+[807.8:811.8] I mean you can also put a constraint.
+[811.8:825.8] Some examples when you know we can have f of x be one norm. You can have GA of x as the least absolute deviation or least squares.
+[825.8:828.8] So you can also put some regular rise here.
+[828.8:845.8] So the generality of this is that you can put an indicator function for a X. Then this problem, sorry, this problem becomes minimize f of x subject to ax is equal to b.
+[845.8:858.8] If you remember indicator functions are an elegant day of writing in this kind of problems as you know, you mean f of x was the indicator function on the set b ax.
+[858.8:873.8] So this is zero than a x is equal to b. You're going to constraint the satisfy. So what's the infinity you get infinite penalty in the cost. If it is not, so you get a satisfied.
+[873.8:883.8] All right, so how do we come up. So how do we go from here to something like min max by x y.
+[883.8:891.8] Let's see some set wise and some sets. So how do we go there? Right. For this, we need a tool.
+[891.8:897.8] Thank you for your consideration to reveal this underlying demands.
+[897.8:908.8] Now, the key idea here is to represent the common function in terms of its max form.
+[908.8:918.8] Now for this, let's have a domain for the function some Euclidean space that is in that with some inner product and so forth.
+[918.8:930.8] The definition of the tangible conjugate is given by this. So what you do is you look at the supreme over this particular inner product.
+[930.8:936.8] So to do space will be in terms of y.
+[936.8:948.8] So you look at y transpose a x minus f of x. You're doing a supreme or maximization. Right. So minus f of x. In this case, it's concave.
+[948.8:958.8] F. I'm it's concave. So the supreme is a concave maximization problem.
+[958.8:969.8] Good. Okay. So this particular function is asterisk not star. Right. It's asterisk.
+[969.8:973.8] Well, why will be the potential conjugate?
+[973.8:988.8] Well, f. And what this does is it basically looks at the supporting hyperplanes on the function. So you can pick points.
+[988.8:1002.8] And you can see what there is like a geometric interpretation of what y is like the support of the slope of the hyperplane and this minus if the y is the intercept and so on and so forth.
+[1002.8:1010.8] I think this would be clear with the examples, but just know that here is the definition of the potential conjugate that you take a function.
+[1010.8:1018.8] Maybe you write it in a more complicated form complicated looking form, but it is useful trusting.
+[1018.8:1026.8] Okay. Good. Now what I will do is I'm going to tell you a bit about the properties of the potential conjugation. So we just recall here.
+[1026.8:1033.8] So this f star one, which is supreme over the name of f, y transpose x.
+[1033.8:1035.8] I saw x.
+[1035.8:1040.8] It's the fact is the potential.
+[1040.8:1059.8] So first, x star is a convex function. Right. Is a function of one. Why do you say it is? If you think about this.
+[1059.8:1074.8] So whatever this supreme is in the end, it gives you a value for x star. Right. And then what this y function is is something like y x star, but it's a bunch of these x star.
+[1074.8:1081.8] So what you're doing is you're taking a bunch of affine functions.
+[1081.8:1096.8] And you're taking this supreme affine functions, the convex maximum of convex functions is convex and f star, y is a convex function.
+[1096.8:1105.8] Now here's an interesting thing. If you do conjugation of conjugation, then you end up with the same function if f is convex.
+[1105.8:1121.8] So double conjugate gives you back function. Now, usually the funny part, if you have a conjugation of a conjugation, but the function is non-comix, then what you get is called the lower convex envelope of the function.
+[1121.8:1135.8] Okay. So if you have something like this, then when you do conjugation of conjugation, you get this convex part. You literally get this nice straight line, this is convex.
+[1135.8:1149.8] And then you get the same line. I get the function again. Wherever it's convex, it gets that part. Wherever it's non-comix, it kind of fills that in the closest convex function.
+[1149.8:1161.8] And that is called the lower convex envelope. In this case, you do the conjugation of conjugation, then you still remain with this lower convex envelope.
+[1161.8:1187.8] So here's an interesting part. If f is new strongly convex, then the conjugate is one over new lipid's gradient. So this is interesting. So if the function you're interested in doing the conjugation is from a convex, it's dual function is lipid's gradient.
+[1187.8:1201.8] And vice versa, there's this nice symmetry. But of course, the smoothness and strong convexer are doing norms.
+[1201.8:1208.8] But if it's throwing from X and L2, then it is the distance in the gradient also in L2.
+[1208.8:1224.8] Okay, so some examples here. So if f of x is a simple quadratic, then what would be the eventual conjugates? I mean, this is you literally write down the definition.
+[1224.8:1238.8] Right, so we have max over x, y, x, y, this, lm over 2, squared. How do we find the maximizer? We can take the derivatives, the derivative of this is just y.
+[1238.8:1248.8] The derivative of this is lm, the x, you set that to zero. And x star is one over lambda, y.
+[1248.8:1264.8] Now, if you plug this in, so x star, if you plug this in here, then you get the inner product of one over lambda, y inner product is y. So this is the one squared.
+[1264.8:1276.8] And then we have the one over lambda squared. So the land does cancel, you get one over two lambda.
+[1276.8:1287.8] Right, and that means to one over two lambda, y squared. And so here's the interesting part. So this is a strong economics with lambda.
+[1287.8:1294.8] And this is one over lambda, which is gradient and y star, we have this dimension.
+[1294.8:1306.8] Now, how do we do this for a numbsumif function? Something like Alonno. Right, so when in doubt, just write down the definition.
+[1306.8:1316.8] Right, so this is the rule that you should abide. Do the bytes, big, the ball skis, five. I always write down the definition, then in doubt.
+[1316.8:1324.8] So I'll be find the central conjugation. At least you write down the definition, you get a partial credit.
+[1324.8:1341.8] So the definition of the Alon norm. So what we can do is, so Alon norm decomposes over the coordinates.
+[1341.8:1349.8] We know, right? So this one on is basically summation of the individual coordinates, want to P.
+[1349.8:1358.8] So this should be P. Yeah, so maybe a typo here.
+[1358.8:1369.8] So this is what they have. Right, so this is just literally the inner product says that we take an element wise product and sum them up.
+[1369.8:1385.8] So we want that. So if you think about this, you can write, um, why I the X i is the sign of X i times the absolute value of X i.
+[1385.8:1398.8] Nothing magic from here. This is if X i is positive. This is there to X i if X i is negative. This is again X i. It's sign is it's.
+[1398.8:1409.8] So what we need to do is figure out what happens in various cases of the input, why I because for the maximization problem.
+[1409.8:1421.8] Why is an input? I saw you can you can consider this as X star Y, which is one over lambda Y.
+[1421.8:1430.8] Okay, so let's look at the following cases when the size of why I in absolute values list and lambda.
+[1430.8:1442.8] I saw lambda is a parameter. Now what we're doing is that we're doing the following. So why I sign minus lambda.
+[1442.8:1457.8] So why I is absolute value is less than lambda. So this means, um, no matter what this is, the maximum positive number that it can be is still less than equal to lambda.
+[1457.8:1474.8] So this is not negative. This means this particular inequality holds. Right. So no matter whenever lambda in absolute value is less, sorry, whenever why I in absolute value is less than, um, lambda.
+[1474.8:1489.8] In this case, the absolute value multiplies a negative number. So you're trying to maximize with X. The best you can do is put a zero there.
+[1489.8:1502.8] Right. So taking X is equal to give you taking X equals zero gives you this, which is the maximum. Any other number will make it less.
+[1502.8:1516.8] So if for at least one, it is positive, then this means this can be greater than zero. So X can just put any large number and it maximizes it.
+[1516.8:1523.8] So this goes to plus infinity because X here there's no bound.
+[1523.8:1540.8] So here, then this means that the dual function is actually indicator function. You look at why it's such that the absolute value of y is less than, uh, infinite norm of infinity norm of y is less than equal to lambda.
+[1540.8:1555.8] If f of x is one of x. Why then why the f has to is why is the indicator function.
+[1555.8:1571.8] I think it's not as less than equal to to in this case, actually, so it's lambda, and this is precisely this particular do known business.
+[1571.8:1585.8] You know, so if f of x is one norm, then the do norm is infinity norm. In fact, the way you define the one norm is soup.
+[1585.8:1600.8] Why such that why infinity is less than equal to y X. Wow, this is the indicator function. It goes here as a negative.
+[1600.8:1605.8] It's an exclamation problem. So you had a negative.
+[1605.8:1609.8] And these are dual feature.
+[1609.8:1629.8] Now, what I've done is one of my PhD students, Marwella, the Eloise PhD thesis was on using this conjugations to get comics, lower envelopes of non-comics functions to come up with structures, parsed to regularize this or objectives.
+[1629.8:1639.8] And there's like a whole history about this. So a partial snapshot is in the advanced material at the end of this lecture.
+[1639.8:1652.8] So what you can do, if you recall, I mentioned that the potential conjugates double potential conjugation with some compact support leads to the comics, lower envelopes.
+[1652.8:1661.8] So variety of sparsely related stuff. I thought you think about just L0 or what I'm called norm.
+[1661.8:1671.8] You can use this trick to come up with comics, regularizers, comics, lower envelopes, and advanced material.
+[1671.8:1677.8] If you have questions, feel free to ping me offline about this, which is a fascinating topic.
+[1677.8:1687.8] All right. Good. So now, just think about general non-smoke problems. Or here we have G a of X.
+[1687.8:1701.8] So one thing we can do is we can write G a of X as maximization over G conjugate Y evaluated at this. So we flip the tables.
+[1701.8:1711.8] Remember, point you get off a complex function. So you do double conjugate, you get the function back.
+[1711.8:1718.8] So you can think of this as G U, which is a complex function, which is a maximum.
+[1718.8:1725.8] I'm going to use a different variable Y here, U Y minus G conjugate.
+[1725.8:1738.8] Y. In this case, we're going to evaluate this as A X. So this goes here. So you have this max or Y A X in a product with Y.
+[1738.8:1748.8] I'm going to go. All right. So if you think about it, then our min X F of X plus this is actually min max.
+[1748.8:1763.8] This object. So we have phi x, y, which is F of X, convex A X, Y, comics concave G X, Y, concave.
+[1763.8:1769.8] So in terms of phi, this is concave in terms of X, this is convex.
+[1769.8:1782.8] Y. So if you think about this, if G of X is this indicator function, the conjugate of it is very simple.
+[1782.8:1799.8] So this inner product. Right. So literally, literally, you would like a certain thing to be equal to B. You can use this.
+[1799.8:1810.8] And in the minimax formulation. So you have this particular problem. Let's say this minimized one norm subject to an affine equality equality.
+[1810.8:1823.8] Then what we can do is we can write this min and then this in terms of max is the dual diagram.
+[1823.8:1832.8] And this is called Lagrangian.
+[1832.8:1847.8] No questions. So it's just we're going to evaluate this conjugate that a X.
+[1847.8:1871.8] Okay. Sorry. I mean, we're going to evaluate this at ax minus B. So it's just literally this maximize. If you think about it, if ax minus B is zero, then the maximum that this can be is zero.
+[1871.8:1884.8] Because no matter what you put as why you get a zero. But if the constraint is not satisfied. So if by any luck, ax is not equal to B.
+[1884.8:1894.8] Then why is unconstrained? It just maximizing to infinity hands. It's an indicator function for the constraint.
+[1894.8:1903.8] And then you get this nice min max problem. And this particular thing is actually called Lagrangian.
+[1903.8:1908.8] All right. I hope this is clear.
+[1908.8:1917.8] So let's continue to think about this special cases.
+[1917.8:1929.8] Now for this, I gave an example of sparsity, which you recall.
+[1929.8:1935.8] When I was talking about these time data tradeoffs, let's just six, I believe.
+[1935.8:1942.8] Now, this basis for city noise. So suppose we have this under determined linear system.
+[1942.8:1948.8] So let's say you're trying to do MRI. So this exponential is your MRI image.
+[1948.8:1956.8] A is a sub sample Fourier operator. And B are the Fourier samples. And we have some Gaussian perturbations.
+[1956.8:1961.8] Right. When the problem is under the twemm, and there are infinitely many solutions.
+[1961.8:1973.8] So if you recall, in this case, a is an antivillanous phase. And then there's like many solutions that exist.
+[1973.8:1980.8] Right. So we picked the one that has, let's say, the minimum al1 norm.
+[1980.8:1990.8] I use this prior sparsity. So in this case, you are seeking to minimize one norm of detector subject to.
+[1990.8:1994.8] The data.
+[1994.8:2002.8] Fidelity is satisfied. Right. So if you know the norm of the noise, then this.
+[2002.8:2005.8] This needs to be satisfied for the true.
+[2005.8:2014.8] And we have this infinity norm. And in this case, it is necessary to do this by conjugation.
+[2014.8:2022.8] Because in the end, we were thinking about doing a sparsity solution. And what we do is, as opposed to minimizing this,
+[2022.8:2026.8] we minimize its convex lower envelope by doing double-cune conjugation.
+[2026.8:2032.8] And for this, you do need this particular compactness on the primal domain.
+[2032.8:2038.8] Anyway, so this is just a classic example. There's like a whole debt to this.
+[2038.8:2044.8] We will not get into, but if you're interested, just ping me and we can talk.
+[2044.8:2049.8] So if you think about it, then our problem fits into the following template. Right.
+[2049.8:2052.8] So we have an objective minimize f of x.
+[2052.8:2060.8] And a x minus b is in some convex set. Right. So it's an inclusion.
+[2060.8:2067.8] So what could the speed? It could be precise. There's a x minus b in two norm lives in.
+[2067.8:2072.8] And the ball of radius, which is equal to the two norm of the norm lives. Right.
+[2072.8:2076.8] And then you have another constraint, which could be this one.
+[2076.8:2083.8] And this particular template is very broad.
+[2083.8:2089.8] So what I will do now, I'm going to characterize the important properties of this particular template.
+[2089.8:2092.8] But I'm going to even further simplify.
+[2092.8:2103.8] I just showed you that this template captures something like minimize one more subject to a x minus e to know is less than equal to the two norm.
+[2103.8:2109.8] And an x infinity is less than equal to one. Right.
+[2109.8:2117.8] A very general camp that you can put a variety of different options here.
+[2117.8:2125.8] And notice that an optimal solution needs to be the minimum achieving minimum here while satisfying these constraints.
+[2125.8:2134.8] So I'm going to consider this template, which is much simpler looking. Right. So we're just going to minimize the convex function of f of x.
+[2134.8:2140.8] Subject a x is equal to b. None of these shenanigans.
+[2140.8:2148.8] You might be asking, well, how, you know, and I'm going to argue that these two templates are equal.
+[2148.8:2152.8] So without those of channels, we're going to talk about this.
+[2152.8:2157.8] But rest assured that we can actually handle this template.
+[2157.8:2162.8] So how? Right.
+[2162.8:2165.8] Okay. So let's think about this problem.
+[2165.8:2173.8] Now, I'm going to introduce auxiliary variables. So we're going to let some R1 B ax minus B.
+[2173.8:2182.8] And R2 actually equal to X. Right. So in this case, our minimization problems is over X R1 and R2.
+[2182.8:2188.8] You minimize the effects. R1 is in the set. R2 is in the set.
+[2188.8:2197.8] AX minus B is equal to R1 and X is equal to R2. Right. It's magic.
+[2197.8:2207.8] Now, let's redefine a variable. So let's define this variable Z, which has a concatenation of X R1 R2.
+[2207.8:2214.8] I'm going to define a different linear operator that has A in it. Some minus identities all around.
+[2214.8:2231.8] I'm going to define augmented B, which has zero paint. I'm going to define an F bar of Z, which is F of X plus the indicator function of R1 in the set and indicator function of R2 in the set.
+[2231.8:2241.8] All right. So our problem is, in fact, the cool them to minimize. We just take to a variable, which is higher dimensions.
+[2241.8:2262.8] Z, F bar of Z, A bar Z is equal to B bar. Right. So it's not a big stretch, but it is true because at the solution, R2 must be equal to X. Right.
+[2262.8:2268.8] It must. Otherwise, it's not a solution.
+[2268.8:2277.8] In this case, R1 must be into this set, but you know, R1 must be equal to X, A, X minus B.
+[2277.8:2287.8] So it's the solution R1 star is equal to A, X star minus B. And it needs to satisfy the distance chain.
+[2287.8:2301.8] And F needs to be minimum while satisfying all these constraints. So you get the solution to this. And this problem is equal to that problem. All right.
+[2301.8:2318.8] So, you know, with this simplified notation, what you will do is consider this. And this capture is, in fact, a lot of the standard comments optimization formations.
+[2318.8:2331.8] So there is a discipline, comics programming, supplementary material, which you want to learn more about things like, you know, linear programming, comics, quadratic programming, signal, cone programming, send different programming.
+[2331.8:2340.8] They can be made fit into this by just going reformulations, just like the one that I showed.
+[2340.8:2353.8] And many of these existing problems also fit into this form. And now here, we're going to do a minmax version. Right.
+[2353.8:2366.8] So remember, we would like this constraint to be satisfied. So what we do is we write it in this maximum. So it's max over Y, A, X minus B.
+[2366.8:2373.8] Unless X satisfies the constraint.
+[2373.8:2380.8] Why makes it infinity? If X satisfies the constraint, you get a zero.
+[2380.8:2396.8] So this problem is we pull them to min max 5x, Y, if we fix plus this particular inner product. And again, this is fold to the ground.
+[2396.8:2400.8] All right.
+[2400.8:2413.8] Now what I will do is the introduce what is called as the do problem. And what is the do problem. So here is our final problem.
+[2413.8:2420.8] Right. The original problem. What we do. You write the Lagrangian form here.
+[2420.8:2440.8] Here is the max. Now I'm going to do a little trick. I'm going to call maximization over this function D, which will be minimization over F.
+[2440.8:2453.8] So I'm kind of flipping the min and the max here. All right. Nothing but that.
+[2453.8:2462.8] And if you think about it, here is an implicit function. It is defined in terms of an optimization problem, kind of like the central conjugates.
+[2462.8:2473.8] So D of Y, if you want to evaluate the value of this, you plug in Y. And then you minimize the respect to X for X.
+[2473.8:2481.8] Why now why is a given vector? Let's say, right? A X minus B. All right.
+[2481.8:2496.8] So because Y is a given vector, this is just an F-function of X. So you have an unconstrained minimization problem in terms of X.
+[2496.8:2504.8] You minimize obtain object of value. Then you have that particular D of Y, D for do. All right.
+[2504.8:2525.8] So the dual function is from cave. So even if epipix is not convex, this concave, because if you see in terms of the Y, it is just an F-function, no matter what F is.
+[2525.8:2536.8] And you're taking minimum over F-function functions. So you get this. And it's concave.
+[2536.8:2551.8] All right. So this maximization problem in terms of this dual function is a concave maximization problem if you do this.
+[2551.8:2570.8] All right. So let's see an example. Just to highlight the fact that this particular problem is dual function, you can actually write it down. And that oftentimes is non-smooth.
+[2570.8:2587.8] All right. So just consider the simple problem. All right. So you would like to minimize some quadratic in terms of the one. So X is X1 X2, it's 3.
+[2587.8:2606.8] And there's a constraint on these coordinates. Here's our objective. Now, if you actually write down the function, right. This is the X. So we're minimizing. Here's our F of X. All right.
+[2606.8:2627.8] And then we have our dual variable Y, whatever the linear constraint is, which is this. You can plot this function. And you will see that it is concave.
+[2627.8:2648.8] And as you can see, it is non-smooth. Right. So at the same time, I'm sorry here. Maybe we should have used Y is opposed to lambda. So we'll try to fix this. So this is Y. This is just Y axis. This is D of Y. Just to be consistent with notation.
+[2648.8:2663.8] All right. Good. Now we maybe take a break here. And I'm continuing with this because what we did by just flipping the min and the max is actually very dangerous proposal.
+[2663.8:2678.8] All right. So we'll discuss this starting at 10 15. All right. So we can.

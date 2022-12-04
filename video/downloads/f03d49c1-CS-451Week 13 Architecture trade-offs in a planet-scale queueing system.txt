@@ -1,0 +1,202 @@
+~CS-451/Week 13: Architecture trade-offs in a planet-scale queueing system
+~2020-12-14T18:33:42.379+01:00
+~https://tube.switch.ch/videos/f03d49c1
+~CS-451 Distributed algorithms
+[0.0:2.0] The floor is yours, Manos.
+[2.0:9.0] Thanks so much, Jorge, for the kind introduction and hello everyone and thank you for attending this talk.
+[9.0:18.0] I'm Manos. I have been working with Facebook in London for a couple of years and for that I was at EPFL.
+[18.0:29.0] What I'm going to do today is talk here about this system and services on which I have been working along with the rest of the people in the team in the time of part of.
+[29.0:41.0] I'm going to explain, I'm going to focus this talk on the parts where sort of academia and what we learn in the university meets reality.
+[41.0:56.0] And the type of trade-offs one has to make in a climate scale system in order to achieve what is expected out of the system but at the same time potentially sacrificed part of the purity that we learn about in the university.
+[56.0:67.0] So let me just start with explaining what the topic or if you like the overall umbrella of this presentation is going to be.
+[67.0:80.0] The system I'm going to be talking to you about is trying to solve the general problem of getting data that is produced in point A to point B where this data is to be consumed and processed.
+[80.0:95.0] So you can think of numerous different use cases existing in a place like Facebook or but at other places as well where you have the data that is being generated at least in the case of Facebook on hundreds of thousands of different servers.
+[95.0:106.0] This data might be something like ads information what I call impressions and clicks here so knowing that a specific user has clicked on specific ad.
+[106.0:122.0] Some event about a service that is running within Facebook server logs, someone running machine learning jobs and trying to accumulate features and extract features in order to do the processing and so on.
+[122.0:130.0] On the other end you have the fact that some of these data is potentially relevant for the data warehouse to be stored and analyzed.
+[130.0:139.0] They might be relevant for a string processing engine that is just going to be creating that say online aggregations based on this data.
+[139.0:150.0] It might be relevant for a key value store that is populating and a cash like memcached or something similar or it might just be used for any other purpose.
+[150.0:161.0] The important thing is that for this type of operation of taking the data out of all those hundreds of thousands of machines and taking them to a more centralized scenario that allows their processing.
+[161.0:166.0] You needed the abstraction of basically a big fat dump pipe.
+[166.0:180.0] Some abstraction that allows you to move the data that allows you to have some notion of buffering so that this data is not dropped on the floor if something is happening on the receiving end.
+[180.0:195.0] But also have some notion of multiplexing or multi tenancy so not all of them need to go through the very same pipe. If you think about it, you can have the equivalent of a table or the equivalent of a logical stream.
+[195.0:207.0] Some are named abstraction that tells you that this specific data that the clicks data for example belongs to this specific stream that is going to end up being consumed on the other end.
+[207.0:215.0] The important thing is that the data from let's say impressions in this case might not necessarily be relevant just for the warehouse.
+[215.0:217.0] They might even be relevant for a key value store.
+[217.0:226.0] So you needed the ability to make sure that there's a decoupling between the producers and the consumers of this data.
+[226.0:238.0] Putting this so we've just together the name of the system and service that I'm talking about today is called scribe and it's essentially a distributed offered multi tenant pipe.
+[238.0:248.0] If it helps you and if you are trying to map it with other systems that are out there, I'd say that the closest open source alternatives probably a patch of Kafka.
+[248.0:259.0] But there are some other offerings in in other cloud scale companies such as Amazon, Kenisys and other services that are trying to solve the same problem.
+[259.0:270.0] The reason that in this slide, I also sort of highlighted real time services because besides just a part of what I mentioned taking data from pointing into point B.
+[270.0:283.0] You can think of scribe as a system that also facilitates map-produced like workloads where you do some type of processing you aggregate it in another way and then you need to store it somewhere again in order to continue processing the same data.
+[283.0:298.0] In this case, scribe can play the part of both of every single sort of check pointing spot of any persistent spot among the different steps of processing.
+[298.0:307.0] So the actual abstraction that is exposed to the users of this service is just a logical stream.
+[307.0:312.0] In Kafka terms, this would be a topic in scribe terms we call the category.
+[312.0:327.0] But the overall idea in the example that I'm highlighting here is that on the top part you see that you have two different invocations of what utility that just happens to be called scribe cat with that indicates that
+[327.0:340.0] I want you to write a message in category which is called test cat and this message is going to be hello or it's going to be full and this can happen in different machines across the Facebook feed.
+[340.0:356.0] Then on the receiving end, you have a command equivalent to the Unix tail command which just is going to be responsible for aggregating this data that has been stored in persistent storage and outputting them on the receiving end.
+[356.0:373.0] One new one thing to pay attention to which I'm going to elaborate on in in the next slide is you can notice that there isn't really any essence of order in the data that has been output.
+[373.0:391.0] So you see that hello appears and then food and bar appears and world appears afterwards. I could even come up with a last year order that has world before hello or something similar and I'm going to explain later why this is the case.
+[391.0:404.0] So in terms of scale, these numbers that I'm presenting are already a bit stale but scribe has an ingestion rate and aggregating ingestion rate of around 2.5 terabytes per second.
+[404.0:422.0] And as I said beforehand, this data tends to be read by multiple consumers which is why the rate the the egress of the system is actually around 7 terabytes per second. So we have a factor of redemplification that is close to 3.
+[422.0:440.0] These numbers stem from millions of machines on which scribe is is working on and operating in the phase of the and in terms of the logical the different logical streams, the categories, there are hundreds of thousands of them.
+[440.0:446.0] However, this scale does not come for free.
+[446.0:464.0] If I wanted to sort of wrap up what I have talked about so far, we have talked about a system that persists this data that is really written to it in the order of a few days that is available on every single machine across Facebook.
+[464.0:476.0] So this latency from the moment of the data item is read until the time that it's available to to a reader spans from seconds up to minutes.
+[476.0:488.0] But at the same time, a system that is slightly lost so the the durability guarantees are ranging from 3.9 to 5.9 depending on its configuration.
+[488.0:494.0] And a system that does not expose a strict order to the data consumers.
+[494.0:517.0] And this is what the focus of this talk is going to be about because this is the part where the expectations coming from what you do in a distributed systems course start diverting basically because of pragmatism and because of the type of requirements that are that arise from the actual consumers and the actual customers of the system.
+[517.0:528.0] So starting from the aspect of data completeness, when I first joined this writing, I was sort of.
+[528.0:537.0] Shopt in a sense that I wouldn't ever expect that there are customers that are willing to lose parts of their data.
+[537.0:548.0] What I came to find out through the years is that there's a number of reasons why this is an acceptable scenario for some applications.
+[548.0:557.0] The first one is that you might be dealing with a with a scenario in which you generate so high volumes of this data in real time.
+[557.0:568.0] And in reality, even if you were sort of you know serving them all to the downstream consumer, they wouldn't have a place to actually park this data.
+[568.0:580.0] The storage requirements for them could or the rate in which this data is generated would be not ready that a downstream consumer would have to throw some of this data away.
+[580.0:589.0] And it's because the scribe might actually be quite stricter to what the upstream data generators are doing.
+[589.0:604.0] So if the upstream is lost or it is sampled, bringing a system that is going to give you five nines of durability guarantees is not going to make things worse for the application.
+[604.0:614.0] The next part is that there are a number of use cases that go through very high volumes of data, but for which if the loss of this data is statistical in nature.
+[614.0:624.0] So if you're not penalizing a specific producer or if you're not penalizing data that has specific structure, then small losses are tolerated.
+[624.0:632.0] They're not critical to the actual creation, especially if all this data is meant just to go ahead and train models.
+[632.0:641.0] And finally, there are a number of cases where to put it bluntly, still data is equivalent to being useless data.
+[641.0:648.0] So there is no point in you trying to strive for this data completeness, 100% data completeness.
+[648.0:660.0] If this means that this completeness is going to come at the expense of latency, or it's going to come in the form of eventually arriving eventually receiving, you know,
+[660.0:668.0] the last part of this data that is missing, but this data might be a day old or even, you know, a couple hours old.
+[668.0:689.0] So in a sense, what I'm describing is that there are multiple customers that are dealing with, you know, fire hoses of data that are unwilling to pay for, you know, the extra, the extra sort of overheads that are related to getting completeness for this data.
+[689.0:707.0] So with all this in mind, let me try to describe a very high level overview of the architecture of scribe and each data plane actually because the control plane of scribe spans a very big number of services as well.
+[707.0:726.0] But looking at this picture from left to right, what we see initially is that we have the concept of a producer. This is just a scribe library that is responsible for allowing the user to offload a message for specific category into describe infrastructure.
+[726.0:746.0] The very first hop that intersects this type of request is a demon that is running on virtually every machine around Facebook, which is called scribe D, which is responsible for carrying the data out of this library and acting as an intelligent buffer for this data.
+[746.0:775.0] For example, if anything happens to network connectivity between this demon and the actual back in the scribe, then the demon is responsible for retrying this, this flash of a message of buffering the message to persistent storage in hopes of releasing the message afterwards dealing with any other type of failure in the back and service that makes the back and service and available to receive this data and so on.
+[775.0:803.0] The next hop is the first part of the actual back end of the right path of crime, what we call a right service, which is a multi tenant service running basically almost I would say on every region of data centers that Facebook is operating on and it's responsible for this and it's and it's responsibility is to actually
+[803.0:820.0] reorder the data that is being will not reorder but actually aggregate the data that it is receiving and create batches based on every single category with the idea being that at the every hop that you
+[820.0:836.0] that you process in data, you start creating bigger batches of them for scalability purposes and then it's also responsible for figuring out which is the actual persistent storage in which these batches are going to be stored.
+[836.0:864.0] The persistent storage in our case is a distributed data log abstraction system, which is called log device and if again if you want to map it to another to other systems out there, you can think of Kafka actually Kafka is sort of the equivalent in terms of distribution size to log device, you can think of level DBE, you can think of other systems that are giving you the
+[864.0:878.0] subtraction of the log in a distributed scenario. So what I have been describing so far is the the light of the message up to the point where it reaches persistence storage in in log device.
+[878.0:893.0] Now the right path of the right path of the script, the right path of the script are actually quite decoupled in the sense that once this data makes it into log device, there is a periodic job that is just updating
+[893.0:919.0] a registry based on where data actually resides. Then the right side whenever it receives a request from a consumer is going to be responsible for getting data figuring out where the data actually lives using this service this capital registry, which is the only common component between the right path and the repath essentially.
+[919.0:929.0] And then reading the data out of the log device clusters, merging them into a single stream and serving them to the downstream consumer.
+[929.0:944.0] So in a nutshell, what I have been describing is more or less a big aggregation through where data starts being generated in medium-term machines, then it goes to thousands of different right service instances.
+[944.0:958.0] It's being stored in the log device clusters and then the right service is just going to flatten it and serve it to the downstream consumer out of all the different charts in which this data resides.
+[958.0:964.0] So let's start talking about the complete nassango.
+[964.0:974.0] On the right path, log device is actually durable storage. It's multiplicated. In some case, data is replicated across different regions.
+[974.0:984.0] However, on the way to this persistent storage, we have a single, we have an ocean of a single copy of this data living in memory.
+[984.0:1011.0] In other words, once the producer has afloat at this, you know, this data item, then it's lifetime is moved towards the demo to strive D or it's lifetime is moved to the right service and associated with this single logical copy, which means that if anything goes right before data makes it into log device, you have to deal with the fact that data did not make it into persistent storage.
+[1011.0:1039.0] The typical scenario in which you bring in stronger guarantees to have such a system is going to operate and what you have been taught as well in a distributed systems corals is that typically the way that things work in reality is that you have to introduce a notion of acknowledgement in order to figure out if a message has actually made it into the intended destination.
+[1039.0:1056.0] However, in our case, in this multi hop system, when you actually acknowledge those operations is going to go ahead and give you different guarantees and it's going to involve different trade of in terms of what is being exposed to the end consumer.
+[1056.0:1066.0] So there are a number of options for starting this in this picture. You can actually acknowledge a message the moment that it has been processed by the producer and afloat it by the producer.
+[1066.0:1072.0] You can do it the moment that the message reaches the backend, the right service.
+[1072.0:1078.0] Or you can do it the moment that the data actually makes it into persistent storage.
+[1078.0:1095.0] In reality, what we have time to find out is that one size does not feel feel so there are different flavors that different customers are interested in based on what the requirements that they expect are.
+[1095.0:1107.0] So one of those flavors which we have dealt high durability means that this acknowledgement to the producer is sent only once data stored in log device.
+[1107.0:1111.0] This typically means that you don't lose data.
+[1111.0:1117.0] It means that you can achieve at least once semantics.
+[1117.0:1142.0] At the same time, however, it means that you can have increased data duplication because every hope in the right path before data makes it into log device has retry logic embedded in it in order to ensure that this data is going to make it despite trans and failures, despite bugs, despite server shutting down, anything, any reason that you can imagine.
+[1142.0:1159.0] Also because in a distributed system that are inherently cases of uncertainty where only one part of a communication has been lost, for example, so you're retrying hope that the actual data is persistent.
+[1159.0:1182.0] The other thing is that in this type of flavor, we have had to deal with the less aggressive batching scenario, which means that a reason for this is because you are trying to strive for lower latency and minimize the duplicate location.
+[1182.0:1194.0] But at the same time, this lower latency inherently implies that you cannot make the batches that are dealing with as big, therefore penalizing throughput.
+[1194.0:1199.0] And this leads to their at least once semantics flavor.
+[1199.0:1215.0] Another option for other customers is the high throughput flavor. The idea there is that the producer can optionally acknowledge the reception of a message upon actual receival.
+[1215.0:1236.0] And even then, we have customers that don't even care about this because they find that it penalizes their throughput. But the overall idea, the jest for this flavor is that if you accept small amounts of data loss, it means that you can go ahead and create bigger batches of data in all of those buffering intermediate steps that I have been mentioning.
+[1236.0:1248.0] And thus providing higher scalability and higher throughput for your system. Of course, the caveat is that you're dealing with a bit of a hand-waving approximately once semantics.
+[1248.0:1254.0] I would have called them at most ones, but it's not as clear here as has been at most ones.
+[1254.0:1273.0] So you have this scenario where you have this approximately one situation, which, however, is good enough for the vast majority of data producers. In the case, when we're disgusting, single customers creating multiple gigabytes of data per second.
+[1273.0:1282.0] In this case, the three nines of the rapidity are treated as good enough.
+[1282.0:1309.0] Now, on the read path as well, the single logical copy of such and still remains, which means that from the perspective of the read service, if it requests a data item from log device, there's no way for it to reason in terms of the actual sort of three or five replicas that log device might be storing.
+[1309.0:1323.0] The contract between the two systems is that I need access to this data item. If log device cannot provide it, if the unit of storage in log device, which is called a cluster, is unavailable.
+[1323.0:1329.0] In essentially, the read service has to treat this data as being unavailable.
+[1329.0:1333.0] And there are a number of options of what you can do in such a scenario.
+[1333.0:1346.0] The question is that there are customers that say, you know what, I'm going to accept the loss and I'm going to carry on because I know that this is once in a boom event, there's some disaster event, there is some hardware issue.
+[1346.0:1352.0] It's not the normal operation and at the end of the day, it's going to be okay for my use case.
+[1352.0:1362.0] Another scenario is that a customer might be willing to wait for this for this data to appear because data completeness might be paramount for.
+[1362.0:1370.0] A third scenario is that a customer might actually want an extremely loud message in terms of something like this happening.
+[1370.0:1376.0] And this loud message might very well be an abort of the read.
+[1376.0:1386.0] Now, in the type of system that they have described, there are ways in which we could in principle do something smarter.
+[1386.0:1397.0] We could, for example, as I hinted, know that, you know what, the log device might actually have copies of these data stored in multiple different locations and only one of them is unavailable.
+[1397.0:1404.0] Or maybe we can figure out the log device storing data in many different regions.
+[1404.0:1412.0] So maybe I can receive a data replica from this from just one region that is still available.
+[1412.0:1432.0] The reason that we haven't done this is because in order to manage to scale a system like Stripe in so many different regions and in so many different machines and to this amount of throughput, we needed to have a clean layering between log device and Stripe.
+[1432.0:1454.0] So this means that the interaction between the systems is minimized and complexity, but at the same time can lead to some data loss scenarios just because we have elected that we're not going to bypass the layer of log device, the layer of distributed storage on the level of the read service or on the level of the right service.
+[1454.0:1461.0] And therefore it's another compromise that you make for pragmatic reasons in this scenario.
+[1461.0:1478.0] Before I move to the other part, are there any questions whatsoever, either for clarification or for any part of the talk.
+[1478.0:1495.0] All right, in this case, I will proceed. So moving on to the part of order. Oh, yes, please. Somebody is asking, I'm wondering when is data removed from log device.
+[1495.0:1518.0] That's a good question. So data is removed from log device in general after a period of three days. Then the reason that the period is set up as a three day one is because the vast majority of data pipelines that are reading data out of stripe, they might do it by stream processing system that might be read as I said by some machine learning pipe.
+[1518.0:1532.0] But in most cases, the same data actually makes it to the data warehouse to this, you know, to the single location for analytical processing within Facebook.
+[1532.0:1554.0] Those three days are meant to act as a big enough buffer for data to make it to the warehouse or to make it to some other system that is more suitable for data analysis. But in reality, the overall system, the overall scribe offering is not optimized for someone to decide that they want to read data that is two days old.
+[1554.0:1566.0] The reason for this is that the overall system is optimized based on the assumption that most pipelines are going to be trying to read fresh data.
+[1566.0:1578.0] And this fresh data is bound to live in memory in the buffers of log device after this data has been written or after this data has just been read by someone.
+[1578.0:1593.0] The moment you start reading data further down in the past, then those data access patterns become extremely expensive because for a system that big, you're basically relying a lot on hard drive distance that of SSDs, for example.
+[1593.0:1602.0] So you're bound to have an order of magnitude or two more expensive reads in this scenario.
+[1602.0:1608.0] Does it answer the question? Is there anything else?
+[1608.0:1611.0] So the person says yes, thank you.
+[1611.0:1631.0] All right. So the second part that I wanted to to breach is the topic of ordering and how the notion of strict ordering is something that is really applicable in the case of scribe, but also rarely relevant.
+[1631.0:1634.0] To some extent.
+[1634.0:1646.0] So let's think for a moment, the design principle on which pride has been built and how they are actually manifested in the actual architecture.
+[1646.0:1660.0] So as I said at some point, the notion of the unit, if you like, of storage in terms of an abstraction from the side of log device, not in terms of physical storage,
+[1660.0:1666.0] but the logical grouping of how the storage is organized is the concept of a cluster.
+[1666.0:1673.0] You can think of a cluster like a specific database instance.
+[1673.0:1680.0] Now this cluster has a set of configured logs or shards, the actual storage for this cluster.
+[1680.0:1694.0] Each one of those shards or logs is holding data for single category only. And one category because it can actually contain quite a head to amount data can actually comprise multiple logs or shards.
+[1694.0:1700.0] We treat every one of those shards as having a maximum amount of right and brief throughput.
+[1700.0:1708.0] Because again, this is this is relevant to the type of physical storage in which this information stored.
+[1708.0:1721.0] So we needed to have a periodic job in place that is responsible to publish which are the categories that have data and in which shards this data is actually contained.
+[1721.0:1726.0] Because otherwise there's no way for the read side to figure out where to read data from.
+[1726.0:1744.0] And secondly, to split those shards into more than if they get hot because as I said, you cannot sustain any amount of throughput for a single storage unit.
+[1744.0:1756.0] So when the right service is a request to persist the methods for a given category, it has to go ahead and pick which cluster is going to have the data living in.
+[1756.0:1764.0] It's going to pick any log, any shard for this category and it's going to append the message there.
+[1764.0:1775.0] When the read service is going to see this category request and it's going to be asked to read data, let's say after 9 a.m. or something, sometimes some.
+[1775.0:1780.0] It's going to have to look up the clusters with data for this category.
+[1780.0:1788.0] Look up the time so that it can figure out which of the logs are relevant and from which part of those logs it needs to be reading data from.
+[1788.0:1795.0] And it's going to start merging those three into a single output.
+[1795.0:1810.0] If you think about it, but the justice tried is a system for which traffic to single category can scale horizontally because data for a category can be read in any log in any cluster.
+[1810.0:1828.0] And it also means that even if I go ahead and write a message service, hello for one category and then a message which is old, those consecutive rights can actually end up in different logs or even in different clusters in different regions even.
+[1828.0:1840.0] And the reason for this is that the top priority of scribe from its inception has been scalability and availability, especially on the right path.
+[1840.0:1847.0] The overall idea is that despite whatever I said for the three, nine or five, nine, so the message is making it and so on.
+[1847.0:1851.0] Right availability is key for the system of scribe.
+[1851.0:1865.0] What this means is that what you're losing in the process is the notion of ordering guarantees because you have sent data in in completely different storage packets.
+[1865.0:1875.0] So if you wanted to sort of bring them back and reorder them in their original order, it's it's extremely expensive.
+[1875.0:1889.0] And he also lose the notion of repeatable reads because given that you are sending your data to all of those different logs and these logs need to publish the information about them.
+[1889.0:1894.0] And then you can have consumers in different regions.
+[1894.0:1908.0] There are no guarantees that the way in which those consumers, these readers, the read service are going to detect their relevant logs in the exact same order across those exact across those different regions.
+[1908.0:1928.0] So the notion of repeatable reads is also lost along the way just because of the non-determinism in how those the logs that I described here and the service discovery is exposed.
+[1928.0:1940.0] To give you a brief example of this and think about what happens even within a single stream consumer.
+[1940.0:1951.0] Let's assume that we're trying to read data for a given category and this data has to be fetched from three different charts from three different log device logs.
+[1951.0:1958.0] The reader from one of those logs might actually be faster than the others or even worse.
+[1958.0:1964.0] Although the readers might have almost the same speed, but one of them might actually be slower.
+[1964.0:1973.0] Any of you who has read a paper like MapReduce or similar distributed system papers, they know the concept of a straggler.
+[1973.0:1988.0] So if any of the logs, the readers for these logs for whatever reason is actually slower than the rest, it can potentially go ahead and penalize the other readers if you want to impose a strict order.
+[1988.0:1997.0] Even if this order is not the same as the one that was imposed at the producer, even if the order is based on the time stamp.
+[1997.0:2008.0] In this example, if reader zero is way slow, then reader one and reader two are going to have a hard time serving the data that they have.
+[2008.0:2016.0] And the downstream consumer is going to have significant latency imposed over the readers.
+[2016.0:2021.0] What we have settled in the read part of the cry is something that we call rough ordering.
+[2021.0:2032.0] The idea there is that instead of trying to move those three readers in log step, you are enforcing a contract to the reader, to the downstream consumer.
+[2032.0:2041.0] That says that my fastest reader and my oldest reader cannot be a part more than n minutes.
+[2041.0:2047.0] And this n number is configurable by the actual customer.
+[2047.0:2064.0] So in the typical scenario, what's going to happen is that the moment that reader one in this example is going to start experiencing messages whose time stamps are, let's say, 30 minutes newer than the time stamp that reader zero has seen.
+[2064.0:2071.0] Then the entire stream is going to freeze and it's going to make for reader zero to make more progress.
+[2071.0:2077.0] This means that we can reduce the blast radius of stragglers.
+[2077.0:2089.0] At the same time, we are relaxing the semantics of ordering in favor of read availability and ensuring that downstream consumers are receiving data.
+[2089.0:2110.0] And finally, based on the fact that we offer the guarantee of this reader is being in and mean it's a part. It means that a downstream consumer, if they actually care about the order of messages, they have the opportunity of building an abstraction of their own.
+[2110.0:2124.0] At the end of the edge of the cry, essentially at the edge of the cry, that might be investing in buffering, might be investing in watermarks, might be investing in some other type of technology.
+[2124.0:2131.0] That's going to allow them, for example, to offer exactly one semantics or strict ordering or something similar.
+[2131.0:2145.0] And they can still base whatever architecture they have in place on the end minutes divergence in the stream on the concept of rough ordering.
+[2145.0:2166.0] So to wrap it up, the summary for the top that I have been giving is that essentially there is no notion of free land that there is an inherent trait of between scale, operational complexity and semantics in a large scale distributed application.
+[2166.0:2184.0] And in many cases, depending on the scenarios that you are trying to serve, semantics can be held constant. I'm not saying that strict ordering is infeasible or that there isn't a scenario where you can enforce a law's guarantee.
+[2184.0:2200.0] However, in the case of tribe, the scale part in this trade of trifactor that I mentioned is imposed by company growth. So scale has to be our utmost priority.
+[2200.0:2207.0] And the relaxation of semantics has traditionally been a tool to manage complexity.
+[2207.0:2227.0] All that being said, users can still be more reliable applications overstribe at the next cost. And this alludes to what I mentioned in terms of how does someone build exactly once processing overstribe or potentially do de-triplication overstribe and so on.
+[2227.0:2250.0] The important thing that we have learned from our experience so far is that if you are going to go ahead and relax the semantics, you should let your users decide what this relaxation should be sort of airing towards, whether it should be relaxation, inter-metallic application, whether it's going to be relaxation in terms of waiting for your data to appear.
+[2250.0:2271.0] In any case, one flavor does not feed all. So I have also touched some additional information on more information about trial and around real time data processing within Facebook that I'm hoping is going to be interesting for you folks.
+[2271.0:2286.0] And with this in mind, I would like to wrap up. Thank you for your time. Reitered what Rashid said that we have been building data processing, large-kill data processing systems in London.
+[2286.0:2305.0] We have always been looking for, you know, interns, permanent hires, anything you name it, log device and strive our teams that are fully based in London and fully developed in London. And yeah, any questions would be way more than welcome. Thank you.
+[2305.0:2315.0] Let's wait a few minutes until we see if somebody is writing on the chat.
+[2315.0:2335.0] What is the main difference between scribes and Kafka or rabbit and Q? I don't know.
+[2335.0:2356.0] I don't know. Thanks. That's a great question. So in terms of main difference, as I said, the main part, if you want to think about Kafka or about rabbit and Q, you typically think of a system that is operating in the scale of log device.
+[2356.0:2385.0] So it is a data center scale system, at least based on our experiences. What is the difference in terms of privacy? All the added source, if you like, in order to make sure that this type of system stops being just what I'm having, calling it a system and becomes a service, a service that is operational, multi tenant, disaster scale.
+[2385.0:2403.0] And working on every region within Facebook. This might mean that in terms of the service aspect, need strive itself needs to deal with the fact that it needs to have demons or the ability to run on every single host within Facebook.
+[2403.0:2421.0] It might mean the part that you need of very extensive control plane that is going to deal with, for example, a user where a data producer where something happened and they decide that it's okay to start funneling 300 gigabytes per second of anticipated traffic into the system.
+[2421.0:2436.0] So what I'm describing is that even if you have something like Kafka or rabbit and Q, you have to have a very extensive ecosystem in order to deal with this type of events, to deal with monitoring the system, to deal with operating the system.
+[2436.0:2459.0] In the case of pride, what brings up a lot of devices, this is a very complex craft of services that is making sure that all of this is exposed as a service as a multi tenant service, as a hands-free service to anyone within Facebook.
+[2459.0:2473.0] Okay, I see no way. Thank you. Okay, so Bastien and Oliver have asked their questions. Thank you very much. So I see no more questions and thank you so much, Manus, for the time to prepare and the time to give this talk.
+[2473.0:2481.0] I think it's really interesting. It opens many research as well as I guess directions for projects for practical projects. So thanks so much.
+[2481.0:2496.0] We'll keep in touch to continue the collaboration and of course, I have all the students stay safe. See you at the latest on January 16. I'm sorry, the date of the exam was not decided by me.
+[2496.0:2502.0] Work hard, but don't stress too much. Thanks, Manus. Thanks all.
+[2502.0:2512.0] Thank you. Thank you. Take care.

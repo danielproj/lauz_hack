@@ -1,0 +1,599 @@
+~CS-451 / Week 3: Causal Broadcast 
+~2020-10-05T17:27:26.295+02:00
+~https://tube.switch.ch/videos/a4e1f62b
+~CS-451 Distributed algorithms
+[0.0:8.36] Good. So good morning. Today I'm going to talk to you about another form of broadcast,
+[8.36:14.780000000000001] which is cousin broadcast. But before doing that, let me remind you a couple of things.
+[14.780000000000001:21.18] One of them is the very fact that what we are studying here are abstractions for distributed
+[21.18:29.98] programming. Remember and try to keep in mind this picture that you have a network that
+[29.98:35.36] provides you with some basic primitives like UDP and TCP, which we try to define in a
+[35.36:42.86] formal manner. We did that in the first class with Fairlose channels and reliable channels.
+[42.86:50.8] And the entire axiom or thesis of this field is to say somebody who is willing or who wants
+[50.8:56.44] to program a distributed application. And today, not application are distributed should
+[56.44:63.519999999999996] not start from UDP and TCP, but should have higher level abstractions. Pretty much like
+[63.519999999999996:71.28] when we say we don't want to give people only as the assembly language to write programs,
+[71.28:76.42] but we give higher level abstractions in the form of programming language libraries in
+[76.42:80.24] Scala, Python, this and that. So try to give that picture. This is what we are trying to
+[80.24:88.5] do. We are trying to give higher level abstractions than plain UDP and TCP. This is observation number
+[88.5:94.83999999999999] one. Observation number two, while studying these abstractions that we believe the program
+[94.83999999999999:102.47999999999999] should use to build applications, we are also experimenting what it means to write a distributed
+[102.47999999999999:107.22] program or a distributed algorithm. What it means to reason about its correctness, its
+[107.22:113.52] complexity, etc. So we do that step by step. And we always try to follow a very disciplined
+[113.52:119.06] approach, which is let's define precisely the specification of what we want to build
+[119.06:126.44] in terms of properties, typically, liveness and safety properties. And then once we are
+[126.44:131.84] pretty sure what the properties are, then we dive into the algorithm. And there we start
+[131.84:137.44] by giving the simplest algorithm possible, simplest in the sense that we don't care that much
+[137.44:144.12] about complexity and also simplest in the sense that we make strong assumptions. For example,
+[144.12:151.2] last week we studied best effort broadcasts, library broadcasts and uniform library broadcasts.
+[151.2:158.2] These are three forms of broadcast primitives that vary according to the somehow the strength
+[158.2:163.56] of the properties we want to ensure in best effort broadcasts what we are basically saying
+[163.56:169.79999999999998] is that if the sender is correct, then everybody delivers the message. And then we said,
+[169.79999999999998:175.0] well, but what if the sender fails? Shall we allow a half of the process as to deliver
+[175.0:180.07999999999998] and the other half not to? And then we said no, for some applications, this is not good.
+[180.07999999999998:185.23999999999998] And therefore, we would like to make sure that everybody delivered the message. But then
+[185.24:192.24] we realized that there is a subtle distinction there. In one case, we say, if any correct
+[192.24:198.0] delivers a message, then every correct delivers. This is the reliable broadcast. And there
+[198.0:205.64000000000001] is a slightly even stronger version, which says if any process delivers, including a process
+[205.64000000000001:211.24] that is not correct, which means it delivers and then fail, then we would like every correct
+[211.24:219.24] deliver. So these three differences, different broadcasts, I hope they make you realize how
+[219.24:225.68] important the specifications are. Sometimes one word here and there makes a huge difference.
+[225.68:231.4] And believe me, today, many problems in distributed programs come from the fact that we don't
+[231.4:235.76000000000002] really know exactly what specification we should implement. And therefore, the programs
+[235.76000000000002:240.48000000000002] are surprising because they don't really match what we had in mind. So it is important
+[240.48:248.35999999999999] to write carefully what we have in mind. So I said that we start from very simple algorithms.
+[248.35999999999999:253.67999999999998] So typically, we make strong assumptions. So this is what I did last week. I assumed that
+[253.67999999999998:259.0] in particular for the last two kinds of broadcasts that we had a perfect failure detector,
+[259.0:265.15999999999997] that we have the ability to know exactly if somebody has failed. And if somebody has failed,
+[265.15999999999997:269.71999999999997] we detect that information and there is no false positive. Right? So we if we detect that
+[269.72:276.44000000000005] somebody has failed, indeed that process failed. And I told you that we can build algorithms
+[276.44000000000005:281.92] for reliable broadcasts and uniform reliable broadcasts assuming a perfect failure detector.
+[281.92:287.28000000000003] But the perfect failure detector is a very strong assumption. You can indeed hope to have
+[287.28000000000003:293.08000000000004] such a fail of the detector scheme based on things. And I have a live messages in a completely
+[293.08000000000004:299.04] synchronous network. But in reality, as soon as you go over the internet or even on the
+[299.04:305.16] cloud and you have omission collisions between messages, failure detector is not perfect anymore.
+[305.16:310.76000000000005] And the question there is can you have a live broadcast and uniform reliable broadcasts
+[310.76000000000005:318.68] without a perfect failure detector. And I encourage you one and Matteo, your TA's, to give
+[318.68:324.36] you exercises on how to build a live broadcast and uniform reliable broadcasts without using
+[324.36:330.8] the perfect failure detector. And please try to do those exercises if you didn't do them.
+[330.8:337.8] And if you did try to really be very careful into the subtleties in the solutions. Just
+[337.8:344.64] just to give you an idea. In one case, the perfect failure detector is really used to boost
+[344.64:350.16] or to reduce complexity. You remove in it doesn't make a huge difference. This is the first
+[350.16:358.04] case of a live broadcast. If you remember, a process does not relay a message unless it
+[358.04:364.56] detects the failure of the standard. Unless it detects the failure of a standard. And there
+[364.56:371.32000000000005] we could and we discussed that last week, we could actually be eager and simply relay
+[371.32000000000005:377.6] messages without caring about who failed and who did not fail. So we could easily remove
+[377.6:383.28000000000003] the perfect failure detector. In the other case, uniform reliable broadcasts, if you remember
+[383.28000000000003:392.20000000000005] there, the idea was to say, I as a receiver of a message, I should only deliver that message
+[392.20000000000005:398.8] when I know I have some degree of certainty that everybody has at least seen the message.
+[398.8:405.28000000000003] So here I use the word scene to mean receive. And remember this distinction. Deliver means
+[405.28:410.71999999999997] deliver according to the semantics of what we want to implement. And usually when I
+[410.71999999999997:416.03999999999996] a call scene or receive is the primitive that we have at our disposal. Here we want to
+[416.03999999999996:422.88] implement uniform reliable broadcasts. So I say, I should not do that unless I know that
+[422.88:430.28] everybody has seen the message, which means even if I fail, correct processes will deliver
+[430.28:434.96] that message. But how do I know that everybody has seen the message? This is dangerous because
+[434.96:440.12] some people might fail. So I say everybody who is correct must have seen the message. And
+[440.12:447.79999999999995] there we use the perfect failure detector. It turns out that we can alleviate the need
+[447.79999999999995:453.67999999999995] for the perfect failure detector. We can somehow intuitively say there is an alternative to
+[453.67999999999995:460.32] waiting until everybody who is correct acknowledge in the message. We can do slightly better. We
+[460.32:467.76] have if we have an additional assumption and this additional assumption is on the number
+[467.76:472.56] of correct processes in the system. What is the correct process? Remember is a process
+[472.56:478.6] that does not fail. That does not fail for the entire lifetime of an execution. So this
+[478.6:486.48] is what I have just did is to give you a summary of the class of last week, but also of the
+[486.48:492.6] exercise session. Of course, I did not talk about certain things related to reliable broadcasts
+[492.6:497.68] that we might come back to later. For example, I didn't tell you what happens if processes
+[497.68:503.16] crash and recover. What should we do? Fine, because we are assuming that in the context
+[503.16:508.36] of at least the first part of the class, processes when they fail, they don't recover to
+[508.36:515.32] simplify. But it's important to ask in reality what happens in that case. I didn't talk
+[515.32:520.5600000000001] about what we call epidemic broadcasts, the different kinds of broadcasts like what we
+[520.5600000000001:526.2] see today with epidemics, where we somehow have a probability of forwarding messages.
+[526.2:533.7600000000001] I will come back to that later. I closed the live broadcast chapter or summary to start
+[533.76:546.72] the class of today, causal broadcast. By the way, there are very good videos of best
+[546.72:554.46] effort reliable, uniform causal broadcasts on the web. These videos have been recorded
+[554.46:561.04] based on this book. Live and secure distributed programming. The book used in this class. And
+[561.04:570.3199999999999] they are in a website by EPFL called 1DDA, W-A-R-N-D-I-D-A. Recorded by a professor, Vivien
+[570.3199999999999:575.0799999999999] Kema, who was supposed to talk in my group. So he did a series of videos on pretty much
+[575.0799999999999:581.0] all the classes we are giving. So please go to 1DDA and try to see the classes, even if
+[581.0:589.8] you believe you understood everything. Okay, causal broadcasts. We are going to follow
+[589.8:596.92] the same path as last week and next week. First, why do we care about causal broadcasts?
+[596.92:601.88] What is the motivation of this? Why do we need such a primitive? Where would it be used?
+[601.88:609.5999999999999] And then I will try to precise a little bit which properties we want from causal broadcasts.
+[609.5999999999999:615.56] And then we are going to study two algorithms. In fact, you are going to study one algorithm
+[615.56:621.28] and then another algorithm. And the two algorithms are quite different. And I hope that they
+[621.28:628.7199999999999] give you a big perspective of causal broadcasts. So a piece of history, causal broadcasts
+[628.7199999999999:635.1999999999999] is a very old notion. I think in several, well, very old as far as computer science is
+[635.1999999999999:641.4399999999999] concerned. In 78s, Leslie Lamport tried to define a notion of time in computing and distributed
+[641.44:649.96] computing. And he defined the notion of causality. I will explain that. And for many years, this
+[649.96:657.2] notion was of pure theoretical interest. Only the theoreticians were interested into talking
+[657.2:664.4000000000001] about causal broadcasts, finalized data. And recently, people started in cloud computing
+[664.4000000000001:669.4000000000001] systems to really care about causal broadcasts. And fortunately, in many cases, people did
+[669.4:676.16] not read the old papers of Lamport and the papers that came after him. So people started
+[676.16:682.3199999999999] implementing things that were actually bogus or impossible. And I cannot emphasize enough
+[682.3199999999999:686.52] the importance of mixing theory and practice. Even if you want to implement something in
+[686.52:691.24] the cloud with causal properties, start by looking at what people have written in this
+[691.24:698.96] field. So causal broadcasts is the broadcast primitive
+[698.96:707.12] at the name indicates. We have a sender, a, that broadcast a message, and processes that
+[707.12:714.96] need to deliver. And again, he now deliver is with respect to a causal broadcast protocol.
+[714.96:720.0400000000001] And we assume that we have a system within which we want to broadcast an information. Okay,
+[720.0400000000001:727.24] so the system is composed, for example, of all processes who subscribe to something. Say,
+[727.24:733.52] all the processes who are following someone on social network and they all want to receive
+[733.52:737.4] the information of that process. So this is the system. Of course, if you are not interested
+[737.4:745.0] in getting information from process A, you are not part of the system. This is important.
+[745.0:751.2] Okay, so in order to understand the notion of causal broadcasts, you need to realize that
+[751.2:758.5200000000001] when we looked at best for broadcast, as well as reliable and uniform reliable, we never
+[758.5200000000001:764.36] we never consider it relations between messages. We were only focusing on one message at a
+[764.36:770.4000000000001] time. We say, PI broadcasts a message, the message should arrive to PJ, should that
+[770.4000000000001:776.4000000000001] it, that we were focusing on one message at a time. But we didn't care. We didn't care
+[776.4:782.1999999999999] to the relation between PI broadcasts in a message M and then PI broadcasts in later
+[782.1999999999999:789.12] and prime. Similarly, we didn't care about PJ when it delivered the message M from
+[789.12:795.64] PI, whether PJ broadcasts another message or not. We considered the messages separately.
+[795.64:803.4399999999999] In other words, we considered the messages to be independent. It turns out that in reality,
+[803.44:813.8800000000001] messages are usually not all of them, but many messages are related. And when these messages
+[813.8800000000001:820.72] are related, we sometimes want them to be delivered in the order in which they were issued.
+[820.72:827.2] With reliable broadcasts, you can have P1 broadcasts in message M1, then P2 broadcasts in message
+[827.2:837.88] M2 and processes delivering M2 before delivering M1. And this might make no sense for the applications.
+[837.88:843.6] And this is particularly disturbing when one of the message actually causes another message.
+[843.6:852.0400000000001] Let's say I send you all a message. I tell you the exam has been decided to January 15.
+[852.0400000000001:856.84] And then this is M1. And then later on, I broadcast a message to you and I tell you this
+[856.84:862.88] is message M2. The second one, telling you, in fact, it's not the message will be. It is
+[862.88:871.64] not January 15, but 14. If you get message M2, it's impossible for you to understand what
+[871.64:877.6800000000001] I'm talking about. You are missing the context. The context is message M1. So I hope this
+[877.6800000000001:885.0] simple example tells you that messages are sometimes related. And if you receive the
+[885.0:892.0] message M2 before the message that caused it, which is message M1, you won't understand
+[892.0:899.32] anything. Consider actually more generally a system of news which I'm talking here.
+[899.32:904.48] Every new event that is displayed in the screen contains a reference to the event that
+[904.48:910.68] caused it. So for example, you have a post on a social network and then a comment on
+[910.68:916.88] that post. These are two messages, right? I broadcast, I post something and then later
+[916.88:924.2399999999999] on, I comment or somebody has seen my post and comments on that post, which means broadcasts
+[924.2399999999999:932.04] another message. So here M1 is the post, M2 is the message issued by somebody who has
+[932.04:940.24] seen my post. If a third process sees the comment before seeing the actual post, while
+[940.24:946.2] that process will not understand anything. Actually, it could lead to a bug. Here it's another
+[946.2:952.88] form of violation of causality. In the previous form that I discussed, it's the same process
+[952.88:959.04] sending the exam is on January 15 and another message saying, oh, it's on January 14.
+[959.04:965.48] In this case, it's another form of causality. It's P1 posting something and P2, it's not
+[965.48:973.4] P1 anymore, it's P2, reacting to P1 and broadcasting a comment. And again, these are two messages,
+[973.4:978.4] the broadcasting of the post and the broadcasting of the comment that are causally related. If
+[978.4:984.44] I look at reliable broadcast and uniform reliable broadcast, they are not going to ensure that
+[984.44:992.48] the comment is delivered after the post. Or if the correction, it's not January 15, it's
+[992.48:1000.48] delivered after the actual message that caused it. So, causal broadcast is the kind of broadcast
+[1000.48:1007.9200000000001] that somehow takes these dependencies into account and guarantees that messages are delivered
+[1007.9200000000001:1015.6800000000001] according to this order. So, causal broadcast somehow is above the channels that we were
+[1015.6800000000001:1020.88] talking about. So, channels means in this context of this class, reliable channels, which
+[1020.88:1028.68] themselves are above unreliable or fairly channels. And causal broadcast is typically on top
+[1028.68:1034.8] of reliable broadcast and if we have a failure detector, on top of the failure detector.
+[1034.8:1041.16] Okay, so I try to give you an intuition of why we need causal broadcast. We need causal
+[1041.16:1047.76] broadcast because sometimes messages are related and we need to make sure they are delivered
+[1047.76:1054.68] according to the dependencies between these messages. And of course, this is to address
+[1054.68:1060.64] something that even the strongest form of reliable broadcast uniform does not guarantee.
+[1060.64:1067.8] So, how do we specify causal broadcast? It is broadcast primitive. Therefore, there are
+[1067.8:1075.6] two actions. See, ob broadcast in a message M. This is, I am telling you the exam is
+[1075.6:1083.08] on January 18. I am posting something on the news on a social media. And the second action
+[1083.08:1091.12] or the second event is this callback event. And this callback is basically something that
+[1091.12:1100.3999999999999] is triggering within all processes in the system. And this basically says a process on which
+[1100.4:1108.52] this CO deliver is triggered, delivers according to the CO semantics, message M, coming from
+[1108.52:1116.24] the source. Okay, so this is the classical way of defining an interface of broadcast.
+[1116.24:1122.52] The property that we want to guarantee here is causal order. It is causal order in addition
+[1122.52:1128.3600000000001] of course to what we did see in last week. Either reliable or uniform reliable. So in addition
+[1128.36:1134.8] to those, we have a property that is called causal order which relates messages. And
+[1134.8:1140.7199999999998] this causality property is the following. So now you need to focus a little bit. There
+[1140.7199999999998:1146.36] is no magic here. You don't need to know any hardcore mathematics to understand. This
+[1146.36:1155.9599999999998] is simple, first, or the logic. The properties says the following. Let M1 and M2 be any two messages.
+[1155.96:1166.64] Okay, any two messages broadcast in the system. We write that M1 implies M2. Okay, and we
+[1166.64:1177.04] say M1 implies M2. Or we write M1 causally precedes M2. Sorry, give me a second. I have
+[1177.04:1195.96] some noise at home. I need to. Sorry. Let M1 and M2 be any two messages. M1 implies M2.
+[1195.96:1204.36] And we say M1 causally precedes M2. If any of the three following properties is satisfied
+[1204.36:1211.8799999999999] any of them. The first property says some process, the I broadcast M1 before broadcasting
+[1211.8799999999999:1218.56] M2. So this is the example I was taking earlier. I have broadcast a message saying the exam
+[1218.56:1226.32] is on January 18 before broadcasting a message M2 saying, oh no, it's not the 18 or it's
+[1226.32:1234.6799999999998] the 15 or whatever. So this is actually called three for ordering. First, first, out. I'm
+[1234.6799999999998:1241.0] issuing two messages. And in fact, I'm, these messages are related. The second property
+[1241.0:1249.52] says some process PI delivers M1 and then broadcast M2. So this is the second example
+[1249.52:1257.4] I was taking. A process has seen my post. So I post something which is I broadcast M1.
+[1257.4:1263.72] Another process P2 have seen my post say on Facebook. And then it post something else.
+[1263.72:1273.44] It broadcasts M2. So here again M1 causally precedes M2. But causality comes from two different
+[1273.44:1279.0] processes whereas in case one causality comes from the same process. And the third property
+[1279.0:1288.72] is what we call the transitive closure of C1 and C2. It basically says message M1 causally
+[1288.72:1298.28] precedes M2. If there is a message M3 such that M1 causally precedes M3 and M3 causally precedes
+[1298.28:1305.28] M2. So for example, if I have, if I broadcast message M1 telling you something about the
+[1305.28:1314.8799999999999] exam and somebody reacts to that message and then broadcast something and then somebody
+[1314.8799999999999:1322.44] else broadcast something reacting to the second process. Then the first of my message is,
+[1322.44:1329.3999999999999] we say it's causally precedes the third message. Intuitively, there is a message in between
+[1329.4:1338.76] that connects these two messages. So causality property says M1 precedes M2. If any of these
+[1338.76:1346.5600000000002] three properties is satisfied. Now an observation is in order. Clearly, if I'm broadcasting two
+[1346.5600000000002:1351.8000000000002] messages that have nothing to do with each other. So one of the messages says the exam is
+[1351.8:1359.8] on January 16th. And another message that says something completely different by staying next
+[1359.8:1367.1599999999999] Monday I will be at EPFL. So these two messages are completely causally unrelated. In that case,
+[1367.1599999999999:1373.3999999999999] what I will do in an actual distribution system, I will not use the same causable gas primitive.
+[1373.3999999999999:1379.6399999999999] I, as a programmer, I would say if the messages are not causally related, use another primitive.
+[1379.64:1385.88] So you have to remember that it's not all messages that are coming from a process that have to
+[1385.88:1393.72] follow this property. It's when the programmer decides to use the same primitive. So for example,
+[1393.72:1398.8400000000001] I can have a primitive about the exam. I can have a primitive about skiing, another primitive about
+[1398.84:1412.4399999999998] presence at EPFL or not. So causable gas has two events. See obode gas M and see all the
+[1412.4399999999998:1418.6] universe source M and the property that needs to be satisfied is the following. If any process
+[1418.6:1427.0] PI delivers a message M2, then PI must have delivered every message M1 such that M1 precedes M2.
+[1427.0:1433.08] Very simple. What we are saying, but not this however, the choice of the words we are saying.
+[1433.8:1441.16] If any process not is one thing, if any process correct or not. So the way I formulate the
+[1441.16:1447.64] property has this uniformity flavor. If any process delivers a message M2, then that process
+[1448.28:1455.48] must have delivered every message M1 that causally precedes M2. Of course, this is all in the context
+[1455.48:1463.08] of the same cause of broadcast primitive. So these are the examples I was talking about earlier.
+[1463.08:1470.68] So in this case, I assume the same cause of broadcast abstraction. I have three processes P1, P2,
+[1470.68:1479.48] and P3. P1 broadcast M1 and then P1 broadcast M2. And remember that this vertical line means
+[1479.48:1485.48] a deliver in the message. So here I have, sorry, a second.
+[1493.08:1493.48] Sorry.
+[1498.04:1505.48] P1 broadcast M1 and then P1 broadcast M2 later. And in this case, causality is violated because
+[1505.48:1514.6] process P3 delivers M2 before delivering M1. Notice that again, the vertical line means we
+[1514.6:1524.68] deliver the message and therefore causality is violated. Is causality violated here? I let you think a
+[1524.68:1534.92] little bit. P1 broadcast M1. Later on, P1 broadcast M2. So clearly, again, I consider that
+[1534.92:1540.68] their broadcast assume in the same cause of broadcast primitive. M1 causally precedes M2.
+[1541.96:1551.48] P2 delivers M1 and then delivers M2. It's all fine. What about P3? Does it violate causality? Of course.
+[1554.2:1561.24] Of course, yes. Why? Because the property, even if notice that P3 does not deliver M1,
+[1561.24:1569.64] but even if it does not deliver M1, the property says, if any process delivers the message M2,
+[1569.64:1574.76] M2 here can be M3 or whatever. It turns out that M2 is the exact message we are talking about.
+[1575.64:1583.8] If any process delivers M2, here we have P3 delivered M2. Then P3 must have delivered every
+[1583.8:1592.28] message M1 such that M1 precedes M2. P3 did not deliver M1. So please notice that here,
+[1592.84:1599.8799999999999] it's not the fact that P3 delivers M1 after M2 that causes the problem. The problem is already
+[1600.6:1608.6] created before P3 because P3 delivers M2 and did not deliver what should have been delivered
+[1608.6:1615.32] before M2. This is like saying P3 gets the message. It's not January 18 or it's January 16.
+[1615.32:1624.52] So it does not know what we are talking about. Here's another case. P1 broadcasts M1 and then P2
+[1624.52:1631.48] delivers M1 and broadcasts another message. Clearly, M2 cause it's causally after M1 or M1
+[1631.48:1639.48] cause it precedes M2. It's causality respected. Let's think a little bit. Let's look at P3O,
+[1639.48:1648.28] P3 delivers M2 and then delivers M1 violating causality. So now what I'm talking about here is
+[1648.28:1654.1200000000001] the causality property. But of course when we define the causal broadcasts abstraction,
+[1654.1200000000001:1660.1200000000001] it's not only about the causal order property. It's about also other properties that we have seen.
+[1660.12:1665.4799999999998] And we define two kinds of causal broadcasts, at least in the context of this class.
+[1667.1599999999999:1673.0] Now liable causal broadcasts, it's our liable broadcasts meaning it has the properties we
+[1673.0:1681.08] have seen last week. Validity, no creation, no duplication, agreement, plus causal order.
+[1681.08:1692.84] And we can also define uniform causal broadcasts which has uniform validity, which has URB1,
+[1692.84:1698.1999999999998] URB2 validity, no duplication, no creation, plus uniform agreement.
+[1699.96:1705.48] Notice something here. The causal order property is inherently uniform. Right? Because it says,
+[1705.48:1712.04] if any process delivers a message M, then something should happen. But the agreement property,
+[1712.04:1720.1200000000001] it's not defined in the causal order property. So here we don't say when a process should deliver
+[1720.1200000000001:1725.24] a message and when it should not. We simply say if you deliver a message, you should deliver what
+[1725.24:1731.72] precedes it. But they could be messages that do not precede each other and that could violate
+[1731.72:1738.68] uniform agreement. So I really suggest that you spend some time thinking about what is really
+[1738.68:1744.6000000000001] the liable causal broadcasts and what is uniform causal broadcasts. By looking at the differences
+[1744.6000000000001:1749.48] between these properties and that video of Professor Rigyan Kema which is on the one
+[1749.48:1755.16] did, the website of EPFL explains this difference just at the level of specification.
+[1755.16:1761.4] Okay, so now we are going to start looking at algorithms.
+[1765.0:1770.92] The first algorithm is called non-blocking and the second algorithm is blocking.
+[1771.88:1775.96] And you will see what the difference is between non-blocking and blocking and believe me,
+[1775.96:1782.6000000000001] these algorithms have been indeed a long time ago, consider of pure theoretical interests.
+[1782.6:1788.12] But now they're really very important in cloud systems and transactional cloud systems.
+[1788.12:1793.08] So it's important to understand these two classes of algorithms. In practice, you have tons
+[1793.08:1797.6399999999999] of algorithms that each of the current algorithms belong to one of these two classes.
+[1800.52:1806.4399999999998] The way we are going to do this is in a modular manner. We are going to, I'm going to present
+[1806.44:1813.0] reliable broadcast algorithms using the reliable broadcast primitive. It turns out that the way I'm
+[1813.0:1820.1200000000001] going to present these algorithms is such that if I replace the underlying reliable broadcast primitive
+[1820.1200000000001:1826.28] with uniform or reliable broadcast, I will end up with a uniform causal broadcast primitive.
+[1826.28:1831.3200000000002] So it's going to be very modular. And this is important because when you build these
+[1831.32:1838.36] abstractions one on top of the other, modularity is very crucial. As you will see, in a couple of
+[1838.36:1843.8] weeks, we will end up with very complicated algorithms. And we will be happy to have
+[1844.52:1849.6399999999999] already defined clearly reliable broadcasts and then uniform causal broadcasts, etc.
+[1849.6399999999999:1855.3999999999999] In a modular manner such that you can only replace the basic block to get additional properties.
+[1855.4:1861.8000000000002] So this is the first algorithm. We want to implement a reliable causal order broadcast.
+[1861.8000000000002:1867.8000000000002] Okay? And we are going to use reliable broadcasts. Okay? We assume that reliable broadcasts is
+[1867.8000000000002:1874.1200000000001] something implemented, whether we implement it with a perfect fair detector or we implement it
+[1874.1200000000001:1880.2] in an eager manner, like I said last week and earlier today, by always relaying messages,
+[1880.2:1885.0800000000002] I don't care. I haven't built in a building block or library broadcasts that I'm going to use.
+[1886.44:1894.44] I'm going to use two specific variables. Remember that this this block in it typically initializes
+[1894.44:1899.88] the variables that we are going to use, but also helps you see what local variables we are using.
+[1900.6000000000001:1908.68] Remember, these are local variables delivered and past are local variables. They are not shared
+[1908.68:1915.0800000000002] among processes. Every process is executing this algorithm, but every process has its own
+[1915.0800000000002:1921.16] variable delivered and its own variable passed. In all processes, these two variables are
+[1921.16:1927.0800000000002] initialized to the empty set. But in different during the execution, different processes
+[1927.8:1934.6000000000001] can have different values for each of these variables. Okay? Implementing a reliable causal
+[1934.6:1940.84] broadcasts. Remember, consists in implementing its interface. Its interface consists of two
+[1941.6399999999999:1947.56] operations of one operation and one callback. So I have to say what happens when a process
+[1947.56:1953.8] invokes the operation and I need to say what happens when the callback is invoked or when it has
+[1953.8:1960.84] to be invoked. So what do I do when I want to broadcast a message M as your broadcast M?
+[1960.84:1968.76] I do the following. I trigger. Trigger means I do a specific action that involves different
+[1968.76:1975.24] layers of my own process or that involves the broadcasting of messages. And here I use reliable
+[1975.24:1983.48] broadcasts to send message M. This is the type of the message. Okay? Whenever I have some messages
+[1983.48:1992.44] that I need to store or that I need to do, I usually associate with them a specific,
+[1993.16:1999.64] a specific, not symbol, a word that says the type of the message. Usually in the context of
+[1999.64:2004.44] this class, we mainly have data message. We are going to see some cases where you have control
+[2004.44:2010.28] message, but it doesn't make a difference. It's just for clarity. What is important here is this
+[2010.28:2017.8] second element of this vector here. I associate with M the content of variable past.
+[2018.92:2025.0] Past initially is empty. So initially when I send my first message, past is going to be empty.
+[2025.56:2033.8] Fine. But before finishing this implementation of this action, action, I put past equals past union.
+[2033.8:2043.96] This spare here and this spare contains self, self, it's like this in other programming languages,
+[2043.96:2051.64] which means the identity of the process executing this. If this process is P1, I would put past equals
+[2051.64:2061.48] past union P1M. Meaning now past equals a pair P1M. What does that say? Intuitively it says
+[2061.48:2072.12] now my variable past or I have seen I as a process, I have seen one message issued by me P1 and
+[2072.12:2081.16] this message is M. Why is that? Assume I broadcast another message M prime after broadcast in M.
+[2082.04:2088.52] What is that I'm going to do? I'm going to do a library broadcast. Past M, but now past contains,
+[2088.52:2096.7599999999998] sorry, past M prime, but now past contains the pair P1M, which means that when I broadcast M prime,
+[2096.7599999999998:2105.56] I will be broadcasting with M prime P1M. If I broadcast P2M, I will be broadcasting with
+[2105.56:2117.0] past which now contains P1M, P1M prime. Okay, good. What happens when a process so here,
+[2117.0:2123.4] the broadcast is by the reliable broadcast primitive. Okay, which means that processes will
+[2123.4:2129.64] are be delivered because I'm using RB broadcast. And the, for example, if the sender is correct,
+[2129.64:2135.88] every correct process will are be delivered. What? RB deliver from PI. This is the source,
+[2135.88:2148.28] a message of type data and this message comes with a list of vectors and this list is past M.
+[2148.28:2155.0] So this past M is going to contain message of the full process message, process message.
+[2155.6400000000003:2163.1600000000003] What do I do? First I check. So this is a process. Let's call it PJ. PJ delivers this, it checks.
+[2163.16:2172.3599999999997] Is M in variable delivered? Well, remember, variable delivered was initially empty. Is M
+[2172.3599999999997:2180.52] in variable delivered? No, it's not. Then this means I have never been delivered this message.
+[2180.52:2185.72] Okay, then I go on and I do the following. What is that I do? I look at the past of M.
+[2185.72:2195.3999999999996] Okay, I look at this list and I go through all pairs of process message in past M. For each of
+[2195.3999999999996:2201.56] them, I start from the beginning for each of them, I start from the oldest in the list I do.
+[2202.3599999999997:2209.16] If the message is not in my variable delivered, then I deliver that message. But now I deliver it
+[2209.16:2215.72] according to the cause of semantics. I deliver the message in with the indication that the source is
+[2215.72:2225.3199999999997] this one. Okay, the source is not PI. The source is what was in the past. Then I deliver I add
+[2225.3199999999997:2233.24] N to the set delivered and I add as N to the variable past. Aha, so this means that variable past
+[2233.24:2242.3599999999997] is a variable that I update when I broadcast messages here. But it's also a variable that I update
+[2242.3599999999997:2250.7599999999998] when I deliver messages. Okay, this is just the continuation of the previous slides. So here,
+[2250.7599999999998:2257.4799999999996] I have three more lines that I put here. After I've done this, this means I have delivered all
+[2257.48:2268.2] messages in the past of M. When I do that, then I deliver M. I also remind recall that I delivered M
+[2268.2:2275.08] in order not to deliver it twice and I also add M in the past. So now what's happening? If P1
+[2275.08:2286.2] broadcasts a message M1 and then P1 broadcasts another message M2, I know, I mean, I know.
+[2286.2:2293.0] I will, P1 will definitely put in the message M2 when it broadcast is using a live broadcast,
+[2293.0:2301.08] the past of M2 and the past of M2 is M1. Okay, therefore if a process P3, for example,
+[2302.3599999999997:2309.3199999999997] receives, I say receives if you want or delivers according to the reliable broadcast semantics message M2,
+[2309.32:2317.2400000000002] it is not going to deliver it to RCO, delivered immediately. It is going to first look in the past
+[2317.2400000000002:2326.2000000000003] of M2 and it will find M1, it will ACO deliver M1 and then ACO deliver M2. Okay, so this is important,
+[2326.2000000000003:2331.8] which guarantees causality. But there is something here interesting, which is the fact that
+[2331.8:2342.44] P3 delivers according to the reliable broadcast M1 before delivering M2. Well, it has actually M1 in
+[2342.44:2353.32] the past of M2, but it will also get M1 from P1 later. In this case, it will ignore this message. Why
+[2353.32:2360.84] will it ignore this message? Because when it delivers the message M, it will realize that M is in
+[2360.84:2367.32] its past. Okay, so when it gets this message, it will realize that it's in past. It's important to
+[2367.32:2376.44] notice that a process does not interrupt the execution of this action when it gets another message.
+[2376.44:2386.04] So let me explain. P3 delivers M2, so it executes all what it takes to finish this action. It means
+[2386.04:2392.2799999999997] going through this past, delivered M1, putting M1 in the variable delivered, delivered M2,
+[2392.2799999999997:2397.8] putting and when it gets this M1, it's not going to interrupt what it's going there. It finishes this
+[2398.36:2403.56] and then it tweets the action of delivered M1. And when it does that, it will realize that
+[2404.52:2414.36] M1 is in the variable delivery. Let's look at another example here. P1, FCO broadcast and therefore
+[2414.36:2424.28] RB broadcast M1. Okay, this M1 goes to P2 and then to P3. P2 delivers M1, it
+[2424.28:2435.7200000000003] RB, it LCO broadcasts M2, but it puts the past of M2, which is M1 in M2, similarly here.
+[2435.72:2444.68] Notice here that the fact that M1 is in the past of M2 is related to this piece of code,
+[2445.9599999999996:2453.0] which is when you deliver a message, you actually also put it in your past. When you broadcast a
+[2453.0:2457.3999999999996] message, you put it in your past, but when you deliver a message, you put it in your past.
+[2457.3999999999996:2464.3599999999997] This is what's happening here. P2 delivers M1, puts it in its past, which means that when
+[2464.36:2476.36] it broadcasts, it puts M1 in the past. Okay, so when P3 delivers this message, it first looks at
+[2476.36:2485.0] the past, delivers M1 and then M2. Okay, I hope this is clear. I'm looking at time. Again, I'm sorry,
+[2485.0:2492.84] but I suggest that we continue and I promise I finished much earlier than if we had taken a break.
+[2492.84:2497.7200000000003] And I don't need to stop the recording and start it again, which sometimes causes problems.
+[2498.36:2503.6400000000003] So algorithm 1 that I just presented ensures causal reliable broadcasts. You can actually prove
+[2504.28:2508.92] that it guarantees all the properties of a reliable broadcasts. If the broadcasts are
+[2508.92:2514.44] correct, then all correct processes will deliver a message. It's not completely trivial to prove
+[2514.44:2523.0] these things. Please try to look at at this book. It has some proofs of this. It's not trivial. It's
+[2523.0:2530.12] not complicated. So you have to do some first-order logic reasoning. For example, showing that there is
+[2530.12:2535.7200000000003] no duplication is not immediate because you can get messages from different sources. You get them
+[2535.7200000000003:2540.68] directly or you get them from a past. So you have to be able to reason and say, because we have
+[2540.68:2547.08] viable delivery, therefore we guarantee that the message is not delivered twice. Similarly,
+[2547.08:2552.68] to guarantee the causality property, we have to use the argument that we have the past
+[2552.68:2558.52] of a message always as a companion with the message. And therefore, if a message M2 is
+[2558.52:2564.9199999999996] delivered by a process, every message M1 that has caused it is delivered first. So forth.
+[2564.92:2571.16] It turns out also that if we replace a reliable broadcasts with uniform or reliable broadcasts,
+[2572.12:2577.7200000000003] algorithm 1 will ensure uniform causal broadcasts. This is also something I'm not going to detail
+[2577.7200000000003:2584.92] here and I encourage you to do it by yourself. To my, by yourself, to convince yourself, for example,
+[2584.92:2591.4] the way I would suggest that you do it, you first look at the algorithm we just presented and you
+[2591.4:2600.6] try to prove that this algorithm, which I just presented here, does not guarantee uniformity,
+[2600.6:2606.76] uniform agreement. In other words, it doesn't guarantee that if any process delivers a message,
+[2606.76:2611.64] every correct process delivers that message. It's not completely trivial to prove that. You need
+[2611.64:2618.2000000000003] to think about a counter example. I really encourage you to find that counter example that exhibited
+[2618.2:2626.9199999999996] a situation, draw a picture where you have processes such that one of them broadcasts some message.
+[2626.9199999999996:2633.3999999999996] That message is delivered by a process. The process fails and nobody delivers the message.
+[2633.3999999999996:2639.96] Try to exhibit that case and try to argue that if we replace a reliable broadcast with uniform
+[2639.96:2645.8799999999997] or reliable broadcasts, we at least prevent that situation and then we can argue that we guarantee
+[2645.88:2657.8] uniformity. Okay, good. If we replace reliable broadcasts with uniform reliable broadcast,
+[2657.8:2664.6] argue it one with ensure uniform live broadcasts. I just see that if there is a problem in the chat,
+[2664.6:2678.92] okay, I see some hello beautiful people and what is the website address he's referring to for the videos.
+[2678.92:2692.6] Okay, the just type one, dda, w, a, n, d, i, d, a and then you end up with, I don't know how many
+[2692.6:2699.08] hundred videos are done at EPFL mainly in my group or by people visiting the group and you will
+[2699.08:2704.6] have all kinds of videos, some of which directly related to this class, you can type a reliable
+[2704.6:2709.4] broadcast uniform or reliable broadcast because of broadcasts. Some of them are in French but most of them
+[2709.4:2712.68] are in English concerning this class. Okay, so one did.
+[2712.68:2726.8399999999997] Okay, good. There is something interesting about the algorithm I just presented, which is you always
+[2726.8399999999997:2733.8799999999997] carry the past with you. You always carry your past. It's a very heavy, very heavy scheme in all
+[2733.8799999999997:2738.6] senses. So whenever you get a message, you get the past of that message and you deliver everything.
+[2738.6:2747.08] Of course, one might argue that this algorithm is not very practical because messages can turn
+[2747.08:2753.64] out to be very heavy. Let's assume you are sending videos and you want to say, oh, I send you a
+[2753.64:2758.52] video and when I get the video, I send another video and somebody who gets that video sends another
+[2758.52:2765.4] video. This means that messages are going to be huge very quickly. There are two ways to address
+[2765.4:2772.52] that issue. One of them is to look at a completely different algorithm. This is what we are going to
+[2772.52:2780.28] see in a minute. The other option is to try to clean the past. Okay, cleaning the past is what we are
+[2780.28:2787.96] going to see here. We keep the same algorithm but we add to that algorithm something I call garbage
+[2787.96:2793.08] collection but it's not garbage collection in the in the classical sense of fetching pointers
+[2793.08:2798.68] and references or whatever. It's garbage collection in a distributed sense. I look at what is not needed
+[2798.68:2806.2] anymore and I remove it. Okay, and this is what we are going to see. But again, our algorithm is correct.
+[2807.08:2812.6] As is, it is correct and this is always the discipline I push you to follow. Try to first get an
+[2812.6:2817.64] algorithm prove it correct and then you can sit and say, oh, but it's not that efficient and now we
+[2817.64:2827.0] are going to improve and this is what we're going to do. And to improve this algorithm, let's make
+[2827.0:2835.0] our life simple and use besides a live broadcast a perfect fairly detect just to make sure we
+[2835.0:2839.0] understand what we're talking about and then we are going to ask ourselves can we remove this
+[2839.56:2846.52] perfect fairly detect. Okay, so here in addition to the two variables delivered and past, I use
+[2846.52:2852.52] the variable correct. Remember that whenever I have a perfect fairly detector, I use this variable.
+[2852.52:2859.08] They usually go together. The fail of the detector tells me who am I supposed to exclude from the
+[2859.08:2865.0] system and basically correct is the variable that tells me this is the system s, the set of process.
+[2866.2:2872.36] I have also another variable here which is acknowledge m and this acknowledge m is somehow a
+[2872.36:2878.1200000000003] dynamic variable in the sense that it's a variable I create for every message. Okay, whenever I see
+[2878.1200000000003:2888.36] a message, I create this variable which I put to empty. Okay, so whenever my fail of the
+[2888.36:2894.76] detector tells me P i has crashed, I remove P i from my variable correct. Okay, let's
+[2894.76:2911.5600000000004] forget this for some time. So here what I'm going to do is in addition to the algorithm I presented.
+[2911.5600000000004:2917.32] So this is not a different algorithm. It's the previous algorithm to which I add something
+[2917.32:2926.04] like inheritance. I inherit the two properties I had before and I add a couple of events. The first
+[2926.04:2932.84] event says whenever for some message that I have delivered, some message is in the set deliver.
+[2934.2000000000003:2941.8] Whenever the variable ack m that I create dynamically whenever I have rb delivered m,
+[2941.8:2950.6000000000004] if myself is not in ack m, which means I have not a acknowledge m, I add myself to ack m and
+[2950.6000000000004:2960.6000000000004] rb broadcast specific message. Okay, good. So what I'm doing here is acknowledging all messages
+[2960.6000000000004:2967.2400000000002] that I have seen. Okay, so whenever I see, whenever I use the word I see, I means whenever I
+[2967.24:2976.04] rb deliver a message, I acknowledge it. Okay, here I say whenever m is in deliver, in fact I could
+[2976.04:2981.8799999999997] do this every hour, every two hours. It doesn't matter. What is what matter is from time to time,
+[2983.0:2989.16] whenever a message is in deliver, I need to acknowledge and acknowledge it one only once. Once I
+[2989.16:2997.72] have done that, broadcasts into all processes and messages telling them I add m, I remove myself from
+[2997.72:3004.44] I put myself from ack, which means I will not do this again. Now I have this other event,
+[3004.44:3012.2] which is somehow companion to this and in this other event what I do is whenever I rb deliver
+[3012.2:3023.24] ack m, which means some process has broadcast ack m and this process is bi, I add bi to the set ack
+[3023.24:3032.52] m and then I do the following test. If all processes whom I believe are correct in my system,
+[3032.52:3041.0] okay, so for all pj in my variable correct, if pj is in variable ack m meaning if I have seen
+[3041.96:3049.8] pj acknowledging m then I remove m from my past. Okay, so what am I doing here? It's basically I'm
+[3049.8:3058.7599999999998] looking at my variable past and I'm removing from it all messages that are useless. They're useless
+[3058.76:3065.32] in the sense that all processes in the set correct are telling me they have seen this message.
+[3065.32:3071.7200000000003] So I don't need to worry about it anymore. Okay, so if I send you a message m later on I send
+[3071.7200000000003:3077.6400000000003] m prime then I put m in the past of m prime. If I send another message m second I put m and
+[3077.6400000000003:3084.0400000000004] m prime in the past of m second. If I send m third I need to put the entire past except
+[3084.04:3092.2] if all processes that are in my set correct tell me well you don't need to send m anymore because
+[3092.2:3100.7599999999998] we have all seen it. Okay, in that case in the future I remove m from the past. Okay, and that way
+[3100.7599999999998:3109.96] I can shrink the variable past and I don't need to send everything that is in the actual past.
+[3109.96:3117.16] So this is just an idea of how I can garbage collect the past and it will be interesting here to see.
+[3117.16:3126.84] Well first I told you that this event here I don't need to do it all the time because this is
+[3126.84:3133.08] expensive. I'll be broadcasting the message whenever I've seen them is expensive. So what I can do
+[3133.08:3141.48] in practice is to say every hour I don't only broadcast one message at a time but I broadcast
+[3141.48:3146.84] all messages that I have seen at the same time. Okay, I do just one broadcast per hour I say I have
+[3146.84:3155.16] seen all these messages. It is also interesting to ask what happens if my failure detector is not
+[3155.16:3161.7999999999997] correct. Okay, what happens if it's not correct? Again, remember a failure detector guarantees
+[3161.8:3170.1200000000003] two properties. It guarantees that if somebody fails everybody knows about it. Okay, and it's also
+[3170.1200000000003:3175.6400000000003] guarantees that if a process if I know about a failure, if I hear about a failure then the
+[3175.6400000000003:3182.2000000000003] failure actually has actually happened. Now I would like you to really think carefully and if it's
+[3182.2000000000003:3186.92] not in the exercises I will try to edit in the exercise and who knows maybe in the exam.
+[3186.92:3195.88] One, what happens in this algorithm if the failure detector property called completeness is
+[3195.88:3202.2000000000003] violated, completeness is the property that says if somebody has failed everybody knows about it.
+[3202.2000000000003:3209.48] So what happens if this property is violated? Meaning if we don't remove somebody from the set
+[3209.48:3216.6] correct where we should have done it. What would happen? Are we going to violate causality or not?
+[3217.8:3222.76] And what happens if it's not the first property of the failure detector that is violated but the
+[3222.76:3229.4] second one, the second one accuracy I defined it a couple of weeks ago says if my failure detector
+[3229.4:3235.56] tells me a process has failed that process has really failed. What if this property is violated?
+[3235.56:3242.68] In other words, what happens if I remove someone from my set from my variable correct and I shouldn't
+[3242.68:3249.0] have done that because that process is actually correct? Am I going to violate causality or not?
+[3250.44:3255.4] Addressing this question will help you really understand the condition and the which
+[3255.4:3261.32] this garbage collection really works. Okay, so this is important. Notice that this algorithm one
+[3261.32:3267.1600000000003] prime is not a standalone algorithm. It's an algorithm that comes as a companion to algorithm one.
+[3267.1600000000003:3273.48] Together they constitute an enhanced force form of algorithm one which was correct by itself.
+[3274.1200000000003:3278.84] Okay, now I'm simply saying we can make it slightly more efficient in terms of
+[3279.2400000000002:3284.6000000000004] sizes of messages by adding algorithm one prime but we are also adding the assumption of the
+[3284.6:3293.08] perfect failure detector. Do we really need it? Okay, so try to remember this question. I don't
+[3293.08:3298.6] remember whether you will have it as an exercise or not. If you don't, please try to do it yourself.
+[3300.04:3311.16] Okay, good. Now we are going to spend a completely different class of algorithms. I told you
+[3311.16:3318.44] that today people use the two kinds of algorithms. The first kind is transporting the past in
+[3318.44:3323.8799999999997] some form of or another but you have the actual past. You can clean it, you can do some
+[3323.8799999999997:3330.68] optimizations or whatever but you have the past. Now we are going to see a completely different
+[3330.68:3337.16] causal order broadcast algorithm. Okay, so this this form of causal order broadcast algorithm has
+[3337.16:3343.8799999999997] a huge advantage with respect to the previous one but it also has a drawback. There is no free
+[3343.8799999999997:3351.24] lunch. The previous algorithm as I said earlier in the slides is non-blocking. What does it mean
+[3351.24:3358.8399999999997] that it's non-blocking? It means whenever I reliably deliver a message I can immediately
+[3358.8399999999997:3365.48] cause a delivery. Of course, immediately means I just need to execute some local computation
+[3365.48:3373.4] and this is what I do in this in this algorithm here. Whenever I'll be delivered a message M,
+[3374.04:3380.76] I have only some local computation. I just check if I have delivered it or not and if I did not
+[3380.76:3386.36] deliver it, I have to deliver its past and then I deliver the message. Okay, I don't wait for
+[3386.36:3397.56] any other external event. So this is important. It's called non-blocking in this sense. It is non-blocking
+[3397.56:3406.92] but I have to pay the price of huge messages. So now what if we don't want to broadcast pasts
+[3406.92:3414.52] either because messages are huge and because let's say I don't have a perfect credit detective
+[3414.52:3420.52] so I cannot clean the past. So we don't want to send the past. We just want to send one message
+[3420.52:3426.44] at a time with just some information. Okay, with just minimal information, some encoding.
+[3427.64:3436.2] And here, Lampports and later on, what is his name? Yeah, Matern, who is a professor now at ETH,
+[3436.2:3445.3199999999997] they came with a great idea. And this idea basically consists in, I'm going to give you the intuition
+[3445.3199999999997:3454.12] before giving you the algorithm, consists in basically encoding the past of the messages in a way
+[3454.12:3461.08] that doesn't really contain the messages but simply informs the processes. Be careful. You have to
+[3461.08:3468.44] wait for one message from P1, two messages from P2, three messages from P3 before delivering
+[3468.44:3475.48] this actual message. Okay, so just an information telling processes, be careful. Don't deliver
+[3475.48:3483.4] this message immediately plus it gives them information about the conditions or the messages
+[3484.12:3488.84] they need to wait for. It doesn't tell them what these messages are because otherwise we are
+[3488.84:3495.2400000000002] back to algorithm one. It simply tells them, be careful. There are some messages missing from P1,
+[3495.2400000000002:3500.6800000000003] some messages missing from P2 before you could actually deliver that message. This is the intuition.
+[3500.6800000000003:3506.84] It uses something called vector clocks. This encoding I'm talking about is called vector clocks.
+[3507.6400000000003:3514.52] But therefore it's not big messages as I will explain. However, it's a blocking algorithm
+[3514.52:3520.52] because we need to wait for messages that we are missing. Okay, so let's, let me give you this algorithm.
+[3520.52:3526.28] It's a great algorithm. It's quite simple. I believe I hope I will assume that you will all
+[3526.28:3534.28] digest this algorithm. So here the main variable I have is called vector clock. It's an array.
+[3534.28:3542.44] Okay, so for all PA in S, I have vector clock, PA equals zero. So vector clock is a vector, a vector
+[3542.44:3550.36] of size n if n is the set of the system is the size of the system and initially and I have every
+[3550.36:3557.16] index of this vector clock is would respect to one process. So I have vector clock P1, vector
+[3557.16:3566.52] clock P2, etc. And this is for every process. Okay, so process P3 has a VC array and this VC array
+[3566.52:3573.8] has element 1, 2, 3, 4, 5. This project P2 has also this vector clock. So every process has a
+[3573.8:3582.6] vector clock of size n. And then I have a viable tending equals empty set.
+[3585.16:3594.44] What is this? Okay, let me move. Good. So when I ask you broadcast, n, what do I do?
+[3594.44:3602.84] I deliver the message m myself. I immediately deliver the message m. Okay, good. This is as we say,
+[3602.84:3610.04] Samosh Patpa, I deliver the message myself. Because in a broadcast system, everybody should
+[3612.12:3620.52] deliver a message, including myself. And then I broadcast the message m. But now I don't broadcast
+[3620.52:3625.96] the past of the message. I don't have a viable past. I broadcast my vector clock.
+[3626.92:3635.24] My vector clock is an encoding of what I have done of how many messages I broadcast or I
+[3635.24:3642.36] delivered from every process. Okay, so this is crucial. And then I encode the fact that I have just
+[3642.36:3650.44] broadcast m and delivered m. Okay, so I to broadcast m, I first deliver m and I actually
+[3650.44:3659.32] are the broadcast m with my vector clock. And I encode the fact that I have just delivered one more
+[3659.32:3665.88] message. Okay, so I just record the number of messages I have delivered.
+[3669.32:3678.2000000000003] Now, when a process are the delivers from a process pj, this kind of message, meaning a message
+[3678.2:3685.0] of type data, m with vector clock n, this means that the process we are talking about here,
+[3685.64:3692.2] delivers a message n. And this message comes with a vector clock. The vector clock of what? The
+[3692.2:3700.04] vector clock of the process pj. It's not the vector clock of the process pj at the same at this
+[3700.04:3707.08] very moment. No, it's the very vector clock of process pj when pj has broadcast m. If it had
+[3707.08:3714.36] broadcast m one hour ago, the vector clock of m would be the vector clock as it was one hour ago.
+[3715.48:3721.08] Now, when I deliver m, I have the vector clock of m meaning the vector clock of pj. What is
+[3721.08:3731.88] broadcast m? Okay, so now, what do I do? I first see, it's pj myself. Okay, because as we have
+[3731.88:3736.84] seen here, when I then broadcast a message, I first deliver it. So I first check, is this
+[3736.84:3742.76] myself? If it's not, if it's not myself, if it is myself, I directly deliver the message.
+[3743.8:3750.36] If this is myself, then I do something we didn't see that much before, but we're going to see
+[3750.36:3756.44] here. I put in a variable I call pending. Intuitively, pending means these are messages that are
+[3756.44:3763.32] pending. I should at some point deliver them. Okay, at some point. I add in my variable pending,
+[3763.32:3770.04] the content of the variable plus this new message I just received and the vector clock of m
+[3770.04:3778.04] and the source. Now, I have a specific action, the river pending. What is this the river pending?
+[3779.0800000000004:3784.52] This is just for modularity. I could have put it here, okay, but just for modularity, I just
+[3784.52:3792.12] put it here. Just you can take this and put it here. Doesn't make a difference. So what do I do here?
+[3794.84:3800.52] Procedure delivery pending is what I should have done in the previous slide. I go through all,
+[3801.72:3808.36] okay, so while I take every message in pending and I do the following.
+[3808.36:3819.0] Okay, for all processes PK, okay, for all processes PK in the system, if this day of PK,
+[3819.0:3823.96] which means my vector clock, this is my vector clock, this is the vector clock of the process
+[3823.96:3832.04] executing this. If it is bigger, then the vector clock in the message for process PK.
+[3832.04:3841.4] What does this mean? So assume I am P3 and here PK is process 1. What I'm doing is
+[3842.84:3849.72] my vector clock at process PK of process 1, okay, which means what I have seen directly from
+[3849.72:3859.56] process 1, the number of messages I delivered from process 1 is bigger or equal to what PK,
+[3859.56:3866.36] what the message M is telling me about P1, okay, so this is P1 and this is the vector clock of the
+[3866.36:3877.88] message. So if this vector clock tells me this value is 2, sorry, this value is 2 and I have seen
+[3877.88:3886.2799999999997] only one. This means that I'm missing a message from P1 and I should wait. If the both of them are
+[3886.28:3891.4] equal, this means that I'm missing and I'm not missing anything. If this is bigger, this is
+[3891.4:3899.32] this means that I'm ahead, I have seen more messages. If I am ahead or equal, this means that I'm
+[3899.32:3906.1200000000003] missing I'm not missing anything, then what I do is pending, I remove from variable pending,
+[3906.1200000000003:3913.96] message M and I deliver it. This means that I'm not missing anything. I include, I update my vector
+[3913.96:3921.7200000000003] clock by saying I have delivered one more message from process S. So let's summarize here what we
+[3921.7200000000003:3934.04] are doing. Whenever I deliver a message M, I look at my vector clock because I want to see if I'm
+[3934.04:3941.96] not missing any message in the past of M. How do I know if I'm missing any message in the past of
+[3941.96:3949.64] M or not? I look at the vector clock of M. The vector clock of M, remember, is actually an encoding
+[3949.64:3955.88] of the past of M. It doesn't contain the past. It simply says in the past of M there are two processes
+[3955.88:3963.08] from P1, three processes from P2 and so forth. I compare that with my own encoding of the past
+[3963.08:3973.0] and if for every process in the system, my vector clock tells me I'm not missing anything in the past
+[3973.0:3979.48] of M as long as the messages are concerned, the number of messages I'm concerned, this means
+[3979.48:3987.7999999999997] that I'm safe and not missing anything in the past of M. It is important to realize that the first
+[3987.8:3995.7200000000003] process, the first message of Mp1 is the same for everyone, the second message of P1 is the same
+[3995.7200000000003:4002.2000000000003] for everyone and so forth. They are not two different second messages of P1. If I realize that the
+[4002.2000000000003:4008.76] number of messages I have delivered from P1 is bigger than what I see in the past than I'm fine.
+[4008.76:4013.8] I can easily go and deliver it. I'm going to give you an example because this might look
+[4013.8:4024.76] too abstract. Let's look at a couple of examples and again the best way to do it, to do this besides
+[4024.76:4030.2000000000003] looking at the other video on the course of broadcast, please try to do these things yourself.
+[4031.8:4036.6800000000003] Let me take an example where I have two processes and please ask you to focus, we are almost done.
+[4036.68:4045.3199999999997] 1. Process P1, broadcast M1 and then process P1, broadcast M2 again. This means that when
+[4045.3199999999997:4052.68] process P1, broadcast M1, there is no past here, ok? Vector clock is 0, 0, 0, which means that
+[4052.68:4062.3599999999997] there is nothing in the past of M1. However, when process P1, broadcast M2, now it sends with M2,
+[4062.36:4072.2000000000003] it's encoding of the past of M2. The encoding of past of M2 is 1, 0, 0. What does that mean?
+[4072.2000000000003:4081.08] It means when process P1 has broadcast M, it knows that there was another process by P1,
+[4081.08:4090.04] which was broadcast. The fact that this and this are zero simply means P1 did not deliver from P2
+[4090.04:4096.92] any message before broadcasting M2 and P1 did not deliver from P3 any message before broadcasting M2.
+[4096.92:4102.76] The only thing in the past of M2 is a message from P1. I don't need, P1 does not need to put M1,
+[4102.76:4112.2] simply says there is a message from P1. So, when P2 delivers M1, it executes this here,
+[4112.2:4122.679999999999] is my VC of P1 bigger or equal than the vector clock. Of course, because they are all 0, 0, 0, 0, 0. So,
+[4122.679999999999:4133.5599999999995] everything is fine, it delivers this. Very good. When P2 delivers M2, here M2, it checks.
+[4134.679999999999:4141.72] Oh, the causal past of M2 contains one message from P1. Oh, but I did already deliver a message
+[4141.72:4149.64] for P1. Okay, so this means that this value at process P2 is going to be 1 and this value is going
+[4149.64:4156.2] to be 1. So, this is all fine, it can deliver M2 because it did deliver already a message of M1.
+[4156.92:4166.52] The interesting case is P3. When P3 out are be delivered M2, it are be delivered with this vector
+[4166.52:4179.72] 1, 0, 0. So, here P3 executes this algorithm and for Pk for K equals 1, Vt at P3 is 0.
+[4181.0:4191.4800000000005] It is not bigger than this, which means that P3 does not, is not going to deliver this message
+[4191.48:4201.08] in. It puts it into variable pending and doesn't touch it anymore. It's only here when P3
+[4202.04:4207.879999999999] are be delivered this message with vector clock 0, 0, 0 and satisfies this property
+[4209.24:4219.959999999999] that P3 delivers M1. And when P3 delivers M1, it increments its value or index one of this
+[4219.96:4227.4800000000005] vector clock. So, this is going to be 1 and now it is ready to deliver this message as well because
+[4229.24:4236.68] the delivery pending is going to enable P3 to deliver this message. This is exactly what's
+[4236.68:4243.08] happening here. So, it's going to deliver M1 and now it can deliver M2. Let's look at another example.
+[4243.08:4251.72] This example conveys the the five form of causality. This message comes after this message.
+[4251.72:4257.72] Therefore, this vector clock includes the action of sending this message. In this case,
+[4258.76:4268.04] the vector clock is 1, 0, 0 here because P2 when it delivers M1, it broadcasts M2 and now M2 has
+[4268.04:4277.88] vector clock 1, 0, 0, 0 here. P3 delivers this message again here but are be delivered but cannot
+[4277.88:4285.24] arseil deliver because it is lacking, it knows it is lacking a message. So, it should not
+[4285.24:4290.2] deliver this message. It's only when it gets this message that it can now deliver this message.
+[4290.84:4297.16] So, I hope this is clear. But again, please go and try to get this examples yourself.
+[4297.16:4305.72] One interesting question that I ask you to think about is, why do we put bigger or equal? Why
+[4305.72:4312.12] don't we say equal? You can think in these two examples I have been taking, you get messages
+[4312.12:4319.72] either your vector clock is up to date or it is late. It is never ahead. Try to ask yourself,
+[4319.72:4327.64] are there situations where this vector can be strictly bigger? Why are we handling this case of
+[4328.68:4334.68] superior or equal? Try to do that yourself. Try to think and convince yourself why all these
+[4335.240000000001:4340.280000000001] exercises, if they are not done by the TAs, are in this book. So, you can find the solutions but
+[4340.280000000001:4346.6] it will really help you do the exercise yourself without looking at the solutions by the TAs or in the book.
+[4346.6:4348.6] Okay.
+[4348.6:4368.6] Okay. I will stop the recording here and

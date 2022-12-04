@@ -1,0 +1,634 @@
+~CS-401 Lecture 2
+~2022-09-28T15:22:30.978+02:00
+~https://tube.switch.ch/videos/AfmqfqU9zZ
+~CS-401 Applied data analysis - Fall 2022
+[0.0:2.6] Okay, so welcome to ADA lecture two.
+[2.6:6.1000000000000005] Today we'll start diving into the material.
+[6.1000000000000005:10.1] We'll talk about first steps in the data processing pipeline,
+[10.1:11.700000000000001] how to handle data.
+[11.700000000000001:15.700000000000001] Before we dive in, just a few housekeeping items,
+[15.700000000000001:19.2] reminder to just your teams of four people
+[19.2:22.1] by Friday, 7th of October.
+[22.1:25.5] That is not this Friday, but Friday in a week.
+[25.5:29.2] Each team member must complete this form individually.
+[29.2:32.9] So four times per team.
+[32.9:36.5] We'll get started with the project soon also.
+[36.5:43.0] So the milestone one will be released in a couple of weeks
+[43.0:45.7] from now, so Friday in two weeks actually.
+[45.7:48.7] Then reminder about the quiz.
+[48.7:53.4] The first quiz will be held this Friday in the lab session,
+[53.4:55.6] the first 15 minutes of the lab session.
+[55.6:59.0] This Friday's quiz will be kind of a hoax quiz, right?
+[59.0:60.1] A mock quiz.
+[60.1:62.3] There are no real technical questions,
+[62.3:65.3] but you should still do it because this will let you figure out
+[65.3:68.9] how the system works on Moodle and whether there are any
+[68.9:70.4] technical glitches and so on.
+[70.4:74.4] So definitely come and do this quick naming convention.
+[74.4:76.9] Last week I called this Q zero.
+[76.9:80.1] I realized that Q1 is a much better name for it
+[80.1:85.2] because this way the quiz I is always about the material
+[85.2:87.5] from lecture I, okay?
+[87.5:91.1] But it will be held in lecture I plus one because we always have
+[91.1:94.4] a quiz about the material from the week before.
+[94.4:98.4] So Q1 will be about lecture one lecture one didn't have
+[98.4:99.7] any technical content.
+[99.7:104.7] So Q1 will also not have any technical content.
+[104.7:107.6] And do come to Friday's lab session.
+[107.6:112.0] We are aware that it was very full last time.
+[112.0:116.9] So some people gave us feedback.
+[116.9:120.60000000000001] On that we are monitoring the situation and if we need a
+[120.60000000000001:123.5] big room, we cannot find a big room,
+[123.5:125.60000000000001] but we can find more rooms.
+[125.60000000000001:127.30000000000001] So we will see about that.
+[127.30000000000001:132.70000000000002] But in our experience attendance of the lab sessions has gone
+[132.70000000000002:134.5] down with the semester.
+[134.5:136.5] I'm not encouraging you to not come.
+[136.5:140.1] I encourage you to come, but we'll see what the real world
+[140.1:142.3] is like and we will then adapt to that.
+[142.3:146.5] But I'm not going to make any decisions after week one.
+[146.5:150.1] Okay, so as last time, please send us your feedback.
+[150.1:153.6] There was already some useful feedback in week one.
+[153.6:155.2] I'm always reading this.
+[155.2:157.7] So please keep it coming.
+[157.7:161.0] So data science is a bit like cooking.
+[161.0:165.0] That's the analogy that will guide us through today's.
+[165.0:168.8] Lecture you start from raw ingredients and then you turn
+[168.8:170.8] them into something useful and tasty.
+[170.8:174.6] So in the case of cooking, it's a delicious meal at the
+[174.6:175.9] end and in the case of data science,
+[175.9:177.6] it's it's insights.
+[177.6:179.6] You turn raw data into insights.
+[179.6:185.1] In the case of cooking, it would become a sum to go to the
+[185.1:188.5] field and pick apples or milk a cow or slaughter a cow.
+[188.5:191.1] Every time you want to cook a meal, right?
+[191.1:195.20000000000002] So instead you go to the store and there the ingredients are
+[195.20000000000002:198.4] systematically shelved or they're even partly pre-processed
+[198.4:200.8] for you and it's the same for data.
+[200.8:203.0] You don't always go back to the raw data,
+[203.0:206.2] but you want to organize your day useful formats into
+[206.2:208.7] immediate formats that can then service input to the
+[208.7:212.3] various downstream analysis.
+[212.3:215.7] So in the parlance of the 90s or early 2000s,
+[215.7:219.4] we're also speaking of data warehouses in that sense
+[219.4:222.7] because it's really like you go to a shop and there all the
+[222.7:226.0] data's there and just to pick it up from the chefs.
+[226.0:230.4] So today's lecture will be divided in three parts.
+[230.4:235.1] First we talk about the structure of those data warehouses.
+[235.1:238.4] So this is the topic of data models.
+[238.4:242.1] How do you want to model and store your data?
+[242.1:247.5] Then we'll have part two about data sources and then in the
+[247.5:249.8] third part we'll talk about data wrangling,
+[249.8:252.8] which is basically refers to these red arrows.
+[252.8:256.0] How do you go from the raw data sources to data that is
+[256.0:259.1] better organized and then how do you process that data
+[259.1:261.5] in order to derive insights?
+[261.5:263.5] By the way, is the mic too loud?
+[263.5:266.8] Should I turn it down or how is it?
+[266.8:267.70000000000005] It's good.
+[267.70000000000005:269.70000000000005] Yeah, okay.
+[269.70000000000005:273.20000000000005] Okay, let's get started with part one data models.
+[273.20000000000005:276.0] So what does Wikipedia have to say about data models?
+[276.0:278.8] Wikipedia says a data model is an abstract model that
+[278.8:282.20000000000005] organizes elements of data and standardizes how they relate
+[282.20000000000005:285.8] to one another and to the properties of real work entities
+[285.8:287.0] and so on and so on.
+[287.0:290.2] So you can have a lot of theory about data models and so on.
+[290.2:294.2] So that you'll get in your data by base class here with
+[294.2:298.1] more follow Bob's definition, which simply says that a data
+[298.1:301.2] model specifies how you think about the world.
+[301.2:302.9] Okay.
+[302.9:306.1] So in other words, what aspects of the world do we want to
+[306.1:308.5] take into account in your analysis?
+[308.5:311.1] The word has many aspects and about most of them you don't
+[311.1:312.8] care most of the time.
+[312.8:315.0] For example, if you're a data scientist Facebook,
+[315.0:318.0] then you might think of the world as a set of people that
+[318.0:321.2] are connected via symmetric friendship links.
+[321.2:325.9] In reality, friendship might not be symmetric, right?
+[325.9:328.7] You might have a stalker who thinks they're your friend,
+[328.7:330.3] but you don't think they're your friends.
+[330.3:332.7] But if you're that Facebook data scientist,
+[332.7:338.6] then your model of the world is that friendship is symmetric.
+[338.6:342.6] And then you also don't care about modeling all types
+[342.6:344.90000000000003] of properties about these people.
+[344.90000000000003:346.40000000000003] Do you care about their gender?
+[346.40000000000003:347.90000000000003] Do you care about their age?
+[347.90000000000003:349.70000000000005] Yeah, maybe do you care about their shoe size?
+[349.70000000000005:350.70000000000005] Maybe not so much.
+[350.70000000000005:352.3] And so that's part of your data model,
+[352.3:354.5] which aspects do you care about?
+[354.5:357.5] And you choose that and you need to be wise here to
+[357.5:360.1] include the things that are relevant while excluding
+[360.1:362.5] the things that are irrelevant because they would
+[362.5:366.1] complicate your analysis.
+[366.1:369.5] So the question with data models is how do you think
+[369.5:370.70000000000005] about the world?
+[370.7:373.7] And if someone asks you that question, then a very good
+[373.7:376.09999999999997] way to answer it is by staying here.
+[376.09999999999997:378.4] Look at my entity relationship diagram.
+[378.4:382.3] Who has seen entity relationship diagrams before?
+[382.3:385.5] OK, so these should be roughly the people who took a
+[385.5:386.8] class in databases.
+[386.8:392.3] I guess if you haven't seen entity relationship diagrams,
+[392.3:395.3] don't worry, we're not really going to build on them in
+[395.3:398.2] the class, but I want to give you this as a useful tool
+[398.2:401.2] to write down how you think about the world.
+[401.2:403.59999999999997] And so this is a useful thing to do at the beginning of
+[403.59999999999997:406.0] your data analysis pipeline.
+[406.0:408.7] So here in this example, we have an entity relationship
+[408.7:418.3] diagram to model a company where you have these gray
+[418.3:421.09999999999997] rectangular nodes, they are entities.
+[421.09999999999997:422.9] OK, so these are entities.
+[422.9:424.5] We have clients.
+[424.5:426.9] We have branches of the company.
+[426.9:430.7] Then we also have these yellow diamonds.
+[430.7:432.7] They are relationships.
+[432.7:436.29999999999995] So that is relationships between entities.
+[436.29999999999995:442.4] For example, employees can be in relationship with clients.
+[442.4:444.4] And the relationship is called works with.
+[444.4:446.5] An employee can work with a client.
+[446.5:448.7] And you see there are also cardinalities.
+[448.7:452.09999999999997] And this means that each employee can work with several
+[452.09999999999997:454.59999999999997] clients and every client can work with several employees.
+[454.6:457.6] And these numbers don't have to be the same.
+[461.1:464.8] And then finally, entities can have attributes.
+[464.8:469.70000000000005] So a client has an ID, has a name, has a full size, has an
+[469.70000000000005:471.6] age, and so on.
+[471.6:476.6] And you can include all those that matter here.
+[476.6:482.6] And there is more nuance like the double versus the single
+[482.6:487.1] lines and the red versus the blue attributes and so on.
+[487.1:489.40000000000003] I won't go into the details there.
+[489.40000000000003:492.70000000000005] Just maybe quickly the red attributes are keys.
+[492.70000000000005:499.20000000000005] So those are attributes that uniquely identify the entity.
+[499.20000000000005:502.3] There's a very concise way of writing down how you think
+[502.3:503.1] about the world.
+[503.1:504.6] What's not in the diagram?
+[504.6:508.6] You don't care about what's in the diagram you care about.
+[508.6:512.58] OK, so this entity relationship diagram, you can
+[512.58:513.88] think of it as abstract.
+[513.88:515.38] It's like math.
+[515.38:519.88] It's like not really, it doesn't speak to how you store your
+[519.88:521.2800000000001] data in a computer.
+[521.2800000000001:524.1800000000001] It's really just how you think about the world and how you
+[524.1800000000001:526.38] manifest that inside of computer.
+[526.38:528.2800000000001] That is yet another question.
+[528.2800000000001:531.58] So it's kind of an orthogonal implementation question.
+[531.58:532.7800000000001] So now let's look at the question.
+[532.7800000000001:535.38] How should I store my data on a computer?
+[535.38:537.7800000000001] And to answer that question, you should go back to the
+[537.7800000000001:539.38] fundamental question.
+[539.38:540.7800000000001] How do I think about the world?
+[540.78:544.18] Because that should guide how you store your data on a
+[544.18:545.68] computer.
+[545.68:553.28] And so here are four different ways of storing your data on a
+[553.28:553.78] computer.
+[553.78:557.98] And we'll go through those in the first part of the lecture.
+[557.98:562.78] So we start with the flat model, which says that the world
+[562.78:565.5799999999999] is simple.
+[565.5799999999999:566.98] It's flat.
+[566.98:570.5799999999999] There's only one type of entity and all those entities
+[570.58:572.1800000000001] have the same attributes.
+[572.1800000000001:574.2800000000001] Actually, maybe I can give a quick whirlwind tour before we
+[574.2800000000001:576.38] dive into each of them.
+[576.38:581.48] The next more complicated way of thinking about the world
+[581.48:584.38] would be that the world contains many types of entities,
+[584.38:586.1800000000001] not just one single type.
+[586.1800000000001:589.1800000000001] And those entities can be connected by relationships.
+[589.1800000000001:591.48] If that's how you think about the world, then the best
+[591.48:596.6800000000001] way to store your data is in a relational model.
+[596.68:602.4799999999999] If you think about the world as a hierarchy of entities, then
+[602.4799999999999:604.88] the document model is well suited.
+[604.88:608.5799999999999] If you think about the world as a complex network of entities
+[608.5799999999999:612.4799999999999] that can be connected in arbitrary ways, then rather than
+[612.4799999999999:616.0799999999999] only a tree like in the document model, then the network
+[616.0799999999999:617.18] model is best suited.
+[617.18:619.18] OK, but we go through those in order.
+[619.18:622.9799999999999] We start with the flat model.
+[622.98:627.58] A typical example of data that's stored in a flat model
+[627.58:629.08] would be log files.
+[629.08:632.38] Like, for example, server log files from the Apache web
+[632.38:634.48] server, which you're interacting with every day.
+[634.48:640.58] Most web servers are Apache web servers and also
+[640.58:648.1800000000001] called HTTP, HTTP, so the distance for demon HTTP, HTTP,
+[648.1800000000001:650.98] demon because it runs in the background.
+[650.98:652.78] And those servers generate data.
+[652.78:656.5799999999999] Whenever someone requests a file from the server, a new
+[656.5799999999999:658.5799999999999] row is stored in the server logs.
+[658.5799999999999:662.78] And this is what these files look like.
+[662.78:665.48] At first side, maybe a bit cryptic, but at a second look,
+[665.48:666.48] they make a lot of sense.
+[666.48:668.38] Here you have an IP address.
+[668.38:671.18] It's the IP address of the user who requested the page.
+[671.18:672.68] Then there are two undefined values.
+[672.68:674.5799999999999] I don't know what those are about.
+[674.5799999999999:676.28] You have the timestamp.
+[676.28:680.88] You have the actual command that was sent by the browser
+[680.88:687.48] to the server, the return code, and so on.
+[687.48:692.48] So this is not really a database because there aren't
+[692.48:695.28] those nice properties like having a schema and having
+[695.28:698.78] consistency across different files.
+[698.78:700.78] Although it really looks like a database.
+[700.78:703.78] You can think of this as kind of a ghetto database,
+[703.78:709.28] without all the technical nice amenities that the database
+[709.28:711.68] offers, the data is pretty much stored like in a table
+[711.68:714.28] in a database with different columns
+[714.28:718.88] corresponding to different attributes of the data.
+[718.88:721.5799999999999] Coming from the other side of the spectrum,
+[721.5799999999999:723.78] you could think of this as benevolently formatted
+[723.78:726.78] plain text files because there are stored as plain text files
+[726.78:730.0799999999999] on a computer, but they have nice format.
+[730.0799999999999:735.0799999999999] It's not just random text, but it's actually you can write
+[735.0799999999999:737.48] a simple script that would parse those and then you have
+[737.48:740.88] your data pretty much in a form as though you had gotten
+[740.88:743.48] it from a database.
+[743.48:747.6800000000001] Benevolent with formatted is in the eye of the beholder
+[747.6800000000001:750.28] though because you see that this is a bit,
+[750.28:753.88] it's not super easy to parse because here the fields
+[753.88:756.58] are separated by a white space.
+[756.58:759.28] But then in here there is a white space tool,
+[759.28:761.08] but it doesn't separate the fields.
+[761.08:763.38] You have to actually take the stuff between the square
+[763.38:766.38] brackets as the entire timestamp, but then the next
+[766.38:768.78] field is not demarcated by square brackets,
+[768.78:771.08] but by quotation marks.
+[771.08:774.28] So it's still a bit cumbersome,
+[774.28:779.58] but there's a unique way of mapping this to a table
+[779.58:782.48] of attributes basically.
+[782.48:785.78] Something more benevolent would be comma separated vectors
+[785.78:787.28] or tap separated vectors.
+[787.28:790.18] Okay, so this is the flat model because there is only one
+[790.18:794.78] type of entity, namely in this case requests to the server
+[794.78:798.18] and every entity is one line of the file.
+[798.18:801.68] So that's about the simplest format.
+[801.68:804.78] This is about the simplest way in which you can store data
+[804.78:807.48] on your computer.
+[807.48:810.0799999999999] So let's ramp it up a notch.
+[810.0799999999999:812.68] The next step up would be to think of the world
+[812.68:815.18] not as consisting of a single type of entity,
+[815.18:818.18] but of multiple types of entities.
+[818.18:823.28] And those can be connected by relationships now.
+[823.28:825.18] Note also that in the flat model,
+[825.18:827.98] there were no relationships between those entities, right?
+[827.98:831.98] It was just a set of entities.
+[831.98:837.48] So the relational model is actually ubiquitous.
+[837.48:840.5799999999999] You are interacting with it again every day
+[840.5799999999999:844.68] because it is the model that underlies relational databases
+[844.68:847.88] such as my SQL post-cress, QL,
+[847.88:850.48] Oracle, SQLite and so on.
+[850.48:853.78] Who has worked with any of these?
+[853.78:856.28] Okay, so a lot have worked with them.
+[856.28:857.78] Everyone has used them.
+[857.78:860.1800000000001] So it's important to know about them.
+[860.1800000000001:862.6800000000001] So in the relational model,
+[862.6800000000001:866.58] all data is stored in tables.
+[866.58:869.58] And those tables are also called relations.
+[869.58:872.78] Now it's a bit confusing because those relationships,
+[872.78:876.08] the rows of these relations can represent entities
+[876.08:878.1800000000001] as well as relationships.
+[878.18:881.0799999999999] So this is maybe it's better if I don't call them relations,
+[881.0799999999999:882.38] but I just call them tables.
+[882.38:884.38] Okay, so we have tables.
+[884.38:886.78] Some of the tables can represent entities.
+[886.78:889.38] Some of the tables can represent relationships
+[889.38:890.28] between the entities.
+[890.28:891.78] You have an example here.
+[891.78:896.4799999999999] The top table has one row, one entry per president.
+[896.4799999999999:898.4799999999999] I guess you see I made these slides a while ago.
+[898.4799999999999:902.28] There should be a different one in there now as well.
+[902.28:904.28] So one row per president.
+[904.28:908.5799999999999] And now the second table specifies relationships
+[908.5799999999999:912.88] between specifies relationship between those presidents.
+[912.88:916.5799999999999] There is one row per.
+[916.5799999999999:922.18] Her predecessor predecessor successor here of presidents.
+[922.18:925.98] So each president is identified by a unique ID.
+[925.98:930.68] And if president I is the success.
+[930.68:939.0799999999999] If if if the president in the right column is the successor
+[939.0799999999999:940.38] of the president left column,
+[940.38:943.68] then there will be a row that has those two IDs in it.
+[943.68:947.88] Okay, so this second table ties together rows of the first table.
+[947.88:951.28] But everything is a table, both the entities and the relationships
+[951.28:952.28] are stored as tables.
+[952.28:957.68] To process data in a relational model,
+[957.68:962.68] we have a very powerful tool called SQL or SQL,
+[962.68:965.68] which stands for structured query language.
+[965.68:968.68] So you think of this as the interface for doing stuff
+[968.68:970.48] with relational data.
+[970.48:974.68] So it's an extremely rich language.
+[974.68:979.0799999999999] And it's actually a lot of fun to puzzle together large queries
+[979.08:982.48] that do exactly what you want.
+[982.48:987.48] What's nice about SQL is that it's a declarative programming
+[987.48:992.6800000000001] language as opposed to a procedural or imperative programming
+[992.6800000000001:994.6800000000001] language.
+[994.6800000000001:997.6800000000001] You just tell SQL what you want.
+[997.6800000000001:1001.48] You don't need to tell it how you want to obtain.
+[1001.48:1004.6800000000001] So you basically specify the result you want to get.
+[1004.68:1009.0799999999999] But you don't need to specify how that result is computed.
+[1009.0799999999999:1010.28] You think about what you want,
+[1010.28:1012.0799999999999] not about how to compute it.
+[1012.0799999999999:1014.68] To make this point a bit more clear,
+[1014.68:1016.88] I have an example on this slide.
+[1016.88:1020.4799999999999] So imagine that you have two tables.
+[1020.4799999999999:1025.48] One of them has information about dogs and the other table has
+[1025.48:1037.68] information about dog owners and the table about dog owners
+[1037.68:1040.88] has IDs and names of the dog owners.
+[1040.88:1045.88] And the table of dogs has dog names and owner IDs,
+[1045.88:1047.48] but no owner names.
+[1047.48:1051.28] And now you want to add the owner names to each dog.
+[1051.28:1054.28] You want to know for each dog who's the name of the owner.
+[1054.28:1060.48] And then in SQL, you can do this really in one line.
+[1060.48:1063.8799999999999] This is just broken up in three lines because it's a bit easier
+[1063.8799999999999:1064.8799999999999] to read.
+[1064.8799999999999:1068.48] But you would have the select statement that joins together the
+[1068.48:1078.08] two tables, dogs and owners such that the ID in the dog table
+[1078.08:1080.8799999999999] matches the ID in the owner table.
+[1080.8799999999999:1083.68] And that way you merged the information from the two tables.
+[1083.68:1086.48] Now that you just tell SQL what you want,
+[1086.48:1089.88] you say, I want those two tables to be merged.
+[1089.88:1091.68] You don't say how to do it.
+[1091.68:1094.68] Like have a double loop go through this table and then go through
+[1094.68:1098.28] the other table and see if the two IDs are the same.
+[1098.28:1101.0800000000002] That's how you would have to do it if you wanted to write it down
+[1101.0800000000002:1105.0800000000002] in a belief this is JavaScript or if it was in Python or C or
+[1105.0800000000002:1106.68] Java would be the same.
+[1106.68:1109.28] You would have to say how you actually want to do it.
+[1109.28:1112.28] This way, everything becomes much longer.
+[1112.28:1114.48] It's harder to read if I just show you this text you wouldn't
+[1114.48:1116.48] really know immediately what it does.
+[1116.48:1118.48] You could analyze it and then you would know, but it would
+[1118.48:1121.28] take you quite some time to figure out what this text, what
+[1121.28:1122.28] this code does.
+[1122.28:1126.28] Here it's very obvious, you know exactly what will come out of
+[1126.28:1127.28] this.
+[1127.28:1129.8799999999999] So it's more understandable.
+[1129.8799999999999:1131.48] It's easier to write.
+[1131.48:1135.28] It's easier to maintain and you don't have to care about the
+[1135.28:1138.68] low level aspects about what's the best way of computing the
+[1138.68:1140.28] result in SQL.
+[1140.28:1143.08] There will be a query engine that optimizes this for you
+[1143.08:1144.08] automatically.
+[1144.08:1149.28] So here, many advantages of doing things that declarative way
+[1149.28:1153.68] rather than the imperative way.
+[1153.68:1156.8799999999999] You should know the basics of SQL.
+[1156.8799999999999:1160.68] You should know it from your prerequisite.
+[1160.68:1165.28] If you do not, my personal take would be that this is not
+[1165.28:1166.8799999999999] going to be the end of the world.
+[1166.8799999999999:1169.08] I would recommend you to brush up.
+[1169.08:1174.08] Go look at a tutorial online and just you don't have to go
+[1174.08:1178.8799999999999] into all the details, but you should know the key concepts.
+[1178.8799999999999:1180.6799999999998] What are the key concepts?
+[1180.6799999999998:1186.08] What is what would I consider the key concepts is how to
+[1186.08:1191.08] select data from a relational database, how to update and
+[1191.08:1192.08] delete.
+[1192.08:1195.28] Then the concept of unique keys, definitely the concept of
+[1195.28:1198.76] theEST Tyde hey, in your folder and where a key ok right
+[1198.76:1202.52] in your reader connected crypto API something or whatever
+[1202.52:1204.0] problem it can have.
+[1204.0:1206.04] That's exactly the same.
+[1206.04:1211.48] A key okay, let's go back to the current code Ч and
+[1211.48:1214.48] another key.
+[1214.48:1218.68] So where did the other key DO that in the prior expression?
+[1218.68:1221.08]station and the button plays.
+[1221.08:1228.08] If you have the slides open on your computer and answer about your experience with joins,
+[1228.08:1257.08] not joins joins.
+[1257.08:1285.08] Okay, 5 more seconds.
+[1285.08:1287.08] Thank you.
+[1287.08:1296.08] I will close the poll and take a screenshot and for transparency also show you the results.
+[1296.08:1303.08] So this year we have a particularly high percentage of people who have no clue what I'm talking about.
+[1303.08:1313.08] Whereas most people, I guess the plurality has used inner joins, which is also the most useful kind of join.
+[1313.08:1318.08] So that is good and for people in class D, this means two things.
+[1318.08:1329.08] One, brush up on your SQL background and two, come to the lab session on Friday because we will actually talk about these things there.
+[1329.08:1336.08] Okay.
+[1336.08:1343.08] And then let me say something about implementations of SQL.
+[1343.08:1347.08] There are many SQL is not a SQL is a concept, right?
+[1347.08:1350.08] It's something mathematical, if you will.
+[1350.08:1361.08] It's abstract and now it can be databases that you can interface with via SQL, which is a programming language, are plentiful.
+[1361.08:1369.08] And then there's my SQL, there's SQLite, there's Oracle, DB, DB2 and so on.
+[1369.08:1381.08] So all of these are different database implementations that can actually be quite different, but you can interface with all of them via the same programming language, namely SQL.
+[1381.08:1397.08] There are command line clients and graphical user interfaces for those, but most often what's most convenient is to embed SQL code into another programming language.
+[1397.08:1401.08] So for example, you might have a Python script.
+[1401.08:1416.08] And from that Python script in that Python script, you want to interact with the database. You want to pull information out of a database. The way this would be done is by writing down that query that SQL command as a string.
+[1416.08:1421.08] And then you would pass that string to a function offered by the database library.
+[1421.08:1434.08] And then once you have the data from the database, you're back in dry land, you're back in Python land, and there you can, the data then will be stored in Python objects and you can process it conveniently that way.
+[1434.08:1443.08] That is typically easier than doing stuff completely on the command line or via this graphic user interfaces.
+[1443.08:1456.08] The declarative programming principles of SQL are really everywhere, even where it's less obvious. So the spirit of SQL can be found in many places, even when it's not so obvious.
+[1456.08:1477.08] I refer to such cases as SQL in quotation marks as opposed to real SQL, which is, which basically meets those standards that are defined somewhere about about the SQL interface.
+[1477.08:1497.08] Okay, so SQL is in quotation marks is more like a, like a hand wave, we can't step for me, but the idea being that the same principles of thinking about your data as tables and then, and then doing joins and all these kinds of operations on them.
+[1497.08:1509.08] That's what I call SQL quotation marks. So let me give you some examples of SQL, for example, pandas, a Python library, which will be the focus of Friday's lab session is what I would call SQL.
+[1509.08:1526.08] It's very similar to SQL because you can write down commands that look pretty much like SQL, enriched with a few additional elements from functional programming like map and filter, but under the hood implemented quite differently.
+[1526.08:1540.08] From how a real database would handle SQL queries, but to set up the analogy, a table or relation in SQL would correspond to a data frame in pandas.
+[1540.08:1553.08] And let me quickly ask who has worked with pandas. Okay, okay, a lot of you, but those who haven't don't worry, we will give you a grassroots introduction on Friday. So please come there.
+[1553.08:1571.08] A few comments on the difference between pandas versus real SQL pandas is lightweight and fast. It's because it's natively Python, right? It's not, it's not something external that you call, but it's actually a library that was written in and for Python.
+[1571.08:1586.08] Has the full expressiveness of SQL plus the expressiveness of Python in particular, you can use the full gamut of function evaluation in Python, which isn't the case in SQL.
+[1586.08:1600.08] It's not easy to define functions for SQL. You would have to go through some user defined function into face and so on, whereas in pandas, you can just do this in native Python, which is basically right there for you.
+[1600.08:1609.08] And that way, you can integrate nicely with plotting functions like map plotlib. Often you will want to plot the data that you pull out of your database.
+[1609.08:1620.08] And in if you are on a SQL command line interface, there's really no way of doing this. You would have to export the data into a text file and open some other tool like Python, for example, to plot the data.
+[1620.08:1631.08] And if you use pandas, then you can integrate it directly with all the plotting functionalities that you have there in Python. However, what are there? There's no freelance, right?
+[1631.08:1645.08] So the downsides are that pandas tables must fit into memory, whereas a database that you access via SQL can be terabytes petabytes large can be on disk can be on the network can be on another continent.
+[1645.08:1656.08] So there's more flexibility with respect to scaling for real SQL. Also the indexing functionalities are not as good in in pandas.
+[1656.08:1669.08] In particular, there's no post load indexing. So the indices, which allow you to access the data efficiently are built when a date when a table is created, whereas in SQL, you can add tables later on.
+[1669.08:1676.08] If you decide at some point, I should have indexed the data in this other way, because that will allow me to access the data faster, then you can do that.
+[1676.08:1682.08] Later on, kind of open hard surgery style in SQL, you can do that in pandas.
+[1682.08:1694.08] And you also don't in pandas, you also don't have all these nice amenities that database is offer where actually a lot of database research is focused on transactions journaling.
+[1694.08:1717.08] Basically, making sure that you don't corrupt the database if several people write to it at the same time in pandas, the mode of thinking about it is more there's one database, one data analyst, and that's it, whereas in a SQL database, if one database and then potentially millions hundreds of millions of users.
+[1717.08:1732.08] Okay, so another example of SQL is the unique command line, who has who has written Unix command line queries, shell commands, shell commands basically.
+[1732.08:1739.08] Yeah, this is something that I would definitely recommend to you get a bit more geeky in that way, because it will really pay off.
+[1739.08:1765.08] I've seen many times where students in my office had to I asked them, can you quickly show me this, this, this, something about the data and they went to open a text editor started to write import data, you know, some Python script, the real much faster ways to do this on the command line to just filter files, select columns and so on, you can do this on the fly very, very fast.
+[1765.08:1784.08] If you have a little bit of basic knowledge about these, these basic shell commands in, in Unix and you can then string them together quite nifty, it works on max, right, every Mac, you can open the command line and then all of these things will work out of the box.
+[1784.08:1793.08] So if you have a free afternoon at some point, I would recommend you to read a tutorial about basic Unix command lines scripting it will change your life, I guarantee it to you.
+[1793.08:1810.08] So here, for example, we have a fairly complex Unix command line, Unix command, which is composed of several other commands. So this is the pipe symbol, it means that what comes out of this command goes in as input to the next command.
+[1810.08:1838.08] This one is a bit more complex than what you would usually do, but it shows the power of of this. So what this command would do, you have is you have two files, user dot txt and your L visits dot txt users dot txt has information about users like ID name, age and so on and your L visits has information about you could think of this as server logs where you would have one row every time something was requested from the server.
+[1838.08:1857.08] And there could be a user ID also who requested information and what page was requested and so on and what this command would do, it would allow you to find the top five URLs visited most frequently by users between age 18 and 35.
+[1857.08:1868.08] This requires emerging information from these two files joining and you can actually do this on the Unix command line, so I definitely recommend that you get into this.
+[1868.08:1879.08] Okay, so let's stop it here for the relational model and let's look at the next way of storing representing data on a computer, which is document model.
+[1879.08:1901.08] Here you think of the world as a hierarchy of entities as an example, let me give you the example of an address book in an address book, you have multiple contacts every contact has an address every address consists of a street, a number, every contact has
+[1901.08:1921.08] one or several phone numbers, so you could really you can really think of this as a hierarchy, right, there's a contact which itself consists of multiple, let's say, addresses address consists of, so you see how this is recursive, it's structured as a tree.
+[1921.08:1938.08] This kind of data is very conveniently represented in the document model and examples of languages that implement the document model are XML and Jason, I'm pretty sure that you've seen these who has seen an XML file before.
+[1938.08:1945.08] Okay, it's a bit more old school who has seen a JSON file before I would expect a few more people that's roughly the same.
+[1945.08:1963.08] So both of these formats are really equivalent, whatever you can store in XML, you can also store in JSON and vice versa, but JSON tends to be a bit more, if you look at this, I think it probably is a bit more readable this way once the files get larger,
+[1963.08:1992.08] it's definitely the case that JSON is more readable because it's a bit more parsimonious when it comes to a number of characters, there are more characters in XML, typically because you need to open and close every tag, but the idea is the same, these are tree structured data objects, right, where you see the nesting indicates the tree structure basically, if something is indented, it means it's a child of the thing.
+[1992.08:2012.08] That is one tab further to the left and in XML, this is done via these nested tags, so when when something when one tag is inside the other, it means that it's a child, you can also visualize this with indenting, but indenting really doesn't doesn't matter.
+[2012.08:2025.08] It's the nesting that matters and in JSON, it's similar, you also have this nesting, but it's not indicated by having a corresponding opening and closing tag, but with these curly braces.
+[2025.08:2035.08] And so these things are recursive and that way they are really structured as trees.
+[2035.08:2064.08] Okay, so I would like you to think for a minute here, little thought exercise, imagine that you have this data set where you have an address book and you want to store this now, not in the document model, this XML file would be, is an example of a, of a data object stored in the document model, imagine now that you want to store this in a relational database or in the relational model, a SQL type database.
+[2064.08:2071.08] And note that this person here, 656, Chuck Smith has two phone numbers.
+[2071.08:2087.08] And how could we represent this in a relational database where we need to fit everything into columns that have predetermined into tables that have a predetermined set of columns each.
+[2087.08:2101.08] Right, so how could you store this like there are people who have, there might be a person who has a hundred phone numbers, how can we store this in a relational database if the number of columns in a relational database is fixed for every table.
+[2101.08:2108.08] So think about this for a minute, feel free to discuss it with the people sitting next to you.
+[2108.08:2118.08] And then we can quickly see what you come up with.
+[2138.08:2167.08] Okay, so who has ideas and I hope you didn't look at the next slide that would be cheating.
+[2167.08:2175.08] Any ideas how you would do that? Yes.
+[2175.08:2190.08] Very good. So the proposition would be to throw it the data into separate tables. Very good. Anything else?
+[2190.08:2211.08] So this is the same idea. Great. And this is actually the right solution. The idea would be to split the information into separate tables. You have one table with information about the people basically all those properties that you know can exist only once.
+[2211.08:2225.08] So you have them in this left table and then you have a second table which stores phone numbers only right. So here you would have one row not per person, but one row per phone number.
+[2225.08:2234.08] And if the different phone numbers belong to the same person, then they would have the same idea. So you would have for every.
+[2234.08:2255.08] Number would have idea of the person who owns the phone number and then the phone number. Now, how would you, how would you get a representation like this from that? Let's imagine you want to make a string that you want to produce this kind of XML document or a plain text thing that has all the phone numbers together one after the other.
+[2255.08:2272.08] So you, how would you do that? You would need to what's the operation that you would need to apply in order to go from a representation to tables to a representation where all that information is together about the same person.
+[2272.08:2285.08] Exactly. You'd have to join those two tables together. You'd have to join them on the ID field such as information about the same ID from both table for those tables is merged together.
+[2285.08:2304.08] I'm showing this example because it's a nice way of highlighting some advantages and disadvantages of the document model versus the relational model. What's nice in the in the.
+[2304.08:2326.08] In the document model is that up for example updating information is easier right if you want to add a phone number to person you just have to modify you just have to splice in one one row into this XML document basically or if you want to read the information as a human it's right there in one place right away.
+[2326.08:2337.08] That would be the advantage of the document model but it's harder to keep the data consistent that way it's not it's not so easy to have all these.
+[2337.08:2355.08] These guarantees that you have about unique piece and so on that you have a databases plus it's not so easy to represent relationships between different entities imagine you would want to store somehow that this phone number is actually a redirect to that phone number.
+[2355.08:2382.08] When storing that in the document model is not so easy whereas in the relational model you could simply add another table that has that specifies the redirects relation and that would be very easy to do at any point because the information is factored out if you want to add that kind of information to an XML document later you basically have to make changes all over the that XML document.
+[2382.08:2393.08] So all data models are equally well suited for all things that you want to do there is no best data model but it depends on the use case.
+[2393.08:2411.08] How do you process XML and JSON well the document structure are trees right so you can the way to process such documents is by traversing those trees for example via depth first search or breadth first search and all those different.
+[2411.08:2437.08] Algorithms that you know you can either do this manually which is a bit cumbersome or you can leverage proper query languages for document for the for the document model so you should think of these as the equivalent of SQL but SQL is for relational databases and such query languages as x query or jq are for.
+[2437.08:2466.08] Document databases jq ex you can guess that x queries for XML databases and jq stands stands for JSON query is for JSON databases and that is a very convenient way of writing down your queries and you don't have to worry about how to the tree traversal whether it's the breadth first the depth first or whatever but you just write down what you want and the implementation is done under the hood so that's the same spirit as for SQL it's declarative you just say what you want.
+[2466.08:2472.08] But then how it's done is figured out by the query engine.
+[2472.08:2494.08] Okay so finally let's turn the page again and let's look at the network model in the network model as I mentioned you think of the world as a complex network of entities so if you think of it and so that way since
+[2494.08:2514.08] a network is mathematically speaking a graph in the network model you therefore have entities that are represented as nodes in the graph and relationships between the entities that are represented as edges between those nodes.
+[2514.08:2543.08] You could write this information also down in the relational model right because there too we will we could have tables that represent information about the nodes and we could have other tables that represent information about different types of entities that could be a table called nationality which then links people to countries so there could be a table called education which links people to the universities where they graduated from.
+[2543.08:2569.08] You could do that but there are certain downsides if you stored this kind of if you really think about the world as a network of connected entities and you force it into a relational database then there are certain things that you might want to do that are very natural operations on a network but that you can't really easily do in a relational database for example if I say give me a path that connects Ireland to
+[2569.08:2590.08] Ireland records then it couldn't do this in there's no secret command that allows me to do that because it would require changing together a variable number of joins you know I would have to I wouldn't even know which things that have to join together to string together a path from here to there so it would
+[2590.08:2614.08] be cumbersome to do that you would first have to export your data into another format and then process it in another programming language whereas if you model your data straight away in the network model then you will have commands in your query language that allow you to find a path from one node to the other and things like that.
+[2614.08:2636.08] So again it's what's the best way of storing data depends on what you want to do with it if you don't care about things like finding shortest paths then you might be it might be good enough to store the data in a relational database we'll see an example of the network model later on when we talk about the wiki data knowledge knowledge base.
+[2636.08:2662.08] Okay so wrapping up part one of the lecture let me say a word or I guess two about binary formats when it comes to storing data on a computer we saw this example of XML and JSON documents these are in the simplest case you can store those as plain text files on your computer and that's often how they are stored it's well formatted plain text files.
+[2662.08:2689.08] But if you keep your data always in that format then every time you want to read the data into memory and represent them in a programming language you would have to do parsing that means transform the sequence of files sequence of characters into something that is represented inside your computer as really let's say a tree structure object where one one node points to its parent.
+[2689.08:2700.08] So like a think of a tree implemented in in C or in Java that kind of conversion from plain text tool.
+[2700.08:2715.08] Real computer processable you would have to do every time if you keep your data stored as plain text on disk and sometimes that's fine if your data set is small if your data set is large then that would incur huge overhead every time.
+[2715.08:2725.08] So if your data set is large and you already know in what format you want to process it later on then it makes sense to somehow take a.
+[2725.08:2740.08] Basically a snapshot of the binary format after you have transformed it from plain text into computer processable store that right away and then you can store that to disk in binary and then read it back without having to do that.
+[2740.08:2757.08] That conversion every time so you can think of this as having like pre process food that you put in the freezer and then it's very easy to defrost you don't have to to recook it every time.
+[2757.08:2769.08] So this is called this process is called pickling in Python so maybe I should have used pickles actually rather than then freezing as the analogy because that's where the name pickle comes from in the in the Python case.
+[2769.08:2781.08] Like pickling preserving it for the future and then it's easily accessible you just go to the shelf in Java it's called serializable serialization and there are other formats as well Google protocol buffers, park and so on.
+[2781.08:2796.08] And so a note for your projects if you have very large data sets then you might want to consider serializing your data storing it as binary instead of parsing it every time this can easily save you.
+[2796.08:2803.08] Like a 10 20 maybe a hundred fold time effort.
+[2803.08:2812.08] Okay good so here we'll take a break until 915 and then we will continue with part two about data sources.
+[2812.08:2835.08] Okay so we're diving into part two about data sources and to start to to motivate this part of the lecture let's take a quick look at what data sources might be there at a big web company for example at Facebook.
+[2835.08:2858.08] So there you have a whole variety as a as a data scientist you might be touching dozens of different data sets and dozens of different formats every day at Facebook for example you would have the application databases this is kind of the jam right inside the company this is really where information about the users and all that.
+[2858.08:2883.08] The store those would be highly optimized databases structured either SQL or my SQL for example or something that is more on the on the network but highly structured relational databases at the other end of the spectrum you have tons of unstructured data such as images all those photos that people post.
+[2883.08:2912.08] You have Wikipedia information so Facebook integrates Wikipedia into into the results it returns and information about places and so on you also have information about advertisement landing pages which is raw HTML basically so this is really unstructured 30 nasty data and in between those two extremes of structured data and unstructured data you have what I would call semi structured data.
+[2912.08:2940.08] You can think of this as self describing structure I showed you those server logs Apache server logs that's an example of self describing structure it's not it's not a proper database where you have guarantees about consistency and safety towards race conditions when people write at the same time but the data looks a lot like a well structured database.
+[2940.08:2969.08] And there are tons of of data sets like that inside companies such as web server logs client side event logs so information produced typically by JavaScript code that runs on the in the browser you have API server logs add server logs search server logs so all these logs typically generate huge amounts of text files that are more or less well structured.
+[2969.08:2998.08] And so more structured is usually preferred if possible of course because in this let's go back to this cooking analogy you know if if you can go and pick up ingredients from someone else's shelves as long as you don't steal them or buy them in the store then that's better than just having to do it every time your self that way much of the work has already done.
+[2998.08:3027.08] The others they have made mistakes that you would otherwise be doing now so as long as as long as it's possible try to avoid try to use pre process data but then when each data set although it might be well structured might also be in a different format so then when you combine multiple sources you then need to harmonize the different formats and that's when you need to think about data models again what data models is the art.
+[3027.08:3041.08] The data stored in right now and what data model do you want to have as the as the result of the merging of those different data sets.
+[3041.08:3059.08] And then sometimes you need to get your own data from the wild unstructured world and then typically you would transform it from this unstructured format into something that's same structured or really well structured before you go on and process it.
+[3059.08:3082.08] So let me give you another example from the web Wikipedia I really like Wikipedia it exists in over 300 languages if you pull the articles across all those languages you have over 40 million articles and there is a mind boggling richness of of data there.
+[3082.08:3111.08] So this is the article about San Francisco and you have an amazing wealth of information there you have plain text that describes San Francisco you have structured information like tables here you have images you have links to other to other databases let me actually click this link here I should turn down the volume a bit.
+[3111.08:3139.08] So then you have this kind of tables here that nearly look like like databases here information about the weather you can parse that stored into relational database you can do NLP with the text you have images labeled with text so this is great for training.
+[3139.08:3154.08] Image labeling models I used to live here at some point and I'm now I have to just.
+[3154.08:3183.08] He'll be the time because I want to get to the bridge you also have this is the bridge in the song you also have a bridge of course okay so let's stop it here this was just give you a sense of how much information you can pull out of something that at the surface looks very unstructured like Wikipedia but from there you can really bubble information into.
+[3183.08:3204.08] Into all the structure format yes it was really about the song and about the pun with the bridge you know when when the bridge in the song came up I wanted to show the golden gate bridge but the idea is that.
+[3204.08:3224.08] A single data set like Wikipedia really has all these different this was of information you can do so many different things with it and so it's really inspiration for looking beyond just the mess that's there when you open the source code of the page and really thinking about what you can do with it.
+[3224.08:3236.08] And we will offer Wikipedia data sets both raw and pre-processed for the projects also so you will be able to explore this this with yourself.
+[3236.08:3253.08] How do you work with Wikipedia there are several ways for example you can download a very large XML dump with a wiki markup so this is not quite HTML it's a specific language that has been developed to.
+[3253.08:3269.08] To write down Wikipedia articles you can just download that or you can also download structured database dumps for example if you're interested in knowing which pages link to what other pages then there is a table that you can download from the wiki media foundation servers that.
+[3269.08:3283.08] That tells you page a links to page so basically a huge list of all those edges that link pages you can download this is structured pre-processed information.
+[3283.08:3298.08] It's not always super easy to work with Wikipedia since it exists in 300 languages you will have to deal with issues like unique code weird characters non-esky characters obviously is very large it changes all the time so you need to be aware which version of Wikipedia.
+[3298.08:3327.08] Do you want to work with do you care about the evolution of Wikipedia or do you want to work with with a single snapshot those will require very different data sets to make your life easier you always check if there is already something out on GitHub that has someone already gone through certain pains or do you have to go through that pain yourself or you can even use more structured versions.
+[3327.08:3338.08] This is the topic of the next slide wiki data I'm sure everyone has heard of Wikipedia but who has heard of wiki data.
+[3338.08:3356.08] Not so many people okay so actually every Wikipedia article is associated with a wiki data item so when you open a Wikipedia page then in this left navigation bar you will have a link wiki data item and then if you click on that for example if you're on the Switzerland article and you click on that wiki data item link then you can go to the link.
+[3356.08:3385.08] Then you will get to a page like this which you can really think of as a database representation of that article you have here now Switzerland has the idea q39 in wiki data and first thing already it tells you which Wikipedia articles correspond to this concept of Switzerland the concept of Switzerland is not language specific right but there are Wikipedia articles in hundreds of languages about that concept and wiki data tells you that it tells you
+[3385.08:3401.08] that in English the article is called Switzerland in German called fights in French called Swiss and so on and then you have also all these what's called statements but you can also in the database world in the more relational database where you could think of these as relations.
+[3401.08:3426.08] If we tell you that Switzerland is an instance of a sovereign state it's an instance of a country then there will be another statement about the population of Switzerland it will tell you about the languages spoken Switzerland so really it's all this kind of structured information about Switzerland that you could also extract somehow from the text but it would be very cumbersome and here you already have it as a crisp database.
+[3426.08:3448.08] Okay, how can you so I think that whatever project you end up doing in ADA and also in the future have wiki data in the back of your mind because it's a treasure trove for in painting basically whenever you want to know more about the entities that you're working with you might be able to find that information in wiki data.
+[3448.08:3475.08] If you work about if you do something about analyzing politicians for example then you can find information about those politicians which party do they belong to since when are they in politics and so you can find that information wiki data so merging whatever data said you have with wiki data is often a very very useful and powerful thing to do how can you access wiki data you have API access so you can send really those.
+[3475.08:3502.08] Specific queries and get answers for example when was give me all people born in 1950 and then you could get the answer back as a JSON object or you can just download the full database dumps and process them locally on your computer you can do that as well so those are available as JSON which is in the document model but the database dumps are also available as RDF.
+[3502.08:3531.08] I forget what this stands for but it is basically a network model format so it's interesting you can cast this this knowledge graph both into document model or into network model and then whether you should download this one or that one depends on what you want to do with the data if you want to care about things like give me count paths between between these two entities or give me a shortest path between those entities you would download the RDF network.
+[3531.08:3542.08] I wrote the RDF network model format and if you're interested in more traditional things I would say analysis in the JSON format would probably be better suited for you.
+[3542.08:3560.08] Okay so staying in the wiki world there's also very useful meta information about wikipedia that you can grab out there for example wikipedia the wikipedia foundation makes available information about the popularity of articles going back to 2015.
+[3560.08:3568.08] For every article in every language you can know how often it was accessed I think even at an hourly level.
+[3568.08:3577.08] So this is very interesting data in order to understand what people care about in at what points in time.
+[3577.08:3589.08] I used to have a slide with a queer Donald Trump but then someone complained in the last lecture that why do I talk about Donald Trump if we're in Europe I should talk about Georgia Miloni.
+[3589.08:3618.08] So that's why whoever wrote that comment this is in response to the feedback that you gave here is the popularity of Georgia Miloni in blue and marine Le Pen in green over the last seven years since 2015 and you see how how useful this kind of data is you really see for example that the popularity of marine Le Pen is and popularity here I mean interest in my.
+[3618.08:3647.08] Marine Le Pen is cyclical every five years she comes out of her like a like a like a cicada nearly because every five years the French elect their president but interestingly no no long term trend seemingly whereas Miloni really has this over the last seven years she had this rising trend with some spikes and now in the last and the last weeks really exploded this is a logarithmic.
+[3647.08:3675.08] The logarithmic wise scale also this means that going up by a fixed unit corresponds to multiplying the time series by a factor right so this is really nearly a drop in pulse in pulse what we saw there in the last weeks okay so you see this is tremendously important information that stored in these logs and you will be able to work with that data also for your project.
+[3675.08:3704.08] So far we've talked about data that someone else has spent a lot of time preparing for you so this user interface is basically like data is being handed to you on a silver platter right really the data here is extracted from the raw nasty Apache logs of the Wikimedia foundation I've seen those logs I've worked with them their nasty and so this is a lot of pain went into making it processing it such that you can query it so nice.
+[3704.08:3727.08] Sometimes that's not always possible sometimes you need to extract your own clean data from dirty raw data because no one else has done it for you yet for example you might be interested in the contents of a specific website and then you have to go and actually download all the pages from that website and extract information that you care about from the HTML.
+[3727.08:3755.08] If you care about like analyzing the web in general then you can download huge very large snapshots web crawls which is basically a subset of the entire web you can have basically as many web pages as you as you can ever process by downloading data from the common crawl which is pretty much the largest web crawl outside of the web.
+[3755.08:3763.08] It's the largest web crawl outside of outside of the web companies like Google and Microsoft and so on.
+[3763.08:3780.08] It's huge it has billions of pages but to put it in perspective back in 2015 this was still only a panth of a percent of Google's web crawl and now it's probably even less because I'm assuming that Google grows faster than common crawl.
+[3780.08:3805.08] So if you want to analyze the web then this is your go to point common crawl you can have as much HTML as you want basically but if you care about specific websites for example if you want to analyze the Amazon.com or something like that then you might have to just go and crawl the data yourself.
+[3805.08:3810.08] So that you have programs that are called crawlers or spiders.
+[3810.08:3831.08] You see some of these libraries listed here and those will will help you download that data more easily for example it's a crawler because it crawls along the hyperlinks right or spider also a second it walks along the web when one page links to the other follows that link and will download all those pages kind of recursively.
+[3831.08:3851.08] If you download it HTML you want to process it because just the raw HTML there's so much fluff that's just about formatting and making the data making it look nice on a browser you typically have to extract the useful nuggets from the raw HTML for that there are is a bunch of tools also.
+[3851.08:3880.08] Python libraries such as requests or beautiful soup. She might be familiar with but I want to again point out in the spirit of the Unix command line do not forget that there are sometimes if you want to do simple things and there are simple tools personally when I worked a lot with HTML I often just used regular expressions to extract information from HTML right like you might not care about the recursive
+[3880.08:3904.08] tree shape structure of an HTML document if you just want to get the date at the bottom of the of the page you know you can just basically hand code that pattern and then extract that and you don't care about most of that will be much faster than first parsing the document into into a tree so keep that in mind then
+[3904.08:3925.08] working with HTML often feels like working with trash because there's all this there's all this fluff and garbage on the page as I said that's just there to make the page render nicely in the browser but you you don't care about that also every website has a different has different conventions uses different
+[3925.08:3938.08] presents information in in a different way often the HTML is actually ill formatted it doesn't doesn't apply it doesn't comply with with the exact specifications.
+[3938.08:3967.08] But sometimes you can find amazing things in the trash so when I was a student I did a lot of dumps the diving and then you would be surprised what am I amazing things you can find the trash this guy here has found a pair of boxing gloves is not a great find and similarly it's with HTML sometimes when you look at the HTML you actually find those gems in there and this is the buzzword here is schema dot org if you look at this this is a snippet from HTML.
+[3967.08:3976.08] But then you see that although it really talks about you know this this would be rendered as plain text director James Cameron.
+[3976.08:3988.08] The spand James Cameron here is wrapped inside a span that does nothing in your to your eyes it doesn't do anything it doesn't change the way that James Cameron is displayed on the page.
+[3988.08:4016.08] It's just there as meta information right so this span is just there to mark up the string James Cameron as a name such that someone who wants to process the data can have a handle more easily you don't have to have like let's say a list of names and then you search for those but you can go into the HTML and it will be marked up what's the name or then it will tell you.
+[4016.08:4045.08] Is he here in brackets born August 16th 1954 and then that date is marked as the birth date okay so although the purpose of the web pages really to display primarily information to a human in a browser it's kind of marked up in a very kind way such that it's also machine readable and you wouldn't notice if you just look at the page in your browser but then if you look at the source of the data.
+[4045.08:4065.08] Then if you look at the source code there's all this information there so if you care about downloading data from a website and extracting information from it keep an eye out for such annotations they might make your life much easier.
+[4065.08:4092.08] Okay so most large companies today actually don't like it if you just screen scrape their content so if you write a script that follows all the links and downloads all the pages and stores are onto your computer to prefer that if humans do that right that's what that's what their web servers are optimized for and so on so if everyone started scraping then it might put too much load on their servers.
+[4092.08:4103.08] And there are also questions of like who does the data belong to and so on so officially it's often discouraged to just.
+[4103.08:4120.08] Crawl data from the web instead many companies offer web service APIs so you can think of these as yeah like programming interfaces that allow you to request specific information from a website for example if you want to.
+[4120.08:4131.08] Download information about a product on Amazon one thing you could do is to just download the web page about the product and then extract information from the HTML.
+[4131.08:4148.08] Or you could send a request to an Amazon API where you query it with say a keyword and then it returns to you products in as a JSON format for example so this would be the preferred way of getting.
+[4148.08:4169.08] This information rather than getting all the HTML but sometimes a man got to do or a woman got to do what a man got to do right and then you just go and then you do it so that's just we have to cut that out of the video I'm kidding but.
+[4169.08:4179.08] Usually I don't care too much and but it's it's just in your in your interest it's also better to use those APIs because then the data is already keen.
+[4179.08:4188.08] And the most common framework for doing this for for interacting with such web APIs is called rest.
+[4188.08:4217.08] And how this works is that basically every every entity everything is that you might want to know about has a URL that is actually called a URI a unique resource identifier URL is a unique resource location and you can request those via HTTP so you request them the same way as as a browser requests the web page but you don't get back HTML but you get back let's say JSON or XML or something that is well structured.
+[4217.08:4241.08] Here's an example imagine that there is a website called example dot org and they have a rest API for making available information about users and to get information about a user Jane you would know because there is some documentation somewhere that you would have to request the URL example dot org slash users slash Jane.
+[4241.08:4253.08] The server would then not send back an ice the renderable HTML page to you but it would send back to you a JSON object like this one here which has structured information about Jane.
+[4253.08:4268.08] You could then for example modify the information and maybe put it back to the server to actually make updates on the server most you don't do that most you just grab information and don't write anything back but the framework allows also for writing back to the server.
+[4268.08:4293.08] And then you see that in this response you actually have other URIs you have location New York is called New York and it's actually backed up with this hyper reference which is also a link so now you could go and grab that URI and then get information about New York also in the form of a JSON object.
+[4293.08:4322.08] So you could get increasingly much information that way but you see that the format doesn't tell you what this really is you need to grab that from some external documentation in order to know that this age ref in location is actually information about the place here it's kind of self explanatory but it might not be in other APIs so you should try to find documentation in such cases.
+[4322.08:4328.08] Who knows this person Joe is out we know a jazz musician.
+[4328.08:4343.08] It's too bad great guy great musician and he I like the story how he tells how he first heard about jazz as a young boy in Vienna he says.
+[4343.08:4369.08] So I heard this strange new music coming and I said what's that and he the person is talking to said that's jazz how do you write that and he spelt it out somehow I saw my name in there and I like this word and like jazz for Joe Zavino rest is for Robert West so that's why I'm have a specific affinity to rest.
+[4369.08:4393.08] Okay so with that attempt to joke let's turn the page and dive into part three of the lecture which is about data wrangling so basically about those red arrows how can you go from the raw raw data sources to data that's stored in a specific data model and then from data in a data model to doing the actual analysis.
+[4393.08:4415.08] The starting point here is that working with raw data really sucks it's data comes in all different shapes and sizes and forms it can be in CSV file PDF SQL networks edge lists JPEG images you name it and all those different files have different formatting.
+[4415.08:4444.08] And at some point you might want to unify that all the different what's worse different files might even represent the same thing in different ways so for example if you have if you want to state that there's missing that a field is missing in a table then in some files or formats it might be represented as a missing as an empty street in others that might be the word not in others the word might be the word N.A.
+[4444.08:4472.08] For not available or there might be a minus one so it's all these different things if you just work with the raw data you would have to keep all that information around all the time there might be extra rows in some files but not in others because it's self explanatory or you have to read it up in some documentation there are character encoding issues one file might be new encoding you new TF8 the other one in ASCII and so on.
+[4472.08:4495.08] And the point is that you want to unify harmonize all of that before you make any further steps because otherwise it's really a recipe for disaster if you don't do that and so the process of avoiding that recipe for disaster is called data wrangling.
+[4495.08:4524.08] Okay so the metaphor here wrangling is basically the act of catching a horse in cowboy land and the second you're you're wrestling your data you need to beat it in shape basically that's where this word data wrangling comes from the goal is to extract and standardized the raw data and that often requires combining multiple data sources and cleaning anomalies of the data.
+[4524.08:4552.08] There is no fixed recipe for this but generally a good strategy is to combine automation with interactive visualization to aid to aid you in cleaning so you should really see us as some sort of checks and balances where the automation is there to save your time you know you couldn't possibly clean the data manually if it's large but you still want to have a manual human element in this whole process.
+[4552.08:4575.08] And you do that by visualization which allows you to make sure that you didn't screw up you know you always whenever you insert a cleaning step you want to make sure that you didn't clean too much did I throw out good data now did I clean the data in the right way and visualization with some examples of that is a great way of making sure of that.
+[4575.08:4583.08] And then the outcome of data wrangling is improved efficiency and scaling of data importing.
+[4583.08:4604.08] I wish I could give you like the great way of doing it but it's different every time basically this is the most horrible plot to put in words but it's kind of a feature not a bug of this plot because it's precisely the point that I'm trying to make on the left of this plot you have the raw data.
+[4604.08:4633.08] And on the right hand side you have the insights that you want to derive from the data and the blue line that might be a trajectory of you you want to start you have to start on the left and you want to end up on the right but this is usually not a linear process but it's more like you win some you lose some you know you make some you make some progress you maybe clean the data but then you realize I did something wrong actually so you have to go back sometimes you have to go back to the right.
+[4633.08:4643.08] And sometimes you have to go back to the very beginning and collect more raw data because you realize that there was actually like a bug or you forgot to select.
+[4643.08:4660.08] To download a certain piece of information and then the idea though is that you push this line and ever further to the right until you finally you finally got it so that is a messy process and it takes a lot of time.
+[4660.08:4663.08] And the estimates say that.
+[4663.08:4672.08] Rangling data rangling takes between 15 80% of a data scientists time that is not a very.
+[4672.08:4693.08] A track of prospect of becoming a data scientist I guess but it's it's a good incentive to rise through the runs in a company because at some point you will have others underneath you that we do that dirty work and then you can focus on more of the analysis part.
+[4693.08:4711.08] And importantly you need to use common sense in this right there is no like button that you can press but you always need to have your mind on so even this process might seem not mind numbing but as we know as you know debugging is actually something that requires extreme sharpness intelligence and this is kind of data debugging.
+[4711.08:4740.08] So what kinds of data problems might there be that you want to debug there might be missing data which could be for example because a sensor didn't work or you or really the data is missing someone that might not have a wife so there is missing a missing entry for wife in that database but they might also be but everyone has a shoe size and they might be shoe size missing and then it's probably because it wasn't measured or because it was measured the wrong way.
+[4740.08:4766.08] It could be incorrect data maybe the shoe size was measured measured in inches but was entered as though it was actually centimeters and then this would be incorrect rather than missing data you might have inconsistent representations of the same data like some data in inches some in centimeters or I told you how missing data might be represented in different ways and so on.
+[4766.08:4795.08] What's crucial is that a very large fraction of some estimates say 75% of data problems require human intervention so you can't do this completely automatically but you need to have an expert look at it or you might have to put the data out on crowdsourcing to get human eyeballs on it and finally of course there's a trade off between healthy hygiene you know cleaning the data versus over sanitizing the data
+[4795.08:4815.08] and basically spending all your time on just getting clean data at some point you need to stop cleaning and start doing this is an interest you can look at this later this is a woman who paints the floor in her apartment once a day and this is clearly too much this would be the equivalent of over sanitizing your data.
+[4815.08:4844.08] For your own perusal at home I have here I have linked here a list of data horror stories what can go wrong if the data what can be downstream consequences of having dirty data I just want to maybe quickly tell this anecdote because it's not at the link it's one from my lab I had a master student in my first year at the PFL and he worked on this very large Wikipedia data set
+[4844.08:4872.08] full trajectory of all Wikipedia edits so this was like several terabytes of data and so we needed to use a large compute cluster had up cluster for that and we actually have to pay inside the department for that so we we use the cluster and then once a month we get a bill from the department that says you have used this and this much please transfer the money from your lab account to the compute cluster account and then this poor guy received the bill or I received the bill
+[4872.08:4897.08] 10,000 francs although he had just worked with it for a couple of weeks and I sent him this and he became all pale and I was afraid that he now would be money and I wrote to the to the IT people and it turns out that they had mixed up on team and fall and so this was actually a bill of 10,000
+[4897.08:4917.08] and so on team so it was 100 francs and not 10,000 francs but it gave one student a very tough night so and this these stories about and there are many worse cases than that in case how can you diagnose data problems I have
+[4917.08:4938.08] a very high visualizations for that and also basic statistics we look about how to do basic statistics in the next lecture and visualizations I believe in the lecture after or the other way around I can't remember but let me give you a quick glimpse for the specific purpose of diagnosing data problems
+[4938.08:4956.08] if you have the right kind of plot then it's often very easy to spot outliers or to spot missing data something that might be very hard if you just look at the raw data like scrolling through you know a file
+[4956.08:4979.08] first it's not even possible if it's more than a few kilo bites but but also in principle even if you could if you had infinite patience your visual system just isn't made to spot such issues by looking at plain text but by looking at the proper kind of visualization it might just stick out immediately
+[4979.08:5008.08] I think you give you this example of the Facebook graph I've I've mentioned I'm mentioning Facebook here for the second time in this lecture so a quick reminder I said it already last year, last lecture Facebook was a social network where you could kind of become virtual friends with someone so it's a bit like tick talk but not so many videos and more focused on a slightly other thing so that's Facebook and here is a subset of the Facebook network where you have dots, nodes
+[5008.08:5024.08] for people users of Facebook and there is an edge align between two people if they are friends on Facebook the size of the node just captures how many friends does someone have bigger the node the more friends
+[5024.08:5034.08] okay so this looks like a reasonable network there's a there's a very large connected component and then there are a few kind of cliques that are disconnected from the rest
+[5034.08:5055.08] this is a network visualization so we really plot the network there's another way you can visualize the data you can also do it as a matrix so this is called an adjacent sea matrix where you have one row per user and you have also one column per user and when you
+[5055.08:5084.08] have an adjacent eye and user J or friends then the cell I J in this matrix is blue otherwise it's white okay and so this matrix was the users for the rows and the columns are ordered in a specific way they were ordered by an algorithm to put as much weight as possible as much blue as possible on the diagonal such that basically we see those clusters forming right so in the
+[5084.08:5113.08] space that that huge that huge square here is basically the big connected component here and so you use and then there are two more components as you can see two more large components so but if we don't do that if we don't run this algorithm that permutes the rows to put as much blue as possible on the diagonal then the matrix looks like this now here the rows and the columns are sorted
+[5113.08:5142.08] in the order in which the data was downloaded from the Facebook API right so this data was constructed by someone querying Facebook give me information about that users give me all the friends of this user back in the day you could do that now after Cambridge analytic and so you can't do that anymore but there was a time the golden age when you could do this kind of thing and here this is what you see so first the first row was retrieved from Facebook and then at the end the last row was retrieved question one
+[5142.08:5170.08] question one why is the matrix symmetric I gave you the answer earlier in the lecture second right exactly the key is that the friendship relation on Facebook is symmetric you cannot be friends with someone unless they're also friends with you that's why the matrix is symmetric
+[5170.08:5199.08] why is there a big white hole in the southeast of this matrix who can come up with a reason for that could it really be that yes second yes perfect it's this is a bug it's not a feature it's not really that there is a zone where people are just not connected to each other at all you would expect more something sparsely
+[5199.08:5223.08] like this the point is that at some point Facebook would reply I'm not giving you any data anymore because you've already hit your limit and this you see it then because that happened at this point here this is where Facebook stop responding what why is there data down here then
+[5223.08:5243.08] because the matrix is symmetric this data here was actually download this is the data here and that's when it was downloaded basically but from here on no more data was actually obtained with this kind of visualization you see very clearly but with this no way you would not know there was any bug in collecting the data
+[5243.08:5255.08] here you also won't see it but if you look at it the right way it comes very obvious that something is wrong no real networks looks like this where there is like completely completely white all of a sudden
+[5255.08:5270.08] okay when you want when you want to visualize data at scale it becomes quite difficult this was a small portion of Facebook but if you want to visualize all two billion users of Facebook
+[5270.08:5299.08] then you couldn't look at such a matrix anymore it would be two dots would become too small here is another example of that you have a scatter plot two dimensional data X and Y and each dot is one data point if you just plot the data raw then it will become this huge plot basically it's all black in the middle because there are dots over each other but in some places you might have a thousand dots on top of each other in other might have just two on top of each other
+[5299.08:5328.08] but black on black always looks exactly the same right so this would not be a good kind of visualization to plot this two dimensional data if you have a lot of it a much better visualization is to somehow group data to split up your two dimensional plane into this little cells hexagonal in this case and then you count how many points do you have in each cell so this is called a histogram and then you you draw a dot
+[5328.08:5348.08] in size proportional to the number of data points in that cell now all of a sudden we see much more information then on the left because we see that here there is actually less data in one cell then there note how hexagons are perfectly suited for this because you can tile them very nicely the two deep plane
+[5348.08:5370.08] if this was like circles or squares you couldn't put them together so nicely so the bees have figured this out a long time ago and we can be inspired by that and use that kind of shape for visualization instead of working with size you can also work with color and making a then you would make a cell darker the more data is in there
+[5370.08:5396.08] okay let me see how much more I have okay just a little bit okay so how to deal with missing data how to visualize missing data it's actually not so obvious so here's an example from US census data where you have on the x axis time and on the y axis you have how many farm laborers were there that year
+[5396.08:5414.08] now unfortunately the archives in the records in an archive burned for the for the year 1890 so we have no data for 1890 how do we visualize this we have zero farm laborers on record that year right because
+[5414.08:5433.08] they burned so we could visualize it as zero but that's kind of not really what you want because there were more than zero farm laborers they're just known in your data set which is different so another way of doing it could be to just infield the data and do an
+[5433.08:5449.08] interpolation take the data from the year before and the year after and then just do a linear interpolation that's a reasonable thing to do but it would be a bit disingenuous to pretend that this is real data right so another thing that you could do is to just not plot any
+[5449.08:5462.08] point for that year but then it kind of visually disrupts your perception so I think the best way of doing it would be to plot that that time when you don't have data in another color it's honest it's
+[5462.08:5478.08] explicit about there being something different but it still gives you the whole the holistic impression and so the point is that knowledge about the domain and about data collection should drive your choice of visualization
+[5478.08:5494.08] for example a zero because the records burned is very different from a zero number of farm laborers because the farm is burned in one case there really were no farm laborers and in the other case you just don't have data about the farm laborers
+[5494.08:5520.08] see quickly what I got I have some I skipped this anecdote about Willie it's basically about a guy whose name is Willie and his name is actually just Willie he has no last name and it's this slide is about the tragedy of Willie how he is stored in all these different databases because sometimes it's a last name is required
+[5520.08:5540.08] and so on LinkedIn is Willie W and in papers is Willie app and so on and so kind of a story how same person very different names this is hard to work with data okay so let me wrap up before you start analyzing your data you ask
+[5540.08:5558.08] yourself do I have missing data if I had missing data how could I tell so these are really kind of the meta questions that you have to ask yourself in order to even start cleaning the data do I have corrupted data if so what might have caused the corrupt data and how
+[5558.08:5576.08] might I be able to recognize it then once you've sorted out these issues you probably want to parse or transform your data into into a format that is actually useful for the specific kind of analysis that you want to do what is your use case based on that you should choose your data model
+[5576.08:5605.08] and don't be surprised if you come back to the stage later on you might realize that I should have stored my data in a network model actually so let me now go back to square zero and redo it if you it's always good to lay your hands on code and documentation about the data so this seems like a no brainer right of course you do that but it's easy to forget that sometimes take a step back and ask yourself did I google all the things that I should have googled did I do my due diligence
+[5605.08:5633.08] to figure out what I can about this data set before you get too excited and jump in and and then it's always of course great if you can find the data that you want in a format that's already nicely cleaned nicely parsable but of course there's no freelance right if you take a data set that was already cleaned and you're buying with it all the potential errors that might have occurred during cleaning
+[5633.08:5638.08] so you must be able to trust the person who did the cleaning for you.
+[5638.08:5662.08] Okay, so I had a nice use case here of highly non parsable data but I'll not show it if you want this was about recapture you can you all know it anyways the point is that there are nice ways of killing two birds with one stone cleaning data sets and doing something useful for the world in the case of recapture it tells humans apart from bots and at the same time it transcribes the newer time.
+[5662.08:5672.08] The newer times or hard to recognize characters something that can't be do with computers and it's leveraging humans to do that and so it's win win.
+[5672.08:5687.08] Okay, so I'll stop here and remind you of the feedback slide if you have any feedback except for don't go over time next time that I already know please leave it here and then see you on Friday. Thank you.

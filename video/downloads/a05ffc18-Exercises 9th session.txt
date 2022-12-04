@@ -1,0 +1,371 @@
+~Exercises: 9th session
+~2020-11-24T12:11:25.535+01:00
+~https://tube.switch.ch/videos/a05ffc18
+~CS-451 Distributed algorithms
+[0.0:6.72] Okay, so hello guys once again.
+[6.72:14.24] So today I'm going to present solutions for the exercises from the previous week.
+[14.24:25.6] But before we start, I need to give you information with respect to access sessions in general.
+[25.6:34.0] So once we finished shared memory, the accession from the accession from today, this is it.
+[34.0:42.120000000000005] We covered everything from the everything that we are supposed to cover in our exercises.
+[42.120000000000005:49.480000000000004] Of course, in normal circumstances, we would have had the midterm and then we would use
+[49.48:58.239999999999995] one session for that and then another session for discussing the solutions.
+[58.239999999999995:63.31999999999999] But given the current situation, that's not possible, so that's not going to happen.
+[63.31999999999999:69.4] But from the next session, I mean for the next session, I encourage you to collect all
+[69.4:79.16] the questions you might have with respect to the course, to the topics that we
+[79.16:82.8] discovered, we covered, sorry.
+[82.8:89.72] And then we should discuss and we should solve any confusion that you might have.
+[89.72:95.75999999999999] Depending on the number of questions that we receive next time, we will figure out
+[95.75999999999999:105.4] whether we are going to do this type of discussion sessions again or just the next time in the
+[105.4:109.24000000000001] session next Monday would be the last for this semester.
+[109.24000000000001:124.64000000000001] So please do collect questions for the next session and then let's discuss them.
+[124.64000000000001:127.28] Okay, so I see the questions now here.
+[127.28:129.92000000000002] I suppose that the midterm is cancelled.
+[129.92:136.64] I mean, no one really confirmed this to me, but it looks like that is not going to happen.
+[136.64:140.04] As for the second one, also, I don't know.
+[140.04:151.2] Let me discuss this with Russia and with others and I will just let you know through
+[151.2:152.2] Moodle.
+[152.2:158.44] So what I just said is of course, if there is a midterm, then I guess we are going to
+[158.44:168.96] deal with that, of course, but if that's not the case, then we are going to use these
+[168.96:176.68] sessions to discuss some of your questions and stuff like that.
+[176.68:181.76] Okay, so now that that's out of the way, let's continue.
+[181.76:189.48] Okay, so I guess we are not going to have a very long session today because this shared
+[189.48:198.0] memory exercises were pretty easy and this is not really something that we are focusing
+[198.0:205.32] that much on in this course, but nevertheless it's something that we should cover at least
+[205.32:208.76] in this brief manner.
+[208.76:211.48] Okay, so let's say.
+[211.48:217.72] So the first thing is we ask you, I would say a trivial question from this majority voting
+[217.72:218.72] algorithm.
+[218.72:225.95999999999998] So this majority voting algorithm is one implementation of the regular register.
+[225.95999999999998:235.28] So you should know by now that a regular register and a register in general is usually defined
+[235.28:238.48] with read and write operations, right?
+[238.48:243.0] So read operations simply reads some value from the register and write operations simply
+[243.0:245.6] writes some value from the register.
+[245.6:250.56] But we are talking about the regular register.
+[250.56:257.96] It is defined and you know, we know that a register really is really regular if it satisfies
+[257.96:260.0] two properties.
+[260.0:264.2] Of course, the first property is the elimination that simply says that if a correct guy
+[264.2:269.96] correct process, a process that never crashes, you know, invokes an operation, whether it
+[269.96:275.15999999999997] is right or read operation, then eventually will this operation will eventually finish.
+[275.15999999999997:278.03999999999996] So this process will not be sucked in.
+[278.03999999999996:285.2] And more importantly, there is this validity property that says if we are talking about
+[285.2:295.92] regular register, if a process invokes a read operation that is not concurrent with any
+[295.92:304.15999999999997] right operation, then this read operation simply returns the last value written in that
+[304.15999999999997:305.15999999999997] register.
+[305.15999999999997:312.0] However, if that's not the case, so if we have that the read operation is, read operation
+[312.0:318.44] is concurrent with some right operation, then read operation either returns a last written
+[318.44:322.32] value or a value that is concurrently being read.
+[322.32:331.16] Okay, then we have seen in the book and also in the course in Russia's lecture that you
+[331.16:333.84] might have two ways of implementing a register.
+[333.84:340.72] The first way is the way that it's called how we refer to him is it is a read one, read
+[340.72:347.08000000000004] one, write all register, implementation and that uses a perfect failure detector.
+[347.08000000000004:353.52000000000004] But now there is another way of doing this and this is a majority voting algorithm, it
+[353.52000000000004:358.76000000000005] does not use a perfect failure detector but rather uses a eventually perfect failure
+[358.76000000000005:359.76000000000005] detector.
+[359.76000000000005:362.72] And this is something that we are going to talk about today.
+[362.72:365.0] So I mean today.
+[365.0:370.32000000000005] So the question is why every process needs to maintain a copy of the register value in
+[370.32:372.64] the majority voting algorithm?
+[372.64:375.28] And the answer should be pretty pretty simple.
+[375.28:382.0] So assume that some process queue, so we have some process queue that does not maintain
+[382.0:383.92] a copy, okay?
+[383.92:389.88] And assume that the writer updates the value of the register.
+[389.88:395.84] Okay, so if queue is in that majority, then the writer would have stored the value in
+[395.84:402.79999999999995] the majority of processes minus one because it does not store value in queue, right?
+[402.79999999999995:408.35999999999996] So what can happen is that then all process is crashed and simply there is no way for
+[408.35999999999996:415.52] us to retrieve this value that is being written because no one indeed stored this value.
+[415.52:423.12] Okay, so what can happen is that I am a great guy, I write, I don't know, write number
+[423.12:430.96] one to the to the to the column of processes to the majority of processes and queue is in
+[430.96:432.28000000000003] that majority.
+[432.28000000000003:439.92] But suppose if queue does not really have this does not really remember what is being written.
+[439.92:445.8] What happens then is that all of these other other process could fail and when someone wants
+[445.8:453.04] to read it will potentially read the sale value, it will not read anything.
+[453.04:462.84000000000003] Because there is nothing written, but of course that's just one scenario of a sale value being
+[462.84000000000003:463.84000000000003] read.
+[463.84000000000003:471.92] So this is why all processes must really pay attention and remember what are the values
+[471.92:479.88] that were written before the last written value in the register.
+[479.88:487.6] So I would say this question is really nothing special in a sense if we just wanted to let
+[487.6:491.4] you know that you cannot simply just give a call to the
+[491.4:497.4] statements and say yeah everything is fine because potentially, I mean not potentially,
+[497.4:501.8] but whenever you want to deal with the read operation you must retrieve some value and
+[501.8:506.64] then if you just don't know what is the value that should be retrieved then yeah we cannot
+[506.64:510.44] really solve the problem.
+[510.44:515.84] This was just a warm up exercise and nothing special I guess everything is clear here and
+[515.84:517.84] everything is fine.
+[517.84:518.84] Okay.
+[518.84:528.56] Now let's talk about the, let's talk about now more about let's say free flavors of
+[528.56:529.56] registers.
+[529.56:534.2] So I mentioned the second one, the regular register.
+[534.2:542.6400000000001] Also there is somewhat weaker notion of register that is called safe register.
+[542.6400000000001:547.0400000000001] So again if we have a safe register termination always holds.
+[547.0400000000001:553.32] So a correct guy will never be stuck which means that the correct process will always finish
+[553.32:556.24] the operations it started.
+[556.24:563.24] But when we talk about qualitative, qualitative is not as strong as if we are talking about
+[563.24:567.2] the regular register.
+[567.2:579.36] So in the safe register a read operation returns the last written value only if it is not
+[579.36:581.64] concurrent with any write operation.
+[581.64:588.04] If it is concurrent with any write operation then it returns any value from the universe
+[588.04:595.36] of possible values that a register can carry.
+[595.36:596.36] Okay.
+[596.36:602.5999999999999] So just one little thing before we start, before we take a look at the solution with
+[602.5999999999999:603.5999999999999] this.
+[603.5999999999999:610.24] So when we talk what does it really mean to for an operation to be concurrent with some
+[610.24:611.24] other operation.
+[611.24:617.0799999999999] So when we are talking about registers, what we have already said is that registers are
+[617.08:621.2800000000001] defined, used in grid operations and write operations.
+[621.2800000000001:629.8000000000001] But we cannot really think of read and write operations as operations that finish in a moment.
+[629.8000000000001:639.76] So rather once a process invokes the read operation for example it takes time for operation
+[639.76:642.5200000000001] to be complete.
+[642.52:650.68] So that is why we simply say that a read operation there is an invocation that we call, I
+[650.68:652.72] don't know let's just call it read.
+[652.72:659.04] And then there is a read okay or read complete, you know call back event that is triggered
+[659.04:662.04] once the read operation is indeed complete.
+[662.04:664.3199999999999] The same holds for the write operation.
+[664.3199999999999:669.84] So once a process invokes a write operation we can denote that as you know write operation,
+[669.84:674.32] write started event being triggered at the process.
+[674.32:680.0400000000001] And once a write is really done then there is a write okay or write complete or however
+[680.0400000000001:685.5600000000001] you want to call it event that is triggered at the process that simply says yeah everything
+[685.5600000000001:691.6] is fine now you can you now know that write operation is finished so you can do other
+[691.6:693.52] stuff that you want to do.
+[693.52:705.72] Okay so then we say that operation O1 precedes operation O2 simply if completion of operation
+[705.72:712.24] O1 precedes even invocation of the operation O2.
+[712.24:715.3199999999999] I think that should be pretty clear right.
+[715.32:725.6800000000001] And then of course if no operation if no operation you know if you have two operations such that
+[725.6800000000001:730.9200000000001] neither the first is the preceded the second nor the second preceded the first we say
+[730.9200000000001:737.88] that these two are we say that these two are you know are concurrent.
+[737.88:745.2800000000001] Okay so I just wanted to give you some form formal definition of what really what we
+[745.28:749.0799999999999] really mean when we say that something is concurrent that an operation is concurrent with
+[749.0799999999999:752.88] another operation and yeah that's pretty much it.
+[752.88:755.68] Okay so let me get back to the exercise.
+[755.68:763.9599999999999] So we want to give a execution of a register such that execution is unsafe and this is
+[763.9599999999999:765.6] quite simple to do.
+[765.6:772.16] So let's say that we have a process B and process draw process B writes value 1 and process
+[772.16:775.3199999999999] draw reads values here.
+[775.3199999999999:777.3199999999999] Why is this not safe as the execution?
+[777.3199999999999:783.8] Well if we have a safe register we see here we see that this free operation is not
+[783.8:788.64] fairly concurrent with the right operation why because the right operation is completed
+[788.64:793.0] before the read operation is invoked as we can see from the from the picture.
+[793.0:796.4399999999999] Do you guys see my cursor?
+[796.4399999999999:800.4] I guess you do.
+[800.4:802.4] So yes.
+[802.4:803.52] Okay thank you.
+[803.52:811.84] So yes so here it is seen that this if we assume that this is time time grows to the
+[811.84:821.28] right we figure out that process B finishes its right operation before processor invokes
+[821.28:822.92] its read operation.
+[822.92:830.28] So in order for this to really be a safe execution process this read operation should
+[830.28:834.16] return value 1 and not value 0.
+[834.16:837.6] So this is why this is not a safe execution.
+[837.6:841.4] Okay let's continue this should be pretty simple.
+[841.4:848.0799999999999] Now we want to give an execution that is safe but not regular.
+[848.0799999999999:852.52] So I have already mentioned what is the validity property in regular register.
+[852.52:858.3199999999999] So if read operation is not concurrent with any right then it returns the last written
+[858.32:866.5600000000001] value which is fine but if it is concurrent then it returns the it returns either the
+[866.5600000000001:872.9200000000001] last value or the value that is concurrently being written.
+[872.9200000000001:874.6400000000001] So what we have here?
+[874.6400000000001:881.96] Well here we have that process fee first the right value 1 then it writes value 2 and processor
+[881.96:888.44] reads at this point in time so why is this a safe execution?
+[888.44:895.0] Well this is a safe execution because read operation is concurrent with some right operation
+[895.0:902.2] if you remember safe register says if a read operation is concurrently then write operation
+[902.2:908.8000000000001] then read operation could return whatever it wants and that is really the case here because
+[908.8:912.88] read operation is concurrent with this right operation why is this case because neither
+[912.88:918.04] this read operation precedes this right operation nor this right operation precedes this read
+[918.04:919.1999999999999] operation.
+[919.1999999999999:923.28] So these two are concurrent and if that is the case if register says okay it is completely
+[923.28:931.1999999999999] fine for you to return anything you want and that anything that is returned could be different
+[931.1999999999999:935.0799999999999] from the last written value and that is completely fine.
+[935.08:941.36] But why isn't this the you know why isn't this a valid execution of a regular register?
+[941.36:947.5600000000001] Well regular register says validity of the regular register says if read operation is not
+[947.5600000000001:951.64] concurrent with any right operation then it returns the last written value.
+[951.64:956.48] Well here this read operation is concurrent with the right operation so we should just
+[956.48:962.96] you know don't think about this case but then it says the following if read operation is
+[962.96:967.6] concurrent with a right operation then read operation needs to return the last written
+[967.6:974.2800000000001] value which in this case would be value one or a value that is being concurrently written
+[974.2800000000001:979.76] which is in this case value zero value two sorry but read operation returns value zero which
+[979.76:984.5600000000001] is neither the last written value nor the value that is currently being written so this
+[984.5600000000001:990.4000000000001] is simply not a valid execution of a regular register but it is a valid execution of a safe
+[990.4:996.48] register okay I guess this also should be quite simple.
+[996.48:1004.9599999999999] And lastly we ask you to give the similar executions but they will represent a valid execution
+[1004.9599999999999:1012.1999999999999] of a regular register but not a valid execution of an atomic register okay so let me just
+[1012.1999999999999:1019.88] briefly you know talk about atomic register so atomic register is a regular register okay
+[1019.88:1024.76] so it has these two nice properties of course the elimination that says correct guy eventually
+[1024.76:1033.12] finishes it's operation and this validity property that says that if you know if read is
+[1033.12:1038.0] not concurrent with any right then the last written value is returned otherwise either
+[1038.0:1042.88] the last written value or the value currently being concurrently being written is there but
+[1042.88:1051.48] it is a stronger atomic register is stronger than regular register in the following it has
+[1051.48:1057.0400000000002] this additional property that is somehow somewhat called ordering or linear eligibility or
+[1057.0400000000002:1061.3600000000001] however you want to call it in the sheet book it's called ordering that simply says if
+[1061.3600000000001:1067.64] I read returns a value V and then stop sequence read returns a value omega or V prime let's
+[1067.64:1072.7600000000002] use V prime so we have the first read returning V the other the second read returning
+[1072.76:1080.76] V prime then the right of V prime does not really precede the right of V okay what does
+[1080.76:1088.64] this really mean well this really means that every single operation could appear to of an
+[1088.64:1100.8] atomic of an atomic register could appear as a you know as could appear as if it is performed
+[1100.8:1111.0] at a single point in time and that point in time being between the invocation of that
+[1111.0:1117.84] operation and the completion of that operation so you can what you can do is pretty much take
+[1117.84:1123.9199999999998] this period of time so the period of time from the invocation of the operation to the to the
+[1123.92:1132.24] completion of this operation and squeeze it to a single point in time and really thought of
+[1132.24:1141.52] a thought about this operation as if it really executes atomically in this in this point in time
+[1141.52:1148.88] and this this point in time that we can abstractly think think about is called linearization point
+[1148.88:1159.24] as you will see here so we have now this nice execution process P first we write one and then
+[1159.24:1164.4] write two and process for all reads first in number first the value two and then for value one
+[1164.4:1169.3600000000001] why is this a regular execution well this is a regular execution because of the follow
+[1169.36:1181.84] we have this grid operation that is concurrent with with two bright operations okay it is concurrent
+[1181.84:1187.04] with this and also with this and if that is the case it can return whatever whatever is
+[1187.04:1192.8] concurrently being written and concurrently what is written in value number two and this is
+[1192.8:1203.84] fine also this is concurrently concurrently with this operation right but it can really it can
+[1203.84:1209.84] return of course the value that is the last written value and this is the value one and it is
+[1209.84:1217.9199999999998] easy to see that this is indeed the this is indeed the the the the valid execution of a regular
+[1217.92:1224.96] register okay but what is this not the atomic so we said that atomic register is regular register
+[1224.96:1230.24] plus this for them in property so since this is regular everything is fine so we just need to
+[1230.24:1236.5600000000002] check this for them in property right so the ordering property starts if we have two subsequent
+[1236.5600000000002:1242.5600000000002] three operations the first returns number the first returns value two the the second returns
+[1242.56:1248.1599999999999] value one then the right of value one could not proceed the right of value two well this is
+[1248.1599999999999:1253.52] really not the case here right since the right of the value one precedes the right of value two
+[1254.8799999999999:1267.12] okay so let me let me show let me try to explain it in in in in the in different
+[1267.12:1273.84] terms so what we say here is the following the execution is not a atomic because the second
+[1273.84:1280.32] read returns a value that is altered and the value returned by the first three okay since the
+[1280.32:1289.4399999999998] first read okay I see two questions I will just you know tackle them after I finish this
+[1289.44:1304.3200000000002] okay this is work me let me see okay there are some states okay yeah okay sorry so what I wanted
+[1304.3200000000002:1310.16] to sorry once again so said differently since the first three returns number value two it means
+[1310.16:1316.56] that it's a linearization point is after there is a linearization point of the second right
+[1316.56:1324.72] why is this the case so suppose that the second so since this read returns value two and we can say
+[1324.72:1333.12] now that as I said you can think now that each of these operations here really executes complete
+[1333.12:1339.36] at one single point in time that is between the implication of this operation and the
+[1339.36:1347.28] oh sorry once again and the completion of this operation and since we now know that this
+[1347.28:1354.3999999999999] an realization point of process of this read operation must be must be somewhere here why because
+[1356.8799999999999:1362.8799999999999] we already can think that the value that the right of the right operation or right of value two
+[1362.88:1370.72] is already being done since this read returns number two then what also mean that this also means
+[1370.72:1379.7600000000002] that read operation the second read operation must return value value two why is this the case well
+[1379.7600000000002:1385.0400000000002] this is the case because we have what we what we have is the following if we are talking about
+[1385.0400000000002:1391.8400000000001] linearization points as this is really something extremely simple this let me just summarize it
+[1391.84:1398.6399999999999] is simply says that all of this operation that of course takes on time can be taught of as if they
+[1398.6399999999999:1405.6] occur in a single point in time so when we are talking about ordering of this linearization points
+[1405.6:1413.36] we will have that linearization point of this first operation precedes the linearization point
+[1413.36:1420.48] of the second operation this is free of you to see but since the and also what we know is that
+[1420.48:1426.88] the linearization point of this second read operation is after the linearization point of this
+[1427.1200000000001:1434.8] first operation first read operation and we also know the following linearization point of
+[1434.8:1440.96] this operation the first read operation comes after the linearization point of the second
+[1441.92:1446.56] right operation why is this the case well this is the case because this read returns value two
+[1446.56:1449.46] So we have the following ordering.
+[1449.46:1452.56] Firstly, we have of course the first right operation,
+[1452.56:1457.56] right one, then right two, then right, then read two,
+[1457.56:1459.56] and then read one.
+[1459.56:1462.56] Well, this cannot be a valid execution of an atomic register
+[1462.56:1468.56] because this second read operation must return also value two,
+[1468.56:1471.56] because value two was returned by the first read operation,
+[1471.56:1475.56] and between these two, there is no right operation.
+[1475.56:1477.56] Right operation happening.
+[1477.56:1481.56] So I hope you understand what I meant here.
+[1481.56:1486.56] Please, okay, I'll take a few seconds here to stop and ask you
+[1486.56:1490.56] if you have any questions here, because this is really something,
+[1490.56:1500.56] something that sounds confusing, but it's really extremely extremely simple.
+[1500.56:1505.56] Okay, so I'll give you like two or three seconds,
+[1505.56:1508.56] but I don't really see any questions.
+[1508.56:1512.56] Okay, then I'll just continue with the last exercise.
+[1512.56:1518.56] Okay, and then we ask you about something that is going on with the,
+[1518.56:1523.56] with these two implementations of the regular registers.
+[1523.56:1526.56] So the first one being this majority voting algorithm that,
+[1526.56:1529.56] importantly, does not use the perfect failure detector,
+[1529.56:1534.56] and the read one right-hole algorithm that uses the perfect failure detector.
+[1534.56:1538.56] Okay, so what we ask is the following.
+[1538.56:1543.56] In majority voting, algorithm views sometimes times.
+[1543.56:1547.56] But in read one by tall algorithm, we do not use those times times,
+[1547.56:1549.56] and the question is why?
+[1549.56:1552.56] Well, the answer is the following.
+[1552.56:1567.56] In this read one, write, in this read one right-hole algorithm views perfect failure detector.
+[1567.56:1570.56] Right, so what does that simply, what does that mean?
+[1570.56:1574.56] Well, that means that the writer of the,
+[1574.56:1580.56] the writer of the register will finish its write operation.
+[1580.56:1585.56] Only once it receives messages from all the correct processes in the system.
+[1585.56:1588.56] Okay, so suppose the following scenario.
+[1588.56:1593.56] Suppose the time I am a process in the system, I am a correct guy.
+[1593.56:1601.56] And in, and we are talking about majority, majority voting algorithm,
+[1601.56:1607.56] what can potentially happen is that I received two write operations, right?
+[1607.56:1611.56] And I received a write operation that is, let's, let's number it by,
+[1611.56:1614.56] with number one, so the right operation number one,
+[1614.56:1616.56] and then the right operation number two.
+[1616.56:1625.56] Success, right operation number two is, you know, issued, is invoked after the completion of the right operation number one.
+[1625.56:1632.56] So this simply means that I am, I can, I can update my, my, you know,
+[1632.56:1638.56] my estimate of what is the, what is, what is the value of the register?
+[1638.56:1640.56] And that is, you know, variable,
+[1640.56:1648.56] while in the variable, while in the, in the implementation of this majority voting algorithm.
+[1648.56:1651.56] So I should update it.
+[1651.56:1656.56] Firstly, with the right of operation, right one.
+[1656.56:1660.56] And only then with the right of an operation of right, right two.
+[1660.56:1663.56] Why, why, why, why we must do it in this way?
+[1663.56:1665.56] Well, suppose that I do it, reverse this.
+[1665.56:1670.56] So suppose that first, I apply the right operation of value to,
+[1670.56:1673.56] which says, okay, right, value five.
+[1673.56:1679.56] And only then I received because of the problems with network,
+[1679.56:1681.56] with communication and stuff like that.
+[1681.56:1685.56] And only then I receive a,
+[1685.56:1689.56] right operation with number two.
+[1689.56:1696.56] And what I must do is I should not really change my, my, my estimate
+[1696.56:1699.56] because this is a sale value, okay?
+[1699.56:1702.56] So this is what is being written here.
+[1702.56:1706.56] So if process fee first writes a value, we end up particularly value omega.
+[1706.56:1709.56] But does not success the same majority in both cases.
+[1709.56:1712.56] Then process queue, which is supposed to return omega,
+[1712.56:1715.56] might have no information about which value is the latest.
+[1715.56:1721.56] And this is really what is being, what is being given by this time stamp.
+[1721.56:1723.56] Okay?
+[1723.56:1726.56] And that is why we need to use time stamps in the,
+[1726.56:1731.56] in this majority voting regular register.
+[1731.56:1737.56] But why don't we need to use the following in the,
+[1737.56:1741.56] in the,
+[1741.56:1747.56] this algorithm read one, right, all that uses the perfect value to detect?
+[1747.56:1751.56] Well, something like this cannot really happen.
+[1751.56:1758.56] Why? Well, because writer will not even issue the second right operation.
+[1758.56:1764.56] Of course, here we are talking about the single writer multiple reader registers.
+[1764.56:1768.56] So it will not issue the second right operation before it finishes the first,
+[1768.56:1773.56] first right operation, which simply means that if I am a correct guy,
+[1773.56:1776.56] it is impossible for me to receive,
+[1776.56:1781.56] to receive a message in different order.
+[1781.56:1787.56] Why? Because the, as I said, the writer will not issue the second operation.
+[1787.56:1793.56] So that simply means that there will won't be a second right message being sent
+[1793.56:1796.56] before it receives the message from my self.
+[1796.56:1800.56] Which then simply means that since it receives a message from myself,
+[1800.56:1805.56] I have already received this right operation for the right message for the,
+[1805.56:1807.56] for the first operation.
+[1807.56:1810.56] So this is why it is not really needed for,
+[1810.56:1812.56] for us to have time stamps in this case,
+[1812.56:1816.56] because time stamps are, let's say, implicit in this,
+[1816.56:1821.56] in this, in this algorithm because of the use of the perfect value to detect.
+[1821.56:1824.56] Okay?
+[1824.56:1829.56] So this is the last exercise for today.
+[1829.56:1834.56] Any questions?
+[1834.56:1844.56] Okay, I guess not.
+[1844.56:1852.56] So then let me just tell you once again what is the idea.
+[1852.56:1859.56] So I will check now with the receipt and with others on the course.
+[1859.56:1863.56] And I will let you know tomorrow, I guess,
+[1863.56:1868.56] the latest, whether we are going to have the, the midterm.
+[1868.56:1871.56] Depending on that, so if we don't have a midterm,
+[1871.56:1874.56] and I suppose that's, that's going to happen,
+[1874.56:1877.56] I ask you to prepare questions for the next,
+[1877.56:1887.56] for the next session that you might have with respect to everything we've covered so far.
+[1887.56:1890.56] And then Matem and I would, you know,
+[1890.56:1894.56] we will gladly answer those questions and, you know,
+[1894.56:1897.56] discuss possible solutions and stuff like that.
+[1897.56:1900.56] So yeah, that's, that's pretty much it.
+[1900.56:1902.56] That's how we are going to continue.
+[1902.56:1905.56] Okay, there is a question.
+[1905.56:1908.56] Okay, so there is no midterm.
+[1908.56:1911.56] So, yeah, I guess this is the,
+[1911.56:1916.56] so that means that we are going to continue this way.
+[1916.56:1919.56] So once again, please prepare any questions,
+[1919.56:1923.56] any confusion that you want to be resolved and stuff like that for the next time.
+[1923.56:1927.56] So we are going to use the next session solely for that.
+[1927.56:1931.56] We are going to talk about those problems, try to figure them out.
+[1931.56:1935.56] And then, yeah, and then we'll see.
+[1935.56:1939.56] I mean, if we have a lot of questions that we cannot cover in the next session,
+[1939.56:1942.56] then we are going to again, of course, have an session.
+[1942.56:1952.56] And also just bear in mind that Matem and I are available for any of your questions regarding the theory stuff.
+[1952.56:1956.56] So please, whenever you have any problems, any confusion, anything,
+[1956.56:1960.56] and you don't want to wait for a, for an exercise session.
+[1960.56:1965.56] Just, you know, send us an email or even better post it on the model
+[1965.56:1970.56] because maybe other, other students might have similar problems.
+[1970.56:1973.56] So, yeah, with that, I'm going to conclude today's session.
+[1973.56:1975.56] Thank you very much for being here.
+[1975.56:1986.56] And I'm going to give you another five seconds for potential, potential questions.
+[1986.56:1992.56] Okay, there, it seems like no one has a question.
+[1992.56:1996.56] So, yeah, then thank you guys for coming.
+[1996.56:2000.56] Stay safe and, yeah, prepare questions for the next time.
+[2000.56:2018.56] Bye.

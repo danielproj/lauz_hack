@@ -1,0 +1,261 @@
+~COM-516 Lecture 9.2
+~2020-11-07T20:31:37.150+01:00
+~https://tube.switch.ch/videos/94ef7882
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:9.8] In this video we will turn to the problem of graph coloring.
+[9.8:26.560000000000002] So today will be an introduction to graph coloring and what we can do with MCMC about
+[26.56:31.119999999999997] this problem and next time we will do the analysis.
+[31.119999999999997:51.239999999999995] So today is about simply an introduction and the statement of a theorem and next time
+[51.24:61.160000000000004] we will be the proof of the theorem and the analysis.
+[61.160000000000004:68.84] Okay so recall the problem here.
+[68.84:71.24000000000001] I already stated it last time.
+[71.24000000000001:76.28] You have an arbitrary graph which is a set of vertices and edges.
+[76.28:100.0] So let's take a graph here like that say and we will say that an assignment of colors
+[100.0:120.24000000000001] will suppose we have few colors that I call 1, 2, 3 up to q is a vector x1, x2, x up
+[120.24000000000001:129.96] to the cardinality of so the number of vertices of the graph where the indices of the graph
+[129.96:140.44] is here represent the index of the vertices.
+[140.44:148.12] So here you have v equals 8.
+[148.12:160.88] And each coordinate xk is one of the colors.
+[160.88:165.88] So the assignment will be denoted by the vector notation with a line.
+[165.88:172.36] In the notes we call this x without the underlying line.
+[172.36:196.8] What we call a proper coloring or a proper assignment is such that any vertices that belong
+[196.8:203.8] to an edge so you could have these vertex and these vertex that belong to this common
+[203.8:216.08] edge here are such that xk the color assigned to k is different from the color assigned
+[216.08:218.08] to l.
+[218.08:227.64000000000001] So if we draw a proper coloring we should have that if here it's red maybe here it's green
+[227.64000000000001:239.96] and if I have enough colors then I can find a proper coloring if I don't have enough colors
+[239.96:247.88000000000002] well I will not be able to find a proper coloring.
+[247.88:256.44] So here I'm drawing a proper coloring with how many colors did I use?
+[256.44:273.92] So here q equals well I have blue, green, red and the move here so four colors I guess.
+[273.92:289.64000000000004] So we often also call this a proper q coloring or a proper coloring.
+[289.64:308.88] And the aim is to sample from the distribution pi over x which is the identity.
+[308.88:316.12] So it's the uniform distribution over proper coloring so the numerator is the identity such
+[316.12:335.44] that x is proper q coloring divided by z which is the number of proper q colorings.
+[335.44:355.24] Okay so that's our aim and now let's start from a little remark is that for an arbitrary
+[355.24:373.16] graph and some arbitrary number of color q it is not always the case that a proper coloring
+[373.16:384.28000000000003] exist.
+[384.28:392.84] So then this probability distribution would not even exist right because it would be undefined
+[392.84:397.52] so 0 over 0 say.
+[397.52:409.91999999999996] Okay but at least there is a sufficient condition such that proper coloring always exists at
+[409.92:427.36] least if you have that q is greater or equal than the maximum degree of all the vertices
+[427.36:445.92] v. Okay plus one then we are assured that a proper coloring exists.
+[445.92:453.52000000000004] Indeed take a vertex v what is the degree of a vertex in the graph so if you have a graph
+[453.52:459.79999999999995] here like that.
+[459.79999999999995:471.35999999999996] So well you have these vertex and the degree is the number this is the number of vertices
+[471.35999999999996:474.0] but our neighbors.
+[474.0:487.6] So here the degree so that's the vertex v the degree of v is equal to 4.
+[487.6:498.04] And if the number of colors here is 5 so then certainly you know I can give I can certainly
+[498.04:507.40000000000003] give different colors to these vertices here.
+[507.40000000000003:515.88] So let me take one more color.
+[515.88:526.72] I can give certainly different colors to these vertices and no edge will have the same
+[526.72:537.12] color for example so certainly these four colors around the vertex v are different than
+[537.12:547.24] green and also if you have an edge here or you could have edges here and here then the
+[547.24:551.4] colors are different.
+[551.4:565.88] Okay so we will anyway take a number of colors that's big enough and you will see that
+[565.88:571.88] in fact to do the analysis that we are going to do we will need a number of colors that's
+[571.88:579.6] even bigger than this but we are in this framework and we are assured that this distribution
+[579.6:583.52] is well defined and exists.
+[583.52:592.28] Okay and let's fix a notation once for all.
+[592.28:603.28] The max degree of the vertices in the graph I call this delta.
+[603.28:614.76] And from now on the number of colors is greater than delta plus 1.
+[614.76:627.56] Okay so we will study the following algorithm.
+[627.56:637.0] Here the following algorithm which in fact is a metropolis algorithm and we will recognize
+[637.0:640.5999999999999] it as a metropolis algorithm a little bit later.
+[640.5999999999999:653.64] That in fact is a metropolis algorithm see later.
+[653.64:666.96] Okay so the first step of the algorithm is that you start so as I said the idea is to
+[666.96:678.24] sample from the probability distribution of the uniform in the space of colorings.
+[678.24:691.64] Okay so before I go on let me also make something precise a secondary mark.
+[691.64:713.56] Here the space of proper two colorings is called S and that is the space of all assignments
+[713.56:728.88] x so vectors with a number of components equal to a number of vertices such that for all
+[728.88:741.4] k l in the edge space the component k and the component l are different.
+[741.4:763.68] Okay this space S is going to play the role of the state space of the mark of chain
+[763.68:773.8399999999999] and x will play the role of the states.
+[773.8399999999999:778.4799999999999] Okay proper two coloring will play the role of the of the states but remark that S is
+[778.4799999999999:792.68] included in a bigger space which is the space of all assignments which are not necessarily
+[792.68:799.3199999999999] the proper colorings.
+[799.3199999999999:807.2399999999999] We want to sample from S but let's leave a part for the moment the problem of so two
+[807.24:829.8] samples from S and we want to sample uniformly from S.
+[829.8:854.4399999999999] So we will use the following algorithm is used and we will prove that indeed this algorithm
+[854.44:877.44] works at least for delta for q large enough with respect to delta.
+[877.44:885.84] Now what's the optimal q that's a difficult question and we will not really address it
+[885.84:888.6400000000001] you will see what we will prove.
+[888.6400000000001:892.8800000000001] So the algorithm is as follows.
+[892.8800000000001:898.9200000000001] Let me state now the algorithm.
+[898.92:912.12] So first you start from a proper q coloring x in S.
+[912.12:916.56] Let me leave a part the problem of finding this initial condition.
+[916.56:922.8] I'll comment in two minutes.
+[922.8:940.7199999999999] Second you select vertex x in V uniformly at random.
+[940.72:951.72] Okay so if you have capital N vertices you take vertex in V with probability 1 over N.
+[951.72:971.8000000000001] So vertices I call them V here or K or L as you wish.
+[971.8:984.9599999999999] Color that I call C in 1 to q up to the q's color uniformly and random.
+[984.9599999999999:992.24] So pick a color any color with probability 1 over q.
+[992.24:1002.88] And the first step is the following.
+[1002.88:1017.36] If C the color C is allowed at V then you recolor vertex V.
+[1017.36:1023.16] What does it mean to recolor vertex V?
+[1023.16:1035.56] You have the color xV and you do the move xV goes to C.
+[1035.56:1051.08] You have the old color and here you will have the new color.
+[1051.08:1067.32] And if C is not allowed then you just do nothing.
+[1067.32:1079.84] So somehow you propose a move here and you accept the move if you stay in the spaces
+[1079.84:1085.56] and otherwise you reject the move.
+[1085.56:1107.48] And we will convince ourselves later that this is an instance of metropolis algorithm.
+[1107.48:1115.08] So it is stated in a language that is a bit different than the general metropolis algorithm.
+[1115.08:1125.24] Till now but we can it is a good exercise to restate this as a metropolis in the general framework
+[1125.24:1129.6] of the metropolis algorithm.
+[1129.6:1137.84] Okay, first let me do a comment about this fact here because if you have an algorithm
+[1137.84:1144.6799999999998] well you better be able to propose an initial coloring here otherwise that is not really
+[1144.6799999999998:1148.4399999999998] an algorithm right?
+[1148.44:1171.68] So in fact the first step is not really a problem at least if colorings exist because
+[1171.68:1200.88] and or if Q is big enough because one can always start from any assignment x and proceed
+[1200.88:1212.3200000000002] in the fall as as as the algorithm tells you.
+[1212.3200000000002:1224.8400000000001] So this means you apply steps to two to four.
+[1224.8400000000001:1229.1200000000001] So you select a vertex at random you select the color at random.
+[1229.12:1234.7199999999998] You look if this color is an allowed color if yes you recolor.
+[1234.7199999999998:1240.36] So at step two, and otherwise you do nothing.
+[1240.36:1262.52] So when you do these steps then in fact the number of edges that have a wrong color can
+[1262.52:1265.7199999999998] only decrease.
+[1265.72:1279.6000000000001] Okay, so if you think about the cost function the cost can only decrease or stay or stay
+[1279.6000000000001:1282.08] equal maybe.
+[1282.08:1287.72] So there is a danger that your stack in a local minimum and the cost does not decrease
+[1287.72:1300.68] anymore but one can show that in fact if delta is big enough if Q is big enough with some
+[1300.68:1322.04] probability eventually you will convert to the state space S.
+[1322.04:1332.32] And in fact the analysis of the algorithm that we will do shows this although we will not
+[1332.32:1344.0] discuss it really again we will just admit this that if Q is big enough this will work.
+[1344.0:1351.08] What is the critical Q so that this always works this might be a more difficult question.
+[1351.08:1364.1599999999999] Okay so we will show the following theorem and okay I'll make a so the theorem says
+[1364.1599999999999:1369.76] the following so if the color number of color is big enough meaning here it's greater
+[1369.76:1373.9199999999998] than three delta.
+[1373.92:1385.0] Then which is bigger than delta plus one which guarantees the existence of colorings.
+[1385.0:1403.88] Then for all proper colorings X initial colorings X say if you wish initial proper colorings
+[1403.88:1412.44] X if you look at the total variation of the following probability distribution the probability
+[1412.44:1421.1200000000001] distribution of the chain starting at X and running for n steps minus the probability
+[1421.1200000000001:1428.96] distribution of the uniform over which is uniform over proper colorings look at the total
+[1428.96:1446.1200000000001] variation here so this is the probability distribution of the chain starting at X and running
+[1446.12:1465.28] for n steps and this is the uniform probability distribution over proper colorings.
+[1465.28:1476.08] So our interest is to sample from pi we create a chain that allows us to create samples
+[1476.08:1481.8] according to this chain here and we want the probability distribution of the chain to
+[1481.8:1492.48] be closed in total variation while the theorem assures that this is less than here the number
+[1492.48:1501.1599999999999] of vertices times exponential minus n divide by the number of vertices and here there
+[1501.16:1512.0] is coefficient 1 minus 3 delta over q and because of this coefficient here you need
+[1512.0:1521.8400000000001] this condition that q is greater than 3 delta otherwise the bound is trivial.
+[1521.84:1534.6399999999999] If you look at the mixing time then you will find that the mixing time t epsilon is less
+[1534.6399999999999:1547.6399999999999] or equal than 1 over 1 minus 3 delta over q number of vertices times log of the number
+[1547.64:1552.6000000000001] of vertices plus the log of 1 over epsilon.
+[1552.6000000000001:1559.0] Okay this is a small exercise to show the further or more you take the definition of the
+[1559.0:1569.0400000000002] mixing time that you have already seen in this class and you apply the standard idea
+[1569.0400000000002:1572.3200000000002] and you get the mixing time.
+[1572.32:1582.24] Okay some remark here about this condition we said before that in order for coloring
+[1582.24:1587.6] to exist it's sufficient to have q greater or equal to delta plus 1.
+[1587.6:1598.52] This is certainly true and you might ask what is the optimal
+[1598.52:1611.48] q critical such that the algorithm works given delta.
+[1611.48:1618.68] Okay is it delta plus 1?
+[1618.68:1635.92] Well in general we cannot answer this question and depends on the graph so there is no general
+[1635.92:1651.72] answer.
+[1651.72:1667.16] But now there are interesting classes of graphs that people study and for example what
+[1667.16:1677.1200000000001] is popular is to take an Erdoche raining graph if you don't know what this is never
+[1677.12:1688.28] mind we will not insist but basically this is a graph that is taken in a random ensemble
+[1688.28:1696.52] of graphs and for sparse Erdoche raining graphs there are interesting problems trying
+[1696.52:1699.8] to determine the critical color.
+[1699.8:1709.6399999999999] The answer is known but it's much beyond the scope of the class to determine it and there
+[1709.6399999999999:1716.8799999999999] is a critical q as a function of delta that can be determined.
+[1716.8799999999999:1725.68] Okay q critical as a function of delta can be determined for a typical Erdoche rainy
+[1725.68:1731.96] graph because these graphs are themselves random.
+[1731.96:1741.24] But this is a difficult problem and we will not talk about such problems.
+[1741.24:1759.6] So we limit ourselves to here arbitrary graphs.
+[1759.6:1769.88] We limit ourselves to q greater than 3 delta for arbitrary graphs.
+[1769.88:1782.68] If you look in the book of levin and peras that is on the wet page you find a better condition
+[1782.68:1792.64] and a better theorem.
+[1792.64:1810.4] However the analysis is more difficult and these can be these turn out to be difficult
+[1810.4:1830.96] problems.
+[1830.96:1846.26] With no reference to the general theory of ergodic Markov chains that satisfy detail
+[1846.26:1847.82] bands.
+[1847.82:1860.48] In other words we will prove it by our bare hands even as if we had never heard about Markov
+[1860.48:1861.48] chains.
+[1861.48:1868.1599999999999] And it's very often the case that when you want to produce such concrete results like
+[1868.16:1880.72] this theorem like this bound well all the structural theorems of Markov chains that were
+[1880.72:1892.76] discussed in the class while they are useful as a framework of mind are not directly used.
+[1892.76:1902.6] Well of course if you know how to compute the spectral gap of this chain then maybe you
+[1902.6:1910.6] can apply directly one of the bounds that we saw in this class but that's not the way
+[1910.6:1916.28] we will proceed in fact.
+[1916.28:1924.24] And computing the spectral gap might be difficult and in fact the analysis that we do here
+[1924.24:1930.84] after all provides a bound on this spectral gap.
+[1930.84:1947.08] Okay so the next thing I would like to do now for today and the last thing in fact is
+[1947.08:1964.32] to recognize the algorithm as a metropolis algorithm.
+[1964.32:1976.8] Okay so remember what we said we said first you select vertex v at random.
+[1976.8:1988.6399999999999] Then you select so well first you start how was it formulated start from a proper cue
+[1988.6399999999999:1993.12] coloring so let me not change the formulation here.
+[1993.12:2009.32] So first start from some hex that is a proper cue coloring second you select vertex at random
+[2009.32:2011.4799999999998] uniformly at random.
+[2011.48:2033.3600000000001] Third you select a color uniformly at random from the cue colors and fourth if C is allowed
+[2033.36:2043.4799999999998] you recolor the vertex v otherwise do nothing.
+[2043.4799999999998:2047.1999999999998] And then of course you repeat.
+[2047.1999999999998:2057.6] Well you repeat from step 2 right.
+[2057.6:2068.44] So what I claim is that what is first the base chain?
+[2068.44:2075.64] Well I claim the base chain is the following you take an assignment X okay I represent it
+[2075.64:2089.52] as a point in S and I do a move to a new assignment Y okay and how do I do this move so the
+[2089.52:2102.48] probability of this move is psi x y and how do I what probability should I affect to
+[2102.48:2131.2] this move well the following if y is such that x and y differ at only one vertex.
+[2131.2:2140.8799999999997] Well then I can go from x to y in the following what is the probability that I suppose this
+[2140.8799999999997:2148.2] vertex is v what's the probability that I choose v it's 1 over the number of vertices
+[2148.2:2159.8799999999997] and what is the probability that I choose the color C in y when I recolor x well it's
+[2159.88:2172.44] 1 over Q okay so you have this base chain if y and x differ at only one vertex okay and
+[2172.44:2179.12] this is a condition that tells you that y and x are neighboring colorings in the space
+[2179.12:2183.2400000000002] of all colorings.
+[2183.24:2200.0] So these are neighboring colorings in the space S of all proper colorings.
+[2200.0:2214.56] On the other hand the other possibility is that x the assignments are equal so that's
+[2214.56:2226.68] the question of the self loops here then you have a self loop okay so you have x and you
+[2226.68:2231.48] come to the same coloring here.
+[2231.48:2239.68] Okay so what probability should you affect to that?
+[2239.68:2264.8399999999997] Well this probability will be equal to the following probability it's the probability so well
+[2264.84:2271.84] how do you compute this?
+[2294.84:2299.1600000000003] How do you compute this?
+[2324.84:2354.6400000000003] Okay so psi x x by the normalization condition is 1 minus the sum over y different from x
+[2354.64:2365.12] of psi x y okay that's just the condition that tells you that the row sum of the matrix
+[2365.12:2380.08] psi is equal to 1 and so this is 1 minus 1 over Q times the number of vertices sum over
+[2380.08:2388.24] y different from x psi x y and this what is it?
+[2388.24:2398.3199999999997] It's the number of colorings that are neighbors to x.
+[2398.3199999999997:2408.24] How do you find this number?
+[2408.24:2422.3599999999997] Well this number is the following you have you you you select how do you find a coloring
+[2422.3599999999997:2430.16] that is a neighbor to x you select a vertex you have V choices to select the vertex and
+[2430.16:2444.3999999999996] then you must select a color that is not the color of x so you have Q minus 1 choices and
+[2444.3999999999996:2458.6] this is 1 minus V Q minus 1 over QV and then you find 1 minus 1 minus 1 over Q which
+[2458.6:2472.7599999999998] is 1 over Q. Okay so this is your base chain now psi x y equal 1 over V times 1 over Q
+[2472.7599999999998:2485.36] psi x x is 1 over Q this here is valid in case y and x are neighbors and if x and y are
+[2485.36:2502.1200000000003] not neighbors psi x y equals 0 if y and x are not neighbors somehow in this state space
+[2502.12:2517.7999999999997] meaning that they don't differ at only at only at most one vertex they are not neighbors
+[2517.8:2534.7000000000003] the base chain and what is the acceptance probability? Well the acceptance probability is a x
+[2534.7:2552.1] y which is the minimum of 1 and pi y divided by pi x not the base chain is uniform so it
+[2552.1:2564.66] simplifies psi x y and psi y x are equal okay here psi x y equals psi y x so this simplifies
+[2564.66:2578.54] in here so this is equal to the mean of 1 what is pi y it's indicator function that y is
+[2578.54:2592.62] a proper coloring divided by z and what is pi x so pi x is the indicator function that x is
+[2592.62:2604.38] proper divided by z so as usual z consoles but x is proper because this is equal to 1 because
+[2604.38:2614.1] x is the starting point and then you stay in the space of proper coloring so at each step this is 1
+[2614.1:2631.98] and then you find the acceptance probability of the algorithm is 1 over indicator function
+[2631.98:2644.18] that y is a proper coloring yes and that's all okay and this minimum is always equal to the
+[2644.18:2659.02] indicator function that y is a proper coloring and we find the rules that we said before this
+[2659.02:2682.58] means that certainly well this means that you know if the coloring of v is allowed
+[2689.02:2710.94] a x y equal 1 and if the coloring of v is not allowed you reject the move a x y equals 0 and you
+[2710.94:2730.38] do nothing okay and then you can easily write p x y okay but these two last slides are here to
+[2730.38:2743.34] convince you that this little algorithm here is purely equivalent to the metropolis lasting algorithm
+[2743.34:2765.42] a last remark well you might ask is the chain irreducible and operiodic and does it satisfy
+[2765.42:2780.2200000000003] detailed balance okay so one can easily show it satisfies detailed balance I think and just by
+[2780.22:2796.2999999999997] the general theory it is a periodic because there are self loops already there are self loops in
+[2796.2999999999997:2803.5] the base chain and these self loops occur with probability 1 over q and they will remain in the
+[2803.5:2813.82] in the mark of chain the the little cavit is that we don't know if this is irreducible it's not so easy
+[2813.82:2827.5] to see that it's irreducible okay so here is a remark to end not easy to see
+[2827.5:2842.78] if the chain is irreducible and in fact indeed okay indeed we will not
+[2842.78:2858.78] have to prove this because as I said we prove the theorem by bare hands not with a theory
+[2858.78:2873.7400000000002] because we we prove this theorem here this theorem will prove it by just the bare hands
+[2875.82:2876.3] okay
+[2876.3:2903.02] next time but in fact if delta is greater than so q is greater than 3 delta certainly the chain
+[2903.02:2917.74] is irreducible and in fact the proof of the theorem will show this somehow it's not at all
+[2917.74:2927.74] obvious that this is true for all q smaller than 3 delta and greater than delta plus 1 in fact
+[2927.74:2941.1] for many class of graphs this might even be wrong in fact so it might mean that you you can have
+[2943.8999999999996:2952.7799999999997] you know in the space of all colorings in the space of all colorings if I draw the space here
+[2952.78:2964.5400000000004] of all colorings s okay so that's a state space of all proper colorings you have a coloring here
+[2964.5400000000004:2975.9] it might have neighbors to which you can move and from this you can move and here you can move
+[2975.9:2983.34] but then there might be another group of colorings that are all connected okay but somehow
+[2985.42:2998.38] you cannot necessarily move from one cluster to the other okay and this clustering phenomenon might occur
+[2998.38:3016.1400000000003] clustering might occur in s and then the chain is not irreducible
+[3016.14:3026.2999999999997] okay so
+[3031.3399999999997:3039.1] so it's not this is not an obvious question and this is one of the reasons also why you often have
+[3039.1:3053.5] to prove your theorems by by bear hands okay enough for this video

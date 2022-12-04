@@ -1,0 +1,267 @@
+~EE-556 / Lecture 9 - 2/2 (2020)
+~2020-11-02T13:33:40.142+01:00
+~https://tube.switch.ch/videos/40e3cd78
+~EE-556 Mathematics of data: from theory to computation
+[0.0:2.0] All right.
+[2.0:9.0] So, let's get started again.
+[9.0:19.0] Just to recap what you were talking about, we answered four questions so far.
+[19.0:29.0] You know, on the convergence of SGD, whether or not SGD avoids strict saddles,
+[29.0:41.0] and whether or not SGD converges to a minimizer, and the fourth one was whether or not SGD would
+[41.0:51.0] converge to the global minimizer. And now in this particular lecture, what we will do is
+[51.0:57.0] we're going to talk about some of the practical algorithms that people use in the literature
+[57.0:63.0] that give you a very good performance in getting to those, for example, zero training law.
+[63.0:74.0] And the difficulty with deep learning is that you have to train with a lot of data points,
+[74.0:84.0] and you need algorithms that kind of adapt to the problem and give David performance.
+[84.0:94.0] Now, add the graduates, certainly one. I think this, I know the original paper was in 2008 to 2010
+[94.0:101.0] or something like this by Chanduchi, and this was giving really good performance.
+[101.0:110.0] Here's the algorithm. In this particular case, we're using scalar step size.
+[110.0:118.0] So this thing is actually scalar because it has an identity matrix,
+[118.0:126.0] so multiplying with the identity gradient remains the same. And this particular thing
+[126.0:136.0] just accumulates the gradient norms. So if you think about it, as the stochastic gradient norms become small,
+[136.0:146.0] the step size decreases at a less in terms of speed. But what is interesting is that as stochastic gradients,
+[146.0:153.0] let's say you're near the solution, and you're like jumping near arms, the gradients are pretty much similar.
+[153.0:161.0] It kind of settles to deterioration count. This way you get alpha k, which is something like one or the sort of k.
+[161.0:168.0] And this is what you want to have. And if your objective was from the comics,
+[168.0:173.0] for instance, then in this case, the gradients, stochastic gradients would also go down,
+[173.0:182.0] then you may actually have a better rate. No, not necessarily. No.
+[182.0:195.0] No, either grad does not enough to stochastic gradients. Sorry, scratch that. Now, I'll just recall this particular picture from our lecture theory,
+[195.0:205.0] lecture 4. What you can do is try to adapt each coordinate, which you can do with a variable metric.
+[205.0:212.0] In this particular case, or let's say you're at this point, you are the level sets, you are the level sets,
+[212.0:220.0] you're at this point, you are the level sets around that point. And you can see that by adapting to x1,
+[220.0:227.0] so you can take maybe a bigger step in x1 direction, and a bit smaller step in the x2 direction.
+[227.0:233.0] And that should improve the practical performance, because you can take bigger steps.
+[233.0:239.0] Actually, the worst case looks just constant in this function is that, so you need to take smaller steps.
+[239.0:252.0] If you were to just work with the worst case, it's constant. But then you can locally adapt and work the bigger steps in getting to the objective minimum.
+[252.0:264.0] And the way you achieve this in Hedagrad is that you take the gradients, stochastic gradients, then you element-wise square them.
+[264.0:271.0] And you have your variable metric. So you look at the coordinates, the gradients at each coordinate,
+[271.0:279.0] and you accumulate the gradients at each coordinate separately, and then you take a step accordingly.
+[279.0:285.0] All right. Now, question is whether or not we can improve over Hedagrad.
+[285.0:304.0] The answer is affirmative. So Hedagrad, all the stochastic gradients have equal weight. So this is like a complete historical average.
+[304.0:316.0] Now, consider a steep function, but it's flat around the minimum. So it's just like this. So here's the steep function, but it gets flat around the minimum.
+[316.0:322.0] It's steep here, maybe here, but around the minimum, it has a nice wide basin.
+[322.0:334.0] And so if you are using gradients accumulation, maybe you should give more weights to the current gradients, because the function is flat, hence the gradients are somewhat smaller.
+[334.0:340.0] Then you can use a biter step.
+[340.0:358.0] Okay. Now, in this particular case, so here is Hedagrad, but it takes the gradients at the diagonal matrix, and then squares the entries of the gradients and accumulates this.
+[358.0:369.0] So RMS prop basically weighs the gradients, and it gives a bit more weight to the current gradients than the previous gradients.
+[369.0:375.0] What's this? The weight goes.
+[375.0:383.0] So in this case, the recent gradients would have a bit more importance.
+[383.0:396.0] Okay. Now, so far we talked about these adaptive gradient methods, and if you recall, I introduced this method called acceler grad.
+[396.0:422.0] And what acceler grad did was it did acceleration over add a grad. And by doing so, we gave guarantees for acceler grad that were somewhat universal in the sense that in the comics case.
+[422.0:429.0] Acceler grad can get k squared rate if the function is smooth if you're using the termistic radians.
+[429.0:435.0] It gets a square of k rate, if you're using stochastic radians, which is also optimal.
+[435.0:445.0] In fact, this algorithm is universal in the sense that if the gradients were actually subgradients, it also gets your square of k rate.
+[445.0:455.0] And the algorithm is given here. So here, sorry, so put expected gradient is equal to the gradient.
+[455.0:460.0] Okay. Maybe there are some typos here.
+[460.0:463.0] Yeah, I think this is.
+[463.0:469.0] So we should fix these typos.
+[469.0:479.0] So the algorithm is this one. Now here in the comics case, you need to average, but what we find, which I will show you, and frequently that you don't need to average.
+[479.0:488.0] Also, so there's this. We're also still working on this particular algorithm to give guarantees in the non-comics case.
+[488.0:501.0] But this is a summary of what I just said in the case of complexity. So if you use some way in the scheme of the gradients that is increasing in the latest radians, and you can get k squared rate.
+[501.0:511.0] So you get an all till the square of k rate. And there's an algorithm that improves this log k it's called unique grad.
+[511.0:523.0] Which is a collaboration between my student Ali, myself, Kylivia, Technion, and Francis Barrett in Ria.
+[523.0:527.0] So you can remove the log k factor as well.
+[527.0:540.0] Okay. Now the main dish, Adam methods. So this is apparently the most cited paper in across all sciences.
+[540.0:549.0] Adaptive moment estimation. So this algorithm takes RMS prop and adds a second order moment estimation.
+[549.0:560.0] Okay, and I'll tell you what the algorithm is. So you think about the tip size and you have some tuning parameters beta two.
+[560.0:573.0] So again, so maybe peak is for cast the gradient here. So typically use the gradient, but you can use this for cast the gradient here.
+[573.0:579.0] Yeah, I should be more careful with this.
+[579.0:582.0] So there's this time.
+[582.0:589.0] So this is for cast the gradient. So, but you can plug in the determinist gradient. No problem.
+[589.0:595.0] What you do is you do this gradient averaging. Right.
+[595.0:604.0] So if you think about this is more like a variance reduction step.
+[604.0:609.0] Because what it does is it somehow averages the cast the creatings.
+[609.0:623.0] And this is the RMS prop update. Right. So it tries to come up with a variable metric across individual coordinates.
+[623.0:630.0] By using these weights, it does some bias correction. It adds a bit of a touch factor.
+[630.0:637.0] So that you know, you don't have zeroes when you do these divisions. Right.
+[637.0:643.0] So these these vector operations are element wise. So these dots.
+[643.0:648.0] And that square. These are element wise squares.
+[648.0:658.0] And here it is. Right. So it has it's more like.
+[658.0:666.0] I'd like to add the variance to that. That's about it.
+[666.0:676.0] Now it turns out that the original proof of the atom method is wrong.
+[676.0:682.0] And that you actually need some monotonic corrections step here.
+[682.0:690.0] And this is the AMS grad methods, which got the best paper award at ICLR.
+[690.0:704.0] So it's the same thing. If you have a constraint, what you do is you apply the projection that the weighted projection.
+[704.0:710.0] Right. So the weighted projections define here.
+[710.0:714.0] Because you're doing variable metric in different coordinates.
+[714.0:722.0] So the projections are no longer regular projections. You also have to weigh your projections in the same manner.
+[722.0:726.0] In different differently for different points. Right.
+[726.0:734.0] So AMS grad, although AMS grad corrects atoms errors.
+[734.0:738.0] It's.
+[738.0:745.0] It's not as widely used for some reason.
+[745.0:749.0] Okay. Now in general.
+[749.0:756.0] So the original AMS grad, the proof was given only for the comics case.
+[756.0:763.0] And if you compare it against the adapted methods, for example, a cellar grad, it's it's rate is worse for the comics case.
+[763.0:770.0] Moreover, there's this beta one parameter that you have to strictly decrease.
+[770.0:778.0] But in practice, the practitioners use the constant beta one.
+[778.0:784.0] So AMS grad basically points out gives a counter example for atom, where it doesn't work.
+[784.0:788.0] And then proceeds to correct an error in the proof.
+[788.0:795.0] But it's proof is not for noncomics problems where atoms typically applied.
+[795.0:801.0] It is for comics problems and that the parameters are not what people use in practice either.
+[801.0:803.0] Right. So the original.
+[803.0:811.0] And as a result, people started thinking more about AMS grad and guarantees in the noncomics case.
+[811.0:815.0] And I'll tell you some of the guarantees.
+[815.0:819.0] But first, let's understand the guarantee for.
+[819.0:824.0] At the grad is a Rachel Ward paper, the Leon but two.
+[824.0:829.0] Now here's the deal.
+[829.0:835.0] So what you can do is you can run at the grad with the algorithm that they sent so forth, right?
+[835.0:839.0] You assume that the actually.
+[839.0:843.0] The function has bounded gradients.
+[843.0:848.0] And that it is proper meaning that there's a minimum that you obtain.
+[848.0:855.0] In this part, so suppose you have to cast a gradient estimates that are with bounded variance.
+[855.0:862.0] Then one of the iterates across iterations will have a.
+[862.0:869.0] A guarantee of a square of k rate with probability one lines delta.
+[869.0:877.0] So if you want the delta to be small, then you have to do a lot of iterations.
+[877.0:884.0] Right. And that it says something about the gradient of the iterate full gradient of the iterate,
+[884.0:886.0] which would do not have access to.
+[886.0:889.0] So you cannot use it to stop the algorithm.
+[889.0:892.0] So this is a bit of a problematic.
+[892.0:894.0] Characterization.
+[894.0:900.0] All right. Now for a miss grad, I think this is John John Goose results.
+[900.0:902.0] From UCLA.
+[902.0:911.0] You can give a similar guarantee for.
+[911.0:917.0] Ams grad, right, the corrected version of Adam, but in this particular case, you can take beta constant.
+[917.0:924.0] And you get a low k divided by square of k. But again, the minimum across some iterations.
+[924.0:929.0] Right.
+[929.0:935.0] Now you can you can also do something similar. So you assume that the sub the.
+[935.0:938.0] The stochastic gradients are bounded.
+[938.0:941.0] And what you can do is randomly pick an iterate.
+[941.0:945.0] With some probability that depends on the steps as you use.
+[945.0:949.0] And this particular case.
+[949.0:954.0] You can pick a time horizon and you can use equal probability.
+[954.0:958.0] In this case, you have a guarantee like this.
+[958.0:960.0] No. That's.
+[960.0:961.0] Yeah.
+[961.0:963.0] It's what you can characterize.
+[963.0:966.0] But in practice, these algorithms work.
+[966.0:972.0] What we've done, for example, lately was to show that again with a similar thing.
+[972.0:975.0] Or you can pick uniformly random.
+[975.0:978.0] Then you have a given a time horizon T.
+[978.0:980.0] You have a one or T guarantee.
+[980.0:983.0] But in this particular case, you can also handle the constraints.
+[983.0:988.0] Right. So that the guarantee is given on the gradient mapping.
+[988.0:993.0] So.
+[993.0:999.0] Now here, what I'd like to do is show you some practical performance.
+[999.0:1002.0] And here's a resident.
+[1002.0:1006.0] In this particular case, if you run Adam versus accelerad,
+[1006.0:1013.0] which is the algorithm for mix, they have pretty much the same performance and training and test.
+[1013.0:1017.0] So you could you could say you could see.
+[1017.0:1023.0] Maybe you can try different steps, I skate rules and so on.
+[1023.0:1024.0] All right.
+[1024.0:1032.0] Now let's just try to wrap up on in terms of the performance of non-formic algorithms.
+[1032.0:1038.0] Now, if you if you have smoothness, then HGD at the grad or I miss from Adam,
+[1038.0:1042.0] MS, accelerad, they have sort of K guarantee.
+[1042.0:1047.0] You can improve these guarantees if you assume things like pole gap over C,
+[1047.0:1049.0] which which is Jerome bolts.
+[1049.0:1053.0] It's popularized by March myth in the machine learning literature.
+[1053.0:1058.0] Or you can use a strong growth condition, which is something that we show,
+[1058.0:1067.0] which is a necessary and sufficient condition for stochastic gradient descent to converge linearly with constant step signs.
+[1067.0:1074.0] In this case, you know, like by using you've been just one stochastic gradient out of the finite stone.
+[1074.0:1078.0] So this is for finite stone.
+[1078.0:1087.0] You can go from sub linear one over square root of K to one over K and to even linear rates.
+[1087.0:1089.0] All right.
+[1089.0:1092.0] Good.
+[1092.0:1095.0] Actually, I don't have that many slides left.
+[1095.0:1099.0] So maybe we can try to focus it more.
+[1099.0:1105.0] So if you remember, I gave an example of implicit regularization of HGD.
+[1105.0:1110.0] Okay. And the idea was that SGD basically.
+[1110.0:1115.0] So the example we had was something like one, two,
+[1115.0:1119.0] it's one, it's two, is equal to two or something like this.
+[1119.0:1122.0] So we had something like that.
+[1122.0:1124.0] Right.
+[1124.0:1134.0] And so if you say, if you start stochastic gradient descent will move in the north space of this.
+[1134.0:1138.0] And then give you let's say the minimum out to no solution.
+[1138.0:1144.0] Right. And if you run add a grad, it goes like this and gives you this.
+[1144.0:1147.0] Okay.
+[1147.0:1152.0] Like it usually goes at the 45 degree angle.
+[1152.0:1157.0] Because it it adapts to the gradients in each coordinate.
+[1157.0:1163.0] So it will go at one one direction.
+[1163.0:1169.0] And somehow what people have seen observed, I'm not making this as a rigorous statement,
+[1169.0:1176.0] is that the these adaptive methods give you results that are.
+[1176.0:1179.0] That have high curvature around.
+[1179.0:1186.0] Okay.
+[1186.0:1192.0] So.
+[1192.0:1198.0] So I think that people visualize the landscapes.
+[1198.0:1204.0] For example, the events at Facebook was a PhD student with the young icon.
+[1204.0:1208.0] His PhD thesis was all about visualizing landscapes.
+[1208.0:1212.0] And so they say that when you use things like Adam,
+[1212.0:1218.0] then the minimum you get are a bit sharper.
+[1218.0:1224.0] And what they also say is that if you use this GD, you get to minimum that are a bit wider.
+[1224.0:1228.0] So the curvatures are a bit better for a GD.
+[1228.0:1233.0] And in this case,
+[1233.0:1241.0] this is an interesting thing because if you think about it.
+[1241.0:1244.0] Remember what we're doing is we're doing empirical risk and musician,
+[1244.0:1261.0] Rm. So we are trying to approximate this loss with this.
+[1261.0:1263.0] Right.
+[1263.0:1267.0] So let's say this is the ERM.
+[1267.0:1271.0] So this is our estimate.
+[1271.0:1274.0] And let's say this is the true population risk.
+[1274.0:1277.0] It is closed but so much shifted.
+[1277.0:1284.0] So if you think about it, then these sharp minimums are not robust in the sense that.
+[1284.0:1289.0] If the drop of performance, if the true function is a bit different.
+[1289.0:1290.0] Is more.
+[1290.0:1294.0] So if you were here, you look at the test performance.
+[1294.0:1297.0] It could be not so good.
+[1297.0:1302.0] Whereas if you were here, your real performance.
+[1302.0:1304.0] Will suffer less.
+[1304.0:1310.0] So like why they're minimums in that case is a bit more robust to mismatches.
+[1310.0:1313.0] Right. So remember again, we're doing training.
+[1313.0:1316.0] What to care about is generalization.
+[1316.0:1319.0] We do the training with the empirical risk.
+[1319.0:1323.0] But the test is on the population risk, right.
+[1323.0:1325.0] Things that we haven't seen before.
+[1325.0:1328.0] And because empirical risk.
+[1328.0:1331.0] Approximates the population risk.
+[1331.0:1335.0] You may want to find minimums that are a bit wide.
+[1335.0:1340.0] So that little mismatches do not affect your generalization performance is what.
+[1340.0:1344.0] We're trying to get it in this particular slide.
+[1344.0:1348.0] But in general, you know, like.
+[1348.0:1351.0] I myself have not observed these things.
+[1351.0:1357.0] I did not visualize these things, but this is this is said by the experts.
+[1357.0:1364.0] So apparently you know, that the methods find sharp were minimums.
+[1364.0:1366.0] And if you define.
+[1366.0:1370.0] Flatter or wider minimums and so it generalizes better.
+[1370.0:1376.0] And you know, people show this.
+[1376.0:1379.0] So here's at the grad.
+[1379.0:1384.0] Here is for example, look, so this is the training performance.
+[1384.0:1388.0] Typically, you know, at the grad, Adam, they perform well.
+[1388.0:1394.0] There's the stochastic gradient descent is a bit higher in terms of the training performance.
+[1394.0:1397.0] But in generalization.
+[1397.0:1399.0] HD.
+[1399.0:1401.0] Rules. Right.
+[1401.0:1404.0] So that's that's what the argument is.
+[1404.0:1408.0] Right. But remember again, HDD also does implicit regularization.
+[1408.0:1414.0] Hence, this sharp reverse is flatter minimum arguments.
+[1414.0:1418.0] Maybe coupled with the fact that HDD does regularization.
+[1418.0:1426.0] And as a result, it finds the flatter minimum may explain the practical performance.
+[1426.0:1429.0] All right.
+[1429.0:1435.0] Okay. So just to wrap up the lecture today.
+[1435.0:1442.0] What we know in reality is deeper and more complicated models end up giving better performance.
+[1442.0:1449.0] Okay. So in terms of over parameterization, you actually don't want wider models.
+[1449.0:1450.0] Deeper models.
+[1450.0:1455.0] And I tried to show this inductive bias examples.
+[1455.0:1464.0] Because people had these deeper models and the deeper models, you know, like so let's say you have a true function class.
+[1464.0:1472.0] Now, with dense single layer neural networks, you can maybe get this.
+[1472.0:1478.0] But with wider layers, deeper layers, you can get this.
+[1478.0:1493.0] And maybe the actual function itself is here, which is a bit closer than the densit and layer model.
+[1493.0:1500.0] And the point about the single linear model is that remember if the activation function is non-pulomial represented.
+[1500.0:1502.0] Meaning it doesn't have a finite polynomial expansion.
+[1502.0:1504.0] Taylor says expansion.
+[1504.0:1508.0] Then it's a universal epoxener.
+[1508.0:1518.0] But by putting deeper layers, we create structures with convolutions with other properties, the transformers, the LSTMs, whatever you have.
+[1518.0:1525.0] In the current literature, you create architectures that give you functioning classes that are closer.
+[1525.0:1530.0] And somehow, surprisingly, you use them algorithm like SGD.
+[1530.0:1541.0] It does implicit regularization and it gives you minimum non-solutions and it does harmless interpolation as we discussed in the last lecture.
+[1541.0:1552.0] And also, step-by-stage yields like quickly decreasing it also enables you to converge to a local minimum rapidly.
+[1552.0:1568.0] So when you see, for example, training performance, people do these tricks of dropping the step size with SGD and obtaining, for example, much better performance, even complicated architectures.
+[1568.0:1572.0] And at this point, there are more questions than answers.
+[1572.0:1575.0] But in practice, this paradigm works.
+[1575.0:1581.0] And as a result, it's very interesting.
+[1581.0:1589.0] Also, it's also a sort of topic in my lab that we study these kind of problems.
+[1589.0:1594.0] I'm more interested in explicit regularization than in political regularization.
+[1594.0:1598.0] But yes, okay.
+[1598.0:1603.0] So, we continue with the homework on Friday.
+[1603.0:1611.0] Next week, on Monday, I'll talk more about things like density learning with general adversarial networks.
+[1611.0:1616.0] And we'll talk about the difficulty of optimization in that particular case.
+[1616.0:1624.0] If you have questions, I can answer them now. Otherwise, have a great week.
+[1624.0:1637.0] And we'll talk more later.
+[1637.0:1647.0] See you later.

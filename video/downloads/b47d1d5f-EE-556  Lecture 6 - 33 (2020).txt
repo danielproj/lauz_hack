@@ -1,0 +1,765 @@
+~EE-556 / Lecture 6 - 3/3 (2020)
+~2020-10-15T00:23:31.547+02:00
+~https://tube.switch.ch/videos/b47d1d5f
+~EE-556 Mathematics of data: from theory to computation
+[0.0:11.0] So what I would like to do now is describe you a condition that will give us perfect recovery
+[11.0:15.32] if you believe it.
+[15.32:18.88] So here's the deal.
+[18.88:23.76] So what you're doing with optimization is that we're trying to minimize this function
+[23.76:30.040000000000003] f. If you recall, it's something like a gauge function.
+[30.040000000000003:36.44] The bigger the value is and the smaller it is, the smaller the value is.
+[36.44:41.400000000000006] So suppose at one point we have an f of x tilde.
+[41.400000000000006:44.72] So which is this guy.
+[44.72:47.24] You have an x tilde.
+[47.24:54.24] And let's say x tilde satisfies this constraint. So like b is equal to a x tilde.
+[54.24:61.24] This means x tilde is what x, 2 plus vectors in the last phase.
+[61.24:63.24] Good.
+[63.24:64.8] Now we're at this.
+[64.8:66.36] We're at x tilde.
+[66.36:71.24000000000001] And what we want to do is try to do the sense.
+[71.24000000000001:73.84] Where can we be sent?
+[73.84:78.64] So we look at the cone of the temp directions.
+[78.64:79.64] What do we do?
+[79.64:84.36] We plug the polytop there and I shift it towards the origin because that's going to give us
+[84.36:86.76] the directions.
+[86.76:95.60000000000001] So here, the directions that you can descend is this half space.
+[95.60000000000001:97.92] So I just nicely shifted towards the origin.
+[97.92:103.76] We're looking at this cone.
+[103.76:104.76] Okay.
+[104.76:109.44] So here's the null space of a.
+[109.44:114.2] Remember we want to be feasible while descending.
+[114.2:117.92] So obviously the only descent direction here is this one.
+[117.92:122.12] Meaning you can also have this one that's also the same direction.
+[122.12:126.92] But so it needs to be along that line.
+[126.92:130.0] All right.
+[130.0:137.4] Now from this picture is it clear that the only time where x natural can be the solution
+[137.4:147.68] is the null space only intersects with this descent cone of the origin.
+[147.68:153.44] Because as long as the null space has an intersection that is non-trivial, there
+[153.44:156.64] exists a descent direction.
+[156.64:163.55999999999997] So suppose you're at x natural, the true parameter.
+[163.55999999999997:170.48] The only time where you can continue to descend is if there exists an intersection at the
+[170.48:174.0] descent cone.
+[174.0:182.6] So if the null space intersects with the descent cone is not zero but something else, that
+[182.6:187.76] means you can find a descent direction while keeping the constraint while satisfying
+[187.76:192.79999999999998] the constraint because the null space enables you to do that.
+[192.79999999999998:195.04] You can descend on the objective.
+[195.04:200.95999999999998] But if this intersection is only the origin zero, then you're at the solution and you actually
+[200.95999999999998:203.6] find true parameter.
+[203.6:206.6] You cannot descend more.
+[206.6:209.24] All right.
+[209.24:214.08] So just to see this again, all right.
+[214.08:216.32000000000002] So here our descent cone is this one, right.
+[216.32000000000002:219.52] You hug the polytope, you shift it.
+[219.52:229.24] If the null space does not intersect with this cone, that means you are here to be able
+[229.24:234.48000000000002] to satisfy the constraint and descend.
+[234.48000000000002:236.20000000000002] All right.
+[236.20000000000002:239.20000000000002] You need to go along this line.
+[239.2:243.6] But that line does not intersect with the descent directions.
+[243.6:248.48] Meaning you cannot decrease the objective any further.
+[248.48:250.39999999999998] Hence your x the solution.
+[250.39999999999998:251.39999999999998] Right.
+[251.39999999999998:253.39999999999998] Does that make sense?
+[253.39999999999998:257.2] All right.
+[257.2:263.71999999999997] Then we have boiled down the question for the following.
+[263.72:272.52000000000004] What is the probability that a randomly generated matrix A, its null space, will intersect with
+[272.52000000000004:277.56] the descent cone of the function at x2?
+[277.56:280.04] All right.
+[280.04:288.92] Because if the intersection is just zero, then you have just found x star as the true
+[288.92:291.6] parameter.
+[291.6:298.08000000000004] It takes a while to get to this point.
+[298.08000000000004:306.40000000000003] But like I said, the idea is that the null space is there so that you satisfy the constraint
+[306.40000000000003:308.92] set of the objective.
+[308.92:311.20000000000005] So the optimization problem.
+[311.20000000000005:316.08000000000004] The descent cone is there so that you decrease the objective.
+[316.08000000000004:317.08000000000004] All right.
+[317.08:322.76] So to be able to decrease your objective while satisfying the constraints, require you
+[322.76:326.08] to look at this intersection.
+[326.08:333.03999999999996] And if the descent cone at the true parameter, intersect with the null space is zero, this
+[333.03999999999996:340.12] necessarily means your solution of the optimization problem is actually the true parameter.
+[340.12:341.68] All right.
+[341.68:345.12] So the question is when will this happen?
+[345.12:347.03999999999996] All right.
+[347.04:351.76000000000005] Now, I'm going to boil this question down to a very simple question.
+[351.76000000000005:352.76000000000005] Why?
+[352.76000000000005:356.28000000000003] Now, imagine.
+[356.28000000000003:360.36] So you understand when subspaces intersect.
+[360.36:370.96000000000004] I so suppose I give you two random-oriented lines in two-dimensional space.
+[370.96000000000004:375.36] When would they intersect?
+[375.36:378.48] The probability of them, they will always intersect at the origin.
+[378.48:379.48] Right.
+[379.48:380.56] So let's say the lines go through the origin.
+[380.56:382.56] They will always intersect with the origin.
+[382.56:386.08000000000004] But would they intersect anywhere else when they're randomly oriented?
+[386.08000000000004:389.12] It's a pretty difficult picture.
+[389.12:390.12] Right?
+[390.12:393.84000000000003] Because they have dimension one and dimension one.
+[393.84000000000003:398.28000000000003] If their dimension ends up to the ambient dimension, right?
+[398.28000000000003:402.28000000000003] It's very difficult to intersect.
+[402.28:406.0] If it is more than the ambient dimension, they would intersect immediately.
+[406.0:407.0] Right?
+[407.0:408.4] So it's the question.
+[408.4:410.91999999999996] So think about it in the 3D.
+[410.91999999999996:416.03999999999996] I give you a two-dimensional random-oriented type of plane and a line.
+[416.03999999999996:418.03999999999996] When would they intersect?
+[418.03999999999996:419.2] Almost never.
+[419.2:425.47999999999996] They would only intersect at the origin because they have to go through the origin.
+[425.47999999999996:429.59999999999997] But suppose I give you a two-dimensional hyperplane and two-dimensional hyperplane in 3D
+[429.6:434.72] dimensions, when would they intersect outside the origin?
+[434.72:436.12] Always.
+[436.12:441.36] Because their dimensions add up more than the ambient dimension.
+[441.36:442.36] Okay?
+[442.36:451.8] So the question is, can we assign a dimension like quantity to a convex form?
+[451.8:452.8] Right?
+[452.8:457.28000000000003] Can we literally assign a dimension?
+[457.28:461.59999999999997] Because then it is exactly the same argument that I will use.
+[461.59999999999997:462.59999999999997] Right?
+[462.59999999999997:468.67999999999995] If the dimension of the cone and the dimension of the mass phase, when you sum them up,
+[468.67999999999995:472.64] is more than the ambient dimension, they would definitely intersect.
+[472.64:475.11999999999995] If it is a place, they will not.
+[475.11999999999995:477.11999999999995] Does this make sense?
+[477.11999999999995:478.11999999999995] All right?
+[478.11999999999995:482.52] So this is where the beautiful things begin.
+[482.52:487.44] Okay?
+[487.44:490.12] And this looks like some up-fus-obscaded theorem and so on.
+[490.12:491.12] So it is not.
+[491.12:492.12] Okay?
+[492.12:493.91999999999996] It is not some obscure set of statistics.
+[493.91999999999996:494.91999999999996] It is not.
+[494.91999999999996:495.91999999999996] Okay?
+[495.91999999999996:500.59999999999997] So imagine you would like to understand how wide a cone is.
+[500.59999999999997:506.56] This is what the subspace dimension kind of eludes at.
+[506.56:509.84] So what we are going to do is, here is a cone.
+[509.84:510.84] All right?
+[510.84:514.0799999999999] No, no, no, no, no.
+[514.0799999999999:519.8399999999999] If you look at the supplementary material, you will see that it has a polar.
+[519.8399999999999:522.04] Okay?
+[522.04:523.8399999999999] So here is the polar cone.
+[523.8399999999999:524.8399999999999] All right?
+[524.8399999999999:526.8399999999999] Now let's say this is the origin, right?
+[526.8399999999999:528.64] It is in fact the origin.
+[528.64:534.64] Now what we are going to do is we are going to just take random vector, standard random
+[534.64:535.64] vectors.
+[535.64:536.64] All right?
+[536.64:540.12] So if you take one standard random vector, it would be here.
+[540.12:541.88] Another one would be here.
+[541.88:544.84] Their lands would differ because they are random.
+[544.84:545.84] All right?
+[545.84:550.28] It can be unbounded, but they are usually within a few standard deviations.
+[550.28:552.28] Yeah?
+[552.28:556.92] So what we are going to do is we are going to project this random vector onto the cone.
+[556.92:557.92] All right?
+[557.92:558.92] We draw the random vector.
+[558.92:560.6] We project onto the cone.
+[560.6:567.28] So if you draw in this area, which is in the polar, so this is the cone polar, then
+[567.28:571.0] the prediction onto the cone will give you zero value.
+[571.0:572.0] Right?
+[572.0:578.0] And if you imagine the narrower the cone is, the bigger the polar is.
+[578.0:579.0] Right?
+[579.0:585.8399999999999] So this, if this cone was narrower, this angle was smaller, then so these are 90 degrees,
+[585.8399999999999:586.8399999999999] right?
+[586.8399999999999:587.8399999999999] The polar would be bigger.
+[587.8399999999999:592.8399999999999] In fact, if the cone was just a line, the polar would be the health space on the other
+[592.8399999999999:593.8399999999999] side.
+[593.8399999999999:594.8399999999999] Yeah?
+[594.8399999999999:595.8399999999999] Good.
+[595.84:600.1600000000001] And what we are going to do, so if you draw something here, you will project here.
+[600.1600000000001:601.1600000000001] Right?
+[601.1600000000001:602.44] It will be something small.
+[602.44:603.44] Right?
+[603.44:608.44] And if it is inside the cone, you just keep the vector.
+[608.44:611.48] And we are going to look at the expected value.
+[611.48:613.48] Because this is randomness.
+[613.48:618.44] We write this one down, and we take integral with respect to the probability measure.
+[618.44:619.44] Right?
+[619.44:622.0] I am not saying you should do that.
+[622.0:624.64] I am saying this is how we define it.
+[624.64:625.64] Okay?
+[625.64:630.24] In fact, how you do that is in the advanced material of this particular lecture.
+[630.24:631.24] Good.
+[631.24:639.36] Now, it turns out that this is actually something like a dimension for that cone.
+[639.36:645.6] And in fact, this argument about adding dimensions to see if it passes the end of the dimension
+[645.6:649.4399999999999] will work perfect even with this quantity.
+[649.4399999999999:653.28] All right?
+[653.28:656.8] So, here is our condition.
+[656.8:657.8] All right?
+[657.8:667.12] If the cone makes cone, so remember, the dimension of the non-space is p minus n.
+[667.12:668.12] All right?
+[668.12:672.0799999999999] When you draw a random, the columns are in general space.
+[672.0799999999999:676.52] The ambient dimension will be p minus n.
+[676.52:682.0799999999999] So what we are going to do is we are going to look at the case when p minus n, which is
+[682.08:683.6] the non-space dimension.
+[683.6:688.6] So, let's look at the statistical dimension of the cone.
+[688.6:694.88] Whether or not it is, sorry, it is greater than the ambient dimension.
+[694.88:696.2800000000001] All right?
+[696.2800000000001:700.08] So, for this, we are going to add a bit of a slack here.
+[700.08:706.2800000000001] So, this constant, the reason for this is the characterizations of the randomness.
+[706.2800000000001:707.2800000000001] Okay?
+[707.2800000000001:709.08] So, there will be a small slack here.
+[709.08:710.08] Okay?
+[710.08:713.08] If you divide this by the dimension, this will go to 0.
+[713.08:719.2800000000001] For example, you know, imagine 10 to the 6 dimensions, this is 10 to the 3.
+[719.2800000000001:721.48] You divide it by this 10 to the minus 3.
+[721.48:722.88] You know, small.
+[722.88:724.2800000000001] Okay.
+[724.2800000000001:730.88] So, we are going to see if it is greater or less.
+[730.88:735.48] So, you see, p is the cancel and we will go to the other side.
+[735.48:737.88] So, we are going to look plus minus.
+[737.88:747.08] You will see that, so depending on this constant and the probability, if n is greater than
+[747.08:750.68] this dimension, right?
+[750.68:755.28] The intersection will be 0 with high probability.
+[755.28:764.88] When n is less than this dimension, the intersection will be overwhelmingly high.
+[764.88:771.88] So, the probability that they will only intersect at the origin is very small.
+[771.88:772.88] All right?
+[772.88:773.88] Good.
+[773.88:778.88] And this is exactly what happens with the convex recovery.
+[778.88:785.88] So, you look at the statistical dimension of the descent cone.
+[785.88:787.88] All right?
+[787.88:793.88] If number of samples is slightly greater than this, you will solve the problem.
+[793.88:798.88] If it is less than this, you will not solve the problem.
+[798.88:800.88] There is no algorithm here.
+[800.88:801.88] All right?
+[801.88:805.88] We are literally saying the solution of the convex program.
+[805.88:807.88] But it has to satisfy.
+[807.88:812.88] Now, it turns out that you can compute these quantities.
+[812.88:816.88] For instance, for the L1 norm, is this?
+[816.88:822.88] For the nuclear norm, it depends on the ranks R.
+[822.88:834.88] So, for P by P matrix, with rank R, the statistical dimension is 6RP.
+[834.88:843.88] So, if you have the number of samples more than s-load P over s, you recover.
+[843.88:847.88] If it is less, you don't.
+[847.88:848.88] Okay?
+[848.88:850.88] Very good.
+[850.88:852.88] Cool.
+[852.88:860.88] Now, as you can see, the statistical dimension depends on how wide the cone is.
+[860.88:861.88] Right?
+[861.88:867.88] The wider the cone is, the more likely you will intersect with it.
+[867.88:868.88] Right?
+[868.88:873.88] Because the wider the cone is, the more the statistical dimension is.
+[873.88:875.88] And hence, you need more samples.
+[875.88:880.88] And it needs to be greater than that statistical dimension.
+[880.88:881.88] Good.
+[881.88:884.88] So, now, imagine the first vectors.
+[884.88:888.88] So, where we use this L1 norm.
+[888.88:893.88] If I add a little bit of strong convexity,
+[893.88:897.88] L2 squared, with the strong convexity of mu,
+[897.88:903.88] what I do is I make this...
+[903.88:912.88] Let's say it did more robust version of L1 norm.
+[912.88:918.88] It kind of like you, as if you just pressurize it,
+[918.88:922.88] and it starts kind of getting enlarged.
+[922.88:924.88] Now, here's the deal.
+[924.88:929.88] If you have a convex body inside another convex body,
+[929.88:934.88] and you're at a point, the cones of the convex body
+[934.88:937.88] that includes the other body are bigger.
+[937.88:939.88] Because they're just...
+[939.88:942.88] I mean, if you try to hug it, you hug the first one.
+[942.88:945.88] Then you can only hug the other one.
+[945.88:953.88] So, the descent cone of this strongly convex function
+[953.88:959.88] is bigger than the descent cone of this standard function.
+[959.88:964.88] I added a bit of strong convexity.
+[964.88:966.88] Now, here's the deal.
+[966.88:970.88] I think many of you are already guessing what I'm trying to say.
+[970.88:973.88] You know what happens to the convex programs
+[973.88:975.88] when you have strong convexity.
+[975.88:976.88] Don't you?
+[976.88:978.88] Things get faster, no?
+[978.88:981.88] That's what we're going to use.
+[981.88:987.88] Now, it turns out that, so let's say you have a normalized varsity.
+[987.88:991.88] So, S divided by P, we're going to call it row.
+[991.88:994.88] So, here, this is where you want to be.
+[994.88:997.88] It's farce.
+[997.88:1002.88] And what you can do is you can look at the statistical dimension.
+[1002.88:1006.88] So, this delta divided by P,
+[1006.88:1009.88] think about it, this is the estimation.
+[1009.88:1011.88] Oh, no, I did use these.
+[1011.88:1013.88] Sorry.
+[1013.88:1019.88] So, the statistical dimension of the descent cone of F mu,
+[1019.88:1021.88] it's x natural.
+[1021.88:1023.88] Now, x natural sparsity is here.
+[1023.88:1026.88] So, x natural will have less sparsity.
+[1026.88:1033.88] If it is here, more sparsity if it is here.
+[1033.88:1036.88] So, you become less and less sparsity as you go here.
+[1036.88:1039.88] More and more sparsity, right?
+[1039.88:1041.88] Here's your sphere.
+[1041.88:1044.88] And here's the statistical dimension.
+[1044.88:1048.88] What is interesting is that, you know, when you're zero,
+[1048.88:1054.88] you have the original statistical dimension, which is small.
+[1054.88:1056.88] It's a function of the sparsity.
+[1056.88:1058.88] So, you need less measurements.
+[1058.88:1061.88] And you just start adding strong convexity.
+[1061.88:1064.88] This curve will necessarily shift up.
+[1064.88:1069.88] Meaning, you will need more samples.
+[1069.88:1070.88] All right?
+[1070.88:1071.88] Does that make sense?
+[1071.88:1072.88] It's the statistical form.
+[1072.88:1079.88] Remember, our condition for perfect recovery is.
+[1079.88:1087.88] So, we look at the statistical dimension of the descent cone.
+[1087.88:1088.88] Right?
+[1088.88:1090.88] The less sparsity is the bigger this is.
+[1090.88:1094.88] The more strong convexity you add, the bigger this is.
+[1094.88:1095.88] All right?
+[1095.88:1099.88] You just need the samples to compensate for it.
+[1099.88:1101.88] Okay?
+[1101.88:1104.88] Now, here's the field.
+[1104.88:1105.88] This is an interesting thing.
+[1105.88:1110.88] So, if you look at maximal smoothing parameter for perfect recovery,
+[1110.88:1115.88] meaning, so you literally say, I'm going to choose
+[1115.88:1120.88] and fix, right, how often the dimension.
+[1120.88:1127.88] So, what is the maximal smoothing I can do?
+[1127.88:1131.88] So, how much I can add a strong convexity
+[1131.88:1134.88] until I recover this sparsity vector?
+[1134.88:1135.88] Right?
+[1135.88:1137.88] So, this is the normalized sparsity.
+[1137.88:1138.88] Right?
+[1138.88:1144.88] So, the higher it is, the less.
+[1144.88:1147.88] Like, you need more samples.
+[1147.88:1154.88] So, if rows small, this is, you have very few sparsity,
+[1154.88:1160.88] this means that at this point, you can add a lot of strong convexity.
+[1160.88:1168.88] If you're list spars, you can add just a tiny bit.
+[1168.88:1169.88] All right?
+[1169.88:1171.88] You cannot add more.
+[1171.88:1176.88] Okay, so, can we use this to do a little trick?
+[1176.88:1178.88] It turns out that you can.
+[1178.88:1179.88] All right?
+[1179.88:1184.88] So, what we can do is that you can actually pick an algorithm
+[1184.88:1191.88] and characterize how much, whether or not you actually have a trade-off
+[1191.88:1196.88] between this number of samples, so your precision is better,
+[1196.88:1200.88] and the computation, the advantage you get is by adding strong convexity.
+[1200.88:1201.88] Okay?
+[1201.88:1207.88] So, this algorithm, I'm not, I'm going to discuss when we talk about primal dual methods,
+[1207.88:1211.88] but it turns out that you can come up with a relationship directly
+[1211.88:1217.88] on your estimation performance to the true parameter.
+[1217.88:1218.88] All right?
+[1218.88:1221.88] So, remember, as long as your samples are greater,
+[1221.88:1225.88] then the statistical dimension, right?
+[1225.88:1228.88] X-tr is equal to X-tr.
+[1228.88:1231.88] We're not doing the decomposition anymore.
+[1231.88:1234.88] We're directly characterizing that error.
+[1234.88:1235.88] Okay?
+[1235.88:1237.88] So, which you can do?
+[1237.88:1241.88] And this, inversely depends on the strong convexity parameter.
+[1241.88:1248.88] Okay?
+[1248.88:1249.88] All right?
+[1249.88:1256.88] Given this observation, I'm going to call this an observation.
+[1256.88:1259.88] So, suppose, you know, as you're walking back home,
+[1259.88:1262.88] I just jumped in front of you and I said, you know,
+[1262.88:1266.88] I just figured out how to put the smoothing parameter, man.
+[1266.88:1269.88] And you're like, okay, what do you do?
+[1269.88:1276.88] You're, of course, obviously, too happy to see me in your day.
+[1276.88:1281.88] So, I just tell you, okay, then maybe we can actually choose the amount of computation
+[1281.88:1284.88] we need to get this precision.
+[1284.88:1292.88] If you have more data, I can smooth it more so that we do less computation.
+[1292.88:1293.88] All right?
+[1293.88:1295.88] Excited by this perspective.
+[1295.88:1299.88] I show you that you actually have to do something like this.
+[1299.88:1300.88] Okay?
+[1300.88:1306.88] So, you can see that when you have strong convexity in number of iterations,
+[1306.88:1310.88] overuse the decrease to solve it to an epsilon accuracy.
+[1310.88:1312.88] Okay?
+[1312.88:1317.88] You can fix this parameter and as you increase the sample size,
+[1317.88:1321.88] fine, you know, the number of iterations will decrease.
+[1321.88:1325.88] Or you can do the theorem that I was telling you.
+[1325.88:1328.88] So, here there's four factors to be a bit conserved,
+[1328.88:1330.88] I did the probabilities and so on and so forth.
+[1330.88:1331.88] Okay?
+[1331.88:1336.88] As you can see, you can increase the smoothing with the sample size even further and further.
+[1336.88:1339.88] So, you can make this go down a bit faster, right?
+[1339.88:1343.88] The critical point of this is that remember this is number of iterations,
+[1343.88:1345.88] what we care is the time.
+[1345.88:1350.88] And if you keep it here because the data size is increasing,
+[1350.88:1352.88] even though you decrease the iterations,
+[1352.88:1358.88] your total complexity will increase.
+[1358.88:1362.88] Whereas if you do it the way I prescribe, the total complexity will decrease.
+[1362.88:1365.88] And there's a bit of a condition number issue here.
+[1365.88:1367.88] So, just ignore this part of the plot.
+[1367.88:1371.88] But as you can see, you can make, as you get more and more data,
+[1371.88:1375.88] you can make the algorithms run faster.
+[1375.88:1378.88] All right, that was the trade-off.
+[1378.88:1381.88] Okay?
+[1381.88:1386.88] So, we identify the fundamental trade-off and then we showed it in algorithm
+[1386.88:1388.88] to achieve this trade-off.
+[1388.88:1391.88] There's a difference in the statements, okay?
+[1391.88:1395.88] So, at one point, we just talked about the performance of these estimators
+[1395.88:1398.88] and the existence of the trade-off.
+[1398.88:1402.88] And in the other, we showed in an algorithm that can actually achieve this trade-off.
+[1402.88:1406.88] So, one is like achievable to you, the other one is from worse.
+[1406.88:1408.88] Okay? Good.
+[1408.88:1411.88] So, I would like to tell you a little bit about another trade-off.
+[1411.88:1413.88] Okay?
+[1413.88:1416.88] So, here is again this competing objective in optimization.
+[1416.88:1419.88] We would like to get an acquisition in statistics.
+[1419.88:1422.88] We want to get a statistical precision.
+[1422.88:1428.88] And there is a trade-off, so to say, or competition
+[1428.88:1433.88] between the perturbation cost and the convergence rate of optimization algorithms as well.
+[1433.88:1438.88] And we kind of see in this, no?
+[1438.88:1443.88] And what we're going to try to do is maybe delve a little bit more into this trade-off
+[1443.88:1445.88] and understand it all with the better.
+[1445.88:1448.88] And we kind of hinted at this before.
+[1448.88:1451.88] So, think about the gradient descent and this two-cast gradient descent.
+[1451.88:1452.88] Okay?
+[1452.88:1454.88] Here is in the term-ministered sitting.
+[1454.88:1456.88] We're trying to solve the term-ministerial objective.
+[1456.88:1457.88] Here is the term-ministerial objective.
+[1457.88:1458.88] Here is the term-ministerial objective.
+[1458.88:1460.88] We're trying to solve this term-ministerial objective.
+[1460.88:1462.88] Or the finite sum problem.
+[1462.88:1463.88] Right?
+[1463.88:1464.88] The empirical risk minimization.
+[1464.88:1465.88] 1 over n.
+[1465.88:1467.88] i as if it were 1 to n.
+[1467.88:1469.88] f i x.
+[1469.88:1470.88] Right?
+[1470.88:1473.38] It is a term-ministerial problem, but we can apply this term-ministerial
+[1473.38:1475.88] gradient descent method to it.
+[1475.88:1477.88] So, here is our lovely gradient descent.
+[1477.88:1480.88] We need this step size to be for the sum of functions.
+[1480.88:1483.88] To be less than 2 over l to converge.
+[1483.88:1488.88] And 1 over l is the optimal worst case step size.
+[1488.88:1492.88] And we discussed these kind of properties before.
+[1492.88:1498.88] For the stochastic gradient descent, we assume that we had these stochastic radians
+[1498.88:1501.88] that are in expectation equal to the gradient.
+[1501.88:1504.88] And that we take a step size that is decreasing.
+[1504.88:1505.88] Right?
+[1505.88:1509.88] In the strong-equal-mf case, we take step size as something like 1 over 2.
+[1509.88:1515.88] u k, faster decrease in the strong-equal-mf case, but let's keep it to the elliptic case.
+[1515.88:1516.88] No?
+[1516.88:1518.88] All right.
+[1518.88:1519.88] Good.
+[1519.88:1523.88] Now, in the finite sum setting, right?
+[1523.88:1527.88] So, here is our gradient.
+[1527.88:1532.88] And one way to get the stochastic gradient was to uniformly pick an entry.
+[1532.88:1536.88] I hope you guys remember this.
+[1536.88:1539.88] And we had this comparison.
+[1539.88:1540.88] Right?
+[1540.88:1543.88] Radiant descent gave us a 1 over k-rate in this case.
+[1543.88:1547.88] And we assumed lipcious continuous gradient.
+[1547.88:1552.88] And SGD, stochastic gradient descent, gave us a 1 over square root of k-rate.
+[1552.88:1553.88] It's slower.
+[1553.88:1554.88] Right?
+[1554.88:1559.88] Seems like we shouldn't care about the solver than it's set.
+[1559.88:1561.88] We care about the total time.
+[1561.88:1562.88] Right?
+[1562.88:1566.88] It does be again, think about the cost per iteration.
+[1566.88:1571.88] Now, gradient descent needs to go over the data.
+[1571.88:1575.88] So, the cost is proportional to n.
+[1575.88:1578.88] There is SGD.
+[1578.88:1581.88] Actually, cost per iteration is something like log n.
+[1581.88:1582.88] Right?
+[1582.88:1586.88] Because you need to pick a random number in n dimensions, which you can do with log n for density.
+[1586.88:1591.88] But for the sake of this, it's a constant.
+[1591.88:1593.88] Right?
+[1593.88:1598.88] So, to reach an epsilon accuracy, we need 1 over epsilon iterations.
+[1598.88:1602.88] Reach an epsilon accuracy, we need 1 over epsilon square iterations.
+[1602.88:1604.88] What's the total complexity?
+[1604.88:1607.88] Here, n divided by epsilon, here is 1 over epsilon squared.
+[1607.88:1612.88] Which one is better?
+[1612.88:1614.88] You obviously tell me, it depends.
+[1614.88:1620.88] It depends what n is and how it compares to.
+[1620.88:1628.88] What are epsilon?
+[1628.88:1633.88] So, if you're not interested in a two-prestisive solution,
+[1633.88:1636.88] this seems to be a bit better, no?
+[1636.88:1639.88] Because n could be billions.
+[1639.88:1641.88] All right.
+[1641.88:1646.88] Now, if the object that even has strong complexity,
+[1646.88:1655.88] it looks like there is a bit of an advantage, maybe, to gradient descent,
+[1655.88:1661.88] because it gets this linear ring.
+[1661.88:1668.88] So, the cost per iteration, n, but you do just a few iterations.
+[1668.88:1670.88] Okay?
+[1670.88:1674.88] So, we can write down the total complexity again.
+[1674.88:1677.88] All right.
+[1677.88:1683.88] Now, as you can see, the SGD gives you a lower conversion rate,
+[1683.88:1686.88] but lower cost per iteration.
+[1686.88:1690.88] So, it gives you an advantage over all total time.
+[1690.88:1700.88] So, when n is large, SGD is awesome if you're looking for low precision.
+[1700.88:1707.88] Now, remember, SGD decreases the step size if you remember.
+[1707.88:1710.88] Because even if you start at the optimal solution,
+[1710.88:1712.88] the characteristic gradients may not be zero.
+[1712.88:1714.88] So, you may move away from the solution.
+[1714.88:1716.88] So, you need something decreasing.
+[1716.88:1720.88] Or, you need averaging if you remember.
+[1720.88:1721.88] All right.
+[1721.88:1727.88] But in the strong-lequommex case, gradient descent gives you just a few iterations,
+[1727.88:1732.88] fast-convergence linear converges, whereas you remain sublinear.
+[1732.88:1740.88] So, let's try to fundamentally understand what it didn't tell us.
+[1740.88:1743.88] So, this is the so-called descent lemma.
+[1743.88:1750.88] If you remember, we were taking this quadratic upper bound,
+[1750.88:1757.88] and if you were to minimize it, we would get,
+[1757.88:1762.88] so, right.
+[1762.88:1783.88] So, this is equal to that. This is our quadratic upper bound.
+[1783.88:1785.88] When we minimize, we do the gradient update.
+[1785.88:1787.88] This term goes to zero.
+[1787.88:1792.88] Then, you have f of xk plus 1,
+[1792.88:1795.88] less than or equal to this particular quantity.
+[1795.88:1799.88] So, f of xk plus 1, minus f of xk.
+[1799.88:1803.88] So, here, there is the general version where you keep the step size.
+[1803.88:1809.88] If you plug in gamma k is 1 over l, you get 1 over 2 out here.
+[1809.88:1813.88] Okay?
+[1813.88:1820.88] There's something wrong with this expression, I feel.
+[1820.88:1831.88] So, maybe there's a 2 here, and there's a 5 or something on it.
+[1831.88:1835.88] Yeah, I think there's a 5.0. We're missing a 2 here.
+[1835.88:1841.88] Anyway, so, when you plug in 1 over l,
+[1841.88:1848.88] just imagine that there's a 1 over 2 l there.
+[1848.88:1850.88] Okay? Good.
+[1850.88:1853.88] When you have x3d, I still think there's a 2 l.
+[1853.88:1859.88] Either here or here, there's a 1 half here.
+[1859.88:1865.88] Now, imagine that when you run x3d, this cannot hold.
+[1865.88:1869.88] Right? Because your gradients are not sarcastic gradients.
+[1869.88:1873.88] So, there is, in fact, a variance term that pops up.
+[1873.88:1875.88] Don't tell me how we came up with this.
+[1875.88:1882.88] It's actually the simple algebra going over this particular, this inequalities.
+[1882.88:1889.88] So, without the variance being 0,
+[1889.88:1893.88] SGD will not have this nice descent.
+[1893.88:1896.88] Let's just say this. Let's just say what it is.
+[1896.88:1904.88] And if you get an xk, that is x star, this term goes to 0.
+[1904.88:1912.88] Right? And yet, you still have this slack, meaning xk could be
+[1912.88:1921.88] dying around, you know?
+[1921.88:1923.88] So, we need to control the variance.
+[1923.88:1926.88] We need to control the variance is what?
+[1926.88:1929.88] Decrease this step size.
+[1929.88:1933.88] You know? You didn't decrease the step size.
+[1933.88:1935.88] So, here's a question.
+[1935.88:1940.88] Can we try to keep the step size because big step size is not good.
+[1940.88:1941.88] No, you go fast.
+[1941.88:1946.88] So, can we decrease the variance somehow?
+[1946.88:1951.88] So, this goes away not because the step size is going to 0,
+[1951.88:1959.88] but this goes to 0.
+[1959.88:1965.88] Okay, so in one of the locations, there must be, so it is here.
+[1965.88:1971.88] So, let's fix that type there.
+[1971.88:1974.88] All right, do you understand the objective now?
+[1974.88:1979.88] Big step size, more good.
+[1979.88:1982.88] We understand that there is this term.
+[1982.88:1986.88] We need the step size to go down to 0 when you're working with the
+[1986.88:1988.88] stochastic gradients.
+[1988.88:1994.88] So, can we keep a constant step size?
+[1994.88:1998.88] Yes, there is no because you say, well, come on, obviously,
+[1998.88:2000.88] the stochastic gradients have variance.
+[2000.88:2002.88] But let's just the game around.
+[2002.88:2005.88] Let's decrease the variance of the stochastic gradients somehow.
+[2005.88:2010.88] All right.
+[2010.88:2013.88] So, what we need is basically, we need to choose the stochastic
+[2013.88:2017.88] gradient either to make the variance go to 0 or
+[2017.88:2021.88] Lv to 8 and Xk goes to X star.
+[2021.88:2025.88] So, here Xk needs to go to X star in such a way that the gradient
+[2025.88:2027.88] norm also becomes 0.
+[2027.88:2031.88] All right, so, somewhat equal to this.
+[2031.88:2034.88] So, the most obvious today, which I also hinted at when we introduced
+[2034.88:2037.88] SGD is just try to do mini patches.
+[2037.88:2041.88] So, why do we draw a single sample when you can draw more?
+[2041.88:2043.88] Right.
+[2043.88:2047.88] But then the issue with this strategy is that if you wanted to
+[2047.88:2052.88] decrease with iterations, you may need to make the
+[2052.88:2055.88] that size bigger and bigger and bigger.
+[2055.88:2062.88] Does that make sense?
+[2062.88:2064.88] I mean, I'm not going to get into the details of this, but the
+[2064.88:2067.88] high-level message is very clear.
+[2067.88:2071.88] With SGD, we can pick more terms, right?
+[2071.88:2074.88] Five or ten terms.
+[2074.88:2078.88] This means that the stochastic gradient variance will decrease
+[2078.88:2081.88] with these terms.
+[2081.88:2085.88] Commensurately.
+[2085.88:2088.88] All right. So, BKs are that size.
+[2088.88:2090.88] It is for iteration.
+[2090.88:2094.88] So, by picking BK to BK, increase the
+[2094.88:2097.88] iteration, all of a sudden we don't need to make the
+[2097.88:2101.88] step size go down to 0.
+[2101.88:2103.88] Right?
+[2103.88:2104.88] Okay.
+[2104.88:2108.88] So, can you do something a bit smarter is what comes next?
+[2108.88:2111.88] Okay, this is the idea.
+[2111.88:2114.88] So, what we're going to do is we're going to construct another
+[2114.88:2120.88] stochastic estimate. All right.
+[2120.88:2123.88] And this has made it a big splash in the literature.
+[2123.88:2129.88] So, I'll try to highlight the high-level ideas first.
+[2129.88:2133.88] When you see the algorithm, then, however, the ugly, the
+[2133.88:2138.88] algorithm looks, it will make sense.
+[2138.88:2140.88] Okay. Good.
+[2140.88:2144.88] So, here's our stb update. Here's our full gradient
+[2144.88:2147.88] deterministic structure. Right?
+[2147.88:2151.88] Now, what we're going to do is we're going to look at two random
+[2151.88:2152.88] variables.
+[2152.88:2156.88] It will take the same term. One will be evaluated at xk and
+[2156.88:2160.88] the other will be evaluated at a quote-unquote anchor point
+[2160.88:2164.88] x tilde. Right?
+[2164.88:2169.88] Now, what I want is that these two guys to be correlated.
+[2169.88:2178.88] Okay. And given this, hopefully, will be able to estimate
+[2178.88:2183.88] this expected value a bit better with more confidence, if you will.
+[2183.88:2187.88] All right. So, somehow, what we're going to do is we're going to
+[2187.88:2193.88] condition our styles on observing something.
+[2193.88:2198.88] And given that observation, even if we take a single term,
+[2198.88:2202.88] our variance will not be that large variance, but will be
+[2202.88:2208.88] something much smaller. Does that make sense?
+[2208.88:2214.88] Okay. All right. So, of course, you know, this choice is
+[2214.88:2218.88] important because it will affect how correlated x and y are.
+[2218.88:2224.88] Ideally, you want them to be close. Right?
+[2224.88:2231.88] So, our goal is to come up with a good estimate of this given.
+[2231.88:2236.88] Maybe that's got it. Okay. Cool.
+[2236.88:2242.88] So, here, this is the simple part of it.
+[2242.88:2247.88] It could be confusing, but trust me, it is not the easy.
+[2247.88:2252.88] The idea is that we are given y or its expected value.
+[2252.88:2259.88] It can be constructed an estimator for x in such a way that, you know,
+[2259.88:2263.88] like, so this is the general form. You can do more with this form,
+[2263.88:2267.88] but imagine this alpha is one. Okay.
+[2267.88:2270.88] What just little imagine alpha is one.
+[2270.88:2277.88] In this case, all right, the expected value of r1, you know,
+[2277.88:2282.88] is the expected value of x. You see that, right?
+[2282.88:2285.88] Now, you look at the variance of r1.
+[2285.88:2291.88] It is the variance of x plus the variance of y minus a correlation.
+[2291.88:2299.88] So, if x and y are somewhat correlated, you can make the variance smaller than the variance of x.
+[2299.88:2301.88] Right? That's...
+[2301.88:2305.88] It is literally a mathematical way of saying what I just told you.
+[2305.88:2308.88] What our goal was.
+[2308.88:2310.88] All right?
+[2310.88:2313.88] So, can we use this information to construct our estimates?
+[2313.88:2316.88] Yes. Okay.
+[2316.88:2320.88] Now, suppose...
+[2320.88:2325.88] Whoa!
+[2325.88:2331.88] I have the expected value of x tilde, which is the gradient at x tilde.
+[2331.88:2334.88] All right?
+[2334.88:2337.88] Okay. What is y in this case?
+[2337.88:2342.88] y is gradients of f i k.
+[2342.88:2346.88] So, at the kth iteration, we draw a random index i k.
+[2346.88:2352.88] So, this is our minus y.
+[2352.88:2354.88] All right. So, think about this.
+[2354.88:2357.88] This is random because I choose the index randomly.
+[2357.88:2359.88] What's its expected value?
+[2359.88:2362.88] It's the gradient evaluated at x tilde.
+[2362.88:2364.88] Right?
+[2364.88:2371.88] Cool. You read me or you're against me.
+[2371.88:2380.88] I'm assuming that the audience is so old now that there are no questions so far in this lecture.
+[2380.88:2385.88] Anyway, so this is our x.
+[2385.88:2388.88] And this is our estimator.
+[2388.88:2392.88] So, I'm going to argue that this has less variance.
+[2392.88:2395.88] And hopefully you will believe me.
+[2395.88:2397.88] Okay? Continue.
+[2397.88:2399.88] So, here's the algorithm.
+[2399.88:2400.88] You have two loops.
+[2400.88:2404.88] In mon loop, in the outer loop, you take a gradient.
+[2404.88:2405.88] At the point.
+[2405.88:2411.88] And then you make progress with the said gradient
+[2411.88:2415.88] by doing little, little updates to the stochastic gradient.
+[2415.88:2420.88] And then you average.
+[2420.88:2423.88] The method is ugly, but it is based on the following.
+[2423.88:2427.88] Once you compute the gradient one time, let's say,
+[2427.88:2430.88] it can continue doing SGDs.
+[2430.88:2433.88] But if you use the information, the gradient information that you use,
+[2433.88:2437.88] remember with SGD, you take small steps here and there.
+[2437.88:2439.88] So, there's a correlation.
+[2439.88:2443.88] But you will have much less variance using this path.
+[2443.88:2448.88] Okay? So, it's a double loop or multi-states team
+[2448.88:2452.88] that reduces the variance of the stochastic gradient.
+[2452.88:2461.88] This is what stochastic variance reduction gradient method is, S-V-R-G.
+[2461.88:2462.88] Okay?
+[2462.88:2467.88] So, here's the computational complexity for S-Fest-cribed.
+[2467.88:2472.88] So, you need some full gradient, but then you take some stochastic steps.
+[2472.88:2475.88] Okay.
+[2475.88:2479.88] Now, at this point,
+[2479.88:2482.88] to be able to give you something rigorous about it,
+[2482.88:2484.88] I need some conditions.
+[2484.88:2487.88] And the conditions are simple.
+[2487.88:2490.88] Okay? So, we use, we assume that the function is from,
+[2490.88:2493.88] form makes fine in machine learning,
+[2493.88:2495.88] we can add the L2 regularization.
+[2495.88:2497.88] It's fine.
+[2497.88:2500.88] The learning rate is this constant learning rate.
+[2500.88:2503.88] So, which is basically the maximum of, let's say,
+[2503.88:2506.88] the individual, the constants that you observe so far.
+[2506.88:2509.88] It's fine.
+[2509.88:2512.88] Okay?
+[2512.88:2513.88] Good.
+[2513.88:2518.88] So, here.
+[2518.88:2525.88] So, you need this quantity to be less than one.
+[2525.88:2528.88] It's one of those times where you will say,
+[2528.88:2530.88] you need to find and move on.
+[2530.88:2532.88] There's no need to explain this quantity.
+[2532.88:2534.88] It's a technical condition.
+[2534.88:2537.88] And just trust me to subscribe.
+[2537.88:2540.88] And you pick one and risk it.
+[2540.88:2543.88] Then, it turns out that you get a nice linear rate.
+[2543.88:2546.88] Which is awesome.
+[2546.88:2549.88] So, you now have a hybrid algorithm.
+[2549.88:2553.88] And you will see that it literally just smits gradients,
+[2553.88:2555.88] two gradients,
+[2555.88:2558.88] and that's good.
+[2558.88:2561.88] Okay.
+[2561.88:2563.88] And what you can do is actually,
+[2563.88:2566.88] you can give an overall total complexity result.
+[2566.88:2568.88] Okay?
+[2568.88:2571.88] So, here is, you know, how the choices of the parameters are,
+[2571.88:2573.88] so that this assumption is satisfying.
+[2573.88:2577.88] But what is cool about this is that for the gradient methods,
+[2577.88:2580.88] so imagine this L max for least squares,
+[2580.88:2582.88] close to L.
+[2582.88:2584.88] Okay, someone.
+[2584.88:2590.88] So, the gradient method actually requires to do L times L over nu.
+[2590.88:2598.88] There is this method does N plus L max divided by nu,
+[2598.88:2602.88] log 1 over epsilon, log 1 over epsilon.
+[2602.88:2605.88] So, clearly, remember, condition numbers are numbers
+[2605.88:2607.88] that are bigger than one.
+[2607.88:2611.88] Clearly, this is an advantage over the gradient method.
+[2611.88:2612.88] Okay?
+[2612.88:2616.88] Especially than N is large, because it's N plus the condition number,
+[2616.88:2618.88] and not times.
+[2618.88:2620.88] Good.
+[2620.88:2622.88] So, here is a comparison.
+[2622.88:2625.88] But let me actually show you something very exciting.
+[2625.88:2626.88] Okay?
+[2626.88:2628.88] This plot.
+[2628.88:2631.88] Now, there are some caveats with this plot.
+[2631.88:2633.88] I'll explain them.
+[2633.88:2636.88] So, here are the epochs.
+[2636.88:2638.88] Okay?
+[2638.88:2640.88] So, this is the gradient method.
+[2640.88:2643.88] It weights the compute the gradient time.
+[2643.88:2645.88] It decreases the object.
+[2645.88:2648.88] It weights the compute the gradient time.
+[2648.88:2650.88] It decreases the object.
+[2650.88:2651.88] Okay?
+[2651.88:2654.88] Here is a shitty.
+[2654.88:2658.88] And after a while, the gradient method is 6.
+[2658.88:2660.88] More?
+[2660.88:2663.88] And here is the SDRG.
+[2663.88:2665.88] What?
+[2665.88:2667.88] Now, what are the caveats?
+[2667.88:2670.88] So, maybe we obviously need the full epoch to start.
+[2670.88:2672.88] So, maybe we could have just started here,
+[2672.88:2674.88] but the conclusion wouldn't change.
+[2674.88:2675.88] Right?
+[2675.88:2680.88] But if you're doing this count, then we can also think about the gradient method requiring the liquefied constant.
+[2680.88:2684.88] And that's a lot of computation to begin with.
+[2684.88:2685.88] Right?
+[2685.88:2690.88] So, maybe we can start at the 50th epoch if you're doing,
+[2690.88:2693.88] let's say, least squares and power terations,
+[2693.88:2696.88] because you need to look at the data matrix 50 times to get
+[2696.88:2699.88] a liquefied constant, then you start.
+[2699.88:2700.88] You know?
+[2700.88:2702.88] Actually, the immediate we start,
+[2702.88:2704.88] but somewhat this hybrid method gets the best,
+[2704.88:2707.88] like it literally is underneath both.
+[2707.88:2709.88] You know?
+[2709.88:2711.88] Good.
+[2711.88:2714.88] So, here is basically a summary,
+[2714.88:2717.88] and this is like a very good place to end.
+[2717.88:2723.88] You know, like, SDRG retains the linear rate of gradient descent,
+[2723.88:2729.88] and it even improves its complexity by using this idea from stochastic gradient descent.
+[2729.88:2730.88] Right?
+[2730.88:2733.88] And the idea is that you have the condition number plus,
+[2733.88:2738.88] number of data points versus condition number times, number theta points.
+[2738.88:2740.88] Good.
+[2740.88:2742.88] So, this is a perfect time to wrap up.
+[2742.88:2746.88] We will post the homework one,
+[2746.88:2751.88] and we'll try to figure out what the logistics of the lab all will be.
+[2751.88:2753.88] All right.
+[2753.88:2757.88] The lab hours are in that corner computer lab.
+[2757.88:2760.88] So, we need to figure this out this week.
+[2760.88:2761.88] Right?
+[2761.88:2764.88] If you have suggestions and many more, I'm happy to hear your ideas,
+[2764.88:2767.88] how we can make this work.
+[2767.88:2769.88] Now, here there's a bit more,
+[2769.88:2772.88] so here is the calculation of the statistical dimension.
+[2772.88:2776.88] There's other variance reduction techniques.
+[2776.88:2777.88] All right?
+[2777.88:2778.88] As advanced material,
+[2778.88:2781.88] those of you who are interested, take a look.
+[2781.88:2783.88] I'll give us your comments.
+[2783.88:2788.88] Hit that like button, click subscribe to our channel.
+[2788.88:2789.88] All right.
+[2789.88:2791.88] I'll see you guys on Friday.
+[2791.88:2817.88] Have a good week.

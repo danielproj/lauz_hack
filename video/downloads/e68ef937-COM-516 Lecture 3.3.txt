@@ -1,0 +1,142 @@
+~COM-516 Lecture 3.3
+~2020-07-29T21:56:50.139+02:00
+~https://tube.switch.ch/videos/e68ef937
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:8.08] So now comes the question. We have defined the notion of stationary distribution, but as
+[8.08:15.08] I say, stationary distribution is quite abstract theoretical definition. It's vector which
+[15.08:27.88] satisfies the system of linear equations. Now, we would like to have a notion where we
+[27.88:37.48] have that limits of my distribution time n as n goes to infinity is this stationary
+[37.48:41.84] distribution. And that's where we introduce the concept of limiting distribution. So the
+[41.84:62.440000000000005] definition is as follows. We say that a distribution
+[62.44:91.47999999999999] pi is a limiting distribution for the Markov chain x. If for every initial
+[91.48:107.76] distribution pi 0, limit as n goes to infinity of pi n of the distribution of the chain
+[107.76:116.72] at pi n. You take this to the limit and you get 2 pi. Here is the definition. So here
+[116.72:127.0] it's quite important for every initial distribution pi 0. Because if you are in position
+[127.0:133.68] to choose your initial distribution, you could always satisfy this with a stationary distribution.
+[133.68:139.0] You could always choose for the initial distribution the stationary distribution itself. And then
+[139.0:147.64] pi n will be equal to pi for every n and n. Now we ask that whatever your starting point,
+[147.64:162.2] you always get to pi in the long run. And that's more difficult to obtain of course.
+[162.2:173.32] So again, some remarks about limiting distribution.
+[173.32:184.0] One such a limiting distribution may not exist. So there are cases, there are Markov chains
+[184.0:206.16] or which limiting distributions do not exist. But if it exists, then it is unique. So you
+[206.16:211.84] cannot have 2 limiting distributions. By definition of what a limit is, right? If the limit
+[211.84:224.52] exists, then you cannot have 2 different limits. And one thing is true that if pi is a limiting
+[224.52:247.32000000000002] distribution, then it is also a stationary distribution. Then it is a stationary distribution.
+[247.32000000000002:250.72] The reciprocal statement doesn't hold. If you have a stationary distribution, that's
+[250.72:255.68] not necessarily a limiting distribution. But if you have a limiting distribution, then
+[255.68:265.56] it is a stationary distribution. And the proof of this goes as follows. So we know that
+[265.56:278.4] pi n plus 1 is given by pi times p, pi n, sorry, pi n times p for every n. This is what
+[278.4:290.28] we call this so twice actually. That's true for every n in n. So if pi is a limiting
+[290.28:297.2] distribution, then this will converge as n goes to infinity. Well, pi n plus 1, we
+[297.2:309.44] also converge to pi. And this pi n, as n goes to infinity, will converge to pi. And so
+[309.44:316.0] we'll get pi is equal to pi p. Actually, this proof is a bit, there was a bit of cheating
+[316.0:326.0] here. This argument goes through perfectly correctly in the case of finite chain. But
+[326.0:331.8] if we have an infinite chain, here we have actually an infinite sum hidden. And we have
+[331.8:341.68] to be careful that we can take the limit. So here, let me put QED with some quotations
+[341.68:355.28] mark. And when this is plus infinity, then one has to be a little careful here and a
+[355.28:365.55999999999995] little bit more careful. But you know, that's basically the intuition holds through. You
+[365.55999999999995:374.67999999999995] can show it carefully and you get the result. Okay, so again, the reciprocal statement doesn't
+[374.67999999999995:381.4] hold. If you have a stationary distribution, it's not necessarily a limiting distribution.
+[381.4:387.2] And we are going to see when, yeah, these counter examples where you have a stationary
+[387.2:394.15999999999997] distribution, but you don't have a limiting distribution. With this concept of limiting
+[394.15999999999997:403.32] distribution, I can now state an important theorem. First, I will add yet another definition,
+[403.32:409.35999999999996] which is not really a definition, it's just a summary of three concepts in one. We say
+[409.36:439.2] that a Markov chain is an addict if it is irreducible, apiatic and positive recurrent.
+[439.2:457.84] Okay. Now comes the theorem I wanted to state, which is known as the agradic theorem.
+[457.84:465.15999999999997] And this theorem we are going to prove, not today, but next week. Because it's an important
+[465.16:472.24] theorem and the proof has many interesting ideas in there that we are going to reuse
+[472.24:483.72] for all the parts of the class. So the theorem says the following. Let X be an agradic
+[483.72:509.92] Markov chain. Then it admits a unique limiting and therefore stationary distribution
+[509.92:533.32] pi. So, which is saying that two things, right? Let me just remind them here for every
+[533.32:547.44] initial distribution pi 0, limit as n goes to infinity of pi n is equal to pi and second
+[547.44:561.1600000000001] pi is equal to pi. Okay. Perhaps here, let me just say that we could phrase this slightly
+[561.16:572.28] differently. For example, we could say that we, well, okay, let me not just do that. Just
+[572.28:580.1999999999999] one equivalence here. This is this thing here. This statement here, the whole statement,
+[580.2:592.1600000000001] right, is equivalent to saying that for every i in s, the limit as n goes to infinity of
+[592.1600000000001:605.9200000000001] property that X n is equal to j, even that X 0 is equal to i is equal to pi j. And well,
+[605.92:614.3199999999999] actually, I should say for every i j in s. Okay. So if you want, we can prove that this
+[614.3199999999999:623.04] is the equivalent in the sense that, so you can either consider that you start from an
+[623.04:627.8399999999999] initial, any initial distribution, but actually you can show that it's equivalent to saying,
+[627.84:640.1600000000001] let's start from any point, any state pi. Okay. And once you prove that if you start from
+[640.1600000000001:645.2] a deterministic position, right, you choose any deterministic position i, so you start
+[645.2:651.5600000000001] from this position with property 1, then it's not so difficult to show that if you start
+[651.56:659.16] from any initial distribution, you're also going to converge, right? It's the same thing.
+[659.16:665.3199999999999] Okay. Just as a side remark, so you don't need, when you prove things, you can really prove
+[665.3199999999999:673.3599999999999] this statement here, which is a bit easier to prove in general than just checking this
+[673.3599999999999:679.88] for every pi 0. Again, when, so in the finite case, this is obvious. In the infinite case,
+[679.88:687.56] again, you have to take care of some details here because we have an infinite number of states,
+[687.56:696.2] but you can do this carefully and show the equivalence of the two statements. So actually
+[696.2:703.48] here, what does that say? Well, we, this theorem is, you know, part of it has already been
+[703.48:710.9200000000001] proven, right? Because ergodic chain means irreducible, aperiodic and positive recurrence.
+[710.9200000000001:715.44] So we saw that if we have an irreducible and positive recurrent chain in the format
+[715.44:722.52] theorem, then there is a unique stationary distribution for the chain. Here, the thing
+[722.52:729.16] we have more is the fact that this stationary distribution turns out to be also a limiting
+[729.16:734.24] distribution for the chain. And so what is the assumption that was needed in order to
+[734.24:746.04] conclude this? The extra assumption is this one that the chain is aperiodic. And so here,
+[746.04:761.0799999999999] I would like just to explain why this aperiodicity is important. So here's a final remark that
+[761.08:781.1600000000001] aperiodicity matters. So, okay. So here is an example of chain which is not aperiodic,
+[781.16:797.88] but the least aperiodic chain you can imagine. Consider the chain which is just two states
+[797.88:804.88] and the chain just swaps from one state to the next at every state. I will, at every
+[804.88:813.92] state. So the transition matrix here is this one. So here, of course, the periodicity
+[813.92:825.96] of the chain is two. And what about stationary distribution for this chain? So, well, if
+[825.96:839.6] you just try to solve the equation pi is equal to pi p. So you write down this equation.
+[839.6:849.9200000000001] And I let you check that actually, well, pi is equal to one half, one half is a solution.
+[849.92:856.24] And we have a finite irreducible chain. So I can even replace this by is the solution.
+[856.24:863.8399999999999] There is no or no two solution of this equation with the normalization condition, right? So
+[863.8399999999999:869.4799999999999] pi 1 plus pi 2 or pi 0 plus pi 1 has to be equal to 1. So therefore it's a uniform
+[869.48:881.12] one, one half, one half. Okay. So this is a stationary distribution and it's unique.
+[881.12:889.88] Now is it a limiting distribution? Well, again, if you start from the initial distribution
+[889.88:897.12] which is one half, one half, then surely you will remain in the state in this distribution
+[897.12:908.92] forever, right? But now if you start from if pi 0 is say 1 0, you start with 41 state
+[908.92:920.4] 0, then of course what you have in this case that pi 1 is 0 1 and pi 2 will be back to
+[920.4:931.56] 1 0 and so on. So in this case, the sequence of pi n will not converge to so will not converge
+[931.56:942.0799999999999] because it will switch between 0 1 and 1 0 all the time. Okay. So limit as n goes to infinity
+[942.08:953.88] of pi n doesn't exist. And the fundamental reason why it does not exist is because here
+[953.88:968.2] we have an periodic chain. Okay. So apiadicity is important. If you are to modify a little
+[968.2:985.08] this example, I'd say modify example by just adding an epsilon arrow, self loop of weight
+[985.08:998.2800000000001] epsilon. Even if epsilon is super small but not zero, okay, if epsilon being greater than
+[998.2800000000001:1011.32] zero, then now pi becomes epsilon 1 minus epsilon 1 0. And now this chain is of course finite
+[1011.32:1028.28] irreducible apiadink and positive recurrent. So it's all this and these two things here
+[1028.28:1041.0] imply positive recurrent as we saw before. And therefore because it's all of this
+[1041.0:1051.32] it is agodic. Okay. So the theorem applies here and so in this case there exists a unique
+[1051.32:1062.6] pi which is both limiting and stationary distribution. Before also they used, there exist
+[1062.6:1071.8] only one stationary distribution but this was not limiting distribution here. It becomes
+[1071.8:1082.36] both limiting and stationary distribution. And it's an exercise to compute what this pi
+[1082.36:1099.8] is. Okay. And finally remark I would like to make about this apiadic condition is that
+[1099.8:1106.32] okay. So when we have an apiadic chain like this one, the one we have in front of you,
+[1106.32:1110.6799999999998] you have a unique limiting and stationary distribution. So now if you have a chain that
+[1110.68:1120.1200000000001] is padiadic, you might wonder what happens to pi n. Right? What happens to this limit
+[1120.1200000000001:1125.88] of pi n? Okay. The limit of pi n does not exist. Still, can we say something about the
+[1125.88:1134.88] limiting behavior of the chain as m gets large? And actually yes we can. So this is the
+[1134.88:1144.24] last remark I want to make is that. So if you want you could you could you could be
+[1144.24:1173.88] disappointed here saying that so can't we say anything for a padiadic chain? Here the
+[1173.88:1186.7600000000002] answer is yes we can. And so we we won't be able to prove that pi n goes to somewhere,
+[1186.7600000000002:1197.44] but we can say the following we can say that for every initial distribution pi zero,
+[1197.44:1213.0] n over n times some of a k ranging from one to n of probability that x k is equal to i,
+[1213.0:1222.72] well, but I should just write it as pi k.
+[1222.72:1230.72] So we can say that pi n goes as n goes to infinity to pi i for every i in s. So actually
+[1230.72:1237.4] it's not pi n that converges directly to pi. This we know that pi n cannot converge.
+[1237.4:1247.08] We have the counter example before, but if we make a leverage of pi n over the first n
+[1247.08:1254.6] steps of the chain and we let n go to infinity then we recover this. So typically in the
+[1254.6:1264.8799999999999] previous example where we had this chain that was just going from zero to one endlessly,
+[1264.8799999999999:1271.6399999999999] then we see you know after one step your you've been in position zero for the first step
+[1271.64:1279.1200000000001] zero at step one you're in position one. And so after three steps you've been in position
+[1279.1200000000001:1287.0800000000002] zero two times and being position one one time after n steps nearly half of the time you
+[1287.0800000000002:1295.5600000000002] were in position zero the other half you were in position one. And so as n goes to infinity,
+[1295.56:1303.44] the amount of time you spent in position zero is close to one half. It's actually exactly
+[1303.44:1312.24] one half for some values of n and when n is even, but you know in general it's close to
+[1312.24:1320.52] one. It's close to one half and similarly for the policy to be in one. So indeed as n
+[1320.52:1330.8799999999999] goes to infinity these other ages here converge towards the stationary distribution. So even
+[1330.8799999999999:1340.96] in the periodic case we're able to relate the distribution of the chain at time n to the
+[1340.96:1345.96] stationary distribution. Just that of course it's a bit less nice than when you have a truly
+[1345.96:1352.68] limiting distribution where from every initial distribution then pi and just simply converges
+[1352.68:1358.3600000000001] to pi. Okay so here you have to take average just to get the convergence result. But just
+[1358.3600000000001:1366.08] to say that in so in general a stationary distribution is never a completely abstract
+[1366.08:1376.56] concept. It is a concept that allows to relate to see what happens to the chain in the long
+[1376.56:1384.0] run. Okay and of course I should say this is not completely general. This is only for the case
+[1384.0:1399.32] of finite sorry it is only to that only for irreducible and positive recurrent chain. Because
+[1399.32:1404.24] of course in the general case we have cases where pi does not exist. But there is no stationary
+[1404.24:1411.6] distribution. But okay but for a new irreducible and positive recurrent chain we know that there
+[1411.6:1416.32] is a unique stationary distribution and we have these convergence here which is again a
+[1416.32:1422.8799999999999] weaker convergence than what that's what given by the limiting distribution but still
+[1422.88:1451.3600000000001] it's a convergence result. Okay so I guess this is all for today.

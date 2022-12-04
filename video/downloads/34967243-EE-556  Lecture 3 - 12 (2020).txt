@@ -1,0 +1,606 @@
+~EE-556 / Lecture 3 - 1/2 (2020)
+~2020-10-03T13:34:13.295+02:00
+~https://tube.switch.ch/videos/34967243
+~EE-556 Mathematics of data: from theory to computation
+[0.0:7.0] All right, how is everybody?
+[7.0:14.0] Let's begin the class.
+[14.0:27.0] So I will remove my mask because I had a good distance to people and there's a bit of
+[27.0:31.0] difficulty that the coverage could be to speed.
+[31.0:38.0] All right, so welcome back to Math of Data.
+[38.0:44.0] What we're going to do is we're going to continue our coverage of optimization algorithms.
+[44.0:51.0] And today we'll talk about like scale optimization methods.
+[51.0:61.0] All right, now what we've been doing so far was looking at statistical estimators and using
+[61.0:69.0] the things like maximum likelihood of heuristic, setting up optimization problems.
+[69.0:80.0] Given the optimization problems, we talked about the role of computation and then discuss things like, you know, gradient descent method.
+[80.0:87.0] You highlighted the challenges to the gradient descent methods, you know, stationary points,
+[87.0:96.0] first order stationary points, local minimum, how we choose their sizes, discontinuities, non-sumidness.
+[96.0:100.0] And what we're going to do today is we're going to continue along the same vein.
+[100.0:105.0] We're going to talk more about the computational aspects.
+[105.0:111.0] So what we will do is we're going to literally have our single formula minimized epiphyx.
+[111.0:119.0] In this case, it's going to be something strange in this case that the space of all possible parameters
+[119.0:124.0] X will be just all wheels and key dimensions.
+[124.0:131.0] But what we're going to do is we're going to specifically focus on convex functions.
+[131.0:140.0] And if you recall, the way we set up gradient descent is to create iterates by updating the gradient
+[140.0:143.0] and we choose a straight-sized alpha.
+[143.0:152.0] In the last lecture, we discussed how to choose this alpha, depending on the properties of the function F.
+[152.0:164.0] Now, what we did in the last class was to give you some characterization on the performance of our coordinates.
+[164.0:167.0] In particular, gradient descent.
+[167.0:175.0] So what we did was that we said if F has liquefious continuous gradient, or in short, if F is as smooth.
+[175.0:183.0] By choosing the step-sized constant, which is the reciprocal of the lip-shift constant of function F and so on.
+[183.0:192.0] Then we had this nice formula that kind of explained the practical convergence.
+[192.0:194.0] So here L is in the numerator.
+[194.0:197.0] So your distance to optimality.
+[197.0:203.0] So this is our F star.
+[203.0:207.0] It's upper bounded by a constant L, which captures our thickness.
+[207.0:215.0] Remember the function, the smoother the function is, the smaller this constant is.
+[215.0:220.0] Our initial distance to an optimal solution.
+[220.0:224.0] So it starts very close and we don't have to do much work.
+[224.0:229.0] And with each iteration, we decrease this error sublineally.
+[229.0:232.0] That was the characterization.
+[232.0:238.0] We then looked at L smooth and mu strongly convex.
+[238.0:240.0] This is a very stationary class.
+[240.0:244.0] And we talked about the step-size to divide it by L plus mu.
+[244.0:247.0] Where mu is the strong convexity constant.
+[247.0:253.0] In this case, we had this stronger notion of convergence, which was the convergence in sequence.
+[253.0:256.0] To be optimal solution, mind you.
+[256.0:261.0] In the strong convex phase, we have a unique solution.
+[261.0:265.0] As you can see, we decrease the solution.
+[265.0:267.0] Each iteration by a constant fraction.
+[267.0:273.0] And that fraction is given by L minus mu by L plus mu.
+[273.0:276.0] Why?
+[276.0:283.0] Now, for these two cases, I mentioned, and I, I left some slides for advanced material,
+[283.0:289.0] that the optimal step sizes for diverse phase for the gradient descent method is 1 over L.
+[289.0:292.0] When the function is only how smooth.
+[292.0:296.0] And then 2 divided by L plus mu.
+[296.0:300.0] And the function also is strong convexity.
+[300.0:308.0] And the funny thing about this is that if you use the top optimal step size in terms of convergence 1 over L.
+[308.0:312.0] Not 2 divided by L plus mu.
+[312.0:320.0] You still get linear convergence, except that the decrease is a bit worse.
+[320.0:325.0] So here, the factor is L minus mu divided by L plus mu.
+[325.0:335.0] Here, it's literally the square root of L minus mu plus L plus mu.
+[335.0:346.0] So this is like 0.49.
+[346.0:348.0] This is something like 0.7.
+[348.0:351.0] So this decrease is much, much faster.
+[351.0:358.0] Your distance to the optimal solution gets cut off at each stage.
+[358.0:363.0] So sometimes the particular ratio of L of mu is known as the condition number.
+[363.0:371.0] The condition number is large. That means the following is a bit more difficult to set.
+[371.0:377.0] Now, we talked about all of them.
+[377.0:381.0] And we said that they're most characterized by the fact of information that we use.
+[381.0:384.0] And they used things like gradients.
+[384.0:387.0] Either something like the first order to this is extension.
+[387.0:391.0] We call them first order methods.
+[391.0:397.0] Now, I just gave you a characterization where I just recalled the characterization for the gradient.
+[397.0:400.0] That uses the gradients first order information.
+[400.0:406.0] And it has a particular convergence rate, which is something like 1 over K.
+[406.0:410.0] So the question is, is the best we can do?
+[410.0:413.0] Given the information.
+[413.0:416.0] We're talking about gradient descent.
+[416.0:422.0] We're saying gradient descent usually gives the gradient to the step size, depending on how to step size.
+[422.0:424.0] It's performance changes and so on and so forth.
+[424.0:433.0] But if you think about it, gradient descent is just one algorithm and only many possible algorithms.
+[433.0:437.0] Is it the best algorithm?
+[437.0:441.0] So how do we determine this?
+[441.0:451.0] It turns out that you can actually construct examples that resist, for example, any method using information about the gradients.
+[451.0:464.0] So in particular, you were an extra construct one example that shows that there is a lower bound for algorithms that have to satisfy.
+[464.0:468.0] They're just using first order information of the gradient in your objective.
+[468.0:476.0] And in this case, so here the constructed example is infinitely defensible and else smooth.
+[476.0:489.0] In this case, any algorithm must satisfy this particular lower bound, which kind of makes sense.
+[489.0:498.0] The term of your initial distance appears again. So the bomb gets better if you start closer to the solution.
+[498.0:506.0] I think there is a question.
+[506.0:509.0] Let me just say this and then we need to start.
+[509.0:514.0] It's innurzlich proportional to the smoothness, right? The smoother the function is.
+[514.0:518.0] The easier things are, the smaller the lower bound.
+[518.0:523.0] But what is this? This is actually k squared.
+[523.0:531.0] For iteration, if you recall the previous slide, gradient descent goes with 1 over k, also gradient descent.
+[531.0:542.0] The bound of f of x k minus x star is order 1 over k, like besides the constants of l and the initial distance.
+[542.0:547.0] But this is more or less 1 over k and not k squared.
+[547.0:553.0] So this is the strongy convex case. The lower bound is actually this.
+[553.0:559.0] If you recall for gradient descent, if you use the optimal step size,
+[559.0:565.0] in this case, you decrease it by this factor.
+[565.0:569.0] And this is a better factor, smaller than this one.
+[569.0:580.0] So this smaller than that, that means it is possible to go faster.
+[580.0:591.0] So the caveat to the gradient descent is that it does not meet these lower bounds.
+[591.0:596.0] These lower bounds say that if you have this information, you can do better.
+[596.0:601.0] I know we can always do better.
+[601.0:604.0] But it doesn't get to these bounds.
+[604.0:611.0] So let's hear the question at this point before I know that.
+[611.0:625.0] The question was not a question on the slides, but more like zoom technicals.
+[625.0:640.0] Alright, then the natural question is, is it possible to design an algorithm that will use first order in pollution?
+[640.0:650.0] Hopefully we do at least as it was gradient descent, but ideally we will match the lower bounds.
+[650.0:656.0] Well, it turns out that it is possible.
+[656.0:664.0] So during this store had this paper in 1983, it's called accelerated gradient descent.
+[664.0:672.0] And you will, I mean, I will describe the algorithm and then show that it actually matches these lower bounds.
+[672.0:681.0] The funny thing about this paper is that it was forgotten until mid 2005.
+[681.0:687.0] The reason being is that the optimization community went into a completely different direction.
+[687.0:693.0] Well, not completely, but when they bit more sophisticated and started talking about second order methods,
+[693.0:699.0] which I've also mentioned in this particular lecture.
+[699.0:707.0] And these methods are faster than first order methods.
+[707.0:712.0] But the perturbation complexity is a good worse.
+[712.0:716.0] They require more work for iteration.
+[716.0:722.0] And to kind of trade off that we will discuss also in this particular lecture.
+[722.0:726.0] Alright, so let me tell you what the accelerated gradient descent with this.
+[726.0:731.0] It's a simple modification.
+[731.0:737.0] So what you do is you keep an auxiliary iterative.
+[737.0:749.0] And what you do is that so this particular ratio, think of it is like something like k plus 1 divided by k plus 3.
+[749.0:758.0] Like it looks implicit currency. Think of it as a weight that you know,
+[758.0:762.0] increases for one as the iterations continue initially.
+[762.0:770.0] It is, you know, like one one house, right? And T is one or T is zero is one third.
+[770.0:777.0] And what you do is that given your previous iterative, given your current iterative,
+[777.0:782.0] you add a momentum. So it's romantically speaking.
+[782.0:788.0] So let's say this is your your xk. This was your xk plus 1.
+[788.0:791.0] Look at this distance.
+[791.0:793.0] Alright.
+[793.0:797.0] Then to this you add a little bit this distance. Right?
+[797.0:801.0] So this depends on that particular ratio.
+[801.0:807.0] Scale. Right? So it's like momentum.
+[807.0:810.0] You push yourself a little bit further.
+[810.0:815.0] Then take the gradient. So this will become our yk.
+[815.0:820.0] We will take the gradient from yk and then update the point accordingly.
+[820.0:825.0] So whatever the gradient was. So let's say it was.
+[825.0:830.0] This we take the negative direction and the updated here.
+[830.0:835.0] This will be xk plus 2.
+[835.0:838.0] Alright? And then you do the same thing here.
+[838.0:844.0] You add a bit of momentum. Right?
+[844.0:848.0] So this is something like a little bit of an extra gradient.
+[848.0:852.0] Alright?
+[852.0:861.0] I think the video basically is showing your feedback.
+[861.0:863.0] Alright.
+[863.0:877.0] In the case of from the connects functions.
+[877.0:886.0] The algorithm is a bit different.
+[886.0:893.0] Because if you notice this thing will converge to one.
+[893.0:902.0] Meaning as you iterate more and more, you literally take the full difference and push.
+[902.0:913.0] And in the case of from from makes it easy. This ratio is a constant.
+[913.0:915.0] Now here's the remark.
+[915.0:920.0] In this case the accurate gradient descent method becomes a non-monotonic method.
+[920.0:928.0] If you recall the way we the state derived the gradient descent.
+[928.0:934.0] We argued that we want the method that will decrease the objective.
+[934.0:939.0] Right? Projective. We want to decrease the objective.
+[939.0:943.0] And you choose a step start for the decreases the objective. Right?
+[943.0:945.0] We never increase the objective.
+[945.0:949.0] But because we're adding this particular momentum.
+[949.0:952.0] If you look at the objective values.
+[952.0:956.0] If they increase during iterations.
+[956.0:959.0] Alright? Good.
+[959.0:964.0] But if you think about it the cost for iteration.
+[964.0:969.0] Of this method is essentially the same as the gradient method.
+[969.0:977.0] Do you see this?
+[977.0:983.0] What is the main course in running the gradient method computation of the gradient?
+[983.0:989.0] Once you compute the gradient. Just adding vectors up.
+[989.0:993.0] It's somewhat negligible. It of course depends on the problem.
+[993.0:998.0] But just vector additions and feed dimensions is not that difficult.
+[998.0:1000.0] Alright?
+[1000.0:1003.0] Because remember when you compute the gradient.
+[1003.0:1006.0] For each coordinate you have to do some work.
+[1006.0:1013.0] Over the data points you add them up. We multiply do work.
+[1013.0:1016.0] And once you're at that point.
+[1016.0:1020.0] Just adding in just a single number is not that difficult.
+[1020.0:1024.0] So that's the argument. Right? It's more or less the same.
+[1024.0:1026.0] Okay.
+[1026.0:1034.0] So here's the convergence rate factorization for the accelerated gradient descent methods.
+[1034.0:1038.0] The terms that we expect are naturally there.
+[1038.0:1041.0] I think there are more questions.
+[1041.0:1049.0] Okay.
+[1049.0:1051.0] Okay.
+[1051.0:1055.0] Wow.
+[1055.0:1058.0] Okay.
+[1058.0:1064.0] Accelerate the gradient descent. So here's the worst case performance factorization.
+[1064.0:1065.0] The smoothness is there.
+[1065.0:1070.0] The smoother the function is, the better the bound is.
+[1070.0:1074.0] We again have our initial distance to the solution.
+[1074.0:1079.0] So if you start close and it means the bound is better. Right?
+[1079.0:1082.0] But notice how we're beating these transplants.
+[1082.0:1089.0] Because before they're having a K, we have K squared. Right?
+[1089.0:1096.0] So let's think of a hypothetical scenario where this particular constant is just simply one.
+[1096.0:1103.0] If you want to get a point one accuracy in our objective.
+[1103.0:1107.0] With the gradient descent, you need to do hundreds iterations.
+[1107.0:1113.0] With the accelerated gradient descent, you need to do 10.
+[1113.0:1115.0] Do you see this?
+[1115.0:1124.0] Because if you want fxk minus f star less than or equal to point 0.01,
+[1124.0:1132.0] all you need to do is equate this and solve for K.
+[1132.0:1143.0] So roughly speaking, hundreds iterations versus 10.
+[1143.0:1146.0] I didn't mean to say.
+[1146.0:1153.0] No, I mean, so in this case, K could be it, but I'm just simplifying things a little bit.
+[1153.0:1155.0] All right?
+[1155.0:1156.0] Okay.
+[1156.0:1165.0] It turns out that accelerated gradient descent also with the modification on the momentum,
+[1165.0:1172.0] which is important here, matches the lower bonds in terms of the strong pomix.
+[1172.0:1173.0] Okay.
+[1173.0:1177.0] So some observations and caveats at the same time.
+[1177.0:1181.0] Itter of accelerated gradient descent is not guaranteed to converge.
+[1181.0:1186.0] They may just circle around.
+[1186.0:1188.0] Now, the issue is this.
+[1188.0:1194.0] If you use the accelerated gradient descent for the lipicious continuous gradient class,
+[1194.0:1200.0] for a strongly convex function, you're not guaranteed to have linear rate.
+[1200.0:1205.0] So if you remember, for the gradient descent, if you use the sub optimal step size,
+[1205.0:1208.0] you would still have linear rate.
+[1208.0:1220.0] For accelerated gradient descent, it is important to use the version for the strong pomix case.
+[1220.0:1228.0] And if you want to do that, you need to know the strong pomix department.
+[1228.0:1237.0] Now, of course, accelerated gradient descent achieves the lower bound with the net plants.
+[1237.0:1244.0] So here's an example of which regression, same thing you can look at in the last lecture.
+[1244.0:1245.0] All right?
+[1245.0:1249.0] So here's the theoretical bound for the accelerated gradient descent method.
+[1249.0:1252.0] Here's the performance of gradient descent.
+[1252.0:1258.0] So in this case, what we're doing is we're solving a least square problem,
+[1258.0:1261.0] where A is n by P.
+[1261.0:1264.0] And there's no strong pomix at E, right?
+[1264.0:1267.0] So row times x squared divided by 2.
+[1267.0:1271.0] This is what we're minimizing the regression from the last class.
+[1271.0:1274.0] And here is the accelerated gradient descent.
+[1274.0:1286.0] Notice the significant difference in terms of number of iterations to achieve a particular accuracy.
+[1286.0:1287.0] Right?
+[1287.0:1295.0] So roughly speaking, gradient descent takes 5,000 iterations, whereas this is maybe 500.
+[1295.0:1299.0] Can be a number of 92 different.
+[1299.0:1305.0] And in fact, this was like a major revelation mid 2000s.
+[1305.0:1310.0] You had like point of paper, like every paper in machine learning would just show that,
+[1310.0:1314.0] oh, we used accelerated gradient descent, our classification results gotten better.
+[1314.0:1319.0] Same thing on sigma processing inverse problems where people would not see nice results,
+[1319.0:1322.0] because they just didn't have the patience to wait.
+[1322.0:1327.0] All of a sudden, within the same time, you would solve problems much more accurately.
+[1327.0:1331.0] And you would have better pictures, for example.
+[1331.0:1332.0] All right.
+[1332.0:1336.0] Now, in the case of strongly from x, all right?
+[1336.0:1341.0] So here's the strongly from x-case.
+[1341.0:1348.0] So here is the theoretical bound for all lectures continuous gradient.
+[1348.0:1352.0] Here's the theoretical bound for the strongly complex.
+[1352.0:1353.0] Right?
+[1353.0:1361.0] And you can see that the accelerated gradient descent methods actually has a worse rate than gradient descent
+[1361.0:1367.0] when you use the incorrect version, only for the lectures continuous gradient.
+[1367.0:1372.0] But if you use the correct version, it's pretty fast.
+[1372.0:1377.0] And notice that the iterates are not monotonic.
+[1377.0:1384.0] You have a tendency to overshoot the solution and oscillate around.
+[1384.0:1385.0] All right?
+[1385.0:1386.0] Good.
+[1386.0:1391.0] So just to see the difference again explicitly,
+[1391.0:1397.0] for else mode functions gradient descent goes order 1 over k, accelerated gradient descent
+[1397.0:1401.0] with their little additional cost goes 1 over k squared.
+[1401.0:1405.0] So this is good.
+[1405.0:1411.0] So here, this fifth size only depends on the lectures constant, which is nice.
+[1411.0:1412.0] Right?
+[1412.0:1418.0] But even then, you may not know it for many problems.
+[1418.0:1425.0] And locally, maybe the function, so let's say you may have a function that is smooth
+[1425.0:1431.0] around the solution, but globally, it's a bit more steep.
+[1431.0:1432.0] Right?
+[1432.0:1436.0] So if you use the lectures constant here, you would go slowly.
+[1436.0:1441.0] I'll explain this with more examples.
+[1441.0:1444.0] You want to add that to local geometry in general.
+[1444.0:1450.0] Right? So if it is smoother here, then here, you want, you can take bigger and bigger steps.
+[1450.0:1455.0] So the question is, how do we do that?
+[1455.0:1460.0] So what I will do is I'm going to tell you a little bit about adaptive first for the methods.
+[1460.0:1465.0] And then tell you just the switch of new submitted.
+[1465.0:1469.0] There is additional advanced material at the end of the lecture.
+[1469.0:1474.0] If you want to learn more about Newton method, quasi-Newton methods, they're all there.
+[1474.0:1475.0] Right?
+[1475.0:1480.0] If you're not responsible for this course.
+[1480.0:1481.0] Good.
+[1481.0:1488.0] Now, adaptive methods converge with fast rates without knowing this smoothness constant.
+[1488.0:1497.0] And what you do is you try to use information from their gradients that you observe and their norms.
+[1497.0:1506.0] The Newton method tries to use higher order information to adapt to the local geometry.
+[1506.0:1512.0] And Newton method has faster convergence rates.
+[1512.0:1515.0] It's as far as convergence rate locally.
+[1515.0:1518.0] But time lies, there is a trade-off.
+[1518.0:1523.0] And I will explain the trade-off in this lecture in the optimum slides.
+[1523.0:1536.0] So the question is so far you have not considered any stochasticity effects.
+[1536.0:1539.0] So so far we're talking about deterministic methods.
+[1539.0:1542.0] Cochastic methods are coming up.
+[1542.0:1543.0] Not yet.
+[1543.0:1545.0] All right.
+[1545.0:1549.0] So in practice, we probably have to use SGD.
+[1549.0:1551.0] Wow, we will see.
+[1551.0:1554.0] Right, right now we're talking about the basics.
+[1554.0:1559.0] We need to crawl before we start sprinting.
+[1559.0:1563.0] So right now I'm just talking about using gradients.
+[1563.0:1567.0] What's the best we can do with gradients?
+[1567.0:1572.0] And which algorithm gets to those, let's say, best bounds?
+[1572.0:1573.0] All right.
+[1573.0:1579.0] Accelerate gradient descent seems to be one performing best in the worst case.
+[1579.0:1582.0] Sands for L to new functions.
+[1582.0:1583.0] Right.
+[1583.0:1591.0] But now what I'm talking about is adaptivity in the sense that you want the algorithm to adapt to local information.
+[1591.0:1596.0] Or local structures and not the global structures.
+[1596.0:1600.0] So let's talk about that one first before we jump into this series.
+[1600.0:1602.0] Okay.
+[1602.0:1604.0] So let's think about this.
+[1604.0:1607.0] So here's a function.
+[1607.0:1610.0] Let's say it's steep here.
+[1610.0:1615.0] So if you think about the, the lips its constant, it's global, right?
+[1615.0:1623.0] You try to find this constant so it holds everywhere.
+[1623.0:1625.0] You remember this, right?
+[1625.0:1627.0] There you go.
+[1627.0:1629.0] So if you use this lips its constant.
+[1629.0:1633.0] And if you remember the majorization and the musician perspective, let's say you're here.
+[1633.0:1637.0] You want to do a gradient step, you will be minimizing this.
+[1637.0:1641.0] But the tick-up or bump.
+[1641.0:1643.0] Right.
+[1643.0:1648.0] So when you do that, you minimize this.
+[1648.0:1649.0] You take it step.
+[1649.0:1652.0] So here's a level of the function.
+[1652.0:1653.0] Right.
+[1653.0:1657.0] Just contours of equal function values.
+[1657.0:1658.0] Right.
+[1658.0:1660.0] Here's the optimal solution.
+[1660.0:1662.0] Let's say, right here.
+[1662.0:1669.0] Let's see that in general, locally speaking here, we can do better.
+[1669.0:1670.0] Right.
+[1670.0:1673.0] Because this, this.
+[1673.0:1676.0] Verskage, Liches constant, it's there.
+[1676.0:1679.0] It's far away, not around the solution.
+[1679.0:1680.0] Right.
+[1680.0:1685.0] So if you could somehow adapt ourselves with a local Liches constant,
+[1685.0:1688.0] it could actually take bigger steps.
+[1688.0:1692.0] And try to reach the optimum solution faster.
+[1692.0:1696.0] Does this make sense?
+[1696.0:1697.0] Right.
+[1697.0:1701.0] So for this, again, you know, you saw this particular quadratic upper bound,
+[1701.0:1703.0] which has a close form expression.
+[1703.0:1704.0] Right.
+[1704.0:1707.0] Which is, you know, xk.
+[1707.0:1709.0] One of the without a.
+[1709.0:1710.0] It's.
+[1710.0:1711.0] Right.
+[1711.0:1712.0] It's.
+[1712.0:1716.0] This will be our xk person.
+[1716.0:1719.0] All right.
+[1719.0:1720.0] Good.
+[1720.0:1728.0] Now, while we are there, why not try to solve a truly quadratic upper bound in the sense that.
+[1728.0:1735.0] So what prevents us from putting an ellipsoid like this that better adapts to the local geometry of the function.
+[1735.0:1736.0] Right.
+[1736.0:1740.0] Do we need to just think about circles all the time?
+[1740.0:1744.0] We can think about ellipsoids that kind of better adapt to the geometry.
+[1744.0:1746.0] Right.
+[1746.0:1757.0] In this case, what you can do is replace the simple quadratic upper bound with a quadratic upper bound that matches the geometry.
+[1757.0:1758.0] Right.
+[1758.0:1765.0] So here you will have something like x minus xk transpose, which we notice x minus xk.
+[1765.0:1773.0] So this is still quadratic with a couple matrix.
+[1773.0:1774.0] Okay.
+[1774.0:1777.0] So in general, these are called variable matrix.
+[1777.0:1779.0] Radiant descent.
+[1779.0:1783.0] In the sense that you take the gradient, you somehow warp it.
+[1783.0:1786.0] Then you get this direction.
+[1786.0:1789.0] And then you update with that direction.
+[1789.0:1791.0] Right.
+[1791.0:1793.0] Now here.
+[1793.0:1798.0] So it's exactly what I'm talking about now.
+[1798.0:1799.0] Right.
+[1799.0:1801.0] So here is what h is.
+[1801.0:1803.0] Okay.
+[1803.0:1809.0] If you choose h with diagonal matrix.
+[1809.0:1810.0] Right.
+[1810.0:1814.0] So let's say it's a diagonal matrix multiplied by a constant.
+[1814.0:1815.0] Right.
+[1815.0:1818.0] You can simply choose this constant to be L.
+[1818.0:1821.0] You get gradient descent.
+[1821.0:1823.0] Okay.
+[1823.0:1827.0] But what you can also think about is adapting it.
+[1827.0:1831.0] So you can apply it.
+[1831.0:1834.0] So think about taking coordinate by step sizes.
+[1834.0:1835.0] Right.
+[1835.0:1839.0] In this case, you can just put a positive diagonal matrix.
+[1839.0:1841.0] All right.
+[1841.0:1847.0] Or you can put the patient there.
+[1847.0:1851.0] Because if you think about it, it is literally the tailors.
+[1851.0:1861.0] So roughly speaking, right.
+[1861.0:1874.0] If it's roughly quadratic.
+[1874.0:1877.0] If you want to minimize this, you will see that.
+[1877.0:1881.0] Minimize this, satisfies literally this one.
+[1881.0:1886.0] The Haitian emers group up up.
+[1886.0:1888.0] But let's not get into the details of this yet.
+[1888.0:1892.0] It's just saying I'm just saying that you can choose this.
+[1892.0:1893.0] Right.
+[1893.0:1895.0] As a designer.
+[1895.0:1898.0] It turns out to be this method in this.
+[1898.0:1901.0] Or you can choose the approximation of the Haitian.
+[1901.0:1905.0] All right.
+[1905.0:1908.0] So adaptive gradient methods.
+[1908.0:1914.0] Basically, adapt locally by setting hk as their function off the past gradients.
+[1914.0:1915.0] Right.
+[1915.0:1923.0] So roughly speaking, this hk will be a function of the gradients that you observe as the iterate.
+[1923.0:1927.0] Now, some well known examples.
+[1927.0:1933.0] So at the grad, choose the hk by accumulating the gradient loans.
+[1933.0:1936.0] Right.
+[1936.0:1939.0] So what it does is simple version.
+[1939.0:1943.0] It's a scalar one actually here.
+[1943.0:1946.0] So you can put it identity.
+[1946.0:1950.0] Times of identity.
+[1950.0:1953.0] What it does is.
+[1953.0:1955.0] It looks at the normal to gradient.
+[1955.0:1959.0] If the gradient norms the increasing because it's something things up,
+[1959.0:1962.0] it will decrease the steps.
+[1962.0:1965.0] If the gradients are going down fast.
+[1965.0:1968.0] That means this summation will become more or less constant.
+[1968.0:1972.0] So you will see the constant slope sounds.
+[1972.0:1973.0] Right.
+[1973.0:1976.0] And there are other examples are a ms crop.
+[1976.0:1979.0] Adam that we will not get in in this lecture.
+[1979.0:1983.0] But we will talk more about them when we talk about.
+[1983.0:1987.0] All right.
+[1987.0:1991.0] So for the time being, just take a look at the advanced material at the end of the lecture.
+[1991.0:1994.0] To learn more about these methods.
+[1994.0:1998.0] But we will again talk more about them when we start the only.
+[1998.0:2001.0] Okay.
+[2001.0:2004.0] So let's think about the scalar text size.
+[2004.0:2008.0] Adder grad adaptive gradient method.
+[2008.0:2009.0] All right.
+[2009.0:2010.0] Good.
+[2010.0:2014.0] So what it does is it literally accumulates.
+[2014.0:2017.0] The norm of the gradients.
+[2017.0:2021.0] And then it weighs the gradient that is good to.
+[2021.0:2024.0] Here, basically.
+[2024.0:2025.0] Okay.
+[2025.0:2031.0] Based in the order.
+[2031.0:2034.0] So it is.
+[2034.0:2036.0] You saw some days to remarks here.
+[2036.0:2044.0] And so it literally tries to adapt the local geometry by looking at how the gradients have been changing.
+[2044.0:2047.0] Does this make sense?
+[2047.0:2049.0] All right.
+[2049.0:2055.0] Now the adaptive gradient method also has a variance where you can diagonally adapt.
+[2055.0:2060.0] If you remember, in the diagonal adaptation, you end up getting a diagonal matrix.
+[2060.0:2065.0] That will give you a set size for each coordinate independently.
+[2065.0:2066.0] Right.
+[2066.0:2067.0] Different.
+[2067.0:2073.0] So in this case, here you can actually make one coordinate for a bit faster than another coordinate.
+[2073.0:2076.0] All right.
+[2076.0:2079.0] Good.
+[2079.0:2088.0] So in this case, what you do is you take the gradients and then you put them into the diagonal of the matrix.
+[2088.0:2092.0] And then you accumulate those.
+[2092.0:2093.0] All right.
+[2093.0:2098.0] So it literally looks at how the gradients are changing at each coordinate.
+[2098.0:2103.0] So imagine you start with the correct position for one coordinate.
+[2103.0:2105.0] There you just like the rules.
+[2105.0:2107.0] You won't worry about it.
+[2107.0:2108.0] No.
+[2108.0:2113.0] If one coordinate was very smooth, you will have a large set size in that coordinate.
+[2113.0:2116.0] Whereas for the other ones, you will have a different set size.
+[2116.0:2120.0] It will depend on the value of the gradient at that coordinate.
+[2120.0:2121.0] Okay.
+[2121.0:2126.0] So it's the simple notification.
+[2126.0:2128.0] What details are you thinking?
+[2128.0:2134.0] It just looks like the accumulates coordinate vice-graders.
+[2134.0:2139.0] So if you think about it, this is a bit finer bonding of the function.
+[2139.0:2147.0] It is now looking at each coordinate separately.
+[2147.0:2155.0] Now, what you can do is you can give some rate factorizations.
+[2155.0:2156.0] All right.
+[2156.0:2160.0] In this case, if the function was the elliptic,
+[2160.0:2163.0] elliptic means it's not elliptic, it's continuous gradient.
+[2163.0:2165.0] Elliptic means it's literally elliptic.
+[2165.0:2166.0] Nice one.
+[2166.0:2173.0] F of x minus f of y, g, x minus y.
+[2173.0:2176.0] This is what it means to be elliptic.
+[2176.0:2178.0] All right.
+[2178.0:2181.0] If you just make this assumption, you get a square root of k-rate,
+[2181.0:2191.0] where d is some distance to the initial point to a solution.
+[2191.0:2198.0] Right.
+[2198.0:2203.0] The guarantee is given in the average iterates.
+[2203.0:2204.0] Okay.
+[2204.0:2207.0] So if you notice, one thing about that is that it really matters.
+[2207.0:2210.0] Initially, it may increase your check to complete.
+[2210.0:2211.0] Okay.
+[2211.0:2220.0] So in general, you give some rate characterization in the average.
+[2220.0:2221.0] All right.
+[2221.0:2224.0] The more familiar convergence result is when the function is elliptic.
+[2224.0:2228.0] Move in which case we get a one-hour k-rate.
+[2228.0:2231.0] Similar to gradient percent.
+[2231.0:2235.0] What is different here is that to run the algorithm,
+[2235.0:2238.0] we didn't need to know this constant.
+[2238.0:2241.0] And if the constant appears in the theoretical characterization
+[2241.0:2243.0] of the algorithm.
+[2243.0:2244.0] All right.
+[2244.0:2249.0] So the smoother the problem is, the smaller this alpha is.
+[2249.0:2252.0] And yet the adaptive gradient method,
+[2252.0:2256.0] by the way, if you need these gradients,
+[2256.0:2262.0] does not need to know how to run.
+[2262.0:2263.0] Okay.
+[2263.0:2265.0] Good.
+[2265.0:2268.0] Okay.
+[2268.0:2273.0] Now, so this is again not the best rate that they can do.
+[2273.0:2274.0] Right.
+[2274.0:2279.0] So I argued at the very beginning of this lecture that given first order information,
+[2279.0:2285.0] there's a, you can actually obtain better rates than what we're taking.
+[2285.0:2292.0] In fact, accelerated gradient method did that.
+[2292.0:2298.0] So can we have an adaptive accelerated method that will achieve this faster rate
+[2298.0:2304.0] or will take poor rate, but without having to know which is faster?
+[2304.0:2306.0] The answer is positive.
+[2306.0:2307.0] Yeah.
+[2307.0:2308.0] I'm pressing.
+[2308.0:2309.0] Yes.
+[2309.0:2313.0] About the least independent energy phase.
+[2313.0:2314.0] Okay.
+[2314.0:2318.0] So one question is, do you see a dimension effect anywhere?
+[2318.0:2320.0] You do.
+[2320.0:2322.0] Okay.
+[2322.0:2327.0] If you look at this, these distances scale with the dimension.
+[2327.0:2328.0] Right.
+[2328.0:2332.0] So if you have a vector in p dimensions,
+[2332.0:2335.0] you start with a random vector,
+[2335.0:2337.0] let's say the solution was zero,
+[2337.0:2340.0] you're literally looking at the normal fat vector,
+[2340.0:2343.0] which depends obviously on the dimension.
+[2343.0:2344.0] Right.
+[2344.0:2349.0] So the dimension comes in through this diameter.
+[2349.0:2350.0] Okay.
+[2350.0:2352.0] Dimension always appears.
+[2352.0:2353.0] Right.
+[2353.0:2354.0] Yeah.
+[2354.0:2360.0] I hope that answered your question.
+[2360.0:2361.0] All right.
+[2361.0:2366.0] So the question is, is it possible to obtain faster rates
+[2366.0:2371.0] or adaptively without having to know which is constant?
+[2371.0:2376.0] The answer is affirmative.
+[2376.0:2381.0] So the advanced material explains this a bit more.
+[2381.0:2385.0] But so here's the accelerated gradient descent method.
+[2385.0:2389.0] Remember, it does some momentum.
+[2389.0:2390.0] Right.
+[2390.0:2392.0] And it does the gradient step.
+[2392.0:2397.0] And it's, you know, just slightly more costly than the gradient method.
+[2397.0:2399.0] It just needs to do this momentum update.
+[2399.0:2400.0] Right.
+[2400.0:2405.0] And remember, this momentum is something like k plus 1 divided by k plus 2.
+[2405.0:2408.0] Actually, it's something that goes to 1.
+[2408.0:2414.0] So here's a more complicated looking method.
+[2414.0:2416.0] But not so much so.
+[2416.0:2417.0] Okay.
+[2417.0:2420.0] In this case, you again do the gradient update.
+[2420.0:2421.0] Right.
+[2421.0:2426.0] But then you do some other vector updates.
+[2426.0:2428.0] Not too expensive.
+[2428.0:2429.0] All right.
+[2429.0:2431.0] Additional vector updates.
+[2431.0:2436.0] Here's how the parameters are selected.
+[2436.0:2439.0] I mean, these are very simple to choose.
+[2439.0:2440.0] Right.
+[2440.0:2444.0] So you accumulate the gradients, but with increasing weights.
+[2444.0:2446.0] For example, right.
+[2446.0:2451.0] As you iterate more, the past history gets less and less weight.
+[2451.0:2453.0] It's kind of makes sense.
+[2453.0:2454.0] Right.
+[2454.0:2459.0] And there is some sort of interpolation extrapolation.
+[2459.0:2461.0] Okay.
+[2461.0:2465.0] You try to get more from the gradients and the interest.
+[2465.0:2467.0] Right.
+[2467.0:2472.0] It's the paper of mine with my PhD student, and our collaborator.
+[2472.0:2475.0] Here.
+[2475.0:2476.0] All right.
+[2476.0:2483.0] Now, let's try to wrap things up for the performance of position algorithms.
+[2483.0:2486.0] In general,
+[2486.0:2491.0] we will see us talk about rates all the time.
+[2491.0:2492.0] Right.
+[2492.0:2496.0] But rates is not the complete picture.
+[2496.0:2506.0] What we really care is how much we spend to save time wise waiting for an algorithm.
+[2506.0:2512.0] So in general, what we care about is time to reach an accuracy.
+[2512.0:2517.0] And roughly speaking, it is, you know, iterations to reach an accuracy.
+[2517.0:2521.0] Per iteration time multiplied.
+[2521.0:2527.0] So emergence rate is important, but per iteration time is also important.
+[2527.0:2530.0] And there is some sort of an inverse relationship.
+[2530.0:2537.0] Fasted algorithms in terms of rate rates longer per iteration by.
+[2537.0:2540.0] So use this simple summary.
+[2540.0:2543.0] So when the function is out smooth,
+[2543.0:2547.0] gradient descent requires one gradient computation.
+[2547.0:2550.0] It has a one over k rate.
+[2550.0:2553.0] And that gradient descent has the same rate.
+[2553.0:2557.0] But it runs without having to know the which is constant.
+[2557.0:2558.0] Right.
+[2558.0:2561.0] If you think about it for the least words,
+[2561.0:2566.0] to get the which is constantly need to compute the spectral norm of the data matrix.
+[2566.0:2572.0] This may require you to do multiple passes on the data already.
+[2572.0:2574.0] So there's like a bit of set up cost.
+[2574.0:2581.0] Whereas the adapter algorithm can immediately start without having to know this is just constant.
+[2581.0:2588.0] The accuracy gradient descent methods with very little increase in computation gets a better rate.
+[2588.0:2589.0] Alright.
+[2589.0:2593.0] So the accelerator does the same thing with the most fancy array.
+[2593.0:2596.0] Alright. And for.
+[2596.0:2602.0] How smooth and use thrown in comics you get linear rates except for accelerators.
+[2602.0:2605.0] We currently do not know how to get linear rate.
+[2605.0:2613.0] It's an ongoing research project in my group if you're interested in contributing to some finally.
+[2613.0:2615.0] The nipton method.
+[2615.0:2617.0] Globally it has one over k rate.
+[2617.0:2623.0] But once you get into the stock of quadratic convergence region, it will get.
+[2623.0:2625.0] Whether the convergence.
+[2625.0:2629.0] But per iteration you need to solve a linear system.
+[2629.0:2632.0] Meaning you have to solve yet another optimization problem.
+[2632.0:2633.0] Alright.
+[2633.0:2639.0] This is much costlier than just doing gradient.
+[2639.0:2645.0] But if you think that computing the gradient was so extensive.
+[2645.0:2651.0] Meaning you can have a problem where there's just too many data points and you need to solve the accurately.
+[2651.0:2655.0] You may want to prefer using it again.
+[2655.0:2659.0] The slides on Newton method are indeed.
+[2659.0:2661.0] Advanced material.
+[2661.0:2678.0] Data 50 minutes break.

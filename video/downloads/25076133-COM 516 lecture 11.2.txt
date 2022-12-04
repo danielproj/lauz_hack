@@ -1,0 +1,217 @@
+~COM 516 lecture 11.2
+~2020-11-22T20:36:09.020+01:00
+~https://tube.switch.ch/videos/25076133
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:16.0] Okay, so in this video we'll discuss parts B and C, so I'll start with the metropolis
+[16.0:28.44] algorithm, I recall we are talking about this model here, then I'll talk about the
+[28.44:42.24] Albert so-called dynamics or algorithm and I'll show how this is a special case
+[42.24:65.44] of heat bath dynamics in general and finally I'll discuss some a little bit
+[65.44:78.94] some simulation results to illustrate these algorithms, so let's start with
+[78.94:91.94] the metropolis algorithm, so let me put first the Hamiltonian again because it's
+[91.94:103.44] nice to have it to have the formula available, so recall you have a spin
+[103.44:112.72] assignment sigma which is a vector sigma 1 up to sigma n belonging to minus
+[112.72:124.22] 1 plus 1 to the power n and this assignment is assigned to vertices of a graph
+[124.22:132.46] which has also edges and Hamiltonian in general is our double sum here or
+[132.46:144.54000000000002] some over edges of jv w in direction strength of an edge sigma v sigma w minus a term
+[144.54000000000002:157.18] that acts like a bias when you add it here, okay so that is the cost of the Hamiltonian
+[157.18:176.9] has interpretation of an energy or a cost, so what are the steps of the metropolis
+[176.9:200.1] algorithm, well you select, so here is the algorithm, you select a vertex v
+[200.1:218.1] uniformly at random and so with probability this means with probability 1 over n
+[218.1:231.85999999999999] and you propose the following move the assignment sigma goes to the assignment
+[231.85999999999999:244.06] sigma prime where sigma prime is such that sigma prime w equals sigma w if w is
+[244.06:253.54] different from v and sigma prime v is equal to minus sigma v, okay so this is a
+[253.54:264.42] flip of the spin at the vertex v, so you propose to flip the spin at vertex v and
+[264.42:284.5] you compute the cost and the cost I'll call it delta h say equals delta h for
+[284.5:294.78] moving from assignment sigma to sigma prime, well okay let me not call it delta h because
+[294.78:301.58] maybe it's confusing with the h notation for the cost itself, what I compute is the cost
+[301.58:318.02] difference, okay the cost difference delta e for moving from sigma to sigma prime and
+[318.02:331.46] this is the new cost h of sigma prime minus the old cost h of sigma, okay and you accept
+[331.46:347.18] the move with probability so of acceptance a of sigma goes to sigma prime which is equal
+[347.18:365.54] to exponential minus, so I'm sorry the acceptance probability will be the minimum
+[365.54:382.26] of 1 and e minus beta delta e, okay so this is the metropolis algorithm, so let us look
+[382.26:395.9] a bit closer at this acceptance probability, okay h of sigma is minus sigma minus the sum
+[395.9:411.62] for address, sigma v, sigma w minus the sum over vertices of h v, sigma v, the difference
+[411.62:423.17999999999995] of cost when you make this move, as I just said is the new cost minus the old cost or
+[423.18:439.62] the new energy minus the old energy and this acceptance probability which is the min
+[439.62:453.7] of 1 and e minus beta delta e of sigma to sigma prime, well this is equal to 1, so let
+[453.7:471.26] me write it here, this equals 1 if delta e is positive which means if the new energy is
+[471.26:486.58] bigger than the old energy or bigger or equal, so if you, sorry, so it's the contrary,
+[486.58:495.34] right it's 1 if this is negative, so if the energy is lower, so this means if the new
+[495.34:505.97999999999996] energy is lower than the old energy, lower or equal, so if you lower the energy you've
+[505.97999999999996:517.42] certainly accept the move and it's equal to e minus beta delta e, if delta e is positive
+[517.42:527.14] meaning that if the new energy is greater, so you increase the energy by the move then
+[527.14:536.78] you accept the move with a probability less than 1 and with probability 1 minus min
+[536.78:552.8199999999999] of beta delta you reject it. Okay, so you see that you never compute here the
+[552.82:568.38] partition function and this is just an instance of the Metropolis-Hasting algorithm with
+[568.38:575.1400000000001] a base chain that has equal probabilities for the move sigma to sigma prime or and sigma
+[575.14:586.46] prime to sigma, so the base chain simplifies in the ratio that you have here and simply
+[586.46:609.3000000000001] this quantity here is what is it delta e is equal to e minus beta h of sigma prime divided
+[609.3:620.3] by e minus beta of h of sigma, so that's pi of sigma prime divided by pi of sigma and
+[620.3:631.5799999999999] if you recall what we said in previous lectures this is just the Metropolis rule in its simplest
+[631.58:643.6600000000001] form when the base chain is symmetric between sigma sigma prime and sigma prime sigma.
+[643.66:664.26] Okay, so the chain is irreducible because by the moves that consists to select a vertex
+[664.26:670.8199999999999] and to flip the spin you can go from any spin assignment to any other spin assignment.
+[670.82:677.82] Since you have a probability to reject a move you have self-loops so it's upper-iodic.
+[677.82:688.4200000000001] Okay, because of self-loops and because the Metropolis rule is satisfied detail-balances
+[688.42:712.54] is satisfied and pi is the stationary distribution, so this exists and since the chain is irreducible
+[712.54:721.38] and the stationary distribution exists it means the chain is positive recurrent.
+[721.38:735.38] You have a positive recurrent chain, so all that taken together implies that the chain
+[735.38:749.98] is ergodic and pi is a limiting distribution.
+[749.98:768.86] Now I would like to stress that this is certainly true, so this is certainly true for n finite
+[768.86:780.94] and time or number of steps goes to infinity.
+[780.94:795.74] But it does not tell you how the mixing time grows with n and if somehow n grows to infinity
+[795.74:807.66] and the number of steps goes to infinity after the limit and goes to infinity, well ergodicity
+[807.66:816.5] could break down and we'll discuss this when I illustrate this kind of chain with some
+[816.5:821.26] simulation results.
+[821.26:841.1] Okay, another final important remark and this was discussed in the quiz last week or two
+[841.1:858.3000000000001] weeks ago, the difference of course between the final state and the current state is interesting
+[858.3000000000001:868.74] to compute, so let's compute it, so you have minus the sum of over edges of JVW, sigma
+[868.74:883.54] v, sigma w minus sum over v, hv, sigma v prime, okay, I have the prime cost and then I'll
+[883.54:894.7] subtract the old cost.
+[894.7:907.7] Now for the needs of the argument, maybe I should use other letters here, so I'll use
+[907.7:929.86] kl, kl, kl, k, k, k in the kl is an edge minus sum over kl and edge j, kl, sigma, k, sigma
+[929.86:950.02] l minus sum hk is sigma prime, okay, okay, so we have selected
+[950.02:964.6999999999999] vertex v, sigma w is prime, is sigma w, if w is different from v, sigma prime v is equal
+[964.6999999999999:979.98] to minus sigma v, okay, so when you are computing this, you see that if k and l do not
+[979.98:1000.5] contain v, well then and say k is different from v in these terms here, then the terms
+[1000.5:1004.94] simplify, why?
+[1004.94:1013.0600000000001] Because you have this condition that sigma prime w is equal to sigma w, okay, all terms simplify
+[1013.06:1041.1799999999998] and it remains only the following, what remains is minus, a term where in an edge you have
+[1041.18:1051.7] a v, okay, so only the edges with where one of the two vertices is v and the other ones
+[1051.7:1071.1000000000001] are w's remain, okay, so what will remain is sum over w, which is
+[1071.1:1085.3799999999999] the neighbor of v, but since I label j, I do not have to write this like that, okay,
+[1085.38:1104.66] and here, well, I just have this and then I have sigma, sigma w times sigma prime v minus
+[1104.66:1130.1000000000001] h v sigma v minus sum over w, j v w, sigma w, sigma v minus h v sigma v, okay, and you
+[1130.1:1139.8999999999999] have this minus here and this here is minus sigma v, okay, so you see that the minus here
+[1139.8999999999999:1154.6599999999999] with the minus here and this minus in front should not be there, okay, so minus times minus
+[1154.66:1166.1000000000001] here and minus times minus is a plus, so you will find two sigma v sum over w, j, v,
+[1166.1000000000001:1179.6200000000001] w, sigma w, and then you have minus here, and here it was a prime, okay, and this is minus
+[1179.62:1188.26] sigma v, so again minus and minus is a plus, minus here and minus here is a plus, so you
+[1188.26:1212.3799999999999] get plus h v, so this is what you get, okay, so what you get is only the contribution
+[1212.38:1231.74] of the neighbors of v, okay, for the interaction, you get only neighbors of v that share a
+[1231.74:1249.46] n edge, this is even the definition of what is a neighbor, okay, but share and edge, now
+[1249.46:1258.5] in this notation, KL is an edge, you count each edge once, okay, and this is why you only
+[1258.5:1264.38] have a factor 2, if you would count the edges twice then this would mean you normalize
+[1264.38:1275.22] your j differently, you would have a factor of 4 here, or you would have a different factor
+[1275.22:1283.74] anyway, okay, so for the interaction you only the neighbor of v that shares an edge count,
+[1283.74:1302.06] okay, and for the bias, only the vertex v enters, okay, so you see the computation of the
+[1302.06:1309.78] acceptance probability then is very simple because you can put this formula in here,
+[1309.78:1317.58] okay, and you get a very simple acceptance probability, so that's about all I have to say
+[1317.58:1334.8999999999999] about the metropolis algorithm, and the algorithm was summarized here, okay, so this one is
+[1334.9:1360.94] done, let's go now to global dynamics, or algorithm, okay,
+[1360.94:1378.7] so it's similar than before, the only thing is that the acceptance probability is different,
+[1378.7:1391.3] so we will not follow exactly metropolis rule, or at least not in the form that I just
+[1391.3:1420.7] gave you, so you select vertex v at random, uniformly as usual, among the set of vertices,
+[1420.7:1434.3] so each vertex is selected with a probability 1 over n, propose the move from the assignment
+[1434.3:1445.42] sigma to the assignment sigma prime, again such that sigma prime w equals sigma w, if
+[1445.42:1458.94] w is different from v and sigma prime v is a flip, okay, so this is a flip of the spin,
+[1458.94:1470.9] we call we have binary spins, and what you do is that you accept the move with acceptance
+[1470.9:1492.94] probability, a of sigma goes to sigma prime equals to 1 half of 1 minus hyperbolic tan
+[1492.94:1503.78] of beta delta e sigma prime to sigma, so the same difference of cost between the new assignment
+[1503.78:1518.06] and the old assignment, beta delta e divide by 2, so you accept the move with this probability,
+[1518.06:1532.3] when you reject the move, okay, but this is a parenthesis, with probability 1 minus the
+[1532.3:1544.8999999999999] acceptance probability, but maybe it's nice to observe here that 1 minus a is really 1
+[1544.9:1555.6200000000001] times 1 plus hyperbolic tan of beta delta e over 2, this is a small remark, but you see
+[1555.6200000000001:1565.8200000000002] the acceptance and rejection probabilities are very symmetric here, okay, and the difference
+[1565.82:1577.3] of cost, the delta e sigma prime sigma as before is h of sigma prime minus h of sigma, and
+[1577.3:1590.22] this is what we just computed, that's twice the sum over w, twice sigma v times the sum
+[1590.22:1608.7] of neighbors of v, over neighbors of v of sigma w plus h v sigma v, okay, as before, okay,
+[1608.7:1620.06] so you see the only difference with metropolis algorithm is that you have here hyperbolic
+[1620.06:1635.78] tan formula for the acceptance probability, so it's a good exercise to check that detailed
+[1635.78:1652.74] balance is satisfied, okay, first of all, first of all, again, this chain is irreducible
+[1652.74:1659.54] because the base chain is the same, and just with the base chain you can go from any assignment
+[1659.54:1670.18] to any other assignment, there are self loops, so the chain is aprolyotic, but now we have
+[1670.18:1678.1] not checked detailed balance by the general theory, but this is an exercise, you can check
+[1678.1:1695.4599999999998] that detailed balance is satisfied, again, okay, so once you know that detailed balance
+[1695.4599999999998:1703.62] is satisfied, the chain is algorithm, okay, so all that implies that there exists a stationary
+[1703.62:1722.1399999999999] distribution, which is pi, this fact with irreducibility implies that the chain is positive
+[1722.14:1735.3000000000002] recurrent, okay, you do the usual argument and then you conclude that the chain is irreducible,
+[1735.3:1753.86] hyperbolic positive recurrent, i.e., it is erogotic and pi is a limiting distribution, and
+[1753.86:1761.5] this again applies to finite n and when in the limit where the number of steps goes to infinity,
+[1761.5:1773.58] if you would invert the two limits, things can get much more subtle, okay, let me give
+[1773.58:1784.26] you a nice remark now on the interpretation of a little bit this formula here for the acceptance
+[1784.26:1802.62] probability, okay, so the acceptance probability, let's rewrite it is 1 half, 1 minus tan beta
+[1802.62:1818.1799999999998] delta E over 2, and recall, so as I said delta E is twice sigma V sum over interaction
+[1818.1799999999998:1830.58] terms of our neighbors plus twice HV sigma V, let's replace this in there and what do you
+[1830.58:1841.02] find? You find that the acceptance probability, if I replace, is 1 half, 1 minus tan hyperbolic
+[1841.02:1851.6599999999999] tan, so because the two here will simplify with the two here, what do you find? Well, you
+[1851.66:1875.8600000000001] find beta sigma V times the sum over W, JVW sigma W plus HV, okay, the whole thing here
+[1875.86:1891.86] is in the tan, but sigma V takes values plus or minus 1, and tan X is equal to, so tan
+[1891.86:1902.86] of minus X is equal to hyperbolic tan of, well equal to minus hyperbolic tan of X, by
+[1902.86:1912.1799999999998] the way hyperbolic tan of X is exponential of X minus exponential of minus X over exponential
+[1912.1799999999998:1922.1] of X over 1 plus exponential of X, and in case you're wondering the graph looks something
+[1922.1:1932.3799999999999] like that, it goes to plus 1 at plus infinity minus 1 at minus infinity, and here it is
+[1932.38:1944.7] linear, okay, as a function of X, okay, so using this property, you will find that the acceptance
+[1944.7:1954.9] probability, using this property you can put this outside of the tan here and you find
+[1954.9:1972.46] the nice formula, 1 half 1 minus sigma V, tan hyperbolic of beta times a quantity that
+[1972.46:1987.18] I'm going to call HV local, where HV local, I'm going to give an interpretation here,
+[1987.18:2005.78] it's simply the sum over WJ, VW, sigma, W plus HV. Now, how is this HV local interpreted,
+[2005.78:2014.98] let me make a little drawing here, you have the vertex V, and you have the local vertices,
+[2014.98:2022.26] the neighbors of V, let's take a square grid, and let's look at the neighbors of V, so
+[2022.26:2029.3] you would have also vertex here, but I don't count these ones, okay, on a square grid,
+[2029.3:2036.8600000000001] that's the graph, now the point here is not that the grid is square, but I just take this
+[2036.86:2051.94] to illustrate, so you have your vertex V, and here you have the vertices W, sum over.
+[2051.94:2063.18] The contribution to HV local comes from a contribution of HV here, that comes from here,
+[2063.18:2075.54] okay, and a contribution from the interaction terms that come from these ones, okay, and
+[2075.54:2089.94] you see that you can interpret this as a total bias, it's a kind of total effective bias
+[2089.94:2103.1] on the spin, in physics it's called a total local effective magnetic field,
+[2103.1:2118.7000000000003] so you have a bias that comes from the external bias HV, and a bias that comes from the neighbors,
+[2118.7:2127.02] from the neighboring spins, sigma W, that are here, here, and here, and this bias is stronger,
+[2127.02:2146.2999999999997] if the interaction along the edge is stronger. So, suppose that, so now it's interesting to
+[2146.3:2162.42] think a little bit, and suppose that sigma V is plus 1, and HV is negative,
+[2176.3:2203.7400000000002] or take another case, suppose sigma V is equal to minus 1, here, okay, and HV is positive,
+[2203.74:2218.58] and the acceptance probability, if sigma V is negative, and HV is positive, this acceptance
+[2218.58:2243.98] probability here, what is it equal to? Well, let's do it, let's do it here, okay, so,
+[2243.98:2258.82] this is 1 half, 1 minus sigma V, tan per body, beta HV local, okay, at the same time you
+[2258.82:2270.82] will reject the move, so this is acceptance probability, you will reject the move with
+[2270.82:2280.5800000000004] probability, 1 minus sigma goes to sigma prime, and this is 1 half, 1 plus sigma V, because
+[2280.5800000000004:2293.5800000000004] you can check the addition of the two probabilities, some two, okay, so let's look at various cases,
+[2293.58:2309.22] suppose sigma V equals plus 1 initially, okay, and suppose HV local, which is what it is,
+[2309.22:2324.66] simply this quantity here, and suppose this is positive here, okay, then what do you find?
+[2324.66:2338.7] Well, you will find that rejection probability, let me call this R of sigma, sigma prime, you
+[2338.7:2353.5] find that R of sigma, sigma prime is greater than the acceptance probability, this means that
+[2353.5:2362.8999999999996] it's less favorable to flip the spin, okay, so the tendency, but this is a probabilistic
+[2362.9:2373.54] thing, okay, so it's just a tendency, the tendency is not to flip, because you don't accept
+[2373.54:2387.86] the move, okay, on the contrary, if sigma V is minus 1 initially, and HV local is positive,
+[2387.86:2400.7000000000003] then the rejection probability is smaller than the acceptance probability, so the tendency
+[2400.7000000000003:2415.54] is to flip, so you see that the spin wants eventually to get the same sign as this local
+[2415.54:2424.74] magnetic field, okay, and you can do all the other cases with a negative local magnetic
+[2424.74:2445.5] field, it will be the contrary, okay, so in global dynamics, at the end, what
+[2445.5:2459.9] controls the move or the spin flip at a vertex, well, again, that's the difference of cost,
+[2459.9:2467.42] of course, because by definition it's written here, you have this difference of cost, but
+[2467.42:2479.2200000000003] this reduces to the local magnetic field, so what controls the move or spin flip at a vertex
+[2479.2200000000003:2497.26] is the local configuration and the local bias or magnetic effective magnetic field, okay,
+[2497.26:2522.78] and the spin is has the tendency to flip, so has to align with HV local, this is the
+[2522.78:2542.5400000000004] intuition, okay, so that was it for a global dynamics, let me make now kind of remark and
+[2542.54:2559.98] talk about what's called heat bath dynamics or it's also called Gibbs sampling, why Gibbs
+[2559.98:2565.5] sampling because the kind of measure we are dealing with for this model is also called
+[2565.5:2579.06] Gibbs measure, okay, and Gibbs is one of the fathers of statistical mechanics and he did
+[2579.06:2588.34] his great works in the second part of the 19th century and towards the end of it also,
+[2588.34:2606.5] okay, so heat bath dynamics can be viewed as a generalization
+[2606.5:2633.66] of global to general measures and general alphabets, it's really useful when
+[2633.66:2653.8599999999997] the measure pi has properties similar to Gibbs measures, so it's of Gibbs type, so I will
+[2653.86:2672.78] not define this very precisely here, mathematicians also call this a Markov random field, and what
+[2672.78:2679.6600000000003] I mean by that is that when you have ratios of probabilities of assignments you have the
+[2679.66:2691.5] nice simplifications that we have seen up to now, okay, and you will have an exercise,
+[2691.5:2698.2999999999997] you will have some exercise to do about that and to understand a little bit more about
+[2698.3:2723.38] it, okay, so the algorithm is the following, you select an initial assignment, now let
+[2723.38:2733.3] me call the assignments by vectors x and x is x1 up to xn because I am on a general alphabet
+[2733.3:2758.5800000000004] now, select vertex v, okay, or a component of x uniformly at random
+[2758.58:2785.5] and compute the conditional probability of an assignment y, conditioned on the fact that
+[2785.5:2801.78] y, w equals x, w for w different from v, okay, so conditioned on this event, and then you
+[2801.78:2815.3] make the proposed move, so the proposed move, you propose, well the proposed move is from
+[2815.3:2835.82] x to y, okay, and you make the move from x to y with this conditional probability, so
+[2835.82:2845.6200000000003] I set things in words here, but we can set up a formula for the conditional probability,
+[2845.62:2860.38] this is the probability of y given that y, w equals x, w for w different from v, and you
+[2860.38:2869.58] know if the measure you are sampling from the conditional probability I am talking about
+[2869.58:2882.02] is the probability of the assignment, so you know I use the formula, that the base formula,
+[2882.02:2890.22] that the probability of an event a given an event b is equal to the probability of a and
+[2890.22:2899.54] b divided by the probability of b, okay, so what's the probability of a and b?
+[2899.54:2907.7] Well it's the probability that the assignment is x1 up to x, v minus 1, and then at vertex
+[2907.7:2920.9] v it's y, v, and then you have x, v minus 1, x, v plus 1 up to x, okay, that's the event
+[2920.9:2926.82] a intersection b, and then you simply have to normalize this probability, and that's
+[2926.82:2941.2200000000003] the probability with respect to y, so this is simply the sum over y, v, in the alphabet
+[2941.22:2958.8199999999997] of pi x1 up to x, v minus 1, y, v, x, v plus 1 up to x, and okay, and you will see in
+[2958.8199999999997:2969.5] exercises that this is a special, this is a generalization of blower, and it's an exercise
+[2969.5:2986.5] to show first of all detailed balance in general, and also to show the reduction to a
+[2986.5:3002.22] blower dynamics for the easy model, so if pi is the measure of this, what are these

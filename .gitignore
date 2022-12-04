@@ -1,0 +1,12 @@
+__pycache__
+.DS_Store
+start_henry.sh
+http_ca.crt
+elastic_search
+env
+.vs
+.idea
+bin
+obj
+app.env
+unsafe_uploads

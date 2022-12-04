@@ -1,0 +1,490 @@
+~EE-556 / Handout 1 - Solution (2020)
+~2020-10-02T12:16:37.912+02:00
+~https://tube.switch.ch/videos/2cd1e5eb
+~EE-556 Mathematics of data: from theory to computation
+[0.0:5.24] Hello everyone, my name is Japping and in this video I'm going to walk you through the
+[5.24:10.6] materials in Handel 1 which is about basic probability and statistics.
+[10.6:15.88] So let's begin.
+[15.88:23.84] So in the first exercise we asked you to prove a very useful bound in the probability
+[23.84:29.68] theory which is the union bound and you say that if you are given with a bunch of
+[29.68:40.519999999999996] events e1 up to en then the probability of the union of them is going to be
+[40.519999999999996:44.8] up-or-bounded by this form of individual.
+[47.08:50.4] And we're going to break the proof into two steps.
+[50.4:54.2] The first step we asked you to prove the following st-min.
+[54.2:63.64] So you're even with two events a, b and a is the subset of b.
+[63.64:72.04] Then the probability of a is going to be up-or-bounded by the probability of b.
+[72.04:75.72] Let's see how to improve this.
+[75.72:80.56] And the idea is that you want to go back to the x-mium of probability that we
+[80.56:84.72] are introducing a class. So let me remind you here what are the x-mium.
+[84.72:97.64] The first one is the probability of any event is at list 0.
+[97.64:103.80000000000001] And the second one is that the probability of the whole space or the simple space is 1.
+[103.8:111.39999999999999] The third one is that if you have two events that are disjoint then the probability of the
+[111.39999999999999:121.84] union of the events is going to be equal to the sum of them.
+[121.84:127.47999999999999] Alright so the idea of proof and dis exercise is we're going to somehow decompose the
+[127.48:134.56] deepensets a, b into sound disjoint union so that we can apply the third x in a
+[134.56:136.64000000000001] half the probability here.
+[136.64000000000001:143.04] So here you have a simple space, a theory then it's b and then inside you have another
+[143.04:144.84] event a.
+[144.84:158.76] And we know that the event b can always be written as the union of the blue part and
+[158.76:164.48000000000002] the red part which does not contain a.
+[164.48000000000002:173.96] So this part is b minus a and by definition this is simply the intersecting with the
+[173.96:176.8] complement of a.
+[176.8:185.08] So by decomposing this step b into this form we can see that the probability of b is the
+[185.08:193.88] probability of a plus the probability of the second step by the third x in a half the
+[193.88:196.0] probability.
+[196.0:203.28] And now we can apply the first x in a half the probability to conclude that the probability
+[203.28:207.12] of any step is always lower bounded by zero.
+[207.12:212.64] So the overall event will be sorry the overall probability will be lower bounded by just the
+[212.64:213.64] probability of a.
+[213.64:220.36] So that proves the part a and in the second part b we're going to prove the union
+[220.36:226.92000000000002] bound itself and let's focus on the simple case where you're given to set c1, you two
+[226.92000000000002:232.4] but this time they don't necessarily contain each other and we ask you to prove that the
+[232.4:244.48000000000002] probability of the union of them is bounded by the sum of the blue.
+[244.48000000000002:257.64] And here we're going to apply a very similar idea so you have two sets c1, c2.
+[257.64:264.28] And we want to decompose the union of e1, e2 into this joint unit.
+[264.28:275.2] So the way you can do it is you can consider just the e1 itself union the red part here
+[275.2:276.8] which does not come in e1.
+[276.8:280.96] So this is e2 minus e1.
+[280.96:292.59999999999997] And again by definition this c1 union into e3 16 with the complement of e1.
+[292.59999999999997:300.35999999999996] So by decomposing the union in this fashion we see that the probability of union of
+[300.35999999999996:305.4] them is the probability of the first one plus the probability of the second set here which
+[305.4:308.4] is e2 into second with e1.
+[308.4:317.32] But now we know that the second set is here.
+[317.32:322.91999999999996] This is contained in e2 because it's e2 intersecting with others.
+[322.91999999999996:330.28] So by the previous exercise we know that the probability of second set here is bounded
+[330.28:331.96] by probability of e2.
+[331.96:338.44] So this proves the case for the union two sets and if you have a union of arbitrary
+[338.44:350.52] number of sets you can always decompose it into the first one union to rest.
+[350.52:356.15999999999997] And then you can apply parpe, recursively to your life at the union bound.
+[356.15999999999997:361.88] So this finishes the first exercise.
+[361.88:366.6] Now let's come onto the second one which is not really an exercise but more like the
+[366.6:375.76] complement about how we can solve some sort of what's called a modeling problem.
+[375.76:382.52] So let's begin with something that we told in class already.
+[382.52:385.2] So let's begin with the least where estimator.
+[385.2:388.71999999999997] So how do we arrive at the least where estimator?
+[388.72:394.16] When we arrive at the least where estimator by making a series of quite strong assumptions,
+[394.16:404.08000000000004] the first one is assumed that there is something that's called a sum of a true signal.
+[404.08000000000004:410.0] And the second one is that we assume that the input and the output are related by a linear
+[410.0:411.52000000000004] relationship.
+[411.52000000000004:416.64000000000004] So we assumed a linear model.
+[416.64:427.36] And finally we assumed that the input output that corrupt by both the points.
+[427.36:438.0] So what this means is that for each observation be I, we assumed that this is obtained by
+[438.0:443.84] the inner product of sum of the data AI with the true signal X2.
+[443.84:448.0] So we don't have Xs directly to X2.
+[448.0:452.71999999999997] We only have Xs to the inner product with some data that we have.
+[452.71999999999997:461.67999999999995] And this is corrupt by some those points.
+[461.67999999999995:464.96] All right.
+[464.96:472.55999999999995] So once you have made all such assumptions then by the maximum likelihood principle,
+[472.56:485.12] you know that you can try to recover the true signal by solving the ML estimator which
+[485.12:491.36] can become just the least where estimator.
+[491.36:503.12] So here this vector B is where you put all these Vi into a vector form and this matrix
+[503.12:508.08000000000004] A is where you put all these vectors AI into a matrix form.
+[508.08000000000004:509.08000000000004] All right.
+[509.08000000000004:516.76] So this is the origin of the least where estimator assumes a true signal linear model and
+[516.76:521.76] the origin noise.
+[521.76:524.76] But very often in modern applications which are typically much more complicated in large
+[524.76:525.76] scale.
+[525.76:527.76] None of these assumptions can hold.
+[527.76:534.36] So for instance, in practice we rarely say nearly goes a noise and input and the output
+[534.36:541.48] that T before you related by a very complicated function that is not linear at all.
+[541.48:550.32] And also most often the meaning of a true signal is very basic in practice as well.
+[550.32:555.32] So modern machine learning has a new way of dealing with this kind of modeling problem
+[555.32:561.6800000000001] where you are trying to avoid making too many unnecessary assumptions.
+[561.6800000000001:568.64] And the way the modern machine learning does this is by something that's called a universal
+[568.64:575.76] approximation and the most one I'm going to name as a approximator is the neural network.
+[575.76:586.84] So in this part we're going to introduce this kind of philosophy.
+[586.84:590.84] This is rather informal that we call universal modeling.
+[590.84:601.84] So the idea is to follow.
+[601.84:606.0400000000001] So let's begin with what we have.
+[606.0400000000001:617.96] We know that we always want to recover some sort of observation from data and this data
+[617.96:622.0400000000001] has certain distribution that we don't access to.
+[622.0400000000001:626.6800000000001] We only have access through the data.
+[626.6800000000001:633.84] And we know that the input and the output are related by some complicated function.
+[633.84:635.64] And let's call that function h.
+[635.64:642.2800000000001] And in particular here this h can be very far away from a linear function.
+[642.28:648.12] So with these two super generic assumptions on a list we should expect that the h solves
+[648.12:672.1999999999999] the following optimization problem.
+[672.2:681.12] So if I optimize over arbitrary function then I know that h must be the minimizer because
+[681.12:690.6800000000001] the input and the output are related to the size of the by this function h.
+[690.6800000000001:695.96] So I can recover the input and output relationship or making prediction by solving this optimization
+[695.96:697.2800000000001] problem.
+[697.28:702.72] So of course we're immediately based with two issues.
+[702.72:718.76] So the first one is we cannot really compute this expectation here because we don't
+[718.76:721.16] have access to the data.
+[721.16:729.8] However, in the class we have already seen how people tackle this kind of problem in
+[729.8:730.8] practice.
+[730.8:742.4399999999999] You simply collect data.
+[742.44:754.5200000000001] And you replace the true expectation with try to approximate the true expectation by
+[754.5200000000001:757.7600000000001] the improved one.
+[757.7600000000001:762.0] So this is an intuitive and very effective method.
+[762.0:765.24] So the first issue is not really a big issue.
+[765.24:768.24] The second issue is more complicated.
+[768.24:784.72] The second issue is that we cannot optimize over any function.
+[784.72:790.36] So of course this looks like an optimization problem but minimizing over arbitrary function
+[790.36:792.52] is too much to ask for.
+[792.52:796.12] We can never solve this problem in practice.
+[796.12:798.92] So how do we deal with this problem?
+[798.92:804.96] And the modern success of machine learning or in particular deep learning happily relies
+[804.96:808.2] on the following idea.
+[808.2:816.24] So in order to introduce this idea I will need to state the theorem first.
+[816.24:822.76] So this theorem is by Andrew Baron.
+[822.76:828.4] And I will only state the informal version of it.
+[828.4:834.08] You can see the reference in the handout for module fields.
+[834.08:840.72] So this theorem essentially we state the following.
+[840.72:858.76] Any function can be approximated.
+[858.76:875.04] I'll be sure really well by a large neural network.
+[875.04:879.16] So in other words the neural networks are some sort of universal or proximity.
+[879.16:885.92] So here when I wrote nice and forth and cold I'm hiding some regularity of something
+[885.92:892.76] that just different ability find an integral and so on but it's a very mild assumption.
+[892.76:898.36] So this theorem is saying that the neural network can essentially approximate any nice
+[898.36:900.36] and not function.
+[900.36:905.24] So if we go back and look at this optimization problem here we know that we're optimizing
+[905.24:908.56] over arbitrary function which is impossible.
+[908.56:913.24] But this theorem maybe we can replace this minimization problem by just the neural networks
+[913.24:916.76] because we know that by doing so you don't lose much.
+[916.76:924.24] The theorem says that you lose absolute approximation which can be made arbitrarily small.
+[924.24:929.08] So instead of optimizing over any function instead what we can do is the following.
+[929.08:958.0400000000001] We say we can solve the following problem.
+[958.04:982.28] So instead of optimizing over arbitrary function right now what we can do is we can focus only
+[982.28:989.88] on neural networks with some parameter x and we optimize over the parameter and the
+[989.88:995.4] theorem says that you suffice this you solve this new optimization problem which is much
+[995.4:1000.24] more tractable and you don't lose much.
+[1000.24:1006.0799999999999] You can still recover approximately the relation between the input and the output.
+[1006.08:1017.44] And now the two the most important aspect of switching to this new formulation is that
+[1017.44:1024.4] this new optimization problem can be actually solved in practice quite well.
+[1024.4:1028.28] By running something that's called the stochastic gradient descent with vector propagation
+[1028.28:1033.6000000000001] and we will have a lot more to say about that in the common vectors.
+[1033.6:1038.8799999999999] So right now here I'm going to stop and I'm just going to focus on I'm just going to
+[1038.8799999999999:1047.0] stress again that you can see neural networks at some sort of universal modeling learning paradigm
+[1047.0:1048.52] for your data.
+[1048.52:1058.7199999999998] You require essentially no assumption yet each there and these very good approximation provided
+[1058.7199999999998:1062.08] you can solve this problem.
+[1062.08:1069.08] So it reduces the problem of modeling to just hoping this optimization problem which
+[1069.08:1076.3999999999999] is the focus of a big chunk of our lectures.
+[1076.3999999999999:1082.4399999999998] Alright that's our second exercise.
+[1082.4399999999998:1092.0] And in the third exercise we're going to talk about randomness in statistical learning.
+[1092.0:1099.6] So here what we want you to understand is that you in a modern machine learning literature
+[1099.6:1101.12] you'll see a lot of randomness.
+[1101.12:1110.68] Like you see people say okay I have a method that delivers the solution with expected errors
+[1110.68:1117.64] more than something or with high probability my methods solve the problem etc.
+[1117.64:1124.64] And whenever you see this statement the first thing that you want to ask yourself is
+[1124.64:1131.16] expectation expected error with respect to what and also high probability with respect
+[1131.16:1134.0] to what.
+[1134.0:1141.1200000000001] So in this exercise we're going to illustrate the source of different randomness to the
+[1141.12:1148.1999999999998] simpler simple model of the square estimation problem that we're already covering the class.
+[1148.1999999999998:1152.36] So let me quickly remind you what's the linear linear.
+[1152.36:1154.3999999999999] Sorry what's the least square estimator.
+[1154.4:1179.4] So here we want to solve.
+[1179.4:1186.4] We want to solve this problem where we know that the e comes from a times the true signal
+[1186.4:1189.96] for some motion noise.
+[1189.96:1195.5600000000002] So this is the linear model.
+[1195.5600000000002:1201.48] And in the first exercise we asked you to compute the following quantity.
+[1201.48:1213.48] What is the expectation over the wind and the noise of this quantity?
+[1213.48:1232.1200000000001] So let's solve this exercise.
+[1232.1200000000001:1238.56] So we know that there is this equation attack because I'm going to use it.
+[1238.56:1256.52] We know that by this equation here, mean minus a x2 is just mean minus w.
+[1256.52:1268.92] And we know that w follows the golden distribution with some variance in the square.
+[1268.92:1277.28] So this a reduces to computing the 2 non square of a golden vector which is simply just
+[1277.28:1286.48] some of the variance of e coordinates.
+[1286.48:1295.12] And here you have hopefully n of n because the dimension of the vector n so this will be
+[1295.12:1299.24] n's plus 3.
+[1299.24:1307.76] So that will be the first exercise here using complete expectation over the noise.
+[1307.76:1308.76] Alright.
+[1308.76:1314.32] And in the second exercise we are going to compute expectation with respect to a different
+[1314.32:1319.52] source of randomness which is randomness in the beta.
+[1319.52:1327.24] So we know that in practice this matrix a or this data are typically random as well
+[1327.24:1331.2] and they are independent of the randomness of the noise.
+[1331.2:1347.88] So let's assume that this matrix a is random and each entry follows some iid distribution
+[1347.88:1364.5600000000002] with mean 0 then you write it as mean 0 and variance 1.
+[1364.5600000000002:1368.8000000000002] And we ask you to compute the following quantity.
+[1368.8:1384.12] It's not taken with respect to the randomness of the beta a x 2 non square.
+[1384.12:1388.2] Actually sorry we ask you to compute the following thing.
+[1388.2:1406.6000000000001] This is equal to for any vector for any fixed vector.
+[1406.6000000000001:1410.8] So this is the second exercise here.
+[1410.8:1420.76] And before proofing this exercise I want to give you some simple review on the linear
+[1420.76:1422.8] algebra that we are going to use.
+[1422.8:1427.8] I think they are in general very useful and we are going to use that in the remaining of
+[1427.8:1428.8799999999999] this exercise.
+[1428.88:1449.44] So the first factor that I want you to tell you is the first factor I want to tell you
+[1449.44:1458.64] is that so suppose you have a vector.
+[1458.64:1467.64] And we know that the B transpose B this quantity here is just the norm 2 non square of the
+[1467.64:1468.64] vector.
+[1468.64:1474.8000000000002] So this is a scalar.
+[1474.8000000000002:1484.48] And this scalar is not the same as you compute BB transpose because this guy will not
+[1484.48:1492.48] do Rpc which is the matrix.
+[1492.48:1500.64] And in particular this is a rank 1 matrix.
+[1500.64:1507.3600000000001] So the first factor here I think we want to remind you of the difference between 2.
+[1507.36:1514.9599999999998] So this is a common mistake when you first encounter the material.
+[1514.9599999999998:1522.24] And next I am going to introduce some very useful way of writing out the matrix vector
+[1522.24:1523.24] multiplication.
+[1523.24:1525.6] So there are many different ways.
+[1525.6:1533.04] And the first way I am going to tell you here is you have a matrix D. And if you write
+[1533.04:1543.8799999999999] it in a column form so you have a lot of column vectors so on.
+[1543.8799999999999:1551.6] And you have another vector D which has entries D1, D2, so on.
+[1551.6:1566.8] And the matrix vector multiplication of B and D you can write it as the span of the
+[1566.8:1573.8799999999999] columns of D up to whatever your dimension is.
+[1573.8799999999999:1578.6399999999999] So if you write your matrix in the column form then you can write the matrix vector multiplication
+[1578.64:1585.0400000000002] as the span of your column vectors.
+[1585.0400000000002:1589.72] However there is another way of writing out the matrix vector multiplication which is
+[1589.72:1602.2] if you have matrix C but you write the matrix C in terms of row form so it is some column
+[1602.2:1608.92] vector with transpose so on.
+[1608.92:1614.28] And you have another vector U. I don't need to write the entries there.
+[1614.28:1622.52] Okay another vector U. Then you can write the matrix vector multiplication as the following
+[1622.52:1635.16] form.
+[1635.16:1644.72] We know that for the matrix vector multiplication you simply multiply the first row with the vector
+[1644.72:1647.6399999999999] as the second entry and so on.
+[1647.64:1655.64] Each product of the row and the vector you can express them as the inner product.
+[1655.64:1664.0400000000002] So the first entry here will be the inner product of the 2C1 and view and the second entry
+[1664.0400000000002:1667.68] will be C2 and view.
+[1667.68:1672.6000000000001] And again up to however many entries you have.
+[1672.6:1683.76] So if you write your matrix in the row form then you can express the matrix vector multiplication
+[1683.76:1685.76] in the following way.
+[1685.76:1689.3999999999999] So we are going to use these two facts.
+[1689.3999999999999:1698.76] So with ECFAST we are going to come back to the exercise which is proving this relationship
+[1698.76:1699.76] here.
+[1699.76:1706.76] So let's see how to prove this.
+[1706.76:1713.76] So there are many different ways of proving this exercise so here I am going to give you
+[1713.76:1715.96] two ways.
+[1715.96:1735.56] So the first one is we know that AS is by the problem.
+[1735.56:1748.96] We know that we always write the matrix A in the row form so this is some column transpose
+[1748.96:1756.12] and you have N samples by the X.
+[1756.12:1766.36] So by the third fact that I just showed you here we know that this can be written as the
+[1766.36:1769.4799999999998] inner product between A1 and X.
+[1769.4799999999998:1773.52] Inner product between A2 and X.
+[1773.52:1779.7199999999998] Although we have to use the inner product between A and NX.
+[1779.72:1789.32] And the quantity we want to compute is 1 over N expectation of AX2Nom square.
+[1789.32:1792.92] And this will simply be the expectation.
+[1792.92:1801.1200000000001] If you write out the 2Nom square of this vector which is what I wrote down here you would
+[1801.1200000000001:1809.0] get A1X square plus A1X square.
+[1809.0:1816.0] A2X square plus AX square.
+[1816.0:1820.0] Okay.
+[1820.0:1837.64] But then we know that each entry of these Aijs are ID and therefore these are identical
+[1837.64:1842.88] and independent copies of the same random vectors.
+[1842.88:1846.92] And therefore the expectation of each one of them will be the same.
+[1846.92:1854.0800000000002] So in the end this will be just N times 1 of them.
+[1854.0800000000002:1859.4] Then say A1.
+[1859.4:1864.8000000000002] So in the end the whole problem we reduce this to just computing this quantity here because
+[1864.8000000000002:1867.4] the other two will cancel out.
+[1867.4:1876.0] So we can simply focus on what is the expectation of A1.
+[1876.0:1880.2] So what is this quantity here?
+[1880.2:1881.2] All right.
+[1881.2:1885.4] There are many different ways you can compute this quantity.
+[1885.4:1893.0] The first one is you can simply just explicitly write down the entries of this vector of
+[1893.0:1913.04] this cellar which will become this will be just the expectation of A1X, A1, D. This will
+[1913.04:1916.28] be the dimension of your vector square.
+[1916.28:1923.28] And then you can expand this term right here just either the cross terms they will become
+[1923.28:1928.56] 0 because they are independent and that mean 0.
+[1928.56:1935.96] And all you are going to left is just the expectation of A1J square which is 1.
+[1935.96:1945.8] So this eventually will become just some mention of AX square which will become the two
+[1945.8:1950.32] known square and this will through the exercise field.
+[1950.32:1953.24] So I will skip the detail here.
+[1953.24:1954.8] So this is the first way you can prove.
+[1954.8:1962.3999999999999] But the second way here I'm going to show you a more efficient way of computing or whenever
+[1962.3999999999999:1967.36] you are encounter with this kind of computation.
+[1967.36:1974.1599999999999] Now there is a trick that you can perform which is we know that the expectation of A1X
+[1974.16:1982.28] square is the expectation of A1X times itself.
+[1982.28:1991.0400000000002] And this I can write it as the expectation of A1 transpose X so this is the meaning of
+[1991.0400000000002:1992.4] the product.
+[1992.4:2004.0800000000002] But I can also write the same in the product as the X A1 X transpose A1.
+[2004.08:2014.76] Now since this X transpose and times X so these are linear operations and you have an
+[2014.76:2016.36] expectation.
+[2016.36:2021.0] And from probability, basically probability theory we know that you can always exchange
+[2021.0:2024.0] the linear operation and the expectation.
+[2024.0:2035.64] So what you can do is you can draw this expectation inside and just focus on computing this term
+[2035.64:2039.08] right here.
+[2039.08:2043.56] So what is this term right here?
+[2043.56:2053.96] And remember from our previous linear operation one here we know that this is A1 A1 X
+[2053.96:2061.48] transpose is the brainquat matrix and what is the form of this brainquat matrix?
+[2061.48:2078.12] It looks like A1 X square, A1 X square, A1 X A1 2 for the dot, A1 X A1 N and you have
+[2078.12:2086.3599999999997] A2 2 squared up to A and square and here up to A1 X A1.
+[2086.3599999999997:2089.52] So also good right.
+[2089.52:2096.2] So you simply write out what is the form of this A1 A1 transpose matrix here and then
+[2096.2:2104.7999999999997] you apply the expectation to each entry and we know that since each Aij is with mean
+[2104.8:2108.0800000000004] 0, variance 1 and they are independent.
+[2108.0800000000004:2115.48] So whenever you have cross term, it they all become 0 and if you compute the diagonal
+[2115.48:2121.88] element where you have A1 square A2 to the sphere so this will become 1.
+[2121.88:2126.2000000000003] So in the end this will just become identity.
+[2126.2:2134.2] So and therefore we have just shown that this inner product square that we wanted to compute
+[2134.2:2142.64] is X transpose times identity times X which is the 2 non-square of it and this proves
+[2142.64:2143.64] the XSIC.
+[2143.64:2158.44] So let's go to exercise C. So in exercise C where we ask you the following question.
+[2158.44:2166.72] So by sorry in exercise C we ask you to prove another inequality that's for the basic
+[2166.72:2168.52] inequality.
+[2168.52:2174.84] So we ask you to prove that the maximum like we do estimator that we show you satisfies
+[2174.84:2178.08] this relationship.
+[2178.08:2202.24] So we ask you to prove this in false.
+[2202.24:2208.12] How do we prove this? The idea is simply you use the definition of the maximum like
+[2208.12:2222.2799999999997] we do estimator because we know that it makes no like we estimator is the minimizer
+[2222.28:2242.0] of X minus Q2 non-square and in particular if you compute this quantity this will be always
+[2242.0:2253.0] bounded by any other vector and in particular the 2.
+[2253.0:2259.84] The difference of the 2 is delta bounded by 0.
+[2259.84:2268.76] Now let me just use this simple fact where you have the difference between 2 norms of
+[2268.76:2284.76] X and 2 vectors this is equivalent to V1 plus V2 in a product V1 minus V2.
+[2284.76:2300.0400000000004] So with this relationship we can show so just apply this formula we see that the difference
+[2300.04:2316.32] between here at the difference here is just the sum of the 2 vectors in their products
+[2316.32:2331.36] with the difference of the 2 vectors.
+[2331.36:2347.48] And we know that this is upper bounded by 0.
+[2347.48:2361.44] This term and this term will cancel out and also we know that V is a X 2 plus the noise
+[2361.44:2378.88] and in particular a X minus V is just the minus of the noise.
+[2378.88:2405.6400000000003] This upper bounded is I here and then you just move the top few terms to the right.
+[2405.64:2412.2] This will conclude the truth.
+[2412.2:2417.2] The rest is simple calculation.
+[2417.2:2423.3599999999997] So this proves part C and in the next part this part is the more interesting part which
+[2423.3599999999997:2431.7599999999998] is what helps you see the difference between different randomness or you need to be aware
+[2431.76:2438.2000000000003] of the differences between deterministic or random problems.
+[2438.2000000000003:2443.84] So in this part we ask you the following question.
+[2443.84:2473.76] So by part C we know the following.
+[2473.76:2488.96] So this is what we just derived from part C and therefore we can apply exploitation to
+[2488.96:2504.28] both sides.
+[2504.28:2521.8] That's the expectation of a X 2 non square is just the 2 non square of X itself.
+[2521.8:2532.5600000000004] So we can apply the resulting part B to conclude that this is the expectation of a
+[2532.56:2538.12] applied to some vector and we're taking expectation over a so this will just become the
+[2538.12:2564.7599999999998] expected w a also way.
+[2564.76:2571.5600000000004] So we arrive at this conclusion.
+[2571.5600000000004:2574.88] The disculture is actually not true.
+[2574.88:2579.76] This is false.
+[2579.76:2603.48] And we ask you why this is the case.
+[2603.48:2609.32] So this is what we ask you to think about in this exercise and the answer is simply that
+[2609.32:2635.56] remember in B this relation both for all vector.
+[2635.56:2654.36] But notice that this vector must be fixed or in other words deterministic.
+[2654.36:2664.36] However if we look at the vector that we're trying to copy the expectation over here
+[2664.36:2682.32] we see that this vector is actually not fixed is a random vector.
+[2682.32:2683.92] Why is it random?
+[2683.92:2695.44] The way you obtain the vector makes one like to estimator is by solving this problem right
+[2695.44:2697.92] here.
+[2697.92:2704.04] And in this problem your observation B will be random your matrix A will be random and
+[2704.04:2711.56] therefore your vector the makes one like to estimator will also be random.
+[2711.56:2724.12] And therefore here you have a very complicated vector that depends on the randomness between
+[2724.12:2730.7999999999997] the source of different randomness such as the noise and also the distribution of your
+[2730.7999999999997:2732.56] matrix A.
+[2732.56:2737.88] And therefore here you cannot simply close your eyes and say I can because this relation
+[2737.88:2742.48] holds for all the vectors so we must hold for this vector as well.
+[2742.48:2750.4] Because they are intricate dependency between the matrix A and also this vector itself.
+[2750.4:2758.36] And therefore the conclusion the inference that we just went through does not hold.
+[2758.36:2762.92] So this is the kind of mistake that you would make if you don't pay too much attention
+[2762.92:2768.2400000000002] to the different sources in randomness.
+[2768.2400000000002:2773.48] So this is exercise D.
+[2773.48:2781.08] Now I'm going to move on to exercise E which is possibly the most important exercise
+[2781.08:2784.16] in this handout.
+[2784.16:2791.96] So here we are going to ask you to prove the following statement.
+[2791.96:2806.12] So here we are going to introduce literally the most important algorithm in machine learning
+[2806.12:2816.12] all of these that is called the sophisticated gradient descent.
+[2816.12:2824.96] And SPD Rouse is following.
+[2824.96:2845.92] So at each step we are going to pick and index I uniformly at random.
+[2845.92:2852.56] From the state of all indices.
+[2852.56:2861.32] The pictures randomly pick and index from one to end.
+[2861.32:2870.2000000000003] And then we are going to run the following.
+[2870.2:2891.8399999999997] So this is the SPD.
+[2891.84:2902.2400000000002] Now SPD can be seen as a randomized version of an algorithm that we already covered in
+[2902.2400000000002:2905.1600000000003] a class from just the gradient descent.
+[2905.1600000000003:2920.36] And what you would do in gradient descent is the following.
+[2920.36:2936.8] You would just take the estimates.
+[2936.8:2953.2400000000002] And then we just run some step size times the following quantity.
+[2953.2400000000002:2962.52] Sorry, I was missing you here.
+[2962.52:2971.04] So this is gradient descent.
+[2971.04:2973.24] And this is tocassi gradient descent.
+[2973.24:2978.12] And as you can see, tocassi gradient descent is a randomized algorithm where at each time
+[2978.12:2981.68] state you are going to pick and index.
+[2981.68:2986.84] So now we are going to justify the name of tocassi gradient descent.
+[2986.84:2996.56] Why does this algorithm here approximate gradient descent in any stochastic sense?
+[2996.56:3003.96] And the answer is that if you compute the iterates of stochastic gradient descent over the
+[3003.96:3030.0] randomness that you choose, then you will see that this actually becomes
+[3030.0:3031.0] the true gradient.
+[3031.0:3053.96] So we are going to prove this statement.
+[3053.96:3071.68] So let me quickly remind you that the matrix A is the real form.
+[3071.68:3079.7200000000003] Now we are going to use the previous linear out of the path that I introduced earlier.
+[3079.72:3095.7599999999998] So here I am going to compute the gradient descent.
+[3095.7599999999998:3106.24] And this I know is what I do is a uniformly taken index i at random.
+[3106.24:3109.8399999999997] And then I just consider this iterates.
+[3109.8399999999997:3115.52] So the expectation will be the probability which is just 1 over m.
+[3115.52:3121.3599999999997] The dimension of each of the index i take.
+[3121.3599999999997:3136.08] So you run over all the indices of the quantity inside.
+[3136.08:3144.2] And I claim that this is the same as the one over m just a gradient.
+[3144.2:3146.2] And why is that a case?
+[3146.2:3151.96] Because let's think about what's this vector here.
+[3151.96:3161.44] So we know that the AX is as we've seen before.
+[3161.44:3168.08] This is just a1 in a product with access to the first entry, a2 in a product with access
+[3168.08:3170.2400000000002] to second entry and so on.
+[3170.2400000000002:3174.48] All the way up to a n.
+[3174.48:3181.76] So aX minus b is the vector that looks like a1 in a product with a1 in a product with
+[3181.76:3188.56] x minus b1, a2 in a product with x minus b2.
+[3188.56:3193.92] All the way up to a n, the product x minus bn.
+[3193.92:3202.92] So this is the vector that's called nt here.
+[3202.92:3211.2799999999997] But now we know that a is given in this row form here.
+[3211.28:3225.5600000000004] So a transpose will be given in a color form as a1, a2 all the way up to a n.
+[3225.5600000000004:3236.6000000000004] So therefore if you compute a transpose aX minus b which is a transpose b is vector here.
+[3236.6:3244.12] We know that we can write that the matrix vector product as the span of the column vectors
+[3244.12:3246.6] of a transpose which is this ai.
+[3246.6:3253.52] So this will be just some mentioned bi, ai.
+[3253.52:3258.6] The bi is this each entry of the vector.
+[3258.6:3265.88] So this will be just ai, x minus bi, x ai.
+[3265.88:3275.1600000000003] And this is precisely what's written here.
+[3275.1600000000003:3279.7200000000003] So these two quantities are the same.
+[3279.7200000000003:3285.84] All right, so we will have a lot more to say about stochastic gradient in latent lectures.
+[3285.84:3294.8] It's a very useful algorithm for optimizing the neural networks that we saw in xs s2.
+[3294.8:3298.44] And it's possibly a de-foundation for multi-much learning.
+[3298.44:3303.44] So please pay more attention to those lectures.
+[3303.44:3309.04] Right now I'm just going to stick to the basic linear model and show you that stochastic
+[3309.04:3313.84] gradient descent is running some sort of gradient descent in expectation.
+[3313.84:3318.84] All right, that finishes xs s2 in.
+[3318.84:3322.88] So let's move on to the finite ray exercises.
+[3322.88:3337.88] For n, we ask you to compute that under the same assumption as in part e where I apologize.
+[3337.88:3352.44] So this is the assumption.
+[3352.44:3368.52] And we ask you to show the following.
+[3368.52:3376.36] So this is the result we asked you to see.
+[3376.36:3381.2000000000003] All right, again, there are many different ways of proving this result.
+[3381.2:3386.2799999999997] Here I'm going to perform a similar trick that I showed you before already.
+[3386.2799999999997:3393.16] So we know that we want to compute this quantity.
+[3393.16:3396.8399999999997] But this quantity is a scalar times the vector.
+[3396.8399999999997:3404.16] I can also equate the length, write it as just a vector times the scalar, right?
+[3404.16:3416.92] I have made noting to this quantity here.
+[3416.92:3432.12] And I know that the i is ai times the true signal was a golden noise.
+[3432.12:3451.6] So ai minus, in a product minus d i will be just minus of the noise.
+[3451.6:3454.8399999999997] Sorry.
+[3454.8399999999997:3457.8399999999997] My apologies.
+[3457.84:3464.84] So I would just substitute in b i here.
+[3464.84:3476.0] I get ai x minus b i, which is ai x true minus w i.
+[3476.0:3477.8] Now I can sit.
+[3477.8:3479.28] I can sit where the term.
+[3479.28:3496.88] So the first one is ai x minus x true because they both have the ai component minus ai times
+[3496.88:3500.1200000000003] the noise of ui.
+[3500.12:3512.12] So I know that this term is 0 because the noise, because the noise are independent of the
+[3512.12:3513.12] vector.
+[3513.12:3519.88] And also I know that the noise has mean 0.
+[3519.88:3528.56] So when I compute the expectation over the noise, the second term will tend to well.
+[3528.56:3531.24] So now let's focus on the first term.
+[3531.24:3542.04] And for the first term, I'm just going to write out again ai times ai transpose x minus
+[3542.04:3543.04] x true.
+[3543.04:3548.16] So I just write out the admission of the inner product.
+[3548.16:3558.0] And again here you see that you have another rank one matrix and apply to some fixed vector.
+[3558.0:3561.24] So you can apply this entry that we used before.
+[3561.24:3568.8] You can simply compute the expectation of this part multiplying the vector on the outside
+[3568.8:3569.8] part.
+[3569.8:3575.52] But we already know that this is just the identity.
+[3575.52:3579.4] And therefore we have to the result that we wanted.
+[3579.4:3583.32] All right, that's part f.
+[3583.32:3589.7200000000003] Now let's go to the final part where we ask you to do under the same assumptions.
+[3589.7200000000003:3607.88] In B, we say, so we ask you to prove this statement.
+[3607.88:3614.44] Again, many different ways, but here I'm going to show you a quick way which will demonstrate
+[3614.44:3622.96] that if you can somehow cleverly manipulate the expectation, you can actually use it as
+[3622.96:3626.8] a tool for your analysis as well.
+[3626.8:3634.6400000000003] So here I'm going to rewrite this term given on the left hand side.
+[3634.64:3642.92] Let me put this in the graph.
+[3642.92:3652.92] But I know that this is simply by moving the one over hand inside.
+[3652.92:3660.0] I know that this is simply the expectation over sdb.
+[3660.0:3677.0] All right, this is by part e.
+[3677.0:3678.0] Right?
+[3678.0:3682.0] So this is what we show.
+[3682.0:3700.0] So you can always exchange the order for which you're taking expectation that that is
+[3700.0:3701.0] fine.
+[3701.0:3715.6] But then what is the quantity that's inside?
+[3715.6:3721.8] The quantity that's inside is exactly what we computed in the last exercise queue.
+[3721.8:3725.68] And we know that this is equal to x minus x2.
+[3725.68:3734.3999999999996] So we know that this is simply just x minus x2.
+[3734.3999999999996:3740.3599999999997] Now we see that we're taking an expectation over a sound vector that has nothing to do
+[3740.3599999999997:3742.12] with the randomness of sgd.
+[3742.12:3750.16] So in the end, this is just x minus x2.
+[3750.16:3756.96] And this will conclude the video for endow one.
+[3756.96:3759.96] And you have any additional question.
+[3759.96:3766.8799999999997] Will come please send an email to your head DA or post endow with it.
+[3766.88:3796.84] So thanks a lot for your time.

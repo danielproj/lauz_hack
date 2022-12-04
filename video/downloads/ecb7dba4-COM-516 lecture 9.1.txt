@@ -1,0 +1,307 @@
+~COM-516 lecture 9.1
+~2020-11-07T20:27:48.613+01:00
+~https://tube.switch.ch/videos/ecb7dba4
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:15.52] Hi, in this video we will apply our first application of the specific metropolis
+[15.52:34.08] testing algorithm to the following problem which is the optimization of a function on a
+[34.08:48.8] discrete space and we will also review a procedure called simulated annealing
+[48.8:59.839999999999996] which is an elaboration on the metropolis testing method
+[64.88:76.4] okay so the kind of function that I'm going to consider here
+[76.4:88.72] I'll call it F maps discrete set S which later is going to be the state space of our
+[88.72:102.52000000000001] mark of chain but for the moment this is some discrete space so think of Z or
+[102.52:119.56] the possible color range of a graph or think of the assignments of binary
+[119.56:122.6] variables in the easy model that we saw last time
+[122.6:135.64] all these are discrete spaces of course Z is the space of integers is very simple
+[135.64:145.2] so the function maps S into R okay and so the notation will be that if you have
+[145.2:153.6] an element let's call it i to begin with in S this notation will change later
+[153.6:163.83999999999997] a little bit it maps to a value F of i now all I'm saying conceptually also applies to
+[163.83999999999997:170.64] functions that map from continuous spaces to R or even more complicated than R
+[170.64:178.39999999999998] but since the whole class is in the setting of discrete mark of chains we'll
+[178.39999999999998:187.76] take discrete this grid function and the goal ultimately although we will not
+[187.76:201.12] quite reach this goal in general but the goal is to find or find approximately
+[201.12:218.96] somehow so the real goal would be to find a global minimum of F okay but we will
+[218.96:232.72] also be content to find some maybe some good minimum so some local minimum of
+[232.72:240.64000000000001] F which is close enough to the global one whatever it needs but let's keep in
+[240.64000000000001:248.60000000000002] mind the rainbow so the picture is the following you have the values of the
+[248.6:254.72] functions of the function here and the function takes values in the state space
+[254.72:260.84] that I depict by or this discrete space that I just depict by a line this is a
+[260.84:270.84] just a conceptual picture and so you have this function that can be quite
+[270.84:280.03999999999996] complicated and you see the here the global minimum is here okay you have the
+[280.03999999999996:291.12] global minimum but you have many many local minima
+[291.12:305.16] and as you know when you try to apply some greedy algorithm so take for
+[305.16:313.84000000000003] example some some initial condition somewhere here and you try to apply
+[313.84:321.84] some gradient descent for example well you might you might fall here in a local
+[321.84:332.55999999999995] minimum okay so a greedy procedure makes you stuck in the in the local in the
+[332.55999999999995:338.67999999999995] local minimum and unless unless you start with a very good initial condition
+[338.68:348.72] say an initial condition here you will not necessarily reach this this global
+[348.72:359.92] minimum okay so we will see that by applying the metropolis lasting algorithm one
+[359.92:370.48] can do better than pure gradient descent to minimize this this function so
+[370.48:384.40000000000003] before I I state the ideas let me let me give you some examples of functions
+[384.4:393.91999999999996] of interest so just as it's hard to sample from high-dimensional distributions
+[393.91999999999996:400.47999999999996] in general the problem is hard so this optimization problem or for that
+[400.47999999999996:412.88] matter any optimization problem is generally hard generally for high-dimensional
+[412.88:428.6] functions so for example consider consider the coloring problem okay so
+[428.6:435.56] remember you have a graph with a set of vertices and edges and you say that
+[435.56:456.88] a proper coloring is an assignment of colors that we call colors takes take
+[456.88:467.6] value x in the set of two colors okay so here you have two colors an assignment
+[467.6:487.68] of colors to vertices okay to two vertices I in V okay say in V such that if if
+[487.68:504.04] k and L are an edge xk is different than xl okay so here the state space what I
+[504.04:517.36] call i before okay is the same thing as vectors x indexed by the vertices of the
+[517.36:532.36] graph and what we want to minimize is the following cost function I define it
+[532.36:545.08] here okay so you want to minimize c of x okay so that's my function f c of x
+[545.08:555.4] which is the cost of the assignment x equal to the sum over all edges and I
+[555.4:571.64] pay say one dollar each time that each time that an edge does not have a
+[571.64:585.64] proper coloring so each time that xk is equal to xl 4k and L and edge okay and
+[585.64:602.4] in words this is the number of edges that whose two vertices have the same color
+[602.4:621.9599999999999] okay so this cost is a highly complex function because it goes from this space s
+[621.9599999999999:629.96] which is the space of assignments which for each vertex you can choose a
+[629.96:639.36] color from one to q so is this space to the power V here and it goes into the
+[639.36:649.36] integers okay but integers are embedded in R okay so from one assignment you
+[649.36:661.0] compute c of x and well what you would like to do is to minimize this function
+[661.0:667.6] so find the assignment that has the minimal number of incorrectly colored
+[667.6:675.5600000000001] edges in good cases the minimum might be at zero so maybe c of x
+[675.56:683.8399999999999] attains it minimum at zero in general this is positive or zero if you find
+[683.8399999999999:689.68] the minimum at zero it's necessarily a global minimum and it means that you have
+[689.68:699.8] color on the graph with a proper coloring okay so this is an example a second
+[699.8:713.24] example is the easing called easing Hamiltonian or this is the same thing as
+[713.24:722.8399999999999] an energy function or call it a cost function if you prefer so let me
+[722.84:730.1600000000001] quickly go through this example remember in the easy model we we have binary
+[730.1600000000001:742.4] assignments so again we have a graph made of vertices and edges and we assign
+[742.4:752.2800000000001] binary variables s i equal plus and minus 1 to vertices let me call them okay
+[752.28:765.72] towards this k in V and a general assignment to the whole graph is a vector s
+[765.72:778.76] and goes from s1 to s cardinality of V and we have defined this cost h which
+[778.76:789.56] is a function of the assignment being minus sum over k l or edges of the graph
+[789.56:800.3199999999999] some real number jkl s k s l okay well this is just a real number and if the
+[800.3199999999999:806.08] graph has no structure and jkl have no structure and in particular they take
+[806.08:811.0400000000001] positive and negative signs and the graph is large this can be a very hard
+[811.0400000000001:819.4000000000001] problem to minimize the cost okay so the goal is to find the assignment
+[819.4000000000001:830.84] star such that h of star is equal to the minimum this minimum is attained
+[830.84:839.96] also in the coloring problem I could formalize things in the same way so
+[839.96:848.52] this assignment lives in the space of plus and minus 1 to the power of V this
+[848.52:856.96] space is finite so evidently the minimum the minimum is attained okay so
+[856.96:863.6800000000001] again here you have a function that goes from this discrete space well which
+[863.6800000000001:872.64] is this plus minus 1 to the power of V and here it really goes to the reals
+[872.64:879.88] okay and you want to to minimize this function so whether it is in the coloring
+[879.88:888.64] problem or in the in this easy Hamiltonian problem these are are very very
+[888.64:899.08] hard problems okay in both problems the state space s is somehow a very high
+[899.08:912.9200000000001] dimensional space so here you have c of x or h of s and this is a very these are
+[912.92:929.7199999999999] very complicated complicated functions okay so these are very complicated
+[929.72:942.84] functions in in general with many many local
+[942.84:953.44] minima and at the same time it could be you can also have many global
+[953.44:965.4000000000001] minimum or you can have one depends okay so this means that algorithms
+[965.4000000000001:973.96] especially greedy algorithms and especially if you think about a regular
+[973.96:988.0400000000001] in the sense say will typically be stuck in local minimum and it's even known
+[988.0400000000001:993.2] in many problems of interest that the number of local minima can be
+[993.2:1002.76] exponentially big in the size of the graph so there is a proliferation really
+[1002.76:1022.4399999999999] of this minima and it's really easy to very very hard problems okay now to to
+[1022.44:1036.68] illustrate the concept of how to apply the metropolis
+[1036.68:1053.0800000000002] has in algorithm I use I use an easy kind of function which is one dimensional
+[1053.0800000000002:1061.24] but but that's just to illustrate the concept and to make pictures but the
+[1061.24:1076.72] concept is completely general okay but conceptually what comes next is
+[1076.72:1082.92] completely general okay so to fix the ideas we consider a function that goes
+[1082.92:1097.3600000000001] say from z to r okay and so I is just an integer and it's not to f of i so
+[1097.3600000000001:1104.0800000000002] here is the picture I have the value of the function f here and I have the
+[1104.08:1114.0] integers here and I draw it as a continues function but of course I really have
+[1114.0:1131.3999999999999] discrete values here okay we will assume that the limit although maybe it will
+[1131.4:1135.64] not be very visible in the formalism here but let's assume that the limit
+[1135.64:1141.88] when i goes to plus and minus infinity of f of i is infinite so it's really has
+[1141.88:1151.5600000000002] on the picture here the state spaces I was talking about here are finite okay so
+[1151.56:1170.6799999999998] this assumption is not necessary no okay so one idea is to use something
+[1170.68:1182.44] and naively so this is would be a first idea okay but we will elaborate this
+[1182.44:1196.96] idea use something of the uniform distribution over global minima there might
+[1196.96:1205.24] be one there might be many and this is similar to the uniform distribution
+[1205.24:1210.72] over colorings in the coloring problem in the coloring problem if you have a
+[1210.72:1217.64] proper coloring it's a global minimum of your cost function and if you have
+[1217.64:1222.52] many of these colorings this space is not trivial even if you have one it's
+[1222.52:1231.0] not trivial to find it and I already introduced the last time the uniform
+[1231.0:1235.68] distribution over the set of proper colorings well here it's even simpler
+[1235.68:1241.44] this distribution I call it pi infinity you will see later why this
+[1241.44:1252.0] subscript infinity for state i okay is the indicator function of the event
+[1252.0:1265.92] that i is a global mean of f divided by what the normalization function I
+[1265.92:1276.52] call z infinity and then infinity is the sum over i in z here well this in
+[1276.52:1283.36] general our space has okay so all this I could I could say for the easing and
+[1283.36:1294.0] coloring problem also okay so that's the first idea it turns out that this
+[1294.0:1304.12] does not work very well we will see a little bit later so first of all it is
+[1304.12:1310.6] hard to sample from this distribution okay because we don't know the global
+[1310.6:1318.2399999999998] minimum so we don't even know when to decide the indicator function is 1 or 0
+[1318.2399999999998:1323.6799999999998] we might not know how to compute that in it we might not know how many global
+[1323.6799999999998:1330.08] minimum there are there could be exponentially many in the in the problems I
+[1330.08:1344.56] mentioned here and so it's hard to sample and so the idea now is to use Markov
+[1344.56:1362.84] chain Monte Carlo method so we want to to to sample from this unit from
+[1362.84:1383.9599999999998] distribution by using some form of MCMC okay but this does not quite work
+[1383.96:1398.56] immediately and we have to use an elaboration of the idea here okay a kind of
+[1398.56:1404.24] better idea so we'll say later why it does not work quite immediately so
+[1404.24:1418.16] the better idea is to consider something by MCMC of a slightly different
+[1418.16:1432.8] distribution so of the following distribution that I call pi beta of i which
+[1432.8:1442.08] is equal to e minus beta f of i so this is reminiscent of the distribution we
+[1442.08:1452.52] used for the to model the in this model divided by z subscript beta where beta
+[1452.52:1460.1599999999999] is just a positive real number and this has some interpretation we will
+[1460.16:1477.52] interpret this later okay and z beta is the sum over all i in the state space
+[1477.52:1486.28] which might be z or some more complicated state space of e minus beta f of i
+[1486.28:1493.96] okay so that the distribution is normalized to 1 and we want to sample by MCMC
+[1493.96:1512.96] so remark that for beta going to infinity by beta of i just tends to by
+[1512.96:1527.16] infinity of i in other words if beta goes to infinity it is possible to see
+[1527.16:1538.24] that the probability here goes to 0 if i is not global minimum and otherwise it
+[1538.24:1548.2] goes to 1 okay to see this maybe the best thing is to think of a function that
+[1548.2:1558.88] where you have put the the origin here the height of the of the axis here such
+[1558.88:1567.56] that the global minima are all at 0 it's not necessary whatever whatever
+[1567.56:1573.8799999999999] are the global minimum this will work because there is a division between a
+[1573.8799999999999:1580.32] numerator and a denominator but it's much easier to see if you set the
+[1580.32:1588.3999999999999] minimum of f to 0 so it's it's not a loss of generality
+[1588.4:1608.8000000000002] if you want to set the problem such that the minimum over i in z of f of i equals
+[1608.8000000000002:1614.2800000000002] 0 otherwise you know if it's attained at another value this will divide out
+[1614.28:1621.52] between numerator and denominator but again this is not easy because it's
+[1621.52:1627.7] difficult to confuse that beta and we will use the mark of chain Monte Carlo
+[1627.7:1632.48] method and we'll use it in the metropolis fasting for
+[1632.48:1645.44] okay now for the moment beta is just a parameter but let me immediately
+[1645.44:1660.88] remark that in fact beta well if you think of the of the easy model and and
+[1660.88:1666.5600000000002] you know these algorithms as I said last time the MCMC method was invented
+[1666.5600000000002:1673.8400000000001] in Los Alamos by physicists simulated an emin that we'll see a bit later was
+[1673.8400000000001:1680.48] also invented by one physicist Keirpathre and one computer scientist
+[1680.48:1691.84] Keirpathre I think and so these ideas are very physical and if you think of
+[1691.84:1716.1999999999998] the easy model it's quite clear that then clearly you can interpret beta as
+[1716.2:1723.16] a temperature parameter an inverse temperature in fact we'll come back to
+[1723.16:1727.76] these in model and white inverse temperature we see we see when we come
+[1727.76:1741.16] back in a few weeks and and think of the values f of i as somehow the energy of
+[1741.16:1753.88] state i or if you wish the cost of state i okay energy and temperature have
+[1753.88:1758.8600000000001] basically the same units can be given the same units and the product beta
+[1758.8600000000001:1764.3200000000002] times f should be without units in the exponential otherwise you cannot take
+[1764.32:1773.1599999999999] the exponential and that's why beta is an inverse temperature okay so let's
+[1773.1599999999999:1786.84] state let's state the metropolis has to in algorithm here and in fact I'll
+[1786.84:1794.76] state it in the form of the metropolis algorithm the simple metropolis algorithm
+[1794.76:1815.84] is the following well you choose a base chain okay here I propose but you
+[1815.84:1824.8999999999999] could choose something else but I propose to choose a base chain so with
+[1824.8999999999999:1832.4399999999998] colipsi such that the transition probabilities from i to i plus minus 1 on
+[1832.4399999999998:1845.48] z okay on the space space z equal s so I'm talking about that case is 1 half and
+[1845.48:1859.16] 0 otherwise okay so I'm on the infinite line here and I choose I propose
+[1859.16:1866.24] moves of this type with transitions probability 1 half so that's the symmetric
+[1866.24:1880.84] simple random walk what is important here is that i and i plus minus 1 are
+[1880.84:1885.48] neighbors I could choose second nearest neighbors and do something more
+[1885.48:1890.36] complicated but in general they there should be a notion of neighborhood as
+[1890.36:1899.32] this is again a kind of of growing the algorithm if we are talking about
+[1899.32:1905.36] these in model or the coloring we will see that the moves that we propose are
+[1905.36:1910.76] also in some sense between neighbors okay neighboring colorings where only
+[1910.76:1916.24] the color at one vertex differs and things like that but we'll talk
+[1916.24:1923.08] specifically about these cases later on okay the second step in the algorithm
+[1923.08:1940.24] remember is to accept so to define or if you wish to okay to accept moves with
+[1940.24:1951.1200000000001] acceptance probabilities so if you move from a to j okay so for such a move
+[1951.1200000000001:1961.76] here from i to j sorry the acceptance probability is the minimum of 1 pi j
+[1961.76:1970.8799999999999] and pi i remember that you should really accept the move if pi j is more
+[1970.8799999999999:1978.04] probable if j is more probable than pi than i also so this acceptance
+[1978.04:1985.92] probability will be 1 that's the way to remember how to put the indices and
+[1985.92:1997.3200000000002] this in our specific problem is equal to the minimum of 1 and exponential minus
+[1997.3200000000002:2005.24] beta f of j minus f of i if you look at the distribution the z beta
+[2005.24:2017.0] councils so that's if j is equal to i plus or minus 1 and it's zero other ones
+[2017.0:2031.1200000000001] okay you never make a move between states that are not nearest neighbors okay
+[2031.12:2040.84] and this leads to the following chain well then you you construct this means
+[2040.84:2053.64] that you have constructed the following chain okay the following is the mark of
+[2053.64:2065.16] chain constructed is the new mark of chain with respect to the best chain it has
+[2065.16:2075.68] transition probabilities to go from i to j equal to the acceptance probability
+[2075.68:2084.12] times the proposed move the probability of the proposed move so a i j times
+[2084.12:2093.7999999999997] psi if i is different from j and remember the complement is 1 minus all the
+[2093.7999999999997:2099.2799999999997] moves that we that we didn't accept
+[2099.28:2111.6400000000003] okay that's for i equal j so here we have self loops okay and from i to i and it
+[2111.6400000000003:2119.0400000000004] means that we have rejected all hard moves to to the case that are different
+[2119.04:2133.96] from i okay so you feed in you feed in these formulas here and and you you look
+[2133.96:2143.36] what what happens but let's make a picture here of what happens so let me
+[2143.36:2152.52] change color maybe so this is a formal way of stating the algorithm but let me
+[2152.52:2180.52] talk about the picture of what happens here so we have this state space z our
+[2180.52:2195.36] function f and let me let me draw a function that has many local minimal and
+[2195.36:2208.16] goes to infinity okay so what is the idea well the idea is I start with some i
+[2208.16:2220.8399999999997] some state i here okay and I propose a move to a state i plus 1 or to a state i
+[2220.8399999999997:2235.08] minus 1 and so let's look at the move where I go from i to i minus i plus 1
+[2235.08:2251.3199999999997] here okay you see here that f of so i plus 1 is j okay f of i plus 1 minus f
+[2251.32:2265.6400000000003] of i is negative so the min so so this implies that a i i plus 1 equals 1 if you
+[2265.6400000000003:2280.04] look at the formula so you certainly accept this move okay so this is the
+[2280.04:2287.7599999999998] really step you certainly accept this move now let's look at what happens if you
+[2287.7599999999998:2306.08] propose to go to i minus 1 here well f of i minus 1 minus f of i is positive
+[2306.08:2315.72] and this means that a i i minus 1 is less than 1 okay so you accept the move
+[2315.72:2324.6] with some probability and you're rejected with some probability so you accept
+[2324.6:2337.96] with a probability less than 1 and you do us or you do a self-loop which means
+[2337.96:2348.7599999999998] you do nothing or you stay at i this is the self-loop with the complement
+[2348.76:2359.8] probability which is also less than 1 okay and why is this good because this
+[2359.8:2366.8] avoids that you are stuck in a local minimum so suppose I would have
+[2366.8:2375.28] started here if you always accept a move you would be stuck in a local
+[2375.28:2381.76] minimum here and the only way to get out of the local minimum is to
+[2381.76:2393.0] sometime accept moves that go out here okay same thing if you would always
+[2393.0:2399.8] accept moves you would go down again while here you would find a global
+[2399.8:2407.36] minimum that would be good for you but somehow you know here I was stuck
+[2407.36:2417.0] before so sometimes you have to to reject moves so to accept with a lower
+[2417.0:2444.8] probability okay so the two important remarks are the following that if a move
+[2444.8:2458.0] lowers the cost so a proposed move if a proposed move lowers the cost then you
+[2458.0:2487.84] certainly accept it okay however if a proposed move increases the cost well you
+[2487.84:2491.7200000000003] know if you're competing really you would never accept it but that's a bad idea
+[2491.7200000000003:2499.6000000000004] well you should sometimes
+[2501.96:2512.88] accept it okay that's the only way that you get out of local minimum that is the
+[2512.88:2540.4] only way to get out of local minimum and unstuck yourself now what
+[2540.4:2556.84] happens what is the effect of beta the temperature the inverse temperature and
+[2556.84:2567.64] now you will get a kind of feeling why we call it an inverse temperature if
+[2567.64:2581.3599999999997] beta is large then remember this acceptance probability which is equal to the
+[2581.3599999999997:2593.44] minimum of one and exponential minus beta half of j minus f of i if beta is
+[2593.44:2612.28] large well this a i j is is is very small okay because because well it depends
+[2612.28:2633.7200000000003] it's very small if f of j is greater than f of i and is equal to 1 if f of j
+[2633.72:2642.3199999999997] less than f of i okay but the first statement here tells you that there is a
+[2642.3199999999997:2661.7599999999998] very low probability to to accept a move that increases the cost very low
+[2661.76:2678.44] probability to accept a move that increases the cost okay and this this might
+[2678.44:2698.6] be bad because you don't have too many self loops somehow so the chain is
+[2698.6:2711.16] it's a periodic but it's not it's not it's not it's a periodic but not in a
+[2711.16:2716.2999999999997] good way okay although the chain is going to be a
+[2716.2999999999997:2722.68] ergodic but somehow the mixing time is going to be large so let me let me not
+[2722.68:2739.7999999999997] state this formalize this too much okay so this is almost as being stuck in
+[2739.8:2755.36] in local minima so if you don't have too many self loops you have a tendency
+[2755.36:2773.0] of being stuck in local minima okay on the other hand if beta is small then
+[2773.0:2790.64] look if beta goes to zero then a ij is always close to 1 okay because the mean of
+[2790.64:2796.16] 1 and something close to 1 is close to 1 although it's less or equal to 1
+[2796.16:2820.52] is close to 1 so you tend to always accept a move and the chain is nicely nicely
+[2820.52:2842.24] ergodic but it will explore the whole state space and the chain will explore the
+[2842.24:2856.8799999999997] whole state space and we'll tend to pi beta to so and it will tend to the
+[2856.8799999999997:2869.9199999999996] stationary distribution pi beta but for beta small okay and this it's very
+[2869.92:2882.6800000000003] different than pi infinity which was our initial interest so you will not be good
+[2882.6800000000003:2887.56] at finding a finding local minima
+[2887.56:2914.68] okay so one must be careful to choose beta careful how you choose beta and this is an
+[2914.68:2932.8399999999997] art this is a kind of art and I'll come back in the maybe in some in some zoom
+[2932.8399999999997:2940.3999999999996] session on how one can choose beta there is a paragraph in the notes that gives
+[2940.4:2951.84] you a work or estimate how to choose it so in the notes you find a kind of intuition
+[2951.84:2977.28] how to choose it okay but there is one way to choose beta which somehow combines
+[2977.28:2992.88] the best of both worlds here okay so and this leads to what is called simulated
+[2992.88:3020.44] and okay so the idea of simulated annealing is to do the following is to combine both the
+[3020.44:3042.52] effects of beta small and beta large so the idea is the following so you start with
+[3042.52:3051.0] some beta small appropriate so how to choose it appropriately this is a little bit
+[3051.0:3061.7599999999998] an art and you can refer to this ballpark estimates here and so when beta is small as we
+[3061.76:3073.48] said pi beta well if beta is small first of all remember that if beta is small what was
+[3073.48:3085.2000000000003] our measure here pi beta is e minus beta f of j over z beta so for beta equal zero this
+[3085.2:3094.56] tends to pretty uniform distribution over the whole state space not only over over global
+[3094.56:3104.72] minima but over whole state space okay so this is more or less the uniform distribution
+[3104.72:3120.8799999999997] over the whole state space at least if beta equal zero okay so you you explore well the whole
+[3120.88:3147.6800000000003] state space and after a reasonable amount of time
+[3147.68:3165.2799999999997] you have almost converged to the distribution pi beta so for example if you were in a in
+[3165.2799999999997:3174.8399999999997] a local minimum that's a very bad one suppose you were in this local minimum here after
+[3174.84:3184.92] a reasonable amount of time you will have escaped from this local minimum because basically
+[3184.92:3197.32] you have accepted almost all moves and you might be here here here you are uniformly distributed
+[3197.32:3202.56] in the state space somehow that's true beta zero but of course you should not choose
+[3202.56:3212.96] beta equal zero but beta small okay but then this is not good enough because you would like
+[3212.96:3230.0] to explore the low line minima and not any local minimum so then you increase beta by a
+[3230.0:3252.72] little and run the new chain for some time okay so you started from some beta zero say
+[3252.72:3264.9199999999996] you increase beta by a little so you go from beta zero to beta one and after some time
+[3264.92:3285.32] you converge you hope to converge approximately to pi beta one okay and then you repeat you repeat
+[3285.32:3305.6800000000003] so you go from beta one to beta two you run the chain and hope to converge to pi beta two
+[3305.68:3331.48] and then you repeat and so on and eventually you reach samples distributed as almost pi
+[3331.48:3358.12] well infinity okay or pi for beta very large okay and these samples are well low line minima
+[3358.12:3372.08] maybe sometimes you can reach the global minimum so I'm a bit vague here because this is a
+[3372.08:3380.72] bit on art there is a question how much time do you run each step what kind of increase
+[3380.72:3390.0] you make when you go from beta zero to beta one then to beta two etcetera this is a bit
+[3390.0:3406.7999999999997] on art and okay this will depend on the problem and there is no absolute rule that one can
+[3406.8:3416.7200000000003] give here this method of simulated annealing is quite a bit inspired by the way that people
+[3416.72:3437.12] fabricate some materials and namely good alloys so one starts from some metal that is brought
+[3437.12:3443.9599999999996] first at very high temperature that's the beta zero here and what you want is to reach a kind
+[3443.96:3455.08] of atomic or crystalline configuration of the alloy that makes it have good properties
+[3455.08:3462.32] that you want but these atomic configuration is like it's like a minimum it's like a global
+[3462.32:3478.6400000000003] minimum here and it is hard to reach okay and you might have also many global minima so you
+[3478.6400000000003:3487.76] start from a high temperature so you melt the metal and then instead of lowering the temperature
+[3487.76:3497.84] to bring the alloy suddenly if you lower the temperature to suddenly you might you might reach
+[3497.84:3505.48] only a local minimum somehow so you might reach a local minimum here okay it's much better and
+[3505.48:3514.0800000000004] and this is something that metallurgists have known for many years it's much better to lower
+[3514.08:3521.92] the temperature very slowly since beta is inverse temperature this corresponds to increasing beta
+[3523.12:3533.6] very slowly and in this way you have a better chance to reach the global minimum
+[3533.6:3545.52] okay that's about it what I wanted to say about simulated annealing in the next video we'll go
+[3545.52:3569.68] towards the coloring problem MCMC for the coloring problem thank you

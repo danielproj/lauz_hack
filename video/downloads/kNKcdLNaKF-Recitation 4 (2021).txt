@@ -1,0 +1,340 @@
+~Recitation 4 (2021)
+~2021-11-08T10:36:33.987+01:00
+~https://tube.switch.ch/videos/kNKcdLNaKF
+~EE-556 Mathematics of data: from theory to computation
+[0.0:7.0] I don't want to.
+[7.0:10.0] Yeah, because I think.
+[10.0:16.0] So we are going to recap a bit what is the story of the paper.
+[16.0:19.0] If I'm not mistaken, the lecture on.
+[19.0:20.0] Dislearning.
+[20.0:23.0] So you already had an introduction into the paper.
+[23.0:26.0] We're going to discuss, but I'm going to shortly.
+[26.0:29.0] I don't want to.
+[29.0:31.0] Including the source.
+[31.0:36.0] Then moving to back propagation, which is essential for learning.
+[36.0:37.0] I think that I cannot.
+[37.0:38.0] The neural network.
+[38.0:40.0] So it's a way of learning the neural network.
+[40.0:41.0] And we're going to discuss the.
+[41.0:42.0] I think the.
+[42.0:45.0] Which is essentially the two news nowadays.
+[45.0:47.0] And then we're going to the most.
+[47.0:48.0] Oh, yeah.
+[48.0:49.0] I always.
+[49.0:52.0] Thank you for something now.
+[52.0:53.0] I'm.
+[53.0:56.0] Yeah.
+[56.0:59.0] And maybe.
+[59.0:61.0] There are of course.
+[61.0:63.0] There are of course.
+[63.0:64.0] Yes, Molly.
+[64.0:67.0] And very long.
+[67.0:68.0] Yeah.
+[68.0:71.0] Okay.
+[71.0:73.0] So I should.
+[73.0:75.0] We.
+[75.0:79.0] Let's read.
+[79.0:86.0] Yeah.
+[86.0:89.0] Right.
+[89.0:90.0] Right.
+[90.0:98.0] So after this.
+[98.0:100.0] Issues with the people at room.
+[100.0:102.0] So everybody joining a room.
+[102.0:104.0] Can you hear well?
+[104.0:106.0] If yes, also please mute yourself.
+[106.0:108.0] So we don't hear back.
+[108.0:111.0] And you don't cause any troubles here.
+[111.0:113.0] So starting from tensors.
+[113.0:117.0] So tensors is a fundamental tool in deep learning.
+[117.0:124.0] And you have hopefully seen already some special forms of tensors in your linear algebra courses.
+[124.0:128.0] So essentially order zero tensors are the scalar variables.
+[128.0:137.0] Order one tensors are vectors or the two tensors are matrices and from order three and one words with a simply called them tensors.
+[137.0:139.0] Why are they significant?
+[139.0:147.0] Well, you already saw on lecture on Monday that even the one layer hit the neural network depends on matrices.
+[147.0:154.0] And if you move into images or other structures, you have higher dimensional.
+[154.0:157.0] Structures which are essentially tensors, right?
+[157.0:166.0] And also convolutional filters or other types of structures that we use in deep learning rely essentially on high dimensional tensors.
+[166.0:167.0] Right?
+[167.0:175.0] So this slide is just a reminder of these structures and how you can approach them.
+[175.0:181.0] Unfortunately, many of the tools that we have in linear algebra.
+[181.0:186.0] So essentially vectors and matrices do not generalize well into tensors.
+[186.0:190.0] So for instance, one, the well established notion of rank.
+[190.0:193.0] And specifically symmetric rank does not generalize well.
+[193.0:201.0] So you know that the matrix has a specific rank, which is essentially the maximum of the.
+[201.0:206.0] So it can be up to the maximum of the height or the width of the matrix, right?
+[206.0:209.0] This doesn't generalize trivially into tensors.
+[209.0:213.0] And in fact, there are different notions of rank into tensors.
+[213.0:217.0] And it is NP hard to actually compute it for a general tensor.
+[217.0:231.0] And we only know ranks of specific tensors. So you see already things do not generalize precisely for higher order structures, which makes analysis of.
+[231.0:238.0] Tensors and the tools we are going to use a little bit more difficult when it comes to.
+[238.0:249.0] Notions of low rankness that might be needed and also one other thing is that these.
+[249.0:254.0] Rank one. So the rank one approximations into matrices.
+[254.0:261.0] It is clear that if you remove one rank one approximation, you can get something that is up to this rank, right?
+[261.0:264.0] This is not necessarily the same in tensors.
+[264.0:269.0] So be very careful when you are talking about tensors and tensor ranks.
+[269.0:274.0] And especially the symmetric rank here that they do not.
+[274.0:280.0] Have the same properties as you had in very constrained matrices and vectors.
+[280.0:287.0] Now, you go just to one slide for tensors. We can discuss more later if this is something you have questions.
+[287.0:291.0] But for now, this is a reminder of why we started with tensors.
+[291.0:296.0] This is a structure that you saw on Monday for one hidden layer neural network.
+[296.0:308.0] Right. So this simple equation implements one hidden layer and X two and X one are two matrices that you can think as learnable.
+[308.0:315.0] So we are going to show you today how to learn X two and X one from data.
+[315.0:321.0] Sigma is an activation function. So you can think it as a simple square function.
+[321.0:326.0] For example, I'm going to show more example later in the in the course day.
+[326.0:333.0] New one and new two are called bias and essentially are vectors that are still learnable.
+[333.0:342.0] And this structure here that you see highlight if you if you repeat it, you can construct what is known as deep neural network.
+[342.0:358.0] So a deep neural network that has all the high is essentially this structure repeated for several layers along with some inductive biases on the X matrices and the learning process.
+[358.0:361.0] Any question up to now.
+[361.0:374.0] Everything is clear with this equation that you saw on Monday. This is just recoupping the equation that you saw on Monday, but everything is going to build on this equation. So if you have any question is better to shoot now.
+[374.0:376.0] No.
+[376.0:379.0] From general monitoring the chat.
+[379.0:381.0] Okay. Great.
+[381.0:382.0] Okay.
+[382.0:389.0] So how do you learn X one and X two? Well, this is the topic of we start discussing now.
+[389.0:399.0] And we use here some very well known methods that is a back propagation to learn these things.
+[399.0:404.0] So we will assume that we have a first order method and we need to compute the gradient. Right.
+[404.0:410.0] So you can assume that we have some loss function. We're going to see complete examples later today.
+[410.0:421.0] And we iterate through our function age. Right. So as a reminder here is the function age a is your input data.
+[421.0:428.0] And X are your learnable parameters. Right. So X one, X two, new one and new two.
+[428.0:434.0] And you iterate over your training data and you construct equation one.
+[434.0:450.0] And this is the needed for the computations, the gradient to give you a signal of how to optimize your parameters. Right. So this is one specific example of how to do this when you come to square loss.
+[450.0:452.0] So this is a square loss.
+[452.0:465.0] So for every standard, we have one input that AI one output behind and we compute the square loss. This is a lie.
+[465.0:475.0] And then we compute the gradients with respect to our parameters. Right. So the gradient respect to X two and the gradient with respect to X one.
+[475.0:494.0] And you see that two equations two and three share some structures. Right. So they have very similar components. For instance, the parentheses here, P I minus the output network is exactly shared in the two cases.
+[494.0:514.0] Can everybody see this is there someone that cannot see this? No. Okay. So this means that basically we could do something smarter rather than compute every single equation alone.
+[514.0:529.0] Which is what I'm going to show you in the case that we do the computation in a discrete machine like the computer. Right. So equations two and three look fine, but actually what happens is the following.
+[529.0:542.0] So assume we we have one layer here. So a L minus one here is your input in the case is the first layer or the output of the previous layer in case we have several layers.
+[542.0:552.0] And I'm going to highlight how this computation happens. So first you multiply with XL and you get the first output. Then you add the bias and you get you.
+[552.0:562.0] Well, which is the pre activation features. Then you apply the activation and you get a L right and then you can use a L.
+[562.0:574.0] Essentially, the input here for the next layer and so on. Right. So this is the forward pass. So this is given the input data. I run the neural network to obtain my outputs.
+[574.0:582.0] Which can be for instance the class or the whatever the output image I care about.
+[582.0:592.0] And now for the backward, I need the gradient right. And to do that, here is the exact computation of the gradient analytically.
+[592.0:609.0] So assuming I have the output that was AL in my slide, I need to go. Right. So this is the forward pass. I need to go the opposite direction for the backward pass for propagating.
+[609.0:628.0] Why do I need to go backwards? Someone to find a few that have run neural networks. Why do I need to go this way of getting the gradient?
+[628.0:647.0] Yeah, because of some table. Yes, I do use the table, but where is my loss? My loss is in the output right. So I have the value in the output and I need to propagate the output the value of the output backwards.
+[647.0:649.0] Do we agree?
+[649.0:662.0] Okay, so we starting from the output, I start going backwards. So I'm going to assume that I have this gradient from some previous computation.
+[662.0:677.0] And I now I need to compute these three values. So essentially what I care about is these two to learn the parameters and the third one I care for propagating further backwards to the previous layers.
+[677.0:693.0] So these are the analytic expressions of how you can do this. Essentially here is to a equal here, we just use the previous input to this precise layer.
+[693.0:708.0] And here is the last piece, which is how I compute the gradient with respect to well. I remind you that you were was the pre activation features, right. So just before applying the element wise activation function.
+[708.0:732.0] So I get you and maybe simple computation remember I have this I have this or I can compute this I apply the chain rule and once I obtain this, this is actually the same. So these are equal and then I can multiply the previous input and I can get my my result, my gradient with respect to X of L.
+[732.0:746.0] And this symbol is obviously like they have a lot of products. So element wise for the high multiply the element I, the first vector with the element I of the second vector.
+[746.0:764.0] And using this, this, you know, degrading the respect to you. I like also compute this gradient and now you see that's why I gave you this and like says this is given right. So once we have this, we can use this for the next iteration.
+[764.0:781.0] So it's simply few gradients and here is the schematic of this how this can happen. So remember, we assume that this is given and then we do a couple of very simple computation to compute the gradient with respect to you.
+[781.0:795.0] Which is the same as the gradient exactly with respect to M. And then we multiply with the previous input. So a of L minus one was the input I gave this layer.
+[795.0:813.0] So I'm to obtain the gradient with respect to effects of L and then I can do one more computation, which is a multiply with X of L. So my current parameters to obtain the gradient with respect to the previous inputs.
+[813.0:835.0] The, the, the, you notice that the structure I have is recursive and it can be computed very with a very simple computation. But it requires that I save some values. Right. So for instance here, I needed to save this one.
+[835.0:852.0] And of course, these are the parameters that I already have. So in the forward pass is not enough to get the lost function. I also need to save these intermediate values that I need for the backward pass.
+[852.0:868.0] And then during the backward, I compute all these additional derivatives that are both with respect to the parameters I care for optimizing and with respect to the inputs for propagating continued, continuing the propagation further.
+[868.0:883.0] The computation of this one with the naive derivative is quadratic with respect to the number of layers. So you see here the two formulas that give us a simple complex in the two cases.
+[883.0:895.0] But I can use the back propagation rule. I just share to make this linear with respect to the number of layers. Of course, it is still quadratic with the number of neurons.
+[895.0:911.0] So this is how you would normally compute the gradient if there wasn't automatic differentiation. Right. So of course, nowadays, deep neural networks do not have two or three or five layers. Right.
+[911.0:933.0] The minimum you have is tens of layers, usually hundreds of thousands of layers, which means nobody can write all the derivatives, or at least I believe so by hand. So for this, we have hopefully some tools that help us do this job of computing the gradients and optimizing over.
+[933.0:946.0] And actually, we can use these in all modern frameworks. So the math degree differentiation refers to this computational techniques that computes this exact gradient for us.
+[946.0:953.0] And it can also have certain benefits with respect to the computational complexity.
+[953.0:965.0] So for instance, here is one example of how we can be done. So assume we have this function on the top that is very simple functions demonstrate the point.
+[965.0:980.0] And we want to evaluate this at the point two five. So X one and X two are X one is two and X two is five. This is the forward pass. And this is the backward pass. Right. So focus please here for few minutes.
+[980.0:993.0] Here is the breakup of the computation. So if you see, it starts from the two inputs, remain term as VI for reasons of computational graph.
+[993.0:1005.0] And then it does a couple of very simple operations. Right. So first, it computes the logarithm with respect to X one, but we care about then the product and then the soil.
+[1005.0:1019.0] So it's respect to X two. So these are two V one V two and V three. If we are them together is essentially our is the function at with care about now.
+[1019.0:1031.0] The thing is that we don't simply add very one plus the two plus the three like it just breaks into two operations because it's easier to do the backward pass afterwards.
+[1031.0:1046.0] So they want to last the two and then it's using this result as we find. So all of this is done automatically in frame, like in this modern frameworks, you pass the function out without care about and it constructs is automatically.
+[1046.0:1061.0] So it gives you the expected out and then remember we need to go backwards. So we start from these results and we reverse we exactly compute the gradients respect the parameters of the care about.
+[1061.0:1078.0] So starting from the five that was our output, we now want to the previous one. So we care to compute this before, which is a gradient of five. And we have this values. So we have the values here.
+[1078.0:1096.0] We can replace here similarly with we compute the gradient of V five. So this one respect to three. Right. So this gradient should be minus one. So we have the value minus one and then we have the value for the file of was our output.
+[1096.0:1107.0] And we continue to back propagate upwards. Any questions.
+[1107.0:1131.0] If we follow this computation, the output is like the data is sorry is computed using the table rule and we get in the end to be expected a gradient with respect to all the parameters that we care to optimize.
+[1131.0:1144.0] And also the respect the gradient with respect to the final function that we wanted in a new medical manner.
+[1144.0:1166.0] So the details here you can see later with the slides, but what is important is that in modern frameworks when you care for this function and you care to optimize this function breaks the computation in a couple of different small steps.
+[1166.0:1179.0] It's it's a very simple computation for the computer and it knows what the gradient of this computer. What the gradient of this computation is so that it can do the backward pass.
+[1179.0:1199.0] So here is very simple operations each one for instance this plus like this addition is trivial the same same for the sinusoid and it knows the exact computation of the gradient when it needs to do the backwards pass and this backward pass then is a way that we back
+[1199.0:1210.0] to the gradient in a very efficient manner. So that's actually a linear with respect even with the new rules.
+[1210.0:1225.0] So auto grad and this way of computation is very efficient for the construction of the computational graphs which are something that the digital networks rely upon for the learn.
+[1225.0:1238.0] So all these frameworks that we are going to see in a bit for instance, PyTorch or TensorFlow that you might have written rely on the construction of automatic construction of a computational graph.
+[1238.0:1261.0] So this essentially just means that even though you construct a layer what it does underneath that it breaks this down into very simple operations that it knows then how to do the backward pass when it is time for training or when someone trained.
+[1261.0:1290.0] Of course there are many frameworks out there that do auto grad so in case you are interested there is some version of auto grad that is very easy to do and build upon as you can find open source on GitHub and there are of course a lot of advanced applications for instance differentiable graphic rendering that are available nowadays as open source in the code.
+[1290.0:1311.0] And yeah there was a question no okay perfect okay so are there any questions after now this will this last part will be writing essentially code for PyTorch.
+[1311.0:1323.0] So are there any questions up to now.
+[1341.0:1348.0] This is the last right so we assume for it for it for easy computation that we have one.
+[1348.0:1365.0] Like you can't like you can't tell how to value here you need to compute some loss so assuming we we made that one for like is of computation because it would be like we have 0.652 here we messed up on the computation.
+[1365.0:1376.0] And then like where do you go by and why do you compute it like that and then we put it to the other side to get this.
+[1376.0:1394.0] Yes so again what do you care about is that you get the full gradient of your method right so let's say you don't know analysis and you don't know what the hard compute for instance all of these all at once.
+[1394.0:1408.0] Or like let's say you are starting analysis and you want to verify this for the base and what this does is that we it should give you exactly the same method as if you do this analytics.
+[1408.0:1435.0] And the reason that we are breaking this before is essentially that we need this before in previous steps. So here I need if I'm going this way I need so I use B minus 1 and B0 to form my test to functions then I use it also for B3.
+[1435.0:1451.0] But before you see already depends on some derivatives I have right so depends on B1 and B2 like some computations or so I need this derivative to be able to find the derivative with respect to those.
+[1451.0:1478.0] So essentially if I could compute in one row that the derivative with respect to this to I wouldn't need all these intermediate derivatives but I need this intermediate derivatives first of all because in the case of neural network I will have intermediate parameters but even in this case I need them to be able to compute this final derivatives.
+[1478.0:1496.0] Okay let me ask the following question. How would you compute this 0 without calling V4 and V8 would it be possible?
+[1496.0:1514.0] I am assuming that the process is actually inverse but V4 bar so it is derivative with respect to B4.
+[1514.0:1529.0] No no this is simply in a patient.
+[1529.0:1547.0] So I care to get like the derivative of this, the derivative of this and so on. So to get the derivative of this I have V5. So how can I get this?
+[1547.0:1564.0] So remember from the equation here right so the first step for this only.
+[1564.0:1579.0] I have from the chain rule the derivative with respect to the previous case. So that's why you're getting this V5.
+[1579.0:1596.0] And then you're doing a bit of respect to V5 because of this. This makes sense. So okay without seeing the right part.
+[1596.0:1614.0] How would you say that the derivative of how am I getting V3? When does V3 appear here? V3? Yes V5 right. So to get V3 I mean the derivative of V5 with respect to V3.
+[1614.0:1636.0] V3? Is simply there are some like so if you get the derivative you cannot always get all the additional derivative.
+[1636.0:1650.0] So if you try for instance to get these two or like a derivative of some other variable it doesn't depend on the constant with respect to this V0.
+[1650.0:1665.0] So to get to this I have the dependence that I'm getting V5 to compute V5 I mean V3. So the opposite to get V3 like the derivative of V3 I mean V5.
+[1665.0:1693.0] So to form this into like essentially a neural network that you go forward. So you can think that this is going slowly from the left to right to go backward I need all my dependencies like the derivative with respect to all my dependencies.
+[1693.0:1704.0] Any more questions?
+[1704.0:1727.0] Yes so this is a computational part so essentially the language that we have in the next few slides is PyTorch but of course PyTorch is not the only language sorry not framework not even language like all of them or almost all of them depend on Python nowadays.
+[1727.0:1738.0] So there is TensorFlow there is MXNet and there is of course like a framework in Julia there is also cafe that used to be popular few years ago that was not.
+[1738.0:1758.0] So we can use it in Python and we recommend PyTorch because it has the largest community and the largest support nowadays. So all the next examples are based on PyTorch but of course you can use them or translate them to your favorite framework.
+[1758.0:1771.0] So in this slide we have a question how many of you have used PyTorch before? How many of you have trained in networking PyTorch?
+[1771.0:1794.0] Okay so this slide for those of you that have seen it should be trivia and there will be one mistake in this slide so for those of you that know exactly what PyTorch does please let me know when you see that mistake.
+[1794.0:1810.0] Okay PyTorch can be or many of PyTorch commands the simple commands can be similar in structure with NumPy which is another library for numerical operations in Python.
+[1810.0:1830.0] So you can define some random numbers here you will define random number with that shape which is essentially TensorFlow for the other pencil here you define random matrix.
+[1830.0:1847.0] So this operation in PyTorch is as well the multiplication you can also permute the pencils the pencils dimensions, reshape and flatten or matrix size depending on the size that you want in the right.
+[1847.0:1865.0] These are very simple operations that you can refer to later when we want to implement something. Here is the first example of autograd that I refer to in a computational manner here is how simply it is actually with modern frameworks.
+[1865.0:1894.0] So you can import PyTorch of course like in this example we are going to import it and was from is like written as pity we define some random numbers X and V and assume there is gradient here this is us for like dummy example case to show you the rest of the part which is the forward pass that we were mentioning so we do a matrix multiplication X with the vector V.
+[1894.0:1912.0] So you sound to get like to your loss in the end you do the backwards and that's the that's how simply it is nowadays to compute the automatic differentiation that took some time to explain.
+[1912.0:1925.0] Did anybody spot anything so far everything is correct here.
+[1925.0:1953.0] So this is the way this is literally the simplest way of writing the backwards because this line and usually this is how we also call it in in PyTorch in no matter how complex your network is because of this computational graph that is automatically constructed.
+[1953.0:1970.0] This is one issue but there is another issue but I will let you use what it may be later when we get to the part that you need to do for you if you want you can do implementation.
+[1970.0:1996.0] So there are several APIs nowadays in PyTorch that you can use to define easily your neural network and here is the simplest example of this so essentially we are defining one class bias that it does nothing more than add whatever variable we fill it in some bias which is a learnable parameter.
+[1996.0:2025.0] So this is the way that you define something that is learnable in PyTorch and of course here it has some vector dimension but it can have arbitraried dimensions if you want and the way that the API written is that if you call it as an instance of this ppm module so PyTorch neural network module and then you call the function it learns that initialize everything.
+[2025.0:2042.0] But by default it threads up this parameter that is a very quiet graph so usually if I remember correctly this is not required in case you have done the two steps before.
+[2042.0:2058.0] So one question if we call it for instance it is three lines so we initialize like this a and then we call the bias class we just define.
+[2058.0:2087.0] So what is the dimension of the output without running this what would you say what does this resulting.
+[2087.0:2107.0] And actually yeah maybe this is a good point to take a break and then we are going to see a couple of layers so usually how much for me until when is the break.
+[2107.0:2122.0] So we break is normally yeah so five past 10 please we continue.
+[2122.0:2142.0] Sorry Volkan we cannot hear you I think you cannot.
+[2142.0:2171.0] Once again we started with this module API in PyTorch right so we wrote a very simple class that inherits this PyTorch neural network module and once we call the init then basically we can define parameters or modules and then PyTorch knows how to construct the computational graph which means that we get for free the grade.
+[2171.0:2199.0] So it knows how to get the gradients for essentially it knows how to do the learning with back propagation and then typically we have also this forward part that we write explicitly which operations we want to do here it was simply the operation take a vector a that is fed as input and add some bias that is a learnable parameter.
+[2199.0:2226.0] So I'm explaining this because the next part is giving you the tools of the deep learning frameworks or rather the most useful layers so the next few layers activation functions and losses that will give you are really the building blocks for really any deep learning system at the moment.
+[2226.0:2243.0] So the first one is the linear layer which is the extra one and text two variables in the first few slides right so this is what we refer to as linear layers and you can see here the precise expression of the linear layer.
+[2243.0:2266.0] And now we will be I will be giving you some time to think how to modify this class to implement this linear layer so essentially what type of modifications do we need to do here and here in order to be able to implement this function.
+[2266.0:2294.0] To answer this could somebody answer what was the bias that we already had implemented what it was the expression of the bias function that we gave you above exactly so we didn't have exo fail right so now how would you modify this code to include exo fail.
+[2294.0:2309.0] Take your time maybe and then building on these tools I want to construct the class of linear layer.
+[2309.0:2337.0] Yeah, yes, but where does this text so the comment was that we multiply a time sex plus the bias but if you do this my question would be pie torched with the with raising error.
+[2337.0:2357.0] So you need to define an ex that also has a gradient attached right so you are able to back propagate through that and what is the tool that I just mentioned that is able to do that in pie torched how would you write that in pie torched.
+[2357.0:2372.0] Yes, you define a parameter yes, yes, of course, of course, that's why I am we're discussing this.
+[2372.0:2389.0] I mentioned that that's absolutely right for for claiming not to know pie torched I think you would already write it correctly.
+[2389.0:2409.0] So it's absolutely correct so basically you define a new parameter so self dot linear or something like this pt and then parameter and then instead of one dimension that you have for the bias you give to one for instance M so the first dimension and then one second dimension that has to be the same as this one.
+[2409.0:2423.0] And then you also requires grad equal to that is just to track the to add it to the computational graph and be able to have the back propagation afterwards.
+[2423.0:2451.0] So this is the first layer most of the time we actually don't need to implement this this is already given in pie torched and those of you that have used it is very likely that you have used this torched and linear which is exactly the implementation of this linear layer in pie torched and what we are referring to as MLP is essentially stacking several of those with activation functions.
+[2451.0:2478.0] Right and the missing components here is the activation functions which is exactly the next part that I'm going to refer to and essentially these are non linear functions that allow us to do to achieve high expressivity when writing neural networks right so if we don't have activation functions and we simply have the matrix multiplication essentially the linear layers.
+[2478.0:2506.0] Even if we have several linear layers the output would be a factor linear layer in the end if you if you don't have activation functions right if you do have activation functions these changes and we are able to express and achieve high classification accuracy or high like very good generation results with the activation functions and what are these activation functions well usually their element wise.
+[2506.0:2535.0] So this functions that can be as simple as this max function that you see here which is in fact one of the most popular activation functions using practice so what does this say this says that it takes one scalar number X and it does one very simple operation if the scalar number X is bigger than zero it leaves it as is if it's less than zero it just output zero.
+[2535.0:2562.0] If you plot these essentially for any negative value it gets a value zero and for any positive value is just the identity function so this is currently the most popular activation function using deep learning one other that was used to be popular in the past but nowadays it is not used as much is the sigmoid function that you can see here and in both cases.
+[2562.0:2591.0] So this is the activation functions take one scalar number right so this is in contrast to the previous case that we had some the linear layer was acting in the whole vector in the whole input vector and the bias was also a vector this is acting in every single element independently right so this is the full network that sorry the full one layer network that we had in the first
+[2591.0:2619.0] slide and here like some people like to refer this as the short deep neural network like my colleague that wrote the slide here but actually this is just one hidden layer it was traditionally referred to as one hidden layer neural network and this activation functions are typically implemented in
+[2619.0:2646.0] Python you can find for instance the relu and the sigmoid already implemented so you don't need to do these operations by yourself and then the question is how would we generalize the previous case to implement now a full MLP remember a full MLP means that we have at least two layers interleaved with activation functions.
+[2646.0:2675.0] So you can assume that we have the self dot linear that we wrote before we just explain few minutes before how this self dot linear would be included here so essentially we define the self dot linear as a new parameter which is a matrix and then we multiply a with X and we leave the bias the same now how would we generalize this to include number one the activation function and possibly more layers.
+[2675.0:2696.0] Like the answer is yes but I don't know if we mean the same thing that's why I'm asking what recursive do you have in mind.
+[2696.0:2707.0] Sorry please speak up on you.
+[2707.0:2728.0] I was thinking about like recursive function that every time I think my.
+[2728.0:2757.0] Yes yes yes so yes this is the way that actually many times we implement things I certainly use this a lot so one solution would be that you include the for loop here and then essentially in this for loop you define you have a for loop that runs in the number of layers that you want to define and every time you develop like you.
+[2757.0:2777.0] And you lay the is layer you define a new module like this with calling it with parameter and then the dimensions that might change actually and then during forward you write another for loop that calls this.
+[2777.0:2788.0] This a times X i plus bias in the for loop and then calls the activation function afterwards.
+[2788.0:2816.0] So this is essentially the simplified version without the for loop that just computes a simple MLP to layer one where we have an activation function here defined as relu and we do the very simple computation here.
+[2816.0:2841.0] The question is what is should be instead of the lambda functions here is we need again matrices right so the like we need the linear operations here so what what is the taught the pie tors command that implements the linear layers.
+[2841.0:2869.0] Yeah so you you can readily replace I think this code already runs if you run it but if you replace this lambda function with tors and then linear and then the dimensions for instance deem and hidden deem for the first one and hidden deem and output deem for the second one you implement the simplest MLP that you can get and the question is what is the dimension of the output here.
+[2869.0:2894.0] So let's just be out there.
+[2894.0:2900.0] Why and which case are you answering with the lambdas or with torschen and linear.
+[2900.0:2910.0] So if we replace the lambdas with torschen and linear or if in the lambdas case.
+[2910.0:2926.0] But if we use torschen and linear and we suppose to also pass to that function the dimensions or yes.
+[2926.0:2946.0] So we will think both.
+[2946.0:2962.0] I have already added them into google collab to get our answer. But before that let's see one last component which is the loss function and then I'll just build them all together and show one final use case.
+[2962.0:2984.0] So loss function is I assumed in the beginning of the lecture when I was saying that we have some loss function that someone gave us and the task sometimes already defines the type of loss function that we need for instance here you can you need to classify the data as disease or healthy.
+[2984.0:2999.0] Or which is known as classification so we have a script number of outputs that we care about or on the right here you have a continuous output which is you need to predict some values.
+[2999.0:3023.0] So these two might already dictate what types of losses you can use in each case and for instance one very popular one for regression is the means where error while for classification one very popular one is the cross entropy loss that you can see the expressions of these two already.
+[3023.0:3036.0] And of course as many components that are well used and known in the literature they're already included in Pytor's right so he don't need to actually implement these by hand.
+[3036.0:3065.0] So what is the goal what can we use this for of course we use them and they are critical for defining where our function should head towards right so if we define that we need the mean square error then it will try to minimize the values that are far away from the target values and this will lead to different types of signal than if we have mean absolute.
+[3065.0:3086.0] Error in the back propagation and similarly there are many more losses that you can find in the literature if you care for these and of course implemented into Pytor's but for now we will just use these two basic ones in one example shortly.
+[3086.0:3115.0] And before I move into convolutions let me show you these examples so for those of you that haven't seen this so if you go to drive and you do new more Google call up is just in plus that to open a new Google call up that essentially allows you to run in Google servers some computation so it opens this Jupiter notebook and there you can write Python or I'm pretty sure you can write.
+[3115.0:3131.0] Other languages but for now we're just going to use it for Pytorch so these examples are copied from the lectures and they give an answer to the question that we had before so this is again the bias.
+[3131.0:3160.0] The bias class that we had and I used exactly the same numbers and print here the output rights and you see here that as we said before the output is 10 and 5 and here is what it looks like if you print the output with some random values because we initialize randomly and what is interesting is that you see this especially if you want to do this.
+[3160.0:3188.0] Especially if you write in Pytorch or Pytorch like frameworks you see this grad the fan right so this is how Pytorch let you know that actually there is some method that we are tracking the gradient of this one and this add backward already tells you you will see that essentially it just means that we have the backward of the addition.
+[3188.0:3216.0] So when you see this grad the fan function it usually means that you have this gradient attached to this module to this output right so if I put a loss and then back propagate this is a module that enables that and then this is the second example that I showed a few minutes ago I just replaced the lambdas with the bias term.
+[3216.0:3245.0] And wrote here the loss function as the mean square loss right so this is one full example where essentially we define to one class right it includes from the Pytorch and then module and then we initialize this class just to be able to call these requires grad and all these other modules Pytorch has.
+[3245.0:3274.0] And then we define these instances of the bias class that was simply adding a number to whatever we had as input and then the dimension of this right so of course you can replace the bias here with any other class or module that you care about and then you are in the forward you define what you care about for self mode one and self mode to or any other.
+[3274.0:3300.0] Operations this is this is doing right and then we just define to random numbers we instantiate the model and then we use this line here to say that we are going to use the stochastic gradient descent to optimize this with this learning grade right so when we pass this model that parameters.
+[3300.0:3317.0] Pytorch feeds all of these parameters into the computational graph and knows what to propagate what to learn with back propagation when you call when you call this optimizer set.
+[3317.0:3337.0] We call this with the input a and we obtain the output then we use the random values be as our target we obtain a loss and then we do the backward calculation and we make a step for the gradient is there a question.
+[3337.0:3350.0] And now let me revert back to the convolutional neural networks.
+[3350.0:3379.0] Okay so so far so good what is missing well what is missing is that these linear structures do not well work well for images beyond some dimension it did work well for images of very low dimension but it turned out that after some to make progress beyond some accuracy we needed to use some.
+[3379.0:3397.0] Further inductive bias so essentially some structures that were better fit for images and these are exactly the convolutional layers right so you saw Monday the idea behind convolutional layers let me remind you so if we have an image so as to many
+[3397.0:3423.0] words can be represented by third order tensor where we have some channels some height and some width and then sorry then this image we can consider it as a number of patches right where each patch is a 2d patch high times width or kernel times kernel.
+[3423.0:3440.0] And then we apply essentially for each such kernel times kernel one fully connected layer right so sorry.
+[3440.0:3469.0] And convolutional layer can be thought of as applying a matrix multiplication in a patch of the image where we have we get the inputs depending on the kernel size and then we repeat this in a sliding window right so if we have one image that is 100 by 100 and then we have one kernel that is 10 times 10 we slide this kernel
+[3469.0:3495.0] throughout the image 10 times and then we continue that in the next set of rows. Of course in practice, convolutions have a little bit more details for instance how many like what's your step size from one sliding window to the next or whether we also down sample to get the next layer and we also enable several
+[3495.0:3515.0] several outputs to be several output channels so we the convolutional kernel has actually four dimensions the height width of the kernel the input dimensions and the output dimensions right so it's a four dimensional tensor.
+[3515.0:3539.0] And here you can see how the how the convolution operation looks like and in fact when you go to the modern deep learning frameworks you figure out that as convolutional layer they they compute the cross correlation operator.
+[3539.0:3562.0] And basically this is again already included in the fighters as convendi where and the can be 1d to d or 3d and this is very frequently used or was like the state of the art until very recently into images, images, like structure.
+[3562.0:3571.0] Any questions for images or convolutions in particular.
+[3571.0:3592.0] Because recently there is another class of function that seems to perform at least as well as convolutions and doesn't actually use convolutions so it's a very interesting development.
+[3592.0:3614.0] But for several years actually and all the default benchmarks are using convolutions these class of functions actually the latest understanding I have and I think the latest that has been published can only benefit in very, very large scale type of data sets.
+[3614.0:3643.0] So for data sets such as needs cipher all these typical data sets that we use that have up to few million data samples convolutions indeed help a lot but when like Google had trained some networks for hundreds of millions or billions of data points they claim that they have a structure that works better than convolutions.
+[3643.0:3648.0] Anything else from convolutions.
+[3648.0:3666.0] Okay so this is exactly the example I showed in the Google call up and putting it all together and showing one use case of training and natural neural network for a task.
+[3666.0:3680.0] If someone who has experience with pytorch can you guess what this network is doing before I explain.
+[3680.0:3706.0] Yes for what. So miss data set is one of the toy data sets used widely in the literature and you can see here it is already included in the one of the torch packages so you can import it very simply and then here we use it to load data from.
+[3706.0:3726.0] So needs transform the tensor just transforms the image into a format that is that is the same as the one that pytorch requires and then we create this data loader that fits the data a B.
+[3726.0:3750.0] And then apart from the data loader and miss here we define the model so we use the nested model class that I showed few like in Google call up and I will return to it shortly with dimension 784 why 784 because this is 28 times 28 which is the dimension of miss.
+[3750.0:3777.0] Then we define the optimizer so we use a simple as you do for this where we use the network dot parameters some learning grade and then we are going to use cross entropy because we care for digit classification so miss includes these to the images that have symbol digits from 0 to 9 and they are classified obviously in 10 classes.
+[3777.0:3806.0] And we care for learning this network to predict what digit it was fed right so given one input image we have we define a network that is an instance of this nested model and then we expect the network to learn to predict what digit this image represents and this epochs is just the value used here for how many times should run.
+[3806.0:3834.0] So this is exactly the simplified version that I have changed slightly the parameters made it 10 epochs instead of 100 and also track the losses right so this is exactly the same code as you have in the slides with 10 epochs and tracking of the losses right so if you yeah is the question.
+[3834.0:3859.0] So if you run this you will see that this is what you get what you obtain with the losses so it starts from a very high loss and then it's decreasing decreasing decreasing until some point that you get rather stable loss and there is one for this.
+[3859.0:3887.0] You will see that it stabilizes around 2.4 and the reason that is not reducing even third day is the nested model that I have defined right so what is the nested model that I had defined which is the network right so I define simply the bias so I would ask now how I would modify I could modify this in order to be able to
+[3887.0:3916.0] use this class and train more effectively how would you improve on this here I just do addition right so I get some input so some 784 so remember the Dean when I use this class is 784 and I define simply this operations for the network with the bias class right what would be some obvious.
+[3916.0:3930.0] Some obvious improvements to modify so instead of simple addition that is the bias them what else could we do to strengthen the network here.
+[3930.0:3954.0] So essentially define an MLP right is this clear to everybody that if we add these modules we would get at least something better than a distance.
+[3954.0:3969.0] So in the I'm not sure why I cannot write maybe I can close this.
+[3969.0:3992.0] So anybody wants to take a guess on how this will become exactly you remember what the linear layer is.
+[3992.0:4004.0] Yes.
+[4004.0:4024.0] Let's see if we can run this.
+[4024.0:4050.0] And in the meantime in the reminder of the time if you want we like you could modify these example from your slides to write a convolutional network and you need to do if you want to do I mean a couple of changes in the number of layers in the sorry in the type of layers that you have.
+[4050.0:4058.0] Okay this seems to be running so.
+[4058.0:4082.0] No this is what.
+[4082.0:4107.0] And I'm going to let it let this run for a while in the meantime if you want to implement this as a convolutional network what would you change what is the difference between a convolutional network and the linear network.
+[4107.0:4112.0] Is it clear yes.
+[4112.0:4136.0] Yes the layer but what else apart from the layer what is the so I skipped a few steps so that we can discuss now about the convolutional layer what did I assume here so the the a dot view one minus one is a pie tortu of way of flattening the tensor right so.
+[4136.0:4163.0] If you remember if we have an image typically it has channels he height and width right so it's a third order tensor and then we also have the now the batch size so essentially is a fourth order tensor right but here what I do is with this command I can flatten this tensor into batch size and all the rest.
+[4163.0:4192.0] In the case of me means 28 times 28 because it's great scale images so it has just one channel so essentially I feed in one 784 vector times the batch size so in this case what I'm feeding into the network is something that has a batch size times features should be 784 right when I want to.
+[4192.0:4212.0] To run convolutions I need this 3D structure that has channels height times width so what is the second thing I would need to to do to get the convolutional network working.
+[4212.0:4228.0] Define the kernel yes this is defined here so instead of pt.nendot linear I would need to replace the linear part yes and what about the data.
+[4228.0:4241.0] Do I still need this operation no so I don't reshape them into something that has just 7884 because I'm not going to do this.
+[4241.0:4269.0] I want to keep the structure I want to keep it in an 80 28 times 28 or whatever your height times width is so in this case we you need to modify this dot view and delete this dot view and also modify this dot linear is there some other change that we would need to do.
+[4269.0:4284.0] What is the the bias what type of how many dimensional pencil is it.
+[4284.0:4313.0] One dimension actually has one one dimension only right it's a vector so while a now is going to be a two dimensional right matrix so here is not exactly this operation.
+[4313.0:4333.0] Pytorps does figure it out I think even if you feed in matrix and the vector how to do this I think it replicates the vector but this one you need to check in some case pytorps allows in some cases doesn't depending on the type of operation.
+[4333.0:4348.0] In general we don't feed in directly the bias in the case of the convolutional network because if you implement this calling the dot convolutional dot com.
+[4348.0:4359.0] Pytorps will already include the bias for you so it it simplifies the operations that you need to do.
+[4359.0:4375.0] Yes, I was going to do what we're running out so we're doing this location right yes and we tell it so our model the number of classes.
+[4375.0:4386.0] It's not the other that discuss also set the date.
+[4386.0:4395.0] Do you understand the question so the question was how many classes does miss have 10 right.
+[4395.0:4415.0] Do I feed anywhere the number 10 so this is the so this is the network that I'm using the call I'm using and this is the function I'm calling the lost with so technically only these two parts.
+[4415.0:4423.0] Should know or at most know the 10 output classes that I care about.
+[4423.0:4444.0] The number 10 is not defined here at all number 10 is not defined here at all and I have not hidden a number 10 here so what are they out dimensions.
+[4444.0:4473.0] So I'm running this just to show you okay here is downloading the data or something but I'm showing running this to show you that in PyTorps you can actually just get even.
+[4473.0:4500.0] Things that are not the things you want to running without no error because it's written in a way to be as flexible as possible so essentially what I should have done is output 10 classes right so it's a probability of like the output my prediction should be should belong in one of the 10 classes one of the 10 digits right because I'm feeding only a minute.
+[4500.0:4529.0] I know that there will be only 10 possible answers right and instead the output has 784 dimensions so obviously this is not going to work if you try the convolutional approach because they are it will not have a so if you just replace this and this with convolution it will output something that's a two dimensional so in this case.
+[4529.0:4541.0] Fighters will fail but in the case of linear it allows you to run even if you don't have a matching in the output.
+[4541.0:4553.0] Is it is this clear or shall I repeat this this is very important when you start writing quite or maybe even more important and figuring out the layers because these layers.
+[4553.0:4567.0] You can figure out by several tutorials but these are some of the things that I have personally suffered several hours debugging exactly these losses.
+[4567.0:4594.0] So is it clear why what should have been written differently and what is currently the reason that I cannot get 97% in in with this simple example other of course that it is a very very simple neural network without an activation function.
+[4594.0:4618.0] So let me recap this for you so here we are defining a linear layer that takes some inputs and simply does a fine transformation right has a linear layer but I don't change the output dimension so essentially this is just a square matrix from the dimension D it goes dimension D.
+[4618.0:4644.0] Same for this one right so the output should have been 10 the output in fact is 784 but instead of like raising a network fighters doesn't complain at all just figures out a way to do some loss now what does this loss expressed nothing of course because it just doesn't.
+[4644.0:4660.0] It assumes that I have a 784 probability instead of a 10 possible probability 10 possible answers right so things get better if you implement convolutions because of the structure I think I thought will fail.
+[4660.0:4679.0] So you should be very careful when you change here the to come to the students just be dem and dem but it should be projecting into a 10 dimensional and what is the next change that you need to do with convolutions so.
+[4679.0:4708.0] Convolutions take in an image and what is the output of the convolution given that we have a patch that we have a kernel that takes the patch and does a fully connected is sorry and a fine transformation centrally per patch and then it goes in a sliding window manner in the rest of the image what's the output of the convolution.
+[4708.0:4712.0] So an output in the case of a linear layer.
+[4712.0:4728.0] It inputs a vector and it outputs a vector in the case of convolution the input is an image and the output.
+[4728.0:4756.0] It's another image so the input to the convolution is an image the output is also an image potentially is not necessarily downscaled potentially downscaled but also upscaled if you use transpose convolution or you can also leave it in the same exactly dimensions but the important thing is input is an image output is an image right so here in the end essentially you need the way.
+[4756.0:4782.0] To transform the image into something that you care about which in this case is a 10 dimensional vector right and the way that one way that this can be done is that you reshape and then you have a linear layer in the end right so for instance if I would replace this with com.
+[4782.0:4787.0] I believe it is.
+[4787.0:4795.0] I would need to do something like view.
+[4795.0:4815.0] But size which is. So you know minus one and then possibly also have a layer here and a fine transformation here to project to 10 dimensions.
+[4815.0:4830.0] Is there a idea clear or do you want me to clarify how you would transform this to a convolution.
+[4830.0:4859.0] Is there something from the chat that we should address. Okay. Okay. Okay. So basically if you didn't follow the last few minutes we were just transforming this example from this nested model that was simply an mlp to a convolutional network right and there are some things to do.
+[4859.0:4865.0] There are some things to keep in mind even when you transform the convolutional network you need.
+[4865.0:4881.0] There are some new and factors that you need to keep in mind and also most important of all keep in mind that by torts sometimes less you do sneaky things like for instance get an output that doesn't match with your error but it doesn't complain about this.
+[4881.0:4890.0] And this has co this can cause several hours of debugging because the losses is meaningless if you don't project in the right dimensions.
+[4890.0:4895.0] And other than this this very simple.
+[4895.0:4924.0] So if you exclude the in the if you exclude the imports that is is enough for you to learn a digit class fire right so this is the magic if you want of modern frameworks that they allow you to write code and neural networks with very few lines of code and also training it easily right so for instance if I let it run for one hour in Google call up it will reach performance over 90.
+[4924.0:4950.0] In this is over 90% in miss right okay someone would argue that miss is not such a difficult data set but regardless it is still easy to change miss with fashion is for cypher here and train the same exactly model with that right so yeah question yeah okay.
+[4950.0:4976.0] And with that there are a few references and one last thing is that we have added some additional things here after the reference is for you if you want to take a look into why because essentially what I was referring to all this time was I was assuming that we have a static input right what happens if we have a cohesive input for instance a video audio time series in general.
+[4976.0:5005.0] So there are a number of players and the number of additional structures that we care about for instance what if we don't have an image but we have a grid that is not as canonical as an image right one pixel next to each other or like one row and another row and so on so there are several other structures that we care about and these few layers I mentioned might not be the perfect inductive bias for those.
+[5005.0:5023.0] And with that I think it's six o'clock so thank you very much for the attention and if you have any question you can come and ask.
+[5023.0:5038.0] Hello. The great weekend guys. I can't hear you can't see you. Oh hey can you not hear us.

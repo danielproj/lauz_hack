@@ -1,0 +1,300 @@
+~CS-451 / Week 8: Reliable Storage 
+~2020-11-09T16:59:24.645+01:00
+~https://tube.switch.ch/videos/96a6abae
+~CS-451 Distributed algorithms
+[0.0:10.0] Okay, so I believe I have, we can now start the class.
+[10.0:12.0] Good.
+[12.0:27.0] So today I'm going to talk about what is sometimes called a reliable distributed storage.
+[27.0:33.0] So this is something you might have heard about when you read stuff about the cloud.
+[33.0:39.0] When you hear about the cloud typically people tell you the cloud is first storage system.
+[39.0:50.0] Before it is an actual abstraction of a computer or remote computer that executes your application, it is first of all a distributed storage.
+[50.0:56.0] It is a storage that is distributed in the sense that of course you are not going to store your information in one place.
+[56.0:62.0] Your storage in several places you replicate the information in order to make it highly available.
+[62.0:71.0] So we talk about reliable to mean it is highly available and it somehow also consistent in in a way I'm going to talk about today.
+[71.0:85.0] Sometimes people mention replicated or even geo replicated cloud to mean, for example, that parts of your data or data of your company is stored in the US, another parts or copies of the same information is stored.
+[85.0:89.0] The information is stored in Europe, another is stored elsewhere.
+[89.0:100.0] And the goal is to make sure that the information instead of being in your computer is stored in somewhere else not only in one place but in several places.
+[100.0:106.0] And of course the ultimate goal is to enable you to get that information whenever you want.
+[106.0:114.0] Meaning that the information is highly available and furthermore, as if the information was sitting in your computer.
+[114.0:120.0] So you can see this imposed something on the semantics of the storage on the library.
+[120.0:126.0] And we are going to view this notion of distributed storage as another abstraction.
+[126.0:132.0] Just like we have seen causal broadcasts which is a specific abstraction consensus to the roller broadcast.
+[132.0:136.0] Here we are going to study the storage abstraction.
+[136.0:144.0] The best way to reason about the storage abstraction is to view it as a shared memory.
+[144.0:147.0] So a memory shared between different processes.
+[147.0:152.0] So in fact, it's as if the information stored in the cloud is something that is available to you.
+[152.0:160.0] But maybe it could be available to other people if you agree in advance that everybody is okay to share that information.
+[160.0:169.0] And processes in your machine are sharing the data in the cloud, but it could be several actually users are sharing the same information in the cloud.
+[169.0:184.0] So it's view of the mind, but it is an important view of the mind which is what the cloud stores could be viewed as the shared memory of your computer that is shared between different processes.
+[184.0:197.0] So those of you who are also following my class concurrent algorithm will see that what we are trying to do in this in this to what I'm trying to do today is bridge the gap between the two topics on the one hand.
+[197.0:211.0] We have machines all over the world, as I said, you're replicated on the other hand, we have the abstraction of a shared memory system which is the infinitely small if you wish what's happening inside the computer.
+[211.0:224.0] And it's as if and this is the main idea behind the cloud originally it's as if we want to take the view of what you have in your computer, which is a shared memory and put it all over the world.
+[224.0:228.0] Okay, so this is the original idea of the cloud.
+[228.0:245.0] In a way what we are saying is we would like to implement the abstraction on top of several computers all over the world, the abstraction of a shared register, which is what you have when you look at inside your machine.
+[245.0:262.0] So what is a register for those of you who know who have had architectural classes or classes about concurrent computing in my class they know but for the others know where it's very simple because we are going to define the API here.
+[262.0:274.0] Just assume that the register is a container just a file and for the sake of presentation here without lots of generality, the resistor contains integers initial initialize to zero.
+[274.0:282.0] So we assume that every value written in that register in that file is uniquely identified.
+[282.0:289.0] This makes the reasoning about correctness easier to this is not again without lots of generalities.
+[289.0:296.0] You simply assume that whenever you write something you associate a timing as an assumption with it, a time stamp with it.
+[296.0:324.0] It makes it unique whenever I say something I say it with the exact dates where I'm saying this given that I cannot say too many things at the exact time it makes the information unique also we assume that if if if a resistor is local to a process meaning it is inside my machine and only one process can access that register if we assume that that we know exactly what we expect from the register.
+[324.0:342.0] If I assume that the register is only accessed by my process or the file is only accessed by me that I know exactly that whatever I write in the file whatever I write in the register if I come and I read I will find the last value written.
+[342.0:360.0] So this is the semantics I expect from a fine system or a register if it is accessed by only one process. So if I have something in the cloud and I am the only one accessing that information then of course I expect then the last thing I have written is what I read.
+[360.0:372.0] If I if it's a container of an integer and I write zero and then I write one and then I overwrite and I write two this notion of overwrite then if I come and read then I expect to see the last value.
+[372.0:377.0] Very good. So this is what I expect if the register is local.
+[377.0:379.0] Okay, the abstraction of look.
+[379.0:405.0] So here is the the picture you should have in mind when we think about storage and registers we have operations read and write so here we are not in the abstraction we are not sending messages of course behind the scenes to implement this abstraction we will be sending messages but unlike cause and broadcast and total order broadcast and so forth where the abstraction talk about sending messages here.
+[405.0:416.0] So this is a abstraction just like constant. So if you want or atomic commit does not talk about messages it talks about writing so this is process p2 writing value five.
+[416.0:428.0] This is process p1 reading and what it reads if indeed this read comes after this right it will read value five and then p2 right value six and then this read with value six.
+[428.0:451.0] Now if this register that I'm talking about is shared by the processes what does it mean that it is shared I mean by that that I don't have a sequential execution where every operation here appears every operation executes after the last one there is no interleaving.
+[451.0:471.0] If it's concurrent then the question that one would ask is what do we expect what is the semantics that we expect in the context of cloud systems and and emulating we call that emulating shared memory in message passing systems we typically expect two kinds of responses.
+[471.0:481.0] The first one is what we call a regular storage and some storage systems today they provide this semantics.
+[481.0:489.0] We call it regular in the shared memory world we also use the same term and it's the same thing.
+[489.0:498.0] This semantics here of regular register is going to define to us one kind of abstraction here the abstraction is that of regular storage.
+[498.0:503.0] It is still only one writer so this is typically what happens when you have a web page.
+[503.0:507.0] There is only one writer of the web page the owner of the web page.
+[507.0:512.0] It provides strong guarantees when there is no concurrent operations.
+[512.0:519.0] Here concurrency simply means somebody's writing and owning my web page I write and somebody's reading.
+[519.0:527.0] There is no concurrency between rights because there is only one writer and I assume that the writer is single-trended it's one process.
+[527.0:537.0] When some operations are concurrent meaning when there is a right that is concurrent with some weeds then the register provides the following guarantees.
+[537.0:539.0] What are these guarantees?
+[539.0:547.0] The read returns the last value written if there is no concurrent or failed operations.
+[547.0:556.0] Otherwise in the case of concurrency it returns the last value written or any value concurrently written.
+[556.0:561.0] What is a value concurrently written? It's in fact the input parameter of some rights.
+[561.0:564.0] Okay so let me explain.
+[564.0:569.0] In the case where there is no concurrency the read returns the last value written.
+[569.0:571.0] Sixth five.
+[571.0:582.0] If there is no if there is concurrency meaning if there is any leaving of operations regularity says the last value written or any value concurrently written.
+[582.0:586.0] Okay let's see now.
+[586.0:588.0] Is this behavior?
+[588.0:594.0] So the behavior of a register is reflected by the values returned by the read.
+[594.0:597.0] The values returned by the right there is no value.
+[597.0:599.0] Simply write five you get back okay.
+[599.0:601.0] You write six you return back okay.
+[601.0:603.0] So the behavior of the register is based on this.
+[603.0:606.0] We can ask is this behavior okay?
+[606.0:612.0] So this guy returns five after reading five so far so good.
+[612.0:614.0] Oh and then P1 returns zero.
+[614.0:627.0] Is this correct with respect to the specification I just presented this specification I just presented says if there is a read that is concurrent with the right the read can return the last value written.
+[627.0:632.0] Five or any value concurrently written or zero doesn't make any sense.
+[632.0:633.0] It cannot return zero.
+[633.0:637.0] It cannot return twenty five either so this is incorrect.
+[637.0:650.0] Remember when I presented to you because the broadcast align broadcast I told you here is the spec and then let's see which execution is correct with respect to that spec we are doing doing the same thing here.
+[650.0:655.0] The spec is this property.
+[655.0:665.0] This execution is not correct with respect to that spec so if you come up with an algorithm that implements a regular storage your algorithm should not return zero here.
+[665.0:674.0] Okay you you could tell me that why in what why on earth could an algorithm return zero well it could return zero because if we assume that the registers are initially zero.
+[674.0:687.0] And if we don't pay attention then maybe this reads those and find some replicas of the some replica of the of the storage which contains the original value basically what we are saying is that this should not be an option.
+[687.0:702.0] What about the following execution in this execution the first three returns the last value written the second read returns the value concurrently written and the third read returns the previous value written.
+[702.0:721.0] If this correct yes it is because the specification simply says if there is a read is concurrent with the right the reads are viewed individually the read returns either the value concurrently written more specifically the input parameter of a right that has been invoked.
+[721.0:740.0] Okay or the input parameter of a right that has been already terminated so this is correct with respect to the regular storage therefore if I ask to build an algorithm for a regular storage I'm allowed to have an algorithm that would behave like this.
+[740.0:769.0] What happens if there is a failure here p2 writes 5 and then starts writing 6 and fails and then the reader comes here can the reader returns a 5 yes in fact in this is important we treat with you the right here that has been crashing as the right that never terminates so if it is as if the right is still going on and will go on forever so when the read comes here is as if the read returns.
+[769.0:782.0] The last value return or it could also read the current value so both this execution and this execution are correct with respect to regular storage.
+[782.0:791.0] Okay so now we want to implement this abstraction in a system where we don't have shared memory okay.
+[791.0:802.0] We're not talking about the system where we have several processes on a shared memory no we're talking about the cloud system but we want to build the abstraction of shared memory okay.
+[802.0:809.0] We have messages so what does it mean to implement our abstraction so just like when we implemented.
+[809.0:827.0] Propose of consensus or propose of atomic commit or whatever we went to the specification to the operations or to the callbacks here we have only operations we don't have callbacks and we implemented the then we gave their so the code.
+[827.0:854.0] In terms of exchange messages this is exactly what we are doing before returning a read a process that invokes a read has to exchange maybe messages with the others similarly if it has to return to to to to execute the right and return okay value the process must or may have to communicate with other processes why in order to guarantee regularity I hope you are with me.
+[854.0:879.0] So as we have done so far we are going to assume the simplest model please keep in mind in the context of this class the simplest model is a model where processes can only fail by crashing okay there is no malicious behavior we are going to come back to that later on in in in next classes when we study isn't in failures and we assume that there is no recovery okay.
+[879.0:908.0] Processes that fail do not recover of course you tell me yeah that in practice they recover sure but they when they recover they may get another name and this falls back into what we discussed last weeks with group membership and so forth okay channels are reliable and fail detector is perfect okay meaning every process that you fail somehow declared of course it doesn't declare but there is a service that notifies
+[908.0:920.0] processes that some process has failed completeness and accuracy if we learn about the failure of someone what we learn is correct there is no false positive.
+[920.0:936.0] So we assume a phase of model and we try to think of an algorithm that implements the abstraction of a regular storage the abstraction of a regular storage is the implementation of read and write such that the read returns a that the last value
+[936.0:964.0] written or the value concurrently written very easy okay how are we going to do that some remark is in order we want also that every process which invokes a read or which invokes the rights terminates its operation remember we want the abstraction that everything happens as if you were executing you read locally or you write locally so when you execute
+[964.0:972.0] to read the right you are not really blocked but in general you are not blocked of course sometimes you are blocked but in general this is not what we want.
+[972.0:991.0] So we have a set of processes in our system okay it is important to notice that in the context of this this lecture I'm supposing that the processes are those somehow in the cloud as well as those in people in front of their computers to try to think that
+[991.0:1006.0] for every process here there is an image of that process in some cloud this would probably simplify your life every process has a local copy of the register okay so if we our application is supposed to share some
+[1006.0:1029.0] registers every single register is replicated everywhere and the first algorithm I'm going to present here is very simple it says every process reads locally okay which means whenever I want to execute a read I am a process behind I simply look at my register and I return the value that I have
+[1029.0:1050.0] and every writer writes globally what is right globally meaning whenever I want to write a value the register was initially zero and I want to write value to this means that if I am P I P I sense the message to all processes okay it tries to inform them all this is the new value and it waits until the process is tell
+[1050.0:1064.0] P one P one or P I we got the new value however you cannot wait for all remember this should be a for a reflex by now all non-crash it processes but how do you get the non-crash it processes we have a perfect fairer
+[1064.0:1078.0] detector okay so he's the algorithm very simple when you write when more specifically write the at-process P I okay so this is the code of process P I write in a value V what do you
+[1078.0:1098.0] send W this is the type of the message V to all processes okay and then P I waits for what it waits for every process P J P J either to receive an act P J tells P I got your value or P I detect P J
+[1098.0:1118.0] which are okay notice that the way I'm writing the code here is slightly different than what we have been doing earlier which is fine I'm simply telling you he it is also okay to write so the code like this if you go to the book you will find the writing closer to the right and I have been used so far but I told this is simpler to see in this case
+[1118.0:1128.0] this is the code of the process who wants to write now process P I want to write sense W V to all okay let's let's figure out what happens at other
+[1128.0:1137.0] processes which are not a writing but are storing the information and receiving this message what do they do so any process P I that receives
+[1137.0:1155.0] message W V from P J what P I does is it puts it updates its own value so here we assume that P I has a variable local variable V I and it updates V I with the received value V
+[1155.0:1167.0] so initially all the eyes are zero and this guy is writing value to which means that these two so we assign to the I value to and then this process sends an act to to the
+[1167.0:1181.0] the sender notice here something this P I here is this P J here okay because he's we are talking about the code of P I and of course when it receives this we assume here that the P J is the sender
+[1181.0:1194.0] what is the code of reading the code of reading is very easy every process which wants to read a value returns directly V I so notice here that I don't specify in which
+[1194.0:1204.0] register I read or I write I to for simplicity of presentation I assume that we have only one register we are talking about of course if we want to make things
+[1204.0:1217.0] out I would say write V at register big R number one and here I would say read at B R number one and this would be the I one and so forth okay so for simplicity of
+[1217.0:1229.0] presentation we are talking about a single register also for simplicity of presentation I simply assume here that P J is somehow directly from this context I don't put it in the
+[1229.0:1239.0] context I hope that this is simple to understand this is very simple algorithm it's also very simple to reason about its correctness consider
+[1239.0:1249.0] writing a so lightness means every operation be it a read or write eventually returns okay so if I'm a process of course if I fail there is no guarantee
+[1249.0:1261.0] but if I don't fail and I want to read I should return if I don't find if I don't fail and I want to write I should return a read is local and it eventually returns so it's
+[1261.0:1270.0] live I don't send any message I don't wait for anything okay the right is more complicated because I need to wait for for messages what do I wait for
+[1270.0:1286.0] okay well I wait for all the processes in the system either they need to send me an act here I need to wait until they send me an act or if they fail I wait until I detect them
+[1286.0:1298.0] given that I have a fail detector and I have reliable channels remember reliable channels guarantee if the sender and receiver are correct the message will arrive okay so here what
+[1298.0:1308.0] I'm going to understand is that either if the sender is correct this is what we assume if the sender is not correct we don't care about if the writer is not correct we don't care about whether this
+[1308.0:1322.0] terminates or not if the writer is correct the question is what about the receivers those who are supposed to receive the message WV the guys here each of them
+[1322.0:1332.0] it is correct or not if it is not correct by the completeness property of the failed detector the sender will not wait for them it will receive a notification that they have failed
+[1332.0:1347.0] if they are correct by the reliability of the channels they will update their value and return okay so live message is very easy in this case what about safety okay what did we say about safety we said in the absence of
+[1347.0:1361.0] concurrent or failed operation in fact concurrent and failed at the same when an operation fails it as if it never stops so we just concurrent but we we make the distinction to make things clear
+[1361.0:1372.0] a read returns the last value region if there is no concurrency this is basically what we are saying assume provide exterminators and no other right is invoked
+[1372.0:1382.0] remember that we assume there is no concurrency good now we need to prove if the writer has written a bunch of things and the last thing it has written is X we have to
+[1382.0:1391.0] prove that the read returns X okay so this is the first aspect of correctness in the absence of concurrency the reach should return the last value
+[1391.0:1411.0] so if X is the last value return are we sure this is what we are going to return yes one by the accuracy property of the failed detector this is crucial the writer here did not finish its right until it received an act from all processes
+[1411.0:1426.0] okay you don't finish this act finishing this this right and returning okay does not happen unless all processes that are correct have received and updated their value
+[1426.0:1435.0] why is that because we assume a perfect failed detector okay there is no wrong suspicions here because otherwise we might suspect somebody to have
+[1435.0:1460.0] failed and that process did not update its message its value so by the accuracy property of the failed detector the value of the register at all processes actually is X therefore after the right terminates after we have reached this line everybody in the system has value V
+[1460.0:1476.0] therefore any subsequent read any read that is invoked in real time after right exterminates will necessarily return Peter of course we assume here that right right X is the last value with
+[1476.0:1493.0] okay we have a single right I hope this is clear good second part of safety says if there is concurrency what is concurrency there is a right and there is a read concurrent with it remember that we have a single
+[1493.0:1506.0] read returns the value concurrency return or the last value between one of them okay we start by saying let's X be the value returned by a read by the properties of the channels we have reliable
+[1506.0:1520.0] channels remember the live channels say you cannot receive a message that was not sent okay which means that if X is read by some process this means that X was
+[1520.0:1538.0] the value of the register at some process this value does necessarily come from the last or a concurrent right because it comes from a message what is that message is the message of the right there but there is only one right so either it's the concurrent right or the last right
+[1538.0:1558.0] okay good I hope this is clear now as we did for as we did for other abstractions we try to consider weaker assumptions okay
+[1558.0:1569.0] weaker assumptions or a weaker model assuming a weaker model means a stronger algorithm now we ask what is fail detection is not perfect
+[1569.0:1580.0] more generally can we device an algorithm that implements a regular register and tolerate an arbitrary number of crashes even if the fail in the
+[1580.0:1594.0] system is not perfect is this possible because my previous algorithm the one I just presented if you noticed totally right any number of crash failures if there is only one process left in the system that
+[1594.0:1605.0] process will be able to read and write it will send a message to all everybody's detected no problem I return my value I write my value that is algorithm I just presented
+[1605.0:1612.0] rely on a perfect fail detection what if we don't have a perfect fail detector what if we have a failure that is
+[1612.0:1622.0] eventually perfect or we don't have any is this possible it turns out that no any wait three wait three means what the
+[1622.0:1632.0] eyveness property we just stipulated which is any read and any write eventually return we call that wait three it doesn't mean that the algorithm does not wait you use some wait
+[1632.0:1646.0] statement that we are saying that the operation does not block any wait three algorithm that is asynchronous asynchronous means does not use a fail detector requires a majority of correct
+[1646.0:1655.0] errors we are going to prove that we are going to show that I cannot implement a regular storage if I don't have a fail in the
+[1655.0:1663.0] detector in fact the proof I'm going to to give you here is very simple and it works even if we have an event really perfect fail detector the
+[1663.0:1674.0] proposal here is stated by saying is synchronous I don't have a fail in the detector at all but it turns out that it would also it also is a
+[1674.0:1682.0] mistake if I say any wait three implementation of a regular or using an eventually perfect fail detector requires a majority of correct
+[1682.0:1696.0] processes how do I how do I show that here I'm saying requires so I will do things by contradiction I say assume I have a certain
+[1696.0:1704.0] number of processes and half of them half of them can fail I don't know which ones but half of them can fail meaning I don't have the
+[1704.0:1713.0] majority and I'm going to build a simple scenario that would show that no matter what algorithm you can think of the algorithm will be
+[1713.0:1724.0] wrong so I've building a sketch of a counter example I say of course I am building the proof the counter example without
+[1724.0:1733.0] assuming any algorithms I'm not building the algorithm I'm building the counter example and in this counter example I use my power what is my power is I
+[1733.0:1743.0] can decide when a rate is invoked and when a right is invoked okay because no matter what algorithm you come up with it has to work for any
+[1743.0:1754.0] reason any right so I as the one trying to beat to kill the algorithm I'm using my power which is building the counter example with the right and the
+[1754.0:1761.0] read and crushing the processes whenever I want I am what we call in in the parlance in the terminology of the distributed and
+[1761.0:1776.0] the algorithm of the computing I am the adversary of the algorithm so the adversary says assume a right is performed right of the and over two processes crush then a
+[1776.0:1788.0] read is performed and the other end over two processes are up then the read cannot see the value of it okay so this is even if we assume let's assume we have four
+[1788.0:1800.0] the right is invoked the right executes and we assume that we can have half of the processes to fail intuitively what we are saying is if we have four
+[1800.0:1812.0] processes P1 P2 P3 P4 P1 invokes the right okay no matter what algorithm you can think of this algorithm has to terminate the right as long as P1
+[1812.0:1824.0] it indicates with at most another process because P1 cannot wait to communicate with two or three other processes because if it does that it could block
+[1824.0:1838.0] forever because we say that we can crash two processes so if P1 executes the right as soon as it can communicate with P2 or P3 or P4 it has to finish so we say assume P1 it can send a
+[1838.0:1856.0] million messages P1 but then P2 is the only one to respond if P2 is the only one if P2 respond then P1 has to finish okay it cannot wait for P3 and P4 so this is what you need to understand it cannot wait for them because we assume that half
+[1856.0:1867.0] of the processes can fail and we don't have a perfect fail detected because if we had a perfect fail detected you can say I will wait until everybody responds or I detect the failures but if I have
+[1867.0:1882.0] an eventually perfect fail detected I could as detect the failures P3 fail P4 fail and in fact begin fail so as soon as I get an information from another process I should stop I should decide to return this is what we are saying here
+[1882.0:1900.0] assume a right V is performed and over to process to crash or I see them as crashing okay they don't respond then a read it performed so assume the other the read is performed as before okay the right is over now
+[1900.0:1929.0] seven hours later the read is performed at P4 and then we say oh but in fact before did not fail it's simply that P1 believed before to have failed but if indeed now P1 has after executing right V and P2 after communicated with it I have both failed then the read has no choice than returning value zero okay so I hope this is clear it's a very we call this this this reasoning
+[1929.0:1953.0] a partitioning argument we say if we don't have a perfect fail detector we can and we don't have a majority assumption we can partition the system into two parts they can be equally big half half the first believes that the other is faulty and the second believes that the first is faulty so the first part the first partition
+[1953.0:1970.0] arrives a new value doesn't hear from the second partition and it cannot wait for the second partition forever which stop it finishes as soon as this finishes the other partition wakes up so to speak wants to read the value and of course it did not hear from the first partition but you can tell me that
+[1970.0:1987.0] wait if none of these partitions fail the message will arrive soon sure they will arrive but maybe they will arrive after the processes in the second partition have read the value and return the value zero which is not the value of it okay so if you
+[1987.0:2004.0] don't understand this partition argument just go to the book it's it's it's I believe quite well explained but it's actually very simple you can play it with four processes so basically what this says is I cannot build a regular storage if I don't have a perfect
+[2004.0:2016.0] failure detector and I don't have a majority if I have a majority of correct processes then I know need I don't need a failure detector which what I'm going to present now so now this is called the majority
+[2016.0:2031.0] algorithm it was published in in 95 sometimes we talk about the majority algorithm to build a regular storage sometimes we say to emulate a shared memory remember that these are the same thing so what do we do
+[2031.0:2046.0] be one is the writer we have one writer any process can be reader fine we assume that any majority of the processes is correct okay so if I have four this means that in any execution three in every
+[2046.0:2052.0] execution three processes are correct one of one of the one of the four can fail I don't know which one
+[2052.0:2062.0] the challenge are reliable okay so I as usual so how are we going to build this algorithm so every process maintains a lock it locker copy of the
+[2062.0:2076.0] register as well as a sequence number SNI and the read time stamp eras in fact one of them is a little bit redundant as I will explain later but to to for simplicity of
+[2076.0:2084.0] the implementation I think it's convenient to to consider them both process P1 also maintains in an additional time stamp that I call
+[2084.0:2095.0] T as one but this is only maintained by the writer okay how is this algorithm now so the algorithm consists in implementing
+[2095.0:2105.0] write and read operation so the writer is P1 when P1 wants to write a value whenever P1 wants to write a value the first thing it does is
+[2105.0:2116.0] increments it time stamp okay time stamp CS1 initialize to zero if this is the first time P1 wants to write it's going to be one then P1 is going to send a
+[2116.0:2128.0] message to all processes now the message contains the message type w the value to be written as well as a time stamp the new time stamp to all okay it
+[2128.0:2136.0] stands to all it waits now it is not going to wait for the failure detector because we don't assume here we have any failure detector in fact we don't need
+[2136.0:2147.0] an eventually perfect one with the majority P1 wait until it receives a knowledge meant a connoble judgment from a majority I don't care what the majority is okay if we are five
+[2147.0:2160.0] processes and I P1 I wait for two more processes to respond of course there is myself plus two okay I wait for three if we are six I wait for four and so forth
+[2160.0:2175.0] any process that receives this message w to s1 v what does it do it checks is this message an old message or a new message I'm going to come back to this notion of old
+[2175.0:2189.0] message or new but if it is the first time P P P I has a sequence number zero which means that it has never seen any right it has value zero this means that this time stamp is bigger than the
+[2189.0:2200.0] sequence number at P I okay this is the first time I got an update I follow the instructions of P I meaning I update my value v now becomes V I
+[2200.0:2210.0] SMI becomes T S1 I remember the time stamp of this and I send back an act it is easy to see that if this is the first right
+[2210.0:2225.0] this is the first time I have a full process that received the message will do this and will respond okay so a majority will respond because we assume that a majority is up and running even if the minority fails this guy will not block
+[2225.0:2234.0] forever I hope this is clear it simply says if P1 wants to write we have four processes P1 sends to all the message with the new time stamp
+[2234.0:2249.0] is one because the first time I write and then P1 wait until it receives either P2 or or P3 or P2 or P4 or P3 or P4 and it knows it can wait for them okay so it wait it knows it can wait for them
+[2249.0:2261.0] you could tell me yeah but what happens if half a I will respond to you this algorithm will block forever but this is fine because this algorithm assumes a
+[2261.0:2281.0] majority is from the majority means is correct if a majority doesn't crash so P what is the read operation so the read operation is at a process P I now any process can read
+[2281.0:2293.0] the writer is only P I now anyone can read but now the read is not local anymore why is it that the read is not local anymore think a little bit if we have four processes P1 P2 P3
+[2293.0:2307.0] P4 P1 writes the first value okay it sends a message only P2 and P3 respond to P1 before is slow in getting the message okay later on P1 writes again it sends a message only P2 and P3
+[2307.0:2323.0] before is slow in getting the message okay now before wants to read it is dangerous if P4 returns its own value because it's own value is 0 and P1 has been read writing other values so no
+[2323.0:2331.0] process can read locally because if you read locally maybe you are a slow process slow in the sense that you didn't see the updates of the
+[2331.0:2345.0] that have terminated because they didn't wait for you they waited for a majority therefore when you want to read you send the message to all basically what you are doing is saying hey maybe I'm slow maybe I missed the last
+[2345.0:2353.0] the last values that were written by the writer and I do that in in one message also with the time stamp this is a real time stamp
+[2353.0:2371.0] processes are supposed when they see this message to respond to me if I am P2 and P4 tells me hey have you seen recent value as a short here is the value I have seen okay so I return the value with the time stamp of my value
+[2371.0:2389.0] and P2 and I respond into this message okay so what the processes do is what what what P4 does is it waits until it receives a majority of such messages such messages means messages with type R
+[2389.0:2418.0] and I respond into read RSI with some value and some time stamp okay am I sure I'm going to get the same value and the same as in J from everyone not at all because in a big system maybe there are other people who are slow like me and who didn't see the latest value okay so maybe see some recent value some old value how do I distinguish recent from all well I precisely have this time stamp here
+[2418.0:2438.0] so here I take I select the value with the largest time stamp okay so if I before and if we are a system of 10 so maybe P5 also has an old value but I'm not going to keep that value and update my own value with that one I will take the one with the large time stamp
+[2438.0:2451.0] intuitively I know that the one with the largest time stamp is the value of either the last one or the one concurrently written okay so this is important
+[2451.0:2465.0] it is important to notice that a process that receives a right message updates it's the sorry it is important to notice in this algorithm let me show you the algorithm here what we do is we only updates
+[2465.0:2486.0] the I with V and S and I with with the S1 if this time stamp is bigger than my S and I so this is important why do we do that why do we do this check what if a process that receives a right message doesn't do the check and updates directly it's value on sequence number
+[2486.0:2509.0] it could happen in this case that I get a very old right let's see here W5 and W6 are two rights by P1 P1 first rights W5 and then white W6 W5 has time stamp one this is the first right of P1 okay so this one sense it
+[2509.0:2528.0] here and this guy respond to him and says okay I have received your value so P1 can move on and invokes right of 6 it invokes right of 6 it sends this message again and this one between response to P1 it says okay I have seen your value
+[2528.0:2547.0] and then between receives the value the message of P1 if it updates its value after receiving the first message of P1 P3 is going to adopt an old value which is wrong of course we are not assuming we have
+[2547.0:2559.0] cause and messages here if we have assumed we have cause and messages we would not need to do this but if we don't assume we have cause and messages or five messages we have only
+[2559.0:2573.0] reliable channels then this could happen so in fact what we are doing here with this check is implementing what is needed what would be needed from
+[2573.0:2582.0] the cause of channels okay the exact minimum we need to make sure that I don't take the last value and then I erase it with an old value
+[2582.0:2596.0] so here the correctness again argument would say liveness and you read or write eventually returns wise that by the assumption of a majority of correct processes okay so this is important
+[2596.0:2611.0] I have any rely on this assumption in fact I need to argue that if a process has a newer time stamp and does not send the act then the all the right has already return
+[2611.0:2621.0] okay so the case where a process does not return only happens if the right is already over so this is a stop to things you need to think about
+[2621.0:2638.0] so the more by the property of the channels any value red is the last value written or the value concurrently written this is simply because we have reliable channels and we have this check of selecting the value with the largest time stamp
+[2638.0:2645.0] okay good
+[2645.0:2654.0] in the absence of concurrent or fed operation a read returns the last value written so this is because we select that property
+[2654.0:2665.0] we select the value with the high stamp this is the last thing I have shown okay a regular register and the regular storage might be considered okay in many cases
+[2665.0:2686.0] okay but but as I pointed out without insisting too much when I presented that abstraction the regular register has this weird scenario where if you have two subsequent reads that are concurrent with the right
+[2686.0:2703.0] it is possible that one of the reads returns the value concurrently written and the subsequent we returns the previous value okay nothing in the specification I presented contradicts this why because as I told you
+[2703.0:2717.0] we focus on every read semantic individually and we say the read returns the last value written or the previous one the read returns the last value written or the previous one therefore
+[2717.0:2731.0] it is possible that this read returns six and this read and and the subsequent read returns five but this is not something that you would really expect
+[2731.0:2747.0] if this register was local in my machine and I was the only one using it okay if I was the only one using it as soon as my memory contains value six the new value there is no way it's going to contain later on the older value
+[2747.0:2758.0] remember that we assume that values are uniquely identified I'm not talking about the case where somebody has a written again value five no no I'm saying this is really the old value
+[2758.0:2770.0] so from this perspective the regular storage is two week in some applications it is fine but in other applications this is two week what we want is what we call an atomic register
+[2770.0:2782.0] an atomic register is one where either this guy returns five and this guy can return five the subsequent read can return five or both of them return six
+[2782.0:2798.0] or well it's the last one I may have it somewhere or the first returns the five and the second returns the six independently of the crash
+[2798.0:2814.0] okay so an atomic register is one that behaves exactly as if I had the memory in my machine either five and five six and six or five and six again the case of crash is simply the case where the operation doesn't terminate
+[2814.0:2832.0] so an atomic register provides or we talk about an atomic cloud or an atomic storage it provides strong guarantees even when there is a concubency and failure the execution is linearizable
+[2832.0:2849.0] every failed right operations appears to either complete or not at all and every complete operation appears to be executed at some instant so if I write five it's as if it executes at an instant therefore I can either read after it or before it
+[2849.0:2870.0] cannot read five six and then five the main difference between regular and atomic is only visible one half I have to succeed success sorry to succeed contributes to successive reads if they never overlap right I will not be able to see that if they overlap
+[2870.0:2896.0] right and they are once after the other then I might see a new value and then an old value good to now so this you can go through these examples alone we are going to implement an atomic an atomic storage okay and this has been a very very hot topic in the last two
+[2896.0:2916.0] three case I will say there was a lot of work about how to implement efficiently an atomic because implementing an atomic register is really like the dream of the cloud as a register storage everything happens as if you had the memory locally again let's start with the simple case we assume a
+[2916.0:2935.0] failed stop model any number of processes can fail by crashing here no recovery channels are reliable and fail the texture is perfect always best to start here before presenting an algorithm let's go back to the algorithm I already presented the one using a regular
+[2935.0:2953.0] register algorithm and ask ourselves with that algorithm work in that algorithm every process reads locally and the writer writes globally is that actually atomic hey so this is the algorithm I presented when you write you send the message to all you
+[2953.0:2970.0] are going to until the fellow detector tells you don't wait for that guy or you receive an act when you read you simply read locally is this atomic well let's see we are going to hear of course in fact it is not and I'm going to explain that
+[2970.0:2987.0] going to play the role here again of the adversary which is not trying to fight any algorithm and like a lower bound proof here I'm trying to fight a particular algorithm p2 writes 5 and then write 6 p1 writes 5 and then read 6 so
+[2987.0:3005.0] far so good but then I can have the situation where a read that is after this one read number 3 comes after read number 2 and returns the previous value I have violated atom is how can this be possible OK let's see
+[3005.0:3030.0] this guy responds sure this guy responds let me think OK this one finishes the right both of them have value value 5 this one writes value 6 OK so it's this one is not over so this one has just sent its
+[3030.0:3050.0] messages the messages are still ongoing this one has received the message so this one has received the message return fund OK this one did not receive yet this message so if this one wants to read it is not going to
+[3050.0:3073.0] invent value 6 it did not receive it yet it might receive it here because the right is not over so it could return value 5 OK so what I'm simply saying is that during this execution of this algorithm some process p1 could have received the message and return the new value and when it reads it returned the new value and another
+[3073.0:3093.0] process who did not receive this message if it reads it will return the old value of this is clear so this is the case where the right consistent sending messages if the
+[3093.0:3112.0] reading of those messages happens to be concurrent with this guy reading and then this guy reading so these two reads are two and are three are not concurrent they are however concurrent with W6 because W6 takes a long time this one could return the last
+[3112.0:3137.0] value return and this one returns the previous value return this one returns the value concurrently written and this one returns the previous simply because it didn't let the message yet this is not a behavior you would expect on a single machine pay with violated the illusion of this cloud which is supposed to be one machine how can we fix our algorithm to prevent this case
+[3137.0:3155.0] in fact the only way to do that is to have also the read begin global OK so this is crucial this is the price to pay for a domesticity this price is actually expensive
+[3155.0:3175.0] the algorithm that I'm presenting to you consisting state when a process wants to read so this guy here when it wants to read as well in fact all of them but what interest me is this guy the one who violates an atomistic what what we're saying is that this guy should not only return his own value
+[3175.0:3199.0] OK when a process wants to read it sends a message to all what what is the type of the message it turns a message saying in fact I have seen this value so here more specifically in fact the guy who is going to fix the problem is not this one is this one I'm telling this one P1
+[3199.0:3217.0] when you want to read don't return value six don't be don't be in a hurry first send you the value to all but you can tell me wait wait wait but why does P1 needs to send the value six to all these guys doing that anyway sure
+[3217.0:3237.0] this guy is doing that anyway but first maybe this guy fails and maybe this guy is so slow that it will terminate in two years and I cannot I am being P1 I cannot wait for this one to terminate because it might never terminate because the other choice for P1 say oh no no I don't return value six
+[3237.0:3255.0] I wait until the right terminates because if I don't wait maybe this guy will return a value and violate atomicity I cannot either the other option is for R2 is for P1 to say well but maybe this one didn't finish I should return value five
+[3255.0:3271.0] maybe this one has finished so it is dangerous not to return value six because if this one had finished I am I have the obligation to return value six so the only option left is for P1 to help P2
+[3271.0:3283.0] what does it mean for P1 to help P2 it means exactly this the reader sends a right as if it pretend to be P2 wait that's not pretending that the message is coming from the reader
+[3283.0:3299.0] it's helping it says well let's speed up this right of the new value such that atomicity will be preserved so what the process will do whenever it wants to be is to send a message to all and wait until it receives
+[3299.0:3325.0] the text PJ so in fact the reader is behaving like the writer and that's necessary and sufficient to implement atomicity there is still a little problem here because if we do this there is this problem because if this one reads and sends the right to all it could be that it could override this right here
+[3325.0:3341.0] so the case I'm saying here is that we have to be careful that the reader does not override the last the value that is concurrently read if the reader is actually an all the reader
+[3341.0:3357.0] so what we actually do is we have the right at P1 here so the main idea is this one this is the main idea this is what I want you to remember in order to fix the problem we are going to read globally
+[3357.0:3375.0] I'm simply telling you we have to be very careful when we read globally because we have to be make sure that the read does not override the last value read which is what could happen here this guy is right in five this guy is right in six
+[3375.0:3392.0] this guy wants to read the value it has to read is actually an old value this guy is right in an old value but if this one is P1 doesn't see the value of W6 it could override W6 it's not what we want so we need to make sure we will use timestamp correctly
+[3392.0:3413.0] so how do we do that in the case where we have one writer and one reader to simplify the problem is easy because timestamps are easy to get so here writes at P1 I sent the message as before to P2 at P2 when it receives WV it updates and stands at Ack
+[3413.0:3426.0] if I have N readers several readers here I need a timestamp here I didn't need a timestamp because I have exactly one reader and one writer simply to see to explain the issue
+[3426.0:3437.0] if I have several readers I need to use a timestamp now we have the algorithm writes uses the timestamp just like we did it with the majority
+[3437.0:3459.0] here even with the perfect value detector I still need a timestamp and now when the reader wants to read it sends a message to all and now the processes when they get a message they don't blindly update themselves they only do that if indeed the timestamp is higher than what they had before
+[3459.0:3477.0] and that way only I can prevent overwriting my value with a previous value so in fact what happened in this algorithm is as if we went back to the majority case because now we have some processes that have all the values that others
+[3477.0:3486.0] and this has happened because now we have the writer writing and also the reader writing but we can fix this with timestamp
+[3486.0:3504.0] one thing that is important to understand here is that if I have a single writer it is easy to define a timestamp I can decide the value this value is associated with this timestamp that value with the other timestamp and the writer defines the timestamp
+[3504.0:3528.0] but if I have n readers and n writers I need to be even more careful because even the way I define the timestamps has to also almost mimic the way we update a new value so before a process writes if I had a single writer the process simply increments its timestamp
+[3528.0:3540.0] now I cannot increment my timestamp because maybe there are other writers who are ahead of me with respect to the timestamp so what I do is I send the message to all the random pay give me your timestamp
+[3540.0:3546.0] everybody responds we're not talking about values here every process sounds like the timestamp
+[3546.0:3561.0] of course I wait only for processes that I don't suspect I select the highest timestamp I add one to it now I have a good timestamp that is at least as high as the timestamp used around me
+[3561.0:3569.0] and now I do the actual writing I send the value with the timestamp and again I wait for acts from every process
+[3569.0:3581.0] so now the processes they expect two kinds of messages messages where the writers or actually the readers both of them write are asking them for timestamps
+[3581.0:3589.0] as well as messages where they're asking them for actual values when they're asking them for timestamps the process simply say here is my timestamp
+[3589.0:3600.0] when processes are asking them for values to update the value they only do that if they receive a timestamp higher than what they have
+[3600.0:3609.0] so again this is to prevent the case where an old value overwrites a new value the read is almost the same as the right except that here
+[3609.0:3625.0] I first determine what is the value that I'm going to read so this is important if I have only one reader and one writer reading is easy I take the value I have and I impose it on the other so to speak
+[3625.0:3634.0] there's only me here I send a read to all I get the value with the high timestamp and then I impose that value
+[3634.0:3644.0] so to summarize in order to implement an atomic register if I have only one writer
+[3644.0:3654.0] okay remember in the regular case there is anyway one writer the regular storage doesn't make sense if I have multiple writers
+[3654.0:3666.0] okay a regular storage is defined for a single writer because the notion of the last value written or the value concurrently written does only make sense if I have one writer
+[3666.0:3678.0] if I have a regular storage I have always the case of one reader one writer or one writer and readers in that case I can have an algorithm
+[3678.0:3690.0] but in the atomic case I can also have one writer and readers okay this is what's happening here my life is simpler because I have only one process defined in a time step
+[3690.0:3705.0] and in that case the right consists in sending the value to be written to all waiting for X the read also consists in writing the value what value I write the value that I have in this process
+[3705.0:3716.0] okay and now the processes whenever they receive a message be it from the writer or from the reader they simply execute it update the value if the message they receive is new okay
+[3716.0:3728.0] so this is to be contrasted with the regular algorithm I presented the main difference is that the reader writes and we use timestamps okay
+[3728.0:3742.0] if I now have an end and algorithm and writers and readers which we didn't have in the regular case now we need to add an additional difficulty which is how to define a timestamp
+[3742.0:3757.0] writer has to send the message to all and get the latest timestamp plus the writer also the reader also has to get the value with the high timestamp
+[3757.0:3778.0] okay so things become complicated because now even the reader cannot trust its own value in fact in the case of atomic register there is no benefit in using a perfect failure detector except you don't need the majority of correct processes
+[3778.0:3793.0] in the regular case the algorithm with a perfect failure detector is much easier and the read is local okay in the atomic case even if I have a perfect failure detector the read is not local
+[3793.0:3803.0] so I have to read and ask others okay so here all implementations I know of use the assumption of a majority of correct processes
+[3803.0:3812.0] so they all use this fact that okay they all work under the assumption that you have a majority of correct processes
+[3812.0:3839.0] so just remember that in the end and algorithm the writers determines the writers determine there is no S the timestamp using a majority
+[3839.0:3860.0] so we already have a number of clips now we will usually have one that works because the read system allows for that space added forward

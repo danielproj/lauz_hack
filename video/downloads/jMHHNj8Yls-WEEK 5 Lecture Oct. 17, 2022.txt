@@ -1,0 +1,708 @@
+~WEEK 5 Lecture: Oct. 17, 2022
+~2022-10-17T16:37:32.979+02:00
+~https://tube.switch.ch/videos/jMHHNj8Yls
+~CS-438 Decentralized Systems Engineering
+[30.0:36.2] All right, we can start now.
+[36.2:42.0] So I'm asking you, so I'm one of the T s for this course and I'll be doing the today's
+[42.0:43.0] lecture.
+[43.0:48.400000000000006] So we are going to talk about replication and consensus in this lecture.
+[48.400000000000006:52.36] Uh, people in the back can you hear me?
+[52.36:53.36] Okay.
+[53.36:55.36] So replication.
+[55.36:62.36] Uh, why do we replicate?
+[62.36:65.36] It's a pretty obvious.
+[65.36:70.36] That is to avoid a single form earlier.
+[70.36:73.36] And then what are the challenges of precipitation?
+[73.36:83.36] So any of you suggest what are the challenges when we replicate some data any suggestion?
+[83.36:87.36] We will have one the last version of the data.
+[87.36:88.36] Yes.
+[88.36:93.76] So if I can elaborate more when you have multiple updates on the same data, you'll be in a
+[93.76:98.76] question where you cannot decide which one is the most recent value.
+[98.76:101.76] Any other suggestions?
+[101.76:103.36] Good.
+[103.36:112.36] So most of the challenges that we need when we replicate data can be kind of.
+[112.36:117.36] Uh, say that is the challenge of making strong consistency.
+[117.36:120.36] So what is strong consistency?
+[120.36:125.86] Strong consistency is the idea that when you have multiple copies of the data replicated
+[125.86:132.36] in maybe in different machines, we need to make sure that there's a single copy of the
+[132.36:138.36] data so that anyone who's going to read this data get the same output.
+[138.36:142.16] Meaning that there cannot be two versions of the same data.
+[142.16:147.16] So that's what we call the challenges, maintaining strong consistency.
+[147.16:149.16] And then what are the consistency model?
+[149.16:154.76] So there is strong consistent model and there is eventual consistent and the difference
+[154.76:159.16] is that what are we going to sacrifice when we replicate data?
+[159.16:162.16] So I hope some of you have heard about this chapter.
+[162.16:163.16] A room.
+[163.16:167.16] Why it says that if you replicate data, you cannot achieve everything.
+[167.16:172.16] And you need to sacrifice one of consistency availability or partial tolerance.
+[172.16:177.16] So to address this issue, there are multiple models.
+[177.16:184.16] So one model says that no matter what happens, we only allow from consistency.
+[184.16:191.16] Meaning that we only have one copy of the data and then anyone who is going to read this
+[191.16:193.16] data gets the same output.
+[193.16:199.16] And then there are some systems where the consistency guarantees are not very high.
+[199.16:201.16] Meaning they are mutually consistent.
+[201.16:206.16] Meaning that they allow concurrent update on the same data item.
+[206.16:210.16] So that for some time, it will not be strongly consistent.
+[210.16:214.16] Meaning that no participant points to read the same data item.
+[214.16:216.16] We received two different data values.
+[216.16:222.16] But what these model guarantees is eventually when there are no concurrent
+[222.16:227.16] section, this data item will have a single value.
+[227.16:232.16] So the applications that use strong consistency, there are deployed applications
+[232.16:235.16] in very large cloud providers like do so.
+[235.16:241.16] An example is blocksuit, soot keeper and span.
+[241.16:245.16] So in this lecture, we are going to look at this strong consistency problem.
+[245.16:247.16] And then what is the replicated look?
+[247.16:249.16] Now I have shown in this diagram.
+[249.16:254.16] So what I have shown here is there are three different backend servers
+[254.16:257.15999999999997] which have shown you in these large boxers.
+[257.15999999999997:260.15999999999997] And also there are several number of clients.
+[260.15999999999997:266.15999999999997] Now what we are trying to actually read, there are n number of clients.
+[266.15999999999997:268.15999999999997] There are n number of servers.
+[268.15999999999997:273.15999999999997] And these clients are going to send request concurrently.
+[273.15999999999997:278.15999999999997] But we want to make sure that we are going to execute these set of commands in the same order.
+[278.16:282.16] Meaning that let's say the replica one that I have shown in the left small site.
+[282.16:286.16] Let's say it gets a set of commands at jump move or ship.
+[286.16:289.16] Then let's say the replica to get different set of commands.
+[289.16:296.16] But what we want to make sure is that all the replicas execute the set of commands in the same order.
+[296.16:304.16] Now why do we want to do that is because we want to have this abstraction
+[304.16:308.16] or say in match written replication.
+[308.16:312.16] So state machine replication is you have multiple set in different machines.
+[312.16:317.16] But we have to recommend that all replicas have the same state.
+[317.16:323.16] Now how to get the same state is by using the same order or same history of command.
+[323.16:328.16] So in this very theory we call this the problem of total ordering.
+[328.16:333.16] And how we achieve total ordering the mechanism is called consensus.
+[333.16:338.16] And also in consensus we make an assumption about the majority.
+[338.16:345.16] So majority assumption is a very simple assumption saying that only a minority of the nodes can fail.
+[345.16:354.16] Now to give some numbers if we have three replicas only one replica can fail because a majority of three replicas is two.
+[354.16:360.16] If you have five replicas we say that two number of replicas can fail but three should be honest.
+[360.16:367.16] So it's a very simple assumption. Now before I go forward do you have any question.
+[367.16:372.16] Good.
+[372.16:379.16] So when talking about any distributed system any distributed protocol.
+[379.16:385.16] The very first thing we need to do is we should look at what is the failure model we are looking at.
+[385.16:391.16] The reason why I'm saying so is there are of course that work to one category of failures.
+[391.16:395.16] But that does not work for another category of failures.
+[395.16:399.16] So there are different classification of distributed failures.
+[399.16:402.16] And I have shown you one accepted category.
+[402.16:406.16] And it had four number of false the first one crash.
+[406.16:419.16] So it says process crashes at time T and never recovers after that time. So you can think of access system where at time T equals zero we start the system.
+[419.16:422.16] And in the success you can talk the time.
+[422.16:427.16] Now what it says is upon your time T where can be any arbitrary value.
+[427.16:437.16] The system runs perfect there are no errors the system the algorithm follows the C2 code or the algorithm that we carry to.
+[437.16:445.16] And there are no false upon your time T. But after at time T there's an event that makes this replic up crash.
+[445.16:449.16] And after time T it's never going to recover. It's it's dead.
+[449.16:454.16] So this is a very simplest failure model you can think of and we call it crash fault.
+[454.16:457.16] And the second class of failures is called omission fault.
+[457.16:464.16] And what it says is process does not send or receive a message that it is supposed to send.
+[464.16:467.16] Now when you decide any algorithm,
+[467.16:473.16] including stuff that you learned in the past few weeks about remote ongoing or anti-entropy or anything.
+[473.16:480.16] You always make this assumption that when you specify an algorithm and when you call it and when you give it to a machine to run.
+[480.16:487.16] You always assume that this machine is going to execute all the steps that it is supposed to do.
+[487.16:495.16] But we have a different types of failures called omission failures where some notes will not follow this protocol.
+[495.16:504.16] And there is only one change to the protocol meaning that sometimes they will not send a message even though they are supposed to send that message.
+[504.16:512.1600000000001] And also sometimes they will not deliver a message meaning that they will receive a message that they will not deliver each of the upper layer.
+[512.1600000000001:516.1600000000001] And these kind of failures are called omission failures.
+[516.1600000000001:527.1600000000001] And the third category is called crash recovery and it states a process that crashes and recovers the final number of times is correct in this model.
+[527.16:535.16] So I thought in the very first model, upon to the time to the process is correct, it is executed correctly. There are no bugs, but after time it is dead.
+[535.16:537.16] It is never going to be live again.
+[537.16:544.16] But in this model upon to the time to execute correctly, but sometimes change to the dash, there are some problems.
+[544.16:547.16] So it is dead. It doesn't rest from the any message.
+[547.16:554.16] But from again time to want to take to it again active and it starts the process message is directly and this can go many times.
+[554.16:564.16] So this behavior says crash recovery model where the process can crash and recover the final number of times.
+[564.16:573.16] And in final we have the hardest kind of failure model to tackle which is the bison time model.
+[573.16:584.16] So what I know may be made in a conceivable way from the algorithm.
+[584.16:589.16] So it and then you write it in let's say go language and then you make an execute what you give it your machine.
+[589.16:594.16] Now your assumption is that this machine is going to execute this algorithm correctly.
+[594.16:601.16] But these failures when the machine is white and tight, these machines do not follow the algorithm.
+[601.16:604.16] Now I can give you a few examples about some bison time behaviors.
+[604.16:613.16] One is let's say a node is supposed to send the same message in to n number of nodes which is simple road cut.
+[613.16:618.16] Now a correct guide will always send the same message to all the nodes.
+[618.16:626.16] But the bison time guide will send message m1 to a minority of the nodes and m2 to a majority of the nodes.
+[626.16:639.16] Now what the bison time nodes are trying to achieve is they are trying to harm the protocol so that the set of objectives that is set to get some protocol are never made.
+[639.16:648.16] So these are the set of failures that we find generally in distributed system.
+[648.16:659.16] And in today's class called Torrent meaning that the algorithm that I am going to present is not safe if you assume the other three modes.
+[659.16:668.16] So any question before I move forward.
+[668.16:696.16] So in this lecture I am going to show you I am going to present you a replication algorithm and this algorithm serves only under the crash call model.
+[696.16:703.16] Meaning that if you assume that some of the nodes can be omission or crash failure or bison time this algorithm is not going to work.
+[703.16:712.16] Now in general if you are designing any distributed algorithm you need to make sure that you take this clearly because no algorithm but all the scenarios.
+[712.16:716.16] Any other question?
+[716.16:727.16] Now the second most important thing when you define an algorithm is to clearly say what is the network model that you are assuming.
+[727.16:735.16] Now upon the now I think even in your homework when you when we give your protocol to implement you just implement it.
+[735.16:742.16] But you never ask what sort of network conditions should be met in order for my protocol to work.
+[742.16:752.16] Now let's discuss the network model but before we go to the classification of different models let's look at some definitions.
+[752.16:758.16] The first one is there which is the one relationship message from not p to not q.
+[758.16:763.16] Now you can think about the distributed system at the collection of any nodes.
+[763.16:772.16] Now you can measure the latency between any two nodes and then delta is like the maximum of these delta.
+[772.16:780.16] If you select any two nodes and then if you measure the latency among any two nodes and if you call it delta the data that we talk here is the maximum of these.
+[780.16:789.16] Now you might ask me can you actually measure that because a given node can only see the latency of the links that it is connected to.
+[789.16:798.16] Now there's a difference between what we say as the definition and there's a difference between what we can actually see when we implement and deploy it.
+[798.16:811.16] Deployer algorithm but in this case I'm only providing I'm only giving you the definition that we kind of assume that we can see for the entire network.
+[811.16:828.16] Now the second definition is global stabilization time which is abbreviated as GST so it says it's the time after which each message sent from not p to not q is received within bounded delta.
+[828.16:835.16] Now I'll explain more about this when I go to the second part of the synchronous model but first let me explain the three model.
+[835.16:846.16] Now what I told you there are different classifications about the network and one of the most accepted classification is called the synchronous positive synchronous and asynchronous.
+[846.16:860.16] Now in the synchronous model we say a network is synchronous if for the entire execution depth is for the entire execution the delta is bounded and all message are received within a bounded delta.
+[860.16:883.16] So what it says that at time zero let's say you start or you would secure the distributed algorithm and now it runs and we say that the network is synchronous if for the entire duration of the application each message received from any of the north is going to be delivered within a bounded delta.
+[883.16:894.16] So I think the idea is pretty obvious the network is synchronous meaning that any message trend sent from north p to not q is delivered within a bounded delta.
+[894.16:912.16] Now the nice property of assuming this simply is that you can define a protocol while you take this delta as a parameter meaning that let's say you're achieved to you are trying to achieve some distributed system stuff and then you are trying to develop a protocol.
+[912.16:921.16] But believe me if you assume this synchrony it makes your life very easy because this is a very powerful assumption.
+[921.16:936.16] Now the second category of a network is for partially synchronous now what it says is after global stabilization time they are access the bounded delta such that all messages are received within delta.
+[936.16:959.16] So let me explain what this means so you deploy your algorithm at time equals zero now in this model up until time GSC which is called global stabilization time we have no guarantee about the network mean that any message trend sent from any north to any north to will take our basic amount of time to deliver.
+[959.16:983.16] So upon just a upon the time GSC there is no guarantee about the delay of each message but this model says that all the GSC we can assume that each message sent from any north to any other thing and not to any other not to if the network which is bounded time delta.
+[983.16:1004.16] So I assume now your clear of what the GSC means so global stabilization time is the time after which we can assume that each message sent from each process see to process few is delivered within a bounded time delta now before you for is there any question about the first two network.
+[1004.16:1033.1599999999999] So I assume that you get a time that it takes for message sent from any north to any north to now this delay can range from zero to infinity by bounded there will mean that there is a bounded value that's not infinity and you can assume that your message will be received within this.
+[1033.16:1037.16] Any other question.
+[1037.16:1066.16] Yeah. So I would say that two more sorry well if the SC start at I think was zero. So the reason why we explicitly mention two modules is this partially synchronous model is the actual model that you see into this network.
+[1066.16:1091.16] Means that in today's network especially with this very high bandwidth data center networks the network is almost always synchronous you can take it for granted but unfortunately there is like once in every one week like one second for every one week there's a duration in the data center in the network where the latency is not not within the bounded delta.
+[1091.16:1101.16] So I would say the far right synchronous model is a more practical model where you can capture this time where the network is not safe.
+[1101.16:1105.16] Any other question.
+[1105.16:1118.16] Good so let's look at the last model and it's very simple it says that we say network is at the front up if there is no upper bound on delta meaning that you deploy your algorithm at equal zero.
+[1118.16:1132.16] But throughout the entire execution of the algorithm each message sent from not to not to that's not have a bounded delta mean that you can take any arbitrary value and it can be delivered as time infinity.
+[1132.16:1148.16] So if you write an algorithm assuming asynchronous meaning that for your algorithm to work if you assume that I don't need any synchronous assumption that's a very powerful algorithm.
+[1148.16:1156.16] But you realize that if you write an algorithm for the circuit asynchronous case your algorithm is going to be very complex and very slow.
+[1156.16:1180.16] But in contrast if you assume synchrony that use when you define an algorithm if you say okay my algorithm assumes synchrony then you're going to write very efficient algorithms but the problem is as soon as the network goes back your algorithm logic is going to be broker and partial synchronous something in the middle so.
+[1180.16:1191.16] In today's lecture i'm going to show you an algorithm that works only on the partial synchronous yes so all of them seem to fall asleep almost never.
+[1191.16:1205.16] So what you're asking is called the reliable delivery now in this I think you have seen it in some other post where you kind of specify the different the types now there are fairly.
+[1205.16:1210.16] And there are point point links and there are local in so.
+[1210.16:1233.16] In this model we don't assume that because that's an orthogonal pass here we are only talking about the network where as you can always talk about perfect links where there are no message loss or point of one links where a fraction of the messages can be lost and stubborn links which kind of save the message until the receiver is home that it has received.
+[1233.16:1245.16] I would say this is an alternate don't think that they're connected this is alternate like for each one this category you can select this one and come up with a different combination.
+[1245.16:1249.16] Is it is it clear okay.
+[1249.16:1263.16] You said that we are saying I see an algorithm that only goes for the partial measures yeah another number also one also works all the one.
+[1263.16:1271.16] If you check an algorithm that works so everybody you have that it works for all the condition but it's going to be very slow most of the time.
+[1271.16:1291.16] And why I choose a partial synchronous algorithm is just because it's one of the very core topics or core algorithms in distributed computing but it doesn't I mean I will say what does not work under I think we need our chosen algorithm.
+[1291.16:1294.16] Any other questions.
+[1294.16:1308.16] Good so the main takeaway of this slide is before you specify an algorithm you should specify the network model and then if an algorithm but only for synchrony that means that under partial synchrony you're asking for it's not going to work.
+[1308.16:1323.16] Good now we are going to talk about consensus as I told you before now before we study any algorithm the most important thing to do is to define what's the interface that this algorithm is going to give you now what is an interface.
+[1323.16:1343.16] It's the set of method definitions that this algorithm provides through its upper layer or lower layer now consensus if you look at that as a black box then you have one method that you can invoke on this black box and at the same time this black box will
+[1343.16:1364.16] give you an indication which is another method of course now the first method is called propose V that the method that anyone use in this consensus can use to invoke consensus and it says that they look the consensus module I'm going to propose this value.
+[1364.16:1391.16] And the consensus module that something magical and at the end it will give an indication to the upper layer saying that okay I have reached consensus and yes that it's all so propose and decide other basic interfaces that consensus producer now the second most important thing when you write an algorithm is to clearly say state the set of properties that you are going to achieve from this algorithm.
+[1391.16:1420.16] Now consensus in consensus there are three main properties the first one is validity meaning that decided value should be one of the values proposed by a replica so in the previous slide I showed you that consensus can be involved by calling the interface method proposed V and I told you that consensus is going to output and indication saying that it has reached consensus on this value V.
+[1420.16:1444.16] Now what is validity property state is that this output that is sent by the consensus module in the decide we should be something that some of the one of the replica proposed earlier meaning that consensus module should not inmate new value any questions about that.
+[1444.16:1473.16] Good so the second property which is I would say the most important property consensus is the agreement meaning that no two nodes decide on different values now this is very important and if we remember what we talked few slides ago what we want to achieve is when there are n number of servers and we give them multiple commands but we want to make sure that all the replica should be in the right place.
+[1473.16:1488.16] The car should execute the same set of commands so the consensus property agreement says that no two nodes decide on different values so what that means is in this black box.
+[1488.16:1517.16] No one can propose V not two can propose V one not three can propose V three and so on so there can be multiple replica that are in working this consensus module but irrespective of number of values that are being proposed there should be a single unique decision at the end there cannot be two decisions where one node decides on V one where another node decides on V two so the agreement property likely repeated state that no two node.
+[1517.16:1530.16] No two nodes decide differently so any questions about that good.
+[1530.16:1549.16] No two nodes decide on the same values as that at the end or the other node problems.
+[1549.16:1573.16] No one cares what we get as output. Any other question? Good so that's a final property that says that termination which is each node eventually decides that means if we give a method called for us we then at some point we should get the output.
+[1573.16:1601.16] Now I have used this word for eventually decide meaning that I am not guarantee any time bound before which you will reach consensus but I'm guaranteed that eventually maybe a time infinity you will receive an output so please keep in mind termination does not guarantee your particular time but it guarantees you eventually if you can leave for million years you will at some point see consensus be increased.
+[1601.16:1629.16] So with that definition let's try to see at the consensus problem and I'm showing you a strong man one so what is a strong man it's a solution I think that partially source the problem but it's not a full solution and it has growbacks and the reason why we always look at drawbacks when we want to achieve something is to get some initial idea and we should be able to see why these strong man are not working.
+[1629.16:1641.16] So let me repeat what I'm going to show you as strong man are not consensus algorithms they are just to illustrate different approaches that you can use you can think of but you cannot use.
+[1641.16:1658.16] So in this from and one what I've shown you is there are multiple purposes and there's a single node that's sold consensus let's say the node in green color and what it does is it will accept the first value it returns.
+[1658.16:1682.16] Now in this model there are multiple purposes you can think of them as client and then single replica and what it does is it will accept the first value it receives so in this case the jump command is received first so it will output jump after consensus output now what's the problem with this approach.
+[1682.16:1711.16] I have animation on that in the slide so I think it's pretty obvious there's a single point of theory and we started this lecture saying that what we are finding is how to replicate data in a consistent way so if you can have a single node that never crashes we don't need to solve the consensus so this from and it's not going to solve consensus and the reason is there's a finger point of phrase.
+[1711.16:1740.16] So we say that the this from and just not solve consensus and let's try to improve upon our first from and which only had one acceptor let's say we have calm of acceptors meaning that there are set of nodes who accept values from quiet and let's say in this from and each acceptor is not accepts the first value it returns so I have shown you an example.
+[1740.16:1757.16] Where there are five nodes and each of these nodes act as a proposer or client but at the same time as the background now it's one acts as a proposer and it proposes the value rate which is received by not s1 and s2 and then
+[1757.16:1776.16] and then not a three sensor value blue blue value and it is accepted by a 3 and s so and finally not a side sensor green value which is only accepted by himself and then in this from and we define that value chosen by a majority is the final
+[1776.16:1804.16] this show now again this is a storm and this is not going to solve consensus but let's see why this approach cannot solve consensus now I think again the reason is obvious why we cannot reach consensus because now we have split both meaning that we do not have any value that have a majority of accept like the proposer rate has to proposer blue has to and
+[1804.16:1823.16] so we haven't seen any majority so we cannot solve consensus so this what we call the split word problem and then we say because of the split word problem we cannot solve consensus using this strong man.
+[1823.16:1838.16] Any question about the first two basic form and good so let's look at the final show man we are going to discuss in this class let's say in this
+[1838.16:1855.16] show man which is not going to succeed because I saw you show man's are just some intuitions but not the final algorithm let's say in this definition each accept accept multiple values meaning that the acceptor can change its mind once it accept a value.
+[1855.16:1884.16] So let's say the node s1 proposes the value rate and it accepted by the first three flicker s1 s2 and s3 and then not it's five proposes the blue value which is accepted by s3 s1 s1 now in this model be defined that any node can change its mind and it can accept a different value for example the node s3 first accepted value rate but then it changes its mind and then it's not going to succeed.
+[1884.16:1904.16] It's mind and then accepted a value blue now can anyone say why we cannot achieve consensus in this mode any solution as to why this is not consensus or why we cannot reach the idea.
+[1904.16:1924.16] So what will be the problem like so you can always think using the properties we talked about validity agreement and termination.
+[1924.16:1953.16] Okay so that's I would say that's correct but also you can look at this as a termination problem because this process can go forever like there is first proposer second proposer proposer so you at any time we cannot say what's the final decision so that's broke agreement and termination problem any other answers about why we cannot reach consensus in this show man.
+[1953.16:1982.16] Okay so the problem we have with this approach is there's no way where any accept can think what is the safe value to accept meaning that in this mode of show man which is wrong each accept just accept what it is given but we see that given a mechanism where any accept can safely accept a value knowing that it's not going to violate any.
+[1982.16:2001.16] So we separate against the so consensus and what we are kind of seeing is that we cannot solve consensus by just merely dot casting items many something more and be the two face protocol for this approach.
+[2001.16:2030.16] So those are the basic so many approaches I came up with to explain now please let me highlight these are just so man and they do not solve consensus this is just to understand what not you can do when you're serving consensus so with that let's look at look at the core algorithm that we are going to discuss in today's lecture which is called part source and I hope some of you should have a might have heard about this.
+[2030.16:2054.16] So it's a very fundamental algorithm in distributed computing and I mean like four decades ago it was one of the very thing in distributed computing so it first appeared in a paper called the part time parliament has anyone read this paper before or at least for the ball this paper before.
+[2054.16:2081.16] Okay so this was published back in 1980s and it's a paper where you cannot understand most of the stuff so this algorithm as I'm going to explain it's a very simple algorithm but this paper is talking about a great parliament and it's not understandable in any way so people at that time they kind of ratios this like nobody even used that but then.
+[2081.16:2110.16] So this is the guy who invented that his name is Leslie ampute I think some of you have heard about him is a pioneer in computer science and he also want a Nobel Prize not a number five during the world which is the I would say the best award you can win in the field of computer science so if you want to win a hearing about you can invent a new consensus protocol so this guy realized that she's on protocol is not something that is is to understand so some years later he wrote another paper.
+[2110.16:2136.16] Paper which is called taxos made simple so what he did was he kind of tried to rewrite his paper in a way that normal people can understand so that paper called taxos made simple and it's the paper which made others to be using this protocol and after that there are lots of research that kind of extent this basic taxos algorithm and again on.
+[2136.16:2165.16] So saying that this protocol birth only for crack fall tolerant crack crack fall scenarios meaning that this algorithm does not work if you assume by some time or any other failure condition and also this protocol is partially synchronous so what is partially synchronous up until GST you don't have any guarantee about the message still is but after GST where GST is the global stabilization time there's a bar.
+[2165.16:2194.16] So that each message sent from North P to Q is delivered within delta so this protocol is partially synchronous and in particular the agreement property of this algorithm fall under any network condition mean that it's the network goes back the agreement is not violated however the termination which says that eventually every process terminates is a termination.
+[2194.16:2223.16] So that termination does not hold under a think 20 so let me repeat this is a partial synchronous protocol and the agreement property falls on the any asynchronous network however the lightness of the termination falls only under partial sink 20 so any question about this basic introduction.
+[2223.16:2245.16] So access has two different kinds of actors like different kinds of replica the first one is proposal and proposals are ones which receives client request and that one who involved this proposed V interface method that I showed you before so
+[2245.16:2262.16] the first one is the one who are going to invoke this proposed V method and then the second kind of north of all acceptors and they are the one who are going to respond to the proposal messages and at the same time they are the ones who actually
+[2262.16:2277.16] chose the correct value now in our setup that I am going to describe you we do not make this distinction meaning that any replica can act as a proposal but at the same time as an acceptor.
+[2277.16:2288.16] And also we will you will be using this term called a ballot number now ballot number is simply an integer there is nothing more than that it's just an integer counter.
+[2288.16:2301.16] So this is a very high level demover tax sauce now tax is a two-phase protocol and in the first place which is called the repair and promise space the task of that
+[2301.16:2312.16] phrase is to find the safe value meaning that the purpose is actively looking for the information to find which value it should propose now if you remember about the
+[2312.16:2325.16] showman three that I propose the problem there was any purpose of comes and he just both of any value that he has in his mind and that was a problem why we could not reach consensus now in the
+[2325.16:2344.16] process any purpose who comes it will first or it was a straight learn what should I propose so that I am not conflicting any previously accepted value so that's the main purpose of prepare promise and you will realize that in the next set of slide prepare promise
+[2344.16:2358.16] space blocks all the proposal that are not yet completed now this will be explained more in the common flight and then the second phase is called a proposed access space and this is the face where the
+[2358.16:2375.16] process actually proposes the use that he feels it's a let me repeat the problem we had with showman three was there was no way for a given purpose to find what to propose now tax of this by first looking at what
+[2375.16:2394.16] the taxidized purpose and one thing not is it will go ahead and propose the safe value and if you look at the paper there is a third phase call learn but it's optional and we don't need it for this discussion any question about this overview
+[2394.16:2414.16] anyone in the soon if you have questions please put it in the speak up link all right so this is the core
+[2414.16:2429.16] access algorithm now I'm going to go through it and then I'm going to explain some of it but some of the details will be a little unclear and then I'll be using three examples to further elaborate what we are seeing in this
+[2429.16:2442.16] protocol now the first thing we do be defining algorithm is to initialize the set of variables that we are going to use now these variables are local variables meaning that in the setup that we are going to discuss each
+[2442.16:2455.16] node are separate and they run in different machines so you can think about there are any machines and they do not have a shared memory meaning that they only know the local memory content and each
+[2455.16:2475.16] machine will have three state variables or the first one okay before that it's already 10 to 15 states and I know that level of we can have a break
+[2475.16:2485.16] so we can stop at this point because I want to start from this point because we can cover that
+[2485.16:2513.16] so
+[2513.16:2537.16] so
+[2537.16:2565.16] so
+[2565.16:2589.16] so
+[2589.16:2613.16] so
+[2613.16:2637.16] so
+[2637.16:2661.16] so
+[2661.16:2685.16] so
+[2685.16:2709.16] so
+[2709.16:2733.16] so
+[2733.16:2757.16] so
+[2757.16:2767.16] so
+[2767.16:2777.16] so
+[2777.16:2797.16] so
+[2797.16:2821.16] so
+[2821.16:2839.16] so
+[2839.16:2859.16] so
+[2859.16:2879.16] so
+[2879.16:2899.16] so
+[2899.16:2919.16] so
+[2919.16:2939.16] so
+[2939.16:2959.16] so
+[2959.16:2979.16] so
+[2979.16:2999.16] so
+[2999.16:3019.16] so
+[3019.16:3039.16] so
+[3039.16:3059.16] so
+[3059.16:3079.16] so
+[3079.16:3099.16] so
+[3099.16:3119.16] so
+[3119.16:3139.16] so
+[3139.16:3159.16] so
+[3159.16:3179.16] so
+[3179.16:3199.16] so
+[3199.16:3219.16] so
+[3219.16:3239.16] so
+[3239.16:3259.16] so
+[3259.16:3279.16] so
+[3279.16:3299.16] so
+[3299.16:3319.16] so
+[3319.16:3339.16] so
+[3339.16:3359.16] so
+[3359.16:3379.16] so
+[3379.16:3399.16] so
+[3399.16:3419.16] so
+[3419.16:3439.16] so
+[3439.16:3459.16] so
+[3459.16:3479.16] so
+[3479.16:3499.16] so
+[3499.16:3519.16] so
+[3519.16:3539.16] so
+[3539.16:3559.16] so
+[3559.16:3579.16] so
+[3579.16:3599.16] so
+[3599.16:3619.16] so
+[3619.16:3639.16] so
+[3639.16:3659.16] so
+[3659.16:3679.16] so
+[3679.16:3699.16] so
+[3699.16:3719.16] so
+[3719.16:3739.16] so
+[3739.16:3759.16] so
+[3759.16:3779.16] so
+[3779.16:3799.16] so
+[3799.16:3803.16] so
+[3803.16:3823.16] so
+[3823.16:3843.16] so
+[3843.16:3847.16] so
+[3847.16:3849.16] so
+[3849.16:3869.16] so
+[3869.16:3873.16] so
+[3873.16:3883.16] so
+[3883.16:3893.16] so
+[3893.16:3903.16] so
+[3903.16:3913.16] so
+[3913.16:3917.16] so
+[3917.16:3937.16] so
+[3937.16:3945.16] so
+[3945.16:3955.16] so
+[3955.16:3965.16] so
+[3965.16:3985.16] so
+[3985.16:3989.16] so
+[3989.16:3999.16] so
+[3999.16:4009.16] so
+[4009.16:4017.16] so
+[4017.16:4027.16] so
+[4027.16:4037.16] so
+[4037.16:4057.16] so
+[4057.16:4065.16] so
+[4065.16:4075.16] so
+[4075.16:4085.16] so
+[4085.16:4095.16] so
+[4095.16:4105.16] so
+[4105.16:4109.16] so
+[4109.16:4119.16] so
+[4119.16:4129.16] so
+[4129.16:4149.16] so
+[4149.16:4169.16] so
+[4169.16:4177.16] so
+[4177.16:4197.16] so
+[4197.16:4217.16] so
+[4217.16:4225.16] so
+[4225.16:4235.16] so
+[4235.16:4245.16] so
+[4245.16:4255.16] so
+[4255.16:4265.16] so
+[4265.16:4269.16] so
+[4269.16:4279.16] so
+[4279.16:4289.16] so
+[4289.16:4293.16] so
+[4293.16:4297.16] so
+[4297.16:4307.16] so
+[4307.16:4317.16] so
+[4317.16:4321.16] so
+[4321.16:4331.16] so
+[4331.16:4341.16] so
+[4341.16:4349.16] so
+[4349.16:4359.16] so
+[4359.16:4369.16] so
+[4369.16:4373.16] so
+[4373.16:4383.16] so
+[4383.16:4393.16] so
+[4393.16:4397.16] so
+[4397.16:4407.16] so
+[4407.16:4417.16] so
+[4417.16:4425.16] so
+[4425.16:4427.16] so
+[4427.16:4435.16] so
+[4435.16:4445.16] so
+[4445.16:4449.16] so
+[4449.16:4451.16] so
+[4451.16:4461.16] so
+[4461.16:4471.16] so
+[4471.16:4475.16] so
+[4475.16:4477.16] so
+[4477.16:4487.16] so
+[4487.16:4497.16] so
+[4497.16:4505.16] so
+[4505.16:4515.16] so
+[4515.16:4525.16] so
+[4525.16:4533.16] so
+[4533.16:4543.16] so
+[4543.16:4553.16] so
+[4553.16:4561.16] so
+[4561.16:4571.16] so
+[4571.16:4581.16] so
+[4581.16:4591.16] so
+[4591.16:4595.16] so
+[4595.16:4599.16] so
+[4599.16:4601.16] so
+[4601.16:4603.16] so
+[4603.16:4603.16] so
+[4603.16:4605.16] so
+[4605.16:4607.16] so
+[4607.16:4609.16] so
+[4609.16:4619.16] so
+[4619.16:4629.16] so
+[4629.16:4637.16] so
+[4637.16:4647.16] so
+[4647.16:4657.16] so
+[4657.16:4659.16] so
+[4659.16:4661.16] so
+[4661.16:4663.16] so
+[4663.16:4665.16] so
+[4665.16:4675.16] so
+[4675.16:4685.16] so
+[4685.16:4689.16] so
+[4689.16:4691.16] so
+[4691.16:4693.16] so
+[4693.16:4703.16] so
+[4703.16:4713.16] so
+[4713.16:4715.16] so
+[4715.16:4717.16] so
+[4717.16:4719.16] so
+[4719.16:4721.16] so
+[4721.16:4731.16] so
+[4731.16:4741.16] so
+[4741.16:4743.16] so
+[4743.16:4745.16] so
+[4745.16:4747.16] so
+[4747.16:4749.16] so
+[4749.16:4759.16] so
+[4759.16:4761.16] so
+[4761.16:4763.16] so
+[4763.16:4767.16] so
+[4767.16:4769.16] so
+[4769.16:4777.16] so
+[4777.16:4787.16] so
+[4787.16:4789.16] so
+[4789.16:4791.16] so
+[4791.16:4795.16] so
+[4795.16:4797.16] so
+[4797.16:4799.16] so
+[4799.16:4801.16] so
+[4801.16:4803.16] so
+[4803.16:4805.16] so
+[4805.16:4807.16] or
+[4809.16:4809.16] Bachelor
+[4809.16:4811.16] Bachelor
+[4813.16:4813.16] Bachelor
+[4813.16:4813.16] Bachelor
+[4813.16:4815.16] Bachelor
+[4815.16:4817.16] so
+[4817.16:4824.16] Bachelor
+[4829.16:4831.16] and
+[4831.16:4833.16] and
+[4833.16:4833.16] and
+[4833.16:4835.12] and
+[4835.12:4843.28] a year, but it's not mandatory. So the least number of notes we can have is three, because
+[4843.28:4847.36] if we only have one, there's a single point of failure. If we have two, there is no majority.
+[4848.0:4854.08] If we have three, the majority is two. But we can have four, but there is no difference between
+[4854.08:4862.0] four and three. Because of a majority of four is still three. So the maximum four tolerance you
+[4862.0:4869.44] can get is still one failure, right? This is my point. So you can sort of my industry for five.
+[4870.16:4876.96] Yeah, if you have five, you can stop on two number of failure. If the any goes five,
+[4876.96:4881.36] then you should wait for three responses, because three is the majority of the failure.
+[4882.24:4886.96] From majority four is three. You've already got one. Yes, sir.
+[4886.96:4897.2] majority four is three. Many other questions. Okay, good. So let's look at the final example.
+[4898.56:4905.36] Now here, we are saying that a previously accepted value, but not a previously decided value,
+[4905.36:4910.88] and let's see how we can wish consensus. Now we start the algorithm from the scratch,
+[4910.88:4916.08] meaning that we started from the boot shop point, and we said, mean value to zero. I think it's
+[4916.08:4922.32] evident when we start the algorithm, we said mean value to zero, accept the value to minus one,
+[4922.32:4927.84] and accept the value to know. So those are the initial states. And let's say the proposal one is
+[4927.84:4933.36] the initial proposal, and he wants to propose a value. We now, if someone wants to propose something,
+[4933.36:4939.76] what does it do? It will choose N greater than mean value. In this case, he selects N equals one,
+[4939.76:4947.280000000001] because one greater than zero. And the next step is to send a prepare message with N. So that's
+[4947.280000000001:4955.360000000001] exactly what it does. It sends a prepare message with value one. And then the accept form
+[4955.360000000001:4960.320000000001] receiving a prepare message will first check if N greater than mean value. In our example,
+[4960.320000000001:4965.76] N equals one and the mean value equals zero. So one greater than zero is true. So it passes the test.
+[4965.76:4974.08] And then the accept will set the mean value to N. So that's exactly what we just all the acceptors
+[4974.08:4981.4400000000005] will say mean value one. And then the acceptable send a form message with N accepted value and
+[4981.4400000000005:4988.0] accepted accepted value and accepted value. So that is what everyone sends. Oh, so this wrong.
+[4988.0:4995.68] Yeah. So everyone sends one minus one and new because at N equals one accepted value equals minus one
+[4995.68:5001.84] and accepted value equals zero. And then the next step is propose upon receiving a majority of
+[5001.84:5008.0] promise messages will check if all the messages have B equals minus one. So in our example,
+[5008.0:5016.72] all the promise messages has B equals minus one. Now, then it will not change its initial proposal.
+[5016.72:5024.16] So B equals we mean that it did not change its mind. And then what does the proposal do? It
+[5024.16:5032.8] will send a broadcast with proposed N value. So if your broadcast propose one B and then accept
+[5032.8:5038.400000000001] a form receiving a propose message will first check if N greater than equals mean value.
+[5038.4:5047.44] In this case, if you check if one greater than or equals one, which is two. And then if you update
+[5047.44:5055.12] the accepted value to N accepted value to V. So it will update accepted value to one and accepted
+[5055.12:5062.0] value to V. Now, there is a problem here. Now, in this algorithm, I never said that we have
+[5062.0:5068.96] perfect point of point of place, the question that you ask. Now, in this algorithm, we don't
+[5068.96:5076.64] assume that. Now, for some reason, the proposed message from replica one to three was not received
+[5076.64:5082.16] by replica. So let's say that message was simple. So in this case, the proposed message was
+[5082.16:5087.28] received from two replicas, but not from this guy. And then the next step of the algorithm for
+[5087.28:5093.5199999999995] the accept is to send an accept message. But let's say in this example, these accept messages
+[5093.5199999999995:5099.36] are also lost. Now, we are in the state of the protocol where the proposal ran some steps,
+[5099.36:5105.759999999999] but some messages were not delivered in the right time. And this is the initial state that we are
+[5105.759999999999:5112.719999999999] sucking. Now, given this initial state, let's say that at some point, the initial purpose of
+[5112.72:5117.84] finding that, okay, my previous attempt was failed. I'm going to try again. But let's say for
+[5117.84:5123.76] some reason, now the proposed decision proposal is going to propose something different, we dashed.
+[5123.76:5129.76] Now, keep in mind, we still have not decided any pre value, even though the proposal
+[5129.76:5135.76] ran previously tried. And what we have been to show that, irrespective of that condition,
+[5135.76:5142.88] we are going to show that every replicas can reach consensus on a single value. So now,
+[5142.88:5149.2] the initial state looked like this, 1 1 v, 1 1 v, but 1 minus 1 mu, because the accept
+[5149.2:5155.6] the 3 did not receive the previous proposed value. Now, the proposal is trying to propose again.
+[5155.6:5160.4800000000005] So what does it do? It will select a mean ballot. It will select a ballot that is greater than
+[5160.48:5168.719999999999] the mean ballot. So, it was so mean ballot was 1, it will select any plus 2, because 2 greater.
+[5168.719999999999:5173.679999999999] And 1, it will send a prepare message. Now, upon receiving a prepare message, what does
+[5173.679999999999:5180.0] the acceptors do? They will first check if this n is greater than the mean ballot, which is 2 for
+[5180.0:5184.879999999999] all the acceptors. So, they will accept it. And what do they do? They will update the mean ballot.
+[5184.88:5190.4800000000005] Now, in this case, this is 2. So, everybody will select the mean ballot to 2. And they will send
+[5190.4800000000005:5195.36] a promo response. And what this the promo response has? It has 3 fields, the first one n,
+[5195.36:5204.64] which is 8% 2. And then it has previously accepted ballot, which is 1 and 1 for the first 2 replicas.
+[5205.36:5211.6] And then accepted value equals v for the first 2 replicas. But the replica 3 has a different
+[5211.6:5217.68] view. So, it has accepted that minus 1 and accepted value, new. Now, the proposal, let's say,
+[5217.68:5224.8] it receives this message. And then now, it's the 30 points, because we are in this condition.
+[5224.8:5230.56] So, propose upon receiving a majority of the promised message. It will first take is v equals minus
+[5230.56:5236.160000000001] 1 for all the promised messages. But in this example, you say it's not the case. Like, new messages
+[5236.16:5243.2] say that the previously accepted value is v for the ballot number 1. Whereas, one says that
+[5243.2:5248.24] there is no previously accepted value. So, this condition does not hold. And it goes to this
+[5248.24:5255.92] else step, which says select the value where these the highest from set of return bb. Now, in our sample,
+[5255.92:5268.4800000000005] v return 1 v 2 times and minus 1. So, from this, the highest b is 1. So, the proposal has to change
+[5268.4800000000005:5276.0] its mind and update v update its proposal to be. Now, we started with the dash. However, the
+[5276.0:5283.2] proposal learned that a majority of the acceptors have accepted v in previous round. So, now I'm
+[5283.2:5291.04] going to change my mind. So, once it does that, it will propose 2d and the acceptors first check
+[5291.04:5296.96] is this 2 is greater than or equals to its mean ballot. Now, the mean ballot is 2 for all the
+[5296.96:5304.4] replicas and n equals 2. 2 greater than 2 is true. So, acceptors will update the accepted
+[5304.4:5310.72] ballot and accept the values, which are 2 and v. And they will send accept 2 v message from which
+[5310.72:5319.04] after which the proposal will decide. So, this is the next one. So, I think I made my best to,
+[5319.04:5326.0] I tried my best to convince you how this algorithm works. But it's not possible to cover all the
+[5326.0:5330.16] possible scenarios, meaning that you can come up in different conditions, different
+[5330.16:5340.24] carrier scenarios and see how this algorithm can reach agreement and be safe. So, as a homework,
+[5340.24:5346.0] I'll suggest you to look at, just to think about different conditions and try to break this algorithm
+[5346.0:5353.92] and see how it achieves consensus. Now, we have 10 minutes, so I'll go to the proofs of this
+[5353.92:5359.28] algorithm. Now, when we started this lecture, I told that from a consensus algorithm, we are trying
+[5359.28:5366.08] to achieve 3 main properties. The first one, validity and what was validity? validity was that
+[5366.08:5373.5199999999995] any decided value should be something that was proposed by at least some, at least a single
+[5373.5199999999995:5381.04] proposal. Now, I think this is quite evident in the algorithm why the validity falls,
+[5381.04:5386.719999999999] because any value that is going to decide at this space is something that a proposal proposed.
+[5386.72:5392.240000000001] Now, when you from the algorithm that there are two ways, a given proposal can learn about what
+[5392.240000000001:5398.72] to propose. If all the, all the promised messages have V plus minus 1, then the proposal is going
+[5398.72:5403.76] to propose what it wants. However, if at least one message says that there's a previously accepted
+[5403.76:5409.2] value, then that value should be proposed. Now, in the first case, we satisfy validity, because
+[5409.2:5413.4400000000005] it's something that a value proposed a proposal. Now, in the second case, you can induct
+[5413.44:5418.48] a value proof that anything that I'm going to choose from a previous proposal is incorrect
+[5418.48:5423.679999999999] something that was proposed by someone in a previous form. So, that's how we prove validity
+[5423.679999999999:5426.5599999999995] in this algorithm. Yep, you had a question.
+[5427.759999999999:5432.639999999999] It is example where you have a link there that you said that I know you've written
+[5432.64:5443.04] as that's what actually basically what it just does. So, this is a partial simple algorithm, and how we
+[5443.84:5448.320000000001] implement, so how we detect that a method is slow, it's just not I know.
+[5451.04:5457.12] Good. So, the next and the most important property is the agreement property. Now, what is the
+[5457.12:5464.24] agreement property? It states that no two nodes decide on different values. Even though you
+[5464.24:5469.2] run this algorithm with 1000 concurrent proposals at 1000 different set, we are going to end up with
+[5469.2:5476.32] a single decided value, and it is satisfied by the column intersection, meaning that if there is
+[5476.32:5483.68] any decision at this point, it means that at least the majority of the nodes accepted this value.
+[5483.68:5491.360000000001] Please follow me. If there is a decision at this point, that means at least the majority of the
+[5491.360000000001:5500.16] replicas accepted this value. Now, if there is any other proposal, trying to propose something,
+[5500.16:5506.4800000000005] it first has to finish this prepare from its space. Now, if there is any of the huge
+[5506.48:5513.839999999999] proposal, it will learn this accepted value, because for the completion of the prepare from its space,
+[5513.839999999999:5520.0] it needs to collect information from at least the majority of the replicas. So, I told you any two
+[5520.879999999999:5528.0] column, any two majority intersect with at least one guy, it with at least one node. And as a result,
+[5528.0:5535.2] if there is any decided value, all the future proposals will learn this value in the prepare
+[5535.2:5541.36] from its space, and after result, will only propose that value in the next proposed accepted phase.
+[5542.96:5549.04] So, that is what I say here, if a value is decided by at least one guy, then all the future
+[5549.04:5554.96] proposals will learn that value in the prepare from its space. And we simply call it column intersection.
+[5554.96:5555.76] Any question?
+[5555.76:5565.92] So, we have time to see if you have noticed that it is a resource, meaning that the other
+[5565.92:5571.04] power rules are greater than the big sense. So, in the beginning, I told you that we are
+[5571.04:5578.88] actually a failure model, and I showed you four different failure models, namely crack
+[5578.88:5586.400000000001] pole, omission poles, crash recovery, and bison time. And I specifically mentioned that this algorithm
+[5586.400000000001:5590.88] works only for crash volts. If there are bison time nodes, this algorithm does not work.
+[5593.28:5594.08] Any other question?
+[5600.32:5603.92] Yeah, so that's agreement, I think it's clear, and then final termination.
+[5603.92:5613.04] Now, termination is only available if the network is synchronous for four data time period,
+[5613.04:5619.52] meaning that the acceptors will wait for a data period before they suspect that a node is failed.
+[5619.52:5625.68] So, we said that the pathos algorithm guarantees termination if the network is synchronous for four
+[5625.68:5630.16] data, but can anyone tell me, I'll quickly write in each four data in this case. We are data
+[5630.16:5635.2] is the message or the data between any two nodes. Any quick answer?
+[5637.599999999999:5645.599999999999] Two round trips? Yes. Two round trips means two times round trips, two times round trip,
+[5645.599999999999:5652.16] and one round trip is two data, so that's why we have four data. And so we say, if there is a
+[5652.16:5658.5599999999995] single proposal for a duration of athletes for data, and if the network is synchronous for
+[5658.56:5665.92] at least this long, then this protocol will terminate. Now, with that, I think some of you might
+[5665.92:5672.64] have the question, what is their multiple leaders? Now, even if the network is synchronous,
+[5672.64:5678.320000000001] if there are multiple leaders trying to propose at the same time, then we cannot achieve
+[5678.320000000001:5684.96] termination in this protocol. I think idea is pretty simple, meaning that let's say replica
+[5684.96:5690.4] one sends a prepare message with n equals one, but at the same time replica two will send a
+[5690.4:5698.16] prepare message with n equals one. Now, there's a chance that none of these two will get a majority
+[5698.16:5705.36] of the responses. So, both of these prepare files will be failed. And let's say upon failing,
+[5705.36:5710.4] replica one will again start a prepare message with a higher ballot number, but at the same time,
+[5710.4:5716.799999999999] replica two also start a prepare from his face. So, now this can go on and on without making any
+[5716.799999999999:5723.36] progress. So, this is the problem with Paxos algorithm, we call it, we cannot achieve
+[5723.36:5730.799999999999] liners when there are multiple concurrent leaders. So, we want different way, we want to
+[5730.799999999999:5735.92] make an income to ensure the liners, even if we have multiple proposals, because in a
+[5735.92:5740.8] kind of application, we do not, we assume that everyone should be able to propose at the same
+[5740.8:5746.72] time, but we need to guarantee that we hold the liners hold even if there are multiple proposals.
+[5746.72:5752.64] So, one classic proposal is called the lead-based Paxos, where we elect the lead-based for some
+[5753.6:5758.56] time and we say that it's only the leader who can propose. So, it's the leader
+[5758.56:5764.32] replica that only proposes, then we don't have any conflicts, because it's only the leader who
+[5764.32:5769.28] is going to send the prepare from his and propose accept messages. And then we have honor method,
+[5769.28:5774.719999999999] which is called optimistic contention handling, and it uses random back-ups and I have shown
+[5774.719999999999:5780.639999999999] you shown that in this slide. So, here let's say replica one, Pax send a prepare message,
+[5780.639999999999:5787.12] and concurrently replica two, right to send a prepare message, and because they are concurrent,
+[5787.12:5794.88] none of them can have this. But what the random back-up does say when the replica
+[5794.88:5801.36] are to find that it is contained in with someone else, it will back off, that means it will
+[5801.36:5806.64] sleep for some time, and it will let the replica one win the game. So, I think it's a very
+[5806.64:5810.96] simple idea, you have multiple proposals, I and someone else are trying to propose at the same time,
+[5810.96:5815.36] and I see that I'm in contact with someone, and I just back off and I sleep for a while,
+[5815.36:5821.839999999999] so that the other one can finish it. And I think this answers the question that was raised about
+[5821.839999999999:5828.0] multiple consensus instances. Now, let me give a high-level introduction about this.
+[5828.0:5834.719999999999] Now, in a real system, we need to agree on multiple values, because there is no point of agree,
+[5835.2:5841.12] just for no single value, there is not much we can do. So, what we are trying to explain is,
+[5841.12:5849.28] we have a replicated load, and each node has its own load, and we need to make sure that for
+[5849.28:5856.72] each load position, every body has the same command. Now, a very classic way to approach this is
+[5856.72:5864.4] called multipaxial, which is extension of the taxis protocol. Now, this is how it works.
+[5865.04:5870.48] Now, how it works is, there is a leader replica, and it will run the prepare from its space,
+[5870.48:5876.32] and if you run the proposed access phase for each different slope. And let me repeat this,
+[5876.32:5882.48] two consensus instances, they do not have any interaction, meaning that you can run some thing
+[5882.48:5888.5599999999995] for the instance one at the same time, you can run some things for the instance two,
+[5888.5599999999995:5894.4] because only we need to make sure that a given instance does not depend on the other.
+[5894.4:5902.0] Now, there is nice optimization use in multipaxial. Now, if you look at the co-paxial protocol,
+[5902.0:5906.48] we have two phases, meaning two round three, but in the first step, that is in the prepare
+[5906.48:5912.639999999999] from its space, what we did was, the leader of the proposed and learned, what should I propose,
+[5912.639999999999:5918.639999999999] what are the same values I should propose. But if there is a fixed leader that everybody kinds of
+[5918.64:5926.240000000001] pre-advary, we do not need this, meaning that you find sure that I am the only guy who is going to
+[5926.240000000001:5932.56] propose for some duration, then for that duration, I am pretty sure that nobody else is going to
+[5932.56:5939.280000000001] propose. So, what I can do is, I can run the prepare from its space for multiple instances.
+[5939.280000000001:5947.76] So, I send a prepare message, but in the from interest responses, the acceptors will send the
+[5947.76:5953.280000000001] set's values for all the instances. Now, the good thing about this approach is that for each
+[5953.280000000001:5959.76] instance, in the next round, the proposal can use a single round trip to replicate a given command,
+[5959.76:5966.24] because in the prepare from its space, it learned all the set's values for all the instances,
+[5966.24:5970.64] and if there is a guarantee that it is only the leader who is going to propose, then he does not need
+[5970.64:5976.4800000000005] to run this prepare from its space, because it knows the set of set's values for each instance,
+[5976.48:5982.5599999999995] each consensus instance. So, that is what I have shown you, leader will send a prepare from its
+[5982.5599999999995:5988.24] message for all the instances, and then it will learn the set's values for all the replicated
+[5988.24:5994.16] looks, and then for each look, it will use a single round trip and it will only use proposed
+[5994.16:5998.5599999999995] accept. So, I know I have been discussing this very far, so if you are interested, you can look
+[5998.5599999999995:6004.879999999999] at the paper called taxes made simple, where it first discusses this first two-phase protocol,
+[6004.88:6010.400000000001] and then this multi-taxos optimization. So, that is all I have, any questions?
+[6011.52:6012.4800000000005] Yes.
+[6012.4800000000005:6015.12] What is the function of a key of the prototype?
+[6015.12:6016.24] Yes, a key of the function.
+[6016.24:6021.12] And then it is functionally to work, like what's the point of the access,
+[6021.12:6027.4400000000005] that is another design, because I think we need to read the confidence that what you need to
+[6027.44:6035.28] read, is like the know of the proposal, the drive has the know of the function, and the
+[6035.28:6036.0] opportunity.
+[6036.0:6041.28] I'm not following this up. I don't think most of the folks learn that, they learn that they
+[6041.28:6044.16] plan, they are the third phase.
+[6044.16:6047.04] No, I can't see.
+[6047.04:6049.759999999999] They are the same, they are the same.
+[6049.76:6060.96] So, you have, you are seen what's the purpose of this, because the proposal can know that
+[6062.0:6068.16] the majority of the acceptors have accepted its proposal, only if it receives accept
+[6068.16:6069.76] from majority of the acceptors.
+[6069.76:6075.76] Otherwise, how does the proposal know that its proposal was accepted by your majority?
+[6075.76:6082.88] Because from the decision, the proposal needs to know that its proposal was accepted by
+[6082.88:6087.2] a majority, and the only way it can get it is to get a majority of acceptance.
+[6087.2:6090.96] So, when I would see, he doesn't do anything now.
+[6090.96:6092.72] He accepts the drive.
+[6092.72:6095.360000000001] Yes, this type, I would say cannot be tired.
+[6095.360000000001:6097.360000000001] Why would the driver be tired?
+[6097.360000000001:6103.280000000001] Because I have to find my thing, because we need some sensor on a thing of value, because
+[6103.28:6105.599999999999] we don't do something with that.
+[6105.599999999999:6109.759999999999] Like, if you risk on the sun, then you look at the look, okay, then if you actually
+[6109.759999999999:6114.48] look at the look, for this thing, then this is the only come out, then we apply to a technical
+[6117.679999999999:6118.88] issue.
+[6118.88:6123.28] I'll just give you that, I should then rather than be in doubt with you.
+[6123.28:6124.719999999999] Okay, Mr. P. P.
+[6124.719999999999:6126.32] You're prepared, right?
+[6126.32:6127.12] Yes.
+[6127.12:6133.76] Two and a half grand of the new dollars, you can all understand, even if you just got a
+[6133.76:6134.72] lot of reward.
+[6134.72:6134.72] Okay.
+[6134.72:6141.04] So, that's the case, first of all, you can do that, but the problem with this approach is,
+[6141.04:6145.92] if two proposals try to propose at the same time, then it turns out that they feel like the same
+[6145.92:6147.12] a valid number.
+[6147.12:6149.84] We just know the problem with that, we don't stay cheap.
+[6149.84:6154.88] However, what we do is, we kind of find a certain number, so that the North-Near,
+[6154.88:6163.6] select 0, 3, 6, and so on, those ones, select 1, buy it all, but for the core, we don't
+[6163.6:6168.24] be sure of the problem, like if you do clap one, then the safety still holds.
+[6170.0:6170.88] Any other questions?
+[6173.6:6177.68] All right, so if you don't have questions, that's a big double concept, so thanks.
+[6177.68:6179.68] I apologize.
+[6181.12:6180.64] Thank you.
+[6180.96:6183.84] So thank you.
+[6183.84:6197.76] I'm slightly vähän inconvenient because the same things you also have to know when you
+[6197.76:6203.400000000001] to answer.
+[6203.4:6206.4] I'm going to be there if you want to.
+[6206.4:6207.4] Everybody.
+[6207.4:6208.4] Yes, they were.
+[6208.4:6209.4] So.
+[6209.4:6210.4] So.
+[6210.4:6212.4] If you have to be a.
+[6212.4:6213.4] You're.
+[6213.4:6214.4] And.
+[6214.4:6215.4] They're.
+[6215.4:6216.4] They should.
+[6216.4:6217.4] They're.
+[6217.4:6218.4] They.
+[6218.4:6219.4] They.
+[6219.4:6220.4] They.
+[6220.4:6221.4] They.
+[6221.4:6222.4] They.
+[6222.4:6223.4] They.
+[6223.4:6224.4] They.
+[6224.4:6225.4] They.
+[6225.4:6226.4] They.
+[6226.4:6227.4] They.
+[6227.4:6228.4] They.
+[6228.4:6229.4] They.
+[6229.4:6230.4] They.
+[6230.4:6231.4] They.
+[6231.4:6232.4] They.
+[6232.4:6233.4] Yeah, yeah, yeah.
+[6233.4:6234.4] Are.
+[6234.4:6235.4] Okay.
+[6235.4:6237.4] Okay.
+[6237.4:6240.4] You got back up?
+[6240.4:6242.4] Are you happy?
+[6242.4:6243.4] Can you.
+[6243.4:6246.4] I'll go ahead and.
+[6246.4:6247.4] Okay.
+[6247.4:6254.4] Oh?
+[6254.4:6255.4] Great car.
+[6255.4:6259.4] Oh.
+[6349.4:6352.08] So I think there's close to the last andrologist,
+[6352.08:6353.9] and the boat is out there by me.
+[6353.9:6355.9] So I guess you get anywhere in what's going on at the�
+[6355.9:6357.94] is we justellen over here
+[6357.94:6359.259999999999] of any of these�면 out of people
+[6359.26:6360.26] about in the trailer.

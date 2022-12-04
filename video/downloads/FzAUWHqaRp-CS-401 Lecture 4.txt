@@ -1,0 +1,421 @@
+~CS-401 Lecture 4
+~2022-10-12T11:25:58.427+02:00
+~https://tube.switch.ch/videos/FzAUWHqaRp
+~CS-401 Applied data analysis - Fall 2022
+[0.0:17.0] Okay, you, you're recording are you? Okay, great. So welcome to lecture four. We'll continue our journey into data science. Today we'll talk about describing data with statistics.
+[17.0:29.0] As always, first some announcements today we won't have many. As you know, project milestone one is due after tomorrow on Friday.
+[29.0:37.0] And then we'll hit you right away with homework one. Don't worry too much. It's going to be fine. And that will be due two weeks later.
+[37.0:47.0] In this Friday's lab session, we will have more exercises on the topic of today's lecture. And then of course there will be quiz three as always.
+[47.0:56.0] And let me quickly say a word about the projects because you still have a couple of days for the milestones. I saw some comments on.
+[56.0:69.0] On Ed about someone saying everything we could think of has already been done. Certainly not. I guarantee you that not think harder.
+[69.0:84.0] And then in related terms, someone asked can we use the data sets for things other than what they were originally collected for or proposed for in the original paper is definitely okay be creative.
+[84.0:102.0] And so that's also partly an answer to the previous question. You know, if everything has been done in one domain with the data set, then you could also think about how could I repurpose it for other things, but certainly there is enough to be done with those data sets.
+[102.0:115.0] Okay, so today's lecture is about describing data that will be three parts. First, we'll do a review of descriptive statistics.
+[115.0:127.0] Then we'll in part two, we'll talk about how to quantify uncertainty. And in part three, we'll look a little bit into how to relate to variables to each other and.
+[127.0:140.0] And then we'll see the aspects of doing this. Okay, so disclaimer, Ada, we're not covered the basics of statistics that would be too much of a brush up that we have to do.
+[140.0:149.0] So we expect you to know these things from your prerequisite courses.
+[149.0:160.0] We'll basically focus today on common pitfalls and some highlights, but this is of course not everything that you can and should know about statistics.
+[160.0:168.0] So we start from some very basic questions that we might want to ask about the data set, but then you'll see that things will quite quickly become uncannily complex.
+[168.0:177.0] Okay, so part one, descriptive statistics, when you have a data set, the first thing you want to do is understand what's in it.
+[177.0:195.0] To do that, when you use pandas like we do in class, you would call the described method on your data frame and then you get a nice table like this that has a column per column of your table.
+[195.0:209.0] It has several rows, each of which is a descriptive statistics. You have things like the count how many how many rows are in each of the columns.
+[209.0:219.0] So here the value is 100 everywhere, but it might not be so this is because count counts the defined values. You might have undefined values.
+[219.0:233.0] So then these numbers might actually be different for different colors columns. You have the mean for each column, the standard deviation for each column, the minimum, the maximum, and then you have these percentiles, which are also called the quartiles.
+[233.0:243.0] These are basically the numbers that you could visualize in a box plot, if you remember the previous lecture.
+[243.0:254.0] This 50 percent, 50 percentile is also called the median, of course.
+[254.0:262.0] Okay, so quickly about these two rows mean and standard deviation. You of course on, on, know what the mean is and what the standard deviation is.
+[262.0:274.0] I won't have to go into detail there, but I say that these two statistics completely characterize the normal distribution, the mean and the standard deviation.
+[274.0:285.0] So why do you then need all these other summary statistics? Why because obviously not all data is normally distributed.
+[285.0:299.0] In particular, the mean and standard deviation are not robust to outliers. Remember last time we talked about power laws, heavy, tail distribution. We'll come back to those today, but those distribution have a lot of outliers or very large, very extreme values.
+[299.0:313.0] And the mean and standard deviation are heavily skewed by such outliers. Now this is not a problem for the normal distribution for normal distributed data because their outliers are extremely rare.
+[313.0:320.0] But it can be a big problem for data that comes from other than normal distributions.
+[320.0:334.0] And I'll show you an example on this slide. Imagine that you have a normal distribution and now I add one data point that's over in what would be that direction, maybe Renault.
+[334.0:345.0] And if I shifted even further, I shifted into Germany, I could make that mean arbitrarily large, right, by just fiddling with that, with that one data point.
+[345.0:351.0] So the mean is not robust to outliers.
+[351.0:370.0] And in on the flip side, we say that a statistic is robust if it's insensitive to such outliers. And the some other statistics that are not robust to outliers are the minimum and the maximum, you know, you see it with the maximum.
+[370.0:384.0] But just add one very large point completely changes the maximum right so it's highly the max is highly sensitive to outliers also the standard deviation, which is of course based on a mean.
+[384.0:398.0] And then what are statistics that are robust to outliers are the quantiles, for example, the quartiles here, the median, which as I said, is the 50th percent quartile quantile.
+[398.0:409.0] And those are not sensitive to outliers because if I take the largest value and I just scale it with a huge number, it does not change the median at all, right.
+[409.0:422.0] So I would have to change the entire, I would have changed many values in order to change the median, whereas I have to change only one value in order to change the mean.
+[422.0:434.0] So this brings us back to heavy tail distributions, which already made an appearance appearance, I think in two earlier lectures of this series.
+[434.0:441.0] So these are distributions that are you could think of them as basically being all about the outliers.
+[441.0:455.0] So we have power laws where the probability of seeing a value X is proportional to one over X to the power of K. So what you see here shaded in the background, that's the power law.
+[455.0:462.0] It's decreasing, but it's decreasing much more slowly than let's say an exponential distribution.
+[462.0:476.0] I already gave you the example of body sizes versus city sizes in city sizes. You cities spend many orders of magnitude, city sizes are distributed according to a power law, whereas body sizes are normally distributed.
+[476.0:486.0] Extreme values are very rare, very rare. There is no one who lies for standard deviations above the mean, basically in terms of body size.
+[486.0:498.0] This makes it tricky to work with heavy tail distributions, quick reminder, if the exponent K up there is up to three, then we have infinite variance.
+[498.0:505.0] And if it's up to two, then we have still infinite variance, but at least a finite mean.
+[505.0:516.0] But I'm sorry, and also an infinite mean, so K up to three infinite variance, finite mean up to two infinite variance, infinite mean.
+[516.0:523.0] This means that you should not when you describe data and your data comes from a heavy tail distribution like a power law.
+[523.0:538.0] This means that you should not report arithmetic means or or variances, because those are highly sensitive to outliers. And although you will always get a finite value because you have a finite data set.
+[538.0:547.0] Those values would in principle would theoretically be undefined. So you're basically giving a.
+[547.0:559.0] If you're distorting, it's a completed distorted view of your data. If you take, if you report this value, that is like if you had infinite data, it would diverge to a to infinity basically.
+[559.0:569.0] So instead, you should use robust statistics. If you have data that comes from a heavy tail distribution, for example, the statistics that we saw on the earlier slide, median,
+[569.0:578.0] quantiles, and so on, there's the 80 20 rule, for example, 80% of people or 1% of people.
+[578.0:588.0] This rules based on quantiles 1% of people own 90% of the wells in a country, something that's robust because it reasons about quantiles.
+[588.0:600.0] Another thing that actually not so many people know about is that instead of using arithmetic means you can use other means, for example, the geometric mean who knows what the geometric mean is.
+[600.0:612.0] Raise your hands. Not so many. You should really know this. You should know about all the kinds of means arithmetic mean geometric mean, harmonic mean.
+[612.0:625.0] The geometric mean is basically the product version of the arithmetic mean, which is based on some, right, for the arithmetic mean you first sum up your numbers and then you divide by the number of numbers.
+[625.0:639.0] And in the geometric mean, you take a product of your numbers and then you take the ends. When you have any data point, you take the ends root of those numbers, which is equivalent to what I have on the slide here, you first take a log of your data.
+[639.0:645.0] Then you take an arithmetic mean and then you exponentiate that arithmetic mean of the log.
+[645.0:659.0] Because logs modulate between something and multiply and so then you get something much more robust because and why is that because if you have outliers in X and take the log transforms to order of magnitude.
+[659.0:676.0] So it removes the outliers don't have such an impact anymore, right, because you shrink the outliers to the smaller values. Now you're in much safer territory for doing something like an arithmetic mean because you basically remove the outliers with the log.
+[676.0:695.0] And now you go back to the original domain by taking an exponential basically the undoing the log. So keep that in mind, geometric means are a much better way of summarizing data when when you have many large values.
+[695.0:715.0] The geometric mean is a nice compromise. It's not invariant to monotonic transformations like the median is by square all my data, then the median will still be won't be affected except that it will be squared also, whereas the.
+[715.0:727.0] It's much less sensitive to outliers than the arithmetic mean OK, so there are many other distributions the.
+[727.0:735.0] So basically a power loss, the example that I gave raised the general question how to know which descriptor statistic to choose.
+[735.0:744.0] Should you choose the geometric mean or the arithmetic mean and so on well to decide that you need to know roughly at least what distribution your data comes from.
+[744.0:758.0] So there are of course many distributions. This is one of those charts that I call toilet charts, you know, you can print it and put it in your bathroom and stare at it every time every time you'll find new things to learn.
+[758.0:773.0] I of course won't go through that one, but I recommend looking at it. There's a link there or you can just come to my lab where we have printed it as a large poster and put it on the wall, which is not to say that my my lab is a toilet.
+[773.0:783.0] OK, so here's just a quick refresher slide showing some of the most important distributions. I won't go through them. This is more for your reference.
+[783.0:790.0] If you want to refresh your mind on some of these.
+[790.0:798.0] So now let's talk a bit more about how you can know where what kind of distribution your data is coming from.
+[798.0:813.0] So here a very important tool is visual inspection. Remember last time when we talked all about that when we talked about that in the entire in all of that lecture.
+[813.0:825.0] Visually visualizing your distribution cannot perfectly tell you from what distribution your data is, but it can often tell you from what distribution your data is not.
+[825.0:835.0] For example, we know that a normal distribution is symmetric. So if you look at a histogram of your data and it's not symmetric, then you know it's not a normal distribution.
+[835.0:846.0] OK, so that can already be quite important information. You can of course also look at the box plot. Remember from last time those two you've seen in the previous lectures.
+[846.0:853.0] And now here is another cute tool that quantile quantile plots who has seen those qq plots.
+[853.0:868.0] So it's a good a lot of you have. So then I won't go into detail. It's just I'll just summarize by by saying that these basically cute q plots let you compare two distributions to each other.
+[868.0:874.0] And if so for example, you could compare your your data.
+[874.0:888.0] So the distribution that you think your data might come from you do this by comparing quantize of those distributions. And if the two distributions are actually the same, then the data will lie on the diagonal as on the left qq plot.
+[888.0:894.0] And if not, then there will be off diagonal and you know that your data is not from that distribution that you hypothesized.
+[894.0:905.0] So these are visual ways of doing it. And then of course, you also have also sort of statistical tests for determining which distribution your data comes from.
+[905.0:916.0] So this is related to the topic of hypothesis testing, which we talk about later in today's class, but we won't talk about it in the context of deciding which distribution your data comes from.
+[916.0:927.0] We look at at the setting where you want to, for example, compare two means to statistics derived from a data set.
+[927.0:938.0] Okay, so now again about this question, where does my data come from? Let's look at power laws again as an example.
+[938.0:948.0] Visuals can be misleading in those cases, because a power law actually doesn't look so different from something like an exponential.
+[948.0:957.0] If you draw it on linear axis, although it's very, very different, right, the tails decay exponentially slower in a power law than on an exponential.
+[957.0:968.0] So what can you do to still use your visual system to gain insights, you plot your data on log log axis instead of linear linear axis.
+[968.0:983.0] Okay, so if instead of plotting x versus y, you plot log x versus log y, then if it's a power law, it will be a straight line that's descending.
+[983.0:995.0] So that last time, what would it look like if it's an exponential distribution and you plot it on log log axis?
+[995.0:1006.0] Would it would the shape also be a straight line or would it be convex or would it be concave?
+[1006.0:1014.0] Any guesses? It's decaying faster than a power law, right?
+[1014.0:1016.0] So it needs to be like this.
+[1016.0:1026.0] It needs to drop faster than the power law, so it will be actually an exponential and we will be an exponential that points down.
+[1026.0:1044.0] On what axis do you have to draw an exponential distribution such that it also looks like this? Like a straight descending line?
+[1044.0:1049.0] And which one?
+[1049.0:1060.0] Correct. So if you have an exponential distribution and you plot x versus log y, then it looks like this.
+[1060.0:1068.0] To this on the back of an envelope, you just exponentially both sides and then you get your exponential back.
+[1068.0:1079.0] Okay, so to motivate the next part of this lecture, I'll ask a simple question, who likes sneakers better?
+[1079.0:1086.0] Men or women? And imagine that you have done a survey where you asked a lot of men and a lot of women, do you like sneakers?
+[1086.0:1098.0] Then you get these statistics, 47.3% of women say they like sneakers and 48.7% of men say they like sneakers.
+[1098.0:1106.0] Do men like sneakers better than women? What do you think?
+[1106.0:1116.0] It depends. Okay, so this brings us to the next part of the lecture, quantifying uncertainty in your data.
+[1116.0:1122.0] We get back to this important question about about sneakers.
+[1122.0:1135.0] So the most straightforward, single statistic is the mean that tells you in each of these groups what fraction of people like sneakers.
+[1135.0:1151.0] Now, you could imagine you, you ran this survey only one time, right? You could imagine that you run it a million times on a million consecutive days or in a million, a consecutive parallel places, you run this survey.
+[1151.0:1158.0] And every time you get such a number like the 47.3% for women, but every time that number will be slightly different.
+[1158.0:1166.0] And so you could plot the distribution over those numbers.
+[1166.0:1179.0] And then you could look at how much variation do I have in the fraction of women who report that they like sneakers.
+[1179.0:1190.0] And you could take that before you could take the standard deviation of the survey results for the one million service that you ran and show them as error bars on your plot.
+[1190.0:1198.0] And if it looks like this, then I would probably conclude that women and men like sneakers equally much.
+[1198.0:1219.0] But if the data looks like this, then it might be different story, right? Then there here, I would conclude that men and women have differ significantly with respect to how much they like sneakers, although the effect size, the difference is small.
+[1219.0:1233.0] Whereas here you couldn't even report that there is any really difference. You can make this more precise with statistical tests, which we'll talk about in a few slides from here.
+[1233.0:1246.0] But already visually, you can see that this is very different from that. So this means that all your plots should always have error bars.
+[1246.0:1262.0] So as any bar plots without error bars unless you have a very strong reason convincing us that it just doesn't make sense to add error bars. Otherwise, you must always have.
+[1262.0:1282.0] So in another in an actual whether you whether you make plots or whether you report statistics always be sure to quantify your uncertainty. This is because basically this is rooted in the fact that finite samples introduce uncertainty.
+[1282.0:1302.0] You could even think of statistics as the art of dealing with finite samples. If you had infinite data, then all these things would be easy because of the central limit theorem. You would always know all the everything exactly basically, but you don't have infinite data.
+[1302.0:1326.0] So you need to deal with uncertainty introduced by finite samples, even when you have complete data set, let's say you have data about every person in the world that would still be a finite sample because you could imagine running the time the world many times and some things there is inherent.
+[1326.0:1338.0] So you can look at this city in the world and then you would see something else if you rerun the world. Basically, so even if you had what you think is complete data, it's still a finite sample from some theoretical distribution.
+[1338.0:1350.0] So you always have that problem of uncertainty due to finite samples, which means that whenever you report a statistic, as I said, you need to quantify how certain you are in it.
+[1350.0:1360.0] We will discuss two ways of quantifying the uncertainty. First, we talk about hypothesis tests and then second, we'll talk about confidence intervals.
+[1360.0:1366.0] And as I said, odd plots should always have error bars.
+[1366.0:1383.0] Okay, so first way of quantifying uncertainty hypothesis testing to start this part of the lecture, I want you to think for a minute, I'm giving you here a bunch of options about where do p values.
+[1383.0:1388.0] Okay, great, everyone has so you should all be able to answer these questions.
+[1388.0:1395.0] Think for a minute, which of these 12 statements about p values are true?
+[1395.0:1420.0] Feel free to discuss with your neighbors.
+[1420.0:1430.0] Actually, let's go straight there. I want you to go to this poll and then tell me which of these options you think are true.
+[1450.0:1475.0] It's a much florist survey and the previous ones, which is a good sign that means that you're thinking.
+[1475.0:1502.0] Okay, so I have only eight votes so far.
+[1502.0:1506.0] Thank you.
+[1532.0:1558.0] Okay, so we'll do 10 more seconds.
+[1558.0:1568.0] Okay, four, three, two, one.
+[1568.0:1569.0] Thank you.
+[1569.0:1575.0] Close this and.
+[1575.0:1596.0] I'll share the results with you. So the largest number of votes is for option I, which is peak with 0.05 means that if you reject the not hypothesis, the probability of a type one error is only 5%.
+[1596.0:1607.0] So the probability of a is correct, meaning that none of these statements about p values are correct.
+[1607.0:1612.0] So let's go back to the basics and build up p values from scratch.
+[1612.0:1619.0] And then you should be able to see why all of these are wrong.
+[1619.0:1629.0] So I think introduction into hypothesis testing and I'll do that with an example that shows you basically captures the essence of p values.
+[1629.0:1638.0] This is about Joseph Ryan, who was a so called parapsychologist in the mid 20th century.
+[1638.0:1655.0] He was interested in studying ESP, extra sensory perception. So what he did was he ran an experiment where he laid 10 cards out on the table with the backup.
+[1655.0:1668.0] So he didn't see which, which cards these, these were so they were either red or blue every card. And there are 10 of them.
+[1668.0:1673.0] And then he made.
+[1673.0:1686.0] He made them guess he brought people to the lab and he asked them to guess for each card whether it's red or blue.
+[1686.0:1691.0] Okay, but they didn't they didn't see it. They didn't know it. So they just really had to guess or they have to feel you know they had to feel the cards and then say whether they think they were red or blue.
+[1691.0:1707.0] And then he found that one person in 1000 had extra sensory perception because that one person actually got all the 10 cards right for every single card. The guest correctly or they felt correctly whether it's red or blue.
+[1707.0:1718.0] Do you agree that that person had extra sensory perception?
+[1718.0:1730.0] Right. Exactly. Okay. So the chance of guessing correctly is one or one half to the power of 10 because every time you have a 50% chance of guessing right.
+[1730.0:1737.0] So that's about what that's exact. That's about one over 1000. It's exactly one over 1024.
+[1737.0:1757.0] So in expectation. So you would expect one person out of 1024 to guess this correctly, which is exactly what happened. And you can also do a back of the envelope calculation to calculate the probability of observing at least one person with
+[1757.0:1768.0] extra sensory perception. And that would be 62% in this case. And that's the p value means even if there is no extra sensory perception.
+[1768.0:1775.0] You still have a 62% chance of observing an outcome at least as extreme as what you observed.
+[1775.0:1788.0] So the p value in this case would be 62%. So this was just kind of an intuitive example will make this more formal in in the next slide.
+[1788.0:1796.0] But I want to quickly follow up on Joseph Ryan because he then he was a partly good scientist. He tried to reproduce his results.
+[1796.0:1809.0] So he brought in another. He brought in those psychics subjects again and he asked them to or the psychics subject because there was only one and then he asked the person to guess again, but they couldn't do it anymore.
+[1809.0:1819.0] And so he concluded that if you tell a medium, someone with extra sensory perception that they have those capabilities, then they lose them.
+[1819.0:1834.0] Okay, he didn't hadn't heard about p values. Okay, so then let's make this a bit more formal in the next slide again, but this is done via hypothesis testing, which is huge subject.
+[1834.0:1843.0] You can take entire classes only on hypothesis testing. So I really need to cut it short in this lecture, but I tried to give you the gist.
+[1843.0:1855.0] Many people don't like hypothesis testing, classical hypothesis testing. For example, there's an entire there's a huge debate in the word of statistics of the frequentists.
+[1855.0:1863.0] These are the people that like hypothesis testing versus the basins who are the people who despise hypothesis testing.
+[1863.0:1875.0] And even if you are more on the Bayesian side or for some other reason, you don't like hypothesis testing, then you still need to understand it because everyone else uses it.
+[1875.0:1891.0] And so in order to read science, you basically, you still need to understand the principles of hypothesis testing and you should certainly never use it yourself without understanding exactly what you're doing.
+[1891.0:1900.0] But you need to quantify your uncertainty. So you need to understand hypothesis tests. Okay, so here's the logic of hypothesis testing.
+[1900.0:1910.0] Imagine that we have a coin. We flip it 100 times. It comes out 40 times heads.
+[1910.0:1922.0] The solution is is the coin fair. If we flip it a billion times and the coin is fair, then we would of course expect it to be about 50%.
+[1922.0:1939.0] Headspot 100 is a small enough number that maybe even a fair coin could give you 40 times heads. Right, certainly for 49 heads, you wouldn't be you wouldn't you wouldn't be very skeptical that the coin is fair.
+[1939.0:1946.0] So how can we go about this? Yes, you have a.
+[1946.0:1957.0] Right now we're. Wow, you are a customer on or something. How did you calculate?
+[1957.0:1965.0] Okay, okay, so let's let's build it slowly and then we can come back to this for now we need we need to work with the fact that there's only 100 coin flips.
+[1965.0:1975.0] We cannot throw the coin more often. This is the data that we have imagined. This is something that happened on another planet and you cannot.
+[1975.0:1985.0] You cannot collect. You cannot intervene. So then we construct another hypothesis, which says yes, the coin is fair and an alternative hypothesis.
+[1985.0:2000.0] No, the coin is not fair. Generally, as the null hypothesis, you take the simplest hypothesis. In this case, the coin being fair is the simplest hypothesis because it makes less assumptions. Right.
+[2000.0:2008.0] That is like Orkans razor basically the coin being fair is the simpler hypothesis than the coin being not fair.
+[2008.0:2021.0] So then you ask how likely would I be to see an outcome at least as extreme as as what I actually actually observed, which was 40 heads.
+[2021.0:2028.0] So how likely would I be to see 40 or even fewer heads if the null hypothesis were true.
+[2028.0:2043.0] That is in our case, if the coin were fair. So if you have a 50% chance of getting heads, how likely are you to observe 40% heads upon 100 coin tosses.
+[2043.0:2051.0] If this probability is large, then the null hypothesis hypothesis is enough to explain the data. You don't need more.
+[2051.0:2062.0] If the data is already likely under the null hypothesis, then it explains the way the data basically and and you don't need to reject the null hypothesis.
+[2062.0:2071.0] So then you can say, okay, there's nothing special basically out my data. Otherwise, you need to dig in deeper in order to understand your data.
+[2071.0:2081.0] So the null hypothesis is not enough to explain the data, then you need to do more research in order to figure out what actually does explain the data.
+[2081.0:2089.0] So the idea here is to gain a week and indirect support for a hypothesis.
+[2089.0:2104.0] H a for alternative by ruling out a null hypothesis, age zero. And to do this by inspecting a test statistic with which is a measurement that you can make on the data.
+[2104.0:2110.0] That's likely to be large under the alternative hypothesis, but small under the null hypothesis.
+[2110.0:2122.0] Let's come back to our coin example and fill in these two aspects. So in our coin example, the null hypothesis was the coin is fair.
+[2122.0:2131.0] And in the alternative hypothesis is the coin is not fair, which means the coin is by.
+[2131.0:2145.0] And we do this by inspecting a test statistic in the case of our coins, the test statistic could be the number of heads that you observe after 100 coin tosses.
+[2145.0:2152.0] But if we have that statistic, then we would consider as.
+[2152.0:2167.0] And we would consider as extreme only if let's say in this case, I said an outcome at least as extreme as the one actually observed and we said everything smaller than 40 heads, but there is the symmetry with the coin right like heads versus tails doesn't really matter.
+[2167.0:2180.0] So really you should care in this case about less than 40 or more than 60, you know, like this far away from fairness basically this far away from.
+[2180.0:2185.0] From 50, this is what you would care about in this case.
+[2185.0:2206.0] So therefore you can make basically a symmetric version of this, which short a two tailed version is also called where instead of looking at the raw number of heads as the test statistic, you could look at the difference between fairness 50 and the number of heads that you observed.
+[2206.0:2218.0] And you can take an absolute value of that to just measure how far away are you from 50, OK, but this is up to you to define the test statistic.
+[2218.0:2235.0] And this is basically an important thing that the decisions do is they come up with clever test statistics that are sensitive to this is invigorating between these two alternative hypotheses basically.
+[2235.0:2238.0] OK.
+[2238.0:2252.0] So now let's continue our coin example as mentioned the null hypothesis is the coin is fair, which would translate to the probability of heads equals the probability of tails equals 50%.
+[2252.0:2271.0] Here now let's look at this we will now use this total test statistic, which is the absolute difference of the empirically observed number of heads from what you would expect under form from a fair coin, which would be 50.
+[2271.0:2285.0] Now we look at the at this probability distribution of the test statistic that is a that is an important device in what's about to follow. So we have the probability of s.
+[2285.0:2294.0] So given age zero, which is the probability distribution of the test statistic if we assume that the null hypothesis is true.
+[2294.0:2303.0] We assume that the coin is fair, then what's our distribution that over a number of heads, OK, so that would be some sort of.
+[2303.0:2329.0] The distribution in this case, I guess very simple example in our decision rule would be we reject a zero if that probability if if the probability of deviating the probability of the test statistic being at least as extreme as what we observe in the data is small.
+[2329.0:2358.0] If the probability of the test statistic being at least as large as the empirically observed s under the null hypothesis, if that value is less than alpha, then we reject the null hypothesis because the data has low probability under the null hypothesis that means the null hypothesis alone cannot easily explain the data that you observed.
+[2358.0:2363.0] Does this logic make sense?
+[2363.0:2372.0] Any questions.
+[2372.0:2387.0] So this quantity here, the probability that that under the null hypothesis, the test statistic is at least as extreme as what we empirically observe that's called the p value.
+[2387.0:2402.0] The probability of observing a result at least as extreme as what you observe if the null hypothesis is true, that's the p value and alpha is threshold in the decision rule that is called the significant level.
+[2402.0:2418.0] And you as the data analyst are the one who define what do you use as s and what value do I choose for alpha and by fiddling alpha, you can fiddle with the false positive rate.
+[2418.0:2427.0] So the false positive rate is the probability of rejecting the null hypothesis, although it is true.
+[2427.0:2437.0] So you see here the twistedness of this whole logic because rejecting something is a negative thing, right, you do not accept it.
+[2437.0:2442.0] But this is what defines the false positive rate, right.
+[2442.0:2450.0] So this is what boggles the minds of many people that it's kind of this doing something by rejecting.
+[2450.0:2457.0] But slowly again, alpha.
+[2457.0:2476.0] The probability of of rejecting the null hypothesis, although it's true. And so that way you limit the number of cases where you.
+[2476.0:2496.0] You reject the non hypothesis, although it's true, so you kind of you think there is an effect, although there's really none that's why it's called the false positive rate and that's what you modulate with alpha and you choose alpha and by increasing alpha, you get a higher false positive rate in the limit if you set alpha to one.
+[2496.0:2509.0] Or to two, then it means that you will always reject the null hypothesis. So you will always think that yeah, there is something going on with my data.
+[2509.0:2515.0] Regardless of whether the null hypothesis is even if the null hypothesis is true, right.
+[2515.0:2535.0] So does limit case shows you that increasing alpha increases the false positive rate. Okay, so I think if you're if you haven't internalized p values before, then this might be you might have to meditate a bit over this slide, but I did my best in order to break it down to something intuitive.
+[2535.0:2542.0] Let me know if questions come up and I'd be happy to reiterate later.
+[2542.0:2560.0] Okay, so there are many statistical tests. Everything I've talked about so far was kind of was kind of agnostic to I picked in I chose a test statistic s here.
+[2560.0:2580.0] And that basically defines your test, you know, like what how you compute the test statistic that defines what test use and there are many different ways of choosing test statistics and there are many that therefore there are many different statistical tests.
+[2580.0:2597.0] And although they differ in their details, the basic logic is always the same and it's the logic of the previous slides you ask if the null hypothesis is true, then how likely would I be to see a result as extreme as what I actually saw.
+[2597.0:2606.0] And based on that, you reject or do not reject the null hypothesis. That's always the same logic and the the the devil is in the details basically.
+[2606.0:2627.0] Because then the right choice of the test depends on multi factors, for example, this is an unexclusive list. What is the question that you ask about the data what type of data do you have? For example, continuous versus categorical outcomes continuous versus categorical factors that dimensionality of your data that dimensionality of your outcomes and so on.
+[2627.0:2642.0] Because depends on the sample size when you compare two samples. You need to ask do those two samples come from the same population or are the different populations. So for example, set of people and so on.
+[2642.0:2653.0] So there is the good thing is that there is plenty of advice about how to choose your test. So for this, I'm giving you already the second toilet chart in today's lecture.
+[2653.0:2670.0] This you can think of a decision tree basically for deciding which test you should use. So for example, how many outcome variables one or more and then how many what type of outcome continuous versus categorical and so on.
+[2670.0:2684.0] And this way you can percolate through this decision chart and then you will basically arrive at the kind of test that you should be doing examples are the tea test with coxins.
+[2684.0:2699.0] So I'm trying to find a sign of rank test and Nova high square test and so on. So this is why I said you can take entire lectures about these because about each of those you could have entire classes about these because about each of these you could have a lecture.
+[2699.0:2710.0] But this is not the purpose of today's class. The purpose was my job was to explain the logic to you and to tell you where you can find more information.
+[2710.0:2720.0] Okay, so I yeah, okay, so I quickly finish this chapter on p values and then we take our break.
+[2720.0:2727.0] Some remarks on p values, they are used all across the sciences at this point.
+[2727.0:2736.0] But they are unfortunately widely misunderstood. I think we saw that also in the survey in the poll earlier that that I made you made you take.
+[2736.0:2741.0] So don't use them if you don't understand them.
+[2741.0:2756.0] Which pretty much means going understand them and what's the p value I said again a large p value means that even under a simple null hypothesis your data would be quite likely.
+[2756.0:2767.0] Note that this tells you nothing about the alternative hypothesis because your data could be likely both under the null hypothesis and under the alternative hypothesis.
+[2767.0:2777.0] So then if you if you reject the null hypothesis that doesn't necessarily mean that the alternative hypothesis is true.
+[2777.0:2782.0] It just means that the null hypothesis is not enough to explain the data.
+[2782.0:2793.0] So historically so and this is kind of yeah, this is what the devilish twist that a lot of people don't get at first sight.
+[2793.0:2799.0] And so here's the devil who invented the whole stick. This is Ronald Fisher.
+[2799.0:2813.0] He introduced p values in the early 20th century to be fair to the devil here. He did not mean p values as a method for formally deciding whether a hypothesis is true or not.
+[2813.0:2825.0] Rather he thought of it as an informal tool for assessing a particular result and for checking whether a simple null hypothesis is good enough to explain the data.
+[2825.0:2838.0] Whether we need to keep looking for other explanations. So it's more like a guidance in in deciding what research steps to do next rather than reporting a final result.
+[2838.0:2861.0] For example, take p equals 5%. This means that if you repeat if the null hypothesis is true. So there's really nothing special about your data. But you repeat the experiment 20 times. Then you will still still see data that's extreme enough such that you will reject the null hypothesis.
+[2861.0:2880.0] So if there's a research question that's pursued by 20 labs in parallel in the lab, then you would end and p equals 5%. Then you would expect one of those labs to by chance find that reject the null hypothesis.
+[2880.0:2893.0] And then if you follow the logic, if we reject the null hypothesis, then this is good enough for publishing. Then one of those will publish, but the other 19 will not. And so now you have what's called publication bias.
+[2893.0:2904.0] Because only the case where the null hypothesis was rejected will be reported, although there were 19 other cases where the null hypothesis was not rejected.
+[2904.0:2927.0] But those people just say, oh well, nothing special about my data. Let's move on. Okay. So this is really tricky. And some people call this the reproducibility crisis of science because we basically or the faithfulness crisis of science, because we don't really know whether what the publications tell us.
+[2927.0:2951.0] And finally, as many people forget this, you'd always look at the y axis. So that is the size of the effect. It's not just the p value. Imagine I have, I have a drug and a placebo. And I want to measure whether the drug does better. I now run it. I do a trial on one billion people.
+[2951.0:2964.0] Even if the two drugs are only a tiny tiny, even if the drug, let's say, decreases your mortality by one in a million, then you might still detect that effect.
+[2964.0:2977.0] If you make a study with enough people, but is it really worth it is such a small effect size really worth doing taking the drug, for example, maybe not.
+[2977.0:2990.0] Just report p values is there a significant difference, but you always must also report how big is the difference. Okay. So effect size as well as significance.
+[2990.0:3011.0] And then finally, this, these options came from a paper that's called a dirty dozen 12 p value misconceptions. An insightful read. I recommend that you do this. If you want to know why the answers that you picked were incorrect.
+[3011.0:3021.0] And then finally, because there is so much there are so many issues because p values have been abused in science, basically.
+[3021.0:3036.0] By using them to claim that a hypothesis is true or not, which they're not intended for, right. They're meant as a tool for guiding your research. That's why some scientific journals have actually banned this way of.
+[3036.0:3052.0] And finally, that hypothesis is true or not based on p values based on hypothesis testing from their publication. So for example, here's this basic and applied social psychology journal that put out an editorial from now on.
+[3052.0:3072.0] The journal is banning the null hypothesis significance testing procedure. Instead, you can use other tools. If you want, there's, for example, the approach of base factors, which is conceptually simpler.
+[3072.0:3086.0] And then the only measures what's the probability of the data under the null hypothesis. This is also a quantity that we use in in hypothesis testing, but it's used in a less convoluted way here.
+[3086.0:3105.0] But we compute that probability of data under the null hypothesis and we computed under the alternative hypothesis. And then we compute that ratio. And if basically if the data is much more likely under the null hypothesis, then under the alternative hypothesis, then the null hypothesis explains the data better.
+[3105.0:3128.0] And then we can read up on this here. There's also an amusing, a link to an amusing section comparing the hypothesis testing and the Bayesian approach. Okay, so I'll take a break here and we will come back at so what is eight plus 15 we come back at nine 22 to talk about how to quantify your uncertainty.
+[3128.0:3151.0] And 20 please 920. Okay, welcome back. So our first approach, how to quantify uncertainty was hypothesis testing. We close that chapter now and we move to the next approach, which is confidence intervals.
+[3151.0:3165.0] So what confidence intervals are. Okay, cool. Thank you. I could probably have the same kind of poll as we did about, about p values with similar results for confidence intervals.
+[3165.0:3172.0] So let's go back to the basics also for confidence intervals. So we're all on the same page.
+[3172.0:3192.0] Intuitively confidence intervals capture the range of of the estimates for a parameter of interest. Let's say for of the mean, for example, the range of estimates that seems reasonable given the observed data.
+[3192.0:3211.0] So in this Snickers example, we might have these point estimates of the means, but then we want to give the confidence intervals would capture what what other values might be reasonable under the data that we observe.
+[3211.0:3228.0] And so there's always a confidence level associated with confidence intervals. And so for example, if the confidence level gamma, if we choose gamma equals 95%. Then we would speak of the 95% confidence intervals.
+[3228.0:3249.0] And there are a common misconception is that if something falls into that a common misconception is that the true value has a let's say 95% probability of falling into the 95% confidence interval.
+[3249.0:3266.0] That's not that's not technically correct. So what do the confidence intervals actually capture assume that there is that there's the parameter of interest for ease of exposition. Let's assume that this is the mean that you want to estimate.
+[3266.0:3282.0] The mean of women and the mean of men of liking Snickers. And so there's a true value there, but you don't observe it. Okay, so the world has a true probability of men liking Snickers.
+[3282.0:3289.0] But you don't observe the true value because you only can ask a finite sample of people to you like Snickers.
+[3289.0:3298.0] And that gives rise to your empirical estimate, which we call M of the parameter of interest of the mean here.
+[3298.0:3301.0] And now.
+[3301.0:3321.0] What what confidence intervals define is the Fagama confidence interval. Then that confidence interval contains those values.
+[3321.0:3336.0] And then at the confidence level one minus gamma. So let me break this down. Let's for concreteness. Let's choose a concrete gamma. Let's change a pick 95% and then the 95% confidence intervals.
+[3336.0:3352.0] Includes all those values of the parameter of interest that you could not reject at the 5% one minus 100 minus 95%. So at the 5% significance level.
+[3352.0:3367.0] So basically imagine that that you could do a test for every one of these values for every possible value of of mu zero.
+[3367.0:3374.0] And those that you cannot reject at the significance level 5% would be in the 95% confidence interval.
+[3374.0:3387.0] And so this is note the subtle difference in this formulation. We assume that the world has a true. There is the true parameter. It's fixed. It's somewhere there, but we just don't observe it.
+[3387.0:3398.0] So then we need to ask which under which true values would the data.
+[3398.0:3412.0] Could I not reject. See how it's even so so hard to put it in words because there are so many not interjecting and so on. But this is very different from if you say.
+[3412.0:3421.0] The actual parameter has a probability of falling of 95% of falling into this confidence interval because then you're applying that there is no true fixed value.
+[3421.0:3431.0] If you're saying if something has a probability distribution of falling somewhere, then it's not fixed. Right. So this this logic of saying the confidence.
+[3431.0:3443.0] The true parameter has a 95% probability of falling into that confidence interval is is not correct because there is no probability distribution in this logic over the true value.
+[3443.0:3453.0] But there is one single fixed true value. Okay, so that's basically the frequentist versus Bayesian approach. This is frequentist, whereas the Bayesian would say actually there is a problem.
+[3453.0:3463.0] There is no single true value, but there is a whole probability distribution over true values. And then you could do that other logic and those are then called credit credible.
+[3463.0:3474.0] Credibility, where is here we're talking about confidence inverse which follow this frequentist logic. Okay, so let me get this logic across with a small visualization.
+[3474.0:3486.0] Okay, so here M is the estimate that you make of the data. You know, you have your finite sample and you compute the mean of that data that's M.
+[3486.0:3497.0] And now we take a hypothesized mu zero. Let's say the true.
+[3497.0:3509.0] The true mean, which is somewhere there, but we don't know it because we have a finite sample only if the true mean here is mu zero.
+[3509.0:3522.0] Then what I mean with this bar here with the blue bar is that if mu zero is the true value, then the empirical estimate.
+[3522.0:3524.0] M.
+[3524.0:3541.0] And then the false into this bar with probability gamma and you see how it's now now reversed right we're saying assume this is the true mu and now there's the probability distribution over the estimated M's.
+[3541.0:3553.0] And I say that this bar I use to visualize where does the true M fall with probability 95%.
+[3553.0:3564.0] And then you do this also for the other extreme. And so then you see that these two values under these two.
+[3564.0:3582.0] Barely is within the region of 95%. Okay, and every other mu zero between those under each of those M would also have a probability of at least 95%.
+[3582.0:3601.0] And by every mu zero between these, you would not reject at the 5% level. Okay, so might take a little bit of meditation to get that logic.
+[3601.0:3614.0] But this is how how technically confidence intervals are defined. Okay, cool.
+[3614.0:3629.0] And what I like about confidence intervals while why are they why I like them better than hypothesis testing is because they basically summarize an infinite number of hypothesis tests that tell you the whole range of hypothesis tests under.
+[3629.0:3638.0] Under which the data would under which the data is likely.
+[3638.0:3655.0] The whole range of hypothesis test where you would not reject the null hypothesis and this way you also get an effect size you also get information about how big the.
+[3655.0:3666.0] And the estimate is not just if it's statistically significantly different from something else. Okay.
+[3666.0:3673.0] Okay, so how can you compute confidence intervals there are two ways of doing this there are parametric and non parametric methods.
+[3673.0:3686.0] The parametric methods assume that the test statistic follows a known distribution typically a normal distribution. There was someone actually in the in the break who came to talk to me about this.
+[3686.0:3697.0] So these tests where you need to make an assumption about how the test statistic is distributed under the non hypothesis those are called parametric tests.
+[3697.0:3718.0] So here you basically need to know or verify that this assumption is actually true that the test statistic actually follows this distribution in some cases that you know it from theory because of things like the central limits here and so on, but in other cases it's not.
+[3718.0:3732.0] So it can get tricky on the flip side non parametric methods make no such assumptions about the distribution of the test statistic and so they instead work by sampling the empirical data.
+[3732.0:3739.0] Which is nice because you less assumptions equals better.
+[3739.0:3758.0] Okay. And so in order to see so here I said that the non parametric methods work with sampling and in order to see how to use sampling for this purpose let's take yet another view on the definition of the confidence universe.
+[3758.0:3768.0] But here I'll repeat from a slightly different angle what I just said before so this is a second chance of getting my convoluted explanation.
+[3768.0:3786.0] So imagine that we were to so what you're given is a data set of end points right that's all you have you have a finite sample of capital and data points and this data collection was done once and that's the sample that you have.
+[3786.0:3810.0] But now imagine for the sake of the argument that you repeated this hold on I misdefined capital and is defined differently on the slide from what I just said so on roll and say you have one finite sample but now imagine that you could repeat data collection many many times.
+[3810.0:3821.0] Okay so instead of asking let's say you're one thousand people in your survey once and then you get the data you repeat your survey a million times.
+[3821.0:3837.0] Okay so you could imagine doing that and then for each time that you repeat the survey you would get you would estimate your let's say a fraction of women who likes nickers and so each of those gives you an estimate M.
+[3837.0:3848.0] So you have let's say you repeat the data collection capital and times then you get this capital and means that you estimate.
+[3848.0:3865.0] And we know from the law of large numbers but it's also very intuitive that if you average these M's then they will approach the true value of the of the mean.
+[3865.0:3880.0] Because you basically have these samples that that you have these samples and if you average a lot of them then they will approach the true mean.
+[3880.0:3889.0] Okay the sample mean approximate the true mean in the limit of infinite data that's what the large the law of large numbers says.
+[3889.0:3903.0] And now for for among these n repetitions of your data collection a fraction for a fraction gamma out of those.
+[3903.0:3914.0] The the estimate M will lie within the gamma confidence interval around new.
+[3914.0:3921.0] This is basically the definition of the confidence interval right.
+[3921.0:3929.0] So let's let's give an example here imagine that mu is the true value of the mean.
+[3929.0:3951.0] And now for if you if you if you estimate me if you estimate mu n times then 95% of the times that estimates will fall into the 95% confidence interval.
+[3951.0:3980.0] Okay so that's by definition of what the confidence interval means. So this means that if you had a lot of these repetitions so you would have 95% green and 5% red crosses that means if you could do these all these repetitions of your data collection then you could just look at the histogram of those estimated ends.
+[3980.0:4007.0] And you could find your confidence interval that way by basically throwing out the lowest 2.5% and throwing out the highest 2.5% that means you discard the most extreme 5% of the data and then that means that that with 95% of your of your estimates are in that blue center there.
+[4007.0:4020.0] So if you could repeat data collection many many times then you could use this histogram based approach in order to compute your confidence intervals.
+[4020.0:4049.0] The big white elephant is of course you have only one repetition of data collection I'm giving you only one sample and you cannot do end towards infinity new versions of data collection so that's the crux and so the the idea now is can we use some sort of simulation or something to make these kind of fake versions of the repetitions of data collection.
+[4049.0:4054.0] And so that's the idea behind bootstrapped resembling who has seen bootstrapped resembling before.
+[4054.0:4077.0] Okay so some people have this is one of the single most useful tools for data analysis right so I'm trying I will do my best now to explain it but I really encourage you to follow up later and try to understand this because this is really such a useful tool for data analysis.
+[4077.0:4082.0] Okay so ideally what you imagine we have our population.
+[4082.0:4100.0] Imagine these are all the the 7 billion people like or maybe 8 billion already and you draw a sample and those you ask how much do you like sneakers or not.
+[4100.0:4127.0] What you would ideally like to do is to sample from the 8 billion you would like to sample many many times let's say 1000 people and then administer your survey because if you could do that then you could do that entire logic but what you have in reality is that you have only one sample of 1000 people you you asked your survey only once.
+[4127.0:4140.0] So your pipeline really doesn't start here your pipeline starts here you only have this one sample and you have to work with that so now the idea of bootstrapped resembling is.
+[4140.0:4167.0] You assume that the distribution that underlies the sample is a good enough approximation of the distribution that underlies the full data okay so you assume that you have the same fraction of sneakers liking men as sneakers liking women and so on roughly in the sample as in the population.
+[4167.0:4176.0] And now you to draw from that distribution.
+[4176.0:4182.0] You draw a new you draw a new random samples.
+[4182.0:4190.0] From the sample that you already have so let's say you have one two three four five six seven eight nine.
+[4190.0:4207.0] So you re sample nine data points from the sample but with replacement okay so you close your eyes you pick one of those data points you write down what it was you put it back and you draw again you don't and you repeat this nine times.
+[4207.0:4222.0] So you make a fake sample that has the same size as you actual sample by drawing with replacement from that original sample why don't we draw without replacement.
+[4222.0:4248.0] I don't know it would just give us the exact same sample again right like if you have named nine data points and you draw on hand data points without replacement and you get all those nine data points right so this is kind of not something that you want so since you want exactly the same size as the sample.
+[4248.0:4258.0] You draw with replacement and then you have another sample that follows the same distribution as the sample that you already have.
+[4258.0:4267.0] And then on each of these fake samples you compute your estimate.
+[4267.0:4284.0] And then you can and then now the logic from the previous slide applies you can look at draw the histogram of of those estimates and you can compute your 95% confidence intervals in that way.
+[4284.0:4294.0] Did this make sense so the crucial thing is that you make fake samples this is by bootstrapping from the sample that you already have.
+[4294.0:4306.0] The sample needs to have exactly the same size the fake samples need to have the exact the same size as the actual sample and you need to draw with replacement there was a question.
+[4306.0:4322.0] So you make that sample idea of the question is that can we.
+[4322.0:4344.0] A test that fundamental assumption that the sample is a good enough approximation of the population this is difficult because you don't know the population right you don't have access to the population so I would say that typically you need to know this via external knowledge how was the sample collected and so on yeah.
+[4344.0:4354.0] Good.
+[4354.0:4368.0] Now that's where the so the question is why do we have to have the same size in the bootstrap resample in the fake sample as in the original sample wouldn't it just be the same data as in the original sample.
+[4368.0:4382.0] That was the point I made earlier that's why you do it with replacement you draw one data point and you put it back and you draw again you put it back that's why you don't always get the same sample.
+[4382.0:4390.0] Why does it need to be the same size because you really want to mimic that sample that you have.
+[4390.0:4404.0] This will automatically basically then modulate the width of your of your confidence interval imagine that your sample has only size size nine like here then.
+[4404.0:4413.0] You will get a lot of variety in the different resamples they might look quite different in the extreme case imagine that you have only one blue and one orange dot.
+[4413.0:4437.0] And then you sample with with replacement you will get very different samples so you will have a lot of variability whereas if this was one million large then there would be much the means that you compute will be much seem much more similar then and your confidence interval will naturally shrink that way so by sticking to the same size you you basically.
+[4437.0:4443.0] That modulates the width of your that sample size helps you.
+[4443.0:4466.0] It affects the uncertainty and then that way you capture that so it's there's also theory behind of this but I think even from the intuition it's it's quite a beautiful idea and it makes no assumptions about the data you just do it and you can also use any other statistic than the mean here of course you might be interested in the mean instead of the median or the standard deviation or whatever and then you can bootstrap.
+[4466.0:4469.0] The same way.
+[4469.0:4476.0] Okay so this brings us to air bars with there are an important use case for confidence intervals.
+[4476.0:4483.0] They're not the only use case but there are one important use case of confidence in a but you need to be careful because.
+[4483.0:4503.0] The other bars do not necessarily signify confidence intervals they could represent many other things as well sometimes people use them to visualize the standard deviation in your data sometimes they they use them to.
+[4503.0:4532.0] Signify the standard error of the mean which is the standard deviation by the squared of number of data points that you have so the rule is always ask always tell what the confidence intervals represent don't just put down I see this way to often where you see a bar chart and it has confidence intervals but then you don't even know what the confidence intervals are and then you have to second guess or these 95% confidence intervals are they 99% confidence intervals are they standard errors.
+[4532.0:4544.0] So that's why important journals require that under every plot you put what are the confidence intervals and you should follow the same rule.
+[4544.0:4556.0] Sorry what are the air bars so I mean so I should change the slide action and say always ask always tell what the error bars represent okay this is really what this means here.
+[4556.0:4578.0] Another thing you should be aware of is about multiple hypothesis testing if you perform experiments over and over again you're bound to find something just by luck right which is also the logic behind hypothesis testing even if there's nothing special you will sometimes lock out and see something extreme.
+[4578.0:4600.0] So if in your analysis you consider at least one positive outcome over your multiple tests to be the manifestation of an underlying effect of something special then your significance level must be adjusted down when when you perform these multiple tests to become less sensitive to basically seeing these.
+[4600.0:4628.0] So here's the logic the p value is the probability of detecting an effect when there is none put intuitively right it's really about like not hypothesis and so on but intuitively the probability if you if you say that the probability of detecting an effect when there is none equals alpha.
+[4628.0:4650.0] Then the probability of detecting no effect when there also is no effect is one minus alpha if you repeat this k times then you have one minus alpha to the power of k and then ultimately that means that detecting an effect when there is none on at least one experiment is if you do one minus that.
+[4650.0:4678.0] So if you do minus the probability of none and then if you plot that as a function of k then you see that this pretty fast approach is one okay so if as you do more and more tests then even if your original significance level is 5% then you will have a high probability that at least one of those will at least one of those you will reject the not hypothesis which is basically that issue of public testing.
+[4678.0:4705.0] So this is basically that issue of publication bias that I mentioned earlier if you have 20 people that that do it that do the experiment then the probability that at least one of them reject the not hypothesis is already about 60% although originally you used 5% as your as your significance level.
+[4705.0:4723.0] So you have various ways of correcting your significance level the most basic one is called one for only correction where you just divide your original significance level for example 5% by the number of tests that you do so this is based on the union bound if you're familiar with that.
+[4723.0:4742.0] Although it reduces the false positive rate it it has high false negative rate that means that even if the not hypothesis is not true then you will still often not reject it because you're more conservative now with respect to rejecting the not hypothesis.
+[4742.0:4765.0] There are alternative ways of doing it such as she duck correction where you basically take that formula from this slide and you you solve it such that you such that you say the new alpha need to be this so let's alpha corrected alpha C needs to be equal to this.
+[4765.0:4772.0] And then you by by solving that you get.
+[4772.0:4797.0] Okay are you can you still hear me okay so I just speak louder now so these are she duck correction is.
+[4797.0:4820.0] Has a has a lower false negative rate than then born for only correction so typically a better way of of correct them okay so we have 10 more minutes and I spent those 10 minutes on part three relating to variables how would you do that what can go wrong.
+[4820.0:4833.0] One of the most basic ways of relating to variables to each other is the correlation coefficient who has heard of piercings correlation before.
+[4833.0:4853.0] Okay this is a very basic statistics or I'm glad that you heard of that one support the point it captures the amount of linear dependence between two variables note that it does not measure the slope if you're like you can do a set of thought to variables exit down.
+[4853.0:4868.0] And the correlation coefficient does not measure the slope if you have to adjust how close those data points are in any kind of any line that has any non zero.
+[4868.0:4884.0] Here are some examples of the data nice perfectly online then you would have 0.8 as you fast out.
+[4884.0:4893.0] So the value of the slope of the long distance between the permission partition would be minus one.
+[4893.0:4910.0] Importantly this only captures linear dependence it doesn't capture all types of dependence so for example if you have data that's like this in your data is highly dependent because for example you know that there's.
+[4910.0:4915.0] Not that there's only a point outside of the stop.
+[4915.0:4925.0] Okay so there are these very strict controls but still the correlation coefficient would give a value of zero although your data has high.
+[4925.0:4931.0] Although the two variables X Y have my YouTube.
+[4931.0:4947.0] So for these reasons are other ways of of measuring the dependence between two variables such as rank correlation or mutual information.
+[4947.0:4956.0] This is for you to do at home if you want to have some fun as testing your capabilities of guessing the correlation you'll see that this is actually surprisingly hard.
+[4956.0:4981.0] And then there's also this nice website that has all sorts of spurious correlation which is where two variables are highly correlated but there's no causal connection between them actually and this will become important in two lectures from now also when we talk about observation studies which is all about position doesn't equal correlation.
+[4981.0:4986.0] Okay but you can have some fun at home with these if you want.
+[4986.0:4993.0] So here a quick question which of these in which of these thoughts do you have the largest here to score it?
+[4993.0:4998.0] Where's the point is to what?
+[4998.0:5012.0] The biggest one is the strongest linear relationship between X Y and X Y.
+[5012.0:5029.0] This is the only thing you want to do is to screw up my set up size. So if I am against the specific way I ask that yes please actually all have the same correlation coefficient.
+[5029.0:5044.0] They also all have the same need of X to have the same set of deviation.
+[5044.0:5064.0] So basically all set of statistics that you can compute based on these four data sets are exactly the same yet they are very different which is another place for data visualization to not just report a mean.
+[5064.0:5082.0] Standard deviation and so on but also look at the data whenever you can when it's dimensionality is low enough because clearly these data sets these four data sets tell a very different story and you cannot get that story if you don't look at the data.
+[5082.0:5093.0] This is what what I'm also writing on this slide and here's another example in how just looking at data from one angle can be confusing.
+[5093.0:5116.0] So this is the anecdote here is that in 1973 the Dean of 13 or president of Berkeley got very worried when he saw the submission figures and saw that 44% of our men were 5 to 75% of all women were 5 were accepted.
+[5116.0:5131.0] And his alarm bells rang in action California at that time it would have been illegal to discriminate still illegal to discriminate on general but already back then it was illegal to discriminate based on gender so they needed to check what's going on.
+[5131.0:5149.0] So next thing they broke up this data by department rather than over the other than just by looking at it.
+[5149.0:5167.0] So this is a paradox and it's called a substance paradox.
+[5167.0:5180.0] I'll show you a visual explanation and then it will be very clear why this happens.
+[5180.0:5200.0] So I'm going to show you a list of the data points and you what fraction of what number of females apply to this department versus what number of names of black females are.
+[5200.0:5210.0] Females have a higher.
+[5210.0:5239.0] So for men who applied to engineering.
+[5239.0:5243.0] This is why then the trend of reverse.
+[5243.0:5253.0] Because overall engineering is much easier to get into than our 10 humanities women chose to apply to the department to their partner.
+[5253.0:5268.0] So this is the name between difference in the difference between male and female then give rise to this reversal of the effect.
+[5268.0:5285.0] So this is called substance paradox and it's it's the reason why you should not just look at aggregate data and then call it quits but actually drill into your data sets set and look at it from various angles.
+[5285.0:5288.0] This is what I'm saying this slide also.
+[5288.0:5299.0] Okay, so let me summarize.
+[5299.0:5305.0] Last lecture I made a point case why you should try to understand the data with visualizations today.
+[5305.0:5310.0] I made a point why you have to understand it with descriptive statistics.
+[5310.0:5321.0] It's important to choose the right statistics based on the type of distribution. Remember, heavy tailed data versus normally distributed data.
+[5321.0:5324.0] Be sure to always quantify your uncertainty.
+[5324.0:5326.0] There are several ways of doing this.
+[5326.0:5332.0] There is hypothesis testing, which gives you P values for for quantifying your uncertainty.
+[5332.0:5344.0] There are confidence intervals which are tightly connected to hypothesis testing, but I think are better suited because they don't only talk about significance, but also about effect size.
+[5344.0:5355.0] And you need to be careful when you perform multiple tests because then you might lock out and see positive results.
+[5355.0:5362.0] And then finally we looked at how to relate two variables to one another.
+[5362.0:5368.0] I made the obvious point that cannot be made off enough that correlation doesn't equal causation.
+[5368.0:5374.0] And so today we talked about two variables. It's even trickier when you have more than two variables.
+[5374.0:5380.0] And this is what we're going to do the next lecture off when we talk about selection analysis.
+[5380.0:5389.0] And we talked about this in parallel data sets in which you have multiple variables that can be correlated with one another.
+[5389.0:5418.0] Okay, so it's 10 sharp. I'll stop here and hope to see you in the Friday lab session. Thank you.

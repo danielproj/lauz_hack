@@ -1,0 +1,637 @@
+~EE-556 / Lecture 10 - 2/2 (2020)
+~2020-11-09T15:23:51.478+01:00
+~https://tube.switch.ch/videos/305b1dc6
+~EE-556 Mathematics of data: from theory to computation
+[0.0:11.32] So originally Dan Skin was just to recap our discussion.
+[11.32:24.36] Originally Dan Skin was fruit for functions that are convex in X.
+[24.36:36.44] Now what we talk about here is that suppose the function is not convex in X.
+[36.44:47.84] It's not concave in Y, but somehow we can manage to find a global maximizer for Y given X.
+[47.84:54.92] In this particular case, we take the gradient of this.
+[54.92:61.32000000000001] So evaluated at this Y star, then it turns out that it is a descent direction for F.
+[61.32000000000001:70.2] So F was max or Y, this phi xy.
+[70.2:78.76] By descent direction, it's not exactly aligned with the negative gradient.
+[78.76:84.36] But if you just apply it, it decreases the objective.
+[84.36:89.88] And sometimes it could even be better than just the local descent direction like the negative
+[89.88:91.88] gradient.
+[91.88:93.76] So that's what we mean.
+[93.76:101.76] And in fact, if Y star is a singleton, so the Cepetema paper, not a C cast paper, both
+[101.76:104.08000000000001] of them are at MIT.
+[104.08000000000001:113.36000000000001] If it's a singleton, then it's a gradient or sub-gradient.
+[113.36000000000001:119.56] So this is what's for cast to get the serial training does.
+[119.56:125.96000000000001] So it's the Casticate the Stale training algorithm, and it's actually quite simple.
+[125.96000000000001:132.72] So what you need to do is get a sub-gradient in the end.
+[132.72:135.0] So imagine you're not looking at this.
+[135.0:142.6] What this does is it gets the mini-batch Castic gradient.
+[142.6:149.92] And the way it evaluates this mini-batch Castic gradient is that for each given data point,
+[149.92:158.24] each index IU choose, it solves this inner problem.
+[158.24:162.68] And it just plugs this in here.
+[162.68:169.4] And you use the lowest gradient with the adversarial input in.
+[169.4:172.76000000000002] Remember, this is a deterministic problem.
+[172.76000000000002:174.76000000000002] There's nothing's sarcastic to it.
+[174.76000000000002:179.0] Like I give you AI, I give you BI, you're done.
+[179.0:186.6] I give you XK, you have the neural network problem, neural network, everything is given.
+[186.6:188.56] It's a deterministic problem.
+[188.56:195.44] You can solve it or approximately solve it using sine gradient, the cent-proximal gradient,
+[195.44:199.48] or a cent-sorry, a cent, all these methods.
+[199.48:206.68] And all you have to do for the XFART is update your Castic gradient.
+[206.68:212.07999999999998] And it's a bit expensive, right?
+[212.07999999999998:219.07999999999998] Because to get a gradient, you have to solve a problem by itself.
+[219.07999999999998:224.04] But there are mitigating circumstances, because here there's only one data, like you
+[224.04:227.88] grab an AI, it's not the whole data set.
+[227.88:230.76] But you work with the neural network.
+[230.76:237.23999999999998] So if the neural network is large, the complexity is the complexity of the say getting one's
+[237.23999999999998:241.23999999999998] to Castic gradient kind of thing.
+[241.23999999999998:242.23999999999998] Right?
+[242.23999999999998:248.12] Again, you know, in general, you cannot find the global maximizers.
+[248.12:258.84000000000003] But in practice, it seems to work well, and it explains many things.
+[258.84000000000003:264.24] And as you can see, the subgradient computation is motivated by downscreens.
+[264.24:266.68] And we know that in general, you get a descent direction.
+[266.68:272.36] Let me just buy you a relaxing some of these options.
+[272.36:278.32] Now I want to make the point that the sale training is very interesting and worth it.
+[278.32:279.32] Right?
+[279.32:283.92] So here's a project that we did with Zeiss, that just ended.
+[283.92:288.72] And there they were interested in this written-of-putty problem, which was also a Kaggle challenge,
+[288.72:290.72] I don't know, four or five years ago.
+[290.72:291.72] Right?
+[291.72:295.48] The idea is that I give you an image like this.
+[295.48:299.12] And what you need to do is predict whether or not there's a disease.
+[299.12:300.12] Right?
+[300.12:310.0] If you recall this gradient, the model gradient is important, you know?
+[310.0:312.72] And this is called a salient-schema.
+[312.72:316.4] Now here, this is the regular trained salient-schema.
+[316.4:317.4] Right?
+[317.4:326.92] You try to attribute, like, what parts of the image should lead to the most of the classification.
+[326.92:331.28000000000003] If you do a salient training and look at the salient-schema, you get something that looks
+[331.28000000000003:335.16] very interpretable, at least to the human eye.
+[335.16:341.40000000000003] So a salient training has robustness and somehow this robust decision making the gradients
+[341.40000000000003:344.76] are very much interpretable.
+[344.76:345.76] Right?
+[345.76:346.76] Good.
+[346.76:355.64] Now, let's talk about the density estimation problem that I mentioned.
+[355.64:362.96] And it's now a very important problem.
+[362.96:366.47999999999996] You know, if you've heard about deep fates and so on and so forth, this is where it comes
+[366.47999999999996:367.47999999999996] from.
+[367.47999999999996:370.36] And just to understand this fitting, right?
+[370.36:374.0] So there is some generator that generates some data again.
+[374.0:375.0] Right?
+[375.0:380.24] And then there's a supervisor, in this case, what we're interested in is understanding
+[380.24:383.24] the distribution of this generator.
+[383.24:384.24] Right?
+[384.24:387.44] And what the supervisor does is gives us some probabilities.
+[387.44:388.44] Sorry.
+[388.44:393.44] Whatever a person just creates a data set that calls it's celebrity faces.
+[393.44:395.44] They're equally likely to celebrity faces.
+[395.44:398.08] There are samples from an empirical distribution.
+[398.08:401.0] So you have the faces and you know their probabilities.
+[401.0:402.8] They're just like equally likely.
+[402.8:403.8] Right?
+[403.8:409.28000000000003] And your job is to understand the distribution in which these faces are generated.
+[409.28000000000003:410.28000000000003] Okay?
+[410.28:413.84] It is a lot of applications in games now.
+[413.84:416.55999999999995] People try to use these generative.
+[416.55999999999995:421.84] You will see why adversarial networks generate world maps.
+[421.84:429.23999999999995] You know, if you think about it, the original Diablo also has a generative network in it because
+[429.23999999999995:435.4] that all maps or all levels were randomly generated for everybody.
+[435.4:436.4] All right.
+[436.4:440.32] Now, there are some denoising applications, an image recovery application.
+[440.32:442.56] So we had some works on this.
+[442.56:448.32] If you understand the distribution of the samples, you can use this as a prior to the recovery
+[448.32:449.32] and it helps.
+[449.32:450.32] Right?
+[450.32:453.08] It's like we had a neural spotlight on this.
+[453.08:454.08] Okay.
+[454.08:460.91999999999996] Now, to be able to understand, you know, like so you are trying to understand the distribution.
+[460.91999999999996:461.91999999999996] Right?
+[461.91999999999996:465.4] So you need to understand a low function that we can use here.
+[465.4:466.4] What is that low function?
+[466.4:467.4] Right?
+[467.4:473.96] Now, what I would like to do is introduce the bus distance or the first move or distance.
+[473.96:479.32] The idea is that so you have, let's say, two distributions.
+[479.32:485.47999999999996] And what you would like to do is transform this, let's say distribution in such a way that
+[485.47999999999996:488.47999999999996] looks like the samples are drawn from Y.
+[488.48:496.56] You cannot distinguish between the transform samples of X and samples drawn from Y.
+[496.56:497.56] Right?
+[497.56:502.96000000000004] And what you can do is you can define a cross function for such a transform.
+[502.96000000000004:503.96000000000004] Okay?
+[503.96000000000004:510.20000000000005] Now, we'll look at the distances under the expectation.
+[510.2:520.2] Oh, yes, yes, yes, yes.
+[520.2:526.12] They will look like this, but in the end, it will have the minimum cost in transporting
+[526.12:527.12] that.
+[527.12:528.12] You know?
+[528.12:537.96] So if you think about it, you know, so let's say here's X and let's say here's Y.
+[537.96:546.64] Now what you can do is you can transport, you know, this here and that here, or you can
+[546.64:551.88] transport this here and that here and vice versa.
+[551.88:559.5600000000001] What you're interested in is, yes, you can come up with a transformation, but it will minimize
+[559.5600000000001:564.2800000000001] the overall cost of putting one point to another point.
+[564.2800000000001:565.2800000000001] Okay?
+[565.28:569.12] So that's the idea.
+[569.12:573.4399999999999] I mean, you can come up with pathological examples where this thing does not exist, but
+[573.4399999999999:575.92] in general, this is my lead behavior.
+[575.92:578.0] So how do we apply this to distribution?
+[578.0:582.6] So imagine I give you two distributions, mu and mu.
+[582.6:583.6] All right?
+[583.6:588.16] So think about the joint distribution.
+[588.16:593.4] What you would like to do is, so let's say given this joint distribution, you want to
+[593.4:598.12] sample and you look at this distance in some norm.
+[598.12:605.8] And this is called the Vastasqine cube where you take the cube power and the cube through
+[605.8:606.8] it.
+[606.8:610.12] And you're looking at the infimum over all this couplings.
+[610.12:611.12] Right?
+[611.12:615.9599999999999] So you have these samples and you look at all these pair of our couplings and then you
+[615.96:624.6800000000001] look at the expectation over the joint distribution and you look at the distance between two couplings
+[624.6800000000001:628.9200000000001] and this will be our cost.
+[628.9200000000001:641.08] And if you want to find, for example, a measure, so let's say you would like to find a measure
+[641.08:643.8000000000001] that approximates a given measure, right?
+[643.8:653.12] What you can do is minimize this Vastasqine distance, meaning you take a look at, for example,
+[653.12:660.9599999999999] samples for mu, you can transport them to the samples of mu and you look at the minimal
+[660.9599999999999:667.8] cost or minimal distance in pairwise couplings, all of the possible ones.
+[667.8:674.5999999999999] Take the one that has the minimum cost that will be your Vastasqine distance and you minimize
+[674.5999999999999:677.9599999999999] respect to the distribution nu.
+[677.9599999999999:678.9599999999999] All right?
+[678.9599999999999:686.4] On a first look, it may look complicated but it is not.
+[686.4:693.04] The definitions are quite precise and just takes the time a bit of while to get used to.
+[693.04:694.04] Okay?
+[694.04:695.04] All right.
+[695.04:704.88] So if you remember with neural networks, so we talked about learning functions.
+[704.88:709.28] We talked about learning parametric functions and then we mutated neural networks as universal
+[709.28:712.8] efforts in use of functions and they're nice.
+[712.8:717.5999999999999] You know, like you can use a structure that has some inductive bias gives you an advantage.
+[717.6:726.6] Now, what I would like to do is think about the density estimation in the context of neural
+[726.6:727.6] networks.
+[727.6:734.28] So what we're going to do is we're going to use a neural network to approximate the density.
+[734.28:740.0400000000001] So traditionally in the density learning problems, you try to come up with an analytical form
+[740.0400000000001:744.24] and then you try to learn the parameters of some optical form or non-parametric learning
+[744.24:745.24] also works.
+[745.24:752.5600000000001] You know, you assume it beat on your prior on your data and then you try to learn this
+[752.5600000000001:755.08] distribution parameters, for example.
+[755.08:758.4] All right?
+[758.4:762.84] Now the way we're going to do, so if you think about the analytical ones are nice.
+[762.84:766.64] Some of the things, let them ethically about the problem and then fixes an analytical
+[766.64:769.36] form and then you work with the analytical form.
+[769.36:775.12] But obviously, the sephrocious limitations because real life distribution doesn't seem
+[775.12:778.24] like they follow a nice beautiful analytical equation.
+[778.24:783.52] That's where our computational thinking kicks in.
+[783.52:788.72] So the way we're going to model distributions now is why what is called as a push forward
+[788.72:789.72] measure.
+[789.72:790.72] Okay?
+[790.72:792.12] And the idea is very simple.
+[792.12:800.08] So let's think about around the variable following a distribution, the omega.
+[800.08:802.72] And let's think about a neural network.
+[802.72:810.0] The push forward measure of this distribution under a neural network will be, will be noted
+[810.0:814.08] like this and it will be the distribution of, you know, you take the random variables,
+[814.08:817.5600000000001] pass it through this non-mainty, it'll be that.
+[817.5600000000001:818.5600000000001] Right?
+[818.5600000000001:823.96] Ideally, you can pick something simple here and you can learn something complicated here
+[823.96:830.24] and you will have a rich set of distributions that you can work with and that's the idea.
+[830.24:837.24] So just to give you an example, you know, think about let's say P omega being a unit normal
+[837.24:838.24] distribution.
+[838.24:839.24] Right?
+[839.24:845.6800000000001] So these omega are just like random numbers generated with respect to Gaussian distribution
+[845.6800000000001:847.6800000000001] is zero mean and bounce.
+[847.6800000000001:850.48] Now, think about an linearity.
+[850.48:852.48] You get W squared.
+[852.48:853.48] Let's teach this.
+[853.48:854.48] So our parameter here is two.
+[854.48:861.8000000000001] Then what you get is the chi squared distribution.
+[861.8000000000001:867.96] And if you see what you're doing is that if you, for example, define a distribution with
+[867.96:870.32] this transformation, right?
+[870.32:873.5600000000001] What you can do is very simple actually.
+[873.5600000000001:881.5600000000001] So here, why is equal to, let's say, W squared.
+[881.56:888.0799999999999] So H inverse is basically W is equal to square top five.
+[888.0799999999999:889.0799999999999] Right?
+[889.0799999999999:897.2399999999999] So what we need to do is use the Jacobian of the transformation.
+[897.2399999999999:906.4399999999999] So the Gaussian distribution is something like one over square top five exponential minus
+[906.4399999999999:908.68] omega squared over two.
+[908.68:909.68] Okay.
+[909.68:914.0] So this is our H inverse Y.
+[914.0:917.5999999999999] So we take the derivative here because this is single term derivative and gradient.
+[917.5999999999999:921.3199999999999] They're just transformed transpose of each other.
+[921.3199999999999:928.16] And you know, so you get one over two square top five.
+[928.16:930.0799999999999] And then you plug this in here.
+[930.0799999999999:938.0] So you get one over two pi one half times you plug this in here.
+[938.0:943.32] I mean, exponential minus Y divided by two.
+[943.32:944.64] Okay.
+[944.64:946.68] And then times this.
+[946.68:952.32] So this would be the distribution of the chi squared density.
+[952.32:955.28] So here, we can do this all analytically.
+[955.28:956.28] Right?
+[956.28:963.64] But the idea here is that, you know, like, you don't have usually a, so for chi distribution,
+[963.64:965.16] we have an analytical thing.
+[965.16:968.4399999999999] But for real data, we're going to use something much more complicated.
+[968.4399999999999:974.76] So this function will be a neural network.
+[974.76:975.76] Okay.
+[975.76:984.16] So let's say there is a true distribution in the generator supervisor and the learning
+[984.16:992.1999999999999] machine, you know, the learning machine will look at the samples and will pick the vests
+[992.2:996.0] sign distance or the say, we pick versus sign one distance.
+[996.0:1005.5200000000001] We're going to try to look at the true distribution and we will minimize a distribution that takes
+[1005.5200000000001:1011.72] an example distribution by Gaussian that pushes forward with a neural network.
+[1011.72:1012.72] All right.
+[1012.72:1013.72] Very simple.
+[1013.72:1017.9200000000001] And what we're going to do is we're going to minimize the distance as a function of the
+[1017.9200000000001:1019.9200000000001] neural network parameters.
+[1019.92:1023.1999999999999] All right.
+[1023.1999999999999:1027.44] Now the idea is, you know, so here's our input.
+[1027.44:1031.32] Let's say it is a small random image.
+[1031.32:1038.48] It will go through a neural network and it will generate real faces.
+[1038.48:1039.68] That's the idea.
+[1039.68:1040.68] All right.
+[1040.68:1045.92] And what you will do is give them the generated faces as a function of the neural network
+[1045.92:1052.5600000000002] parameters, we're going to minimize the versus sign distance between the true distribution.
+[1052.5600000000002:1053.5600000000002] All right.
+[1053.5600000000002:1061.16] Does this make sense?
+[1061.16:1062.16] Anyone?
+[1062.16:1063.16] Does this make sense?
+[1063.16:1067.16] Are people listening?
+[1067.16:1078.5600000000002] No, people are shy this morning or they're actually not.
+[1078.5600000000002:1080.5600000000002] All right.
+[1080.5600000000002:1081.5600000000002] Anyway.
+[1081.5600000000002:1093.1200000000001] So in this particular case, if you think about it, so there are some issues, right?
+[1093.12:1097.2399999999998] Because we don't have the true distribution, almost no.
+[1097.2399999999998:1099.6399999999999] We just have empirical samples.
+[1099.6399999999999:1102.3999999999999] Here's the other kicker.
+[1102.3999999999999:1104.3999999999999] The versus sign distance is non-smooth.
+[1104.3999999999999:1106.4399999999998] How do we get the gradient?
+[1106.4399999999998:1108.56] All right.
+[1108.56:1111.56] And of course, neural networks are non-commex, right?
+[1111.56:1114.8799999999999] So how are we going to find the optimum and so on and so forth?
+[1114.8799999999999:1115.8799999999999] All right.
+[1115.8799999999999:1116.8799999999999] Difficult.
+[1116.8799999999999:1117.8799999999999] Difficult.
+[1117.8799999999999:1118.8799999999999] All right.
+[1118.8799999999999:1119.8799999999999] Good.
+[1119.88:1125.3200000000002] Now, here's a proposal. So as opposed to minimizing the respect to the true distribution,
+[1125.3200000000002:1126.3200000000002] right?
+[1126.3200000000002:1130.72] What we can do is minimize this versus sign distance which we just picked the empirical
+[1130.72:1131.72] samples.
+[1131.72:1132.72] You know?
+[1132.72:1136.3600000000001] So let's say this is the true distribution, right?
+[1136.3600000000001:1140.88] What we mean by the empirical samples is that you have n samples, right?
+[1140.88:1145.0400000000002] And they're distributed to the respect to this underlying density.
+[1145.0400000000002:1149.8400000000001] So if the probability is high in this region, you will have more samples, right?
+[1149.84:1153.9599999999998] If it is low here, there will be less samples, but you kind of know that, right?
+[1153.9599999999998:1159.6399999999999] And this transport distance will take care of this because it will know that there's more
+[1159.6399999999999:1163.6799999999998] probability here because there are more samples to move.
+[1163.6799999999998:1165.84] All right.
+[1165.84:1172.76] Now, so if you think about it, what we can do is this is what we would like to minimize.
+[1172.76:1177.3999999999999] We can just because what's the sign distance, you get to apply, we can apply the triangle
+[1177.3999999999999:1178.3999999999999] in a quality, right?
+[1178.4:1182.68] So we can look at the distance of the empirical to the true.
+[1182.68:1187.3200000000002] And then we can look at the empirical to what they're trying to approximate.
+[1187.3200000000002:1190.2800000000002] It's just simple triangle in quality.
+[1190.2800000000002:1197.5600000000002] And unfortunately, so this versus sign distance, when you have empirical samples, if you just
+[1197.5600000000002:1204.5600000000002] look at how close it can approximate the true density, it has a terrible dimension dependence,
+[1204.5600000000002:1205.5600000000002] right?
+[1205.56:1211.0] You need a lot of samples to actually approximate the distribution.
+[1211.0:1217.3999999999999] So this plug-in estimator where we just swap the true distribution with the empirical density,
+[1217.3999999999999:1226.36] it seems like it has, it may have terrible performance in the worst case, okay?
+[1226.36:1231.44] But note that this does not say this will be just like terrible themselves, but you know,
+[1231.44:1234.8] in the worst case, things can go wrong, okay?
+[1234.8:1241.6] But hopefully we can still proceed and maybe given these samples, our neural networks will
+[1241.6:1245.8799999999999] interpret harmlessly and we will have a good result, all right?
+[1245.8799999999999:1246.8799999999999] Good.
+[1246.8799999999999:1253.36] So the question is, how do we get a sub gradient off the versus sign distance?
+[1253.36:1256.6] This is our key problem now, all right?
+[1256.6:1260.6] Now what we're going to do is we're going to look at a simple duality.
+[1260.6:1268.1599999999999] So you can write this versus sign distance between two densities, is a supremum over a function
+[1268.1599999999999:1275.1999999999998] D that takes this inner product and D is one lip-ships.
+[1275.1999999999998:1277.6799999999998] What I mean by, this is like writing the dual norm, right?
+[1277.6799999999998:1279.12] I give you a vector.
+[1279.12:1281.52] What is the dual norm?
+[1281.52:1284.8799999999999] It is max or soup, right?
+[1284.88:1293.16] Where y, y, one norm is less than or equal to y, one, y, x, right?
+[1293.16:1301.1200000000001] So if you had x minus xk here, you would have x minus xk here and you can do this, no?
+[1301.1200000000001:1302.5200000000002] Very simple.
+[1302.5200000000002:1312.0400000000002] Now here, D, we're going to refer to as dual variable, but D in the literature is called
+[1312.0400000000002:1313.5600000000002] the discriminator.
+[1313.56:1319.32] All right, we will talk about why people talk about this as a discriminator and so on
+[1319.32:1323.0] so forth, but again, theatricality and deception.
+[1323.0:1324.24] All right?
+[1324.24:1330.32] Now, when you look at this term, what this is is in fact an expectation.
+[1330.32:1335.8] All right, what you're doing is given a function, you're taking the inner product with a measure.
+[1335.8:1343.72] So in reality, what you're doing is taking an expectation of this function given a,
+[1343.72:1344.72] right?
+[1344.72:1354.24] A is a sample from the distribution and you have a sample with respect to mu and you were
+[1354.24:1356.28] looking at the expectation of the a.
+[1356.28:1360.3999999999999] It's very simple, right?
+[1360.4:1366.2] So then if you think about this particular case, the vastest time to distance between the
+[1366.2:1370.0400000000002] empirical distribution and your push forward measure.
+[1370.0400000000002:1371.3200000000002] So there's a type we're here.
+[1371.3200000000002:1374.5600000000002] This should have been p omega.
+[1374.5600000000002:1382.52] Sorry for this type of, this is p omega.
+[1382.52:1391.84] So what it is is that you have the differences between two expectations where this expectation
+[1391.84:1396.92] will set data that is generated with respect to the empirical samples and this expectation
+[1396.92:1402.8799999999999] will set the data that is generated with respect to the push forward measure.
+[1402.8799999999999:1409.6] And this distance is supremum over D and D is one lipsticks.
+[1409.6:1413.52] All right, okay.
+[1413.52:1418.08] Now D is a function in general, okay?
+[1418.08:1429.04] So what we can do is parametrize this D function with a neural network, okay?
+[1429.04:1435.8799999999999] So remember, neural networks are universal approximants and if you can have a set, right?
+[1435.88:1444.3200000000002] So this D function, the dual function or code encode the discriminator function, let's
+[1444.3200000000002:1453.2800000000002] parametrize it with parameters y like h of x, d of y, right?
+[1453.2800000000002:1459.5200000000002] So in this case, this can take an input, this can take an input, you know?
+[1459.5200000000002:1461.7600000000002] All right.
+[1461.76:1467.6] So what we can do is look at this.
+[1467.6:1475.44] So let's say we can find some set y, calligraphy y, such that the dual variable remains one lipsticks,
+[1475.44:1476.44] right?
+[1476.44:1484.2] So to be able to model the vastest time distance, we need this constraint, okay?
+[1484.2:1487.16] So then the distance reads is the same thing, right?
+[1487.16:1495.0400000000002] So as opposed to just having D, now we have parametrize version of D with some parameters,
+[1495.0400000000002:1497.6000000000001] we plugged in a neural network.
+[1497.6000000000001:1502.3200000000002] So these constraints are a such that d y is one lipsticks, right?
+[1502.3200000000002:1510.68] So we can put such that d y is one lipsticks, right?
+[1510.68:1511.68] Okay.
+[1511.68:1521.4] Now here, the data was supposed to be generated with respect to our push forward measure, right?
+[1521.4:1526.88] So this h x push forward omega.
+[1526.88:1535.6000000000001] So instead what we can do is use the simple distribution, generate omega's with respect
+[1535.6000000000001:1537.8] to the simple distribution, right?
+[1537.8:1540.3200000000002] So like normal distribution.
+[1540.32:1546.08] You can plug your neural network in, that will give you data, right?
+[1546.08:1556.04] And your D will take that data and this will basically estimate the vastest time distance
+[1556.04:1566.56] between UN and pickle samples and h x push forward p omega.
+[1566.56:1579.1599999999999] All right, once you understand this, like a whole, you open the Pandora's box, right?
+[1579.1599999999999:1583.6799999999998] Because it's not that complicated, you just go through the definition and you plug in
+[1583.6799999999998:1588.8799999999999] your approximations for the functions in terms of neural networks and then you optimize
+[1588.8799999999999:1591.9199999999998] with respect to the parameters of these neural networks.
+[1591.92:1598.24] The point here is that to be able to get, for example, the subgradient for the vastest
+[1598.24:1603.0800000000002] time distance, the right is in the max form because as you can see, we're going to use
+[1603.0800000000002:1605.6000000000001] done scheme somehow, right?
+[1605.6000000000001:1613.2] Just like what we used for the, the adversarial training, all right?
+[1613.2:1618.72] And everything is here as an expression.
+[1618.72:1629.44] You have max, we stick to the dual variables parameters or the discriminator parameters.
+[1629.44:1635.76] You have things that you can somehow approximate by drawing samples, okay?
+[1635.76:1636.76] Good.
+[1636.76:1640.3600000000001] Good, all right.
+[1640.3600000000001:1646.44] Now you guys know from the adversarial training part, what is coming, I'm assuming, right?
+[1646.44:1654.3200000000002] So what you need to do is give it an x, you need to find y star from the inner problem,
+[1654.3200000000002:1662.0800000000002] then you use this to get, just do gradient descent, suppose, for cast to gradient descent,
+[1662.0800000000002:1664.8] some form of gradient descent.
+[1664.8:1669.3200000000002] That's the idea, okay?
+[1669.3200000000002:1674.92] So here, there's a noise vector, there's our h of x, right?
+[1674.92:1677.52] That takes this noise vector.
+[1677.52:1679.3600000000001] You get these samples, right?
+[1679.3600000000001:1684.72] So you get data that is generated with respect to the push forward measure.
+[1684.72:1690.52] All right, so this is P omega.
+[1690.52:1694.2] Now this is our empirical samples, right?
+[1694.2:1700.0] So you can collect a batch from them, you do sub sampling, right?
+[1700.0:1708.32] And then you work for this dual variable that is parametrized, right?
+[1708.32:1716.44] And what you do is you look at the expectation, you look at the A generated by this, the
+[1716.44:1726.28] divi of A, you look at the expectation where A is generated with respect to this push forward
+[1726.28:1727.28] measure.
+[1727.28:1730.04] But there's a simplified way, right?
+[1730.04:1737.32] So you can just look at generated that and evaluate divi, and as opposed to putting A,
+[1737.32:1743.24] you put h x omega, right?
+[1743.24:1748.24] So you can replace these expectations with the empirical samples you have in approximate
+[1748.24:1749.56] cost.
+[1749.56:1751.24] So you evaluate it.
+[1751.24:1753.24] All right?
+[1753.24:1757.24] Is this clear?
+[1757.24:1763.32] If you say nothing, no chat, I will assume it is like absolutely perfectly clear.
+[1763.32:1764.32] Good.
+[1764.32:1765.32] Okay.
+[1765.32:1774.24] Now here, there are some theory practice gaps that I would like to explain.
+[1774.24:1785.52] So in the very original paper, you know, but I think, well, what they did to enforce the
+[1785.52:1787.2] one-lifthousand constraint.
+[1787.2:1790.6399999999999] Remember, you have to enforce the lift system constraint.
+[1790.6399999999999:1795.44] So you have the right gradients in the outer loop for when you do the optimization for
+[1795.44:1798.44] your neural network parameters, right?
+[1798.44:1801.68] h x, so the parameters x.
+[1801.68:1808.24] So what they do is they basically put an L infinity norm on the individual entries of
+[1808.24:1810.52] all the weight factors.
+[1810.52:1816.72] And what they do is they do an update on the weights and then they clip everything by
+[1816.72:1820.6] some parameter, right?
+[1820.6:1830.48] So this is somehow, you do enforcing the, so one-lifthous constraint.
+[1830.48:1833.68] All right?
+[1833.68:1839.6399999999999] So sorry, this is for the, the tools parameters.
+[1839.64:1846.6000000000001] So if you look at this, you know, with some layers, the scripting kind of helps with the
+[1846.6000000000001:1848.2] gradient norm actually.
+[1848.2:1850.76] Like you can observe, you can do something.
+[1850.76:1853.64] But here's a lovely quote from the original authors.
+[1853.64:1857.48] Weightlifting is clearly a terrible weight-inforced elliptic constraint.
+[1857.48:1859.48] I agree.
+[1859.48:1860.48] All right.
+[1860.48:1867.2800000000002] Now, if you think about it, the one-lifthousand constraint, so if you pick a norm to enforce
+[1867.28:1875.44] the slip-smith, what you need is the dual norm of this, uh, dual network or the discriminator
+[1875.44:1878.68] network to be less than or equal to something, right?
+[1878.68:1884.32] And what people tend to do is they put this as a penalty while trying to train the
+[1884.32:1887.32] coating code discriminator or this dual network.
+[1887.32:1888.6399999999999] All right?
+[1888.6399999999999:1892.76] And there's some interpolation tricks that are going on and there's like a whole comparison
+[1892.76:1897.4] between clipping and gradient penalty that helps.
+[1897.4:1899.4] There's also spectral normalization.
+[1899.4:1900.4] All right.
+[1900.4:1905.64] So as opposed to putting a spectral norm constraint, as opposed to exactly enforcing a spectral
+[1905.64:1914.04] norm constraint, um, so here, what happens is that you look at, let's say, the weights
+[1914.04:1919.36] of the dual network and you look, you treat this as a vector and you say infinity norm is
+[1919.36:1923.52] less than or equal to this constant C, right?
+[1923.52:1929.28] Here, what you try to do is you try to look at the shatter infinity norm, right?
+[1929.28:1934.4799999999998] The spectral norm of the weight matrices and you want to keep them within a constant
+[1934.4799999999998:1935.52] level.
+[1935.52:1941.1599999999999] But as opposed to doing projections onto the spectral norm ball, they just scale things
+[1941.1599999999999:1942.1599999999999] down, right?
+[1942.1599999999999:1945.36] Which is a more strict constraint than the spectral ball.
+[1945.36:1952.4399999999998] And this is the spectral norm regularization, which is also a terrible way of enforcing spectral
+[1952.4399999999998:1953.4399999999998] norm constraints.
+[1953.4399999999998:1958.84] And if you recall, we talked about this rather micro complexity bound for the generalization,
+[1958.84:1959.84] right?
+[1959.84:1967.56] So we talked about this uniform bound between the empirical losses, right?
+[1967.56:1974.3999999999999] Sup, next element, which was something like order product of the spectral norms of the
+[1974.4:1978.92] weight matrices with some software and constraint divided by n.
+[1978.92:1981.8400000000001] This was like, I don't know, two or three lectures ago.
+[1981.8400000000001:1986.5600000000002] So by putting a spectral norm constraint, you're controlling this so that your neural networks
+[1986.5600000000002:1989.76] work properly, you know?
+[1989.76:1990.76] Yes.
+[1990.76:1999.0] It's a terrible rating for spectral norm, but some of the works are in practice.
+[1999.0:2000.0] Okay.
+[2000.0:2002.8400000000001] So here is what's a time again, all right?
+[2002.84:2007.52] So here's an implementation and implementation is simple, right?
+[2007.52:2010.9599999999998] You draw these samples to get empirical estimates of the loss.
+[2010.9599999999998:2014.8799999999999] So you can use some mini back sizes, right?
+[2014.8799999999999:2019.56] And now what you do is you update your dual variables so that you get them.
+[2019.56:2024.72] So here what you're doing is given an X, you're trying to find Y star of X.
+[2024.72:2025.72] All right.
+[2025.72:2036.4] So we have min X, max Y, so that dy is one lip-ships, this couple objective, right?
+[2036.4:2038.72] X and Y.
+[2038.72:2048.96] And this inner loop, all it's trying to do is find this Y star, which is at the end
+[2048.96:2051.44] of this loop, it will be our Ym.
+[2051.44:2055.0] It is approximated.
+[2055.0:2059.6] And given this Ym, you go take the gradient.
+[2059.6:2061.88] All right.
+[2061.88:2068.28] So this, so let's call this X, let's call this Y.
+[2068.28:2070.28] All right.
+[2070.28:2072.48] So that's it.
+[2072.48:2079.08] So you solve the inner problem, you get empirical samples to approximate the loss, you solve
+[2079.08:2083.88] it or approximate it to whatever you have, right?
+[2083.88:2088.84] Ideally you get more of the global maximizers, which we highly doubt.
+[2088.84:2093.2400000000002] If you get, then you get what is called as a descent direction and not necessarily a gradient.
+[2093.2400000000002:2099.08] So this may not be exactly a gradient, but it's a gradient approximate, a descent direction
+[2099.08:2101.48] and then you update X.
+[2101.48:2103.12] That's it.
+[2103.12:2105.12] That's scan training.
+[2105.12:2109.76] It's very simple if you consider it from this abstract perspective.
+[2109.76:2110.76] All right.
+[2110.76:2117.5600000000004] Okay.
+[2117.5600000000004:2126.0400000000004] And I think for Yester of Banger, he's cited for this Gens for his Turing Awards, which
+[2126.0400000000004:2129.7200000000003] is a very important award in computer science.
+[2129.7200000000003:2134.5600000000004] And there what they did is, as opposed to minimizing the Waskestine one distance, they
+[2134.56:2141.48] look at the Gensling Shannon divergence between the empirical distribution and the push forward
+[2141.48:2147.4] measure, which turns out to be this particular thing.
+[2147.4:2156.12] And DY here represents the probability that data comes from this real data distribution.
+[2156.12:2162.68] They call us the discriminator and then people basically overloaded this discriminator,
+[2162.68:2165.2799999999997] parameter or discriminator neural network.
+[2165.2799999999997:2170.04] And they think that it really actually looks at the data and the discriminator data points
+[2170.04:2172.68] of the platform and optimization perspective.
+[2172.68:2177.3599999999997] All from this divergence perspective, it actually has a precise role.
+[2177.3599999999997:2182.72] Like you can't really take the discriminator network and regularize things.
+[2182.72:2184.72] It doesn't perform.
+[2184.72:2185.72] All right.
+[2185.72:2186.72] Good.
+[2186.72:2187.72] All right.
+[2187.72:2192.2] So for the last 10 minutes, what I will do is I'm going to highlight the further
+[2192.2:2196.3199999999997] difficulties of Gantrain because it just looks like we're done, but we're not.
+[2196.3199999999997:2197.3199999999997] All right.
+[2197.3199999999997:2200.72] Gantraining is notoriously difficult.
+[2200.72:2205.64] I myself got a Google Faculty Research Award in coming up with a new method that so
+[2205.64:2210.16] commends partially some of these difficulties.
+[2210.16:2216.16] And there's a base on work with one of my PhD students, the APNC.
+[2216.16:2222.08] And it's a fascinating work, which was, I think, that was a glimpse.
+[2222.08:2224.72] I see my world in these conferences.
+[2224.72:2231.08] So let me try to highlight the difficulty a bit more precisely so that you're also there.
+[2231.08:2232.08] All right.
+[2232.08:2235.0] So when it comes to Gantraining, there's heuristics, the law.
+[2235.0:2236.0] All right.
+[2236.0:2241.2] There's this Mario looks at paper from Google that says that all Gantza created equals.
+[2241.2:2245.3199999999997] It turns out that when you have enough computation, you can try all kinds of heuristics and all
+[2245.3199999999997:2250.92] of the methods, no matter how different it is, they're clippings, spectral normalization,
+[2250.92:2259.4] gradient penalty with whatever the neural networks you plug in, they kind of perform similarly.
+[2259.4:2262.92] This is, of course, difficult to constrain.
+[2262.92:2267.92] That's why you have heuristics, the law, and there are all kinds of issues, like there's
+[2267.92:2272.48] scalable issues because you have this difficult minnags problem at every point.
+[2272.48:2275.6] You have to form an empirical estimate of the losses.
+[2275.6:2280.7200000000003] There's mold collapse in the sense that you end up learning HFXs that just produce
+[2280.72:2281.72] one sample.
+[2281.72:2282.72] All right.
+[2282.72:2286.2] And when you run all of them, they actually they cycle around.
+[2286.2:2291.2] So this is simultaneous gradient descent ascent, right?
+[2291.2:2293.04] And then you have the alternating version.
+[2293.04:2299.0] You can do one update in the primal, one update in the dual, one update in the generator,
+[2299.0:2301.04] one update in the discriminator.
+[2301.04:2306.08] There's all kinds of cycling behavior.
+[2306.08:2309.8799999999997] And of course, there's privacy concerns due to memorization.
+[2309.88:2316.28] And I think I should put here, there's also deep fakes.
+[2316.28:2324.08] You use gans, you can put, you know, actual Han Solo's face, Harrison Force face onto
+[2324.08:2329.2400000000002] the Solo movie, or you can take Arnold's face and put it into something and it looks
+[2329.2400000000002:2330.2400000000002] pretty cool.
+[2330.2400000000002:2331.2400000000002] Okay.
+[2331.2400000000002:2338.36] Now, what I would like to emphasize here is that, you know, typically the algorithms
+[2338.36:2339.36] matter.
+[2339.36:2344.84] So if you can take, so you can, you can generate, well, this is what you're going to do in the
+[2344.84:2345.84] homework, right?
+[2345.84:2348.28] So this is kind of interesting.
+[2348.28:2352.6800000000003] You can create a mixture of gals and synthetically so that you have full control over the true
+[2352.6800000000003:2353.6800000000003] distribution.
+[2353.6800000000003:2357.32] And then you can set this algorithm to dimension and you can run it, right?
+[2357.32:2361.8] And SGD will have these kind of behavior, right?
+[2361.8:2365.1600000000003] And in fact, when you run it, you will see SGD cycle around, right?
+[2365.1600000000003:2367.6400000000003] It's the casted gradient descent ascent.
+[2367.64:2370.96] You can use an atom optimizer, which will do a little bit better, but it's going to
+[2370.96:2373.48] start collapsing, for example.
+[2373.48:2378.48] And there are some approaches that we have.
+[2378.48:2380.48] That seems to do better, right?
+[2380.48:2382.48] Let's do the technical research award.
+[2382.48:2383.48] All right.
+[2383.48:2387.12] But let's talk about the general abstract setting.
+[2387.12:2388.12] Okay.
+[2388.12:2389.12] So here's our problem.
+[2389.12:2390.8799999999997] I mean, next.
+[2390.8799999999997:2393.44] And this is general as it gets.
+[2393.44:2398.16] We're going to assume this long term is an x, non-concave and y, right?
+[2398.16:2402.04] And let's even think about unconstrained.
+[2402.04:2405.44] Also, this is the most general.
+[2405.44:2409.84] Not most general, but it's like a general case.
+[2409.84:2410.84] So key questions.
+[2410.84:2415.08] When do the algorithms converge and where do the algorithms converge to?
+[2415.08:2416.08] Okay.
+[2416.08:2426.92] So let's start with a negative result, which is very recent by costus at MIT.
+[2426.92:2429.92] So it just.
+[2429.92:2436.72] First, even deciding whether or not you found a minmax, well, whether or not a minmax point
+[2436.72:2441.0] exists is NP hard.
+[2441.0:2447.04] And even if it exists, finding such a minmax point is pipad complete.
+[2447.04:2448.04] Let me joke about this.
+[2448.04:2452.68] This is a proper geometry of complete.
+[2452.68:2458.64] And it just says this problem is just not easy, difficult.
+[2458.64:2459.64] Right?
+[2459.64:2464.4] You don't know the existence of, for example, minmax points.
+[2464.4:2469.16] Even if you do know there exists a minmax point, finding it is also hard.
+[2469.16:2470.16] All right.
+[2470.16:2471.16] So, what's the problem?
+[2471.16:2474.12] What's the example of this perspective?
+[2474.12:2479.16] So in this particular case, what are we trying to find?
+[2479.16:2483.3599999999997] What we're trying to find is basically a local Nash equilibrium.
+[2483.3599999999997:2491.08] In the sense that you look at the objectives, you're trying to find x stars and my stars,
+[2491.08:2494.7999999999997] that kind of like come up with an equilibrium.
+[2494.8:2503.28] In the sense that, you know, if you have x star y star, if you put any x other than x star
+[2503.28:2506.2000000000003] for y star, your objective increases.
+[2506.2000000000003:2507.2000000000003] Right?
+[2507.2000000000003:2515.6400000000003] The same thing is true for the y star, meaning you fix x star for any other y, your objective
+[2515.6400000000003:2516.6400000000003] will decrease.
+[2516.6400000000003:2520.84] Hence, you're in like some sort of equilibrium point.
+[2520.84:2525.1600000000003] Not necessarily a minimum, but an equilibrium point.
+[2525.1600000000003:2526.1600000000003] All right?
+[2526.1600000000003:2531.44] So, if you think about it, in terms of the optimization, right?
+[2531.44:2536.6800000000003] So, this local Nash equilibrium implies that the gradients, we respect to x and y of
+[2536.6800000000003:2542.2400000000002] zero, and that you have some curvature for the Hessians.
+[2542.2400000000002:2543.2400000000002] All right?
+[2543.2400000000002:2544.2400000000002] Good?
+[2544.2400000000002:2546.2400000000002] Cool.
+[2546.24:2561.52] Now, so if you think about this problem, that's what I say, f of x was, you know, x, y,
+[2561.52:2563.52] y, x, y.
+[2563.52:2565.9199999999996] What did we know about this problem?
+[2565.9199999999996:2569.3999999999996] We know that for smooth x, right?
+[2569.3999999999996:2573.16] And there's some quantification conditions for f to be smooth.
+[2573.16:2577.92] Basically, this needs to be somewhat strong in context in terms of y.
+[2577.92:2582.8799999999997] So, we know that s, g, v converges to the critical points of f.
+[2582.8799999999997:2593.0] It oftentimes avoids, well, in this case, almost surely, avoids these traps, right?
+[2593.0:2597.12] And it goes through these curvature points, right?
+[2597.12:2598.3599999999997] Good?
+[2598.36:2605.96] But, you know, when you're solving gans, because the inner problem is non-comics, we are also
+[2605.96:2617.2000000000003] getting empirical estimates of it, we don't even know that we're getting stochastic gradients
+[2617.2000000000003:2619.2000000000003] for this x, right?
+[2619.2000000000003:2625.36] In adversarial training, the inner problem, max problems are, in fact, deterministic, for
+[2625.36:2626.36] example.
+[2626.36:2632.0] And gans problem is all coupled stochastic estimates of expectations, you know?
+[2632.0:2635.6] So, what we need is more direct approaches.
+[2635.6:2641.6400000000003] Meaning, if you look at the gradient, we just expect x, gradient, we just expect y, and
+[2641.6400000000003:2645.84] you need to work directly with phi x, y.
+[2645.84:2646.84] Okay?
+[2646.84:2655.92] I know this is going to be a rush, but you're not responsible for this on the exam.
+[2655.92:2658.88] I just want to give you some highlights.
+[2658.88:2663.84] So, this is the dessert section in terms of the buffet of negative results.
+[2663.84:2667.8] It turns out that for many of the algorithms used in the literature, which is somewhat like
+[2667.8:2669.64] a generalized Rovin's Monroe schemes.
+[2669.64:2677.44] So, if you do the gradient stochastic gradient descent, or if you do stochastic extra gradient,
+[2677.44:2680.28] you do some of these algorithms.
+[2680.28:2685.6800000000003] What happens is that first, they were, they conversely what is called an internally chain
+[2685.6800000000003:2691.92] transitive set, which actually can include, which includes the minimax points and maximum
+[2691.92:2692.92] points.
+[2692.92:2701.6000000000004] And somewhat, they are just, they have curious sets that are periodically orbiting, where
+[2701.6000000000004:2706.0] you, you see that algorithms never converge, they just cycle around.
+[2706.0:2707.0] All right?
+[2707.0:2708.0] Okay.
+[2708.0:2713.88] So, that was a mouthful, but here's in plain terms.
+[2713.88:2717.84] You can take a method.
+[2717.84:2724.08] And if you just apply this to non-comics, non-comcave minimax problems, you will see that
+[2724.08:2732.08] most of the methods will just circle around without ever touching the critical point that
+[2732.08:2733.08] you're interested.
+[2733.08:2738.52] This is true for stochastic versions.
+[2738.52:2745.08] First order versions, there are two algorithms that you can find online.
+[2745.08:2754.44] This is C, and C, and C, and C, and C, and C, and C, and C, and C.
+[2754.44:2758.2] All right.
+[2758.2:2767.64] So, there are algorithms that people like to apply with atom, pick conditioning, and
+[2767.64:2774.8799999999997] you know, you can get good results, you can get mod collapse, or you can apply some of
+[2774.8799999999997:2778.2799999999997] our ideas, and you get good results and so on and so forth.
+[2778.2799999999997:2781.52] And this is the extra atom method that also works well.
+[2781.52:2789.88] Okay, so, homework one is due on Friday, sorry for going over a couple of minutes.
+[2789.88:2795.16] We will post homework two, and there's some material for you to take a look at if you're
+[2795.16:2797.36] interested on the reinforcement learning.
+[2797.36:2802.64] All right, so I'll see you guys next week.
+[2802.64:2811.64] Bye-bye.

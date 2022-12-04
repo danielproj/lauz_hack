@@ -1,0 +1,512 @@
+~EE-556 / Recitation 1 - 1/1 (2020)
+~2020-09-20T15:49:36.430+02:00
+~https://tube.switch.ch/videos/174f4037
+~EE-556 Mathematics of data: from theory to computation
+[0.0:6.96] All right, let's get started. Welcome everybody to give another edition of math of data.
+[9.040000000000001:18.080000000000002] Today what I plan to do, two are two things. One is I'm going to pick up the stuff I did not cover
+[18.080000000000002:23.52] at the end of lecture one, but I would like to do that at the end of the recitation.
+[23.52:32.08] Because what the recitation does, it covers the material event over in the lecture with some more examples.
+[32.08:42.879999999999995] So just, it's a bit redundant, but I find it does not look good because it makes you rethink about the material that we discussed.
+[42.88:55.68000000000001] All right, so with that in mind.
+[59.68000000000001:70.56] All right, so the outline today is that we're going to revisit the statistical learning theory
+[70.56:78.56] for sticking, but we're going to discuss more on the, let's say, the more compelling or more,
+[78.56:82.88] I mean, easier to understand from metric version of the stuff that's going to be.
+[84.16:90.4] And in the lecture, I mentioned that the linear model is quite general, so I'm going to give you some examples.
+[91.6:98.24000000000001] One will be magnetic resonance imaging. The other one will be the Google page rank problem.
+[98.24:103.36] And how can you capture the linear model?
+[104.88:107.19999999999999] Then I'll give a classification example.
+[108.64:114.56] And I'm not going to give the answer to the learning sample.
+[114.56:118.0] There will be a whole separate lecture on the density learning,
+[118.0:120.08] which is generally the serial networks.
+[121.28:126.72] So we need a bit of material to build up to that level, you know, as a result,
+[126.72:131.92] it can skip, but I'll give you some other regression examples also on regression.
+[131.92:136.88] And then there is quite a bit of PhD material, advanced material at the end.
+[136.88:144.64] So whenever you see this star sign, this is if you're a master student or you're not responsible
+[144.64:149.76] for it, right? If you're a PhD student, I think you should take a look, but there won't be
+[149.76:158.72] anything in the exam. Whenever you see a star in a slide, that means that that's not relevant to your grade.
+[158.72:160.88] All right, it's just for your own knowledge.
+[160.88:168.23999999999998] It's, I mean, what we try to do is show you the abyss, the depth of the material.
+[168.88:175.35999999999999] So if you're feeling that you have some time, take a look at some of these advanced material,
+[175.35999999999999:176.64] it's nice. Okay.
+[176.64:182.16] And I'll have to turn this to questions. All right. So let's begin.
+[184.23999999999998:192.16] So in the main lecture, we talked about this statistical learning framework, where the idea was,
+[193.44:199.67999999999998] was this? I saw we had a generator that generates some data.
+[199.68:207.76000000000002] We assume that this data has an unknown probability distribution and statistical learning framework.
+[207.76000000000002:213.28] Right? This is not, I mean, this is the chapter is a particular day flexible learning framework.
+[214.96:224.32] And then there is a supervisor that assigns, let's say, a label or a real number or a probability
+[224.32:231.04] to this particular data. And as the learning machine, our objective is to kind of understand
+[231.04:238.95999999999998] this mapping that the supervisor uses. Right? Now, we talked about general methods, you know,
+[238.95999999999998:249.04] so something like, we said, bi is equal to something like H, AI, and H could be any function.
+[249.04:256.15999999999997] But what we're going to do now is we're going to focus on the case where these H functions,
+[256.15999999999997:263.03999999999996] where it would supervise is using to map the data to the regression point or the classification label.
+[263.03999999999996:269.44] Right? We're going to assume that it is parameterized by some parameters X.
+[271.2:278.56] All right. So in this parametric statistical learning model, what we have is,
+[278.56:287.44] a parameter spaced, you think? And we're going to assume the simpler case where we do not have some
+[287.44:293.84000000000003] sort of a mismatch between this parameter spaced that the supervisor used using and our learning
+[293.84000000000003:300.88] machines using. So our parameter, there would be a two parameter for the function. So literally here,
+[300.88:309.84] in the parametric learning setting, the supervisor is using a function like this.
+[312.32:321.12] All right. Sorry for the missed, the problem is up and it's difficult to do. All right. So
+[322.88:326.88] so there is a function, what could that be? It could be a little bit of polynomial,
+[326.88:333.44] right? And the polynomial coefficients could be your parameters set. Now we're going to assume
+[333.44:341.28] that there's some known parametric for the decisions with respect to this parameter. And I mean,
+[341.28:346.32] I went over these examples in the main lecture and I'm going to go over these examples now,
+[346.32:356.56] complete to the BF equations. So we will see. All right. And as sample, so here the sample is the care.
+[356.56:365.03999999999996] Right. So this AI, it should be images, be eyes, it should be labels for them. So an image,
+[365.84:370.24] label, tuple, care will be what I would call as a sample.
+[370.24:380.96000000000004] So we're going to assume we know some distribution for this. So the goal of statistical estimation
+[381.68:390.88] is that we're going to try to approximate this parameter that the supervisor is using, given the problem
+[390.88:402.48] system. So here we define, actually, what an estimator is, right? And the estimator. So in this
+[402.48:410.4] class, we denote these x stars as the estimator, right? It's a mapping that takes in this problem,
+[410.4:421.52] setting and produces a value that is within the allowed parameters. Now, remember the way we
+[421.52:427.12] set things up with the probability models, the output of an estimator before realizations is also
+[427.12:434.64] random, because everything is probabilistic. And of course, the output of the estimator is not
+[434.64:442.08] necessarily equal to the true parameter, right? But hopefully it is closed. That's the idea.
+[443.91999999999996:451.03999999999996] Okay. Now, we talked about how to set up estimators. One macro wave was this maximum
+[451.03999999999996:459.59999999999997] likelihood. You can also call it a hubistic. What it says is that given under the given
+[459.6:467.20000000000005] probability, this is the set. What we can try to do is we can try to pick parameters that somehow
+[467.20000000000005:476.56] maximizes the likelihood of observing the samples. So how can you do that? Okay. So here is the
+[476.56:484.40000000000003] a simple visualization. So here, this is a simple visualization. So we're given these pairs. We have
+[484.4:493.44] some models for their distributions. So probability of BI given AI and the parametric,
+[496.4:502.79999999999995] the parameters are known parameters, right? So we took the simple setting where we assume that
+[502.79999999999995:512.16] BI's are independent and identically distributed, IIT. In this case, the distribution, the likelihood
+[512.16:524.24] of these labels, given AI is a product of individual probabilities. Then the maximum likelihood
+[524.24:534.24] says is that you can take the negative load likelihood, and you minimize it. We just picked
+[534.24:539.68] your parameters with the constraint that the parameters actually live in this constraints.
+[539.68:547.5999999999999] And this is what we call as our maximum likelihood. Now, there are other
+[548.9599999999999:554.7199999999999] formulations given AI by using the models, our models may be mismatched.
+[556.4799999999999:562.4] So as a result, we also discussed the possibility of these general M estimators, which
+[562.4:569.68] stand for like maximum likelihood type estimators or minimization type estimators. And in that,
+[569.68:579.1999999999999] we are using a general function epoketics. I'll do the pick that magic. We have some intuition
+[581.04:586.72] or from past experience, or we use machine learning to learn the appropriate optimization.
+[586.72:597.28] Okay, sky is the limit. All right. So this is our estimator, both the M estimator,
+[598.24:606.64] so in general, the end of solving optimization type. All right, so let's talk about some examples
+[606.64:616.3199999999999] now and see how this flex-to-the-roll frame works helps us. What I'll do is I'm going to focus on
+[618.72:626.96] some regression models that are big popular. So the second thing is this. So we have some
+[626.96:634.96] unknown superometer. So whenever you see this sharp, you know, in the musical literature,
+[634.96:648.88] there's a sharp operators. So this will be our two-pronger. So AI, which I refer as the data,
+[648.88:656.5600000000001] is some given text, right? They could be images. All right. So these are our labels. So maybe I
+[656.5600000000001:661.44] should put this label or the numbers, because I defined sample as the AIBI pair.
+[661.44:672.8000000000001] All right. So we have some distribution. This is the setting of the basic regression model.
+[672.8000000000001:680.8000000000001] BI's are some numbers, values. In the Gaussian linear regression model, distribution,
+[680.8:691.92] is distribution. It's mean AI inner product with the two-pronger vector. And it has some
+[691.92:700.88] additive Gaussian noise, the variance is square. In the logistic model, we use the Bernoulli distribution.
+[700.88:711.12] All right. And in applications like photon-limited imaging, so if ETFR there's some labs that
+[711.12:717.04] actually literally look at samples, count photons to create areas.
+[718.16:724.96] Looking at image, for example, neurons and so forth. There, the post on regression model,
+[724.96:732.1600000000001] where you count photons, right? The array that is looking great, and it turns out that this
+[732.1600000000001:739.52] photon model is a good model. All right. So let's see these models in detail now.
+[744.0:749.9200000000001] Okay. So let's begin with the magnetic resonance imaging. I'll ask the audience
+[749.92:755.5999999999999] for a moment. People will zoom. We'll welcome to the comments on them. Has anybody taken an MRI image?
+[757.1999999999999:762.24] Fortunately, I mean, all of us, or all of you are young, it does not mean anymore, but
+[763.4399999999999:769.12] if you didn't have to, right? It takes a long time to sit in an MRI machine.
+[770.0:775.1999999999999] Our people work for a short period of heavy shoes, right? Because you're in some narrow area.
+[775.2:780.72] And the machine makes these annoying noises that become uncomfortable.
+[783.9200000000001:788.4000000000001] The reason why I'm going to mention this, the MRI images, that lately people using machine learning
+[789.2800000000001:797.12] accelerate the MRI quite quickly. Okay. So it's a very good example to discuss because the model
+[797.12:810.0] turns out is a linear model. Surprising. So here's the goal. In MRI, what we would like to do is
+[810.0:818.88] we would like to get an image, which will help a doctor diagnose maybe issues or tell you that
+[818.88:824.16] you're actually fine, that you don't have to worry about it. Hopefully, the later.
+[824.16:834.9599999999999] Later. Later. All right. So let's talk about a simple model, which is actually part used.
+[836.64:841.4399999999999] So what I'm going to do is I'm going to assume that the image that you're interested in is in
+[841.4399999999999:848.4] square root of P by square root of P dimensions. I just to be consistent with the notation
+[848.4:853.4399999999999] that we're trying to learn from is in P dimensions space because what we're going to end up doing
+[853.44:858.96] is we're going to take this image and we're going to factorize it with some
+[859.84:870.6400000000001] a little bit graphically order that we know. All right. Now, the data approximation in this case
+[870.6400000000001:876.72] is that in TMRI machine, what the MRI machine does is it doesn't read the image itself,
+[876.72:887.0400000000001] but it reads it's Fourier transform. So what it does literally scans the Fourier transform
+[887.0400000000001:897.44] off this image that is the doctor is interested in. Okay. So what I will do is I'm going to denote
+[897.44:908.5600000000001] the this piece Fourier transform as a. So it's a you can say linear transform because we're
+[908.5600000000001:913.7600000000001] talking about finite dimensional case any linear transform can be represented as a matrix.
+[914.8000000000001:921.36] All right. So you can think of a P dimensional vector. You take its Fourier transform. You go
+[921.36:927.44] to a P dimensional Fourier representation and the matrix that matches the P by P matrix.
+[933.6:941.76] In Fourier, what we're going to do is we're going to assume that there's bunch of noise sources
+[941.76:947.12] that come together. There's like 80 current sources. There's some interference from power
+[947.12:952.88] off this out there. There's interference from communications. All of them come together and
+[952.88:960.5600000000001] can be nicely modeled as their Gaussian nodes. All right. Now, to to make the explanations a bit
+[960.5600000000001:970.64] easier, I'm going to downplay some of the important parts. Here everything is complex. All right.
+[970.64:977.92] There's whatever you measure actually has an amplitude and a phase. All right. So you see
+[977.92:985.84] this notation. This means complex numbers. Right. But conceptually, it doesn't hurt us to think
+[985.84:993.92] that everything is real for the time being. All right. Okay. But you have to deal with complex
+[993.92:1002.7199999999999] numbers if you're actually working with the MRI data. All right. Okay. So it's like this complex
+[1002.7199999999999:1013.28] normal distributed norms. Okay. Okay. So here, we're going to have a P by one vector V, which
+[1013.28:1017.12] is the measurement vector. And if you want to think about it in the Fourier domain, it's a matrix
+[1017.12:1024.96] square of P by square of P. So you use the same order and put things back into an image Fourier
+[1024.96:1034.56] image. All right. So if you think about it, all right. So let's say this is so because even
+[1034.56:1039.12] images are complex, here is the magnitude of image very interested in. All right. So this is
+[1039.12:1044.24] the heart cross section. In Fourier domain, the magnitude looks like this. For visualization
+[1044.24:1049.84] purposes, we have to plot the magnitude here. Okay. All right. So there's a bit of Gaussian noise
+[1049.84:1057.6] so our measurements, they do looks like this. Right. And if you set up the NNNN estimator here,
+[1058.64:1066.56] which turns out to be the least squares estimator. All right. It is the filter inverse of the
+[1066.56:1077.28] Fourier matrix times the measurements, right. Which is the solution to this problem. Is this clear
+[1077.28:1085.2] by the way? I mean, like I speak to all these so that the case is correct. I mean, when you
+[1085.2:1096.1599999999999] watch this, I recommend bump 0.5 C to the right here. So here's our NNNN estimator. In this
+[1096.16:1101.68] case, you solve this least squares problem. So it's also the least squares estimator. All right.
+[1101.68:1106.8000000000002] And then you do this. Here's an image that you would get. Okay. And this is with real data.
+[1109.1200000000001:1115.68] So just for the small remarks, the wick and math are two operators that maybe take an image in
+[1115.68:1122.24] form of the matrix and they try to set. And math matrix puts it back into a matrix form and
+[1122.24:1127.92] give the vector to these are like eight joint operators. All right. So here we display the
+[1127.92:1132.88] element files, magnitude of complex images. And if you want to learn a little bit more about MRI,
+[1132.88:1140.88] just use this to see my questions that they just say very good. So hopefully you guys are with me
+[1140.88:1147.1200000000001] when I talk about this MRI is a linear problem. Right. So there's a linear model. And it takes
+[1147.12:1157.52] nicely into our statistical learning. So how do we get to least squares to Wusham? The derivation
+[1157.52:1163.4399999999998] is quite elementary. And I'm basically repeating what I did in the lecture one with the complex
+[1163.4399999999998:1171.1999999999998] distribution. So remember when you have this model, the mean of the distribution is basically
+[1171.2:1179.6000000000001] A x natural. Because if you think about it, what we need is to look at the expected value of B,
+[1179.6000000000001:1187.3600000000001] which is expected value of A x natural plus W. This is deterministic because we assume that there's an image.
+[1188.88:1196.32] So this comes out. Oh, again, it frees. I think this goes.
+[1196.32:1209.04] Okay. I just noticed that the sharing throws. So let me try to put this back. I'm sorry. I'm going to do a
+[1209.04:1233.68] reshare. Technically, difficult. Sorry. Okay.
+[1239.68:1247.68] Okay. So there was a question. Why is the NL estimator equals to the LST estimator? In fact,
+[1247.68:1255.68] slide eight is exactly the reason. So what I'm going to do is I'm going to set up the NL estimator.
+[1256.6399999999999:1259.36] And it just turns off that because you're using the gun,
+[1262.0:1267.68] it coincides the least squares estimator. Hopefully this answers the question.
+[1267.68:1275.68] So I was doing a brief derivation here. So the distribution of B.
+[1280.64:1286.48] Okay. So the distribution of B, if you take the expectation of B, it's the expectation of A x natural
+[1287.1200000000001:1291.68] plus W. This is deterministic. So this sums up.
+[1291.68:1304.64] And the expected value of W is 0. So in the complex domain, writing this
+[1304.64:1309.8400000000001] task in distribution, you typically write it in terms of the real and imaginary parts.
+[1310.64:1315.76] And somehow when you combine them, you get one or sigma squared. I really don't want to do this.
+[1315.76:1323.2] Just trust me. I'm a doctor. But the point about this is that here, when you talk about the
+[1323.2:1330.16] distribution of B, it is Gaussian with mean. So this is the mean of the distribution.
+[1331.36:1339.36] A x. And here is the distribution of B in terms of our parameters x.
+[1339.36:1348.3999999999999] Okay. So if you write down the maximum likelihood estimator, this part is your debt.
+[1350.56:1356.08] This part leads to that one. Now remember, we're interested in the R get min.
+[1357.6799999999998:1362.32] So any additive constant doesn't matter. So you can just stick this.
+[1362.32:1370.3999999999999] Scaling also doesn't matter. You just have to put on a key to indicate the number of measurements
+[1370.3999999999999:1378.24] that you take. And because A is the distribution to your transform, which is unit A matrix,
+[1378.24:1386.0] some orthogonal matrix, there's a unit solution to this problem, which is the signal in most
+[1386.0:1392.4] in this case. And for the QA, it will be the Hermitian transpose of the matrix itself. We're going to
+[1392.4:1403.04] invert it. Okay. There's a unit solution. So how do we accelerate MR?
+[1404.08:1412.0] In the previous one, what you do is given the previous spectrum, you scan the whole spectrum.
+[1412.0:1422.08] So suppose it takes you a minute to scan one line, it will take you 60 minutes to scan 60 off
+[1422.08:1429.92] these lines in the previous spectrum. So literally what the MRing machine does is we program a pack
+[1429.92:1437.28] in the previous spectrum and it will literally go scan this and give you samples along that pack.
+[1437.28:1445.12] Does this make sense? Okay. And obviously it takes some time to scan the pack.
+[1447.84:1452.72] One line to scan more, you wait more. Sometimes 14 minutes, 15 minutes.
+[1454.24:1458.8] Good. What if you scan the last lines? Right?
+[1458.8:1472.6399999999999] Obviously you would have to wait less. Good. So in this case, here's an example where we can
+[1472.6399999999999:1479.9199999999998] list. So you see only these lines but not the rest. And for the rest, you can plug in zeros
+[1479.9199999999998:1485.44] because you don't know what they are. And they can just solve the least first problem. So here,
+[1485.44:1495.68] we explain how the sub sampling occurs. So you think about this as a matrix. And what you're
+[1495.68:1501.52] doing is your sub sampling in the sense that you literally see some of these samples.
+[1504.64:1513.28] The rest is you. All right. Obviously you just scan the whole thing. Then this means you scan
+[1513.28:1520.32] the whole space. If you scan this, you have less samples. You scan this time and it's accelerating.
+[1522.96:1531.04] Okay. Good. In this case, if you use the ML estimator, the solution is not unique.
+[1532.08:1538.56] All right. So if you just write down the ML estimator, the matrix, the top sample of matrix.
+[1538.56:1545.6] So the notation here, you can imagine in the case where you have the full scans, you have a P
+[1545.6:1553.76] by P d Fe matrix. Because we are now scanning less samples, you will literally do a sub sample
+[1554.56:1562.56] of the big Fourier matrix. So imagine this is our Fourier matrix. Hey, normally you have P by
+[1562.56:1574.72] P. But what we're doing now is your sub sampling and of these things. So here's some set, some samples.
+[1577.28:1588.6399999999999] I think there's also visible on the zoom. So the action that you're doing is basically
+[1588.64:1595.92] we are testing another problem where you have some sub samples matrix.
+[1598.24:1608.96] Hey, Omega, sub samples of VFT. Here's our image, right? That's wrong. So we obtain the Omega
+[1609.68:1618.0] sub sample data. Does this make sense? And is less than key. So if you think about in this case,
+[1618.0:1632.24] this matrix has a mouth face. Meaning there are vectors that when you multiply this matrix,
+[1632.24:1637.44] you just give you zero. So there are infinitely many solutions to this. You can just take
+[1637.44:1643.68] it's natural to power as vectors from the mouth face of this particular matrix. You still
+[1643.68:1650.4] obtain the same measurements. But if you just do the inverse, you get a unique solution.
+[1650.4:1655.6000000000001] The pseudo inverse will give you, among all these solutions, the one that has the middle mouth to
+[1655.6000000000001:1669.76] more. Still be of linear algebra. In this case, if you do the inverse, here's an image you get.
+[1669.76:1678.56] You think doctors would be happy with this image? I don't know if it is visible, but probably not.
+[1678.56:1688.8] Okay. And question mark. To me, actually accelerate MRI this way. Later on in the lectures,
+[1688.8:1699.44] we'll show it. So see that it is possible. Yes. It's very important. For example,
+[1699.44:1720.0800000000002] we need something, probably the higher frequencies. Not the higher frequencies, but the ones that have a high value,
+[1720.08:1732.3999999999999] maybe very important remark. If you look at the Fourier spectrum, you will see that many of the
+[1732.3999999999999:1733.9199999999998] coefficients are large and the rest is not so large. So here, maybe we should have put a color bar,
+[1733.9199999999998:1741.1999999999998] the darker the image is, closer to zero, the coefficient is. So the brighter it is, the larger the
+[1741.1999999999998:1747.12] coefficients. So if you think about it in the Fourier domain, there is some sort of a compression going
+[1747.12:1753.76] on in terms of what are images. If you were to see these significant coefficients, and only sample
+[1753.76:1760.7199999999998] the significant coefficients, we would actually do a good approximation. But if prior, we don't know
+[1760.7199999999998:1766.0] where exactly these large coefficients are, and that's the name of the game. In fact, we will discuss
+[1766.0:1775.1999999999998] this in lecture four and we talk about compressive sensing or sampling. Okay. I'm going to try to
+[1775.2:1784.0800000000002] pick a paste. So let's think about the cancer detection example. All right. And the cancer
+[1786.0:1791.6000000000001] detection example, we've given some genomic data. All right. And we're given some labels.
+[1791.6000000000001:1799.92] These, these, these, these, no disease. All right. Sorry. It has frozen. Yeah.
+[1799.92:1804.88] I don't know why this is happening. I apologize.
+[1819.76:1821.04] Okay. What is the question?
+[1821.04:1832.8799999999999] Should I look at the Fourier domain? Okay. Can you imagine a way to know beforehand the lines
+[1832.8799999999999:1841.36] that contains more information to make good choice of lines to scan? Now, this is, this is what we
+[1841.36:1850.48] discussed in general. It is not possible. But there are. My lab has come work that shows that
+[1850.48:1857.1200000000001] you can learn some important, you know, you can learn how to prioritize them. Or you can try to
+[1857.1200000000001:1863.6] predict them online using things by pre-inforcing learning. All right. If you're interested in the
+[1863.6:1870.72] topic, find your client and I'm happy to talk more about this. Okay. So we continue then.
+[1872.88:1879.84] All right. Now, in the, the cancer is now, oh, we're given some genomic
+[1879.84:1887.12] sequins, given some labels. And our goal is to predict, but come up with some function that
+[1887.12:1894.3999999999999] will predict the say cancer versus no cancer in some new data. So we're trying to learn the
+[1894.4:1910.4] supervisors method. So in this case, what we do is, so in the, we can assume a linear, general
+[1910.4:1917.8400000000001] idea model in this case, we can give us a score that is linear. So we can use a program
+[1917.84:1924.8799999999999] to model like this. And I'll explain in a little bit. In this case, the amount model becomes this
+[1924.8799999999999:1933.9199999999998] particular logistic loss problem. So think about it this way. So what this does is, given this
+[1933.9199999999998:1939.6799999999998] sequence, the linear mapping gives weights to the importance of the features in this data.
+[1940.6399999999999:1944.3999999999999] Okay. So if this features as somehow aligned,
+[1944.4:1953.44] you can make the probability go to one or go to zero, given. And it turns out that this is
+[1953.44:1958.96] something like you take the data, visualize and high dimensional space and you put a hyperplane
+[1960.16:1966.64] in between. But if you're on one side of the hyperplane, you get hypervote for cancer. And if
+[1966.64:1972.48] you're on the other side, you get low probability. Okay. But let's see how this is done. You know.
+[1972.48:1981.6] So we do this score functions. All right. So think about this here. You're given this data.
+[1981.6:1989.3600000000001] And what you do with this sector or this parameter set is to weigh the importance of these features.
+[1989.3600000000001:1990.16] Okay.
+[1995.3600000000001:2002.08] Now, later on, we will see that nonlinear rating will be much more performant. But for this point,
+[2002.08:2012.48] we're going to stick to linear rating. Okay. Now, so how do we map this score to a probability?
+[2014.56:2019.76] So a very basic model, which is very commonly used is this logistic function. All right.
+[2019.76:2024.8] The logistic function, not logistic, but logistic function. It takes an input.
+[2024.8:2031.52] And it maps the output to one divided by one plus exponential minus 16.
+[2032.3999999999999:2038.32] Now, as you can see, when T is very large, exponential goes to zero because it's exponential minus T.
+[2039.6:2045.76] In which case, the probability goes to one. And if T goes the other way around,
+[2045.76:2049.68] you make the probability go to zero. So minus C3.
+[2049.68:2054.3999999999996] So what we can do is literally give it a score.
+[2057.6:2062.3199999999997] We can map it to a probability using logistic function. All right.
+[2064.08:2069.68] So these labels, we can map it using this score. So if you want plus one,
+[2069.68:2073.9199999999996] you put plus one in front of the score. If you want minus one, you put minus one in front of the score.
+[2073.9199999999996:2077.2799999999997] So that's what that plus and minus are the single units.
+[2077.28:2086.6400000000003] All right. And if you visualize this, so the conditional probability given the score,
+[2088.1600000000003:2094.0] you will see that the logistic functions start from very close to zero, rises to one.
+[2094.7200000000003:2096.32] And in between, it has this
+[2099.44:2105.76] move transition. If you define this score in such a way that multiplies the linear model,
+[2105.76:2115.28] you can make the width of this sharper. You know. All right. It's just a scale.
+[2118.6400000000003:2124.6400000000003] So what we can do is to look at the probability. So if the score is positive, you will get a positive
+[2124.6400000000003:2133.28] probability. If the score is negative, you will get, sorry, you will get a probability higher than
+[2133.28:2139.92] half. If the score is negative, you will get a probability less than half. Right. Ideally,
+[2139.92:2147.36] you want these things to converge to one and zero when you make a decision. Okay. And here is a
+[2147.36:2155.1200000000003] way of predicting. Right. If it is in this region, maybe we can declare it on start them.
+[2155.12:2162.96] But if it is above a threshold, you can declare a disease or normal. Does this make sense?
+[2165.2799999999997:2173.8399999999997] Okay. So in the logistic regression case, we write down our probabilistic model.
+[2175.8399999999997:2181.3599999999997] All right. And in this case, we assume that this is for noob. We just give it.
+[2181.36:2186.88] All right. So using logistic modeling with this probability,
+[2188.32:2194.88] give them the logistic. So give logistic function. We have a nice Bernoulli random variable.
+[2195.6800000000003:2204.32] In this case, the probability mass function, given IID samples, it is just a product of these
+[2204.32:2211.36] probabilities. Right. And then the maximum likelihood estimator takes the negative log likelihood.
+[2212.4:2219.04] And hence, we will get this minus 1, can't log with this minus. The logar then will first
+[2219.04:2224.6400000000003] form two estimations. So the product turns on first summation. We have log
+[2224.64:2236.08] of the expression. And in this particular case, it's a score model is linear. All right. So if this
+[2237.52:2248.4] SxA is the A in a product of X, then this literally defines a linear classifier. So you just
+[2248.4:2256.4] literally look at whether or not you're on one side of the hyperplane versus the other side.
+[2258.0:2261.84] And your distance to the hyperplane will tell you the probability.
+[2261.84:2266.8] Like the farther away you are, the more the closer you are to 0.01.
+[2268.2400000000002:2276.96] Okay. Good. Now, for the first one imaging,
+[2276.96:2284.32] what practitioners do is they put sensors. And on their very low light, they usually come
+[2284.32:2289.92] photons. So they're like amplifiers, they're photon hits. It creates this cascade of other
+[2290.56:2295.28] electrons hitting each other and then it generates some sort of a column.
+[2297.52:2303.04] Now, I must tell you that this will be confusing. And I will again tell you why it is confusing.
+[2303.04:2310.4] So when people talk about photon regression, what you mean changes from community to community.
+[2310.4:2316.32] In statistics, photon regression means something completely different from this.
+[2317.2:2322.8] And I will tell you in a little bit what that is. But in the scientific imaging community,
+[2323.7599999999998:2329.6] what is human is this something. So you're, we have a land that is looking at the sample,
+[2329.6:2336.7999999999997] the sample is on the variable lights. Or you shine some sort of fluorescence so that you start
+[2336.7999999999997:2343.12] counting photons. These photons go through a land, they get somewhat blurred. So this AI
+[2345.7599999999998:2352.88] is what is called as the blur kernel for your land. You get this blur if the numerical
+[2352.88:2364.56] aperture of your land is good. And what you do is, because you're literally counting photons
+[2364.56:2372.7200000000003] this X, the parameter of the image you're interested in is non-negative, because you're looking at
+[2372.7200000000003:2379.84] blur journals, they're also non-negative. So a possum distributed with a parameter like this,
+[2379.84:2384.96] remember for song distribution, it needs to have a non-negative mean parameter.
+[2386.7200000000003:2393.84] So by the setup in the imaging, what I'm writing here is by construction non-negative.
+[2398.48:2407.1200000000003] Good. So the ML estimator is given by this one. So here's an example, but I will get into the
+[2407.12:2415.8399999999997] the derivation. In this case, here is the possum distribution with the parameter.
+[2419.04:2424.3199999999997] Here's to me, I have IID samples. You look at negative low likelihood.
+[2426.56:2435.12] I mean, I'm repeating the same thing and I admit it's redundant, but hopefully,
+[2435.12:2443.12] this is not looking to sleep. It's just somehow reinforcing the bit of dollars.
+[2444.64:2450.24] So here's our estimator and here's our ML estimator, as claimed.
+[2450.24:2465.9199999999996] So for graphical model learning, here it turns out that in certain problems, you have some
+[2465.9199999999996:2474.4799999999996] sequence of data that are generated by some vertices in a graph. That's what I said, you have a
+[2474.48:2483.28] graph that has pages and vertices. So each of these vertices, it gives you some signal.
+[2494.16:2500.08] What you would like to do is I will give you the data and I will ask you to figure out what this
+[2500.08:2506.24] graph is. This is what I mean by graph learning. It's a very important topic.
+[2507.7599999999998:2512.7999999999997] Observe, for example, maybe temporal data from bunch of people.
+[2516.7999999999997:2521.7599999999998] And what you would like to do is learn maybe the correlation structure or conditional independence
+[2521.76:2531.36] structure or the macro structure. So one way to model this is the following. There's something
+[2531.36:2538.5600000000004] called the Gaussian-Marco model. In this case, so we know about the Gaussian distribution, right?
+[2540.0:2549.5200000000004] Sigma, for the covariance matrix. If inverse is in statistics known as the Pystian matrix,
+[2549.52:2557.84] okay? Now, the Pystian matrix in this case is a very particular structure in the sense that
+[2558.96:2567.2] it is supposed to have a zero entry when there is no link between these vertices, there's no
+[2567.2:2573.52] edge between these vertices. And it has a non-zero entry if there is an edge in between.
+[2573.52:2580.16] So here things are color-coded. If there's a link between the fourth and the fifth, we will see
+[2580.16:2584.64] that there is a non-zero entry between fourth and the fifth in the Pystian matrix.
+[2588.96:2593.6] So given this data, right? So you are given some sort of the data matrix.
+[2595.92:2601.84] What you would like to learn is this Pystian matrix. If you have the Pystian matrix,
+[2601.84:2610.08] you just look at the non-zero entries, you're done. All right? If you recover the grass structure,
+[2611.76:2622.7200000000003] what? Good. The ML estimator in this case can be set up by the following problem.
+[2623.84:2629.52] Given the data, you can compute the empirical core variance matrix. All right.
+[2629.52:2641.04] Then the ML estimator turns off to be trace sigma hat data. This is a matrix inner product in fact.
+[2642.16:2651.52] So this literally inner product between this corresponds to trace and then minus log text.
+[2651.52:2657.12] All right? And it is constrained because we're talking about inverses of covariance matrices.
+[2657.12:2661.6] So the data, the parameter needs to live in the positive definite column.
+[2662.96:2675.7599999999998] It needs to be a positive definite matrix. All right? Good? Okay. Now I understand we are out of time
+[2675.7599999999998:2681.6] for this and I'm again maybe going slow. So here's the question, should I continue for the next
+[2681.6:2686.24] 15 minutes in the finished lecture and then be followed up or should we take a 15 minute break
+[2686.24:2689.3599999999997] then continue? I will leave it up for you guys.
+[2694.64:2698.8799999999997] Should we continue? Is it okay if I continue 15 more minutes and then end the lecture?
+[2700.56:2702.72] Are people okay? How about people in Zoom?
+[2702.72:2710.48] Okay.
+[2710.48:2711.68] Okay.
+[2711.68:2714.8799999999997] Go on. All right. Thank you. I will continue on this. There is the
+[2718.08:2723.68] opposition. So here's the deal. Okay.
+[2726.3199999999997:2730.7999999999997] Okay. Maybe actually we should change this to a different notation because I just noticed that
+[2730.8:2736.1600000000003] we call these things exit. So let's think about the following. Okay.
+[2736.1600000000003:2741.28] I apologize that there's a bit of confusion. So this we should call this data.
+[2743.6000000000004:2746.88] So maybe we correct this after the lecture. I apologize for this.
+[2747.6000000000004:2754.0800000000004] So here's the deal. All right. So here we are assuming that x is generated by some Gaussian
+[2754.08:2760.56] zero mean, right? With some covariance. Okay. So which is theta inverse?
+[2762.16:2767.36] I perceive it makes 15 more than the covariance. Okay. So if you think about it, the joint
+[2767.36:2774.7999999999997] distribution of the data is a product because again, we assume iid. Okay. So here's the actual
+[2774.7999999999997:2783.36] distribution for one of them. The assume it is zero mean. So it is this times
+[2783.36:2789.6800000000003] sigma inverse, but sigma inverse is just theta. Right. Times x i minus zero.
+[2791.76:2797.6] It's potentially the four. Right. Now here's the normalization constant to the distribution.
+[2798.88:2805.1200000000003] All right. So this is the normalization constant for the multiday at Gaussinger. Okay. It involves
+[2805.12:2813.44] the determinants. It involves the determinant of sigma. Sigma is theta inverse.
+[2815.2:2823.92] And the determinants of an inverse matrix is one over the determinant of the original matrix.
+[2823.92:2831.68] Hence you have determinant in the numerator. Okay. So because we're taking a product,
+[2831.68:2840.7999999999997] the product gets into the exponentiated form as a summation. All right. I hope it's here.
+[2842.16:2851.2799999999997] The motif here is this. Okay. It's summation x transpose theta x i. This is a scalar.
+[2853.12:2859.12] Good. So I'm going to go to the trick. I'm going to write it as trace x i transpose theta x i.
+[2859.12:2868.24] Because the trace of the table is the same thing. And I'm going to use the trick that
+[2868.24:2877.12] traced a b or symmetric matrices equal to trace ba. I'm sorry about the handwriting.
+[2877.12:2885.92] So this is equal to sum trace theta x i x i transpose.
+[2888.48:2900.7999999999997] Tata is constant so you can make it come out of the summation. And you get literally sigma hat in
+[2900.8:2912.6400000000003] there. Does this make sense or was this too fast? In any case, you know, send me an email or ask
+[2913.36:2919.04] later on and review the text. So this is literally what the ML estimator gives you in this trick.
+[2920.96:2924.0] And it's just the idea for you to try to do the derivation on your own.
+[2925.52:2929.84] One thing I will tell you is that in this particular case, the ML estimator has a
+[2929.84:2937.36] closed form. Tata ML star is literally sigma hat inverse.
+[2948.1600000000003:2953.84] It's just the empirical covariance estimator. But I should note that it is a bias estimator.
+[2953.84:2958.8] It is a bit of estimator based on one minus one over n minus one.
+[2962.56:2970.8] Okay. Now I'm going to try to be through this. So I made a claim that linear models are super
+[2970.8:2987.2000000000003] general. Okay. And I'll give you an example. I don't know. Maybe market tax utilization 500
+[2987.2000000000003:2989.28] billion dollars example. Google page rent. So what page rent does is you write down an query and it gives you a
+[2989.28:2995.2000000000003] fireworks list of pages. So how does it do that? Here's a stimulus model. Okay.
+[2995.2:3002.48] So let's say you go to that page and then there are links in that page and you click on some of
+[3002.48:3009.2] these links and then you follow the links. So what you can think about is that, you know,
+[3009.2:3015.7599999999998] given a user, there's some conditional probability, right? You're in a page and you think about
+[3015.7599999999998:3023.04] it probably to click on a particular link in that page. Right. I, myself,
+[3023.04:3029.52] use Google News. So like I open Google News, go over the article and I click on the articles and
+[3029.52:3037.68] I follow the text. Okay. So here's a very simple way of modeling this. Right. So let's tell a
+[3037.68:3048.56] graph that represents each page. All right. Now imagine that you're in that page two.
+[3048.56:3055.12] The probability that you will go to this page one is one third. Okay. You can go to this
+[3055.12:3062.96] page with probability one third or go to this page with probability one third. No. So given that
+[3062.96:3069.36] you're in that page two, you can write down the probabilities, right? In some H incidence matrix.
+[3070.7999999999997:3076.96] And you will see that when you sum them up, they will sum up to nice D1. All right. So let's
+[3076.96:3084.88] have these probabilities. All right. So we have a directive graph. All right. So in this particular
+[3084.88:3090.7200000000003] case, you can create this toy graph and you can see, you visualize this H incidence matrix. But
+[3092.32:3097.76] the easier for the world by fifth is you know, you have six billion entries. Just storing this
+[3097.76:3109.28] is tempted to our keyabytes. It's too much. Yeah. So let's say we don't miss a method for modeling.
+[3109.28:3120.1600000000003] All right. So let's think about the probability of a user being in the web page I,
+[3120.16:3132.3999999999996] node i, vertex i, right? After k clicks. All right. You know, you're at the page, you click and then
+[3132.3999999999996:3142.3199999999997] maybe that has another link, you click and follow the clicks. You know. So let's define a state
+[3142.32:3151.6000000000004] vector, right? At the k click, if you will, which is just these probabilities, concatenated.
+[3151.6000000000004:3157.6000000000004] So give this introduction at the k click where a user would be on the internet.
+[3159.28:3167.84] So if you think about this transition matrix, if you take this and multiply it with e,
+[3167.84:3174.8] it will tell you what the next state is going to be, right? Because if you have a probability of
+[3174.8:3180.56] being in one state, in the graph you're in that state, conditioned on that probability,
+[3181.44:3187.76] and where you will end up will be determined by the probabilities here, where you end up next,
+[3187.76:3196.8] right? Good. So what you do is literally just use total probability law, right? Our k plus one
+[3196.8:3206.6400000000003] will be just e times our k, right? Okay. So a bit of engineering, there are some issues in this model,
+[3206.6400000000003:3216.48] right? Oh, so the ranking vector is the state distribution, when you just take steps,
+[3218.6400000000003:3225.04] so it's like the stationary distribution, right? Does this make sense? It's a very simple model
+[3225.04:3230.0] and it seems to work off, I think. But there are some issues like disconnected vector, you know?
+[3230.88:3237.12] So if you start with the employees, which is not connected to anything, you just remain there,
+[3237.12:3244.4] so this model doesn't work. All right, so there's a model that you can model that the server will quit,
+[3244.4:3252.08] the current page, and random you open another one, right? For the sake of time, I'm going to go
+[3252.08:3259.92] a bit faster here, right? Now there are again, signals that could be the pages that have no
+[3259.92:3268.72] links to a server, right? So you can create some artificial links that will model again this,
+[3268.72:3274.08] this, you know, you go there and maybe the user will close and then there's another one and so on.
+[3276.48:3280.3199999999997] So the solution is the very simple, you know, if you want to model the event, the sort of
+[3280.32:3285.6800000000003] which the current page will open another one, so you assign some source to the uniform probability,
+[3285.6800000000003:3293.28] right? And then you create some artificial links for the sake of time, I'm going to continue.
+[3295.44:3300.56] So in this case, the page grant matrix is defined by this age incidence matrix,
+[3300.56:3311.52] correct it for, let's say, stint nodes and correct it for quitting the web page and opening another one.
+[3311.52:3319.6] All right, so the page and formulation corresponds to finding a matrix, a vector,
+[3319.6:3332.3199999999997] probability vector r, when you apply to this matrix, it would remain as r, right? Because r is a
+[3332.3199999999997:3338.16] probability, it means to be non-negativity, it is to sum up to one. So our question is can we find
+[3338.16:3349.3599999999997] an r, non-negative r, especially that mr is equal to r, and r sums up to one. All right, good.
+[3349.3599999999997:3355.04] What we can do is we can look at the following immunization problem. We're going to try to find an
+[3355.04:3366.3999999999996] x such that mx is as close to x as possible, right? And one transpose x is as close to one as
+[3366.4:3374.7200000000003] fast as all. All right, so I'm going to keep maybe non-negativity here as well.
+[3378.1600000000003:3383.2000000000003] In this case, by simple rewriting, you can actually obtain a linear model.
+[3386.0:3392.2400000000002] The details are not that important, but it's just linear model, patient, who will they solve?
+[3392.24:3399.2799999999997] No? In fact, what you do is you use what is called as power iterations to solve this.
+[3401.6:3408.3199999999997] So you start with the random vector, repeatedly multiply this and project onto the non-negative
+[3409.04:3413.52] or something continue. That's why page rank is very fast.
+[3413.52:3423.6] So this is the last line. So this is where I was saying that it could be confusing,
+[3424.56:3428.32] because in statistics, there's something called generalized linear models.
+[3430.56:3437.52] And all of the formulas for the generalize linear models can be written in this particular
+[3437.52:3443.28] function. You have this linear inner products, there's an alinear function. The data appears in
+[3443.28:3448.96] the B.I. here. All of them in the generalized linear models can be written in this particular
+[3448.96:3454.32] fashion. So if you take this alinear function to be used for it over two, you get linear regression.
+[3455.68:3462.64] If you take this as this logistic function, you get the logistic regression. And if you
+[3462.64:3469.6] take this as explanation, you give the Poisson regression. The difference between the Poisson
+[3471.68:3478.48] model that we covered and the statistics is that the statisticians denote the Poisson
+[3479.04:3484.48] distribution parameter in explained shaded form to guarantee that it is non-negative.
+[3484.48:3491.28] And as surprised is that if you're working with generalized linear models,
+[3492.32:3494.8] you can just use the v square estimator.
+[3500.2400000000002:3508.08] That is to strike down in v square estimator, even if it's Poisson models, solve it,
+[3508.08:3512.96] you will get a parameter. And if that parameter is scaled correctly, you actually find the
+[3512.96:3520.8] actual solution. So all of these things, all of the generalized linear models are equivalent
+[3522.0:3527.76] up to scaling constants, which is very interesting. So if you have a model with natch,
+[3527.76:3531.04] you don't worry about the generalized linear models. You can just solve this squares.
+[3533.28:3535.36] You just need to figure out the scaling correct.
+[3535.36:3544.4] All right. Okay. So the rest of the lecture is for PhD. There's a bunch of
+[3545.6:3556.08] stuff like minimax risks. I suggest you guys cover that. And I'm sorry that this took me
+[3556.08:3561.04] a long time. I'm not sure if people are still interested in continuing with the lecture. Maybe
+[3561.04:3567.52] I can talk about it another recitation. I will definitely explain this risk minimization.
+[3567.52:3575.2799999999997] So I suggest you stop here. Is that okay? And I will again try to cover this end of lecture one
+[3575.2799999999997:3588.88] later. All right. Is it okay? Is it okay? All right. So thank you all. Are there questions currently?
+[3588.88:3593.76] No. Do you know how to lecture on this model?
+[3593.76:3600.88] Yes. So next piece, there's no lecture. All right. And there's another recitation.
+[3602.4:3611.52] So there, maybe I can complete you one again. All right. Good. Now what I suggest you guys do is
+[3611.52:3629.92] take a look at handout one. I'm not sure I follow. Is it just the slides?
+[3632.56:3637.7599999999998] So what I recommend you guys do is take a look at handout one. This is not a homework.
+[3637.76:3646.48] Like you're not supposed to write down and submit anything. All right. What I would like you to do
+[3646.48:3651.84] is to think and locate it. But take your time because the handout actually has some material that
+[3651.84:3660.2400000000002] you will see from later on. All right. In fact, up to like homework one that handout covers many
+[3660.24:3667.8399999999997] material. So look at it at your pace. We will post the solutions. In fact, for handout one,
+[3667.8399999999997:3674.24] there will be a video going over the solutions. Okay. Next, if you would, it is handout two.
+[3674.9599999999996:3681.8399999999997] Same deal. Just take a look at it at your own pace. If you have questions, send us an email.
+[3681.8399999999997:3686.64] Right. But again, we will post the solutions so that you see how we do it.
+[3686.64:3695.44] Now from the chat, there's the question. Are there lecture notes where we can get more details?
+[3696.24:3702.24] Currently not. So some of these lecture material is just fresh out of the oven.
+[3703.44:3706.3199999999997] Hopefully I will have notes for next year.
+[3707.8399999999997:3712.24] So the material, some of them are new. And I haven't written lecture notes.
+[3712.24:3715.3599999999997] Okay. Your question.
+[3715.3599999999997:3721.6] I want to ask this is one of the lecture. The homework that says that there's real
+[3721.6:3727.7599999999998] the right. That is correct. All of them organic, society, sort of the other theoretical
+[3727.7599999999998:3733.2] components. So the question is also for Zoom is that there are
+[3733.2:3743.6] homeworks. What's the composition of the homeworks? I would say there is more on practical
+[3745.7599999999998:3751.6] exercises than theoretical ones. There's some theoretical questions, but not so much.
+[3753.3599999999997:3761.4399999999996] Now we will tend out a poll to figure out what people like to use. Python. Are you familiar with
+[3761.44:3769.28] the PyTorch module? Are you a MATLAB person? Please try to answer this. Okay. Currently we have the
+[3769.28:3774.48] exercises in Python. There's a little PyTorch when we do generative adversarial networks.
+[3776.64:3782.48] I think homework one, because at his two points, we can actually make the MATLAB available.
+[3782.48:3790.64] So those of you who need a bit more time to get familiar with Python can catch up.
+[3790.64:3792.64] All right. Good.
+[3792.64:3796.08] One, two, three, two, one.
+[3798.32:3802.48] All right. So one critical question. I wish. Okay.
+[3804.4:3808.96] I mean, in my courses, I always allow for a collaboration.
+[3808.96:3815.76] All right. So you can discuss or work with your friends, but in the end, whatever you're
+[3815.76:3824.8] terming in has to be done solely by you. All right. You can acknowledge,
+[3824.8:3831.76] whomever you work with explicitly, say that you work with this person, but whatever you write
+[3831.76:3841.28] needs to be yours. Okay. If you detect cheating, meaning the red copy, you get a zero for that
+[3841.28:3850.6400000000003] homework. And if you detect cheating again, then the school administration kicks in. Okay.
+[3852.4:3857.6800000000003] I don't want to do this. Let me give you one example from an earlier year.
+[3857.68:3865.52] I had a very special student, this person was getting a six just because the person
+[3867.68:3872.72] is opposed to getting a 90 from a homework, this person wanted to get a hundred.
+[3873.6:3880.8799999999997] All right. With a 90, this person, what they get in a six, but instead, he got a zero from the
+[3880.88:3891.44] homework. All right. So just for that ten points and did not get a six, you can get 14.5.
+[3894.1600000000003:3899.36] So don't risk it. You're allowed to work in groups. You're allowed to work with your friends.
+[3899.36:3902.1600000000003] This is how real life goes. You know, like you work with people.
+[3903.12:3906.32] But make sure whatever you're handing in is yours.
+[3906.32:3915.44] Okay. I hope this is clear. Is there a book to tackle these subjects?
+[3915.44:3926.7200000000003] There are, this is more like a collection of books. I don't think there's a single book that covers
+[3926.7200000000003:3932.56] this. Maybe we will have a book for this course that later. Okay. With the class notes.
+[3932.56:3937.68] Okay. Good. See you guys. Enjoy Monday off.
+[3948.24:3954.08] Okay. Just for the zoom, I'm having a hard time choosing between several data science courses.
+[3954.08:3958.64] We just say a few words about how this course compares to the other data science courses.
+[3958.64:3965.92] So there are a bunch of courses available. There's the machine learning course, which is a bit more
+[3965.92:3973.92] applied. So this course has maybe a bit more algorithmic emphasis, statistical learning theory,
+[3973.92:3984.96] emphasis. You know, make the right choice and take this course. The courses are complementary.
+[3984.96:3989.12] Right. So we're in touch with people who are giving the other courses to make sure that this is the case.
+[3991.36:3995.2] I would say this particular course is a bit more advanced.
+[3999.6:4002.96] Just because if you see the star material, you will also see.
+[4004.8:4011.28] But you know, you can't go wrong by taking all of these data science courses. Because like I said,
+[4011.28:4016.4] the people who are giving these courses are in touch with each other to make sure that the courses
+[4016.4:4021.52] are different in complementary. So from what I know from the last years, the machine learning course
+[4021.52:4025.36] and this course actually goes really nicely. They complement each other really well.
+[4025.36:4043.36] So I suggest you click the course. Alright, good. If it could be, we can see you guys next Friday.

@@ -1,0 +1,234 @@
+~COM-516 Lecture 5.3
+~2020-09-02T17:43:32.961+02:00
+~https://tube.switch.ch/videos/72ff003a
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:9.72] Okay, so let me repeat that the ID here is not to prove the theorem, neither the facts
+[9.72:12.56] that I have stated before, which are these ones.
+[12.56:13.8] This is left for next week.
+[13.8:19.12] It will take us some time to get to the proof.
+[19.12:24.44] What I would like to do here is just to add two more definitions and give you an example
+[24.44:32.0] where we can see what this upper bound can provide us as a concrete upper bound on the
+[32.0:34.88] total variation distance.
+[34.88:42.44] So before the example, let me tell you about these two concepts.
+[42.44:56.879999999999995] So we define the spectral gap of the chain.
+[56.88:71.68] This is defined as follows.
+[71.68:78.80000000000001] Gamma, we write it like gamma, is simply one minus lambda star.
+[78.8:87.72] So this is a number that belongs in the worst case, it could be zero, but actually lambda
+[87.72:92.44] star is strictly less than one and lambda star will be positive always.
+[92.44:100.72] So in the best case, if you want, this could be one.
+[100.72:104.8] This spectral gap, why do we define it?
+[104.8:113.0] It measures how far is this interval of eigenvalues from the boundary is minus one plus one.
+[113.0:118.67999999999999] So let me, let me again draw this line here.
+[118.67999999999999:124.72] So we have here minus one, zero plus one.
+[124.72:131.96] And you know, we had, let's say we have this situation where we have eigenvalues lambda
+[131.96:138.32000000000002] one, so this is the least eigenvalue is lambda n minus one, the largest eigenvalue is
+[138.32000000000002:140.32] lambda one.
+[140.32:143.72] And so here gamma would be one minus lambda star.
+[143.72:154.16] So in this case, lambda star will simply be equal to lambda one because it's the closest
+[154.16:156.48000000000002] to one in absolute value.
+[156.48:162.88] And so the spectral gap in this case would be this interval here.
+[162.88:175.83999999999997] If we had another situation like this, then let's say we have again this interval minus
+[175.83999999999997:176.83999999999997] one plus one.
+[176.83999999999997:185.48] And now say we have a situation like this, with lambda n minus one here, lambda one here.
+[185.48:190.04] That's the interval where we have all the eigenvalues.
+[190.04:195.07999999999998] Then in this case, this lambda n minus one, so this lambda star in this case will be equal
+[195.07999999999998:202.35999999999999] to, you know, well, this will be equal to minus lambda star because lambda star will be
+[202.35999999999999:205.72] minus lambda n minus one.
+[205.72:210.79999999999998] And the spectral gap will be this one.
+[210.8:216.92000000000002] So this gap represents the gap from the interval to the boundaries minus one and plus one.
+[216.92000000000002:220.4] And we always take the minimum of the two, right?
+[220.4:234.96] So gamma can also be written as the minimum of one minus lambda one and lambda n minus
+[234.96:241.96] one, my plus one.
+[241.96:244.96] Okay.
+[244.96:248.12] Why do we define this spectral gap?
+[248.12:256.76] Because actually when you, you know, the upper bound, remember, so the upper bound is given
+[256.76:264.72] by this lambda star to the power n divided by two squared of pi i.
+[264.72:272.0] And so because lambda star is one minus gamma, so this is equal to one minus gamma to the
+[272.0:276.52000000000004] power n.
+[276.52000000000004:284.40000000000003] So this is further upabounded by e to the minus gamma n, sorry, e to the minus gamma n
+[284.40000000000003:287.76000000000005] over two square root of pi i.
+[287.76000000000005:294.12] And so therefore the gamma here is the factor you find in the exponential, right?
+[294.12:298.52] And this is using simply the inequality one minus x to the power n is less than e to
+[298.52:301.48] the minus x times n.
+[301.48:307.28000000000003] Or one minus x is less than e to the minus x simply.
+[307.28000000000003:317.52] And so, you know, this gamma now is written in it's a convenient factor to remember.
+[317.52:322.84000000000003] So the larger the thing to remember is that the larger the gamma, the faster the convergence.
+[322.84:333.15999999999997] And let me write this, the larger the gamma, the faster the convergence.
+[333.15999999999997:338.44] So when we want to have a fast convergent Mark chain, we should make sure that this spectral
+[338.44:343.71999999999997] gap is the largest as possible.
+[343.71999999999997:351.15999999999997] So we should make sure that the eigenvalues are most concentrated around zero actually.
+[351.16:354.76000000000005] Okay.
+[354.76000000000005:364.04] The second definition is this mixing time I was telling you about before.
+[364.04:382.0] The mixing time of the chain is defined as follows.
+[382.0:390.24] Actually there won't be one mixing time, but for a given parameter epsilon, which is
+[390.24:399.16] greater than zero, T epsilon is the first time, the first value of n, the smallest value
+[399.16:414.44] of n, such that the maximum overall I in s of P i to n minus pi, so this total variation
+[414.44:418.28000000000003] distance, falls below epsilon.
+[418.28:423.44] Okay.
+[423.44:431.44] And in general, so if you want after this time T epsilon, we are guaranteeing that we
+[431.44:436.76] are epsilon close to the limiting distribution.
+[436.76:441.71999999999997] And the question that we will have, I mean, this, which is the same question as the question
+[441.72:449.64000000000004] on the rate of convergent is how large is this T epsilon, specifically how large is this
+[449.64000000000004:456.20000000000005] T epsilon in terms of capital N, which is the size of the Mark chain.
+[456.20000000000005:457.20000000000005] Okay.
+[457.20000000000005:458.8] The size of the state space.
+[458.8:459.8] Okay.
+[459.8:471.56] How does it, so the question that we will look at is how does T epsilon behave in terms
+[471.56:478.6] of n, which is the size of the state space?
+[478.6:483.84000000000003] Of course, you, you, this also, this T epsilon also depends on epsilon, but as we will see,
+[483.84000000000003:486.84000000000003] the dependency on epsilon is not so high.
+[486.84000000000003:493.52] It's not so important as the dependency in capital N in general.
+[493.52:499.64] Once you've fallen below a certain threshold and it's not so long until you fall below
+[499.64:503.32] another even smaller threshold, you will see this.
+[503.32:504.32] Okay.
+[504.32:510.32] So let me do an example to illustrate this and compute these mixing times and spectral gap
+[510.32:514.96] for a specific chain.
+[514.96:520.88] Here it is.
+[520.88:535.56] So we will go back to the cyclic random mark on the state space 0 to N minus 1.
+[535.56:536.56] Okay.
+[536.56:542.72] We want to be able to apply the theorem.
+[542.72:549.32] So we need to make assumptions such that we have detailed balance.
+[549.32:555.7600000000001] So here we will need that P equals Q is equal to half.
+[555.7600000000001:563.2800000000001] So just to draw again, so we have this chain, which is cyclic.
+[563.2800000000001:569.5200000000001] And now we just assume that we have equal probabilities to go clockwise or counterclockwise.
+[569.5200000000001:575.5200000000001] Okay.
+[575.52:585.92] Because we have seen that if we do not assume this, then in this case we don't have detailed
+[585.92:586.92] balance.
+[586.92:591.4399999999999] I told you, yes, we can prove things without detailed balance, but that's a little more
+[591.4399999999999:592.4399999999999] complicated.
+[592.4399999999999:596.04] So let me stick to this case.
+[596.04:601.0799999999999] So in this case, the matrix P, the transition matrix of the chain has this symbol form.
+[601.08:608.12] So it will be 0, half, and then a list of 0s and half at the end.
+[608.12:614.0] And then half 0, half or 0s.
+[614.0:620.5600000000001] And so 0, half 0, half 0, and so on.
+[620.5600000000001:625.0] Until you have the last line is half.
+[625.0:635.16] And then a list of 0s and then another half, sorry, other half and a 0.
+[635.16:639.76] And perhaps I matrix is not super nicely written here.
+[639.76:643.6] This is the same diagonal and here it should go here.
+[643.6:645.84] You see what you do.
+[645.84:648.84] Okay.
+[648.84:656.5600000000001] This matrix is a double stochastic matrix, so we know the station or distribution.
+[656.5600000000001:668.76] The station or distribution pi is this one over capital N uniform.
+[668.76:678.0] And yes, and if I want to have, if I want to have a pericain, I should assume that capital
+[678.0:679.84] N is hot.
+[679.84:682.6] Okay.
+[682.6:691.28] So now we would like to compute the upper bounds.
+[691.28:693.56] So we have to compute the eigenvalues of P.
+[693.56:697.08] So here I don't want to do the computation.
+[697.08:698.08] It's an exercise.
+[698.08:701.4] You will see this in the exercise.
+[701.4:708.56] This matrix P has an interesting property, it is what we call the circulant matrix.
+[708.56:719.0799999999999] In the sense that every row is the, the permit is the shift of the previous row, the cyclic
+[719.0799999999999:720.0799999999999] shift.
+[720.0799999999999:723.4] We have a cyclic or not more, so we have cyclic shifts.
+[723.4:728.4399999999999] So because it is a circulant matrix, there is an easy way to compute the eigenvalues of
+[728.4399999999999:729.4399999999999] a circulant matrix.
+[729.44:735.2] Actually, there is also an easy way to characterize what are the eigenvectors of such a matrix.
+[735.2:739.24] And it turns out that the eigenvalues of these matrix are given by the following expression.
+[739.24:753.1600000000001] Lambda K is equal to cosine of 2 pi K or N for K ranging from 0 to capital N minus 1.
+[753.1600000000001:756.12] So here a small caveat.
+[756.12:762.64] When I write this, I get the eigenvalues, but the numbering of the eigenvalues is not
+[762.64:766.48] necessarily ordered here and typically not.
+[766.48:776.32] So typically, while Lambda 0 will be equal to 1, but then you should, if you look at the
+[776.32:781.92] values of, before even N, you look at where these eigenvalues are, they are typically,
+[781.92:791.88] if you draw a circle, if you draw a circle, then if you want to compute the eigenvalues
+[791.88:799.56] Lambda K, what you should do is to just draw N points on the circle.
+[799.56:806.36] Perhaps like this, I don't know, I don't know how many points I draw here, but K is something
+[806.36:808.0799999999999] like this.
+[808.08:822.5200000000001] And then the eigenvalues, the values of the Lambda K are simply the projections on the
+[822.5200000000001:828.9200000000001] real axis of these points, which would match.
+[828.9200000000001:835.88] So the eigenvalues here will be these ones.
+[835.88:840.0] I will have one here, I will have one here, I will have one here, and I will have one
+[840.0:841.24] here.
+[841.24:849.0] And here that's the case where actually I should definitely erase this N out here, because
+[849.0:855.84] this is the case where N is even.
+[855.84:858.12] Why is it the case?
+[858.12:867.68] Because here I have a eigenvalue, Lambda, one of these Lambda Ks is equal exactly to minus
+[867.68:871.48] one here.
+[871.48:879.0] And so, and that's because actually I have a chain here, which is periodic.
+[879.0:885.84] And so I do not satisfy completely the assumptions of the algorithm, and therefore I won't have
+[885.84:889.32] the nice properties I was listening before.
+[889.32:895.72] But okay, in the case N is odd, you can figure out that if you draw these not number of points
+[895.72:900.48] on the circle, no eigenvalue will be exactly equal to minus one.
+[900.48:903.9200000000001] And so we will be in the setup of the theorem.
+[903.9200000000001:911.2800000000001] So here, in this case, the chain is not a ergodic.
+[911.28:920.56] And actually in this case, Lambda star is equal to one, because there is one eigenvalue,
+[920.56:924.0799999999999] which whose absolute value is equal to one.
+[924.0799999999999:937.56] And so no convergence, because you don't even have a limit in this case.
+[937.56:953.0799999999999] And in the case where N is odd, we do have something different.
+[953.0799999999999:964.04] And one can show that Lambda star is the absolute value of cosine of 2 pi times N minus 1 over
+[964.04:970.16] 2 divided by N.
+[970.16:974.92] So really, now let me just again draw the circle.
+[974.92:978.0] And perhaps let me do it for a smaller number of points.
+[978.0:983.8] Let's say if you have five points, for example, you would have something like this on the
+[983.8:984.8] circle.
+[984.8:990.92] Sorry.
+[990.92:995.5999999999999] And again, what will be the eigenvalues here?
+[995.5999999999999:1002.04] Well, you will have two eigenvalues in this position, two eigenvalues in this position.
+[1002.04:1007.3199999999999] And on this graph, that's the case for N equals 5.
+[1007.3199999999999:1015.4] You see that indeed, this eigenvalue is the one that is the closest to the boundary,
+[1015.4:1020.8] to minus 1 or plus 1.
+[1020.8:1021.8] And so it is this one.
+[1021.8:1028.72] So here, capital N would be 5, so 5 minus 1 is 4 divided by 2 is 2.
+[1028.72:1037.48] It's actually the second eigenvalue, Lambda 2, which is the closest to plus 1 or minus
+[1037.48:1038.96] 1.
+[1038.96:1042.36] OK, so what is this?
+[1042.36:1048.96] We would like to see how close it is to the boundary, to plus 1 or minus 1, in terms of
+[1048.96:1049.96] N.
+[1049.96:1059.1200000000001] So we can certainly rewrite this as absolute value of cosine of pi times 1 minus 1 over
+[1059.1200000000001:1061.44] N.
+[1061.44:1072.3600000000001] And well, by symmetry of the cosine, this can be written as cosine of pi over N.
+[1072.3600000000001:1079.44] And if you use a Taylor expansion of cosine close to 0, so let's say that N is not, this
+[1079.44:1088.44] will be roughly 1 minus pi squared over 2N squared as N is large.
+[1088.44:1095.2] OK, so this is saying, so this is the approximate expression for Lambda star.
+[1095.2:1107.3600000000001] And therefore, the spectral gap gamma is equal to 1 minus Lambda star will be roughly of
+[1107.36:1112.8] the other of pi squared over 2N squared.
+[1112.8:1122.36] OK, and so the upper bound on, well, we could have written the upper bound on the total
+[1122.36:1133.6399999999999] variation distance in terms of Lambda star, but OK, we can, well, let me do it, Lambda star
+[1133.64:1143.2800000000002] to the power N divided by 2 times square root of pi, sorry, let me just not put the maximum
+[1143.2800000000002:1145.24] here first.
+[1145.24:1147.2] OK, so this is what?
+[1147.2:1151.5600000000002] Well, pi i is uniform, so this is 1 over N, right?
+[1151.5600000000002:1158.3200000000002] Each pi i, so this I can rewrite as square root of capital N over 2 times Lambda star, which
+[1158.32:1164.08] is 1 minus pi squared over 2N squared to the power N.
+[1164.08:1171.3999999999999] OK, so using the upper bound with the spectral gap, we get some somehow clean of expression
+[1171.3999999999999:1181.0] here that this is going to be less than square root of N over 2 times exponential minus pi
+[1181.0:1188.68] squared N over 2 capital N squared.
+[1188.68:1195.12] OK, and now comes the important question that you would like to answer.
+[1195.12:1201.24] If you let the chain evolve from an initial position, which is, would be state 0, for
+[1201.24:1205.48] example, you would like to know, or state, any state i, actually here, the thing is
+[1205.48:1211.04] completely symmetric in every state i, as you see there is no more i in this expression
+[1211.04:1212.04] here.
+[1212.04:1219.24] The question is how little N needs to be, how large needs little N to be, so that this
+[1219.24:1222.32] expression becomes small.
+[1222.32:1230.96] And so for this expression to become small, so this expression will be less than epsilon,
+[1230.96:1240.8400000000001] then what, well, in order to have this expression small, we better have N at least much greater
+[1240.8400000000001:1245.8] than capital N squared, because if N is the order of capital N squared, then you will
+[1245.8:1249.72] get the exponential would be of the order of a constant.
+[1249.72:1252.44] And so multiplied by square root of N is just going to grow, right?
+[1252.44:1258.68] So if you want this to be really small, we need N to be much greater than capital N squared
+[1258.68:1270.8400000000001] and actually, if you make more detailed analysis, you find that actually you should have N,
+[1270.8400000000001:1282.88] which is of the order of N squared log N.
+[1282.88:1292.24] Okay, for example.
+[1292.24:1302.5200000000002] So this gives you an ID for a chain of size capital N of how long you have to wait until
+[1302.5200000000002:1310.16] you get a distribution, which is close to the uniform distribution on the circle.
+[1310.16:1317.0] And of course, well, one thing here is quite logical is that as capital N increased, you
+[1317.0:1318.64] have to wait longer and longer, right?
+[1318.64:1321.96] Because you need more and more time to explore the whole circle.
+[1321.96:1327.68] Okay, and so this analysis gives you a precise guarantee, right?
+[1327.68:1333.92] Of course, it's not a bound, so now you have perhaps to go and look deeper at what the
+[1333.92:1338.8400000000001] total variation distance really is, because perhaps that's a pessimistic of a bound.
+[1338.84:1342.6799999999998] But in this case, it turns out it's not so bad.
+[1342.6799999999998:1356.48] And the mixing time, therefore, so T epsilon, which is the first time that the first time
+[1356.48:1370.16] that the maximum over I in S of PIN minus pi, TV falls below epsilon, well, this will
+[1370.16:1379.68] be certainly something of the order of N squared capital log N.
+[1379.68:1388.88] Really, what you can say is that this mixing time will be, we need to be as large, for
+[1388.88:1396.2] example, we need to be as large as capital N squared log N to ensure that the total
+[1396.2:1400.16] variation distance is less than epsilon.
+[1400.16:1405.2] Okay, so that's how many steps you have to wait until you get something which is close
+[1405.2:1406.68] to the uniform.
+[1406.68:1410.52] Okay, so this is one example.
+[1410.52:1416.28] Yeah, there are quite a bit of computations to be done here, the specifically computing
+[1416.28:1425.64] the eigenvalues of the chain if you want to get precise estimators, how these upper bound
+[1425.64:1427.44] behave.
+[1427.44:1434.44] And you will see more examples of these in the exercises.

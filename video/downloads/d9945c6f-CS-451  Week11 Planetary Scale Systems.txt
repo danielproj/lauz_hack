@@ -1,0 +1,689 @@
+~CS-451 / Week11: Planetary Scale Systems
+~2020-11-30T17:08:18.992+01:00
+~https://tube.switch.ch/videos/d9945c6f
+~CS-451 Distributed algorithms
+[0.0:9.36] So since we actually, yeah, we will have a little more specific video on one of the parts of this lecture.
+[10.4:15.84] This lecture is actually going to be quite qualitative. So I want to start by stating my intent.
+[15.84:23.76] The intent is, you know, for you guys to see what is that we are working on and the lab.
+[23.76:31.360000000000003] So I'm going to focus more on the question than on the questions then on the specifics of the answers.
+[31.360000000000003:39.84] So this is not meant to be a very technical talk, but in any case, you know,
+[39.84:45.6] keep in mind that the goal is to just give you interest. So if anything here, you know,
+[45.6:51.44] captures your curiosity or your interest, you're free to reach out to us. We also have, you know,
+[51.44:57.92] projects and everything. So this is just, you know, to give you an intuition of what happens when you
+[57.92:67.44] actually come and do research at the BFL group, with our group. Okay, so I'm going to talk about
+[68.72:76.0] three, let's say three big projects that we carried out in the last, say, two years.
+[76.0:82.56] These projects are somewhat related to each other. They are well, I would say they are
+[82.56:87.84] significant related to each other. I didn't know exactly what line to take, so I decided to just go
+[88.4:93.76] somewhat chronologically, right? So it's going to be somewhat evident how each project
+[93.76:101.28] led to the next one. But I would say that the underlying topic that we, that we, you know,
+[101.28:107.84] the RISADI, at DCL, has to do with scalability. Now, when you, you know, scalability is quite a
+[107.84:115.28] buzzword in our field. And so sometimes they need to get context to that work, right? Sometimes
+[115.28:121.44] you find papers that claim scalability for, I don't know, 15 processes, right? Sometimes these
+[121.44:130.32] papers claim scalability for a thousand processes. So as you might have seen from, from the title
+[130.32:137.92] of this presentation, here we're trying to give a very, you know, specific notion of scalability,
+[137.92:147.92] which is planetary. Okay, so the goal of our recent work has been to push the limits of,
+[149.35999999999999:157.44] of how large a distributed system can be, all the way to, you know, imprinsible embrace systems
+[157.44:164.07999999999998] that could, you know, encompass not a hundred, not a thousand, but potentially 10 to the nine,
+[164.07999999999998:170.07999999999998] 10 to the 10, 10 to the 12 processes. So in doing so, you will see that we have to,
+[170.96:177.92] you know, go back to the drawing board and significantly redesign, you know, the very core of
+[177.92:185.36] the algorithms that we use. As you can imagine, you know, you have seen many algorithms in, in our
+[185.36:192.24] classes. And, you know, as you can imagine, when you have, you know, a system of abullium processes,
+[192.24:200.08] of course, even just communicating all to all, even just ones becomes unfeasible. So I am going
+[200.08:209.12] to discuss, you know, three steps in our first bit of a planetary scale distributed system.
+[209.12:213.92000000000002] Now first, I'd like to answer, you know, kind of an obvious question, which could be
+[213.92:222.88] why? Why do we need to scale all the way there? Well, I'll argue that there are, you know,
+[222.88:229.2] important implications for this. You know, the moment when you, you know, you have the ability
+[229.2:236.72] to scale a system to a hundred processes, you can form a, let's say, very nicely organized and
+[236.72:243.04] developed data set. Nice. You can, you can, you have a very nice environment, well connected,
+[243.04:250.64] the processes are mostly healthy. And, you know, you have seen lots of examples of these algorithms,
+[250.64:259.36] especially in the hash start model, which models fairly how data centers work, right? Now, however,
+[259.36:268.4] when you push the scale to be vastly bigger, you know, data centers to some extent are no longer
+[268.4:273.28] of interest per se. While we're trying to do with something more along the lines of, you know,
+[273.28:280.08] what you might see in Bitcoin, for example, or in many other cryptocurrencies, but as I was just,
+[280.08:286.64] we're going to try to tackle more scalability and also to achieve a stronger form of
+[286.64:292.96] universality, namely the BET2, you know, host on our systems, not only cryptocurrencies, but
+[292.96:303.59999999999997] a vast collection of potentially, you know, arbitrary complex services. So, I'm going to go
+[303.59999999999997:312.15999999999997] in three steps. The origin is consensus lets us transfer. So back when I actually first joined the
+[312.15999999999997:320.4] lab, we were working on this intuition that we developed into a full-slagged project that we
+[320.4:329.03999999999996] know was published and it had its share of success, where we noticed that quite counterintuitively,
+[329.03999999999996:334.08] you don't need, you know, consensus to implement a cryptocurrency. And here I'm saying
+[334.08:340.15999999999997] counterintuitively not because it's actually counterintuitive, but counterintuitively let's say because,
+[340.15999999999997:345.91999999999996] you know, the reason, or what I would argue, one of the main reasons why consensus is so famous now
+[345.92:354.40000000000003] is cryptocurrency, right? So, consensus came, you know, into our day-to-day world, you know,
+[355.2:359.92] because of cryptocurrencies, but then what we proved was that you don't need consensus to implement one.
+[361.44:367.92] So, what I will actually show is that, you know, what we actually showed was that, you know,
+[367.92:372.64] in order to implement a cryptocurrency, what you actually need is just a reliable protest. So,
+[372.64:380.96] the second step that we did was to try and scale that up. Now, doing that, especially proving the
+[380.96:388.15999999999997] security of our scaled-out algorithms, was quite contrived. So, we had to do two part of M-Shift.
+[389.2:394.32] The first one was, you know, in the design of the algorithm, with switched from implementing,
+[395.03999999999996:400.8] you know, corums, which we have seen in class, into samples, which we translated them into samples,
+[400.8:407.44] because this, you know, somewhat more fragile of suction, that is highly more efficient,
+[407.44:411.28000000000003] and that does not require old wall communication. I'm going to explain that in detail later.
+[412.48:418.96000000000004] The big challenge, however, was how to prove, as I was saying, the security of our algorithms.
+[419.92:426.88] I'm going to give you just an overview of how these proofs tango, because you have seen in class
+[426.88:432.56] some proofs of algorithms, and they are, you know, fairly understandable and fairly set by step.
+[432.56:439.04] And I find it fascinating how just, you know, changing the paradigm a little bit makes them
+[439.04:445.76] fairly more complicated, but still, you know, it's still possible to attack them. Finally, so these first
+[445.76:452.8] two projects, or projects that are concluded, they're published, so we, you know, they are already
+[452.8:461.44] out there, but I wanted to close up with something that is still more of a working progress, right?
+[461.44:468.8] Some generalization on which we are currently working. Now, this last part of the presentation
+[468.8:474.88] is going to be even more if possible qualitative, I'm just going to give you a few hints,
+[475.84000000000003:480.48] but then I'll be open for questions for anything. I'm just going to keep an eagle eye on everything,
+[480.48:485.6] and then, you know, whenever, on whatever you guys want, I can try and deep fill it a little bit
+[485.6:497.28000000000003] more in detail. Okay, so let's start. I remember if I'm not mistaken, personally giving you
+[498.40000000000003:505.20000000000005] an exercise, you know, I think a month and a half ago or something like that, we asked you
+[505.2:512.56] to implement a cryptocurrency out of atomic broadcasts. Atomic broadcasts here, I'm using it as a
+[512.56:517.36] skin and then for a total of broadcasts, so yeah, I could have written total of broadcasts.
+[518.8:525.36] So how do you implement a cryptocurrency with total of broadcasts? Let me say that all the processes
+[525.36:530.4] have access to a shared instance of total of broadcasts. Let's assume that all the set of processes
+[530.4:536.0799999999999] can throw messages in the total of broadcasts and all of them receive them in a consistent order.
+[536.0799999999999:540.0] So let's get in. We want to implement a cryptocurrency out of this. The rules of a cryptocurrency
+[540.0:544.9599999999999] are fairly reasonable, fairly understandable. At the beginning, everybody has a, you know,
+[544.9599999999999:549.6] you have a set of participants and each of them has an account with some amount of resources,
+[549.6:556.8] right? And then you want every owner of an account to be able to transfer money to other accounts,
+[556.8:562.24] and you want, you know, to preserve the amount of money that goes around this system, obviously.
+[562.24:571.68] And someone who are importantly, you want for it to be impossible for a participant to spend
+[571.68:577.8399999999999] money that they don't have, right? So if in this example where you see Alice has, you know,
+[577.8399999999999:586.24] five units of currency, if Alice wanted to get money to Dave for 90 units of currency, then it would
+[586.24:591.52] be, it should be impossible for her to do it. Okay, so let's see how we can do this with total
+[591.52:599.28] of broadcasts. So we have a Genesis state, which is an original state on which we all agree upon.
+[600.5600000000001:605.52] You know, to simplify things, I'm going to say that the original state has, you know,
+[605.52:611.2] T's different accounts having different amounts of currency. Okay, so let's say that, you know,
+[611.2:616.48] some central bank despite how much it's first and has in the system, right, at the very beginning.
+[617.2:624.0] So essentially every process of a participant can broadcast the transactions that he wants to
+[624.0:628.72] perform to all the rest of the system. Why is this useful? Because then every transaction can
+[628.72:635.76] uniquely and independently be verified to be either correct and the full process or incorrect
+[635.76:641.4399999999999] and the four ignore. So here, for example, we can start from the Genesis and then Alice can broadcast
+[641.4399999999999:646.72] the message, right? And say, hey, I want to give, you know, four units of currency to Bob, right?
+[646.72:653.4399999999999] So everybody since Alice had five, everybody, you know, can receive the message and, you know,
+[654.08:661.04] remove one unit of, I mean, remove four units of currency from Alice at them to Bob,
+[661.04:665.8399999999999] or each and every one of them can do the same thing into their own local copy of the system.
+[665.8399999999999:670.8] And everything can keep going like this. So for example, if Card now wants to give one unit
+[670.8:675.8399999999999] of currency to Dave, everybody can immediately verify that Card does not have that money, right?
+[675.8399999999999:682.8] So what's important here is that every transaction is either accepted by everyone or rejected by
+[682.8:688.16] everyone, right? Now, total of broadcasts are the students that you have seen in 10 class and
+[688.16:693.28] this was a brief recap. So if you want to go forward, again, Bob can pay Card or five units of
+[693.28:697.04] currency and everybody can see that the transaction should go through and apply the transaction to
+[697.04:703.04] the local copy of the accounts and so on and so forth. Now, Alice does not want to have money
+[703.04:708.7199999999999] to pay full units of currency to Dave, so the transaction is blocked and so on and so forth, right?
+[710.0799999999999:715.1999999999999] Okay, so now what I'm going to argue here and I'm going to do that is that it's very qualitatively
+[715.2:722.24] is that you don't need total order broadcasts among all the operations. So instead of having just
+[722.24:727.9200000000001] one line, right, where everybody can write elements and elements are totally ordered with respect
+[727.9200000000001:731.44] to each other, every element is a transaction and then everybody can verify whether or not the
+[731.44:738.08] transaction should go through. What we can rather do is split this log where everybody can
+[738.08:745.0400000000001] append things in a consistent way. We can split it into N log. Here N is equal to 4, we have for
+[745.0400000000001:754.72] participants. So we are instead going to give one log to each of the participants, right?
+[754.72:762.48] And we are going to make it so that every participant can only write in its own log,
+[762.48:770.4] but everybody can read from everyone's logs. Now, the requirement that we have for these logs is,
+[770.4:777.52] you know, first in the first step or sort of essentially everybody when they publish entries in
+[777.52:785.6] that log, everybody else should see the order of these elements in a consistent way. Okay, so
+[785.6:791.04] essentially we split the logs and then we gave to each user control of only one of them.
+[791.04:798.64] So let's try to replicate the same transactions that we did in the total order scenario,
+[798.64:804.16] but on these logs. So let's say the Alice here wants to give 40 units of currency to Bob.
+[804.88:813.4399999999999] What I can do is to publish on her own log a withdrawal operation saying, hey guys, first element
+[813.44:824.24] of my log, I want to give 40 units of currency to Bob, right? Now everybody can see that this
+[824.24:835.12] is the first message from Alice. Moreover, everybody can see that, you know, Alice's account
+[835.84:842.5600000000001] includes enough money for the transaction to be okay. So everybody processes this, you know,
+[842.56:848.64] first step which we can call withdrawal, right? And everybody can see that the withdrawal was okay.
+[848.64:855.28] Now the next step is for Bob to publish in its own log. Hey, look at that guy, look at that guy.
+[856.0:862.7199999999999] Everybody can see that Alice, you know, published a message on her own log, right?
+[864.16:869.76] Saying that she wants to pay me 40 units of currency, right? The thought I'm adding to my own log
+[869.76:874.24] for a second operation, a second half of the transaction, which is a deposit operation.
+[874.24:884.08] I'm adding to my own account for units of currency. And as a proof for this, I'm pointing to Alice's
+[884.64:889.76] transaction. Now you can see this guys as a form of tweeting and three tweeting, right?
+[890.56:896.3199999999999] Intrister, you have, you know, everybody has their own log with their own messages, right? And then,
+[896.32:901.0400000000001] in order to paste the money, as well as a tweet, in order to, you know, get the money from someone,
+[901.0400000000001:907.36] you can retweet their message, right? Now, even in a completely synchronous scenario, right?
+[907.36:913.12] What happens is, in order to put it for any process to process Bob's deposit,
+[913.12:920.24] they can just wait to see Alice's withdrawal. Now since Bob, let's assume that Bob is correct,
+[920.24:924.96] since Bob saw Alice's withdrawal, and since we have source sort of a broker,
+[924.96:931.9200000000001] Bob already knows that sooner or later, everybody will see that message. So Bob can reliably
+[931.9200000000001:937.44] reference that message in its own log. So we can go forward and do the same thing. Let's say the
+[937.44:942.88] car now, as we've asked you that previously, wants to pay one unit of currency to Dave, right?
+[942.88:950.64] He does this first step. Everybody can see the car cannot do it, right? Because the car doesn't
+[950.64:956.96] have enough money. And so when Dave goes into the deposit, the message is safely ignored by everyone.
+[958.16:964.8] We can keep going like this. So we're going to have transactions that step-by-step are performed
+[964.8:974.16] in two sets instead of one. But each set on the involves one local log at a time. So we see that
+[974.16:979.68] some transaction happened correctly. Some transactions don't happen correctly, but every transaction
+[979.68:984.56] is seen consistently by all the other ones. Why? Because as long as the transaction is performed
+[984.56:990.8] by correct process, or let's say any half of the transaction is performed by correct process,
+[990.8:996.4799999999999] you know? All the transactions, it goes and depends on, are guaranteed to be eventually
+[996.4799999999999:1005.04] delivered at every process. So what every process can simply rely upon is that as they publish
+[1005.04:1009.8399999999999] their own transactions, the other processes can wait for all the transactions that cause the
+[1009.8399999999999:1016.8] depend on them. They can get, you know, they can apply those transactions to their local copies of
+[1016.8:1023.04] the cryptic ownership, the database, of the bank accounts. And consistently, they can see whether or
+[1023.04:1033.44] not each transaction should go through. Now, this is something interesting. Look at the plots that
+[1033.44:1040.16] you have in front of your eyes. You see the transaction Bob Carc, five, five, right? What happens if I move it
+[1040.16:1048.24] here? You see, I'm switching back and forth. These two states, these two ways of seeing the time
+[1048.24:1056.64] I unfold. As you guys can see, these two transactions are not in causal relationship with each other,
+[1056.64:1068.24] right? But the yield to the same outcome. So the big take home message here is if you want to
+[1068.24:1077.92] implement a cryptocurrency, you do not need total order broadcast. You need something weaker,
+[1077.92:1084.16] something in the, in the lines of, for example, social order broadcasts. Now, why are these different?
+[1084.16:1092.64] One of them, one question before you move on. Yes. But how does Bob knows Alice is not going to
+[1092.64:1102.96] erase her minus four? Oh, right. Yes. Thank you. So it's, so one of the properties of social
+[1102.96:1108.4] broadcast is the quality. And we have seen it in glass for other forms of broadcasts. Yes,
+[1108.4:1115.76] you're being if a correct process sees a transaction going through. And avoidably every other correct
+[1115.76:1122.0800000000002] process will see the same. So that's a very good point at the end of point behind social order
+[1122.0800000000002:1126.4] broadcast is that transactions cannot be erased. Yeah. Thank you. Thank you for the question.
+[1126.4:1129.68] I'm actually going to go a little bit more in detail about this in a few seconds.
+[1129.68:1139.1200000000001] So we don't need total order. We need social order slightly weaker. Why is it like, it's like a
+[1139.1200000000001:1144.5600000000002] weakness here. You have the reference. So I'm going to paint and orange the take home messages.
+[1144.5600000000002:1150.0800000000002] Right? I tried to minimize the amount of text in these lights. But the take home messages are,
+[1150.0800000000002:1156.0] you know, in orange in order to perform, you know, to implement a cryptocurrency, you just need
+[1156.0:1161.36] a social order broadcast. Now, I'm going to give you guys a little bit of an intuition on how
+[1161.36:1166.96] actually you can implement social order broadcast. And interestingly, now you can implement it
+[1166.96:1171.76] with something you have seen in class, which is reliable broadcast. The idea here is that it can
+[1171.76:1180.0] pre-initialize, you know, a other than the infinite set of reliable broadcast instances. Right?
+[1180.0:1184.56] One for the first message of process one, one for the second message of process one,
+[1184.56:1189.84] one for the third message of process one and one and four. One for the first message of process two.
+[1190.3999999999999:1198.3999999999999] Now, each of these can be filled only by the owner of the corresponding log. So let's focus on
+[1198.3999999999999:1205.2] this one log, right? One log can be an infinite sequence of reliable broadcast instances. And now
+[1205.2:1214.8] the source process, you know, the standard process can fill each instance, which is single chart,
+[1214.8:1222.88] can fill that main arbitrary order. So for example, the standard of this log, the owner of the
+[1222.88:1229.68] slot can first send a message and three, right? And the idea is going to be that we just wait
+[1229.68:1235.76] for all the messages to be delivered in sequence. So as everybody receives message M3, everybody's
+[1235.76:1240.96] going to see the same message. However, you know, we just wait to deliver it, right? Because we
+[1240.96:1245.44] haven't delivered message one and two, right? So at some point, the live and time, I could receive
+[1246.0:1251.44] a message M1. So I can deliver it because I didn't, you know, I have delivered all the messages
+[1251.44:1256.24] that proceed M1, which is an empty set, of course. I say that then I receive a message M4. I still
+[1256.24:1261.44] cannot deliver neither M3 nor M4 because I'm missing message two, but then as soon as I receive
+[1261.44:1267.2] message two, bam, I can deliver all of that, right? So as long as you reorder them locally,
+[1267.2:1273.68] everything is fine. So let's say that, you know, you can lay, you can have gaps in the sequence of
+[1274.56:1279.04] reliable broadcasts and you can still have source, source, source, source, broadcasts eventually,
+[1279.04:1287.84] as long as the sender is correct. So the second take home message is actually when you're
+[1287.84:1292.8799999999999] sold reliable broadcast, you have source cryptocurrencies. So in order to
+[1294.32:1299.52] solve a cryptocurrency, you can just use reliable broadcasts. This is fairly interesting, guys,
+[1299.52:1305.52] why this? First, the algorithms for reliable broadcasts are fairly easy and it has seen one
+[1305.52:1312.32] class and I'm actually going to pick it up in a few seconds. The second one is that we know
+[1312.32:1318.16] that we cannot solve consensus in a completely asynchronous setting, right? So either you have to do
+[1318.16:1327.76] it physically or you have to have some assumption of synchronization. So we have two big improvements
+[1327.76:1333.76] to, you know, how efficiently and how generally we can implement cryptocurrencies. Just by
+[1333.76:1340.64] noticing that, you know, we have always been overkilling the problem. We have always been shooting,
+[1340.64:1346.16] you know, with Kenden's applied. We did an econ consensus along with the solve and is a problem.
+[1346.16:1349.52] So let's have a brief recap here. I'm actually going to give you something at this point.
+[1349.52:1354.8799999999999] Matés, of course, you can go back to the previous slide. So I just want to point out here that the
+[1356.0:1363.04] what you mean by solving asset transfer is actually solving the double payment problem
+[1363.04:1369.92] as defined in the original paper of Nakamoto, whomever that is. It is important to go back to the
+[1369.92:1376.96] original paper, which was about solving a personalized problem called double payment and called here
+[1376.96:1382.8] asset transfer. And there is a question. Can you explain how reliable broadcasts can prevent double
+[1382.8:1394.08] spending? This is a question from the chat. Oh, okay. Okay. So the last section was going to
+[1394.08:1403.2] interrogate you to answer in this question. So in brief, I'm going to do a TLDR on this section.
+[1405.2:1412.1599999999999] With reliable broadcasts, you can implement source-sorter broadcasts, right? So using this simple
+[1412.16:1418.8000000000002] technique that it just describes to you, you can have, you know, logs, separate logs, right?
+[1420.16:1424.64] Using reliable broadcasts, you can implement these separate logs, right? And then as I just showed
+[1424.64:1429.92] to you, I think that's enough of a qualitative fashion. If the question was more about how you can,
+[1429.92:1437.0400000000002] you know, how you can go about proving this, I advised to do the paper. However, the basic
+[1437.0400000000002:1441.68] idea here is that as long as you have source-sorter broadcasts, you can split the transactions in two
+[1441.68:1450.4] steps and have each process take care of its own order or their log, right? So double-spinning
+[1450.4:1456.24] is prevented by the fact that everybody sees the same sequence of operations performed by the
+[1456.24:1464.48] users, right? So as they go through the log of each user, they can uniquely stack whether or not
+[1464.48:1468.8] each transaction should go through and there's amounts to preventing double spending. I hope this
+[1468.8:1476.48] is an answer. If this is not enough, then please write to me, I'm super open to additional questions
+[1476.48:1482.96] later. Okay, so let's go back here. One last question, sorry, I'm sure that is active.
+[1486.3999999999999:1491.36] The source order broadcast, is it 5.4 plus plus some form of causality?
+[1491.36:1498.8] Yes, exactly. Yes, it's far on. Yes, so you have, let's go back to this guy here.
+[1498.8:1504.1599999999999] Yes, can you guys see my, I don't know, I don't think I have a pointer here, right? I don't.
+[1504.1599999999999:1512.9599999999998] Well, thanks. Yes, so true, perfect. The idea is that everybody can append elements to their logs,
+[1512.9599999999998:1520.3999999999999] right? But then as, you know, the order with which we process transactions does depend on causality,
+[1520.4:1526.8000000000002] right? So you can either speed up one layer or you can split it into multiple layers. So you can
+[1526.8000000000002:1532.96] either have 5.4, yes, and then just our elements come out of the 5.4, you don't deliver the
+[1532.96:1538.48] transaction at the application level unless you have all the causality dependencies or you can
+[1538.48:1544.3200000000002] wrap everything into the same causality depend form of broadcast. Yes, correct, it's far on.
+[1544.32:1553.2] Okay, so I'm going to go ahead and let's try to discuss business and developer broadcast.
+[1553.2:1557.52] So how can we scale that? I'm going to give you a brief recap for those that missed a few lectures,
+[1557.52:1563.52] maybe. So the interface is you can broadcast, right? So you have an event to broadcast the message,
+[1563.52:1570.1599999999999] you can say, and then you have an event to deliver the message, right? Super simple. The properties
+[1570.16:1574.5600000000002] are free or it is the important properties, let's say you're free, but if you can see consistency
+[1574.5600000000002:1579.8400000000001] and totality and validity, it's the basically idea that if the center is correct, then every correct
+[1579.8400000000001:1583.8400000000001] process delivers its message, right? So no matter what the business in process is due, you have
+[1583.8400000000001:1588.48] seen, you should have seen an introduction to what business means basically, arbitrarily means
+[1588.48:1594.0800000000002] behaving participants, no matter what they do, if the center is correct, then every correct process
+[1594.08:1601.4399999999998] will receive its message. The second property is consistency, which means that even if the center
+[1601.4399999999998:1606.6399999999999] is malicious and is validly behaving and sends with say to conflicting copies of the message,
+[1606.6399999999999:1612.96] right, then no two processes receive different messages. So in this example here, we have some
+[1612.96:1617.76] of the processes received, ARI and some of the processes received nothing. This is an explanation
+[1617.76:1622.48] with consistency properly. Finally, we should have totality, which means that either nobody
+[1622.48:1627.76] receives the message for everybody receives the message. So what I have shown you here is
+[1628.88:1634.96] you know what the three properties are, you know, what the three properties do in the
+[1634.96:1640.96] country, right? However, if you put them all together, if you put them all together, you have,
+[1642.0:1647.1200000000001] you know, you can express this in just one sentence, which is if the center is correct,
+[1647.12:1653.6] they will get them, everybody gets the message of the center and the vice, either everybody
+[1653.6:1659.52] gets the same message or nobody gets any message whatsoever, right? Now I would like to
+[1659.52:1664.0] underline that there's a significant thing that we're kind of leaning behind here, which is
+[1664.0:1671.84] determination, right? Very importantly, this should be a take on message. Reliable cast is not
+[1671.84:1678.48] perform determination. This means that the receiving end of broadcast or any of the processes,
+[1678.48:1683.76] you know, in the different take part in the another broadcast, they can only be in one of the
+[1683.76:1691.12] three states. The first one is having received the message, the messages and the process can safely
+[1691.12:1697.9199999999998] out of the message and move on with its life. The second one is I am waiting for a message,
+[1697.92:1704.88] right? But I have no clue whether or not I will ever receive one. The third, we do not have,
+[1704.88:1713.04] sorry, we do not have a state where we say some kind of bottom where, you know, we just give up
+[1713.04:1722.64] on having, we just give up on having the message, right? There's no moment where a process goes
+[1722.64:1728.0800000000002] like, okay, this is not going to happen, let's move on. So this does not happen, we do not provide
+[1728.0800000000002:1736.16] determination. So our strategy in order to scale the implementation of Relabber broadcast is going
+[1736.16:1743.1200000000001] to be too, um, made it probabilistic, which does best make me. Especially I'm going to make these
+[1743.1200000000001:1747.3600000000001] properties a little bit weaker. I'm still going to have validity consistency and totality,
+[1747.36:1755.28] but I'm going to accept to have them satisfied up to some excellent probability. I am fine with
+[1755.28:1760.6399999999999] having some excellent probability of the system collapsing in flames and fire and everything
+[1760.6399999999999:1765.28] being, you know, completely broken. This is okay as long as this epsilon is more
+[1765.28:1770.6399999999999] enough, right? If I told you for example that you have a 10 to the minus 15 probability of
+[1770.64:1777.0400000000002] being the system collapsing, you should probably, you know, healthy be, use it anyway, right? Because,
+[1777.0400000000002:1781.68] you know, the time that's going to take on average for the system to break down is so long that
+[1781.68:1784.8000000000002] it's probably going to take a few thousands of years and by that time you can, we can have
+[1784.8000000000002:1793.76] any of them better algorithm through place, uh, are on. So what does probabilistic, uh, what,
+[1793.76:1803.52] what would do these probabilistic properties enable? So I'm going to give you an idea of how we
+[1803.52:1813.04] managed to speed up, uh, our reliable broadcast algorithm. Uh, we started, um, from something that
+[1813.04:1816.8] you have totally seen in glass, which is braha broadcast, double echo you have, it's, it's in
+[1816.8:1822.32] your shits book, for example. So how does it work? It's, it's highly easy, you have a standard,
+[1822.32:1828.6399999999999] right? And the standard stands, it's message, it disseminates, it's message to every other process.
+[1829.6799999999998:1834.48] So you have this initial dissemination phase where everybody's going to receive a message
+[1834.48:1839.36] from the original standard, right? Now at this point you have a second phase which I am calling
+[1839.36:1846.96] here filtering where everybody echoes the message around. So whatever it is that, uh, you know,
+[1846.96:1853.3600000000001] a process received, it's going to stand also to every single other, uh, process in the system,
+[1853.3600000000001:1859.8400000000001] right? And the goal here is such, uh, the, the, the goal, the goal here is to, uh, you know,
+[1859.8400000000001:1866.56] it's pretty to be impossible for any two processes to come out of this phase having different
+[1866.56:1872.56] values, right? So in this filtering phase, everybody should either, at the end of this filtering
+[1872.56:1876.08] phase, everybody should either have a message and it should be the same message for everybody,
+[1876.08:1881.9199999999998] or no message at all. Finally, in the amplification phase, essentially the process is stocked to
+[1881.9199999999998:1887.84] each other again in order to determine whether or not to the only supported message is represented
+[1887.84:1894.24] enough that we can either all go for it or nobody goes for it. This is the basic idea of how
+[1894.24:1901.6] double echo broadcast, how double echo broadcasts mean, uh, work in the very classical setting, right?
+[1901.6:1908.3999999999999] So to sum up again, we have a dissemination phase where somewhat, and this is very intuitive,
+[1908.3999999999999:1915.04] we are providing out of the dissemination phase validity and totality, right? So if the center
+[1915.04:1919.6799999999998] is correct, everybody's going to get its message and we can't see that everybody's going to get
+[1919.6799999999998:1925.28] something, right? Or nobody's going to get anything. However, we do not guarantee, as you can see by,
+[1925.28:1929.6] you know, the differently called errors that come out of the dissemination phase, not here,
+[1929.6:1936.48] each error represents one process and, you know, one, uh, the input error is the source. So here,
+[1936.48:1940.32] let's say that we have a Byzantine source, right? That sent you conflicting messages, as you can
+[1940.32:1948.56] see from the, you know, double-colored error of the input. Now, it just comes to my mind that some of
+[1948.56:1952.3999999999999] you is definitely going to be color blind and this is going to be hard to pick for you guys because
+[1952.3999999999999:1958.3999999999999] the list reaches these orange and green. I'm a monster. I'm sorry about that. It's an issue, but try
+[1958.4:1964.88] and, uh, describe this to you. Um, anyways, as the, as the different values come out of the
+[1964.88:1971.3600000000001] dissemination, we throw the outputs into, off-line into the filtering phase. Now, the idea is that
+[1971.3600000000001:1975.44] out of the filtering phase, you only get one color, but somebody might get nothing, right? And then
+[1975.44:1983.0400000000002] in the amplification phase, finally, we amplify the output of the filtering phase if that is
+[1983.04:1988.8] represented enough. So as you, as you heard, we say this multiple times, not easy enough. Um,
+[1990.8:1996.24] what we're trying to solve here is answer the question of what fraction Q of the processes
+[1996.24:2002.48] satisfy a proper DP. How many have seen this message? How many support is there other option,
+[2002.48:2008.6399999999999] right? This is a fairly common question in the field of distributed systems, right? Usually,
+[2008.64:2017.1200000000001] this is done by Quarers. Now, I'm going to take a step back and ask you to believe for a moment
+[2017.1200000000001:2023.8400000000001] that every correct, every process is correct. Every process functions perfectly fine. And,
+[2023.8400000000001:2028.4] you know, all the messages are delivered. So let's say that we live in paradise, right? There's
+[2028.4:2034.96] no crashes, no business in behavior, everything works fine. If I asked you, what fraction Q of the
+[2034.96:2040.24] processes satisfy a proper DP, what it could do is just to send a message to everybody, right?
+[2040.24:2044.56] So you have set of processes, each of them, both for one of the two colors, again, sorry,
+[2044.56:2051.04] call a lot of mine people, there's two differently called sets of processes, some votes for green,
+[2051.04:2055.36] some votes for orange, right? So you could just ask all of them, collect all of the responses,
+[2055.36:2061.28] and just count them, right? This is fairly easy. In this case, we have 17 votes for green
+[2061.28:2068.88] out of total of 24. Now, the obvious problem here is that if you want to determine, you know,
+[2068.88:2075.76] how the much, I mean, what fraction of the processes for green in a system where you have a lot of
+[2075.76:2080.4] processes, now this obviously becomes more complicated. You have to do a lot more of
+[2080.4:2087.92] hability, how much, quite obviously, of n and being the number of processes. So take home message,
+[2087.92:2094.8] the number of messages that need to exchange in order to collect the column is all of n and being
+[2094.8:2101.52] the number of processes in the system. So if you want to clear this up to say, as we said at the
+[2101.52:2106.8] beginning, you know, 10 to the 9, 10 to the 12 processes obviously you could not have to do this.
+[2108.32:2114.4] Okay, so take into the case where everything is fine and everything works perfectly and nobody
+[2114.4:2122.2400000000002] crashes. Do we have a probabilistic way of doing the same? Yes, intuitively, this should be fairly
+[2122.2400000000002:2129.6800000000003] reasonable, right? You select randomly with your own local social framfulness, we do not need to
+[2129.6800000000003:2136.64] agree on any common randomness. You select the sets of processes you want to talk to and you ask
+[2136.64:2142.0] them, right? And then you collect their answers and you get something that kind of resembles
+[2142.0:2147.2] the actual fraction of the processes, that for example in this case, we'll look here we have
+[2147.2:2154.8] 6th, which is more or less reasonably similar to 1724th. Now for whoever has, that would be the
+[2154.8:2164.56] statistics among you, it's fairly reasonable that the set of responses, you know, how the actual
+[2164.56:2173.7599999999998] how the fraction of processes that I observed, you know, changes as a function of the, how much can
+[2173.7599999999998:2179.84] it skew from the actual value, you know, it's binomial distributed. This binomial distribution kind
+[2179.84:2188.96] of looks like a Russian, you know, it's a fairly tightly distributed distribution to which this
+[2188.96:2194.96] expert is going to be the only equation that you're going to see in these slides, a bound
+[2194.96:2201.76] applies. The tells us that the probability that you're going to make an error larger than D
+[2202.56:2208.96] decreases exponentially with S. H of D you don't even need to care, H is a contrived function
+[2208.96:2214.64] that we don't even need to care about. What's important is that it decreases exponentially with S,
+[2214.64:2222.48] as being the size of the sample, right? So if you want to, you know, if you want to make sure that
+[2222.48:2229.04] you don't need a mistake larger than some finite amount D, right? The probability of this
+[2229.04:2237.52] happen can be made exponentially small, right? So for any fixed amount of error they were
+[2237.52:2245.6] fun with. This already gives you an intuition on why this amount of error can be made arbitrarily
+[2245.6:2251.04] small, only with a look at it make a number of steps, with a look at it make a size sample.
+[2251.84:2260.24] So next I comment that is everything that is trapped so far, remember, worked if everybody was
+[2260.24:2267.4399999999996] correct. So how do we include Byzantine behavior into our story, right? Now just one second.
+[2271.8399999999997:2279.4399999999996] This is where the presentation makes us a little bit more quality. It's going to be quite natural.
+[2279.44:2292.2400000000002] So question Matteo at this point, how does the filter in phase work? Yeah, yeah, cool. Do you, okay.
+[2292.2400000000002:2297.76] I'm just reading the question. Yeah, yeah, of course, of course. So if you're asking how does it work in
+[2299.84:2305.12] the deterministic setting, that's fairly easily explained. You just ask everybody, right? And then
+[2305.12:2312.16] if you collect a amount of messages from everybody, you know, supporting a message A, then you can
+[2312.16:2319.6] be certain that nobody else will collect enough messages to support any other message, right?
+[2319.6:2328.56] So you can simply go for A because you collected enough messages supporting A, but you can be
+[2328.56:2334.08] certain that nobody else will collect enough messages to support B. And we're going to try to do
+[2334.08:2339.7599999999998] the same thing, more or less, but in the same thing setting, right? So obviously this becomes a
+[2339.7599999999998:2345.92] little bit more tricky. The moment, the moment you don't ask everybody because you cannot afford it,
+[2345.92:2352.48] you only ask a subset. So we are going to try and still make sure that we collect enough answers,
+[2352.48:2361.12] right? Out of the processes that we ask to, which is a very strict small subset of the two
+[2361.12:2368.08] processes, and you know, only if these tasks are given threshold, then we can move on
+[2369.68:2376.16] and deliver the message to an X-phase. So actually, this is exactly what we're going to do. We're going
+[2376.16:2380.72] to have three faces, right? And instead of taking quorum, first of these three faces, we're going to
+[2380.72:2385.92] take samples. A reference is going to have a specific sample size. How many processes do I ask
+[2385.92:2392.88] about the state of this phase, right? Versus a threshold, which is how many positive,
+[2392.88:2397.84] and we're very positive, it appeared, but intuitively this should make sense. How many positive
+[2397.84:2404.08] answers do we need to have in order to move on to the next one, right? So essentially, you have a
+[2404.08:2408.48] collab with the collection of parameters. In this case, it's going to be fixed because you have
+[2408.48:2414.7200000000003] three faces and then thresholds for each of them. And then the question that you want to ask is,
+[2414.72:2421.6] what is the probability given these parameters that my system will fail, right? Now, you want to do
+[2421.6:2427.3599999999997] this, and I am the line again, in the Byzantine setting. So you want to bound the probability of
+[2427.3599999999997:2435.3599999999997] failure for every possible adversarial behavior, for every possible behavior of the misbehaving
+[2435.3599999999997:2441.3599999999997] processes. So I'm going to keep this spoiler here. The good news is that after you have done all of
+[2441.36:2450.6400000000003] this analysis, you can actually, I mean, the probability of failure actually decreases the
+[2450.6400000000003:2456.2400000000002] exponentially as you can see on the left plot with the size of the system. So what we were getting
+[2456.2400000000002:2462.0] from that certain amount, kind of stays certainly consistent with what we observe after including
+[2462.0:2468.4] the Byzantine behavior and the equation, right? And the probability that the system will fail
+[2468.4:2474.1600000000003] grows only polinomially in the system size. So if you keep the system size fixed and you change
+[2474.1600000000003:2478.7200000000003] the size of the sample, the probability of error goes down exponentially. If you keep the size of
+[2478.7200000000003:2483.52] the sample fixed and you can use the size of the system, the probability of error goes up
+[2483.52:2488.48] polinomially. So this is going to heal here. It was quite radical. If you put these two plots
+[2488.48:2494.88] together, what you see is that for a given security, from a given target epsilon, given
+[2494.88:2500.96] probability of failure that you want to achieve, right? As the system scales up, the sample size
+[2500.96:2506.0] means only to look at it and make a living sense of the sample, right? Now I want to underline
+[2506.0:2512.32] that these are not experimental plots. These are not simulations. These are plots of closed
+[2512.32:2519.44] form expressions that we had to derive and prove for our algorithms. So these, you know,
+[2519.44:2526.32] look fairly complicated. And you know, certainly, you know, they kind of feel like they could be
+[2526.32:2532.0] out of a Monte Gallo simulation, for example. They're not. The, it's only that the closed
+[2532.88:2541.2000000000003] form expression of the actually managed to derive for our algorithms is quite complicated.
+[2541.2000000000003:2547.76] So that we still needed some computational effort to actually compute the numerical values
+[2547.76:2553.5200000000004] for these equations. I'm happy to give you more details on this, but especially to take on messages.
+[2553.5200000000004:2559.28] The first one here, these plots are not experimental. These are actually numbers for which we have
+[2559.28:2564.88] proofs. We have formal proofs for these bounds. And the second more important message is
+[2565.6800000000003:2572.7200000000003] taking a sample costs only a located, make number of messages, located, making the size of the system.
+[2572.72:2577.6] What does this mean for us? That if every correct process needs to go through only three phases,
+[2577.6:2583.68] and each phase only requires gathering a look at it, make number of messages, then, you know,
+[2583.68:2590.7999999999997] N, the size of the system, can become arbitrary large. I'm withdrawing any for every intent
+[2590.7999999999997:2595.68] in purpose, right? I said that at the beginning, it's not necessarily, it could be universal, right?
+[2595.68:2607.04] If every single electron on Earth was a computer and simultaneously ran an instance of
+[2607.04:2612.64] business in reliable broadcast, the performance from more or less stays the same. Every time you
+[2612.64:2617.9199999999996] want to double the size of the system, intuitively, we just have to add one to your message from
+[2617.92:2625.28] plasticity. This allows us to achieve truly planetary scale forms of distributed computation.
+[2626.16:2633.92] So how did we go about proving this? This is going to be weird, but the last, I mean,
+[2633.92:2640.2400000000002] the ultimate section here, I'm just going to try and give you an idea of how hard and how
+[2640.24:2647.52] complicated, but how feasible it can be to prove things about systems that are simultaneously
+[2648.8799999999997:2654.16] probabilistic and visiting. So I'm going to start by underlining what the challenge is.
+[2655.2799999999997:2664.56] So here, very wise to plot, you know, it's just to, you know, to give some things to your
+[2664.56:2673.2799999999997] imagination. Intrudibly, you can see the behavior of a distributed system, the outcome of a
+[2673.2799999999997:2680.24] distributed execution as arising in the Byzantine setting out of the specific behavior of the
+[2680.24:2687.84] correct processes and the specific behavior of the Byzantine as birthplace, right? Now,
+[2687.84:2696.48] as we know, the behavior of the correct processes is, you know, completely determined by our code.
+[2696.48:2704.32] And our code, as we said, is probabilistic, right? So probabilistic code, the behavior of the
+[2704.32:2709.52] correct processes is distributed through some distribution, right? It can be controlled,
+[2709.52:2716.08] but it's a distribution that we know everything about. However, and this is no longer a take-home
+[2716.08:2721.36] message for this lecture, but it's a take-home message for like the course, a large, although you
+[2721.36:2731.2] didn't see, you know, many Byzantine mechanisms in the story, arbitrary is not the same as random.
+[2732.08:2738.16] Okay, so the second act is, right, the determined is the outcome of our system, is not determined
+[2738.16:2744.16] by probability. We're not talking about some correct processes performing well in one specific
+[2744.16:2748.48] fixed scenario, and then the Byzantine processes flipping a coin and deciding what to do now.
+[2749.04:2755.2799999999997] The Byzantine processes will do whatever it's in their power to completely compromise the
+[2755.2799999999997:2762.08] execution, right? So the outcome of the execution essentially depends on how the correct processes
+[2762.08:2768.64] behave, and this is, you know, probabilistically distributed, versus how the Byzantine processes
+[2768.64:2778.24] behave, and this is arbitrarily chosen by the adversary, right? So in the story, we have a
+[2778.24:2783.04] challenge. How can we reduce the arbitrary behavior of Byzantine's? First, there is two
+[2783.04:2787.6] things that we can actually be at eye from a realistic balance on, because we have,
+[2787.6:2791.8399999999997] especially what we're trying to do is to, again, compute a distribution of our two
+[2791.84:2798.4] access out of which one we know either think about, it's the access, you know, qualitatively
+[2798.4:2803.6000000000004] depending on the behavior of the correct process, and the other access, you know, we know nothing
+[2803.6000000000004:2809.92] about. We have no control over it. So we have two possible solutions. All of both of them should
+[2809.92:2817.44] be fairly intuitive. The first solution is to make the outcome of the system, the outcome of
+[2817.44:2822.4] the distributed execution to be independent of the behavior of the correct, of the Byzantine
+[2822.4:2826.48] processes, right? So basically, we design the system in such a way that no matter what the
+[2826.48:2832.2400000000002] Byzantine's do, it's that behavior does not affect anything, and you can see I changed the
+[2832.2400000000002:2837.2000000000003] plots here, right? So this was, you know, the plot that you see on the right is the plot of all
+[2837.2000000000003:2841.36] the possible outcomes, you know, let's say the bread is really bad outcome, everything is broken,
+[2841.36:2847.44] and blue means okay, everything is fine, right? So in this story, as we move vertically, across all
+[2847.44:2854.32] the possible behaviors of the Byzantine processes, and for given specific behavior of the correct
+[2854.32:2860.32] processes, you know, nothing changes, right? So you have these vertical bars qualitatively
+[2861.1200000000003:2868.2400000000002] underlying idea that, you know, you don't have what the adversaries do. Now we could do this
+[2868.24:2875.04] for two of the three steps. Sadly, we do that only for two of the three steps, right? So for whoever
+[2875.04:2880.24] ask how filtering works, yeah, sadly, that's going to be the trickiest, the trickiest part. So for
+[2880.24:2884.9599999999996] two of the three steps of our implementation of our sample based implementation of the
+[2884.9599999999996:2891.3599999999997] reliable broadcast, we could, we could implement this strategy. Have the outcome, be independent
+[2891.3599999999997:2896.16] of the behavior of the Byzantine processes. However, for the, we could not do this, it was
+[2896.16:2900.8799999999997] easy to see that it wasn't possible to do such a thing from this middle filtering phase,
+[2900.8799999999997:2908.24] which forced us to go through two solutions to it. We've got to find the worst possible adversity.
+[2909.04:2917.2] What does it mean? Intuitively, it should mean to literally loop through every single possible
+[2917.7599999999998:2924.3199999999997] behavior of the Byzantine processes until we actually explicitly find the one that maximizes
+[2924.32:2931.28] the probability of things going bad. So again, we have to implement this second solution
+[2931.6000000000004:2940.32] in the filtering phase of our algorithm. Now, what does it even mean to find the worst possible
+[2940.32:2947.1200000000003] adversity? I want to underline how challenging this is. What does it mean to have an adversity?
+[2947.1200000000003:2952.8] Remember guys, adversaries behave arbitrarily. So intuitively, you can see the several adversaries
+[2952.8:2959.92] of the, of the, of the past, of all the possible strings, finite strings of text, right?
+[2959.92:2966.2400000000002] Impressible in order to loop through all the adversaries, a good literary loop through every possible
+[2966.88:2976.48] sequence, right? A, A, B, A, C and so on and so forth. Until maybe I don't know, we find some code
+[2976.48:2982.72] that kind of, you know, looks like code, but then this code could be, you know, of a very
+[2982.72:2987.44] darned adversary. You have one person, then whenever, you know, it wants to sneak around, all it does,
+[2987.44:2991.84] it's noise. So it's a very stupid adversity, which should keep looping through all these
+[2991.84:2998.72] possible strings of text until we maybe find a very strong adversity that keeps increasing its
+[2998.72:3006.8799999999997] evilness until forever, right? So how do we even do this? Not only are several adversaries
+[3006.8799999999997:3013.2] extremely hard to actually, it's infinite, but, and this is way more important, it's unstructured,
+[3013.2:3018.48] or at least it's unstructured until you somewhat give it some structure, right? So the big challenge
+[3018.48:3024.3199999999997] that we had was how do you manipulate a threat that you know, intuitively because you could see as
+[3024.32:3029.04] being composed out of, you know, strings because that's usually the way we decide the behavior of
+[3029.04:3034.6400000000003] algorithm, but it's extremely discontinuous too, right? If you change even a single character in
+[3034.6400000000003:3040.4] a piece of code, sometimes that won't even compile. So in order to do this, we designed one called
+[3040.4:3046.7200000000003] decorators. Very qualitatively, a decorator is a function that takes as an input on a
+[3046.72:3054.48] adversary that outputs another adversary and has this constraint. If you give me an adversary on
+[3054.48:3059.68] an output and adversary, there is at least as powerful as the one that you gave me for input.
+[3061.12:3065.68] Now, why is this interesting? Because if you give me the best possible
+[3065.68:3072.8799999999997] approach, the best possible adversary, the optimal one, then necessarily I must output the same,
+[3072.88:3082.6400000000003] the same optimal adversary, right? So, intuitively, this means that if you take a large set of
+[3082.6400000000003:3091.36] adversary, of a adversary, that includes one or more optimal ones, the ones that have the highest
+[3091.36:3096.6400000000003] probability of compromising the system. If I run all of these through a decorator, and I take the
+[3096.6400000000003:3102.2400000000002] image of this set through the decorator, I am still guaranteed that this image is going through
+[3102.24:3108.3199999999997] the each one optimal adversary. Why is this interesting? Because as you compose decorators,
+[3109.04:3113.2799999999997] you take all the set of all the possible adversaries, you throw them into a first decorator,
+[3113.2799999999997:3117.8399999999997] out of which comes another set of adversaries, which still probably includes an optimal one,
+[3117.8399999999997:3121.12] and you feed this into a second decorator. So, that gives you a little bit less, right?
+[3121.68:3127.52] It only depends on how you design the decorators. When you feel smart enough, you design them in a way
+[3127.52:3133.28] that they converge in multiple possible behaviors in the same way, right? And as you compose these
+[3133.28:3140.96] decorators, they still probably maintain optimality. So, you can retrieve this series as a funnel,
+[3140.96:3148.24] as you see through all the possible sets of adversaries, you know, you progressively reduce and
+[3148.24:3153.36] make more structured the set of decorators, the set of adversaries that you're dealing with,
+[3153.36:3159.36] until you possibly find, in the end, a set of adversaries whose behavior is so constrained,
+[3159.36:3165.36] right? A set of adversaries who try this so small that you can actually finally bound it
+[3165.36:3167.76] with probability theory and just basic algebra.
+[3169.2000000000003:3177.1200000000003] Intuitively, how do you build a decorator? Intuitively, that outcome of a distributed exhibition,
+[3177.1200000000003:3180.7200000000003] you may see in the interaction between a system, which is composed by the correct processes
+[3180.72:3187.2] and adversaries, right? So, as you plug them together, they exchange a sequence of, we could say
+[3187.2:3194.24] invocations are responses, they interact in some way, right? That, you know, can be described by
+[3194.24:3201.3599999999997] a set. The set can be logged into a trace, the logs, the sequence of their interactions. Now,
+[3201.3599999999997:3209.2799999999997] the idea is to take the idea for building a decorator is to create an object that sets in between
+[3209.28:3214.88] translating the invocations and responses between the adversary and the system and acts upon it.
+[3214.88:3218.6400000000003] So, the idea here is that the adversary is going to issue some operation, right?
+[3219.44:3222.96] An undecorator in the matrix, we're going to translate that operation, send it to the system,
+[3224.0:3229.6000000000004] translate the responses, send them back to the adversary. In this way, the adversary
+[3230.96:3235.6800000000003] believes it's working, you know, against the specific system because it's, you know,
+[3235.68:3242.3199999999997] but it actually has cash towards the decorator. This is a very qualitative idea. If you don't see
+[3242.3199999999997:3247.68] me, it means it's completely fine. The basic idea is that decorator's adversary is still
+[3247.68:3254.96] an adversary, which is why, you know, a decorator in this team has a function on the state of the
+[3254.96:3260.3999999999996] first series, right? However, a decorator system also looks like a system to an adversary.
+[3260.4:3266.96] So, the trick here is to somewhat convince an adversary, A, that's playing against a
+[3266.96:3273.36] luckier version of the system, as a system that is somewhat more indulging to the specific way,
+[3273.36:3279.76] A, is implemented, was translating the behavior of A through our decorator to improve its chances
+[3279.76:3284.7200000000003] against the original system stigma. This was very qualitative. If you did not understand
+[3284.72:3291.68] something, it's completely fine. The actual, you know, proofs behind this are still complicated
+[3291.68:3297.52] that the paper that we ended up publishing, we know, containing all the formative fine things,
+[3297.52:3303.2799999999997] all the formative fine stats and the full flat proofs all over the end was actually 200 pages
+[3303.2799999999997:3309.2799999999997] of proofs. So, it's very understandable if this can seem tricky at first. So, I'm going to
+[3309.28:3316.96] conclude the presentation that giving you an idea of how we can move on, right? So, now we have
+[3316.96:3321.92] a way to implement a library library broadcast and we know that we can do that on a private scale.
+[3321.92:3329.6000000000004] The natural question immediately becomes, can you generalize this? Can you implement a database?
+[3329.6000000000004:3338.0] So, a universal piece of data upon which you can implement arbitrary code that runs in a decentralized
+[3338.0:3344.64] fashion, but there also scales to the same scale we've achieved previously. So, as you might
+[3344.64:3354.0] have seen in class, we kind of hinted it through the exercise sessions, solving total order broadcast
+[3354.0:3359.68] amounts to solving a database, to having a way to implement a database. This is due to the fact
+[3359.68:3364.32] that if you broadcast all the transactions in place, there's consistent order, right? All the
+[3364.32:3368.88] processes then every one of them can intuitively, obviously, can improve on this,
+[3368.88:3374.1600000000003] but have an entire copy of the system and apply those changes to the system. Some of them are
+[3374.1600000000003:3379.1200000000003] going to be fine. Some of them are going to be discarded, but all those that are ill-sourened or,
+[3379.1200000000003:3383.92] you know, incorrect, they're just going to be thrown away consistently by all processes.
+[3383.92:3389.1200000000003] So, as long as you have total order broadcast, you can implement a database. Trust me in this,
+[3389.12:3394.64] you can do it. However, and this is something that you have seen in class, so I'm going to assume
+[3394.64:3399.2] that you guys know it. As long as you solve consensus, you can also solve total order broadcast.
+[3399.8399999999997:3405.68] So, take a message as one is we can solve consensus if we can do that with the same performance
+[3405.68:3412.88] as we did, a reliable algorithm, what we can do is a planetary scale database. This amount to
+[3412.88:3419.6800000000003] universal new information infrastructure of all the planets that could in principle allow us to
+[3419.6800000000003:3430.4] move and mean finisher of services that currently are centralized, right? Into a completely decentralized
+[3430.4:3435.44] line. I'm not only talking about only cryptocurrency, I'm talking about social networks and talking
+[3435.44:3440.7200000000003] about message platforms, DNS, certificate authorities. Yes, also cryptocurrency, but not only
+[3440.72:3450.24] then I'm talking about a level of generality and performance that would allow us to entire
+[3450.24:3456.9599999999996] the risk factor the way we, you know, manipulate in principle information on a planetary scale.
+[3457.7599999999998:3464.56] So, how does consensus work? Briefly, you have the story cap as a process, some of the
+[3464.56:3470.32] non-gram reason are going to be business. All the correct ones have an input proposal, let's say, again, sorry,
+[3470.32:3476.88] called blind people, green or orange, right? In the end, we want to decide all for the same color,
+[3476.88:3484.56] right? So either all green, all orange, right? Now, we want to be able to agree, so if you have
+[3484.56:3488.64] a situation where somebody sees, as you can see in the bottom right corner, some different color
+[3488.64:3494.96] of the output then, you know, we don't work well, we also want to have a lazy, which means that if
+[3494.96:3501.8399999999997] everybody proposes one color, nobody, I mean, it's not going to be okay if everybody outputs a
+[3501.8399999999997:3505.68] different color, so this is also configuration where our system fails, and also we won't have
+[3505.68:3513.68] termination. So unlike what we did before, we should not have a situation where everybody hangs
+[3513.68:3520.0] indefinitely waiting to achieve the conclusion of the algorithm, right? We need to have the
+[3520.0:3525.68] many, we need to reinstantiate what we did before. I'm going to go very qualitative here.
+[3526.48:3533.8399999999997] While intuitively I told you so far, this kind of comes from our ability to perform consistent
+[3533.8399999999997:3538.64] broadcast, which is some of the stuff that I'm really not broadcasting, someone has to do
+[3538.64:3549.2] with that filtering phase we talked about so much. We can verify the re-agree. Let's say that we all
+[3549.2:3558.08] start with all the proposals being the same, it should be fairly easy to do in a sample-based
+[3559.12:3564.08] way to verify that everybody can work. I'm not overwhelming, majority agree is on a specific
+[3564.08:3571.12] gosh, or as long as everybody feeds into the input of the algorithm, and I'm overwhelming
+[3571.12:3576.24] with consistent set of proposals, which should be able, and this is very intuitive, but it should
+[3576.24:3585.04] feel okay, which should be able to achieve consensus, right? At that specific step, right? But
+[3585.04:3590.72] obviously what happens if it don't agree, right? If we verify that it don't agree, it might be
+[3590.72:3596.16] impossible for some processes to determine what the majority of the effects, right? So what do we
+[3596.16:3601.3599999999997] do if we don't agree? The idea should be that we're going to step, and everybody that can't
+[3601.3599999999997:3608.56] determine what the majority of the things, then might as well choose a new input at random.
+[3608.56:3614.08] So the idea could be that we unfold in steps. On every step we try to determine whether or not
+[3614.08:3620.64] really the first step is seeded by initial proposals of the algorithm, and then on every step,
+[3622.08:3628.48] we just check if we can do this in log n, right? If we don't, we just go to the next step,
+[3629.52:3636.72] and pick a random value for the next step. Now, intuitively, let me make a miracle here,
+[3636.72:3642.56] take the set of processes, and in the middle of time put an article. What's an article? It's a
+[3642.56:3650.64] magic, illuminated box, right? That everybody can blind with trust for some reason, and the only
+[3650.64:3657.84] thing that it does is as soon as any correct process kicks it, it outputs a random,
+[3657.84:3665.12] completion, predictable, final column, let's say, again, green or orange, right? Since the
+[3665.12:3672.88] idea could be here, we start with a set of proposals, some proposed greens, some proposed orange,
+[3672.88:3678.72] and now in a log n, a matter of steps, kind of follows from the broadcast that we discussed
+[3678.72:3685.7599999999998] before, some of them in a service that the majority thought green, right? However, many of them
+[3685.7599999999998:3693.2799999999997] could come to no conclusion whatsoever. They could see nothing specific emerging from the
+[3693.28:3700.48] samples that they asked to the system. So, what would do that in you, right? So obviously,
+[3700.48:3704.5600000000004] the ones that saw that the majority was green, they're going to go for green and the next step.
+[3704.5600000000004:3707.76] However, all the other ones are going to go to the article. They're going to ask the article,
+[3707.76:3720.2400000000002] hey, can you give us a brown color, right? And somewhat unlucky, the article is going to give
+[3720.24:3724.3199999999997] orange, right? So, at this point, although one that could see a majority, I'm going to go for green,
+[3724.3199999999997:3727.7599999999998] although ones that couldn't, we're going to ask the article and the forego for orange, right?
+[3727.7599999999998:3735.04] At this point, however, we're lucky enough that, you know, vast enough majority could not see
+[3736.3199999999997:3742.16] the majority at the brief step, ask the article. So somewhat large majority now agrees that the
+[3742.16:3752.3999999999996] input should be orange. So, you have some large set of processes that see a majority of oranges,
+[3752.3999999999996:3761.3599999999997] right? However, you know, they, the other ones still are going to go for, I don't know,
+[3761.3599999999997:3766.3999999999996] an ask the article. So, at this point, at some point, we're probably going to have for every step,
+[3766.4:3773.6800000000003] the article is running, we're going to give to everyone the same output, right? This is to say,
+[3773.6800000000003:3778.88] the output that the article is going to give everyone is going to be the same as the majority.
+[3778.88:3783.2000000000003] You have a half probability of doing this. So, at every round, even if you're coding
+[3783.2000000000003:3789.28] keywords at the previous round, you have one half probability that everybody, by, by,
+[3789.28:3793.6] by still log, is going to agree on the value of the wrong includes the next round,
+[3793.6:3798.96] everybody going to immediately verify that we kind of all the overwhelming agree and output,
+[3798.96:3804.24] right? So, probabilistically, with extremely overwhelmingly high probability, we're going to get
+[3804.24:3808.64] that, we're going to get to get the answers. So, the question is, how do you implement the
+[3808.64:3814.72] comma coin, right? Because here I, you know, I solved any, an illuminati orable in the middle of my
+[3814.72:3818.4] system. So, that's not so trivial. I'm just going to give you a tiny hint that this is not
+[3818.4:3824.32] a bit of a conclusion of my talk. So, one trivial solution could just be to do a round problem, right?
+[3824.32:3833.2000000000003] Let's say that at every round, we elect in a round, a process to be the, the article, to tell
+[3833.2000000000003:3840.64] everyone a hopefully consistent is the process is not missing random value, that it generates and
+[3840.64:3845.92] then everybody's going to trust that value, right? So, I could do the first one is the article at
+[3845.92:3851.04] the beginning, another second one is the article at the statement set, and the first step, the third
+[3851.04:3857.28] process is going to be the article. This feels like it's really reasonable. However, after the
+[3857.28:3862.08] beginning process is out of wear of this mechanism, if the beginning process can predict,
+[3863.12:3868.32] you know, which are going to be the places that are going to be endowed with the power of being
+[3868.32:3872.64] an article, except because in these processes, obviously, can do because you just fit, you know,
+[3872.64:3878.24] the places that are going to make them the articles, in doing so they can obviously either stay
+[3878.24:3884.24] silent, and keep the system stuck for a long time, or they can give completely, you know,
+[3884.24:3889.2] inconsistent views of the same, of the same coin to different correct processes,
+[3889.2:3893.7599999999998] causing them to disagree in that way. Now, I'm not saying that we wouldn't eventually get out
+[3893.7599999999998:3900.64] of this situation, but I'm saying that if we have 10 to 12 processes, it's not okay for us to be
+[3900.64:3908.72] stuck for, let's say, 10 to the 11 steps, right? We will be stuck functioning forever. Remember,
+[3908.72:3916.48] guys, our goal is to achieve massive scalability. So, what do we do? How do we select to which
+[3916.48:3922.64] side, which process is the article? Incidentally, we could pick a random, but then, you know, how?
+[3922.64:3929.68] The other one is what we're trying to achieve. Do we, you know, put back an article in our story?
+[3930.48:3935.2799999999997] So, what we do here is to use verifiable delay function. What is the verifiable delay function?
+[3935.2799999999997:3940.16] It's just a function. It looks like a hash function for those of you who have done any cryptography.
+[3941.2799999999997:3947.44] Given an input, it outputs a pseudo random output, however, like hashes,
+[3947.44:3954.56] their design is a way that there is a minimum time to compute this function. Let's say,
+[3954.56:3962.7200000000003] one minute or 10 seconds or whatever that time is, there's a hard, under a hard lower bound on
+[3962.7200000000003:3966.64] the time that it takes to compute these functions, right? Now, let's look for our timeline.
+[3967.52:3971.6] And let's say that we identify a specific moment where the first
+[3971.6:3978.3199999999997] presenting process wakes up and is ready to perform operations, but as I said, pre-complete stop is ready to do whatever
+[3978.3199999999997:3984.56] any, whatever the presenting process is to. And let's assume that, you know, correct process is wake up a little bit later, right?
+[3984.56:3992.96] So, they take us some time, this is going to be finite, as long as, you know, they eventually wake up to initialize.
+[3992.96:3997.44] I'm going to go this process in the middle, so there's the interval of time in the middle,
+[3997.44:4001.52] and I'm going to call it Byzantine Grace Beaded. During the Byzantine Grace Beaded intuitively,
+[4001.52:4008.08] if, you know, the time when Byzantine processes can organize themselves and put themselves in the correct place,
+[4008.08:4017.52] this in order to have power when the actual system runs, right? So, how am I going to elect the leader of each set?
+[4017.52:4022.56] How am I going to have this story, who the R code is going to be? And when I feed an initials,
+[4022.56:4030.4] chances volume into the very tribal run into the very tribal delay function to output, you know, new values
+[4032.08:4040.16] for, you know, clean intervals of time, right? And so, this value is going to be unpredictable for the correct processes
+[4040.16:4045.84] before sometime. So, let's say, as one is going to be unpredictable before time one, as two is going to be unpredictable
+[4045.84:4052.7200000000003] before time two, as three is going to be unpredictable before time three. However, this is proof of the correct processes,
+[4052.7200000000003:4056.96] but it's somewhat true also for the Byzantine processes, which could,
+[4056.96:4066.0] in principle, start pre-computing the moment they started, right? But there's always going to be some specific value
+[4066.0:4071.44] that they could not pre-compute before the beginning of the system. This value is going to be unpredictable
+[4071.44:4076.96] for them. They could not have acted upon the knowledge of this value before the system initialized,
+[4076.96:4082.32] they could not have put themselves in a place where they know they're going to be the R code, right?
+[4082.32:4089.28] So, eventually, if you give it enough time, actually, if you give it an amount of time that is intuitively somewhat proportional
+[4089.28:4094.56] to the Byzantine race, the system is eventually going to get unstuck. So, this is more a problem, less odd idea
+[4094.56:4103.44] of how the consensus is going to work in a system. Take home message. Random is somewhat stronger than
+[4103.44:4110.64] eventually unpredictable. Here, we use eventual unpredictable activity to achieve the fairness of our articles
+[4110.64:4117.76] and then use the articles to achieve actual randomness. So, the, the dessert guys, I hope this was somewhat understandable,
+[4117.76:4122.88] but again, the challenge was to give you more an idea of what to do and why it's interesting
+[4122.88:4129.4400000000005] than actually, you know, the actual solutions. Thank you. One question, Mateo, can we compute the
+[4129.4400000000005:4135.4400000000005] verifiable delay function faster than delta used in a faster processor? Oh, that's an amazing question.
+[4135.4400000000005:4140.08] Thank you. I actually skipped, I actually skipped on that and I was hoping that somebody would ask that.
+[4140.08:4147.68] Yes, so yes, of course. If you have a faster processor, you can be faster. Yes, however, and this is
+[4147.68:4157.68] important. Verifiable delay functions are designed in such a way that they can only be computed
+[4158.72:4166.400000000001] by one processor at a time. More specifically, you can imagine a verifiable delay function as being,
+[4166.400000000001:4172.96] you know, there is a long chain of operations such that each of the outputs, you know, is
+[4172.96:4181.76] necessary to compute the next step, right? In other words, they are designed to be extremely resistant
+[4181.76:4189.04] parallelization. This means that yes, if you have a faster processor, you can compute the verifiable
+[4189.04:4197.68] delay function faster. However, what you need to be talking about is single-trade performance,
+[4197.68:4205.4400000000005] right? And if we have any, you know, gamers in the audience, you know how single-trade performance
+[4205.4400000000005:4212.72] is an issue, right? If you want to boost those gigahertz in your CPU, you've got an overclock and
+[4212.72:4219.6] they have problems with feeding, you know, you've got to put liquid nitrogen on top of your CPU.
+[4219.6:4228.56] Yes, you can get it to be faster, but you mentioned physics prevents you from making it arbitrarily
+[4228.56:4237.6] fast. If you have a track online, I would say that the ratio between let's say the CPU of the
+[4237.6:4245.6] lowest of all the possible chips, let's say Raspberry Pi 1, the most basic sensor logic that you have,
+[4245.6:4251.200000000001] compared to the fastest CPU over a clock to be liquid helium, it's probably a factor of 10,
+[4251.200000000001:4256.64] right? So that's going to be how much more power the business processes have with the
+[4256.64:4262.56] factory, you know, even if all the correct processes where ultra-low, you know, there's a
+[4262.56:4269.4400000000005] strong bound effect. The bound does not exist, which is an issue, the bound wouldn't exist if
+[4270.72:4275.200000000001] this mechanism was subject to parallelization, because you guys know that, you know, I can just
+[4275.2:4283.04] buy more CPUs, right? I can buy more cores for my CPU and just, you know, perform things in parallel.
+[4283.04:4288.4] So the intuitive ideas that have a very function synthesis and parallelization, which makes them,
+[4288.4:4292.8] I mean, the speed of their computation is therefore ultimately bound by physics.
+[4295.28:4304.24] Okay, so one last question maybe couldn't we use a VRC output computed by previous round
+[4304.24:4309.599999999999] Oracle as the randomness seed. It could be a bit biased, but it looks more practical than VDF.
+[4311.44:4314.96] I see. Yeah, that's also a really good question.
+[4316.96:4325.44] Problem there would be that that output would be predictable.
+[4326.96:4330.96] Then next slide. Let assume that you have the business processes be, you know,
+[4330.96:4340.88] even ever so slightly faster at computing the VRS than sort of VDF than the correct processes,
+[4340.88:4346.24] right? They could contextently have advantage as the processes, even after their
+[4346.24:4352.72] instantiation, after the processes compute new values, the Byzantine processes could say I had
+[4352.72:4358.96] of them. Anything can match to say I had of them for at least, you know, of at least one step.
+[4358.96:4364.4] The Byzantine processes could always know what the output of the random model is going to be
+[4364.4:4371.6] at the next step. And they can act in order for the majority to be balanced towards the opposite
+[4371.6:4378.88] value and keep the system stuck forever. So this is actually the intuition behind the
+[4378.88:4385.44] difference between randomness and eventually any eventual unpredictability. We to achieve a
+[4385.44:4395.839999999999] situation where at some point the value of the coin depends on some choice that one correct
+[4395.839999999999:4404.5599999999995] process takes. Then it's generally random and impossible to predict for a Byzantine process,
+[4404.5599999999995:4408.5599999999995] right? So if I elect a leader and then ask that leader, forgive me, that I'm the value,
+[4408.56:4415.200000000001] you know, what the Byzantine processes could do are first to try and be the leader, but they
+[4415.200000000001:4422.400000000001] can't do that for too long. Second, they would have, you know, the only thing that's left for them
+[4422.400000000001:4426.72] after this phase where they could predict the values of the VDF before the initialization of the
+[4426.72:4432.240000000001] system and act in order to be the leader, they, if at any point the leader's correct, there's
+[4432.240000000001:4436.320000000001] just nothing that they can do in order to predict what the output of the leader is going to be.
+[4436.32:4442.32] So that's kind of the difference between eventual randomness. So eventual unpredictability and randomness
+[4442.32:4448.24] is stronger and does require going through some leader that at some point does something that nobody
+[4448.24:4455.5199999999995] could predict and VDF do not have this property. So we need to somehow refine and upgrade the quality
+[4455.5199999999995:4463.12] of the randomness that they produce. Okay, so with this last question, I would like to thank you
+[4463.12:4468.08] and behalf of all the students who have been attending your great, your great talk. It was really
+[4468.08:4475.28] nice, very pedagogical and I think the plan is great and the ambition is amazing. Next week, as I
+[4475.28:4482.0] pointed out, next one day, don't miss David from ABB about how to use distributed computing for
+[4482.0:4490.72] smart grids and also lay on making the big and amazing claim that distributed or even machine
+[4490.72:4496.88] learning today is about agreement problems. Thank you very much, Mateo. Thank you all. Stay safe
+[4496.88:4526.72] and see you virtually next Monday. Cheers guys, have a good one.

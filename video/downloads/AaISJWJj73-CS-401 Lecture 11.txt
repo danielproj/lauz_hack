@@ -1,0 +1,1042 @@
+~CS-401 Lecture 11
+~2022-11-30T10:36:04.771+01:00
+~https://tube.switch.ch/videos/AaISJWJj73
+~CS-401 Applied data analysis - Fall 2022
+[0.0:5.22] Lecture 11.
+[5.22:8.34] Just in time for the end of the 11th month.
+[8.34:14.08] Tomorrow is the 1st of December, so don't forget to open the first door of your event calendar
+[14.08:15.08] if you have one.
+[15.08:18.28] If you don't have one, get one.
+[18.28:22.96] Okay, announcements are short this week.
+[22.96:26.72] Homework 1 is due on Friday.
+[26.72:32.04] We won't ask the questions during the last 24 hours, so you have until tomorrow night to
+[32.04:35.2] ask your questions.
+[35.2:45.04] Projects, milestone 2 has been graded and the grades have been released.
+[45.04:48.28] And milestone 3 will come out right after the homework is due.
+[48.28:52.16] And that's the last, that's the capstone of your project.
+[52.16:57.199999999999996] At this lab session we'll be simple too, we'll just to exercise on handling text because
+[57.199999999999996:61.599999999999994] it's too close to the homework submission deadline to deal with that.
+[61.599999999999994:67.12] But I think it will be a very useful exercise because this handing text is just such a big
+[67.12:69.12] part of the class.
+[69.12:77.36] Okay, so let me recap quickly what we did in the last lecture.
+[77.36:85.16] We looked at four typical tasks, data analysis tasks on text data, and we looked into how
+[85.16:92.0] to phrase those tasks as machine learning problems and how to prep process text so it
+[92.0:95.08] can be fed into the machine learning algorithms.
+[95.08:100.64] The result of that preprocessing was what we call the bag of word matrix, which has one
+[100.64:105.48] row per document and one column per word in the vocabulary.
+[105.48:113.0] And I saw you this as a bag of tricks of a bag of words.
+[113.0:120.64] So that's the rough recap of what we did last lecture.
+[120.64:127.28] What we do now is we will revisit those four typical text processing tasks.
+[127.28:134.6] And we will look into, and so we'll revisit those in more detail in the light of the TFI
+[134.6:140.32] F matrix representation on which we've spent so much time last week.
+[140.32:145.12] The four typical tasks were document retrieval, document classification, sentiment analysis,
+[145.12:146.68] and topic detection.
+[146.68:153.28] And as a quick reminder, the TFI DF matrix, just as the bag of word matrix has one row
+[153.28:159.24] per document and one column per word in the vocabulary.
+[159.24:166.96] And the idea is when you make this vector for a document, so a row in the TFI DF matrix,
+[166.96:172.8] you want to give more weight to end trees that correspond to, so do you want to give
+[172.8:177.60000000000002] more weight to a word when the word occurs frequently in the document?
+[177.60000000000002:185.36] And you want to give more weight to a word if the word occurs rarely across the entire document
+[185.36:190.60000000000002] collection because then the word is more informative than words that appear in every
+[190.60000000000002:194.76000000000002] single document.
+[194.76000000000002:199.28] So let's go back to typical task one, which was document retrieval.
+[199.28:203.84] Remember here you are given a, you have a large document collection and you're given
+[203.84:211.92000000000002] a query document and you're supposed to find the documents that are most closely related,
+[211.92000000000002:214.20000000000002] most similar to the query document.
+[214.2:219.76] We concluded that this is a typical application for nearest neighbor methods, for example,
+[219.76:221.72] K nearest neighbors.
+[221.72:229.07999999999998] And so what we do here is we compare the query doc, let's call it Q, to all the documents
+[229.07999999999998:234.95999999999998] in the collection, that is, if our document collection is represented as a TFI DF matrix,
+[234.95999999999998:242.44] then we represent the query document Q to every single row in the TFI DF matrix.
+[242.44:248.56] And then we rank the documents in the collection, so the rows from the matrix in increasing order
+[248.56:254.07999999999998] of distance to the query document.
+[254.07999999999998:260.12] As distance metrics, we have a choice what we want to use, but typically we use the
+[260.12:265.72] cosine distance here, which is one minus the cosine similarity.
+[265.72:271.15999999999997] So here's a little reminder how the cosine similarity is computed.
+[271.16:278.68] You first normalize the two vectors to unit norm, so you divide them by their, by their
+[278.68:284.04] Euclidean norm, by their length in Euclidean space basically, and then you take a dot product
+[284.04:285.04] of the two.
+[285.04:290.72] So that's how you compute the cosine between two vectors.
+[290.72:295.88] And if the rows in the matrix are already two normalized, remember this is one of the
+[295.88:299.68] pre processing steps that you can apply to the TFI DF matrix.
+[299.68:307.52] So if your rows are already a two normalized, so every row has length one, then you may simply
+[307.52:312.28000000000003] take a dot product because then the normalization by length doesn't do anything.
+[312.28000000000003:318.68] The length is already one, so you can then simply do a dot product.
+[318.68:325.4] This is of course just the most basic approach to make this work in reality.
+[325.4:331.28] Let's say at WebScan, like real search engines, like Google and so on do, you need to make
+[331.28:334.59999999999997] this of course much more efficient.
+[334.59999999999997:339.44] One simple step to make this efficient because then you have to imagine that this matrix,
+[339.44:345.64] the TFI DF matrix, has billions, maybe trillions of entries.
+[345.64:353.03999999999996] Like you wouldn't want to compare the same query document against all those billions of
+[353.04:357.76000000000005] entries of rows every time that someone types a Google search query.
+[357.76000000000005:363.36] So for efficiency, what you definitely want to do on top of many other things that are
+[363.36:367.64000000000004] done by real search engines, but what you want to definitely do is to filter documents
+[367.64000000000004:374.92] first so you don't even have to compare the query to all the documents in your collection.
+[374.92:383.68] So for instance, what you can do is a document that doesn't contain any of your query terms.
+[383.68:387.28000000000003] Let's say you type a search query that has three words.
+[387.28000000000003:391.8] If none of these three words occurs in a given document, then you already know that the
+[391.8:395.48] cosine will be zero.
+[395.48:400.84000000000003] Because if you build that dot product, then you will always have the pointwise product
+[400.84000000000003:404.72] will always give you zero and then you sum own your zeros.
+[404.72:407.92] So you can throw out such documents right away.
+[407.92:413.16] So as a preprocessing step, you would want to pull out from your document collection
+[413.16:419.8] only those documents that contain at least one of the query words.
+[419.8:426.72] And this huge renayer is down the set of documents to be ranked.
+[426.72:433.40000000000003] Of course Google and other search engines do much more than just pre-fittering and then
+[433.4:434.91999999999996] cosine similarity.
+[434.91999999999996:438.23999999999995] They also do ranking.
+[438.23999999999995:441.44] They also give query independent relevance to pages.
+[441.44:442.88] So the buzzword here is page rank.
+[442.88:444.59999999999997] Who has heard of page rank before?
+[444.59999999999997:452.52] Okay, those of you who haven't, we will touch on this topic in the next lecture when
+[452.52:454.64] we talk about handling network data.
+[454.64:457.32] So don't worry if you haven't heard of page rank yet.
+[457.32:465.15999999999997] The idea is that some documents are just better search results anywhere.
+[465.15999999999997:470.12] Regardless of what the user is searching for, some like let's say websites are just better
+[470.12:471.12] results.
+[471.12:476.52] For example Wikipedia is a better resource than conserva pdia or some fake news site.
+[476.52:480.64] So you want to just generally upvote trustworthy pages.
+[480.64:483.71999999999997] And this is what page rank does.
+[483.72:487.64000000000004] As a research engineer you would also want to boost recent search results.
+[487.64000000000004:493.32000000000005] So for example when someone types FIFA word cup you would want to give them results about
+[493.32000000000005:499.0] FIFA 2022 rather than let's say FIFA 1990.
+[499.0:502.76000000000005] Although that was of course a much better word cup.
+[502.76000000000005:506.88000000000005] Germany won the third time.
+[506.88000000000005:511.8] And you would also want to do personalization and contextualization.
+[511.8:516.52] So you would want to use someone previous search history in order to give them better results
+[516.52:517.72] the next time this search.
+[517.72:523.32] You kind of know that when someone who's a naturalist type of agua they're probably looking
+[523.32:524.32] for the animal.
+[524.32:528.72] But when someone who's really has been searching about cars all the time and there might be looking
+[528.72:531.04] more likely for the car.
+[531.04:534.36] So that's personalization and that's also what research engineers do.
+[534.36:543.0] But still at the core of search engines remains document retrieval which is basically a
+[543.0:547.4] cameoor's neighbor retrieval task.
+[547.4:552.4] Let's go to the second typical task document classification.
+[552.4:558.6] Here again we use the TFIDF matrix as our central data object.
+[558.6:563.6800000000001] We now treated as a feature matrix for supervised learning methods.
+[563.68:570.5999999999999] Those that we touched upon in lecture seven.
+[570.5999999999999:578.8399999999999] So this is basically the X matrix in your logistic regression or linear regression or red
+[578.8399999999999:582.5999999999999] and forest or whatever you want to use.
+[582.5999999999999:589.5999999999999] One particularity of using supervised learning for this kind of task like document classification
+[589.6:594.9200000000001] is that oftentimes you have more features than you have documents.
+[594.9200000000001:599.72] So you have as many features as you have words in the vocabulary.
+[599.72:603.84] This might be in the hundreds of thousands or in the millions but often you might have
+[603.84:606.84] only thousands or tens of thousands of documents.
+[606.84:610.6] So your matrix would be short and wide.
+[610.6:615.64] It would be wider than it is tall.
+[615.64:620.36] What's the problem with this?
+[620.36:624.84] If you have a matrix that has that is wider than it's tall.
+[624.84:628.04] You have more features than data points.
+[628.04:631.8] What can happen then?
+[631.8:633.12] We have overfitting.
+[633.12:635.1999999999999] That's exactly it.
+[635.1999999999999:640.48] So mathematically speaking what you have is you have imagine that you want to do a linear
+[640.48:643.28] regression with this kind of matrix.
+[643.28:646.8] Then you have a system of equations that is under determined.
+[646.8:650.3199999999999] You have more variables than you have equations.
+[650.3199999999999:657.8] So then you get either a non or infinitely many solutions.
+[657.8:661.88] So this is not a good situation mathematically and in terms of statistics we exactly get
+[661.88:663.76] overfitting.
+[663.76:670.3199999999999] Intuitively, this, a model that you learn here has very high capacity.
+[670.32:675.4000000000001] If you have, you will learn, let's say you do a linear regression and you will learn
+[675.4000000000001:681.44] as many weights, as many parameters as you have columns in that matrix.
+[681.44:684.5600000000001] For every future you learn a weight.
+[684.5600000000001:689.8000000000001] If you have a very large number of parameters that you can fit then your model has high capacity
+[689.8000000000001:692.6] and it can basically memorize the data.
+[692.6:697.0400000000001] And it will not generalize well to new data that's not in the training set.
+[697.04:704.16] As an intuitive example, imagine that you have a word, imagine that you want to do a classification
+[704.16:709.12] task is my document about sports, yes or no.
+[709.12:717.64] And you have a word that only occurs in one document in the training set.
+[717.64:720.7199999999999] And that document happens to be about sports.
+[720.7199999999999:725.9599999999999] So then your method can just put arbitrarily high weight on that one word and it will be
+[725.96:730.84] guaranteed to get that one document, that one data point correctly.
+[730.84:736.8000000000001] There's no penalty in not giving a high weight because it can't do wrong.
+[736.8000000000001:739.24] There is only one document that has that work.
+[739.24:747.6] So that's kind of an extreme case that shows you how by being allowed to have many features,
+[747.6:752.96] many future weights you can basically memorize the training data.
+[752.96:758.0] So things that you can do are multiple ones, they all aim at the same thing though.
+[758.0:761.96] They aim at effectively making the matrix more square.
+[761.96:768.2] So either decreasing the width or increasing the height.
+[768.2:773.4000000000001] So feature selection decreases the width of the matrix.
+[773.4000000000001:780.12] Regularization, which we look at in a couple of slides from now, doesn't explicitly change
+[780.12:785.16] the dimensions of the matrix, but it effectively does so.
+[785.16:792.84] Or dimensionality reduction is another way of decreasing the width of the matrix.
+[792.84:798.0] And alternatively you could increase the height of the matrix by collecting more data.
+[798.0:801.96] So that's maybe if you can do that, that's always the first thing to do.
+[801.96:808.72] But of course it's often not possible or too expensive to collect more data.
+[808.72:815.64] And finally, you can use ensemble methods such as random forests that basically make the
+[815.64:825.0400000000001] method less sensitive to this kind of overfitting by having multiple versions of multiple weak
+[825.0400000000001:829.28] classifiers and aggregating over them such that the errors of the individual classifiers
+[829.28:834.5600000000001] can't allow.
+[834.5600000000001:837.72] The typical task three that we looked at was sentiment analysis.
+[837.72:843.5600000000001] And here you can basically just copy paste everything that I just said about document classification
+[843.5600000000001:850.72] because you can treat sentiment analysis as a classification or as a regression task.
+[850.72:858.24] And so nothing new compared to a typical task two, which was document classification.
+[858.24:864.5600000000001] Instead, let's go to the topic of regularization that I mentioned two slides ago.
+[864.56:869.56] To model with this, let's look at a linear regression model.
+[869.56:875.3599999999999] And I'm using this because this is the kind of machine learning model that we have seen
+[875.3599999999999:877.4799999999999] most in data.
+[877.4799999999999:881.8399999999999] So a reminder, what are we trying to do in linear regression?
+[881.8399999999999:887.68] Here we have our ground truth labels, why I for every data point, I we have a number that's
+[887.68:892.2399999999999] the true label for that data point, I.
+[892.24:898.76] And we have the feature vectors x i for every data point, I.
+[898.76:901.16] So every x i is a vector.
+[901.16:908.6] And now we want to find the weight vector beta such that when we built such that when we
+[908.6:914.8] use beta to linearly combine the features, we get as close as possible to the true label
+[914.8:919.44] for the data points that we are supposed to to predict.
+[919.44:925.2] So technically, we want to minimize the square distance of the ground truth label, why and
+[925.2:931.12] the predicted label, which is this weighted sum of the features.
+[931.12:936.12] Now for example, you could imagine that we're doing a sentiment analysis task.
+[936.12:941.8800000000001] And then why I might be would be the sentiment scores.
+[941.8800000000001:946.6400000000001] This could be between one and five stars or a number between zero and 100 or however
+[946.6400000000001:948.12] it is defined.
+[948.12:954.24] And now and the x i is the feature vector for document i.
+[954.24:960.5600000000001] So that would be a vector, a bag of words vector for document i.
+[960.5600000000001:966.6] So it has, it counts for every word in the vocabulary, how often that word occurs in document
+[966.6:968.6] i.
+[968.6:974.28] Now imagine that there is a word, let's call it word j, that appears only in documents
+[974.28:981.0799999999999] with sentiment files with the highest possible sentiment and that's in the training set.
+[981.0799999999999:987.4399999999999] And now we can obtain a very small training error on those documents that contain word
+[987.4399999999999:993.4399999999999] j by making the corresponding coefficient beta j large enough.
+[993.4399999999999:1003.4] Okay, because that will drive up that weighted sum of the features.
+[1003.4:1015.76] First i is sorry x, the j is entry will only be non zero for documents that have a sentiment
+[1015.76:1016.76] five.
+[1016.76:1022.52] So if I put a lot of weight on that word, then I will drive up that score and I'll be
+[1022.52:1029.32] able to make the error for those documents that contain word j very small.
+[1029.32:1033.12] The same argument, I'm making the argument in the case of linear regression because that's
+[1033.12:1039.7199999999998] just the model we've seen most in data, but the exactly same argument pertains to most
+[1039.7199999999998:1041.3999999999999] machine learning algorithms.
+[1041.3999999999999:1049.2399999999998] So the point is that this small training error doesn't generalize to unseen test data
+[1049.2399999999998:1055.0] because in test data, the word j might also occur sometimes in documents that have a
+[1055.0:1056.8799999999999] low sentiment score.
+[1056.8799999999999:1062.08] You just kind of lucked out that or you maybe the opposite of lucked out.
+[1062.08:1066.6799999999998] It just happened to be the case that in your training set, word j was only associated
+[1066.6799999999998:1074.1999999999998] with sentiment five documents, but if you collect new data, then that might not be the case.
+[1074.1999999999998:1082.8] And then by making that weight, the weight associated with word j very large, you would
+[1082.8:1086.52] shoot yourself in the foot for the unseen data because now you put all your eggs in one
+[1086.52:1090.96] basket and you would say, if whenever I see word j, it's a high sentiment.
+[1090.96:1094.04] But now you see a case where this is not so.
+[1094.04:1098.56] And then you would predict very high sentiment for those documents, although there might be
+[1098.56:1103.6000000000001] other indicators that really would tell you the opposite, but you ignore those because
+[1103.6000000000001:1108.92] you focus so much, you overfit on that word j.
+[1108.92:1115.24] So one thing that you can do to remedy this situation and it's a very effective remedy
+[1115.24:1116.24] is regularization.
+[1116.24:1120.76] It's conceptually very simple.
+[1120.76:1124.0] What we do here is we keep the same loss function as we have before.
+[1124.0:1129.64] This is the normal least squares loss that we have in linear regression, but we simply
+[1129.64:1131.72] add a second term.
+[1131.72:1132.72] We add a penalty.
+[1132.72:1137.92] We're also penalized now, not only for being far off the ground truth for predicting the
+[1137.92:1144.24] wrong thing, but we're also penalized for choosing coefficients that are very large in
+[1144.24:1146.04] magnitude.
+[1146.04:1149.24] So we take a sum.
+[1149.24:1153.44] This is a sum over all the coefficients.
+[1153.44:1160.44] So as many entries we have in beta and we take a sum of those squares.
+[1160.44:1167.0] And then we have a parameter here that tells us how much weight do we want to put on that
+[1167.0:1170.32] penalty for feeding large weights.
+[1170.32:1175.04] Why do we do the square?
+[1175.04:1182.68] And not just beta itself.
+[1182.68:1183.68] Very good.
+[1183.68:1188.32] Yes, the answer is the pragmatic answer is that you want to be penalized as much for a
+[1188.32:1194.3999999999999] very large negative weight as for a very large positive weight because both of these can
+[1194.3999999999999:1195.6] lead to overfitting.
+[1195.6:1201.6399999999999] So that's a pragmatic reason for having a square here.
+[1201.64:1209.1200000000001] You could also take an absolute value then you would have another kind of regularization,
+[1209.1200000000001:1211.8400000000001] which would then be called the last cell.
+[1211.8400000000001:1217.68] And it has different properties, but in principle you could do that as well.
+[1217.68:1222.24] So a very effective way of prohibiting the method from feeding large weights, which
+[1222.24:1228.5200000000002] is exactly what leads to overfitting in this linear regression case.
+[1228.5200000000002:1231.48] So here's another view of regularization.
+[1231.48:1237.88] You can see it as a way of breaking ties between multiple solutions if the problem is under
+[1237.88:1238.88] constraint.
+[1238.88:1245.1200000000001] I told you, if you have a matrix that is wider than tall, then in terms of linear algebra,
+[1245.1200000000001:1248.88] you will be in a situation where you have an under determined system of equations.
+[1248.88:1253.88] So you will have infinitely many solutions to this system.
+[1253.88:1260.56] So it's under constraint and to break ties between these possibly infinitely many solutions,
+[1260.56:1269.0] regularization can help because whenever there are many solutions that have the same value
+[1269.0:1274.36] here, you would disambiguate them via this term because you would then pick the one that
+[1274.36:1279.52] has the smallest sum of squared coefficients.
+[1279.52:1284.32] So in this example, both models, yellow and green, so you can think of this as a regression
+[1284.32:1289.8799999999999] model that has one input variable X and the output variable Y.
+[1289.88:1292.72] Right now we have these data points.
+[1292.72:1297.92] So these are basically our, you could think of this as our feature matrix, but they have
+[1297.92:1303.8400000000001] only one feature in every data point has only one feature.
+[1303.8400000000001:1311.2800000000002] So it really becomes a vector and you're now fitting a model to that.
+[1311.2800000000002:1319.48] And both the green and the blue model fit the red data perfectly.
+[1319.48:1321.68] But one of them is regularized.
+[1321.68:1326.52] It buys towards smaller weights and it therefore generalizes to new data better.
+[1326.52:1333.08] For now, gave you a data point that was here, then the green line would probably be a better
+[1333.08:1340.64] prediction than the blue line, which has these huge swings because it can exactly.
+[1340.64:1346.6] So okay, so I want to talk too much more because here's a poll for you.
+[1346.6:1351.6799999999998] The questions which curve out of these two, the green or the blue resulted from adding
+[1351.68:1381.24] a regularization term to the loss function.
+[1381.24:1408.88] Okay, we do 10 more seconds.
+[1408.88:1437.4] So we have a vast majority for the true answer.
+[1437.4:1445.44] And actually no answer for the absolutely wrong, no vote for the absolutely wrong answer.
+[1445.44:1452.3200000000002] It is the green line that is regularized here because what allows you to have these large
+[1452.3200000000002:1454.6000000000001] swings is large coefficients.
+[1454.6000000000001:1462.48] So if this is a polynomial, then the only way you can have these large swings is by putting
+[1462.48:1467.88] a lot by fitting high coefficients for the polynomial terms.
+[1467.88:1471.48] So very good, it seems that you really got the idea.
+[1471.48:1477.52] So that means we can move on to typical tasks for which was topic detection.
+[1477.52:1483.2] And here we'll venture into slightly new territory because I will use this as an entry
+[1483.2:1488.2] point to dimensionality, reduction matrix factorization.
+[1488.2:1493.68] So remember in topic detection, you are again giving a TFI, the F matrix or a set of documents
+[1493.68:1498.8400000000001] represented by the words that they contain.
+[1498.8400000000001:1504.0800000000002] But yeah, you are now not given any labels or classes for the documents, but you're supposed
+[1504.0800000000002:1507.44] to elicit them yourself from the data.
+[1507.44:1515.1200000000001] We said one thing that you can do is to cluster the rows of the TFI, the F matrix.
+[1515.1200000000001:1518.0800000000002] Each row is a data point, each row is a document.
+[1518.08:1525.24] And by clustering those rows and then inspecting the clusters, you can get a representative
+[1525.24:1530.08] overview of what's actually in the data set.
+[1530.08:1537.0] And here, so when I say inspect the clusters, what I mean is you can either take the centroid
+[1537.0:1543.12] of the cluster or you can take a few, you can sample a few data points from the cluster
+[1543.12:1550.52] and then actually look at those data points and then decide what is this data point, what
+[1550.52:1552.12] is this document about?
+[1552.12:1558.9199999999998] And then this way, you can come up with your set of descriptive names of labels for those
+[1558.9199999999998:1562.1999999999998] topics.
+[1562.1999999999998:1570.04] In principle, you could use here any clustering algorithm like k-means, k-meat-oids or DB scan,
+[1570.04:1575.72] but in practice, this can be difficult if the dimensionality of your data is large.
+[1575.72:1584.6] So if you're, again, you're in this situation where you matrix is short and wide, then you
+[1584.6:1585.8799999999999] would have trouble again.
+[1585.8799999999999:1592.1599999999999] If you have more words than documents, then you would likely suffer from the curse of
+[1592.1599999999999:1593.8] dimensionality.
+[1593.8:1598.48] Reminder what's the curse of dimensionality in higher dimensions, starting already with
+[1598.48:1605.92] 4 or 5, you encounter this situation where since the space, the volume of the space grows
+[1605.92:1611.72] exponentially with the dimensionality, your data points diffuse in this space.
+[1611.72:1619.32] And any sort of structure that might be there between the documents would slowly be washed
+[1619.32:1624.76] out because there are just so many degrees of freedom that pretty much all data points
+[1624.76:1630.92] would lie equally far away and it will be really hard for a clustering algorithm to find
+[1630.92:1637.24] sets of points that are close together and much further apart than there are from other
+[1637.24:1640.16] sets of points.
+[1640.16:1645.76] Another problem is that you would then often have outliers.
+[1645.76:1651.08] Remember that case where you have a word that only occurs in a few documents, then that
+[1651.08:1657.6799999999998] feature would be 0 for most documents and would be non-zero for only a few documents and
+[1657.6799999999998:1662.08] those would be nearly everything would be outlier in that sense.
+[1662.08:1666.1999999999998] So what can we do?
+[1666.1999999999998:1672.8] One thing that you can do is to reduce the dimensionality of your data.
+[1672.8:1678.48] Originally our dimensionality is as high as we have words in the vocabulary and now let's
+[1678.48:1681.44] try to reduce that dimensionality.
+[1681.44:1686.84] One way a very powerful way in which we can do this is via matrix factorization.
+[1686.84:1695.72] Let's take this matrix which is wide and short and factor it into two matrices which have
+[1695.72:1697.1200000000001] better properties.
+[1697.12:1711.1999999999998] It's factor it into matrix A which is tall and slim and into another matrix which is
+[1711.1999999999998:1716.6799999999998] even shorter and as wide as the original matrix.
+[1716.6799999999998:1722.36] So you know it checks out because the dimensions are the same like this matrix is as tall as
+[1722.36:1729.1999999999998] the original matrix and the matrix B is as wide as the original matrix and then that
+[1729.1999999999998:1737.4799999999998] kind of new dimension that was inserted you can basically choose it however way you want.
+[1737.4799999999998:1742.36] So this is for now just purely linear algebra right?
+[1742.36:1747.8799999999999] You can factor matrices but why is this a useful thing to do here?
+[1747.88:1758.3600000000001] It is because we can assume that both words and documents have representations in a latent
+[1758.3600000000001:1759.5600000000002] topic space.
+[1759.5600000000002:1763.0400000000002] When I say latent I mean it's not something that you observe right away.
+[1763.0400000000002:1771.0400000000002] It's something that comes out from doing this factorization you assume that somehow words
+[1771.0400000000002:1775.4] and documents have representation as lower dimensional vectors.
+[1775.4:1782.2800000000002] And you don't know what those lower dimensions are yet but you assume that there is this latent
+[1782.2800000000002:1787.2800000000002] lower dimensional space in which words and documents live.
+[1787.2800000000002:1792.24] And the matrix factorization allows you to recover that latent space.
+[1792.24:1796.2] And what's the assumption that we make here when we write it down this way when we assume
+[1796.2:1804.68] that the original TFIDF matrix can be factorized into these two smaller matrices.
+[1804.68:1817.8400000000001] What we're assuming is that we model the frequency of a word in a document that's exactly what
+[1817.8400000000001:1821.48] the TFIDF matrix tells us.
+[1821.48:1831.04] We assume that the frequency of words in documents that the frequency is higher if the document
+[1831.04:1841.8799999999999] and the word that we are currently looking at have similar representations in topic space.
+[1841.8799999999999:1846.52] Because that's precisely how we get the entries in this factorization.
+[1846.52:1854.72] If we take an entry in the matrix then this corresponds to how do we get it in this decomposition.
+[1854.72:1862.2] This means to take the row, the corresponding row in matrix A and the corresponding column
+[1862.2:1866.6000000000001] in matrix B and taking a dot product of those two.
+[1866.6000000000001:1870.0] That's exactly what matrix multiplication does.
+[1870.0:1876.4] So here we assume that the frequency of words and documents is modeled by the dot product
+[1876.4:1883.76] of those representations of the corresponding document and of the corresponding word.
+[1883.76:1896.28] So if the two are similar in this latent topic space, that's what this equation assumes.
+[1896.28:1902.36] And so by doing the factorization we can then later look at the latent dimensions that
+[1902.36:1910.84] are learned and use them as new representations for either documents or words.
+[1910.84:1915.76] And if we choose the number of topics to be much lower than the number of words.
+[1915.76:1923.9599999999998] So if A is much slimmer than the original TFIDF matrix, then this is dimensionality reduction
+[1923.9599999999998:1930.6799999999998] because now we've reduced the dimensionality of the data from this number of words to that
+[1930.6799999999998:1932.56] number of topics.
+[1932.56:1937.3999999999999] Every document is now not represented in terms of the words that contains, but it's represented
+[1937.4:1944.64] in terms of its association with those latent topics.
+[1944.64:1948.72] And to interpret the topics we can do two things.
+[1948.72:1956.3600000000001] We can either look at the columns of matrix A. So then every topic is represented in terms
+[1956.3600000000001:1959.8000000000002] of its association with each document.
+[1959.8000000000002:1966.64] Or we can look, we can interpret topics as rows of matrix B. So then every topic would
+[1966.64:1976.4] be represented as how much is associated with each word in the vocabulary.
+[1976.4:1980.5200000000002] So this is optimised, basically what I wrote down on the previous slide and I copied
+[1980.5200000000002:1984.0] here on this slide corresponds to an optimisation problem, right?
+[1984.0:1991.16] Like that tilde that approximately equals, we usually won't be able to do that exactly.
+[1991.16:1999.48] We could only do this if the TFIDF matrix had low rank, but if the width of A and the
+[1999.48:2007.3600000000001] height of B is lower than the rank of the TFIDF matrix, then this will have to be approximate.
+[2007.3600000000001:2012.24] So this is an optimisation problem and let's formalise this.
+[2012.24:2018.8400000000001] What we want to do is we want to find matrices A and B such that the product A times B is
+[2018.84:2022.72] as close as possible to the original TFIDF matrix.
+[2022.72:2031.6399999999999] And when we say as close as possible, we mean that it should minimise the squared distance
+[2031.6399999999999:2036.6399999999999] between the sum of squared point wise distances.
+[2036.6399999999999:2042.56] So we take that, we actually compute the product A times B. Now we get a matrix that has the
+[2042.56:2049.88] same dimension as the original TFIDF matrix, we can subtract the two matrices and then we
+[2049.88:2055.24] just build a sum of the squared differences and that's what we want to minimise because
+[2055.24:2059.68] if that's zero, then the matrices are exactly the same and we want to get it as close as
+[2059.68:2064.7999999999997] zero as possible.
+[2064.8:2074.6000000000004] And so this is called latent semantic analysis and it's a very powerful way of pre-processing
+[2074.6000000000004:2080.0] or of post-processing your TFIDF matrix.
+[2080.0:2082.96] So a few words about how you can actually do this optimisation.
+[2082.96:2089.76] Luckily, you already know how to do it efficiently from your linear algebra class because this
+[2089.76:2096.76] you can do it as a singular value decomposition, who remembers the singular value decomposition.
+[2096.76:2100.1200000000003] Okay, go back to the books.
+[2100.1200000000003:2104.6800000000003] The singular value decomposition is possibly the most useful thing that you've seen in
+[2104.6800000000003:2106.8] your linear algebra class.
+[2106.8:2113.0400000000004] It'll come up if you stay in tech, you will see it again and again and in many different
+[2113.0400000000004:2116.6400000000003] applications, many different shapes and forms.
+[2116.64:2122.56] So the singular value decomposition really, really is your friend.
+[2122.56:2128.4] Also nice fact, it's a non-convexed optimisation problem but we can still solve it exactly
+[2128.4:2129.6] very efficiently.
+[2129.6:2132.7999999999997] So that's kind of a very rare thing, right?
+[2132.7999999999997:2136.44] It's one of the reasons why the SVD is so nice.
+[2136.44:2144.52] But okay, back to the problem that we have here, dimensionality reduction matrix factorisation,
+[2144.52:2151.04] how could you solve this optimisation problem, approximating the original TFI, the FMATRIX
+[2151.04:2153.7599999999998] with two matrices via the SVD?
+[2153.7599999999998:2156.08] Well the SVD gives you three matrices, right?
+[2156.08:2164.84] It takes a matrix, any matrix, any shape can be in the, no constraints on the matrix T.
+[2164.84:2174.48] And it is decomposed into three matrices, U, S and V, little notation in convenience that
+[2174.48:2178.36] the T on the right here is not the same as the T on the left.
+[2178.36:2184.36] The T on the left is an actual matrix whereas on the right the T just marks the transpose
+[2184.36:2189.28] of the matrix V just to be, just to be clear.
+[2189.28:2192.68] So you get this decomposition.
+[2192.68:2198.72] And additionally what's nice with the SVD, it gives you U and V that are of a specific
+[2198.72:2203.28] kind, namely the, they are orthonormal basis.
+[2203.28:2204.28] What does that mean?
+[2204.28:2212.28] That the columns of U and the columns of V, the columns of U are pairwise or thogna to
+[2212.28:2213.28] each other.
+[2213.28:2221.1200000000003] Okay, so they, they will have dot products of zero.
+[2221.1200000000003:2227.92] And the matrix S is a diagonal matrix and it captures the importance of a dimension or
+[2227.92:2234.08] a dimension in our case where we want to do this for, for topic detection, S would capture
+[2234.08:2242.4] the importance of a, of a latent topic in terms of how much variation is there in the
+[2242.4:2244.52] corpus with respect to this topic.
+[2244.52:2252.0] So, so S and the, an entry in S would be large if the corresponding topic occurs sometimes
+[2252.0:2257.48] a lot in some documents, it occurs a lot in other documents, it occurs very little.
+[2257.48:2268.48] And if you want to detect K topics, then you have that freedom to choose the, the use
+[2268.48:2275.8] you can in your once you've done your SVD, you can just consider the first K columns of
+[2275.8:2282.4] U and the first K columns of, of V.
+[2282.4:2286.04] And then that will give you, so that's called the truncated SVD.
+[2286.04:2289.84] And then if you do that, you basically have a representation like, like there, except
+[2289.84:2294.64] that you still have three matrices, whereas we want only two A and B, but you can simply
+[2294.64:2302.36] do this by basically just grouping U and S together or by grouping S and, and VT together.
+[2302.36:2310.2799999999997] So you push the, the S on either side and then you're back in your, in the original formulation,
+[2310.2799999999997:2315.04] where now you have decomposed the original matrix into two matrices A and B.
+[2315.04:2319.84] Alternatively, if you want, you could also take the square root of matrix S, since it's
+[2319.84:2324.32] a diagonal matrix, you can just take a square root by taking a square root of all the diagonal
+[2324.32:2329.72] entries and you could give root to the left and root to the right and then you would have
+[2329.72:2337.8] equally spread S and you would again have only two matrices.
+[2337.8:2345.0] The, a word about this orthogonality, orthogonality in fact, of the columns of U and
+[2345.0:2354.88] V. If we look at matrix A, if we take, if we define A to be U, like we've done, we've
+[2354.88:2362.84] done down here, then the fact that the columns of A are orthogonal to each other means that
+[2362.84:2368.36] the topics, basically are, the topics are not correlated, they don't have information
+[2368.36:2369.44] about each other.
+[2369.44:2375.4] So they basically capture non-redundant information about the, about the documents, which is
+[2375.4:2383.04] really nice because it means that you're doing, you're effectively spreading the information
+[2383.04:2389.08] over those different dimensions without, without one dimension having information about
+[2389.08:2392.16] the other.
+[2392.16:2397.0] To be fair, if you didn't raise your hand in terms of, do you know the SVD, this might
+[2397.0:2403.48] be a bit hard to digest on the spot, but then I would recommend that you revise the SVD
+[2403.48:2409.32] basics and come back to the slide and I'm sure that everything will be pretty clear.
+[2409.32:2417.76] Okay, so now let's take a step back and ask ourselves, a coupbono, like what does this
+[2417.76:2424.56] actually, who benefits from what we just did in terms of factorizing, factoring that
+[2424.56:2425.56] matrix?
+[2425.56:2433.64] But recall that a potential problem with clustering and classification and regression is the
+[2433.64:2435.16] curse of dimensionality.
+[2435.16:2441.2799999999997] So if the TFI, the F matrix is wider than it is tall, then we get all these problems
+[2441.2799999999997:2447.7999999999997] like overfitting or in clustering, the data points are equally far apart because of the
+[2447.7999999999997:2449.7999999999997] high dimension.
+[2449.7999999999997:2455.52] Now if we do matrix factorization like just described, then we solve those problems.
+[2455.52:2462.4] Because now, instead of using the original TFI, the F matrix, either as input to our classifier
+[2462.4:2469.28] or as input to our clustering method and so on, we can just use the matrix A. TFI, the
+[2469.28:2474.44] TFI, the F matrix had one row per document and so does the matrix A. It has one row per
+[2474.44:2479.7599999999998] document, but it represents each document with way fewer numbers.
+[2479.76:2486.2400000000002] So we don't have this problem of if we choose the number of topics, the K in the SVD low
+[2486.2400000000002:2492.1200000000003] enough, then we don't have that problem of overfitting or the curse of dimensionality
+[2492.1200000000003:2493.76] anymore.
+[2493.76:2501.92] So expressed in another way, this would correspond to clustering or learning to classify or
+[2501.92:2512.8] to regress in topic space rather than in the original word space.
+[2512.8:2520.4] So that's really the advantage of doing this matrix factorization.
+[2520.4:2521.7200000000003] Let's consider what we have.
+[2521.7200000000003:2527.0] After we do this factorization, then A and B are just still matrices.
+[2527.0:2534.16] There's no special structure to them and what I mean is the following, the topic representation
+[2534.16:2535.16] from LSA.
+[2535.16:2539.28] So the rows of the matrix A are still simply vectors.
+[2539.28:2541.76] They can have positive numbers, negative numbers.
+[2541.76:2545.6] They can be, you don't know how large they are.
+[2545.6:2553.36] Sometimes you would actually want to consider treat topics as probability distributions where
+[2553.36:2559.1200000000003] you might want to say, oh, I take a document and I represent the document as a probability
+[2559.1200000000003:2563.36] distribution over all the topics that I have in my data set.
+[2563.36:2568.2000000000003] That would intuitively, that would be something more interpretable.
+[2568.2000000000003:2576.04] Because what does it mean if document, if document I has a score of minus 27 for topic
+[2576.04:2577.04] J, right?
+[2577.04:2578.44] This maybe not so.
+[2578.44:2583.28] It might be good as a feature representation, but for interpretation, maybe not so much.
+[2583.28:2591.0400000000004] That's why later on after this latent schematic analysis, folks have introduced probabilistic
+[2591.0400000000004:2594.8] versions of topic detection, of topic modeling.
+[2594.8:2598.52] For example, LDA latent theory allocation.
+[2598.52:2605.32] And this is what I'll dedicate the next few slides on it.
+[2605.32:2611.96] But before we go there, because this will take a few minutes, we will now take our break
+[2611.96:2616.28] and we will come back in 15 minutes at 9.13.
+[2616.28:2627.68] Next thing we are going to do is to talk about a probabilistic version of topic detection
+[2627.68:2631.04] called LDA.
+[2631.04:2635.28] So LDA here stands for latent theory allocation.
+[2635.28:2640.68] Confusently, there is another statistical technique called latent discriminant analysis,
+[2640.68:2642.2799999999997] which is also called LDA.
+[2642.2799999999997:2644.04] This is not what this is.
+[2644.04:2647.52] This is about latent theory allocation.
+[2647.52:2649.9199999999996] So how does this work?
+[2649.9199999999996:2651.9199999999996] Let's set the stage.
+[2651.9199999999996:2658.24] In LDA, we as before consider documents as bags of words.
+[2658.24:2664.72] So we again start from our TFIDF matrix where we have one row per document and or a bag
+[2664.72:2670.64] of words matrix where we have one row per document and one column per word in the vocabulary.
+[2670.64:2677.56] Now, additionally, we introduce this notion of a topic where and now it's a probabilistic
+[2677.56:2685.72] notion where we say a topic is a distribution over all words in the vocabulary.
+[2685.72:2691.7999999999997] So for example, we might have a topic that corresponds to computer science and it would
+[2691.7999999999997:2700.44] give more probability mass to words like computer, processor, CPU, algorithm and so on.
+[2700.44:2708.8] And less or close to zero probability to words like fun and dance and so on.
+[2708.8:2712.44] So this is a probabilistic notion of a topic.
+[2712.44:2718.44] A topic as a probability distribution over the vocabulary.
+[2718.44:2724.7200000000003] And additionally, we assume that each document is represented as a distribution over the
+[2724.7200000000003:2726.04] topics.
+[2726.04:2734.68] So if we have 20 topics, then every document would be represented as a probability distribution
+[2734.68:2736.92] over those 20 topics.
+[2736.92:2744.0] So let me quickly go back to what we had before matrix A. Here we also had every document
+[2744.0:2749.72] as a row in A. But it's not necessarily a probability distribution, right?
+[2749.72:2754.6] You can have negative numbers and numbers that are greater than one and so on.
+[2754.6:2759.6] So we still assume that we want to find this kind of representation A. But now every row
+[2759.6:2764.7599999999998] of A has only non-negative numbers that sum up to one.
+[2764.7599999999998:2769.08] So there's this additional constraint in the matrix A that we want to infer.
+[2769.08:2771.7999999999997] So that's what I mean by the fourth line here.
+[2771.7999999999997:2777.04] Each document has a latent distribution over topics.
+[2777.04:2780.0] And now we assume, and this is assume, right?
+[2780.0:2786.4] We assume that documents are generated according to the following process to be clear documents
+[2786.4:2788.96] are not really generated like this.
+[2788.96:2794.32] But the LDA model assumes that documents are generated in this process.
+[2794.32:2799.8] And then it basically reverse engineer inverts the process in order to find the parameters
+[2799.8:2804.12] of that process that make the data that we actually have most likely.
+[2804.12:2807.88] I come back to that point later just anticipating it.
+[2807.88:2811.92] So here's kind of the generative story of LDA.
+[2811.92:2816.6800000000003] For every single, when we want to generate a document of length n, so a document that
+[2816.6800000000003:2820.44] contains n words, then we do the following.
+[2820.44:2827.7200000000003] First, we sample a topic distribution over the document for the document.
+[2827.7200000000003:2836.6800000000003] So that means we sample a distribution over the, let's say, 20 topics that we have.
+[2836.68:2846.44] Now, this is kind of a little bit twisted because we sample a distribution from a distribution.
+[2846.44:2851.0] So there is a distribution over distributions and we sample a distribution from that.
+[2851.0:2852.0] Okay.
+[2852.0:2856.64] That's where the word directly comes in because the directly distribution is a distribution
+[2856.64:2861.8799999999997] over my polynomial distributions.
+[2861.88:2870.52] This is mostly just to explain the name directly, but the crux here is that we sample this latent
+[2870.52:2874.6800000000003] topic representation for the document and then for every word.
+[2874.6800000000003:2879.2000000000003] So n is the number of words that we want to have in that document.
+[2879.2000000000003:2887.6] So n times we do the following from the topic distribution for that document.
+[2887.6:2890.0] We sample one of the topics.
+[2890.0:2896.56] The topic has a probability, so we sample that topic with its probability in that document.
+[2896.56:2898.6] So that gives us a topic t.
+[2898.6:2904.6] And remember that topics are distributions over the words in the vocabulary.
+[2904.6:2912.8] So now we can sample a word from that topic that we have previously sampled and we can
+[2912.8:2918.64] add that word that we sample to the bag of words for the document that's being generated.
+[2918.64:2922.96] And then we can repeat this until we have all the n words.
+[2922.96:2931.2] Again, this is not really how documents are generated, but LDA assumes that this is,
+[2931.2:2934.2] that documents could have been generated that way.
+[2934.2:2941.2] And now it fits the parameters that are necessary for these steps such that the documents that
+[2941.2:2947.64] you actually observe in your TFI-DF matrix, in your bag of words matrix are as likely as
+[2947.64:2951.3199999999997] they can possibly be.
+[2951.3199999999997:2955.96] And when I say as likely as, this is because all of these have probabilities, right?
+[2955.96:2962.8799999999997] So these are sampling processes where at the end of the day you arrive at a document
+[2962.8799999999997:2968.7599999999998] with a that was generated with a certain probability and you want to maximize the probability
+[2968.7599999999998:2973.0] of generating those documents that you actually have in your data set.
+[2973.0:2978.6] So let me draw a picture of that.
+[2978.6:2984.24] Topics, remember, so topics are, in this case we have four topics.
+[2984.24:2989.84] Each of these little sheets is a topic and although only three words are shown, really this
+[2989.84:2993.64] list has as many entries as there are words in the vocabulary.
+[2993.64:2995.72] So this might be let's say 100,000.
+[2995.72:2998.88] Each of these has 100,000 numbers.
+[2998.88:3001.8] One number associated with each word in the vocabulary.
+[3001.8:3005.32] That's the word in the vocabulary.
+[3005.32:3012.7200000000003] And each word has a probability in each topic and all these numbers inside one topic sum
+[3012.7200000000003:3013.7200000000003] up to one.
+[3013.7200000000003:3019.4] Okay, so each of these is a distribution over all words in the vocabulary.
+[3019.4:3026.0800000000004] Now when we generate a, in the generative story of LDA in the kind of the forward run,
+[3026.0800000000004:3030.28] it imagines that documents are generated like this, you do the following.
+[3030.28:3035.88] A document is represented as a distribution over topics.
+[3035.88:3042.4] So here we have our, we have our four topics and we have a distribution over the four topics.
+[3042.4:3045.92] Green doesn't appear because it simply has probability zero.
+[3045.92:3052.2000000000003] And so we have this histogram that represents or this bar chart that represents the distribution
+[3052.2000000000003:3054.0400000000004] over the four topics.
+[3054.0400000000004:3059.0800000000004] Now when we want to generate the document, what we do is for every single word, we sample
+[3059.08:3063.3199999999997] one of these topics with probability proportionate to the height of the bar.
+[3063.3199999999997:3073.3199999999997] So the probability of the topic and we, so in this case, we, we drew the blue bar.
+[3073.3199999999997:3081.04] And now that means we have to generate a word from the blue topic and added to the document.
+[3081.04:3088.24] And we do this as many times as we want to generate words in the document.
+[3088.24:3092.24] And now, what LDA actually observes is this.
+[3092.24:3099.3199999999997] It observes the documents that you have in your collection and it fiddles.
+[3099.3199999999997:3108.9599999999996] It finds you the numbers here and the numbers here such that the documents that you actually
+[3108.96:3118.2400000000002] observe have the highest possible likelihood. So it's a maximum likelihood approach.
+[3118.2400000000002:3121.2400000000002] So in this sense, LDA is unsupervised.
+[3121.2400000000002:3124.28] The topics kind of come out, you can think of it come out magically.
+[3124.28:3129.6] You don't have to tell it that you want to have four topics, one about genetics, one
+[3129.6:3134.4] about evolution, one about neuroscience and one about computer science.
+[3134.4:3136.16] You don't have to tell it that.
+[3136.16:3141.92] But it comes out from just observing the set of documents.
+[3141.92:3148.3999999999996] So the input that you give to LDA is documents represented as bags of words.
+[3148.3999999999996:3153.44] So you have your classic bag of words matrix that we've been using all the time.
+[3153.44:3160.24] And you have to specify the number of topics that you want LDA to give you.
+[3160.24:3162.96] And as output, LDA gives you the following.
+[3162.96:3170.44] It gives you K topics where every topic, so it gives you K distributions over the words
+[3170.44:3171.44] in the vocabulary.
+[3171.44:3172.68] So this is these things.
+[3172.68:3174.6] It gives you here K equals four.
+[3174.6:3178.52] It gives you these four distributions representing the topics.
+[3178.52:3184.64] And for each document, it gives you a distribution over the K topics.
+[3184.64:3187.6] For this document, that was that kind of distribution.
+[3187.6:3192.96] For every document, you get this kind of distribution also.
+[3192.96:3199.04] And if you are curious about how this works, how this is done, then there's a pretty good
+[3199.04:3201.96] Wikipedia page about it.
+[3201.96:3206.0] And I said this multiple times already, but here you have it in writing.
+[3206.0:3215.04] So LDA finds reverse engineers basically the distributions for topics distributions
+[3215.04:3219.52] over words and for documents distributions over topics, it finds you those distributions
+[3219.52:3224.0] that maximize the likelihood of the actually empirically observed documents.
+[3224.0:3227.44] So it's a maximum likelihood approach.
+[3227.44:3230.92] Okay.
+[3230.92:3233.04] Any questions about that?
+[3233.04:3236.88] Otherwise I turn the page.
+[3236.88:3240.24] Okay.
+[3240.24:3247.56] So let me ask you the following questions, which of the following word pairs is more closely
+[3247.56:3249.4799999999996] related?
+[3249.4799999999996:3253.04] Car to bus or car to astronaut?
+[3253.04:3254.2] It's not a trick question.
+[3254.2:3256.7999999999997] It's just a very obvious question.
+[3256.7999999999997:3259.8399999999997] Do you want to say it?
+[3259.8399999999997:3260.8399999999997] Car and bus, exactly.
+[3260.8399999999997:3265.7999999999997] Car and bus are of course more related than car and astronaut, but how can we quantify
+[3265.7999999999997:3266.7999999999997] this?
+[3266.8:3272.32] Just look at a computer just sees these sequences of letters, right?
+[3272.32:3279.96] So car is no more similar to bus than car is to astronaut in terms of the letter sequence.
+[3279.96:3286.2400000000002] So how could we then quantify that car is actually much more similar to bus than car
+[3286.2400000000002:3288.88] is to astronaut?
+[3288.88:3292.1600000000003] Any ideas how we could do this?
+[3292.16:3298.12] Yeah, how many of it does that go and up?
+[3298.12:3299.2] Ah, very good idea.
+[3299.2:3300.2] Okay.
+[3300.2:3308.04] So the ideas let's represent the words as topics and then somehow compare those topic
+[3308.04:3309.04] associations.
+[3309.04:3310.04] Very good.
+[3310.04:3314.04] So we can to unpack this more slowly.
+[3314.04:3315.24] Let's take the following detour.
+[3315.24:3319.8399999999997] Let's ask, how do we quantify the closeness of two documents?
+[3319.84:3328.2000000000003] We can do this by looking at the TFI, the F matrix and comparing rows in that matrix,
+[3328.2000000000003:3329.2000000000003] right?
+[3329.2000000000003:3330.6000000000004] Every document is a row in that matrix.
+[3330.6000000000004:3336.76] So we can compare those two vectors in order to quantify the similarity of the two documents.
+[3336.76:3340.96] This is also what document retrieval does where you get a new document that's not in
+[3340.96:3341.96] the matrix yet.
+[3341.96:3346.52] And then you compare it to each document in the matrix to each row in the matrix and then
+[3346.52:3350.24] you just do geometry basically, right?
+[3350.24:3354.7599999999998] You somehow look how far apart are these points or you can look at what's the cosine of
+[3354.7599999999998:3357.7599999999998] the angle of those two vectors.
+[3357.7599999999998:3364.32] So just the same way, you can quantify the closeness of two words by not comparing two
+[3364.32:3367.16] rows, but two columns of the matrix, right?
+[3367.16:3370.56] We have one column for each word.
+[3370.56:3378.0] So we can simply represent a word by how much it is associated with each document and
+[3378.0:3381.96] then compare the resulting vectors.
+[3381.96:3389.24] So there's this kind of duality between words and documents.
+[3389.24:3397.0] But now let's get back to this point, how to compare, how to quantify the closeness of
+[3397.0:3398.7999999999997] two documents.
+[3398.8:3403.6400000000003] Imagine you have one document that says, do you love men?
+[3403.6400000000003:3407.96] And another document that says, adores thou the likes of Adam.
+[3407.96:3415.28] Those mean the same thing, the same semantics, but they have zero overlap in terms of words.
+[3415.28:3423.2400000000002] So if we do this method where do you love men is one document, one row, and adores thou
+[3423.24:3429.56] the likes of Adam is another row, then we would get cosine of zero because they have zero over
+[3429.56:3435.2] there's no there's no dimension where the two have both non zero dimension.
+[3435.2:3440.2799999999997] So if we take this dot product, then we'll get zeros everywhere.
+[3440.2799999999997:3448.72] So those two documents would have a cosine of zero, although they are exactly capturing
+[3448.72:3453.08] the same, the same thing just in a different style.
+[3453.08:3457.7999999999997] So similarly, we can have the same problem when comparing two words.
+[3457.7999999999997:3463.12] So when we compare columns rather than words of the TFI, the F matrix, we might have two
+[3463.12:3470.44] words that are actually very similar semantically, but they don't occur co occur in the same
+[3470.44:3472.08] documents.
+[3472.08:3473.84] So that's exactly the same problem.
+[3473.84:3476.48] We would then also get cosine of zero.
+[3476.48:3479.56] So what is a solution to that?
+[3479.56:3483.16] The problem comes from the sparsity of the TFI, the F matrix, right?
+[3483.16:3489.64] There are so many zeros in there that we will often multiply a non zero number with a zero
+[3489.64:3496.7599999999998] and then when we take the sum of the point wise products, then we get all zeros.
+[3496.7599999999998:3499.84] So the sparsity is really the root of evil here.
+[3499.84:3506.08] If we could get our TFI, the F matrix dense, so remove, reduce the number of zeros, then
+[3506.08:3512.52] we also wouldn't get this problem of all these spurious zero cosines.
+[3512.52:3516.64] But how can we make the matrix dense?
+[3516.64:3521.3199999999997] Yeah, we can use topics, exactly.
+[3521.3199999999997:3523.56] So I already showed you how to do this.
+[3523.56:3530.2799999999997] If you factor your matrix, the TFI matrix into these topic matrices, then you now have
+[3530.28:3537.1200000000003] two smaller matrices that are both dense, they usually won't have zeros.
+[3537.1200000000003:3543.48] So in order to compare documents now, let's say those two documents, you would compare
+[3543.48:3547.36] actually rows in this matrix and now you wouldn't get that zero problem because all the
+[3547.36:3549.92] entries of this matrix are non zero.
+[3549.92:3555.36] And to compare words, you would compare columns of the matrix B. And again, you wouldn't
+[3555.36:3559.7200000000003] have the zero cosine problem because there are no zeros in this matrix.
+[3559.72:3561.3199999999997] So problem solved.
+[3561.3199999999997:3564.3999999999996] Okay.
+[3564.3999999999996:3571.04] So this brings us to the topic of word vectors.
+[3571.04:3583.8399999999997] The columns of the, right, so you can consider the columns of the TFI, the F matrix or the
+[3583.84:3591.84] columns of B, you could consider these as vector representations of words.
+[3591.84:3595.1200000000003] That was the whole point of the previous slide.
+[3595.1200000000003:3599.96] In the case of the TFI, the F matrix, you would have these long and sparse word vectors.
+[3599.96:3605.88] And in the case of the B matrix, you would have short and dense vectors.
+[3605.88:3623.6800000000003] The problem with doing it this way is that you represent each, in this representation,
+[3623.6800000000003:3629.08] you represent the entire document as one big, if you look at the TFI, the F matrix,
+[3629.08:3635.2400000000002] you represent every document as one big bag of words.
+[3635.24:3636.24] Right.
+[3636.24:3642.4399999999996] So it doesn't matter whether a word appears in a word that appears in the beginning of
+[3642.4399999999996:3647.0] a document versus one that appears in the end of the same document.
+[3647.0:3652.08] You, since you don't care about word order, you still consider those as being part of
+[3652.08:3653.08] the same document.
+[3653.08:3659.24] So basically by treating things as bags, as sets, you, you lose all this information about
+[3659.24:3667.4399999999996] word proximity, syntax, a structure of the document, and so on.
+[3667.4399999999996:3671.6] And this can be a problem because it throws out useful information.
+[3671.6:3674.2799999999997] So instead, we can do something else.
+[3674.2799999999997:3680.4799999999996] Instead of considering full documents when building our original TFI, the F matrix,
+[3680.4799999999996:3685.56] we can consider more localized contexts.
+[3685.56:3697.08] For instance, we can take a window of length L. In the example here, I use length 3, and
+[3697.08:3703.44] then you consider L consecutive words to the left and to the right of each word.
+[3703.44:3704.44] Okay.
+[3704.44:3711.52] So you kind of slide this window of length 7, you slide it through your document like a
+[3711.52:3718.32] kernel and every time you look at the middle word out of these seven, and you say, okay,
+[3718.32:3722.6] now it's in context, three words to the left and three words to the right.
+[3722.6:3727.88] So if I have the documents, so consider this a document now left and right of the target
+[3727.88:3731.4] word, then off would be the target word.
+[3731.4:3738.88] We have the blue left context and the orange right context.
+[3738.88:3742.32] And we can now construct a matrix out of that.
+[3742.32:3749.04] We can take the target words as the columns of our matrix.
+[3749.04:3751.88] So this is still the same as in the TFI, the F matrix.
+[3751.88:3759.44] But now as the rows of the matrix, we don't take documents as before, but we take context.
+[3759.44:3760.44] Okay.
+[3760.44:3768.36] So we count how often does the word off occur with that left and that right context, and
+[3768.36:3776.2000000000003] that's what we put on as rows of that what we put as entries of the matrix.
+[3776.2000000000003:3777.2000000000003] Okay.
+[3777.2000000000003:3782.6] So I already answered this question basically.
+[3782.6:3789.04] So you can another way of seeing it is to consider context as pseudo documents.
+[3789.04:3797.2400000000002] So you can take, for example, every time that you see this kind of context where you have
+[3797.24:3804.3199999999997] left and right, then some word and the target word, you can take all words that appear in
+[3804.3199999999997:3807.8799999999997] the middle between wedged between the blue and the orange.
+[3807.8799999999997:3813.08] And you can kind of concatenate all those words and make a pseudo document that you can
+[3813.08:3816.9199999999996] name left and right comma the target word.
+[3816.9199999999996:3822.3599999999997] You can consider this a pseudo document and then you count how often does each word in
+[3822.36:3828.04] the vocabulary occur in this wedged into this left and right context.
+[3828.04:3834.4] And then you basically get the same kind of representation, which is, you just made
+[3834.4:3839.32] your own pseudo documents, but then you still get this TFI, the F matrix for those pseudo
+[3839.32:3843.88] documents that are based on context.
+[3843.88:3851.08] And instead of doing TFI, the F, you can really use any other measure of statistical association.
+[3851.08:3859.88] And the FIDF is really a way of capturing the strength of the association with the word
+[3859.88:3861.36] with a context, right?
+[3861.36:3867.2799999999997] TFI, the F counts, just how often does the word occur in that context and then it multiplies
+[3867.2799999999997:3870.2799999999997] it with this constant, which is the inverse document frequency.
+[3870.2799999999997:3875.84] But you can come up with many other ways of measuring the statistical association between
+[3875.84:3877.24] words and context.
+[3877.24:3884.3199999999997] For example, you could use point wise mutual information, which I'm defining here, where
+[3884.3199999999997:3893.68] the point wise mutual information, PMI between a word and a context is defined as, I'm saying
+[3893.68:3898.56] it intuitively first and then I'll explain the formula is how much more likely is the
+[3898.56:3909.4] word to occur in that context compared to a situation where words were randomly shattered
+[3909.4:3910.7999999999997] over context.
+[3910.7999999999997:3911.7999999999997] Okay?
+[3911.7999999999997:3914.88] And so why does this formula capture that?
+[3914.88:3923.88] The probability of CW is the fraction of all, sorry, the fraction of all context word pairs
+[3923.88:3931.6] that are exactly CW, so what fraction of all context word pairs are CW?
+[3931.6:3937.92] And in the denominator here, you have the product of the marginus, which is simply if the
+[3937.92:3944.6400000000003] tool random variables were independent, what would be the probability of observing where
+[3944.6400000000003:3947.04] W in context C?
+[3947.04:3951.32] And so by building the ratio, it tells you how much more likely is it empirically than
+[3951.32:3956.2000000000003] it would be under this random, shuffled null model.
+[3956.2000000000003:3959.76] And then you take a for good measure, you take a logarithm because logarithm, sorry, your
+[3959.76:3968.7200000000003] friends and then you have point wise mutual information.
+[3968.7200000000003:3974.2000000000003] So if you do this and you put the PMI values into your matrix rather than TFI, the FMATRIES,
+[3974.2000000000003:3979.1600000000003] you get something that's called word to veck, who has heard of word to veck.
+[3979.16:3983.48] And a bunch of people have, it was super hot a few years ago.
+[3983.48:3990.8799999999997] Now it's kind of being forgotten because of all the newer NLP methods that are out there,
+[3990.8799999999997:3996.3199999999997] but it's one of the standard ways of representing words as vectors.
+[3996.3199999999997:4003.16] And it works basically by constructing this PMI matrix first, which you can see as an
+[4003.16:4010.3199999999997] alternative to the classic TFI, the FMATRIES, representing words via their context.
+[4010.3199999999997:4021.2] And then you factorize that matrix and you use the columns of this matrix B as representations
+[4021.2:4025.7599999999998] for the words, then that gives you those word to veck vectors.
+[4025.7599999999998:4031.16] Interestingly, this is not how word to veck was introduced by the original authors.
+[4031.16:4035.92] They weren't aware that they were actually doing a matrix factorization.
+[4035.92:4041.24] And it took a few years for another set of authors to ask what is this method actually
+[4041.24:4047.56] doing and then they discovered that it's actually equivalent to doing a matrix factorization.
+[4047.56:4052.48] And so instead as a newer way of doing it, you can also just do the matrix factorization
+[4052.48:4058.3199999999997] straight away rather than do the other gradient descent based thing that the original paper
+[4058.32:4061.84] does and but it's equivalent to doing a matrix factorization.
+[4061.84:4071.32] Okay, so we have about 20 minutes left and I would like to use that time to go a bit beyond
+[4071.32:4072.32] bags of words.
+[4072.32:4080.36] So so far, bags of words have been our way of representing documents where we forgot about
+[4080.36:4082.2000000000003] the word order in a document.
+[4082.2000000000003:4088.0] We just counted how often does each word occur in the document and then that was our representation.
+[4088.0:4094.88] We cast that as a vector and then we could do all those things with machine learning
+[4094.88:4096.28] algorithms.
+[4096.28:4102.68] Now let's look a bit into what we can do in order to go beyond just throwing out the order
+[4102.68:4105.92] of words.
+[4105.92:4111.8] So in terms of starting point, word vectors represent words, right?
+[4111.8:4114.0] But documents are more than just words.
+[4114.0:4116.4] They are entire sequences of words.
+[4116.4:4122.5199999999995] So how can we represent larger units such as sentences, paragraphs and documents?
+[4122.5199999999995:4134.2] The typical approach is or a very simple approach is you can simply take an average or a sum
+[4134.2:4139.32] of all the word vectors associated with the words in that larger unit.
+[4139.32:4146.2] So if you have a sentence, then it will maybe contain five words and each word has
+[4146.2:4151.92] a word vector associated with it and then you can just average those and that would give
+[4151.92:4156.8] you a reasonable representation for the sentence.
+[4156.8:4160.76] Note that it still doesn't consider word order, right?
+[4160.76:4163.88] Because the sum is is commutative.
+[4163.88:4166.88] It doesn't matter in which order you sum.
+[4166.88:4170.8] But still we're setting the stage.
+[4170.8:4176.16] Note that this is also what the back of words does in a way.
+[4176.16:4183.28] When you consider words as one hot vectors, so a long vector that is as long as you have
+[4183.28:4189.84] words in the vocabulary and exactly one entry of that vector is one, namely the entry
+[4189.84:4196.48] corresponding to the word that you're looking at, then building the sum over multiple such
+[4196.48:4199.48] one hot vectors gives you a bag of words vector, right?
+[4199.48:4207.28] Because it counts how often have you seen this one word in your sum.
+[4207.28:4214.799999999999] So you can see back words vectors as exactly that kind of summing of word vectors.
+[4214.799999999999:4219.5599999999995] But those sums or averages are not optimized in any way.
+[4219.5599999999995:4220.5599999999995] It's just like a heuristic.
+[4220.5599999999995:4225.879999999999] You close your eyes and you hope that summing or averaging is the right kind of operation
+[4225.879999999999:4229.16] to do to aggregate over multiple word vectors.
+[4229.16:4239.8] That's why more recently researchers and practitioners are learning vectors for longer units,
+[4239.8:4245.2] rather than just heuristically combining vectors for individual words.
+[4245.2:4247.12] Here are a few methods from EPFL.
+[4247.12:4249.96] The CERF-5 is a method from my own group.
+[4249.96:4257.48] Centavec is a method from Artinagi's group where the ideas you still do summing of word
+[4257.48:4263.2] vectors, but you learn the vectors such that summing is actually the right operation to do.
+[4263.2:4272.599999999999] So you kind of fit, make them, you commit to the operation of summing for aggregation,
+[4272.599999999999:4277.639999999999] but instead of praying that summing will be the good kind of operation for the word vectors
+[4277.639999999999:4282.48] that you've learned in some different way, you actually learn the word vectors such that
+[4282.48:4287.44] they are well suited for the summing operation later on.
+[4287.44:4294.5199999999995] For more advanced techniques, look at convolutional neural networks for aggregating over multiple
+[4294.5199999999995:4295.5199999999995] words.
+[4295.5199999999995:4300.719999999999] Now you start actually taking the word order into account.
+[4300.719999999999:4310.0] Same thing for recurrent neural networks such as long-term memory networks which are methods
+[4310.0:4312.5599999999995] for processing sequential data.
+[4312.56:4319.56] So here you can also deal with word order and most recently, and this is the standard
+[4319.56:4329.0] for many NLP approaches today, is to do transformer-based models who has seen or heard of transformers,
+[4329.0:4332.64] not asking whether you know how they work, but who has heard of transformers.
+[4332.64:4335.96] Okay, not so many people.
+[4335.96:4342.68] So this might be worthwhile reading a blog post or two, just to kind of get closer to what
+[4342.68:4345.44] the field is doing today.
+[4345.44:4351.28] Some common methods here are BERT, which I'll explain on the next slide, or GPT-3, who
+[4351.28:4355.2] has heard of GPT-3, openly IS GPT-3.
+[4355.2:4359.96] Okay, yeah, this is also something that I would recommend reading a blog post about because
+[4359.96:4366.08] this is really where currently a lot of AI is going.
+[4366.08:4376.96] Okay, so let's look at BERT, a classic transformer-based model in terms of motivating example, look
+[4376.96:4378.44] at these two documents.
+[4378.44:4381.4] We have a document that says, my ass likes carrots.
+[4381.4:4386.88] So here you have an ass that likes carrots in this picture and what the ass is thinking
+[4386.88:4389.88] is, oh, the guy who is writing me is actually.
+[4389.88:4390.88] He's such an ass.
+[4390.88:4394.24] Okay, meaning, but the word ass means different things in this context.
+[4394.24:4405.84] In one case, the red ass means donkey and the yellow ass means unpleasant person.
+[4405.84:4412.08] So how can we, if we use classic word vectors, such as word to veg, or something that comes
+[4412.08:4418.68] from LSA, then we could not distinguish these two cases of the word ass because we just
+[4418.68:4421.92] have one column for literally the word ass.
+[4421.92:4430.16] And it's not, it cannot distinguish different use cases of that word.
+[4430.16:4435.6] Instead, what we want is to differentiate these two cases, give them different representations
+[4435.6:4438.6] because they are used in different ways.
+[4438.6:4446.08] And here, the solution consists in contextualized word vectors, which you get, for example,
+[4446.08:4447.08] the word ass.
+[4447.08:4449.8] And this is how it works.
+[4449.8:4455.2] So first of all, birth was a method introduced now already five years ago, nearly by Google
+[4455.2:4461.2] Research in the popular paper.
+[4461.2:4463.2] Last year, it had 30,000 citations.
+[4463.2:4466.04] Now it probably already has like 40, 50,000 citations.
+[4466.04:4467.36] I stopped checking.
+[4467.36:4473.2] But you have to compare this with a paper like the Watson Creek DNA paper, which has 5,000
+[4473.2:4474.2] citations.
+[4474.2:4481.28] So this has about 10 times as many citations already as the classic double helix DNA paper.
+[4481.28:4485.679999999999] So this is really, really popular stuff.
+[4485.679999999999:4490.08] Imagine you have your document, my ass likes carrots.
+[4490.08:4492.12] And we also have this start token.
+[4492.12:4495.639999999999] I'll tell you why we want to have this as well.
+[4495.639999999999:4498.76] So we have start the sentence with a start word.
+[4498.76:4502.28] And then we have four words, my ass likes carrots.
+[4502.28:4507.92] And what birth gives you, don't worry about what it actually does, but you push your document
+[4507.92:4509.8] through this black box.
+[4509.8:4515.0] And it gives you a one vector for each word in the document.
+[4515.0:4516.0] Okay.
+[4516.0:4524.599999999999] So you get this matrix, which has as many as many rows as their words in the document.
+[4524.599999999999:4532.0] And it has some predefined dimensionality, which could be like 300 or 700 or something
+[4532.0:4535.04] like that.
+[4535.04:4539.08] And so note that this is now you get a matrix per document.
+[4539.08:4542.52] Whereas earlier, we had a vector per document.
+[4542.52:4545.96] And then we stack those vectors in our TFI, the F matrix.
+[4545.96:4550.64] Now here we have one matrix per document, because we already have a vector rather than
+[4550.64:4552.6] a single number for each word.
+[4552.6:4553.72] Now we take another document.
+[4553.72:4560.72] Oh, let me first say what this, what you can then interpret this as the rows are contextualized.
+[4560.72:4561.72] Word, word vectors.
+[4561.72:4564.4800000000005] You have one row per input word.
+[4564.4800000000005:4570.280000000001] And you also have this blue vector, which is associated with the start token.
+[4570.280000000001:4576.12] And you can consider this as a representation for the entire document, the entire sentence.
+[4576.12:4582.280000000001] So it kind of pulls information across all the words in the document.
+[4582.280000000001:4590.280000000001] Now if you take another document, he's such an ass, then you again get one, one vector
+[4590.280000000001:4591.6] per word.
+[4591.6:4595.96] Now we have the same word as twice, once in red and once in gold.
+[4595.96:4605.400000000001] But the red ass vector is different from the golden ass vector.
+[4605.400000000001:4608.320000000001] Because those are used differently.
+[4608.320000000001:4615.360000000001] So in general, every time a word is used, it will have get a different vector because
+[4615.36:4624.28] this representation for this word as here is informed by all the other words in the sentence.
+[4624.28:4625.28] Okay?
+[4625.28:4627.24] So this is contextualized.
+[4627.24:4632.679999999999] It's the representation of one word depends on the representation of all the other words
+[4632.679999999999:4635.5599999999995] in the context.
+[4635.5599999999995:4645.04] So this allows you to do fundamentally more than if you only had non contextualized representations
+[4645.04:4646.04] for words.
+[4646.04:4647.04] Okay.
+[4647.04:4659.0] So going beyond, actually going a bit more classic again, there is an entire NLP pipeline
+[4659.0:4667.12] usually where so far we've talked about specific tasks such as document classification and
+[4667.12:4670.0] topic detection and so on.
+[4670.0:4674.12] There's in fact in natural language processing, there's nearly like a standardized pipeline
+[4674.12:4679.48] by which you want to process text and then you can grab information from various stages
+[4679.48:4682.04] of that processing pipeline.
+[4682.04:4686.0] And we've actually touched on a bunch of these already for example tokenization.
+[4686.0:4692.36] We looked at it last lecture, but really it's only one step in an entire pipeline of processing
+[4692.36:4693.36] steps.
+[4693.36:4701.12] So tokenization takes a sequence of characters and groups the characters into words into
+[4701.12:4703.12] token.
+[4703.12:4709.2] And then sentence splitting takes the sequence of tokens and splits it groups, adjacent tokens
+[4709.2:4714.72] into larger units, namely sentences.
+[4714.72:4720.88] Then given a sentence, you want to detect parts of speech.
+[4720.88:4726.2] So parts of speech are things like nouns, verbs, adjectives and so on.
+[4726.2:4730.28] But you already need to have the unit of a sentence before you can even meaningfully think
+[4730.28:4734.92] about parts of speech because they're only defined in the context of a sentence.
+[4734.92:4737.24] Then you can do named entity recognition.
+[4737.24:4742.04] For example, recognize whether a sequence of words corresponds to a person name or an
+[4742.04:4745.92] organization name or a place or a date and so on.
+[4745.92:4751.599999999999] And then more syntactic things like co-reference resolution.
+[4751.599999999999:4755.5199999999995] For example, when I say I like him, he is nice.
+[4755.5199999999995:4759.32] Then he or I like Bob, he is nice.
+[4759.32:4761.16] And he refers to Bob.
+[4761.16:4762.719999999999] So that's the co-reference.
+[4762.719999999999:4766.96] Bob and he refer to the same entity in the real world.
+[4766.96:4776.759999999999] And so this is often an important step for text processing and then parsing.
+[4776.759999999999:4785.759999999999] Parsing deconstructs a sentence into its constituent syntactic parts.
+[4785.76:4794.92] And the result of parsing is a three-base structure like what you have down here for this dependency
+[4794.92:4803.8] parts, which tells you that the verb of the sentence is this and then you have the noun
+[4803.8:4805.2] that depends on the verb and so on.
+[4805.2:4808.84] So it gives you the syntactic structure of the sentence.
+[4808.84:4815.24] So the NEP pipeline runs from a sequence of characters all the way to complex syntactic
+[4815.24:4819.24] object linguistic objects like parse trees.
+[4819.24:4823.04] And there is no need for you to reinvent the wheel here of course, right?
+[4823.04:4828.0] But there are standard implementations like if you're using Java then there is the Stanford
+[4828.0:4830.04] Core NLP library.
+[4830.04:4838.639999999999] If you're using a Python then there is NETK, natural language toolkit or space C and so
+[4838.639999999999:4839.639999999999] on.
+[4839.639999999999:4844.88] So you can use those really as mature technology.
+[4844.88:4851.0] There is usually or traditionally the NLP pipeline as already insinuated by the word
+[4851.0:4858.12] pipeline is a sequential model where you have a fixed order of steps roughly what I have
+[4858.12:4860.04] here on this slide.
+[4860.04:4865.04] And this means though that errors will propagate downstream.
+[4865.04:4872.84] If you make an error already with tokenization then it can screw up all your downstream processing
+[4872.84:4873.84] steps.
+[4873.84:4882.4800000000005] And that's why and so the fixed order is also not optimal for all cases.
+[4882.4800000000005:4889.52] So for example, usually syntax syntactic analysis is done before semantic analysis.
+[4889.52:4896.2] So first people will do the syntactic parse and then you can reason about the semantic
+[4896.2:4902.360000000001] parse like what is the semantic role of each word in a sentence.
+[4902.36:4907.599999999999] But frequently semantics will actually help you in order to infer the syntax.
+[4907.599999999999:4910.4] So there is this kind of mutual dependency between the two.
+[4910.4:4918.719999999999] But if you have a purely pipeline based approach then you cannot leverage this mutual dependence.
+[4918.719999999999:4926.36] So that's why more currently more recently research tries to learn all those different
+[4926.36:4929.719999999999] NLP tasks jointly at the same time.
+[4929.72:4936.92] So the different solutions for the different parts of the pipeline can benefit from each
+[4936.92:4937.92] other.
+[4937.92:4947.400000000001] I'll stop my discussion of advanced NLP topics here and I will instead point you to a class
+[4947.400000000001:4951.96] that is dedicated all to NLP CS431.
+[4951.96:4953.56] Is it happening this semester actually?
+[4953.56:4955.8] Is anyone taking it this semester?
+[4955.8:4956.8] No.
+[4956.8:4961.400000000001] So probably it's happening next semester then which is great because it means you can still
+[4961.400000000001:4966.08] enroll and benefit from it very soon already.
+[4966.08:4973.96] Instead of going deeper in this topic I just have one more slide to wrap up which is trying
+[4973.96:4979.64] to give you a sense of today's trends in natural language processing.
+[4979.64:4987.8] So the big hype, the big trend today is to work with these so-called generative language models.
+[4987.8:4990.52] It's kind of the API is kind of very simple.
+[4990.52:4992.4800000000005] It's text in, text out.
+[4992.4800000000005:4998.72] So there is some massively complex models, the largest machine learning models that have
+[4998.72:5002.8] been built to date are for doing this kind of task.
+[5002.8:5005.12] But forget about that for now.
+[5005.12:5009.4400000000005] Just think about the input output behavior.
+[5009.44:5015.759999999999] These models such as GPT-3 work by taking text as input.
+[5015.759999999999:5020.5599999999995] So here I typed this in the web interface of GPT-3.
+[5020.5599999999995:5024.0] I typed the white text here.
+[5024.0:5029.4] I said turn the following negative beer review into a positive review and then I copy-paste
+[5029.4:5032.639999999999] it a beer review from Rape Beer.
+[5032.639999999999:5038.0] This is actually a review for Budweiser which is the beer that cannot be served at the
+[5038.0:5039.0] World Cup.
+[5039.0:5044.64] If you read the review then you might actually be, maybe it's good riddance.
+[5044.64:5047.32] So here's the review that I copy-paste it.
+[5047.32:5054.8] 440 milliliters can pour 4.5% alcohol by volume, a version, aroma and taste of light grains,
+[5054.8:5061.84] slight fruity, hop undertone, clear golden appearance, light-bottied, very average American-style
+[5061.84:5063.56] light-logger.
+[5063.56:5069.72] And I instructed the model to turn this review which is negative into a positive review.
+[5069.72:5073.56] And so the model gives me as its response another text.
+[5073.56:5076.200000000001] So it's text in text out.
+[5076.200000000001:5080.68] And so what it does, it mostly copied the review.
+[5080.68:5085.4400000000005] It copied kind of the negative, sorry, the neutral parts of the review.
+[5085.44:5095.12] The size of the can, the alcohol by volume and then the kind of objective description
+[5095.12:5096.96] of the taste.
+[5096.96:5101.879999999999] But then this negative sentence, very average American-style, it actually replaced by something
+[5101.879999999999:5102.879999999999] negative.
+[5102.879999999999:5109.5199999999995] As I instructed it to do, it replaced that by a crisp and classic American, sorry, turned
+[5109.5199999999995:5113.96] into something positive because the origin was negative, turned into something positive.
+[5113.96:5120.64] A crisp and classic American-style light-logger, refreshing and perfect for any occasion.
+[5120.64:5126.96] So this is about as good, I would argue, as a marketing person could have done.
+[5126.96:5130.12] And the model was not trained on this task, right?
+[5130.12:5136.28] It wasn't trained to translate negative beer reviews into positive reviews.
+[5136.28:5142.76] It was just trained on many, many gigabytes of text in order to predict the next word
+[5142.76:5144.280000000001] given the previous words.
+[5144.280000000001:5146.64] So that's all the model was trained to do.
+[5146.64:5152.64] But by being able to predict the next words, it could, basically, it extended the text
+[5152.64:5154.88] that I gave it.
+[5154.88:5159.68] And then this was the most likely next continuation.
+[5159.68:5166.56] And so by doing this, these models are basically generalist models that can do any sort of
+[5166.56:5171.0] NLP and also, nearly any sort of AI.
+[5171.0:5178.2] Many NLP tasks can be formulated in this framework by prompting the generative language model
+[5178.2:5180.08] with the right input.
+[5180.08:5185.24] So this is kind of a new style of NLP, where we take this model, we don't even retrain
+[5185.24:5186.24] it at all.
+[5186.24:5190.64] We just have the model as given, and we have to think about how can we ask it the right
+[5190.64:5193.56] questions such that it tells us what we want to know.
+[5193.56:5203.96] And with this way, you can frame tasks like question answering, arithmetic, code completion.
+[5203.96:5210.96] So you can actually write Python code and the model will continue your code.
+[5210.96:5214.200000000001] You can use text summarization translation.
+[5214.200000000001:5217.84] I could say translate the following sentence from English to French.
+[5217.84:5221.52] And then I would type an English sentence and it would give me the French version.
+[5221.52:5228.160000000001] And the model can do all of these things at the same time, which means that something
+[5228.160000000001:5232.280000000001] that you should always have in the back of your mind when you work on projects with text
+[5232.280000000001:5237.84] is, hey, could I leverage these things and just prompt them with the right input such
+[5237.84:5243.72] that without me having to do any training, I would just get my tasks solved for free.
+[5243.72:5244.72] Right?
+[5244.72:5247.0] So this is something to keep in mind.
+[5247.0:5251.36] You can play around with this kind of model at the link that I gave you, you have to create
+[5251.36:5257.48] an account, but after that you get like a certain budget and you can play around with that,
+[5257.48:5258.8] you can also script it.
+[5258.8:5261.0] There is an API.
+[5261.0:5265.48] And after you have exhausted your budget, it costs a little bit of money, but even exhausting
+[5265.48:5269.12] the budget will take quite some time.
+[5269.12:5276.08] So if you want to be bleeding edge, then also maybe for your projects who knows, then you
+[5276.08:5284.48] can play around with this kind of models, which really opens new doors in many directions.
+[5284.48:5285.48] Okay.
+[5285.48:5287.32] So with that, I'll stop here.
+[5287.32:5292.12] This was our double feature on text analysis.
+[5292.12:5296.16] Next time I can give you the horizon for the rest of the lecture.
+[5296.16:5302.16] Next time we will talk about handling network data, graphs.
+[5302.16:5309.48] And after that we will have a lecture about scaling up to massive, massive petabyte scale
+[5309.48:5311.0] data sets.
+[5311.0:5314.88] Unfortunately, I would like to have that lecture about scaling up much earlier, such that
+[5314.88:5318.8] you can actually use it in your project, but there is so much material in the class that
+[5318.8:5320.639999999999] I have to push it to the end.
+[5320.639999999999:5325.2] And then we're done with the material in the very last class.
+[5325.2:5330.24] Just before Christmas, I will just give you kind of a, I will talk about a project of
+[5330.24:5336.12] ours, a research project, and then that will be the end of the class.
+[5336.12:5343.28] And that week, the last Friday, so Friday, the 23rd, we won't have a lab session either.
+[5343.28:5349.0] So the lecture will end on the 21st of December.
+[5349.0:5350.0] Okay.
+[5350.0:5356.04] So with that outlook, have a good week and see you on Friday.
+[5356.04:5363.04] Bye.

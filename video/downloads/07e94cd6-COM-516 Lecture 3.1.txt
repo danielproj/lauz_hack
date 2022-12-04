@@ -1,0 +1,166 @@
+~COM-516 Lecture 3.1
+~2020-07-29T21:54:46.687+02:00
+~https://tube.switch.ch/videos/07e94cd6
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:7.8] Hello, so in this lecture we will introduce the important concepts of limiting and stationary
+[7.8:14.16] distributions for Markov chains, which is a central topic in the theory of Markov chain.
+[14.16:27.240000000000002] Let me start with stationary distribution.
+[27.24:34.239999999999995] So first I would like to remind you of something we have already seen.
+[34.239999999999995:45.239999999999995] Remember, we have this distribution at time n of Markov chain.
+[45.24:65.24000000000001] This is what we wrote as pi n j is the probability that xn is equal to state j for n j in the state
+[65.24000000000001:67.24000000000001] space s.
+[67.24:76.24] So this describes what your probability to be in such and such states.
+[76.24:82.24] This gives you an idea where your process has the highest probability to be at a certain
+[82.24:87.24] time or what are the probabilities for each state.
+[87.24:94.24] Remember that we also said that we could start from an initial distribution by 0.
+[94.24:101.24] So we agreed that we have no complete information about the initial state.
+[101.24:108.24] So the initial state can itself be distributed among different states.
+[108.24:113.24] And of course one big question for Markov chains is how does that evolve over time?
+[113.24:120.24] What happens with pi n as n evolves over time?
+[120.24:129.24] And we have seen the following that from time n to time n plus 1, we have that pi j n plus
+[129.24:141.24] 1 can be written as some of i in s of pi i n times pi j, which is kind of an intuitive
+[141.24:146.24] relation because you know it says the probability to be in a state j at time n plus 1 in order
+[146.24:153.24] to compute this, you just look where you are at time n with the pi i n.
+[153.24:163.24] And then you multiply these probabilities by the transition probabilities to go from each i to the position j at time n plus 1.
+[163.24:166.24] And you sum these probabilities.
+[166.24:179.24] Okay, so this is this holds for every j in s. And in vector form this can be written as the vector pi n plus 1,
+[179.24:192.24] which is known as the row vector is equal to the row vector pi n times the transition matrix p.
+[192.24:199.24] And of course while in finite dimensions this is perfectly well defined, it's also perfectly well defined in infinite dimensions.
+[199.24:205.24] Just that here we are talking about infinite dimensional operator p instead of a simple matrix.
+[205.24:213.24] But this can still be written. So here we have a matrix.
+[213.24:228.24] So this relation suggests that the following definition of what a stationary distribution is.
+[228.24:235.24] So here is the definition.
+[235.24:249.24] A stationary distribution should simply be a distribution pi such that when you apply one step of the chain.
+[249.24:258.24] So when you take this distribution pi and multiply it by p, you remain with the same distribution pi.
+[258.24:269.24] Okay, so here is the definition. Probability distribution pi.
+[269.24:277.24] Actually, you know, well, whenever I say distribution, I mean probability distribution.
+[277.24:286.24] So, so, operative distribution pi will be a sequence of numbers indexed by an immense of s,
+[286.24:294.24] which satisfies, you know, since these are probabilities, they are all between 0 and 1.
+[294.24:299.24] And the sum of i in s of pi i is equal to 1.
+[299.24:315.24] Okay, so a generic probability distribution is a stationary distribution for the chain x with transition matrix p.
+[315.24:344.24] So for the other chain x, if pi j is equal to sum of i in s of pi i times pi j for every j in s or say it in vector form.
+[344.24:351.24] So, pi is equal to pi p.
+[351.24:364.24] And if you will remember anything from this course, that's the equation you will remember in 50 years from now.
+[364.24:375.24] So, this is what definition of what a stationary distribution is. So, it is again a distribution.
+[375.24:382.24] You have your, this is assuming, let's assume that this distribution is the distribution of your chain at a certain time.
+[382.24:392.24] If you let the time evolve by 1, so you apply the matrix p to the distribution pi, you recover the same distribution pi.
+[392.24:399.24] That's therefore the word stationary.
+[399.24:407.24] Okay, let me just write this better.
+[407.24:418.24] Okay, some remarks about what does that imply? What does this definition imply?
+[418.24:425.24] Well, first implications of what it means to be a stationary distribution.
+[425.24:447.24] If pi is stationary, then of course pi is time p to the end.
+[447.24:456.24] We'll be equal to pi is time p times p to the n minus 1.
+[456.24:461.24] But pi times p is equal to pi, okay, because pi is stationary.
+[461.24:468.24] So, we can redo the same trick here. And so, this is pi times p to the n minus 1 now.
+[468.24:476.24] And you know, we can go the same with n minus 2 and so on and so forth until we end up with pi.
+[476.24:482.24] So, if you have a stationary distribution for one step of the chain, then you also have it for n steps.
+[482.24:493.24] So, it remains, so if you're in a stationary distribution, you can perform as many steps in the chain and you will still have the same distribution pi.
+[493.24:505.24] And of course, a second implication of that is that if the initial distribution of the chain is directly the stationary distribution pi,
+[505.24:530.24] okay, then by what I just said, pi n, which we know to be pi 0 times p, will be equal to pi p, sorry, pi 0 times p to the n, will be equal to pi times p to the n, which is equal to pi.
+[530.24:553.24] And that's we will be true for every n in n. So, if you start a chain in the initial distribution, then this chain remains in, sorry, if you start to chain in the stationary distribution pi, then this chain remains with the stationary distribution over all times.
+[553.24:563.24] So, now, from remarks,
+[563.24:590.24] a stationary distribution by definition is a solution of a system of linear equations.
+[590.24:604.24] It's a very mathematical definition and has not, every year, nothing to do except for the matrix P, nothing to do with the actual distribution of the chain.
+[604.24:627.24] Only in the very specific case that we had here above when I assume that pi 0 is equal to pi, then the distribution of the chain at every time is the stationary distribution. But if I don't assume this, then I don't exactly know how to make the connection between pi and the chain x, right.
+[627.24:645.24] The state pi n. So, in particular, it is not necessary.
+[645.24:666.24] The case that the limit as n goes to infinity of pi n is equal to pi, which we would be tempted to say. Right. So, of course, that's the goal, that's the idea that we have in mind that the stationary distribution pi will be the limit of the pi n.
+[666.24:677.24] So, this is actually the definition of what a limiting distribution is so far. We don't have this definition.
+[677.24:687.24] Now, another important remark is that pi may not exist in some cases.
+[687.24:708.24] So, there are a mark of chains for which you can define such distribution pi. If you want to say it otherwise, given a matrix P, it is sometimes the case that you don't find the pi, such that pi is equal to pi p.
+[708.24:727.24] And in some cases, pi may not be unique. But these are these might be the same cases. Well, okay. No, because then if it's not unique, then it exists.
+[727.24:738.24] But so, there are cases where pi exists, but it's not unique. There might be multiple pi. Okay.
+[738.24:756.24] And so, so that's now where we have to start working, trying to identify for which chains does pi exist and is unique. Okay. Which is not given.
+[756.24:771.24] And now, a very practical remark. When you try to solve this equation pi is equal to pi p.
+[771.24:792.24] In the system of, let's say, capital N equations pi is equal to pi p. Well, here we assume that the state space has size N. Okay.
+[792.24:799.24] Capital N.
+[799.24:819.24] And so, that there is always one redundant equation.
+[819.24:831.24] Say that otherwise, the system of capital N equations is not linearly independent. There is one of them, which is, which is implied by the N-1 others.
+[831.24:846.24] And so, if you try to solve the system, you always get multiple solutions. But in order to determine pi,
+[846.24:865.24] you have, of course, sorry, in order to determine pi, we need to use also the condition that we have, that pi is a probability.
+[865.24:878.24] So, we have some of I in S of pi I is equal to one. This is the normalization condition, right? And indeed, right? If you just look at the equation above,
+[878.24:892.24] pi is equal to pi p, then indeed, right? You can multiply pi by any constant C. And if you have a solution for a given pi, then you can multiply it by any constant C. And you will still find a solution to the equation.
+[892.24:908.24] Okay. So, in order to, but okay, this is fine. So, again, you have capital N equations, but not all of them are useful. There is one, which is redundant.
+[908.24:917.24] But on top of that, you have this relation that the sum of the pi I is equal to one that allows you to find the unique pi when this one exists, right?
+[917.24:922.24] First of all, we need to make sure that this one exists.
+[922.24:925.24] Okay.
+[925.24:950.24] Perhaps a more final remark, a more mathematical remark, still another mathematical remark.
+[950.24:965.24] If you define one to be the all one vector, okay? All ones vector.
+[965.24:982.24] So, a column vector, sorry, all ones column vector, column vector.
+[982.24:997.24] Then, p times one is equal to one. Actually, this is the condition. This is saying that the raw sums of p is equal to one.
+[997.24:1012.24] So, some of a j in s of p i j is equal to one for every j. Sorry for every i in s. Okay.
+[1012.24:1018.24] This is the property of transition matrix. By the way, this is sometimes called also.
+[1018.24:1031.24] I should introduce this here, I guess. This is also what we call as stochastic matrix. Just a small terminology here.
+[1031.24:1041.24] Which is completely equivalent to what I said before. We talked about transition matrix. This is just another word.
+[1041.24:1050.24] Okay. So, p times one is equal to one. Right? If you look at this equation on the right, you see that this can be phrased like this.
+[1050.24:1055.24] So, you take the matrix p, you multiply it by the all one vector, you get the all one vector.
+[1055.24:1068.24] Which is saying that one is an eigenvalue of the matrix p with eigenvector all ones.
+[1068.24:1073.24] Okay, because p times one is equal to one times one. Okay. That's okay.
+[1073.24:1078.24] Perhaps I should write this one with double bars so that you know.
+[1078.24:1085.24] So, what I have here just to make me completely clear, I have this is equal to that.
+[1085.24:1106.24] So, one is a eigenvector of the matrix p on the right.
+[1106.24:1121.24] We'll corresponding eigenvalue. And that's always the case.
+[1121.24:1148.24] Now, what I just defined before. Now, if there exists, if there exists a vector pi such that.
+[1148.24:1156.24] And here I should say a raw vector pi.
+[1156.24:1162.24] Search that pi is equal to pi p.
+[1162.24:1180.24] Then, pi is also an eigenvector of p. But this time on the left.
+[1180.24:1192.24] So, this is the same eigenvalue one. So, you can view this equation pi is equal to pi p.
+[1192.24:1200.24] As actually an eigenvector eigenvalue equation.
+[1200.24:1207.24] Where we know that the eigenvalue should be one. And we're looking for the eigenvector corresponding to the eigenvalue one.
+[1207.24:1214.24] For the flight mathematical detour here.
+[1214.24:1220.24] It helps to have this point of view of eigenvectors and eigenvalues.
+[1220.24:1228.24] And we will come back later to this in the course.
+[1228.24:1237.24] Now, about the question of whether pi exists any unique.
+[1237.24:1244.24] So, here I will just state what the situation is.
+[1244.24:1249.24] And we will not go over the proof of that. Because this is what I'm going to state now.
+[1249.24:1259.24] Now, is a bit theorem. We quite a lot of work if you want to prove it.
+[1259.24:1267.24] But, more important is to understand not necessarily the proof. But what the theorem states.
+[1267.24:1283.24] So, here is a theorem. And this is not something we're going to prove.
+[1283.24:1298.24] So, let x be an irreducible Markov chain. So, this is our first restriction. We will talk only here about irreducible Markov chain.
+[1298.24:1304.24] So, that is a chain where all states communicate. Where it's only one class.
+[1304.24:1312.24] Now, this is the building block. If you want this theorem is the building block. It says what happens for a chain which is irreducible.
+[1312.24:1319.24] If you want to go to marginal cases, you can kind of...
+[1319.24:1329.24] You have to see what happens. If you have a non irreducible chain, you have to see what are its classes and so on.
+[1329.24:1334.24] And how to use this theorem. I will mention this a little later.
+[1334.24:1344.24] But really, if you want to understand how Markov chain behave, you should really focus on Markov chains which are just one class. So, which are irreducible.
+[1344.24:1357.24] Now comes the very important statement which is difficult to prove that x is positive recurrent.
+[1357.24:1367.24] According to the definition that we saw last time. So, this is... think of this word positive recurrent as truly recurrent.
+[1367.24:1382.24] So, the chain is positive recurrent if and only if x admits a stationary distribution...
+[1382.24:1391.24] So, if you find a solution to the equation pi is equal to pi p, then you know that your chain is positive recurrent.
+[1391.24:1399.24] And reciprocally, if you can prove that the chain is positive recurrent, then you know that there will exist such a pi.
+[1399.24:1402.24] Okay, so...
+[1402.24:1409.24] And this is very important here because this theorem is a nif and only if statement which is very convenient.
+[1409.24:1419.24] Okay. Okay. So, that's the D-presult.
+[1419.24:1426.24] There are extra things provided by the theorem which is the following.
+[1426.24:1447.24] That in addition, in this case, so if pi exists, which is, you know, then it is unique.
+[1447.24:1454.24] So, that's something interesting. So, if you have a new irreducible chain on top of that it is positive recurrent.
+[1454.24:1461.24] If you find a pi, then you know it's the only pi that is solution of the equation pi is equal to pi p.
+[1461.24:1466.24] There is no other pi which will be solution of that.
+[1466.24:1474.24] And you even have... I shouldn't put a dot here because you even have a formula for this pi.
+[1474.24:1485.24] So, it is given by the following pi i is 1 over mu i.
+[1485.24:1487.24] I don't know if you remember what mu i is.
+[1487.24:1504.24] mu i was this expected time to return to state i. So, which we wrote like 1 over expectation of ti given that x0 is equal to i.
+[1504.24:1512.24] We saw that for a positive recurrent chain, this expected return time is finite.
+[1512.24:1519.24] And so, what's interesting is that note.
+[1519.24:1540.24] If x is positive recurrent, we have seen that mu i is finite.
+[1540.24:1545.24] So, pi will be always greater than 0.
+[1545.24:1557.24] So, in a positive recurrent chain, irreducible chain and positive recurrent, there will be one stationary distribution, a single stationary distribution.
+[1557.24:1561.24] And this stationary distribution on top of that will never have zeros.
+[1561.24:1571.24] And there will be always, since all states communicate, there will be always a positive probability to visit states every state.
+[1571.24:1575.24] No states will be left behind if you want.
+[1575.24:1581.24] So, that's true for every pi in this.
+[1581.24:1586.24] So, that's something which is quite interesting.
+[1586.24:1594.24] So, this theorem says lots of things at the same time. And we will see examples in the next video.
+[1594.24:1602.24] I don't want to state one quick corollary of this theorem before ending this video.
+[1602.24:1615.24] There is, of course, one extremely important corollary, which is that a finite irreducible chain,
+[1615.24:1630.24] if you remember what I told you about finite irreducible chain in the previous video, the previous lecture.
+[1630.24:1634.24] I told you it's always positive recurrent, right?
+[1634.24:1636.24] There is no way to escape the chain, it's finite.
+[1636.24:1638.24] So, we know that we are recurrent.
+[1638.24:1644.24] And on top of that, since we have a finite number of states, we cannot spend an infinite amount of time on average before coming back.
+[1644.24:1647.24] To where we left from.
+[1647.24:1651.24] And so, a finite irreducible chain is always positive recurrent.
+[1651.24:1670.24] Therefore, by the theorem that we have here, a finite irreducible chain always admits a unique stationary distribution pi.
+[1670.24:1677.24] So, here we have a very nice criterion that holds for many, many chain.
+[1677.24:1686.24] So, for many chains, all the ones which are finite and irreducible, you will always find a unique stationary distribution.
+[1686.24:1699.24] So, it's reassuring that this concept of stationary distribution that we defined exists and is unique for a wide variety of Markov chains.
+[1699.24:1703.24] Okay, I will talk about examples in the next video.

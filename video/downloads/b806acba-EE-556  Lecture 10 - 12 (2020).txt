@@ -1,0 +1,593 @@
+~EE-556 / Lecture 10 - 1/2 (2020)
+~2020-11-09T15:22:31.449+01:00
+~https://tube.switch.ch/videos/b806acba
+~EE-556 Mathematics of data: from theory to computation
+[0.0:11.120000000000001] So welcome to yet another lecture of math of data.
+[11.120000000000001:16.56] We're going to continue our discussions on deep learning.
+[16.56:22.36] And today we're going to cover some more sophisticated topics.
+[22.36:23.36] All right.
+[23.36:27.240000000000002] So let's continue.
+[27.24:30.04] So what we're going to do today is we're
+[30.04:34.839999999999996] going to basically cover what is known as adversarial machine learning.
+[34.839999999999996:36.96] All right.
+[36.96:42.239999999999995] For this to be more complete, we're going
+[42.239999999999995:50.480000000000004] to look at minimax problems and the focus on adversarial training,
+[50.480000000000004:52.959999999999994] generative adversarial networks.
+[52.96:57.6] And we're going to discuss the difficulty of solving minimax problems.
+[57.6:60.08] Next week, we're going to continue on the minimax thread,
+[60.08:64.56] but a bit more on the code mix from K of setting.
+[64.56:69.64] So here is a simple optimization template.
+[72.84:76.12] It's you minimize the respect to x.
+[76.12:80.08] You maximize the respect to y.
+[80.08:86.16] Some function that is couples, couples, it couples x and variables.
+[86.16:89.4] You have some domains.
+[89.4:90.64] And it looks there.
+[90.64:96.56] It's like not so much different than if you think about it.
+[96.56:101.64] So this is an explicit function of x.
+[101.64:110.76] So it seems not much different from minimize f of x, x element of this set.
+[110.76:116.2] And it just turns out that this is very broad template.
+[116.2:119.12] It occurs in game theory.
+[119.12:120.6] But what we're going to do today is we're
+[120.6:123.8] going to look at it in the machine learning setting.
+[123.8:126.28] And we're going to cover some applications.
+[126.28:129.52] And these are very nice applications.
+[129.52:132.72] So the first one is a decision training, like I said.
+[132.72:135.92000000000002] The second one is generative at the serial networks.
+[135.92000000000002:140.76000000000002] And in the advanced material, there is a reinforcement learning
+[140.76000000000002:142.76000000000002] part that I will not cover.
+[142.76000000000002:148.44] And you're not responsible for your own knowledge.
+[148.44:155.32000000000002] So let's just recall the setting with the empirical risk minimization.
+[155.32:162.51999999999998] What we had was this vatnix setting where we have a generator that gives us
+[162.51999999999998:163.84] AI.
+[163.84:169.56] We had a supervisor that gives us, let's say, labels or numbers or probabilities.
+[169.56:184.07999999999998] And as the learning machine, our job is to predict these BI given AI.
+[184.08:191.32000000000002] And for this purpose, we delved into the parametric setting where we had a function
+[191.32000000000002:195.24] h, parametrized by parameters x.
+[195.24:198.44] And we called our sort of we looked at our examples.
+[198.44:203.96] And we said, you know, like let's try to minimize, for instance, the population risk,
+[203.96:206.12] expected risk.
+[206.12:211.4] This problem is intractable because we don't know the distribution of AI BI.
+[211.4:220.04000000000002] And instead, we look at empirical risk minimization, which is the mean approximation to the expectation.
+[220.04000000000002:221.52] We have some empirical samples.
+[221.52:225.76] We take the average and times through the strong law of large numbers.
+[225.76:228.12] It will converge to the expectation.
+[228.12:232.0] This and grows with the square of AND rates.
+[232.0:238.28] And here is the optimization formulation that we focused on.
+[238.28:242.08] In the setting, let me just remind you some of the commonly used laws functions.
+[242.08:243.4] We had the logistic laws.
+[243.4:246.52] You can look at squared laws, exchange laws and so on.
+[246.52:250.52] This is a try to process.
+[250.52:258.12] Now, suppose, you know, you, I'm going to assume actually, right?
+[258.12:261.28] You went through the first half of this class.
+[261.28:269.4] And now you know the methods to find some optimal parameters in the empirical risk minimization
+[269.4:270.4] problem.
+[270.4:271.4] All right.
+[271.4:275.52] So what we did is we fixed, let's say, a neural network.
+[275.52:277.4] We set up our empirical laws.
+[277.4:282.79999999999995] We applied a host of algorithms that we could choose from, adapters to cast the gradient
+[282.79999999999995:286.47999999999996] descent, accelerated gradient descent, whatever happened.
+[286.48:292.20000000000005] And we obtained an optimal parameter for our function.
+[292.20000000000005:298.48] Now, it will save examples.
+[298.48:302.04] You can think of it as a perturbation.
+[302.04:303.04] Right.
+[303.04:305.04] Teta.
+[305.04:316.28000000000003] That is specifically designed to hurt your predictive classifier.
+[316.28:317.28] Right.
+[317.28:321.15999999999997] And the idea is that so here we have our loss function.
+[321.15999999999997:326.23999999999995] We have obtained the optimal solution to this loss function.
+[326.23999999999995:332.55999999999995] And we would like to do prediction, you know, the usual way.
+[332.55999999999995:337.28] And somebody says, okay, let me input.
+[337.28:342.32] So in this setting, once he fixed our learning machine, right?
+[342.32:345.47999999999996] So we have our h x r.
+[345.48:347.08000000000004] Now this is how we predict, right?
+[347.08000000000004:349.8] Given new data, this is how we predict.
+[349.8:358.12] So what you can do is given an input that normally follows this on distribution, you try
+[358.12:360.32] to perturb it a little bit.
+[360.32:361.32] All right.
+[361.32:367.68] So that your classifier, instead of taking usual A, it takes a little bit of a perturbed
+[367.68:368.68] input.
+[368.68:373.92] Remember, we fixed our classifier.
+[373.92:377.44] So predictor.
+[377.44:381.6] Now you would like to do the, because it's at the tail, you would like to do this in a
+[381.6:382.6] sneaky fashion.
+[382.6:383.6] Right.
+[383.6:391.56] So maybe you would like to put some perturbation in a way that is not visible to the human eye,
+[391.56:396.84000000000003] or you don't really care, you know, when you see it.
+[396.84000000000003:401.64] So here you do this to maximize the loss.
+[401.64:407.15999999999997] I remember we've been in the setting that we've been always trying to minimize the losses.
+[407.15999999999997:412.84] And now somebody is trying to maximize our loss.
+[412.84:415.08] All right.
+[415.08:423.59999999999997] Now this is an interesting setting because whoever is doing this attack has access to what
+[423.6:434.72] loss function they're using, right.
+[434.72:436.12] And it has or he or she has access to our X star, neural network, and it's perturbed.
+[436.12:437.12] All right.
+[437.12:438.96000000000004] The way I described it here.
+[438.96000000000004:443.16] So this is called a white box attack.
+[443.16:449.24] Everything is known to the attacker and the attacker basically looks at inputs, looks
+[449.24:456.68] at your loss function, then there's a maximization over a compact set and perturbed input.
+[456.68:457.68] All right.
+[457.68:466.68] So some of the most commonly used norms in the constraint is a locating norm.
+[466.68:467.68] And you can also use L1.
+[467.68:471.96000000000004] In this case you get sparse attacks, right.
+[471.96000000000004:476.08] So here's an example that I showed the first very first deep learning literature, which
+[476.08:479.64] is seven or something like this.
+[479.64:483.68] Here you can take a turtle or a tortoise, I think there's a turtle.
+[483.68:490.4] And by adding imperceptible noise to this, you can make the classifier, classifying it
+[490.4:491.4] is all right.
+[491.4:497.2] So I don't know if it is visible, but it is so.
+[497.2:498.79999999999995] Here you do an L1 attack.
+[498.79999999999995:501.24] So you put some stickers on a stop sign.
+[501.24:508.48] I think this was done by test engine, this was something that makes the stop sign look
+[508.48:516.2] like a 45 miles per hour speed limit.
+[516.2:522.04] So that if you're using vehicles, if you're relying on the vehicle, detecting the stop sign,
+[522.04:526.36] it basically is to choose the division of the vehicle to automate the decision making
+[526.36:528.16] in the vehicle, which is terrible.
+[528.16:529.16] Right.
+[529.16:536.04] So when they stay, keep your hands on the steering wheel, and these vehicles, you know, keep it.
+[536.04:538.1999999999999] All right.
+[538.1999999999999:543.7199999999999] Now I would like to set the stage up by recalling what I described.
+[543.7199999999999:548.8] Unfortunately, these attacks are inevitable.
+[548.8:555.12] And there are some fundamental issues that are very hard to circumvent.
+[555.12:561.96] There are ways of mitigating them to a level, but it's very hard to get rid of.
+[561.96:562.96] All right.
+[562.96:564.44] And the second thing is it follows.
+[564.44:570.88] So imagine we take the stylized example, we take a disk into dimensions and we create
+[570.88:574.5600000000001] a two class problem, cats versus dogs.
+[574.5600000000001:581.28] And what we do is we keep a decision boundary, which is just at the equator in the middle.
+[581.28:582.28] All right.
+[582.28:587.8399999999999] And what the stylized examples do is that you take one of the data samples, right, an
+[587.8399999999999:592.64] input, you perturb it by F's, right.
+[592.64:596.4] And you can make it classify as cats and vice versa.
+[596.4:605.3199999999999] So the idea is that the small perturbations you try to shift, like make the classification
+[605.3199999999999:609.1999999999999] wrong basically.
+[609.2:615.8000000000001] So it maximally changes the lowest function.
+[615.8000000000001:622.4000000000001] In this particular case, the natural question is how many data points can this affect?
+[622.4000000000001:630.44] You know, so if in this particular example, we uniformly distribute all the data, if
+[630.44:634.4000000000001] you assume that the data is uniformly distributed on the disk, you know, like so that all the
+[634.4000000000001:637.4000000000001] cats are here.
+[637.4:648.4] Like the only data points that we can affect live in this particular slide, you know,
+[648.4:659.84] actually so in this particular case, not X and Y, but so on.
+[659.84:666.4399999999999] So you can you can push anything in this strip to a different classification.
+[666.44:672.9200000000001] Unfortunately, so fortunately, this is not much, right, in terms of the area.
+[672.9200000000001:677.48] So there's like a large area of samples that you can perturb, but there's this little
+[677.48:680.6] strip of samples that you can perturb.
+[680.6:687.2] But this is the ceiling because this two-dimensional intuition, unfortunately does not extend to
+[687.2:688.72] high dimensions.
+[688.72:691.6800000000001] And there's something called concentration of measure.
+[691.68:698.4399999999999] And what that means is that if you take a high-dimensional sphere, a sphere in high dimensions,
+[698.4399999999999:703.8399999999999] and then you do the same exercise, take an epsilon cut across the equator, right, so just
+[703.8399999999999:708.1999999999999] take an epsilon slice disk.
+[708.1999999999999:714.52] In this case, most of the volume of that sphere lives in that disk.
+[714.52:721.64] And this is what is bad in the sense that in high dimensions, if the data was uniformed
+[721.64:726.92] distributed in that sphere, most of the samples you can actually just perturb by epsilon and
+[726.92:729.92] you can change the classification.
+[729.92:736.6] And here's an example how, you know, like you can in 100 dimensions, you take this epsilon
+[736.6:749.96] to be 0.2 and you see that numerically a large set of a huge amount of data actually can
+[749.96:753.96] be perturbed to swing, right?
+[753.96:761.08] And this is related to the smoothness properties of your neural network also, right, because
+[761.08:770.72] with little perturbations, you can actually, so in this particular case, the smoothness
+[770.72:775.2] properties of the neural network will be a mitigating circumstance, which we will
+[775.2:780.9200000000001] talk about later.
+[780.9200000000001:785.2800000000001] You might think that this is like a very stylized example and maybe some other decision boundary
+[785.2800000000001:786.2800000000001] would help.
+[786.2800000000001:787.76] Unfortunately, this is true.
+[787.76:789.9200000000001] Any other decision boundary makes things worse.
+[789.9200000000001:791.48] This is doable.
+[791.48:795.9200000000001] And hence, the say, examples are somewhat inevitable.
+[795.9200000000001:802.08] And what people try to do is they try to play the smoothness properties of the neural
+[802.08:805.8000000000001] network and so on and so forth to mitigate this issue.
+[805.8000000000001:807.6] Here's another issue.
+[807.6:813.08] If you have access to the data set and you can approximate this decision boundary with
+[813.08:815.64] another neural network, right?
+[815.64:822.4000000000001] So I mentioned white box attacks where the code encode at the serial knows your neural
+[822.4000000000001:826.6800000000001] network, your parameters and everything, you know?
+[826.68:834.52] In the setting where your adversary has access to the data and he or she is looking at the
+[834.52:842.7199999999999] same problem, classification problem, he or she can pick a loss function and try to approximate
+[842.7199999999999:846.3199999999999] the same decision boundary.
+[846.3199999999999:853.8] And in that particular case, you can actually come up with pushes that also will be universal,
+[853.8:856.64] right, across different neural networks.
+[856.64:858.68] This decision boundary is geometric.
+[858.68:860.36] It will be in between.
+[860.36:865.08] So whatever perturbation you pick using another neural network will work for another neural
+[865.08:866.08] network.
+[866.08:869.48] So the situation is very dire, actually.
+[869.48:871.64] All right.
+[871.64:877.36] Now let's see the effects of these perturbations.
+[877.36:884.08] Now those dial back as opposed to classification, let's talk about prediction.
+[884.08:893.4000000000001] And let's try to see or give support for the support on sparse models and their robustness.
+[893.4000000000001:894.4000000000001] All right.
+[894.4000000000001:898.48] So let's consider a linear model.
+[898.48:900.32] So here's the way that we learn.
+[900.32:903.72] We're going to use this to do prediction.
+[903.72:908.6400000000001] So what happens to the function when you perturb input?
+[908.6400000000001:909.6400000000001] Okay.
+[909.64:914.1999999999999] So here I'm not talking about maximizing the loss function mind you.
+[914.1999999999999:919.36] I'm just looking at literally the output of the neural network.
+[919.36:920.36] Nice.
+[920.36:921.36] So here you are.
+[921.36:926.4399999999999] I kind of skipped this, but we'll talk about this.
+[926.4399999999999:928.88] So here we have our predictor.
+[928.88:930.1999999999999] Here's an input.
+[930.1999999999999:931.1999999999999] There's a perturbation.
+[931.1999999999999:935.4399999999999] And let's say the perturbation lives in an utility ball of 3D sexual.
+[935.44:939.6400000000001] Now in this case, the prediction is linear.
+[939.6400000000001:942.2800000000001] So I slide this back in here.
+[942.2800000000001:943.2800000000001] All right.
+[943.2800000000001:946.6400000000001] I have a prediction.
+[946.6400000000001:949.6400000000001] This inner product is independent of the optimization.
+[949.6400000000001:951.8800000000001] So I end up with this.
+[951.8800000000001:952.8800000000001] All right.
+[952.8800000000001:957.0] And this is just simple scaling.
+[957.0:962.2] You can see that this is equal to the prediction.
+[962.2:972.2] The normal prediction plus epsilon, which is our budget times the one norm of x star.
+[972.2:983.88] So if you take the perturbation to be the sign, then it kind of maximally achieves the
+[983.88:986.5200000000001] so sorry, sign times epsilon here.
+[986.5200000000001:988.88] So there's a time flow.
+[988.88:998.08] And it achieves the maximal perturbation.
+[998.08:1002.36] And remember, when we are training some of the linear models, we try to minimize the
+[1002.36:1005.16] l1 norm of our x star.
+[1005.16:1006.16] Right?
+[1006.16:1014.6] So as a result, we're trying to kind of robustify our linear predictors by minimizing the l1 star.
+[1014.6:1022.6] Because if you fix x star, then it is, as you can see, kind of magically robust to perturbations
+[1022.6:1025.44] in a l1 table.
+[1025.44:1029.6] Some observations already marks our appropriate here.
+[1029.6:1038.3600000000001] So it turns out that the gradient of our model, the respect to the input, is our x star.
+[1038.3600000000001:1042.44] And what you do is you use the gradient sign here.
+[1042.44:1050.4] So you might as well put the gradient of hx, you just take the a star.
+[1050.4:1060.04] And something that you always suspected, but just see it very nicely written, is that
+[1060.04:1067.28] sparse models are somewhat robust to perturbations because we're trying to minimize the l1.
+[1067.28:1068.28] Okay.
+[1068.28:1073.28] Now let's actually delve into this channel case.
+[1073.28:1076.52] Here's our target problem.
+[1076.52:1081.8] Somebody's trying to maximize your loss.
+[1081.8:1089.24] In this case, what I'll do is I'm going to kind of go over maybe a bit historical result.
+[1089.24:1090.24] First.
+[1090.24:1091.32] Okay.
+[1091.32:1100.6399999999999] Now, what people have been trying to do to find these perturbations, they try approximate
+[1100.6399999999999:1104.6] fast solutions that perform empirically well.
+[1104.6:1105.6] All right.
+[1105.6:1115.36] Now, the fast gradient sign method, what they've done is they kind of use this intuition
+[1115.36:1126.24] that you take the gradients, you take its sign, put an epsilon, and they call this, they
+[1126.24:1128.04] use this attack.
+[1128.04:1129.04] Okay.
+[1129.04:1135.28] So this is basically the fast gradient sign method.
+[1135.28:1142.6799999999998] So, of course, solving this, what they do is they just take the gradient of loss function,
+[1142.68:1146.8] they take its sign, which is a plus minus one vector.
+[1146.8:1151.28] I mean, you scale it by epsilon, it fits this project.
+[1151.28:1152.28] All right.
+[1152.28:1155.4] And then you use this as your perturbation.
+[1155.4:1161.8400000000001] It is fast because you just need one gradient, so long back drop, you just take the input,
+[1161.8400000000001:1164.1200000000001] you take the sign, you're done.
+[1164.1200000000001:1166.1200000000001] All right.
+[1166.12:1172.6799999999998] So what is interesting here is that for just single output neural networks, this, this,
+[1172.6799999999998:1174.9599999999998] so you can just use the chain rule.
+[1174.9599999999998:1175.9599999999998] All right.
+[1175.9599999999998:1180.84] So there's the gradient that comes from the loss function, which is a scalar forcing
+[1180.84:1182.08] law of output.
+[1182.08:1189.08] And then again, the gradient of the predictor is important.
+[1189.08:1190.08] All right.
+[1190.08:1192.4399999999998] The pattern here is very important.
+[1192.4399999999998:1193.4399999999998] Okay.
+[1193.4399999999998:1196.08] Now, here's some example.
+[1196.08:1204.52] So this is, this is from, I think, Niko, a folder and Alexander Mandry.
+[1204.52:1207.6399999999999] So here is just endless data set and predictions.
+[1207.6399999999999:1208.6399999999999] All right.
+[1208.6399999999999:1215.32] So here you train, you get the data set, you've split into two, you train, and then you predict.
+[1215.32:1216.32] All right.
+[1216.32:1220.6799999999998] Now, when you train, you can actually get very nice classification performance.
+[1220.68:1226.5600000000002] You can see here the predictions are that on, right?
+[1226.5600000000002:1230.6000000000001] You predict the digit correctly.
+[1230.6000000000001:1234.44] But if you do this fast gradient sign attack, right?
+[1234.44:1236.3600000000001] So just you pick an edge long.
+[1236.3600000000001:1240.3200000000002] I think here is like point one or something, something small.
+[1240.3200000000002:1242.04] And you can visualize these images, right?
+[1242.04:1248.24] So when you see them, you still, as the first one would classify them correctly.
+[1248.24:1252.04] But your neural networks are going to give like completely wrong answers.
+[1252.04:1254.64] So it's a zero, but it's predicted as nine.
+[1254.64:1258.0] So one, but predicted as three.
+[1258.0:1264.04] I had one example where you basically predict everything as three.
+[1264.04:1267.04] We did it.
+[1267.04:1272.1200000000001] Some perturbation that just like one perturbation, you put it on all everything is predicted
+[1272.1200000000001:1274.1200000000001] as three.
+[1274.12:1278.9199999999998] You know, it's depressing.
+[1278.9199999999998:1282.8] So there's some robustness issue here.
+[1282.8:1292.52] Now when you think about this as an optimization problem, you will see that the target problem
+[1292.52:1301.28] is in fact fits into our template that we've seen before on composite minimization.
+[1301.28:1304.48] And here we're doing composite maximization, right?
+[1304.48:1309.8799999999999] So let's call this composite optimization.
+[1309.8799999999999:1315.3999999999999] Because if you think about it, you have a constraint which you can treat it as with an indicator
+[1315.3999999999999:1324.12] function, which is zero when eta is in the set.
+[1324.12:1331.12] And infinity when eta is not element of the set and the set is just the ball, right?
+[1331.12:1341.4799999999998] So what we have is maximize over eta, F of eta plus G of eta, which is projectible,
+[1341.4799999999998:1342.4799999999998] approximately.
+[1342.4799999999998:1347.08] So if you recall the Pox and operator, right?
+[1347.08:1351.9199999999998] The Pox operator is just a projection operator, right?
+[1351.9199999999998:1358.36] In the case of infinity, ball constraint, it just, if you have something like this, it
+[1358.36:1361.4799999999998] will just clip it with whatever you put.
+[1361.4799999999998:1364.24] So if this is epsilon, then these are our systems, right?
+[1364.24:1369.08] If it's on the greater than zero.
+[1369.08:1372.84] All right?
+[1372.84:1383.1599999999999] Then what you can do is simply apply the proximal gradient, in this case, accent, right?
+[1383.16:1394.3600000000001] It's a very simple thing to do, because here, the only thing that works out here, we're
+[1394.3600000000001:1396.68] trying to maximize.
+[1396.68:1404.0400000000002] So if you think about this, the eta, in this case, you're maximizing, this is greater than
+[1404.04:1414.0] equal to F of say, eta K, what's greater than F of eta?
+[1414.0:1421.12] K minus some liqueuse constant, eta minus eta K squared.
+[1421.12:1426.28] You can add G on both sides.
+[1426.28:1429.24] All right?
+[1429.24:1452.64] And you can basically write this as square minus eta minus eta minus eta K plus 1 over
+[1452.64:1460.24] the equation squared plus this G.
+[1460.24:1464.4] Now G is an indicator function, so it's zero.
+[1464.4:1471.8400000000001] So you can write the prox, even though there's a negative here, it doesn't matter.
+[1471.8400000000001:1475.3600000000001] It will be again, a projection.
+[1475.36:1485.1599999999999] So here, actually, sorry, the indicator here needs to be minus infinity, okay?
+[1485.1599999999999:1489.6] Minus infinity, because we're trying to maximize.
+[1489.6:1490.8799999999999] All right?
+[1490.8799999999999:1498.3999999999999] So if you do this majorization minimization, so here you take the right hand side, you
+[1498.4:1506.5600000000002] minimize the district of eta, your eta K plus 1 will be this.
+[1506.5600000000002:1511.8400000000001] And what you can do is actually do iterations on this.
+[1511.8400000000001:1516.0] And so you apply multiplications of proximal gradient descent.
+[1516.0:1521.64] We talked about its performance in the non-comic states, for over K, in terms of reducing
+[1521.64:1526.88] the gradient mapping here.
+[1526.88:1535.1200000000001] And in practice, this will result in more powerful attacks that reduce your performance even
+[1535.1200000000001:1537.4] further.
+[1537.4:1542.2] And if you think about it, in the literature, this is called projected gradient descent,
+[1542.2:1545.3200000000002] but it's projected gradient ascent.
+[1545.3200000000002:1551.88] Or you can call it proximal gradient ascent and the P's, even proximal projection is fine.
+[1551.88:1557.8000000000002] But if you look at the literature, the practitioners don't use the gradient directly, they still
+[1557.8000000000002:1561.4] use the sign of the gradient.
+[1561.4:1563.68] All right?
+[1563.68:1569.64] So instead of using this, people still kind of prefer this sign attack.
+[1569.64:1570.88] All right?
+[1570.88:1578.8400000000001] And here you apply again the clipping, okay?
+[1578.84:1592.28] Now in the original paper, people try to motivate the sign by the following heuristic
+[1592.28:1593.28] argument.
+[1593.28:1594.28] All right?
+[1594.28:1604.9599999999998] So if you think about it, the proximal gradient ascent, the step is the algorithm just uses
+[1604.9599999999998:1605.9599999999998] this step.
+[1605.9599999999998:1606.9599999999998] All right?
+[1606.96:1610.72] So if you look at the object onto the set, you have a step size, you take the gradient,
+[1610.72:1616.16] so there's a type of here, so this is the decay.
+[1616.16:1620.8] And if you think about it, the task gradient sign methods, what it does is it takes to look
+[1620.8:1622.4] at the loss function.
+[1622.4:1630.04] So this is basically our gradient of f at zero.
+[1630.04:1631.04] All right?
+[1631.04:1643.08] And just recall that this projection, the clips clipping of the, whatever the vector
+[1643.08:1646.8799999999999] input is, here, air and supervised.
+[1646.8799999999999:1652.56] Now if you think about it, if you have a step size large enough so that you look at the
+[1652.56:1658.92] gradient at the origin, right?
+[1658.92:1665.92] You multiply the step size, everything is graded in epsilon, so whatever you do with the
+[1665.92:1670.96] proximal gradient descent, it will kind of result, the first iteration kind of results
+[1670.96:1678.5600000000002] in the fast gradient sign method, which is obvious because if the gradient scales in a large
+[1678.5600000000002:1684.88] fashion, then when you clip, you only get to see the sign of the gradient scale by epsilon
+[1684.88:1691.88] anyway, and hence they say that the sign method is kind of approximating the proximal gradient
+[1691.88:1700.88] method.
+[1700.88:1710.1200000000001] And here I'd like to code Bane, when he fights a Batman, get to Cality and Deception,
+[1710.12:1717.12] powerful agents to the uninitiated, but it's method of data, we are initiated.
+[1717.12:1720.12] Honestly.
+[1720.12:1723.12] Okay.
+[1723.12:1732.12] If you think about this particular problem, actually you can get what practitioners are using
+[1732.12:1739.12] from more principles fashion, much more principles fashion.
+[1739.12:1749.12] Now, so in general you don't need a concave function, let's assume that F is, so you don't
+[1749.12:1756.12] need concavity here, all you need is smoothness, which is gradient in a long time, but you
+[1756.12:1757.12] have concavity.
+[1757.12:1768.12] So here's our maximization problem, in this case what you can do is minorize, so if you're
+[1768.12:1773.12] maximizing a function like this, what you can do is majorize.
+[1773.12:1783.12] But if you're maximizing a function like this, what you can do is minorize.
+[1783.12:1788.12] So this is called majorization minimization, but here because we're maximizing a function
+[1788.12:1794.12] we'll call it minimization, majorization.
+[1794.12:1801.12] Actually it should be minorization maximization.
+[1801.12:1804.12] Okay.
+[1804.12:1816.12] So in this case we have the usual kind of bound, so we expand this.
+[1816.12:1825.12] This is lecture three, it is done actually for general norms.
+[1825.12:1831.12] So here we have a limited constant in a length of norm, so what I mean by smooth and
+[1831.12:1838.12] a length of norm is this, we take the gradient of F of X, F of Y, in infinity norm in
+[1838.12:1846.12] Dool norm, this is less than or equal to L infinity, X minus, sorry, this needs to be
+[1846.12:1853.12] bound because this is infinity.
+[1853.12:1863.12] So this is what I mean by smooth in L infinity norm, so you have something like this.
+[1863.12:1870.12] So this case, what it implies is that for this there's this lower bound.
+[1870.12:1871.12] Okay.
+[1871.12:1878.12] And given this lower bound with the indicator function on the box, what you can do is
+[1878.12:1883.12] maximize this minorizer for slower bound.
+[1883.12:1890.12] So you take whatever the function was, it could be non-comics like this.
+[1890.12:1896.12] Let's say you're here and what you can do is you can use this fact to come up with
+[1896.12:1899.12] this lower bound.
+[1899.12:1905.12] So suppose you're here, you can maximize this lower bound.
+[1905.12:1910.12] And because the function is always on top of this, you'll make progress by the
+[1910.12:1915.12] amounts, by proportion to the gradient norm for example.
+[1915.12:1922.12] And in fact, you can go to a local optimum like this.
+[1922.12:1924.12] All right.
+[1924.12:1932.12] Now, in this case, it just turns out that the optimization problem here results in
+[1932.12:1936.12] precisely what people use in the literature.
+[1936.12:1942.12] That is, you clip, you take the sign of the gradients, you update with the step.
+[1942.12:1953.12] So the optimal step is, can be found by some optimization, but is an algorithm.
+[1953.12:1957.12] So this is gradient, a stand in El Infinitinal.
+[1957.12:1959.12] All right.
+[1959.12:1966.12] So by just setting things appropriately, you get the algorithm that practitioners like.
+[1966.12:1972.12] So here are some comments.
+[1972.12:1977.12] In the case of doing just minimization, which is picked up a different one, you might
+[1977.12:1980.12] be thinking, why would anybody do that?
+[1980.12:1985.12] The reason why you would do that, actually you should take a look at handout two.
+[1985.12:1993.12] The last question in handout two is that, so if you think about it, your bound for
+[1993.12:2000.12] optimization, if this was minimization, for example, will have whatever the norm you pick
+[2000.12:2001.12] here.
+[2001.12:2011.12] So P x minus x 0 in P squared divided by K, something like this, you know, there are some constants here.
+[2011.12:2015.12] So this is the liquefied constant in the norm that you pick.
+[2015.12:2018.12] This is your distance in the norm that you pick.
+[2018.12:2024.12] The advantage of picking the El Infinitinal is that here, your initial distance will be
+[2024.12:2027.12] maybe independent of the dimension.
+[2027.12:2033.12] So if this liquefied constant is also nice, maybe the product of the liquefied constant
+[2033.12:2037.12] with your initial distance, you can show that it is better than doing the descent in
+[2037.12:2039.12] El Infinitinal.
+[2039.12:2047.12] So in the example, handout two, the last question, we talk about this in another norm.
+[2047.12:2052.12] And we give an example of a sort of best paper award for solving multi-commodative flow
+[2052.12:2057.12] problems where they show that, you know, doing the descent in El Infinitinal is
+[2057.12:2060.12] probably better than doing it in the afternoon.
+[2060.12:2065.12] So there are some advantages, optimization, computational advantages by doing things like this.
+[2065.12:2071.12] And they likely that the practitioners use this because it all performs, you know.
+[2071.12:2076.12] So a research question might be, can you prove this for the neural network loss functions
+[2076.12:2077.12] that we're using?
+[2077.12:2080.12] All right, so if you're interested in, come find me.
+[2080.12:2082.12] Happy to talk more about this.
+[2082.12:2083.12] Okay.
+[2083.12:2085.12] All right.
+[2085.12:2095.12] So here, the proof actually holds without the concavity, but what I say here requires concavity.
+[2095.12:2101.12] Yeah, it's interesting.
+[2101.12:2111.12] Okay, so given that we know somebody may try to give it this aerial examples, what can
+[2111.12:2113.12] we do?
+[2113.12:2117.12] Well, it's like metal running.
+[2117.12:2121.12] If you know what's going to happen, you try to train for it.
+[2121.12:2129.12] And the idea in this case is that we would like to optimize not directly the loss function,
+[2129.12:2132.12] the perturbed version of the loss function.
+[2132.12:2141.12] Meaning, we literally think that somebody for each data points is going to perturb it in
+[2141.12:2144.12] some box.
+[2144.12:2145.12] All right.
+[2145.12:2150.12] And what we would like to do is we would like to minimize these perturbed versions.
+[2150.12:2153.12] Right?
+[2153.12:2158.12] You know, you put your hand, the cat puts on top of it, and then you just put your hand on top
+[2158.12:2161.12] of the cat's hand and then the cycle continues.
+[2161.12:2170.12] And as an optimization problem, this becomes, you know, if you do the empirical estimate of the expectation,
+[2170.12:2182.12] so you have this finite sum of maximums of the loss function, AI plus eta.
+[2182.12:2188.12] If you just put eta i here for each of the data points, right?
+[2188.12:2193.12] You can take this commission inside and then it directly fits into this constraint.
+[2193.12:2194.12] Sitting.
+[2194.12:2199.12] There's no constraint, maybe, for your neural network parameters, but constraints for the person
+[2199.12:2201.12] for serving you.
+[2201.12:2207.12] So your why becomes like a concatenated version of all these atas.
+[2207.12:2211.12] Whatever number is.
+[2211.12:2217.12] And hence everything gets into this adversarial template.
+[2217.12:2218.12] Okay.
+[2218.12:2220.12] Good.
+[2220.12:2231.12] Now, so when you put it this way, you know, if you recall the lectures where we talked about optimization algorithms
+[2231.12:2236.12] for this finite sum problems, the problem is actually the following.
+[2236.12:2246.12] All right. So we have, sorry, we have one over n sum, some f i of x.
+[2246.12:2247.12] Right.
+[2247.12:2254.12] And we don't have a direct expression for this f i of x, but it is actually there.
+[2254.12:2261.12] So f i of x is implicitly given as a solution of a maximization problem.
+[2261.12:2267.12] So if I give you an x here, I give you x, right?
+[2267.12:2272.12] Then this function can optimize the respect to eta.
+[2272.12:2274.12] A i is given.
+[2274.12:2278.12] B i is given.
+[2278.12:2279.12] You can optimize it.
+[2279.12:2282.12] You can evaluate f.
+[2282.12:2287.12] So it's a function implicitly written in terms of a max form.
+[2287.12:2294.12] But there are some issues, you know, like,
+[2294.12:2299.12] I'll may not be continuously differentiable due to real human schooling, etc.
+[2299.12:2306.12] But what I would like to do now is kind of ignore this and see what.
+[2306.12:2308.12] Mainly we could do.
+[2308.12:2309.12] All right.
+[2309.12:2313.12] You see if that matches what is done in the literature.
+[2313.12:2314.12] Okay.
+[2314.12:2320.12] So if you wanted to do stochastic gradient this time here, what do we need?
+[2320.12:2324.12] We need just a stochastic gradient of the, we need, for example,
+[2324.12:2328.12] you can pick an element here, let's say the i entry, we take the gradient,
+[2328.12:2333.12] we have the stochastic gradient of this function, right?
+[2333.12:2336.12] So call this f.
+[2336.12:2341.12] If you pick a random i, you take the gradient, you take its expectation
+[2341.12:2344.12] and it is the gradient of f, we're done.
+[2344.12:2347.12] Just a plush stochastic gradient descent.
+[2347.12:2354.12] To be able to apply stochastic gradient descent, how do we get the gradient?
+[2354.12:2355.12] All right.
+[2355.12:2357.12] So that's the question.
+[2357.12:2359.12] Well.
+[2359.12:2363.12] So seems like this is tough, right?
+[2363.12:2367.12] Because what you need to do is there's an implicit function.
+[2367.12:2368.12] It has maximization.
+[2368.12:2371.12] We have a gradient.
+[2371.12:2377.12] So you need to take a gradient with respect to some maximization seems tough, right?
+[2377.12:2384.12] Well, here the solution to this issue is the dancekins theorem.
+[2384.12:2386.12] And you need some conditions.
+[2386.12:2387.12] Okay.
+[2387.12:2390.12] So let's talk about those.
+[2390.12:2395.12] So I'm going to talk about the dancekins theorem with some enhancement base
+[2395.12:2400.12] on the first C-cuses PhD thesis.
+[2400.12:2401.12] Okay.
+[2401.12:2402.12] So let's consider this.
+[2402.12:2404.12] phi x, phi.
+[2404.12:2406.12] So there's a compact set.
+[2406.12:2409.12] As for our 8, our infinity norm is less than or equal to f.
+[2409.12:2411.12] So is a compact set.
+[2411.12:2415.12] And let's define f of x.
+[2415.12:2416.12] All right.
+[2416.12:2419.12] So this is implicitly written as f of x.
+[2419.12:2424.12] Now we're going to assume that this phi x, phi for each y
+[2424.12:2427.12] is a complex function of x.
+[2427.12:2431.12] We're going to talk about mitigating circumstances there later.
+[2431.12:2436.12] And there are some quantification conditions like whatever the domain of f is non-empty
+[2436.12:2437.12] in the adversarial training.
+[2437.12:2439.12] We know that this is not an empty.
+[2439.12:2443.12] And then there's some continuity assumptions.
+[2443.12:2446.12] All right.
+[2446.12:2447.12] Okay.
+[2447.12:2450.12] Now let's call.
+[2450.12:2455.12] Y star is the set of maximizers to this problem.
+[2455.12:2458.12] Nice for given x.
+[2458.12:2461.12] We have an optimization with respect to y.
+[2461.12:2462.12] All right.
+[2462.12:2467.12] We're going to call the set of global maximizers mind you.
+[2467.12:2468.12] Right.
+[2468.12:2471.12] Global maximizers.
+[2471.12:2475.12] And let's say Y star is an element of this set.
+[2475.12:2477.12] Then we had the following.
+[2477.12:2478.12] Okay.
+[2478.12:2489.12] And in this case, because phi is comics, what you have is a combination of comics
+[2489.12:2491.12] functions.
+[2491.12:2493.12] In this case, f is comics.
+[2493.12:2496.12] I so understand it out of the way.
+[2496.12:2500.12] Now if Y star is a singleton.
+[2500.12:2501.12] All right.
+[2501.12:2505.12] Meaning there's only one global maximizer.
+[2505.12:2512.12] In this case, the gradient of f is actually the gradient of phi,
+[2512.12:2518.12] which is respect to x, evaluated at Y star.
+[2518.12:2519.12] All right.
+[2519.12:2524.12] So what you have to do is solve this problem, find its global maximizer,
+[2524.12:2526.12] then given x.
+[2526.12:2527.12] All right.
+[2527.12:2532.12] So this is, this is in fact, if you think about it, this is Y star x.
+[2532.12:2536.12] Because you need to solve the problem given x.
+[2536.12:2537.12] Okay.
+[2537.12:2542.12] Then you have the gradient.
+[2542.12:2547.12] If phi star is not unique, then if you recall this comics hall definition.
+[2547.12:2548.12] All right.
+[2548.12:2551.12] So there are a bunch of points phi star.
+[2551.12:2555.12] You can look at the comics hall and pick any points from that comics hall.
+[2555.12:2559.12] And it will be a subgradient.
+[2559.12:2567.12] So the sub differential here will be the comics hall of these points.
+[2567.12:2568.12] Yeah.
+[2568.12:2572.12] Of course, the adversarial problem is not comics in general,
+[2572.12:2577.12] but people that do modeling, they argue that the proper initialization
+[2577.12:2581.12] and over-parametrization, these functions are comics.
+[2581.12:2584.12] You never leave some comics basin.
+[2584.12:2586.12] It's effective in comics.
+[2586.12:2597.12] And just again, highlight that you can look at this by looking at a star x.
+[2597.12:2601.12] All right.
+[2601.12:2608.12] So let's try to again look at this from the the say of training perspective.
+[2608.12:2609.12] All right.
+[2609.12:2610.12] So here's our problem.
+[2610.12:2615.12] What we would like to do is let's say runs the cast degree in the cent in this finite sum case.
+[2615.12:2616.12] All right.
+[2616.12:2617.12] You can write it this way.
+[2617.12:2622.12] What we need is the gradient, right.
+[2622.12:2626.12] But we know nothing is comics, nothing is like everything.
+[2626.12:2628.12] Like there are so many bad things.
+[2628.12:2632.12] So there are some mitigating circumstances here.
+[2632.12:2640.12] Now in this particular case, remember, we cannot find the global minimizers.
+[2640.12:2645.12] But let's say we could, right.
+[2645.12:2651.12] So we don't have complexity on x, but we could find the global maximizer.
+[2651.12:2655.12] In this case, whatever you find is in fact a descent direction.
+[2655.12:2658.12] So let's say this was our x.
+[2658.12:2659.12] All right.
+[2659.12:2663.12] By evaluating the gradient, normally you would find this vector.
+[2663.12:2664.12] All right.
+[2664.12:2667.12] And the negative of the gradient is what we use.
+[2667.12:2674.12] So when we do this, what we did is a direction that decreases the objective,
+[2674.12:2679.12] which is not necessarily the maximum local decrease, but something that decreases.
+[2679.12:2682.12] Hence it's a descent direction.
+[2682.12:2683.12] All right.
+[2683.12:2688.12] But again, the complication is we cannot find the global maximizers.
+[2688.12:2689.12] All right.
+[2689.12:2695.12] And even if this non-committer is still holes, if y star is a singleton,
+[2695.12:2698.12] then it is still a stop gradient.
+[2698.12:2700.12] So there are tons of subtleties here.
+[2700.12:2704.12] If you have questions, I'm happy to explain further.
+[2704.12:2732.12] But let's take a 15-minute break.

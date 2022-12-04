@@ -1,0 +1,384 @@
+~WEEK 4 Lecture: Oct. 10, 2022
+~2022-10-10T15:47:27.635+02:00
+~https://tube.switch.ch/videos/X22cTu0qEg
+~CS-438 Decentralized Systems Engineering
+[0.0:2.0] you
+[30.0:32.0] you
+[60.0:62.0] you
+[90.0:92.0] you
+[120.0:122.0] you
+[150.0:152.0] you
+[180.0:182.0] you
+[210.0:212.0] you
+[240.0:242.0] you
+[270.0:272.0] you
+[300.0:302.0] you
+[330.0:332.0] you
+[360.0:362.0] you
+[390.0:392.0] you
+[420.0:422.0] you
+[450.0:452.0] you
+[480.0:482.0] you
+[510.0:512.0] you
+[540.0:542.0] you
+[570.0:572.0] you
+[600.0:602.0] you
+[630.0:632.0] you
+[660.0:662.0] you
+[662.0:664.0] you
+[664.0:666.0] you
+[666.0:668.0] I
+[666.0:668.0] you
+[668.0:668.0] I
+[668.0:676.0] you
+[676.0:678.0] you
+[678.0:680.0] you
+[680.0:682.0] I
+[682.0:686.0] I
+[686.0:688.0] you
+[688.0:701.0] Yeah, so hopefully the notes will help make it a, I can't really repeat the last 10 or 15 minutes for time.
+[701.0:706.0] So rumor-mongerie.
+[706.0:711.0] What's the basic idea?
+[711.0:720.0] So again, we have some, some network topology.
+[720.0:730.0] And our goal is to, you know, take some new message that starts at, starts at initial, some initial node A.
+[730.0:739.0] We want to get it to all of the other nodes.
+[739.0:759.0] So while spending as few messages as possible, right, what's the, if we just take a naive algorithm, like a simple, simple, but working algorithm, the one we talked about last time where, where nodes, say, just broadcast any new message all there to all their neighbors.
+[759.0:771.0] But then, but then, you know, detect if they've already seen a message using a message ID or whatever and not re-broadcast those, right?
+[771.0:799.0] So, if, suppose, let's see, suppose the, the maximum degree of any node is D, right?
+[799.0:823.0] So, how many, how many messages, worst case might a, might a naive gossip algorithm take to flood the message among all end nodes.
+[823.0:832.0] So, there's end nodes total and each node might have up to D neighbors, right?
+[832.0:835.0] Great.
+[835.0:853.0] Sometimes D messages, right? Because, well, each node might receive each message from, from each of its neighbors, right? And it only needed the first one.
+[853.0:868.0] So, if you know of its neighbors, maybe didn't know it didn't need, you know, any of the messages other than the first thing.
+[868.0:897.0] Quite so obvious how you can, how you can reduce this, right? Well, here's the, and so our goal, the goal of rumor-mongering or antianthropy is to reduce that number of messages to approximately.
+[897.0:906.0] We won't be able to do it perfectly, but order of, you know, expected order of end messages rather than in times D, right?
+[906.0:918.0] Can we get this, this D factor out of there to make it so that each node basically receives each, each message redundantly.
+[918.0:937.0] Well, we're not going to succeed in ensuring that each node receives each message only once unless we build it free or, you know, do something like that like we discussed before, but trees are brittle and, you know, we want this to be a dynamic algorithm that adapts quickly to any topology changes, right?
+[937.0:952.0] So, we want to reduce order and, well, keep the topology totally general, and it turns out we can do that. So, it's going to reduce it to some constant times end, of course, right?
+[952.0:956.0] Expected constant number of messages.
+[956.0:968.0] So, how do we do this? What is rumor-mongering? So, what does the name suggest? No, no.
+[968.0:983.0] You're spreading a rumor. So, just based on the title, how do you think this algorithm might work? Just based on a guess, perhaps.
+[983.0:988.0] Yeah.
+[988.0:996.0] Yeah.
+[996.0:1011.0] Yeah. Okay. Good. Good. So, so in rumor-mongering. So, it's absolutely right. So, it's going to.
+[1011.0:1030.0] So, the algorithm is basically going to be first pick a random neighbor.
+[1030.0:1047.0] And by the way, just to set content, this is going to be for any node that receives this new message for the first time, right? So, so initially, you know, that node A injected the message in the system.
+[1047.0:1061.0] It's a it's a hot rumor at that time, you know, from the perspective of node A. So, A is going to run this algorithm. Then when B node B or node C first receive this message, then it's a hot rumor for those nodes.
+[1061.0:1071.0] And they're going to run this algorithm, right? So, this is basically an algorithm that gets invoked on the first receipt of any any new message, right?
+[1071.0:1083.0] So, yeah, like you said, I know it isn't going to just broadcast to all its neighbors because we're hoping to to avoid that cost instead. It's just going to pick one random one.
+[1083.0:1095.0] And send send the message just to that node.
+[1095.0:1114.0] Now, and then this node is going to go silent for the moment, right? It's not going to immediately go to any other neighbors, but instead it's going to wait until that neighbor replies.
+[1114.0:1134.0] So, so the neighbor replies with one bit. Namely, what is the message new to that neighbor, right?
+[1134.0:1151.0] So, let's say this node A on running this algorithm first decides randomly chooses neighbor C and sends the message to neighbor C, right? Now, neighbor C has in fact never seen the message before because it's just starting out the propagation.
+[1151.0:1166.0] So, C is going to reply, oh yes, this is new, this is new to me. Great. Thank you. I appreciate the rumor, right? And neighbor C in turn, of course, now that neighbor C has received the message, it's a hot new rumor for neighbor C as well.
+[1166.0:1176.0] So, neighbor C is going to start running this algorithm. And likewise pick one random neighbor to try broadcasting it to, right?
+[1176.0:1190.0] So, okay, so back to say the initial node A, no A finally receives this reply from the neighbor indicating whether it was news or not, right? Whether it was newer old.
+[1190.0:1218.0] Now, here's where here's where we have an interesting choice. So, if the message was new to the neighbor, well, what do you think we do in that case? Probably not not too hard to guess.
+[1218.0:1229.0] So, we send it. Yeah. Well, define nothing.
+[1229.0:1257.0] So, we're talking about the case where A sent a message to be and it was new to be, right? So, so, so it's apparently like still interesting, still a hot rumor, right?
+[1257.0:1273.0] Yeah. So, yeah. So, so basically, if if M was news, then just repeat.
+[1273.0:1291.0] Go back to step one. Do it again. Right? Pick another neighbor at random. Send it to that neighbor, right? And, you know, repeat as long as we keep randomly finding neighbors that hadn't heard this rumor before, right?
+[1291.0:1307.0] So, in terms of, you know, kind of the literal, you know, gossip spreading ideas, well, you know, if you've heard this, you know, scandalous rumor and, you know, you're talking about it with one friend and they get totally excited about it too.
+[1307.0:1318.0] It's news to them. They really appreciate hearing it. Then you get, you know, you remain excited and perfectly willing to gossip about it with the next friend too, right?
+[1318.0:1345.0] So, the node remains excited, right? Otherwise, but suppose you talk with, you know, you, you talk, talk with some friend about this, this new rumor that you that was news to you and they said, they say, oh, thanks. Yeah, but I heard that already. It's, it's old news to me, you know, fine. Yeah, but sure, you're, you know, welcome to the party.
+[1345.0:1366.0] So, then what are you inclined to do? Yeah. Yeah. So, you're much more inclined to lose excitement like, yeah, okay. Well, this, this friend, you know, I, you know, I was late to the party with this friend, right?
+[1366.0:1380.0] So, so maybe I just lose excitement and, and stop spreading it, for example, I just wait for the next rumor to appear on some other topic, right? On the other hand, do I, do I always lose excitement?
+[1380.0:1404.0] Yeah, yeah. Yeah. Yeah. Yeah. So, that's, that's kind of a problem. I might have just gotten unlucky with my first neighbor neighbor guess. I, you know, there's only one neighbor around me that got the message before me. Maybe that's the neighbor that said it to me.
+[1404.0:1416.0] And this algorithm I haven't even excluded randomly, you know, guessing and sending the message back to the person I, you know, I got it from now, you know, that would be an easy optimization to fix.
+[1416.0:1427.0] But actually, you know, this, this algorithm won't need that optimization in order to, to achieve is it's as a topic results, once it's, once it's complete.
+[1427.0:1442.0] Yeah, so in general, the problem is if I stop too eagerly, then, you know, I might just get unlucky, you know, said first got the message with the one neighbor or the two neighbors that have already gotten it.
+[1442.0:1452.0] And many of my other neighbors haven't gotten it yet. And I'm not going to be helping them. Right? So, I'll just lose excitement and stop before helping any of them.
+[1452.0:1472.0] And so that might, that might be a problem. Right? So what's, what's the, what's the solution to this? Right? We still, we don't want to, you know, if we still always kept gossiping to new neighbors, well, this algorithm wouldn't stop and that, that would be a problem.
+[1472.0:1491.0] So what can we do? It's less extreme. Yeah. Yeah. So we could pick some number of times. Yeah, like D divided by two and, and keep, keep it going that many times.
+[1491.0:1504.0] But the only problem with that is if that's a, like a, a multiple of D, like, you know, D divided by two, for example, then that's order D rather than order one.
+[1504.0:1516.0] And we'll, we'll still probably end up, you know, having, you know, as in public complexity of order n times D, which is what we were trying to avoid. Right? So, yeah.
+[1516.0:1521.0] So, so close, but that's, that doesn't quite get us where we want to go.
+[1521.0:1530.0] Any other ideas? But, you know, frankly, I don't know what the outset, you know, how many of my neighbors do or don't have it already when I'm starting to gossip.
+[1530.0:1540.0] So how do I make this choice? Whether to lose excitement or not after talking to a particular neighbor? Yeah.
+[1540.0:1563.0] Great. Lipa coin. So repeat with say, this is totally arbitrary. The constant doesn't really matter, but say 50% probability.
+[1563.0:1576.0] If, you know, 50% probability will again go back up to the start and keep, you know, keep trying, right? In case there are other neighbors that haven't gotten the message.
+[1576.0:1581.0] And otherwise we do lose excitement, right? And, and just stop.
+[1581.0:1594.0] Okay. So, so, so, they'll stop if the coin flip goes the other way.
+[1594.0:1609.0] Okay. So, click analysis of this algorithm. Now, even with this, you know, with this last optimization where we don't immediately lose excitement, it's still.
+[1609.0:1638.0] So, so, well, what's good about this algorithm? Well, what's good about this algorithm is each of these nodes, once it first sees the new message, it's going to push that message out eagerly to, you know, any to any node that's, you know, kind of willing and interested in hearing the message and it's going to keep pushing until it, you know, loses this excitement coin flip too many times.
+[1638.0:1651.0] So, how many times is too many times on average? Just, you know, dig out your probability theory, right? So, with so how many times do in expectation?
+[1651.0:1662.0] Do I try to send a message to some node and that that that proves to be, you know, a worthless duplicate message? Like, you know, they, they stay, oh, already saw it.
+[1662.0:1673.0] And then I come back and I do my coin slip and I, and I either lose excitement or don't, right? So, how many times, you know, do I send it?
+[1673.0:1682.0] Does each node send a message redundantly before it loses, loses excitement?
+[1682.0:1697.0] So, when you know, this is a, yeah. Fantastic. One over the probability. This is basic probability. So, one over 50% two times, right?
+[1697.0:1717.0] In expectation, I'm, each node is going to send the message redundantly, you know, uselessly, you know, send extra redundant messages about two times in total before it loses excitement.
+[1717.0:1744.0] Right? So, what's the, what's the asymptotic expected total message complexity cost for this, for this algorithm? Not in terms of big, own notation, but the actual concrete, you know, what's the expected total number of extra redundant messages, you know, that wouldn't have had, had to be sent if we were just doing this on a tree, for example.
+[1744.0:1764.0] So, each, each message, you know, each node gets the message once, usefully the first time, that's the, that's the, the time we don't want to avoid and can't avoid. And then each node additionally receives the message another two times redundantly in expectation.
+[1764.0:1771.0] Right? So, what's the total cost of this algorithm, basically?
+[1771.0:1777.0] Yeah, great. I expect a three end messages in expectation, right?
+[1777.0:1788.0] Now, the nice thing of course is that three melts into the big, own notation and, and so it's asymptotically order and, which, which meets our goal.
+[1788.0:1796.0] Now, so that's great. Sounds like we're done, right? Yeah.
+[1796.0:1804.0] Oops, yeah, there's absolutely no guarantee that all nodes will receive this message, right?
+[1804.0:1817.0] So, there can very well be, let's say this node C or maybe node B gets unlucky, a, you know, randomly chooses to try to gossip it to see and be a couple times.
+[1817.0:1831.0] And then, you know, lose his interest before happening to choose a is to to be as a as a neighbor. And then the same thing randomly happens to see, you know, see, just randomly chooses a couple times.
+[1831.0:1843.0] And well, a has already seen it. And so, you know, see, loses loses interest as well before it ever goes to be. And so B is just sitting there without a copy of the message.
+[1843.0:1852.0] And everybody has lie, everybody in the network has lost interest. Nobody is pushing the message anymore. And so this problem is never going to be fixed, right?
+[1852.0:1864.0] The algorithm is totally quiescent. And it hasn't successfully delivered the message to, to all the notes. Oops, that's a problem, right?
+[1864.0:1893.0] Now, on the other hand, so we're just going to let that problem be for now, but observe that basically rumor mongering is very efficient at quickly delivering a message M to most nodes.
+[1893.0:1912.0] Right? Not all it doesn't promise it will deliver it to all nodes, but it will very quickly deliver it to most notes. Why is that? Well, it's when the when most nodes of the network haven't yet gotten the message.
+[1912.0:1931.0] Then these iteration of this algorithm will almost always repeat, right? So when when a node doesn't have any or has very few neighbors that have already seen the message, it's almost certain to pick a neighbor that hasn't seen that hasn't seen the message yet.
+[1931.0:1946.0] And so it's going to keep pushing that message until, you know, a good fraction, a large fraction, at least of its neighbors have seen the message. Right?
+[1946.0:1970.0] And so, you know, there's a basically a very strong guarantee that each node is not going to stop until say, you know, quite a large fraction of its neighbors have seen the message. Right? And so, so this algorithm won't stop until the message is very well spread throughout the network, even though it might not be absolutely ubiquitous.
+[1970.0:1983.0] Everybody has it. There are a few holes here and there, but almost everybody has. Right? So that's a good good thing to start with, even if we're not quite done. Right?
+[1983.0:1990.0] So any questions about this before move on to anti entropy.
+[1990.0:2006.0] Okay? So now let's look at this other algorithm. Anti entropy. So anti entropy is going to work in a fairly different way.
+[2006.0:2021.0] Anti entropy is not going to be triggered basically on the new news of a message. Anti entropy doesn't care, you know, whether the message is new or not. Instead, it's going to be a timer thing.
+[2021.0:2033.0] So periodically, say when a timer fires.
+[2033.0:2047.0] And that timer might be just deterministic or it might be pseudo random as well. But, you know, once in a while, this anti entropy algorithm is going to wake up.
+[2047.0:2069.0] And we're again going to avoid, you know, just suddenly talking to all of our neighbors. Instead, we're going to randomly pick one neighbor.
+[2069.0:2087.0] Right? And then we're going to basically gossip with that neighbor, say send in a message.
+[2087.0:2111.0] So, say, okay, you have anything new that I haven't, haven't seen before. Basically, do something like this.
+[2111.0:2133.0] So, if you use net, I have send me protocol that I mentioned, right? So exchange news. Right? So if, if either node has a message that, you know, the other node doesn't have yet, then when they interact here, both nodes will have all of the messages.
+[2133.0:2155.0] And this is an interactive exchange. It might take a while for them to, you know, figure out which messages are new and which aren't. But at the end, it will, it will cause, you know, these two interacting pairs to have the same, you know, set of messages, the union of the, of the two previous sets.
+[2155.0:2175.0] Why is this algorithm called anti entropy? Well, it's just reducing the entropy in the network in terms of the diversity of message sets that the nodes contain. Once anti entropy is all done, eventually, it'll ensure that all, all nodes have all messages.
+[2175.0:2201.0] Right? Because, you know, each, so basically reduce the entropy. So, which means the difference in message sets.
+[2201.0:2215.0] Right? Now, so if we again look at an example to apology.
+[2215.0:2237.0] With anti entropy. Regardless of where a message starts, it's eventually going to propagate to all of the other nodes. Why? Well, because even though it might take a while.
+[2237.0:2257.0] At some point, node a and node B or node B or node C's, you know, timer is going to fire and either node A will randomly pick node B to to engage in anti entropy with or node B might wake up and randomly pick node A.
+[2257.0:2277.0] Right? We'll get lucky eventually. And, you know, at some point, message M will propagate to node B. Right? As soon as node B talks to a node, you know, randomly picks and talks to a node that had node M, then node B will get node M.
+[2277.0:2293.0] And, you know, node B goes for all the other nodes in the network. Right? So, does this algorithm have the same problem as the rumor mongering algorithm?
+[2293.0:2313.0] So, no. So, the nice thing is this algorithm ensures complete dissemination.
+[2313.0:2330.0] Right? It will eventually, you know, there's a guarantee that it will eventually deliver message to every single node.
+[2330.0:2346.0] Right? And also because it's that kind of I have sent me algorithm. You know, nodes are only exchanging the actual messages if they know that their news to the other know, right?
+[2346.0:2366.0] So, it's because they engage in one of these anti entropy interactions. Right? So, just like I have sent me protocol, this this protocol is only going to deliver the message to each node once. Right? So, it has in that sense that, you know, perfect.
+[2366.0:2380.0] Perfect bandwidth efficiency, you know, order in. If we ignore this, you know, the metadata exchange. Again, during this periodic anti entropy.
+[2380.0:2398.0] On the other hand, you know, a nice thing about even the metadata exchanges is those are kind of the the amount of bandwidth that the nodes are spending in those in those periodic exchanges are strictly limited to a certain rate. Right?
+[2398.0:2415.0] Because it's a configurable based on this, you know, how often this timer goes off. And, you know, it only does a certain amount of, you know, metadata exchange to detect new messages. Right? And then it goes silent again until the next next firing. Right? Yeah.
+[2415.0:2438.0] But, basically, that's the problem. Right? So, especially if the message is new, it's just starting out going this is a super slow algorithm. Right?
+[2438.0:2460.0] And then, you know, it really eventually gets to know make its first top to know the sea, but it might take, you know, quite a bit of time. You know, all of these nodes might have to, you know, do these time delays several times, you know, wake up, flip the wrong number and not, you know, not.
+[2460.0:2472.0] No, not get message them until eventually, you know, a second node gets message and then eventually a long time after that, a third node gets message and so on. Right?
+[2472.0:2485.0] So, especially when, when, uh, when messages are rare in the network, nobody has them yet. This is a super slow algorithm. You totally don't want to do this. Right?
+[2485.0:2493.0] On the other hand, do you also see why it's why I said it's complimentary to the rumor-mongering algorithm? Right?
+[2493.0:2507.0] So, if you use both algorithms, then the rumor-mongering algorithm is going to be really quick and efficient at getting this message to almost all nodes quickly. It'll leave a few holes.
+[2507.0:2518.0] But, but most of the nodes have it. Right? So, supposing we, you know, for anti-entropy, we only really can, you know, we, we've got that rumor-mongering algorithm to get it to most nodes.
+[2518.0:2526.0] So, we really only care about the case where most nodes do have the message already. Right? So, and there's just a little hole. Right?
+[2526.0:2539.0] So, let's say, you know, these three nodes already have the message and all NB is just one of these holes that was, that, you know, that rumor-mongering left to hide. Right?
+[2539.0:2547.0] Now, when B wakes up to its anti-entropy, next, anti-entropy phase, what's going to happen?
+[2547.0:2562.0] So, all of these neighbors already have the message, right? It's a, you know, it's a hole in the, you know, in the dissemination.
+[2562.0:2580.0] But, so, it doesn't really matter which neighbor B randomly chooses to talk with. It's going to, you know, with, you know, absolute certainty or almost absolute certainty, it's going to be a neighbor that has the message. Right?
+[2580.0:2597.0] And so, in general, you know, once you have rumor-mongered the message pervasively, and then you just do one, you know, anti-entropy phase after that, that's generally enough for all of the remaining to patch up all the remaining holes, basically. Right?
+[2597.0:2625.0] So, the combination of algorithm is actually really fast in the most, most nodes, you know, get pushed copies of the message aggressively in the rumor-mongering phase. And then just one quick, you know, anti-entropy phase after that is usually enough, you know, except in very rare occasions for the rest of the nodes, the unlucky nodes in the first phase to get copies of the message.
+[2625.0:2645.0] And then, you know, of course, there might still be a few really unlucky nodes that take two or three or, you know, more anti-entropy phases, but those get really, you know, exponentially unlikely really quick that, you know, that holes persist for more than one or two cycles. Right?
+[2645.0:2666.0] Yeah, so, and, and of course, this is also order n, an order n algorithm. So, you know, using the two in combination is likewise order n. And so it's actually a very efficient, probably ballistic algorithm.
+[2666.0:2677.0] Okay. Any questions about either of these algorithms before we take a break? Yeah.
+[2677.0:2704.0] Yeah. Yeah. Yeah. Basically, so this is, you know, this is basically assuming, you know, you have some kind of, I have send me protocol like we were discussing before, like, you know, and, and, yeah, in practice, that's usually a stateful thing. Hey, hey, friends, you know, we haven't talked a while.
+[2704.0:2722.0] You know, the last I heard, you know, your list of message IDs was up to here. You know, can you send me every all of your message IDs that you, or even just all of the new messages that you received since, since the last time we talked. Right?
+[2722.0:2737.0] So the, I, I have send me protocol will be the most efficient, you know, but even if you just have it, send all, you know, copies of all new messages, you know, since you talked, you know, that might not be too inefficient either.
+[2737.0:2746.0] Yeah.
+[2746.0:2759.0] Yeah. Sorry. Sorry. I, maybe I, I, I didn't mean to, to say that the anti entropy algorithm only starts after the rumor, more agreeing. Right? So yeah, you're right. It is normally continuous.
+[2759.0:2763.0] They, you know, rumor, anti entropy is just operating continuously all the time.
+[2763.0:2772.0] Rumor, mongering, you know, springs into effect when some node gets a new message. Right? Yeah.
+[2772.0:2777.0] Yeah.
+[2777.0:2784.0] Mm-hmm.
+[2784.0:2813.0] Yeah. Yeah. Yeah. Yeah. That's a really good question. And frankly, I can't remember offhand. So this is a detail of NNT. The NNN.
+[2813.0:2831.0] P protocol network, news transfer protocol. The way it, the way it's, I have sent me protocol works. And frankly, I can't remember whether the, I have sent me is predicated on a particular news group or particular list of news groups.
+[2831.0:2845.0] Or if it's global, right? It might work either way. So if it's global, then you kind of have to receive, you know, exchange the message ID. You know, the message ID is obviously don't say what news group the messages are in.
+[2845.0:2857.0] So you might have to like receive a bunch of messages for news groups that you don't want to store. And then you just, you know, mark those message IDs as received and drop the actual content on the floor. Right?
+[2857.0:2870.0] So this still means, you know, it still saves the disk space. Right? This still means you don't have to store on disk all of those, all of those messages in the news groups you don't care to receive.
+[2870.0:2884.0] You still spend the bandwidth receiving one copy of each of those messages just to discard it. Right? So that's, that's obviously not, not ideal. But, you know, that maybe that wasn't too bad. If they were primarily trying to say a disk space.
+[2884.0:2896.0] On the other hand, obviously you could run this at a per news group or per, you know, portion of the hierarchy, you know, with some kind of filter.
+[2896.0:2911.0] And maybe they did have a filtering mechanism like that in the protocols so that they would negotiate and only, you know, only send, you know, sets the message IDs that are in relevant, you know, mutually relevant news groups.
+[2911.0:2926.0] You know, that would, that would definitely save save a lot more. But yeah, I would have to look back at the RFCs to figure out, you know, exactly how they, how they handle that case, which is a very important detail. Thanks for bringing it up.
+[2926.0:2934.0] Good. Okay. Any other question? Yeah.
+[2934.0:2953.0] Yeah. Yeah. Good. Good question. Yeah. This is just the, these are just the terms that they, you know, the inventors of this algorithm came up with.
+[2953.0:2965.0] Kind of like the, you know, kind of a suggestion of the, you know, a hot rumor, you know, it's something that you want to go step in. So, so in that sense, I think it's a, it's a well chosen term.
+[2965.0:2977.0] But yeah, in other sense, in the terms of it being like unsubstantial and the kind of thing you shouldn't be talking about at all. Anyway, you know, maybe it's not quite appropriate in that respect.
+[2977.0:2984.0] You know, it's, it's whatever it is in terms of the terms they chose.
+[2984.0:2995.0] Okay. Good. So, yeah. So time worked out reasonably well. Let's take a quick break. 10 minutes and come back at 11.15. Okay.
+[2995.0:3009.0] Just say that for your mind. Yeah. Just a minute. Okay. Welcome back.
+[3009.0:3021.0] So, we talked about gossip algorithms. So now,
+[3021.0:3035.0] I want to talk about basic flooding search and routing algorithms like beyond just disseminating a message, you know, to all possible notes.
+[3035.0:3048.0] What if we want to be a little bit more, you know, more selective and more intelligent? What if we, what if we want something in particular?
+[3048.0:3064.0] So, obviously, we're going to focus on distributed search.
+[3064.0:3082.0] And we're going to divide this. This is a really big, broad class of algorithms. And to make it tractable, we're going to need to divide it into a couple categories. So we're first going to start with unstructured.
+[3082.0:3102.0] And then later, so today we'll only talk about unstructured search later in a few lectures. We'll talk about structured search algorithms. So what's the difference? Well, the gossip algorithm that we just talked about is an example of an unstructured dissemination algorithm.
+[3102.0:3115.0] Because it assumes that the nodes don't build any don't know and don't even try to build any permanent state about the structure of the network. Right. They just know who there's neighbors are.
+[3115.0:3129.0] But they don't know or they don't even try to know anything else beyond that. Right. Whereas we talked about the spending tree protocol as another way to solve the, you know, gossip algorithm efficiently.
+[3129.0:3145.0] Like if you can detect cycles and force, you know, build a structure, a logical structure, you know, force the topology into a logical tree by building this tree structure on top of the non tree structure underline network.
+[3145.0:3159.0] Then you can route over that tree with, you know, kind of perfect efficient, perfect message efficiency. Right. So, and never, you know, never, you know, never send a message twice.
+[3159.0:3178.0] And it's redundantly as long as that structure still holds and is still accurate with respect to the underlying network. And that's always the big, big gotcha with any structured algorithms. You build a structure. The network changes out from mother under you and the structure is no longer valid.
+[3178.0:3189.0] You know, update the structure and, you know, between the time the underlying network changed and you're and you rebuilt your structure, you adjusted your structure, things are going to go wrong. Right.
+[3189.0:3202.0] That's kind of always the case with structured algorithms. Right. So, so there are things to be said for both classes of algorithms. Right. So unstructured algorithms are kind of by definition.
+[3202.0:3210.0] They're always instantly adaptive.
+[3210.0:3222.0] You didn't try to build any state, any structural state about the structure of the network. You're not using. You're not relying on any structure state, any knowledge about the network.
+[3222.0:3232.0] Therefore, if the underlying network changes, you totally don't care. You just blow on the algorithm. Keeps working with the new structure. Right.
+[3232.0:3243.0] So, you know, network that's rapidly changing. This is a really good thing. Right. So messages with a, so networks with a lot of churn.
+[3243.0:3253.0] So, we could, so when nodes are coming or going or connections are coming and going, we call this churn, you know, how fast is the churn, how slow. Right.
+[3253.0:3270.0] So, with networks with time, churn, unstructured algorithms tend to be really nice because we don't build structures that get broken and have to have to be, you know, rebuilt or adjusted. Right. On the other hand, on the mess on networks with lower churn.
+[3270.0:3284.0] Sometimes structured algorithms are much more attractive. Why? Well, they can be much more efficient.
+[3284.0:3288.0] In various ways.
+[3288.0:3302.0] So, we saw that with this, you know, spanning tree protocol. Once you build the structure and assuming it's still valid, assuming it still reflects the underlying network, you suddenly get perfect, you know, message distribution efficiency.
+[3302.0:3316.0] You know, at the cost of having to build and maintain the structure and well, you know, things break really badly sometimes if the underlying network changes and the structure isn't appropriate anymore.
+[3316.0:3325.0] But yeah, so these can be much more efficient. But they can be brittle.
+[3325.0:3339.0] They can break badly, you know, if the structure stops reflecting the underlying network and they require maintenance.
+[3339.0:3348.0] You can be certain that underlying network is going to change. You just, you know, hope it doesn't change too quickly.
+[3348.0:3352.0] And then structured algorithms can work well.
+[3352.0:3362.0] But even then, you know, it's you're going to have to rebuild or maintain the structures that's going to be that's going to be a cost. It's going to be a risk of things going wrong.
+[3362.0:3373.0] You know, stuff like that. It's complexity. You know, so there's this whole set of trade us. Was there a question here? Come in.
+[3373.0:3390.0] Okay. Okay. So, just to give you those two general categories, again, for now, I want to focus on unstructured search.
+[3390.0:3408.0] And so in the readings, the assigned readings for this page for this week, you'll see a few relevant papers.
+[3408.0:3428.0] One is on a lot of the early peer to peer files hearing algorithms, including Napster and new teller, which one of the papers about are basically unstructured search algorithms.
+[3428.0:3447.0] The model is you have a bunch of nodes that are storing say a database of files, right. And each file has the metadata.
+[3447.0:3468.0] So like a song name, these were initially used very commonly for sharing music files. And that was associated with the actual file contents, right.
+[3468.0:3486.0] And this would often often have other metadata like, you know, a bit rate quality, you know, type of type of encoding stuff like that. But, you know, for now, we're for purposes, we're just going to assume that, you know, the metadata with particular file is just text string.
+[3486.0:3508.0] And to search for something, you're just going to do a string search, right. So some node, let's say Alice over here, some user over here wants to search for a song titled song.
+[3508.0:3529.0] Right. I know kind of a perverse name for a song, but so Alice is Alice searches for, you know, the keywords song. And she just wants to know, well, what other nodes have files in their databases, you know, with song in the title.
+[3529.0:3539.0] And if she finds any, she, she wanted, you know, as if it was a Google like search engine, but we want this to be decentralized. So we don't want to rely on Google.
+[3539.0:3558.0] You know, Alice wants to get basically a list of hits. Okay. So for, you know, for this search term song, here are the complete, you know, metadata strings of a whole bunch of matches, maybe in, you know, descending, descending order based on some kind of.
+[3558.0:3575.0] Some quality metric or something, right. And then Alice is going to be able to pick one or one or more of these, these things to actually things to actually go get, but that's, you know, the actual affecting the file is kind of outside of the search protocol that we're talking about.
+[3575.0:3590.0] For the moment, we can only about the search, right. How does Alice find, you know, which, if any nodes out there have files, who strings, who's metadata string is matched, this match her term.
+[3590.0:3592.0] Right.
+[3592.0:3607.0] So, and, and in this kind of, in this kind of environment, we often want these search terms to be flexible. Right.
+[3607.0:3625.0] So Alice might want to say, okay, I went all songs that have, you know, that match all three of these terms or.
+[3625.0:3642.0] X and term Y or term Z, right. You know, some kind of Boolean expression, you know, about a combination of terms or other things, right.
+[3642.0:3652.0] So you might want to have a kind of non-fremial type of search to determine, you know, what hits and in what priority.
+[3652.0:3673.0] I mean, we won't get too much into the, into the details of that, but, but in, you know, one of the nice things of unstructured search, besides being instantly adaptive to network changes is usually not too much of a problem to, to make the search is fairly powerful and flexible.
+[3673.0:3679.0] Why is that? Well.
+[3679.0:3688.0] So this is because the standard.
+[3688.0:3694.0] Basic algorithm.
+[3694.0:3700.0] Is just to do what we call flooding.
+[3700.0:3711.0] So what is a flooding search? Well, what does the name suggest? How would a flooding algorithm, a flooding distributed search algorithm work?
+[3711.0:3722.0] Yeah. Exactly. So Alice just prepares a message saying, hey, find.
+[3722.0:3735.0] Anything matching this, this search string like song or, or a more complicated expression or anything like so Alice just bundles up the search search expression, whatever it is.
+[3735.0:3748.0] And floods it out asks everybody, hey, can you look at this search, search expression and report to me, get back to me with, with any hits you find, right.
+[3748.0:3762.0] And then the next thing you can do is, you know, you can find a little note, maybe a lot of nodes will have, will find they have something in the database matching this expression and all those nodes will send, you know, will reply directly to Alice.
+[3762.0:3766.0] Oh, yeah, I have these three files matching matching your search.
+[3766.0:3777.0] Here you go, right. And then the results are just, you know, that metadata and then Alice can decide whether she has, you know, later, whether she wants to actually go get any of those files.
+[3777.0:3789.0] So now how might we implement, you know, the delivery of this of these, you know, search is.
+[3789.0:3802.0] Well, we kind of just, just, you know, created appropriate algorithms or, you know, has something like, use net, something like the rumor, monitoring or anti-entry, the algorithms might be, might be good ways.
+[3802.0:3811.0] Right. So any, any gossip approach that can deliver arbitrary messages, well, they can obviously just deliver search messages to everybody.
+[3811.0:3823.0] Right. So, so in, so, you know, basically, a natural unstructured search algorithm is something that's easy to layer on top of any gossip algorithm you want.
+[3823.0:3837.0] Just, you know, use the gossip layer to distribute the search term to everyone, everyone who has a hit response directly not with the gossip algorithm necessarily, but maybe just point to point direct point to point messages.
+[3837.0:3846.0] Right. So, yeah. So Alice basically just gossip.
+[3846.0:3855.0] The search to everyone and then let's say only know be actually has a hit.
+[3855.0:3865.0] No, be privately or, you know, with the point to point message message sends the hit or hits back to Alice.
+[3865.0:3867.0] Right.
+[3867.0:3874.0] Okay. Any questions so far? So, you know, this is, this is a good standard algorithm.
+[3874.0:3886.0] It more or less works. What, in what, in what ways might, might we find it less than ideal perhaps?
+[3886.0:3888.0] Might be very slow.
+[3888.0:3907.0] So, in what way and why? Yeah. So, there could be variable and unpredictable ways. Some, some notes might respond very quickly.
+[3907.0:3917.0] Others might take quite a while. So, yeah, how long do you wait? That's, that's a problem. And, and in these unstructured search algorithms, generally, yeah.
+[3917.0:3935.0] The, you know, the search terms, the hits kind of trickle in. And, you know, if you're, if you're implementing Alice, the search, you know, if you're doing a good job, implementing that you're probably, you know, immediately, you know, presenting the first few results that come back.
+[3935.0:3949.0] Other results that come later, you know, appeared gradually. So, the, you know, the search kind of resolves itself gradually over time. And, you know, Alice can continue looking for more, more hits, you know, as long as she wants to wait.
+[3949.0:3968.0] But, yeah, if there, otherwise, yeah, it's hard to set an upper bound to say, okay, I'm going to stop the search after this time, you know, when, well, that might, you know, Alice might never see some relevant results in that case.
+[3968.0:3986.0] Yeah, so that's, that's definitely a problem. So unpredictable delays.
+[3986.0:4006.0] And, the other hand, that's kind of a hard problem to solve in this context because, you know, unless the network is providing some kind of guarantee, you know, delivery guarantees, it may not be a problem we can really solve, other than just by being as tolerant as we can to those delays.
+[4006.0:4020.0] Yeah, usually, that's.
+[4020.0:4046.0] So, will act, that's the way these peer to peer networking protocols generally work to they assume that this sits on top of the internet, you've got always got TCP underneath. And so, or UDP, for example, and so those, those nodes that find hits can just send a direct reply via UDP to the IP address embedded in the in the query.
+[4046.0:4054.0] And so, you might not work, of course, depending on all kinds of pragmatic issues like net traversal and stuff.
+[4054.0:4073.0] We were just talking about that during the break. But, you know, as a baseline, that's, that's usually what the, you know, kind of the peer to peer algorithms assume on the other hand, you might be operating in a context where, you know, you don't have all to all connectivity.
+[4073.0:4079.0] So, you want to kind of create the indirect connectivity if you need to, right.
+[4079.0:4093.0] That's more complicated. You can do that in ways, but then you have to implement some kind of routing protocol. And that's, we'll get to that as well.
+[4093.0:4116.0] So, if you, but like even in use net, remember we discussed the path. That's kind of a response routing protocol, you know, any message that's that's getting gossiped out requires a return path that you can always follow to send a direct response over that path to whoever broadcast the message.
+[4116.0:4136.0] Right. And so that's one way, like, you know, if you, if you don't want to assume the underlying network is fully connected, well, have the have the search messages as they get gossiped out, put, put some kind of using it like path in them so that the responses can come back via that path.
+[4136.0:4147.0] So, and that's that's a simple routing mechanism. We call source routing. So source routed responses just following a path that they got, right.
+[4147.0:4158.0] There are other approaches that will that we'll talk about. But yeah, so so you can, this is usually dealt with at a separate as somewhat separate layer, but it's important to.
+[4158.0:4172.0] Yeah, good question. Okay. So, so back to the basic, the basic algorithm though. Now.
+[4172.0:4177.0] So, you know, we have to deal with unpredictable delays.
+[4177.0:4197.0] And other problems we might have to deal with is no all to all connectivity.
+[4197.0:4209.0] Or replies, right. So if, if nodes really can only talk to their neighbors, or if they, you know, on the real internet, if they're there often behind that.
+[4209.0:4219.0] And some nodes can talk to some pairs of nodes can talk to each other and others can talk to each other quite so reliably without doing some kind of natural verse or other other things.
+[4219.0:4233.0] Then, yeah, that might be a practical problem. We might have to deal with. But one of the big practical issues is just efficiency.
+[4233.0:4246.0] Again, message efficiency, right. What's the property of this flooding search? Well, all of the nodes see every every node sees every search.
+[4246.0:4264.0] All nodes have to see and process. All searches.
+[4264.0:4288.0] So in some cases, this might not be too much of a problem. But, you know, as the network grows, let's just say, you know, each at each node is a user that tends to produce searches that a similar rate like, let's say, you know, the average user sends out a search once per hour or something like that.
+[4288.0:4309.0] The network grows and grows and grows to, you know, and some arbitrary and nodes. How many searches per hour is is each node going to have to process as in grows?
+[4309.0:4318.0] If it's average one search per hour across all the nodes, you know, each node is going to have to process basically and searches per hour.
+[4318.0:4333.0] Pretty simple. But the problem is, you know, the cost to each node, the continuous processing cost to each node grows linearly with the number of nodes in that in that scenario.
+[4333.0:4353.0] The more nodes you get, the more, you know, the more searches each node has to participate in and respond to all the time. Right. So one of the things we, you know, we obviously like to do is have search algorithms, literally, at least a little bit more efficient than that.
+[4353.0:4364.0] Right. Where not every node has to participate in every single search. Right. So.
+[4364.0:4373.0] And there's a variety of interesting optimizations.
+[4373.0:4395.0] When, since I don't have a lot of time, I won't talk about a lot of them. But as one optimization that's that's often that many of these systems implement and that can can be useful is what we call expanding ring search.
+[4395.0:4410.0] Now, so what does this mean?
+[4410.0:4436.0] If we have, if, if, say if Alice is searching for a, for a popular file, that so a particularly popular song that actually exists at a lot of nodes, some closer or some farther away.
+[4436.0:4450.0] Right. Maybe she doesn't have to. So if she does flood the whole network, she'll get a ton of responses. Right. Way more than she can ever deal with. Most of those will be basically wasted, wasted work for everybody involved.
+[4450.0:4454.0] So maybe she only really needs the first few. Right.
+[4454.0:4477.0] So what if she, instead of flooding everyone, she, she does a. So it uses limited flooding or limited, gosset.
+[4477.0:4491.0] So just as an example, maybe Alice first gosset some message saying. So search for song.
+[4491.0:4517.0] But please distribute this to a, to a maximum of one hot distance. Right. So set a set of distance limit for how, how widely we're going to, we're going to gosset this thing. Now this, this feature is, you know, based part of the Internet product, I be designed the time to live or hot count in IPV 6.
+[4517.0:4536.0] And it's a really easy thing to include in, you know, practically any gossip product. Right. So if the sender just wants to limit the gossip to, you know, a particular particular distance and hot count or something like that. It's easy to do that. Right. So, so that's a natural way.
+[4536.0:4556.0] So, you know, so a fairly easy thing that Alice can do is, well, she doesn't yet know if it's a popular song or not, but she's just going to assume it might be and try and and first send a sender search with the, with a hot count of one.
+[4556.0:4576.0] So, so the first search is only going to hit these notes, right. And then it's going to stop. No, the, the neighbors are just going to stop forwarding her message as they were requested to buy out.
+[4576.0:4598.0] Now, if Alice gets finds the song she was, as she might in this case, she finds this node B immediately, this nearby and has the song she gets responses to be she downloads that song. She's happy she doesn't waste anybody else's bandwidth or her own bandwidth or work getting a big flood of responses for a popular song. Right.
+[4598.0:4612.0] So, everybody is happier in that case than if she just instantly flooded the whole network on the other hand, well, maybe she doesn't get a hit or not one that she wants. She decided just I she wants to search further. Right.
+[4612.0:4623.0] And then well, what does she do of obviously she expands the rate, right. So, she adds, for example, one more hot.
+[4623.0:4646.0] So, the second try might might have might go out, you know, one more hot hot, hot count to that hits a larger number of nodes and so on until after probably a small number of of hops, you know, for most networks.
+[4646.0:4659.0] Usually the logarithmic in the size of the network, you can usually expect for most realistic networks that, you know, something on the order of log in in terms of hot count is going to reach the whole network.
+[4659.0:4678.0] So, basically, you might have to try expand her her search radius up to approximately log in times, you know, to find something that actually turns out to be very rare and only existing on the opposite side of the network. She'll still eventually find it.
+[4678.0:4684.0] But after after log in tries. Right.
+[4684.0:4694.0] Yeah.
+[4694.0:4715.0] When the hot count does go down to zero. Yeah.
+[4715.0:4730.0] So, do the intermediate nodes that already processed old searches, reprocess the new ones. Right. So, yeah, that's that's a good good question that that's kind of a protocol design detail.
+[4730.0:4751.0] Which is a question of how stateful do you want the nodes to be. Right. So, it would obviously be more efficient if the intermediate nodes were aware, you know, at least for a while, we're aware of Alice's first search so that they can, you know, the next time with the larger the same search comes with the larger radius.
+[4751.0:4763.0] Yes, they say, oh, I already processed an earlier version of this. I'm not going to reprocess it. But instead, you know, I'm just going to forward it to a larger, larger radius. Yeah.
+[4763.0:4777.0] So, you know, a smarter, smarter protocol might do that. But there's always a cost, right, to these optimizations. And in this case, the cost is is well, these nodes have to remember the search.
+[4777.0:4797.0] At least for a while, they have to remember that they that they got that, you know, recently, now they might have to do that anyway as part of the underlying gossip protocol. Right. So, so as long as it doesn't add much more state than the underlying gossip protocol did if it's well integrated into the gossip protocol, this is probably easy to do.
+[4797.0:4811.0] And on the other hand, if you do it some other way, like without a gossip protocol, then it might be a little bit more tricky and it might involve state storage that you don't want. But yeah, those are just some of the trade off.
+[4811.0:4816.0] Yeah, good question.
+[4816.0:4845.0] Okay, so, so in practice, this, this kind of thing does, you know, Canon does do, you know, pragmatically, it does a decent job of increasing improving, you know, can we do reducing the unnecessary, you know, chatter messages, especially messages searches for popular content where where the content usually does exist very close to the person who's searching.
+[4845.0:4852.0] On the other hand, what if you're searching for something that doesn't exist at all?
+[4852.0:4862.0] That's also, it might also be a fairly common case. I mean, something you wish had existed in the network, but well, nobody has it.
+[4862.0:4867.0] So then you always have to search all notes, right.
+[4867.0:4879.0] And so from a, you know, you're at it from an asymptotic perspective, this doesn't really improve the asymptotic efficiency, right.
+[4879.0:4906.0] So it pragmatically typically works to improve efficiency, but yeah, as I'm, but not as them, technically.
+[4906.0:4921.0] Yeah.
+[4921.0:4943.0] Yeah, well, fortunately, it's not n squared, usually because in general, so it's not only not as amputically better, it's actually worse as you, as you know, but it's in general, this is basically an order n log n.
+[4943.0:4955.0] At least for, for typical realistic networks where we assume that, you know, with log n rounds, you'll eventually get, you know, get to be flooding the whole network.
+[4955.0:4965.0] So the, you know, the, the inefficiency factor is always going to be basically log n, you know, it's going to be log n times worse than the basic flooding search.
+[4965.0:4976.0] Right, but yeah, you're absolutely right. It's a cost. It's also a cost in late and Alice has to wait longer, you know, with each round to figure out, oh, I didn't succeed in this round.
+[4976.0:4985.0] I guess I should wait and do another round. Right. So, so this only slows down searches even more. And, you know, Alice might not like that, right.
+[4985.0:4996.0] So, makes the variable delays even more, you know, slow and variable, right. So, so that's, that's kind of annoying to, right.
+[4996.0:5003.0] So, so,
+[5003.0:5018.0] so, so these are, you know, so it kind of works, but it's not, not ideal. Now, since I don't have much time, we're down to the last, basically, 10 minutes.
+[5018.0:5024.0] I just want to quickly introduce and suggest you read.
+[5024.0:5048.0] So, what, what are the other assigned readings? Paper called bubble storm, which is a very interesting, let's say it's mostly unstructured.
+[5048.0:5063.0] So, if you read the paper closely, you'll see that they kind of do depend on, you know, something that might suspiciously look a little bit like structures, but, but, but, but they're very limited lightweight structures.
+[5063.0:5087.0] So, we'll call this unstructured search for the moment, but, they're really important and interesting thing. Property that this protocol has is first, it, it still allows general search terms.
+[5087.0:5099.0] Just like unstructured protocols, namely, we just send out maybe an arbitrary expression to some nodes and those nodes figure out, you know, whether it hits their data or not, and they reply.
+[5099.0:5114.0] So, the same basic idea, but it actually gets an asymptotically lower,
+[5114.0:5121.0] as an ontotically better efficiency.
+[5121.0:5137.0] Namely, it gives you, it gives us a guarantee that it takes only, so, so a given search is only going to touch, is not going to touch the whole network is not going to have to have the whole network, participating in it.
+[5137.0:5149.0] Instead, only about order square root of nodes are going to have to participate in any particular search.
+[5149.0:5156.0] And, just to give you a quick sketch, you know, so, how is that possible?
+[5156.0:5171.0] Now, how many of you are familiar with the birth date paradox? Okay, good. So, so, bubble storm is a protocol that basically takes leverages the birth date paradox.
+[5171.0:5182.0] Like many smart and interesting distributed protocols.
+[5182.0:5193.0] Right, so, here's the basic idea in a nutshell.
+[5193.0:5216.0] And, another way we can, we can refer to this as a random meet in the middle. Right, so, the way this works is there's two sides of this.
+[5216.0:5238.0] So, the publishers, the people who have files and metadata to share, and then searchers. Usually, you know, they're, they're the same users, but just feeling different roles. Right, so every user that publishes a database.
+[5238.0:5267.0] So, every user has has the database, but they're not just going to leave those databases on their local nodes. Instead, publishers are going to pick about square root of N random nodes to replicate their database is on onto.
+[5267.0:5287.0] Right, so, let's say this is Bob's machine. And Bob's database, Bob is going to pick square root of N nodes like it randomly picks like this node and this node. Right.
+[5287.0:5307.0] Just a random square root of N subset of all nodes and sends a copy of the database say, okay, hey, you, you won my square root of N, you know, lottery, can you please store a copy of my database in addition to your own and others for the next time period. Right.
+[5307.0:5323.0] So, all nodes are going to do that. So, every database is basically replicated square root of N times through the network. Why is this useful? Well, what are the searchers going to do?
+[5323.0:5352.0] Well, based on your understanding of the birthday paradox, what's your guess? Yeah. Exactly. So, the searchers, instead of flooding this message to everybody, the searchers are going to pick square root of N random.
+[5352.0:5376.0] Nodes to send the search to. Right. So, this is Alice who's looking for something that Bob happens to have. So, Alice is going to randomly pick square root of N about square root of N nodes.
+[5376.0:5388.0] And because of the birthday paradox, well, the panic, you have to tweak the constants appropriately to to, you know, make this work reliably. But, you know, if you just pick appropriate constants.
+[5388.0:5410.0] You get a very high probability that the set of nodes that Alice randomly sends her search to will intersect by on at least one node. There will be at least one node in common with the set of nodes that Bob sent copies of the database to.
+[5410.0:5433.0] Right. So, it's a meat in the middle between Bob's data data, random square root of N database replicas and Alice is random square root of N replicas of our search. Right. And as long as they do meet, you know, kind of randomly, you know, have a birthday collision in the network, which they will with high probability in this case.
+[5433.0:5446.0] Then that node, that rendezvous node will be able to run Alice's search on a copy of Bob's database and see off. There's a hit send it back to Alice.
+[5446.0:5451.0] So, of course, it's probabilistic. It can fail, you know, even if.
+[5451.0:5472.0] But, you know, the problem, again, if you pick the constants appropriately, the probability of failure goes down exponentially as you increase the constants. So you don't necessarily have to worry that much about about that failing.
+[5472.0:5495.0] OK. Now, of course, there's a ton of stuff I lost over. I didn't even talk about well, how does how do Alice and Bob actually know the structure of the network enough to pick a random square root of N nodes to send these things to well, that's where you got to read the rest of the paper and where this, you know, some, you might see some semi structure and assumption like.
+[5495.0:5511.0] But, you know, those can be worked around, right? So there's a, there's ways to solve those problems always with some caveats, of course, but that's that's the basic idea that I want you to be aware of that, that.
+[5511.0:5526.0] This kind of, you know, using the birthday paradox in algorithms like this is often a very powerful technique, even when you don't know nobody knows, you know, a priori, the structure of the network or, you know, which node will be useful.
+[5526.0:5537.0] Nevertheless, just by doing this kind of random thing, they can with high probability, make the search happen at asmtodically much, much better efficiency.
+[5537.0:5565.0] Yeah, the probability that there's no collisions. Yeah, so I would have to dig dig back through the, you know, kind of probably the standard probability calculations, but it's not so.
+[5565.0:5584.0] So it's a standard like, you know, it's in the standard standards, space where, you know, each additional, you know, attempt each additional selection of a random node is going to, you know, give you the same chance of success, right?
+[5584.0:5605.0] And so, so, you know, you're in the standard space where you increase the constant, you know, each increase of the constant of the number of tries or, you know, the constant parameter that you had you multiplied by the square root of n gives you an exponentially increase of finding it.
+[5605.0:5623.0] Right, so, so, you know, to make it to ensure that it's not usually that expensive to get yourself an overwhelming, you know, probability of finding it just by putting a constant, you know, 20, 30, 40, you know, in there and calling it good enough.
+[5623.0:5636.0] Yeah, yeah.
+[5636.0:5655.0] So good, good question. So this, this algorithm in general doesn't, well, it doesn't need to assume anything about the network being static provided it can make this selection of square root of n random notes somehow.
+[5655.0:5677.0] But it's when you get into that part, the selecting square root of n random nodes efficiently that it starts to be useful to have a little bit of structure, but you can also, you can also not use that structure by, well, you know, you know, read the paper, but it basically they use random walks.
+[5677.0:5691.0] So you assume, you know, appropriate things around the network and assume it's, you know, has a standard topology, you can get pretty close to a random selection just by doing a random walk, you know, around the network.
+[5691.0:5702.0] And then you do square root of n of those basically to do to do this replication, but.
+[5702.0:5708.0] Sorry.
+[5708.0:5724.0] So it only really affects the cost if it, if it, if it affects the efficiency of this, you know, square root of n random selection algorithm, which it doesn't, if you're just doing a pure random walk.
+[5724.0:5733.0] If you're doing something or trying to be a little bit smarter than, yeah, there can be a little bit of structure there and that and churn can, can badly affect that.
+[5733.0:5739.0] Yeah, but we'll get into this. So we'll get into these issues a lot more when we get into structure and search.
+[5739.0:5760.0] And I think three weeks now so as so we'll come back to we'll do the replication and consensus and crypto and then we'll come back to the search topic and talk about structured search algorithms where yeah, these these maintenance issues will be a main main point.
+[5760.0:5778.0] Okay, thanks a lot and I'll see you in in three weeks, but please do come here for for the next two lecture with the FIAs.
+[5778.0:5790.0] Here's the end of the video.

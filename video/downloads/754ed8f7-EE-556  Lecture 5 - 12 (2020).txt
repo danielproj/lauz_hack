@@ -1,0 +1,462 @@
+~EE-556 / Lecture 5 - 1/2 (2020)
+~2020-10-09T18:43:11.755+02:00
+~https://tube.switch.ch/videos/754ed8f7
+~EE-556 Mathematics of data: from theory to computation
+[0.0:11.08] Hello everybody.
+[11.08:16.32] One of those Friday late afternoon.
+[16.32:23.92] Thank you for choosing mathematics of data for your data science needs.
+[23.92:32.120000000000005] What we're going to do today is we're going to continue with what we were doing in the
+[32.120000000000005:43.120000000000005] last lecture, which is non-sumoth optimization in conjunction with sumoth optimization.
+[43.120000000000005:51.160000000000004] So today we will talk about a very interesting topic called composite optimization.
+[51.16:58.16] And we'll in particular emphasize algorithms for this purpose.
+[58.16:60.76] All right.
+[60.76:64.36] So what we'll do is we'll begin with composite optimization.
+[64.36:71.88] We'll talk about this class of algorithms called proxene gradient methods and then we'll
+[71.88:76.64] end with the protein with Frank Wolf method.
+[76.64:79.44] All right.
+[79.44:88.32] So far we were talking about the supervised learning setting where we have some samples
+[88.32:96.28] that first form some data A and some labels for numbers B or responses B. And what we wanted
+[96.28:102.84] to do is in order to learn the function of the supervised that was going, we looked
+[102.84:110.60000000000001] into sitting up for magic functions and minimizing losses.
+[110.60000000000001:116.48] What we've done so far was to talk about things like maximum likelihood losses.
+[116.48:122.72] And what I argued that there are cases where the number of data points is not sufficient
+[122.72:126.48] to get a good primary estimate.
+[126.48:133.28] And for this purpose, we started introducing some prior information on the parameters of
+[133.28:136.48000000000002] interest as far as the view was one of them.
+[136.48000000000002:143.96] So semtiput if you think about things like generalize the new model which I mentioned
+[143.96:147.08] doing the rest of the testing run.
+[147.08:151.88] So suppose we have some linear model.
+[151.88:158.76] We have some labels and we measure this log likelihood loss.
+[158.76:166.48] And the idea here is that, okay so there's a type of error this should be here.
+[166.48:172.12] The idea here is that if you regularize the one known, you end up getting fast solutions
+[172.12:178.51999999999998] and that has a very good impact on the sample complexity.
+[178.51999999999998:181.24] So let me give you one example.
+[181.24:189.32000000000002] So I am sweeping a lot of things under the conference.
+[189.32000000000002:194.60000000000002] So under some technical conditions, you can pick a regularization parameter such that
+[194.60000000000002:202.4] our error to a potentially true parameter.
+[202.4:206.08] So this is our true parameter in the linear model.
+[206.08:209.4] This is our generating parameter.
+[209.4:219.20000000000002] Our estimator will have an error that was scaled with s log p divided by n.
+[219.20000000000002:223.68] And if you compare this to the standard maximum likelihood estimation, which does not have
+[223.68:232.36] this particular regularizer, you end up getting p divided by n.
+[232.36:240.4] And s here is the farce of the true parameter.
+[240.4:247.56] So if the true parameter is farce, s is ideally much less than p.
+[247.56:255.68] And hence the data that you need to make this error small, if you could solve this regularized
+[255.68:264.32] problem is arguably much, much less than without regularization.
+[264.32:269.84000000000003] So the nice rule of thumb here is that in the numerator, we have something like the degrees
+[269.84000000000003:271.92] of freedom.
+[271.92:276.72] And these optimization problems tells us that the sample complexity is something like
+[276.72:282.84000000000003] we need to get on the order of the degrees of freedom in the parameter.
+[282.84:287.71999999999997] If you don't have any prior information, the degrees of freedom in the model is p.
+[287.71999999999997:292.4] Because there's p numbers and p dimensions that we can clearly choose.
+[292.4:302.44] So for maximum likelihood to succeed, you have this number p in the numerator.
+[302.44:308.2] On the other hand, if you have s, past coefficients, you need these numbers and you also need to
+[308.2:315.59999999999997] figure out where to put them, so you need something like s, dot p bits to go to positions
+[315.59999999999997:319.44] plus x to write down the numbers.
+[319.44:324.15999999999997] So in the end, your error is close down with s, dot p divided by n.
+[324.15999999999997:328.15999999999997] This is very good.
+[328.15999999999997:332.08] So it's a very good advantage.
+[332.08:340.71999999999997] Now in the last lecture, I showed variety of examples where we end up having to solve
+[340.71999999999997:345.59999999999997] in this particular setting, having to solve problems that have two terms.
+[345.59999999999997:351.32] One is the term that comes from the data fidelity or maximum likelihood, this loss optimization
+[351.32:353.68] perspective.
+[353.68:356.59999999999997] And the other one is the regularized.
+[356.6:365.12] In the previous example, this was the maximum likelihood loss, low likelihood loss, and
+[365.12:370.72] this was the L1 norm.
+[370.72:380.56] Now in the SQL, I'm going to assume f is smooth and g is non-smooth.
+[380.56:386.2] So g is some non-smooth regularizer and it gives us statistical advantages in terms of
+[386.2:389.28000000000003] sample complexity.
+[389.28000000000003:395.28000000000003] Now I mentioned this term before, but if you think about it, the summation of these two
+[395.28000000000003:404.68] terms, if you don't explicitly exploit this composite structure, what you're doing is
+[404.68:408.6] you're trying to minimize the non-smooth function, because the non-term that is non-smooth,
+[408.6:414.0] in particular, if you want to get subgradient of this, thanks to the more Rockefeller's
+[414.0:419.44] theorem, this basically decomposes normally, right?
+[419.44:426.32000000000005] But because f is smooth, there is a single element in the sub differential, which is the gradient,
+[426.32000000000005:431.24] and hence the subgradient of this capital F, their estimation, would be the gradient of
+[431.24:436.76000000000005] F plus a subgradient of g.
+[436.76:440.96] And we discussed in the last lecture that the subgradient method attains a one over
+[440.96:444.36] square root of p rates.
+[444.36:447.36] All right?
+[447.36:455.64] Now if you think about it, without g, we have an s, I mean, you know that ml gets something
+[455.64:465.88] like p divided by n error, but with g, sample complexity is s log p divided by n, but without
+[465.88:476.08] g, we can get a one over, actually, so maybe we should call this kv, so if we can create
+[476.08:479.4] one.
+[479.4:486.08] Subgradient method gets a square root of k rate, where k is the iteration count, right?
+[486.08:491.28] And sorry.
+[491.28:499.59999999999997] So, in this case, we have root sample complexity, but we have to think about methods for solving
+[499.59999999999997:504.2] non-slope problems, and the subgradient method gets a square root of k rate.
+[504.2:510.55999999999995] Whereas in this one, accelerated gradient descent method gets a one over k square root,
+[510.55999999999995:512.88] so there's some sort of a trade-off, right?
+[512.88:518.8] Sample complexity becomes better when you have non-slope movements, and yet, you suffer
+[518.8:523.28] in computation themes, because you have a method that is very slow.
+[523.28:531.5999999999999] Now, the question is, given that there is some structure here, can we hope to do better?
+[531.5999999999999:537.68] In fact, what I will tell you has been a major revelation in signal-phosphine and machine
+[537.68:543.8399999999999] learning in the sense that, under certain conditions, it turns out that there is a three
+[543.84:550.44] lines here, almost a three lines, that you can solve these problems as the efficiency
+[550.44:556.6800000000001] of the, as if they are fully smooth, if a certain condition and operators satisfy.
+[556.6800000000001:560.2] And that's what we're going to cover in this structure.
+[560.2:568.2800000000001] Now, let's think about the classical gradient descent perspective, and I would like to introduce
+[568.2800000000001:573.08] an operator known as the Poxson operator, which would be key in obtaining this fast
+[573.08:577.32] convergence, even in the presence of non-slope movements.
+[577.32:588.76] So, if you remember, if f has a elliptic continuous gradient, we have f of x is meturized by
+[588.76:592.5600000000001] merization plus this quadratic of the bond.
+[592.5600000000001:597.36] All right, this is implied by the elliptic continuous gradient assumption.
+[597.36:604.0] There's a derivation of this fact in the bond of p of the slitches p of something of
+[604.0:606.0] this recitation.
+[606.0:614.88] Okay, so the way actually we get to gradient descent, so I'm just going back, is that we
+[614.88:617.32] minimized this upper bound, right?
+[617.32:619.44] So, we had this further curve bound.
+[619.44:625.6800000000001] This quadratic upper bound can be nicely written as the curve bound minus 1 over 2,
+[625.68:652.4399999999999] gradient of 1 squared plus L over 2, 1, sorry, this square, okay.
+[652.44:657.5200000000001] So this, I just rewrote, it is equal.
+[657.5200000000001:664.72] It's not any fault, I just rewrote this fact, right?
+[664.72:673.32] And the minimizer of this, so if you were to minimize this, okay, we just take to x,
+[673.32:679.32] then you see that the minimizing x star is actually y minus 1 over L gradient of f of
+[679.32:682.84] x, which is our gradient update, right?
+[682.84:686.84] Okay, now what I'm going to do is something very simple.
+[686.84:695.2] Remember, we don't just have f of x, but we have a g of x in our objective.
+[695.2:702.84] So all I am going to do is add this to the right hand side, and I'm going to apply the
+[702.84:703.84] same thing.
+[703.84:713.2] I'm going to try to minimize with respect to x, right?
+[713.2:714.2] Good.
+[714.2:724.5600000000001] Now, if you were to write this down, there are two terms that are not here, which is f
+[724.56:734.92] of y minus 1 over 2 L gradient of f of y squared, if this term was added here, then this and
+[734.92:737.0] this are equal.
+[737.0:742.3599999999999] But remember here, we're looking at the arguments of the minimizers, and with respect to the
+[742.3599999999999:747.0799999999999] decision variable x, this is something like adding a constant number.
+[747.08:755.24] So it doesn't change the argument of minimizers, all right?
+[755.24:764.32] Okay, so if you were to try to minimize this quadratic upper bound, when this point y is
+[764.32:767.5200000000001] x k, right?
+[767.5200000000001:773.84] Then to obtain x k plus 1 in a manner similar to what we did with the gradient descent,
+[773.84:778.84] here's the problem that we have to solve, we had this quadratic, which was easy to minimize,
+[778.84:779.84] right?
+[779.84:787.1600000000001] But now we have this non-summit term here, all right?
+[787.1600000000001:792.6800000000001] So what I'm going to tell you is that if you can minimize this, then the rest of the
+[792.6800000000001:798.64] algorithms will have the same rates and the same characterizations, okay?
+[798.64:805.64] So just to give you an idea about the geometry of this, our quadratic measure is there, now
+[805.64:813.1999999999999] turn up to be a quadratic measure is there plus our non-summit term, right?
+[813.1999999999999:814.48] Good.
+[814.48:820.1999999999999] So here's the linear term plus non-summit term, we have a quadratic on top.
+[820.1999999999999:827.28] And what we do is we try to minimize this arguably simpler function than the original function,
+[827.28:828.28] right?
+[828.28:834.9599999999999] Otherwise, you know, why make the problem complicated is just to get like an improvement
+[834.9599999999999:837.9599999999999] on your check, you know?
+[837.9599999999999:844.36] So this is what we do, we try to minimize this and then we try to make progress towards
+[844.36:847.36] the optimal solution, okay?
+[847.36:850.36] Is this clear?
+[850.36:851.36] Good.
+[851.36:867.08] Okay, so this particular, sorry, this particular optimization problem, the argument, it's known
+[867.08:872.44] as the prox operator or the proximal operator, okay?
+[872.44:878.76] Now the way you write this is you can also, remember, this is the argument of minimizes,
+[878.76:883.08] so you can have a lambda here or lambda here.
+[883.08:890.2] So if you just put it into this quadratic form with one half, you have lambda g here,
+[890.2:898.4] you call this the prox operator of lambda g evaluated at point x, so x comes here and
+[898.4:901.3199999999999] the rest is the same, all right?
+[901.32:910.0] So let me clear this part again just to clarify.
+[910.0:918.08] So because looking at the arguments of the minimizes, I can scale this with any non-negative,
+[918.08:923.0] non-negative, you know, strictly positive constants, right?
+[923.0:928.12] So I can take lambda here, the solution, the arguments of the minimizers are the same,
+[928.12:929.12] okay?
+[929.12:936.48] So you have a one-house quadratic terms here, all right?
+[936.48:942.96] Hence you have lambda g here, okay?
+[942.96:943.96] Good.
+[943.96:951.16] Okay, so if you recall this quadratic upper bound that we just constructed with the
+[951.16:960.24] which is fairly assumption, what we need to minimize is the gmin, L over 2 in this,
+[960.24:962.3199999999999] okay?
+[962.3199999999999:968.12] So this means I, because we're again looking at the argument of the minimizers, you can
+[968.12:977.4] take this L and put it here, so we have prox of 1 over Lg, okay?
+[977.4:986.76] And we are evaluating it at xk minus 1 over L gradient of f of xc, okay?
+[986.76:991.6] This looks like we're just plugging things into the definition.
+[991.6:1001.3199999999999] And this solution minimizes this upper bound, all right?
+[1001.3199999999999:1006.72] So here's the preview of what's coming, whatever algorithm you have, let's say gradient
+[1006.72:1012.84] descent or the accelerated gradient descent, whenever you see the gradient step, replace
+[1012.84:1018.72] it with the prox gradient step.
+[1018.72:1025.52] In that case, you will solve these non-student problems as this, they're smooth in terms
+[1025.52:1027.72] of the rate.
+[1027.72:1032.08] With the additional cost of the proximal operator, right?
+[1032.08:1037.4399999999998] Remember, the main cost of the gradient method is the gradient computation, and the main
+[1037.4399999999998:1043.48] cost of this is gradient plus potentially the prox operator.
+[1043.48:1047.48] Why is this clear?
+[1047.48:1052.8799999999999] It's important that this is clear.
+[1052.88:1064.44] No, no, you compute the gradient operator, gradient update, you plug it into the prox,
+[1064.44:1065.8400000000001] then you compute the prox.
+[1065.8400000000001:1066.8400000000001] All right?
+[1066.8400000000001:1071.7600000000002] I will give you complete examples now.
+[1071.7600000000002:1078.24] But there are cases where this prox is way more expensive than computing the gradient,
+[1078.24:1082.24] okay?
+[1082.24:1089.36] In those cases, you may want to have algorithms that are that take less iterations to minimize
+[1089.36:1097.08] your overall total cost, which could be dominated by the prox operator itself, right?
+[1097.08:1101.72] But in general, what we're going to say is that the problem or the function G is prox
+[1101.72:1107.04] to be intractable, meaning it has a tractable, nice efficient prox operator.
+[1107.04:1112.56] And by efficient, you know, you will see that oftentimes it has a close form solution
+[1112.56:1117.84] for interesting things, regularizers like L1 regularizer.
+[1117.84:1124.8] Or it is sometimes for long your time and you can actually stomach the cost, okay?
+[1124.8:1127.32] So let's give some examples.
+[1127.32:1130.36] All right?
+[1130.36:1138.9599999999998] So one important example is of course the one norm, okay?
+[1138.9599999999998:1145.9599999999998] Now in one norm, what you need to do to compute the prox operator is a very simple operation
+[1145.9599999999998:1150.76] called the software-shoulding operation.
+[1150.76:1155.7199999999998] What you do is if you think about, let's say, an input output pair.
+[1155.72:1161.8] So this is lambda, this is lambda.
+[1161.8:1165.56] So this is in, this is out.
+[1165.56:1173.2] Whatever the coefficient is, if it is between minus lambda and lambda, you set it to zero,
+[1173.2:1181.64] anything greater than lambda, it's shrunk by lambda, anything less than minus lambda
+[1181.64:1188.64] gets towards the origin of lambda.
+[1188.64:1194.6000000000001] All right?
+[1194.6000000000001:1200.72] Sometimes this q of x is not necessarily non-smooth, but can be something like a quadratic here.
+[1200.72:1209.68] In this case, there is actually an explicit prox that involves taking a transpose, and so
+[1209.68:1212.68] forth and multiplying it with an update.
+[1212.68:1213.68] Okay?
+[1213.68:1220.72] I'll tell you it makes the slide how to get this, but you can also think of the prox operator
+[1220.72:1227.28] or non-smooth term as an indicator function for a constraint.
+[1227.28:1236.4] So suppose we have an indicator function, meaning we are trying to solve another regularized
+[1236.4:1242.8000000000002] problem, but a constrained one.
+[1242.8000000000002:1247.8400000000001] Let's say this, no.
+[1247.8400000000001:1252.24] So you can think of an elegant video handling these constraints using the prox.
+[1252.24:1259.72] Is that you just say, oh, you know, let me not think of this as a constraint, but an
+[1259.72:1264.52] indicator function, an non-smooth indicator function, that it contains an infinite value
+[1264.52:1268.72] when the constraint is not satisfied, and it contains the zero value when the constraint
+[1268.72:1269.72] is satisfied.
+[1269.72:1270.72] All right?
+[1270.72:1278.36] So, in the case of one norm, you know, like if you say that the one norm is less than
+[1278.36:1284.36] one, in the one decays, you know, there is this nice equivalence.
+[1284.36:1294.08] Between one and minus one, you have zero for this q of x, and it goes to infinity.
+[1294.08:1300.8] So, if the non-smooth function, so box is a complex function, no.
+[1300.8:1308.56] In this case, the prox operator is in fact a projection operator, meaning what you need
+[1308.56:1312.84] to do is do the gradient update and project on to the constraint set.
+[1312.84:1317.24] That's what it means to do, the prox operation there.
+[1317.24:1319.24] All right?
+[1319.24:1320.24] Good.
+[1320.24:1325.56] Now, how do you define the prox operator?
+[1325.56:1332.2] In general, the prox operator, you can obtain by looking at the optimality of the problem.
+[1332.2:1343.76] So, imagine my g is just literally this quadratic function, and I'm trying to find, whoop, the
+[1343.76:1345.36] prox operator like this.
+[1345.36:1351.8] So, how do I find the minimum of this convex and strongly convex objective?
+[1351.8:1362.0] It is strongly convex, not because A might have a non-zero minimum singular value, but
+[1362.0:1369.6399999999999] also it is strongly convex because there is in fact a quadratic here in terms of the
+[1369.64:1375.6000000000001] optimization network, that makes it strongly convex single valued.
+[1375.6000000000001:1380.44] There is always a single value for this particular equation.
+[1380.44:1384.2] And the rate of finding the optimal, so which is you take the derivative and put it back
+[1384.2:1385.2] to zero.
+[1385.2:1391.3600000000001] When you take the derivative and we discuss how to take such derivatives, you know, a
+[1391.3600000000001:1396.3600000000001] jacobian, may the Taylor Ray, if you haven't caught up on this, please watch recitation
+[1396.3600000000001:1397.3600000000001] more again.
+[1397.36:1403.6399999999999] And here is the derivative of the second term, you set what you put to zero.
+[1403.6399999999999:1410.52] In which case, I just rearranged the terms, you can find that the solution to this.
+[1410.52:1417.8] So, here, I'm going to just take lambda here, why?
+[1417.8:1431.72] So, I can write lambda, A transpose A plus identity Y is equal to X plus lambda AB.
+[1431.72:1439.24] By inverting it and taking it to the right hand side, you obtain the prox of this.
+[1439.24:1447.24] Now, it may look like this is just some far-fetched prox operator, but when you talk about prime
+[1447.24:1452.88] of dual methods, this type of prox operators can be very useful when you're doing things
+[1452.88:1457.36] like alternating direction methods of multipliers type of algorithms.
+[1457.36:1463.16] I will maybe talk more about this when we talk about the prime of dual methods.
+[1463.16:1467.36] Let's start either lecture 10 or later.
+[1467.36:1472.92] The code thing about this is that, you know, here sometimes, as opposed to computing these
+[1472.92:1478.76] terms and then performing the expression, you just need to figure out that there are
+[1478.76:1481.3200000000002] some hidden structures even further.
+[1481.3200000000002:1485.0] That will help you in computation.
+[1485.0:1490.5600000000002] It turns out that, you know, so you can apply this good Bayer matrix identity.
+[1490.5600000000002:1492.76] Sometimes it's called the Penrose-Mingerst, right?
+[1492.76:1498.4] It's just one penable device, you know?
+[1498.4:1510.2800000000002] So, here, if H transpose A is diagonalizable, meaning that there exists a unitary matrix
+[1510.2800000000002:1516.68] and a diagonal matrix such that H transpose A can be written in this particular fashion,
+[1516.68:1520.16] then this computation turns out to be extremely efficient, right?
+[1520.16:1524.96] You will need to invert any matrices for say ever.
+[1524.96:1534.32] And in this particular case, all you need to do is invert the diagonal matrix.
+[1534.32:1541.32] And I can tell you, this occurs in many cases when A is, there are problems where A is
+[1541.32:1544.72] Fourier diagonalizable.
+[1544.72:1548.0] Certain times of matrices are Fourier diagonalizable.
+[1548.0:1554.68] And you can use these structures to obtain efficient proc computation by doing the unitary
+[1554.68:1555.68] matrix.
+[1555.68:1556.68] All right.
+[1556.68:1561.68] Now, I give a non-exhausted list here.
+[1561.68:1565.68] All right.
+[1565.68:1571.8400000000001] And the non-exhausted list has the L1 norm, L2 norm.
+[1571.8400000000001:1574.2] I don't expect you to know this.
+[1574.2:1578.8400000000001] I am giving this as a reference for yourself.
+[1578.8400000000001:1580.8400000000001] All right.
+[1580.84:1589.84] So, for L2 norm, for instance, what you do is you scale the input.
+[1589.84:1590.84] All right.
+[1590.84:1597.08] So, this plus operator is this thresholding operator, just like in the soft thresholding
+[1597.08:1599.08] operator.
+[1599.08:1602.08] Yeah.
+[1602.08:1606.08] For example, there is explicit hyperplaint projections.
+[1606.08:1612.12] I guess, now projection is one, right.
+[1612.12:1615.12] There are other things you can do.
+[1615.12:1623.08] But even things like log function or log data function, there is a proxy for it.
+[1623.08:1624.08] Okay.
+[1624.08:1626.28] Is this clear?
+[1626.28:1632.12] Now, these are a bit more involved, but they are useful.
+[1632.12:1637.12] Okay.
+[1637.12:1639.12] Good.
+[1639.12:1642.12] Now, let's continue.
+[1642.12:1644.84] So, we are interested in solving this, right.
+[1644.84:1650.2399999999998] And I just mentioned that by minimizing this majorizing bound, we need to compute what
+[1650.2399999999998:1652.08] is called as a proxy operator.
+[1652.08:1654.4399999999998] And let's see what we can do.
+[1654.4399999999998:1655.4399999999998] Okay.
+[1655.4399999999998:1661.04] So, given this problem, if you were to use sub-gradients, we know that the efficiency suffers.
+[1661.04:1669.04] And what we are currently interested is using gradient of f and flux of g.
+[1669.04:1674.56] But I must tell you that there are other types of algorithms, okay.
+[1674.56:1679.52] Where you can use a flux of f and flux of g separately.
+[1679.52:1682.72] All right.
+[1682.72:1684.04] This is through splitting methods.
+[1684.04:1689.04] And we can, we will probably talk about these more in the primal dual lectures, which is
+[1689.04:1691.76] later coming.
+[1691.76:1698.24] But you can also try to use second order information from f if f is twice defensiable and
+[1698.24:1702.1599999999999] have a proximal nip solution.
+[1702.1599999999999:1705.96] And that is in the advanced material at the end of this lecture.
+[1705.96:1707.96] But you are not responsible for it.
+[1707.96:1711.6] You can learn more about it by going over the sequence.
+[1711.6:1712.6] Okay.
+[1712.6:1716.12] So, let's see what this flux gradient is.
+[1716.12:1720.9199999999998] Remember, whatever we are doing in terms of the gradient, we just do the gradient update
+[1720.9199999999998:1722.3999999999999] and then apply prox.
+[1722.3999999999999:1726.12] We have our proximal gradient method.
+[1726.12:1736.1999999999998] Now, the first paper to my knowledge where this was analyzed, it actually in things like
+[1736.1999999999998:1742.32] fast recovery literature like Mario Figuredo, who is an optimizer, had a paper with Rob
+[1742.32:1750.9199999999998] Noak, where they were trying to use these kind of algorithms.
+[1750.9199999999998:1755.32] But the names take here comes from a later paper.
+[1755.32:1757.72] I think this is what 2006.
+[1757.72:1765.52] It's the code called Fista paper by Amiabek and Mark Tbil.
+[1765.52:1771.52] And the reason why this algorithm is called ISTA is that they showed the fast method and
+[1771.52:1773.76] they also covered the slower gradient method.
+[1773.76:1779.72] If you remember, the gradient descent we have 1 over k rate, the de-act related gradient
+[1779.72:1784.6399999999999] descent of Nistro, we have 1 over k squared rate.
+[1784.6399999999999:1790.2] So people are already using this 1 over k rate algorithm before.
+[1790.2:1794.8799999999999] What this later paper did is that it showed that you can take this and make it accelerated
+[1794.88:1803.3200000000002] and obtain one over k squared rate and they made it really be iterative, shrinkage and
+[1803.3200000000002:1807.3200000000002] thresholding algorithm.
+[1807.3200000000002:1814.48] It's the, there's nothing but proximal gradient.
+[1814.48:1822.44] And the guarantee for the proximal gradient are exactly the same with the box edit.
+[1822.44:1827.0] In this case, you have the liquefus constant of the proximal term.
+[1827.0:1830.68] Remember the smoother F is, the smaller the constant is.
+[1830.68:1836.0] So with each iteration, if this number is small, we need to do less work to give it to
+[1836.0:1837.0] the same accuracy.
+[1837.0:1841.48] We had the familiar term of distance to the minimizer.
+[1841.48:1842.48] Right?
+[1842.48:1849.92] Remember, we're just assuming here liquefus can be the same as gradient.
+[1849.92:1854.72] We know that the strong commissary assumption, the gradient, as it also attains a linear
+[1854.72:1858.0800000000002] rate at that point.
+[1858.0800000000002:1864.3200000000002] So here, by just using the proxy or a curve and the gradient, we went from 1 over square
+[1864.3200000000002:1867.5600000000002] of k to 1 over k rate.
+[1867.5600000000002:1869.8000000000002] All right?
+[1869.8000000000002:1876.6000000000001] So in the case of Algonn-Lorm, when g is Algonn-Lorm, all right?
+[1876.6:1882.8799999999999] The soft-facial-dine operation is for the twice chin-to-inch.
+[1882.8799999999999:1889.84] So its cost is just going over each for the updated gradient and just thresholding it.
+[1889.84:1891.56] That's not much more.
+[1891.56:1894.84] The main cost is the gradient computation.
+[1894.84:1895.84] All right?
+[1895.84:1897.84] So the rate improves.
+[1897.84:1904.08] I'll bait at the cost of the proxy.
+[1904.08:1907.4399999999998] Okay?
+[1907.4399999999998:1910.0] Then k-fista, right?
+[1910.0:1913.24] So it's the fast iterative shrinkest thresholding algorithm.
+[1913.24:1914.76] It's a soft-facial-dine.
+[1914.76:1917.9199999999998] I don't even recall what the exact terminology is now.
+[1917.9199999999998:1923.8] It's been so long, but this is exactly the same as NESTRO's accelerated gradient.
+[1923.8:1928.76] If you were to drop this proxy, you just add proxy on top.
+[1928.76:1931.8799999999999] So wherever you see the gradient, right?
+[1931.88:1936.6000000000001] Wherever your test is, you put it in front of t, you're done.
+[1936.6000000000001:1940.5600000000002] Okay?
+[1940.5600000000002:1945.1200000000001] You go for k squared rate.
+[1945.1200000000001:1949.7600000000002] And all you need to do, so imagine this term is something like k plus 1 divided by k
+[1949.7600000000002:1950.7600000000002] plus 3.
+[1950.7600000000002:1951.7600000000002] All right?
+[1951.7600000000002:1956.24] It's the momentum term that slowly goes towards 1.
+[1956.24:1961.16] So this is our momentum term, right?
+[1961.16:1966.0800000000002] So what the algorithm does, it does the costly gradient step.
+[1966.0800000000002:1969.44] It does maybe costly, proximal step.
+[1969.44:1972.96] So oftentimes it's not costly, right?
+[1972.96:1976.0400000000002] And then you just do vector additions.
+[1976.0400000000002:1980.52] Hence to obtain an epsilon iteration, you need square root of epsilon.
+[1980.52:1984.68] Epsilon accuracy, you need square root of epsilon iterations.
+[1984.68:1991.0400000000002] Which is a long way to go from square root of k rate to a k squared rate, right?
+[1991.04:1996.0] In terms of iterations, you go from one over epsilon squared iterations to one over square
+[1996.0:1998.1599999999999] of iterations.
+[1998.1599999999999:2007.28] Same problem, exploring structure.
+[2007.28:2014.32] And here again, you know, if g is efficient, then it is our long way please, because
+[2014.32:2025.8] those iterations are almost the same as the gradient.
+[2025.8:2028.84] Which algorithm is square root of k?
+[2028.84:2034.24] It is the sub gradient method that does not exploit the structure and just tries to
+[2034.24:2047.2] minimize the non-stunult objective using the subgradings.
+[2047.2:2048.2] Good.
+[2048.2:2052.76] Okay, so let's see the performance here.
+[2052.76:2059.32] We just write the least squares problem with some regularizer.
+[2059.32:2066.0800000000004] In this case, computation of the gradient is done the usual way.
+[2066.0800000000004:2074.1200000000003] Box operator is the software-shoulding operator.
+[2074.1200000000003:2079.36] But to be able to run the gradient method the way we set things up, we need to compute
+[2079.36:2081.76] this ellipsis constant.
+[2081.76:2087.04] Which we can try to do using power iterations.
+[2087.04:2090.88] If you haven't done so, please see this handout too.
+[2090.88:2094.88] What that talks about how to compute ellipsis constants.
+[2094.88:2095.88] Good.
+[2095.88:2103.12] So what we do here is, you know, we randomly generate some data and then look at the performance
+[2103.12:2105.52] of some of these methods.
+[2105.52:2116.8] Now here, the guarantee for the methods is k squared and for is the one over k, right?
+[2116.8:2124.48] So, given the problem, I can write down, so right now we're solving this as one regularized
+[2124.48:2126.0] problem.
+[2126.0:2136.32] You see that the theoretical bound for, I believe this is the theoretical bound for
+[2136.32:2144.96] Fista because it's cutting across the gradient, the 10ista, I'm talking about gradient method.
+[2144.96:2152.84] And as you can see, the proximal gradient method, the accelerated one, performs better.
+[2152.84:2155.88] And it is much better than what the bound indicates.
+[2155.88:2158.48] But something very funny is going on.
+[2158.48:2163.32] If you notice, it looks like, you know, if you continue to run this, the gradient method
+[2163.32:2169.7200000000003] seems in a track to pass this fast method, right?
+[2169.72:2175.7999999999997] And also you see the oscillations in the accelerated method, right?
+[2175.7999999999997:2180.16] Remember, you put this momentum and the momentum reaches to one.
+[2180.16:2184.7999999999997] So what the accelerated method tends to do is that it kind of passes the optimal and
+[2184.7999999999997:2186.7999999999997] then goes back and forth.
+[2186.7999999999997:2187.7999999999997] That oscillates.
+[2187.7999999999997:2193.04] That's why we have these oscillations.
+[2193.04:2196.3199999999997] Accelerated gradient percent is non-monotonic.
+[2196.32:2201.52] There is gradient descent or in this case, proximal gradient descent is a motor method.
+[2201.52:2203.1600000000003] So what's happening?
+[2203.1600000000003:2211.8] Now, if you think about it, when we talk about convergence characterizations, right?
+[2211.8:2217.88] If you didn't have any constraints or regularizers, we are descending on towards the objective
+[2217.88:2221.0] in any direction, okay?
+[2221.0:2226.0] But it turns out that when you have things like fast regularization, the direction in
+[2226.0:2233.6] which you descend towards the objective are restricted, okay?
+[2233.6:2240.32] And then they are restricted, this riftian constant that we were thinking about, right?
+[2240.32:2246.16] What you need to look at, for example, this matrix A in restricted directions, which
+[2246.16:2251.32] may actually make your riftian constant better and not only that, it may even add strong
+[2251.32:2257.2000000000003] homicidal to the problem. And remember, while the accelerated gradient descent method
+[2257.2000000000003:2262.2400000000002] does not adapt to strong homicidality, the gradient descent method did one over a
+[2262.2400000000002:2269.6800000000003] riftian constant adapt to the strong homicidality without knowing the strong homicidality constant
+[2269.6800000000003:2278.56] and then it obtains a linear rate and here it is indeed obtaining a linear rate, right?
+[2278.56:2287.16] To give you an idea, here is something that took me, I don't know, several hours to make,
+[2287.16:2295.32] but it was time well spent, right? So just think about the following system, okay? So
+[2295.32:2303.0] 1, 2, x is equal to 2. It's a linear distance under determined, there's one equation and
+[2303.0:2309.92] two unknowns, all right? So if I write down the quadratic loss, this is the surface,
+[2309.92:2319.84] right? So it is 0 along this line, right? This is the line that satisfies it, right?
+[2319.84:2330.52] You get 0 loss on this line. Imagine if you were to just descend in this blue zone towards
+[2330.52:2340.72] the minimum, you can see you have curvature, you effectively have strong homicidality. And
+[2340.72:2345.7599999999998] this is what is called as the restricted strong homicidality. And the proximal gradient
+[2345.7599999999998:2354.2] method explores this structure. All right? Is this clear why the proximal gradient method
+[2354.2:2361.64] kind of picks off the theme and goes fast and impaster than the accelerated method here?
+[2361.64:2365.64] It's because we're doing fast regularization. And in fact, you will see that when you do
+[2365.64:2370.7999999999997] fast regularization, when you're computing things like the gradients, and so think about
+[2370.7999999999997:2377.64] this way. Your gradient is a transpose a x minus b,
+[2377.64:2388.68] times x, right? So imagine this x is first. And after the update, you will see this
+[2388.68:2395.08] sparse vector. So what you're doing is you're working with this matrices, a transpose
+[2395.08:2406.2] a sparsely. You're looking at restricted columns of a because you're sparse as you can have
+[2406.2:2413.2] a strong homicidality. This was a major revelation also in this fixed picture.
+[2413.2:2431.2] So I thought I did here, but if you think about it, so
+[2431.2:2455.2] we have this for the definition of strong homicidality. You mean the plot. In the plot, if you're
+[2455.2:2464.0] not understanding only objective in any direction, but only in the restricted directions, as
+[2464.0:2472.0] you can see that there is a large curvature. And the curvature, the minimum curvature is
+[2472.0:2485.08] along this. So here in this reach. So here, there's no curvature. But here, if you
+[2485.08:2494.68] are understanding along this path, you're all going to observe a lot of curvature. So
+[2494.68:2504.2799999999997] that's what the L1 norm does. You end up obtaining sparse vectors. There's the optimization
+[2504.2799999999997:2510.64] more and more. And in fact, once you recover the support of the solution, you actually
+[2510.64:2518.56] just are correcting for the coefficient values. In which case, your wide matrix will just
+[2518.56:2524.8799999999997] work in this restricted subset, which is arguably over complete and has a strong homicidal
+[2524.8799999999997:2532.7999999999997] parameter. As you pick up steam, you go faster because gradient methods, adapts to strong
+[2532.7999999999997:2535.64] homicidality without knowing the strong homicidality.
+[2535.64:2546.0] I'm going to continue. We can take questions regarding this a bit more later. So here's
+[2546.0:2561.48] another example. This one is just logistic regression. You will see this in your homework.
+[2561.48:2569.92] A little bit. So in this case, there's just a lot of data points and some features. We
+[2569.92:2580.16] try to solve this problem using functional methods. And now here, I am throwing like everything,
+[2580.16:2587.92] even some of the advanced material. So here's the question. Should we continue now or take
+[2587.92:2594.6] a 15 minute break? I think the time is now. So maybe we take a 15 minute break and then
+[2594.6:2624.16] continue with this point. All right. All right. You take a 15 minute break. Thank you.

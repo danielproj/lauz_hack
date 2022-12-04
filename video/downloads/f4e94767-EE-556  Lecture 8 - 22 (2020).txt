@@ -1,0 +1,445 @@
+~EE-556 / Lecture 8 - 2/2 (2020)
+~2020-10-26T11:09:50.556+01:00
+~https://tube.switch.ch/videos/f4e94767
+~EE-556 Mathematics of data: from theory to computation
+[0.0:7.0] Just start recording.
+[7.0:15.120000000000001] Just to recall what I was saying was that for general linear models where you can have
+[15.120000000000001:19.36] a nonlinear function, let's say logistic for example.
+[19.36:29.560000000000002] This implicit bias or implicit regularization is still present which you can prove.
+[29.56:39.2] Just to see this in action, what I'll do is I'll give you a stylized example but even
+[39.2:46.04] for non-st stylized logistic regression there are some similarities to qualitatively
+[46.04:51.44] similarities to what we're going to describe here.
+[51.44:60.8] For this particular perfectly separable examples, I'll show the third slide or fourth slide
+[60.8:68.16] that SGD was finding a nice solution that is separating hyperplane.
+[68.16:73.72] We know that actually in this particular case many of the algorithms find what is called
+[73.72:85.12] the maximum margin solution meaning that you look at the geometry of the data points
+[85.12:92.6] and then you can actually find a solution that will maximize the distance to both of
+[92.6:100.8] these points in the boundary.
+[100.8:108.92] This is the max margin solution and these points would be called as the support vectors.
+[108.92:116.36] And this support vector machine is the formulation that finds these points and then puts the hyperplane
+[116.36:126.2] in between and it would have a hard margin because then there's no error in the way you
+[126.2:127.44] classify.
+[127.44:133.8] So it turns out that the hard margin support vector machine actually minimizes the out
+[133.8:141.4] to norm of this particular parameter which ends up also maximizing the margin because
+[141.4:150.76] the solution would have an orientation which is perpendicular to the subspace that is
+[150.76:159.35999999999999] span by these support vectors so to say when they're along.
+[159.35999999999999:163.56] So in this particular case you do this, right?
+[163.56:172.44] So when you write down the support vector machine formulation you write it explicitly, right?
+[172.44:179.48] But what you can do actually is that you can simply minimize the loss.
+[179.48:183.32] So you can write down the logistic loss for this.
+[183.32:188.72] You can just minimize logistic loss and you will find this solution if you run things
+[188.72:192.2] like gradient descent with zero initialization.
+[192.2:198.92] So this is the standard way of writing the support vector machine, right?
+[198.92:203.28] Whereas if you just write the loss function and then apply this gradient descent with zero
+[203.28:209.44] initialization you will find this and that's what the algorithm of mine is implied.
+[209.44:210.44] Right?
+[210.44:219.96] So here it's written a bit more explicitly for the logistic loss and for the linearly
+[219.96:224.52] separable data sets.
+[224.52:237.0] So if you run gradient descent and you will find this hard margin solution but the convergence
+[237.0:241.8] is a bit slow, so one over log t, right?
+[241.8:243.96] So that is interesting, right?
+[243.96:246.44] So we didn't think about explicit regularization.
+[246.44:257.2] You just write down the loss function, we apply an algorithm with a particular, say general
+[257.2:258.4] I was leaning in loss.
+[258.4:262.84] In this particular case the algorithm find a hard margin solution.
+[262.84:266.68] Very good.
+[266.68:271.64] Now similar result, it applied to just a casted gradient descent.
+[271.64:274.40000000000003] So here there is a bit of a normalization, right?
+[274.40000000000003:280.92] Because if you find a solution, any scale solution is also a solution.
+[280.92:284.24] So this is interesting.
+[284.24:290.56] But you can just think about the loss function, what not a regularizer, you run an algorithm
+[290.56:297.56] somehow, but an algorithm, these regularize solution without you explicitly enforcing
+[297.56:298.56] it.
+[298.56:299.56] Okay.
+[299.56:308.96] Now there are of course caveats and this in fact is an active research area.
+[308.96:309.96] Right?
+[309.96:316.96] Now some people just look at matrix factorization problems and they call them linear neural
+[316.96:321.35999999999996] networks, so there's a bit of a jargon overload.
+[321.35999999999996:327.91999999999996] So if you were working in 2010 you would call this matrix factorization.
+[327.91999999999996:333.52] Now you're working in 2020 and you know to keep up with the times you call the same problem
+[333.52:337.47999999999996] linear neural networks, right?
+[337.47999999999996:343.2] So and in fact you call it deep matrix factorization because you know you use the factorized matrices
+[343.2:350.2] into two factors and now you try to factorize matrices into the factors and hence the word
+[350.2:358.32] in the new, linear neural network in an activation function that is identifiable.
+[358.32:363.44] You know that this is not a universe over a presenter, it's because for a new network
+[363.44:370.2] to have a universal representation power, the activation functions should not have a finite
+[370.2:373.8] table of series expression.
+[373.8:377.12] Now let's think about the following problem.
+[377.12:385.12] We try to parameterize a given matrix M is a product of N matrices, right?
+[385.12:396.52] So what we're doing is we're parameterizing this matrix as N linear neural networks.
+[396.52:401.32] In this particular form what you can do is just write down the cost.
+[401.32:410.35999999999996] So here is the cost and you can try to minimize it with respect to the factors.
+[410.35999999999996:417.56] So here for the two factor case you can actually show that weighting this 10 minimizes the
+[417.56:429.16] new tier norm but for more factors in this it cannot be explained by a norm or a semi-norm.
+[429.16:441.36] This result is not that surprising because there are ways to think about this problem.
+[441.36:449.96000000000004] So if you think about it, so the example I like to give is this one.
+[449.96000000000004:458.44] So for the vector case you can think of having a vector.
+[458.44:467.32] So let's say having a non-negative vector as a square of a vector, I element v square.
+[467.32:472.12] So here let's say you have a vector x.
+[472.12:478.4] Let's say it has non-negative entries for the sake of simplicity.
+[478.4:487.15999999999997] The way you can write it is just a product of two vectors, right?
+[487.15999999999997:493.03999999999996] Now imagine you're looking at the one norm of this vector.
+[493.04:499.6] That would be just the two-month squared of the factors.
+[499.6:510.64000000000004] So if you were, for example, looking at the problem like this, you know, e minus a x squared.
+[510.64000000000004:514.44] So minimize this.
+[514.44:521.6800000000001] You can see that x can be alternatively think about minimizing with respect to u.
+[521.68:524.4399999999999] So x is greater than 0.0.
+[524.4399999999999:529.8399999999999] You're minimizing ba squared.
+[529.8399999999999:532.8399999999999] Okay.
+[532.8399999999999:537.12] Now imagine applying gradient descent to this.
+[537.12:538.04] Right?
+[538.04:539.9599999999999] It's your visualization.
+[539.96:554.2] So you somehow minimize the two norm of u subject to b is equal to a u dot squared.
+[554.2:559.2800000000001] And this would be something like impulsifier because in the end you would be minimizing
+[559.2800000000001:564.2800000000001] the one norm of this.
+[564.2800000000001:565.2800000000001] Right?
+[565.2800000000001:568.0] By just applying gradient descent to this particular problem.
+[568.0:570.64] The same idea applies to matrices.
+[570.64:572.32] In this case, you get the nuclear norm.
+[572.32:573.32] Right?
+[573.32:579.12] In the factorized phase, you get the probingist norm of the factors.
+[579.12:584.72] And hence what you can do is if you want to find a law-ranked solution.
+[584.72:586.4] So let's say the problem is symmetric.
+[586.4:593.52] You can minimize b minus a u u transpose squared.
+[593.52:598.0799999999999] And you try to get the minimum nuclear norm solution.
+[598.0799999999999:603.24] But if you go beyond two, then this norm explanation fails down, arguably so.
+[603.24:604.24] Right?
+[604.24:608.96] In fact, you can get non-combex quasi-norms.
+[608.96:613.28] But so the statement says that you cannot use a norm or a semi-norm.
+[613.28:620.12] But you know, perhaps if you use a quasi-norm.
+[620.12:626.96] Because if you actually put for example, x1 half here, then you get u1 norm.
+[626.96:627.96] Right?
+[627.96:628.96] This is not a norm.
+[628.96:632.12] This is not a semi-norm, but it's a quasi-norm.
+[632.12:633.12] So.
+[633.12:634.12] All right.
+[634.12:635.12] Good.
+[635.12:644.88] Now, here is something that is this.
+[644.88:652.64] That is really important, what made deep learning things.
+[652.64:653.64] Right?
+[653.64:662.72] So if you recall, we talked about this particular minimization of the empirical risks, right?
+[662.72:665.2] And I'm the generalization error decomposition.
+[665.2:675.2] So we were talking about our two risks.
+[675.2:695.2] So this is the dash curve.
+[695.2:712.2] The blue dash curve is this curve.
+[712.2:714.2] This is the estimation.
+[714.2:717.2] So this is for that guy.
+[717.2:718.2] Right?
+[718.2:721.2] And this is an actual performance.
+[721.2:722.2] Right?
+[722.2:724.2] And I'll show you in real performance in a little bit.
+[724.2:725.2] And what happens in reality?
+[725.2:731.2] So remember, this is an upper bound.
+[731.2:738.2] It's not how the curve should behave in expectation.
+[738.2:739.2] Right?
+[739.2:740.2] It's a first case of a problem.
+[740.2:742.0] In reality, what happens is this.
+[742.0:744.2] Or what we've seen also, what's this?
+[744.2:750.2] So you decrease things start increasing and then they start decreasing again.
+[750.2:751.2] Right?
+[751.2:757.2] So we've seen this with the endless in the C, for example, at the very beginning of the lecture.
+[757.2:758.2] Right?
+[758.2:759.2] Okay.
+[759.2:765.2] So now with the deep learning revolution, we have new names for these.
+[765.2:767.2] Okay?
+[767.2:769.2] And the names are the following.
+[769.2:777.2] So there's this underpermitrized, or what is called as a classical regime, where this particular upper bound remains more or less valid.
+[777.2:784.2] Right? So there is a three-fot that the error first goes down.
+[784.2:786.2] It starts increasing.
+[786.2:787.2] Okay?
+[787.2:796.2] Now, then there is this overpermitrized testing, where you can actually get zero training error.
+[796.2:798.2] All right?
+[798.2:803.2] Because you have more problems than the data and you can actually flip the data to get zero training error.
+[803.2:809.2] And this point where this transition occurs is called the interpolation in transition.
+[809.2:810.2] All right?
+[810.2:814.2] Or interpolation thresholds in terms of the model class.
+[814.2:823.2] And here optimization is a bit difficult because you have parameters nearly equal to the number of data points.
+[823.2:832.2] And that the condition number of the problem is so bad that optimization algorithms typically suffer because it has a bad condition number.
+[832.2:833.2] Right?
+[833.2:835.2] So here you have a sweet spot.
+[835.2:837.2] The error seems to go up.
+[837.2:844.2] And then afterwards it starts to go down even if the model complex increases.
+[844.2:845.2] Right?
+[845.2:849.2] And you can see this with real training.
+[849.2:856.2] Now, this resonant model, we discussed in the deep learning one lecture.
+[856.2:868.2] It beats human performance in these classification tasks on some of the data sets, like C bar and so on.
+[868.2:874.2] And what is interesting is that, you know, so you can train the resmit 18, which I think refers to the number of players.
+[874.2:877.2] And there's some width parameter that you can play with.
+[877.2:878.2] Okay?
+[878.2:893.2] Now, here.
+[893.2:896.2] Here, and you can start to get zero training error.
+[896.2:903.2] Now, this paper apparently refers to the interpolation threshold is where the.
+[903.2:908.2] The test error starts to go down.
+[908.2:917.2] This is the opening eye paper that that was featured in news and so on so forth, where it shows this double dissent.
+[917.2:922.2] In your test error in the sense that here's the classical performance.
+[922.2:929.2] We expect this to increase, but it curls down and descends again.
+[929.2:934.2] Right? As the model gets more complex, it descends.
+[934.2:935.2] Okay?
+[935.2:941.2] Now, here, what you can do is you can do explicit regularization by early stopping.
+[941.2:946.2] So if you think about early stopping can be viewed as a regularization south.
+[946.2:955.2] And then what you can do is look at all these test errors and look at the lower bound of these things.
+[955.2:962.2] Right? And as you can see, as the model complex increases, the error still seems to go down.
+[962.2:965.2] The test error, the population risk.
+[965.2:966.2] Right?
+[966.2:968.2] So this is the curious thing.
+[968.2:972.2] At the classical theory says it will just shoot up to the moon.
+[972.2:979.2] Whereas in reality with SGD with proper initialization, sometimes early stopping.
+[979.2:989.2] In the sheet here, but not even early stopping is necessary. You can do zero training error and yet your generalization improves.
+[989.2:997.2] This is again called double dissent because in your test performance, you descend.
+[997.2:1001.2] It increases and then you descend again.
+[1001.2:1003.2] Double dissent.
+[1003.2:1005.2] Okay?
+[1005.2:1009.2] Now, let's think about what is going on.
+[1009.2:1017.2] In the under-prometrized regime, so let's say you're trying to do polynomial fits and you have a single degree polynomial.
+[1017.2:1023.2] In this case, you can just try to fit the data and you have this particular fit.
+[1023.2:1028.2] It has low generalization because if you think about it, here's your prediction and here's the true function.
+[1028.2:1032.2] So there's this generalization error.
+[1032.2:1041.2] It also has high empirical error because the data points are somewhat farther away.
+[1041.2:1045.2] Now, this is in the double dissent.
+[1045.2:1052.2] So this is the risk.
+[1052.2:1057.2] Here's the monocomplexity. Here's the estimation.
+[1057.2:1064.2] So you are somewhat here. Your model is too simple. Your empirical risk is high.
+[1064.2:1069.2] The model complicity is low, but the summation is too high.
+[1069.2:1072.2] Here's the sweet spot.
+[1072.2:1078.2] So here's the true function. You use, let's say, a third order for a polynomial, a fourth order for a meal.
+[1078.2:1083.2] So your fit and the data is pretty good.
+[1083.2:1087.2] Your model complicity is pretty good. Everything is good.
+[1087.2:1090.2] You know, sweet spot for the model complicity.
+[1090.2:1096.2] So your generalization error is low. Your data fit is very good.
+[1096.2:1099.2] Everything is good.
+[1099.2:1110.2] So in the case of the double dissent,
+[1110.2:1117.2] you use what happens at interpolation threshold.
+[1117.2:1121.2] So you have a degree 19 polynomial that tries to fit.
+[1121.2:1128.2] So degree 19 polynomial has to the power 19, but it has 20 coefficients.
+[1128.2:1134.2] You have 20 samples, so you should be able to fit perfectly the data.
+[1134.2:1147.2] As you can see, you can. But as you can also see, the generalization error is quite large.
+[1147.2:1157.2] But what happens in the overparameterized regime is that here's a degree 200 polynomial that fits in 20 noisy points.
+[1157.2:1163.2] And when you use SGD, you interpolate harmlessly.
+[1163.2:1174.2] It kind of absorbs noise, but in a way that interpolates in between very nicely.
+[1174.2:1183.2] So there's been some sort of a bias for minimum norm, harmless interpolation.
+[1183.2:1189.2] That explains the success of quite a bit of the deep learning approaches.
+[1189.2:1195.2] You run a deep model that is overparameterized.
+[1195.2:1197.2] There is noise. The model seems complex.
+[1197.2:1202.2] And yet you learn the noisy samples and interpolate in between.
+[1202.2:1206.2] Well, right? So you're not going here.
+[1206.2:1209.2] You're not going there.
+[1209.2:1216.2] You're literally nicely interpolating. So your generalization error is not bad.
+[1216.2:1221.2] And again, at this point, you cannot explain this using a decomposition.
+[1221.2:1224.2] You cannot decompose the empirical and the generalization.
+[1224.2:1226.2] And I'm tired to characterize what happens.
+[1226.2:1229.2] You have to treat things jointly with these three pillars.
+[1229.2:1232.2] Architecture, algorithm and visualization.
+[1232.2:1238.2] Right? I'll talk more about overparameterization in the next 50.
+[1238.2:1252.2] But now what I would like to do in the rest of the class is to give an alternative explanation to the success using a concept called algorithmic stability.
+[1252.2:1254.2] So here.
+[1254.2:1259.2] So what we've seen so far is generalization based on complexity.
+[1259.2:1264.2] Right?
+[1264.2:1269.2] And so complexity dash based generalization box.
+[1269.2:1275.2] And what we've been looking at was this, you know, worst case scenarios.
+[1275.2:1278.2] And what we've seen is that in general, it's not tight.
+[1278.2:1285.2] So you get a bound like this and yet the practical performance goes like that.
+[1285.2:1291.2] Now, it becomes food news.
+[1291.2:1296.2] And these kind of balls do not care about what an optimization algorithm does.
+[1296.2:1304.2] Right? And we've seen that the optimization algorithm implicitly or explicitly can bias the solution.
+[1304.2:1311.2] So can you understand this particular generalization as a property of the optimization algorithm?
+[1311.2:1317.2] So here, we've been talking about the model class complexity and then go to generalization.
+[1317.2:1325.2] So now we think about an algorithm. What happens here that can lead to generalization?
+[1325.2:1328.2] The answer to this question is affirmative.
+[1328.2:1332.2] What we do is look at what is called as algorithmic stability.
+[1332.2:1333.2] All right?
+[1333.2:1335.2] So this is what I would like to explain.
+[1335.2:1341.2] Any questions so far?
+[1341.2:1344.2] Everything is clear?
+[1344.2:1351.2] Okay.
+[1351.2:1353.2] It's scary.
+[1353.2:1359.2] All right. Now what we're going to do is we're going to look at what is called as the uniform stability.
+[1359.2:1360.2] Right?
+[1360.2:1372.2] And uniform stability and cost validation can support similar in the sense that the list they be having algorithm randomized or otherwise.
+[1372.2:1375.2] Okay?
+[1375.2:1381.2] That takes some finite samples set and produce an output.
+[1381.2:1385.2] In this case, the algorithm produced a function.
+[1385.2:1388.2] Right? Not a parameter, but an output function.
+[1388.2:1391.2] So H. So we are in this thing.
+[1391.2:1395.2] Right? We have a generator that gives us A's.
+[1395.2:1398.2] We have a supervisor that gives us B's.
+[1398.2:1406.2] And our learning machine is doing H of A and trying to approximate B.
+[1406.2:1412.2] So in this particular case, the algorithm takes an A, B, and maybe some other stuff.
+[1412.2:1414.2] Lost function, for example.
+[1414.2:1419.2] All right? The gradients and so on and so forth.
+[1419.2:1424.2] So called this S. It takes S and produces an output H.
+[1424.2:1431.2] Right? It learns a function H, which is an element of the function class telegraphic capital H.
+[1431.2:1441.2] Okay? Now we would say an algorithm has a uniform stability beta.
+[1441.2:1444.2] We just take to a lost function.
+[1444.2:1454.2] If you look at this expected supremum of the differences of lost functions,
+[1454.2:1460.2] when your inputs just differ by one sample.
+[1460.2:1471.2] Right? And a more stable algorithm would change less by a single swap.
+[1471.2:1483.2] And hence a lower number means more stable, which is basically in this normal in our classical way of thinking.
+[1483.2:1489.2] Lowest stability is better in this particular case.
+[1489.2:1493.2] So what I mean by this. So here is our inputs.
+[1493.2:1498.2] Right? So let's say we take one sample and swap a bit and another one.
+[1498.2:1503.2] Literally one sample swap.
+[1503.2:1506.2] We have an algorithm that will produce.
+[1506.2:1508.2] So you look at losses. Right?
+[1508.2:1514.2] Ideally, the thing you have won the samples and just swap one sample.
+[1514.2:1516.2] Only one. Right?
+[1516.2:1522.2] And if an algorithm is stable, this lost function wants to optimize.
+[1522.2:1525.2] For example, will not differ too much.
+[1525.2:1533.2] No. Right? So remember, this takes in the problem, optimize it.
+[1533.2:1536.2] Give you a function estimate. Right?
+[1536.2:1542.2] In this case, you evaluate the loss. Right?
+[1542.2:1547.2] A more stable algorithm means that this data is that look at the difference. Right?
+[1547.2:1550.2] So this is data. So this is data. Right?
+[1550.2:1556.2] So this is data for algorithm a. This is data for algorithm b.
+[1556.2:1562.2] A more stable algorithm will be smaller than larger. Right?
+[1562.2:1568.2] So algorithm b is less stable than algorithm a.
+[1568.2:1573.2] Because in the loss with one swap of the data, I am all million data points.
+[1573.2:1576.2] You took one sample and just swap it with something else.
+[1576.2:1581.2] And somehow the algorithm will be radically different. Right?
+[1581.2:1584.2] This is what we mean by stability.
+[1584.2:1592.2] Now, what we can do is, so heavy had this constant data,
+[1592.2:1599.2] it turns out that we can each look at generalization. Right?
+[1599.2:1605.2] So to be able to do this, what we're going to do is we're going to again,
+[1605.2:1609.2] define the empirical risk. So we have n samples. Right?
+[1609.2:1617.2] In this case, the function h is not parameterized. So three functions. Right?
+[1617.2:1621.2] So this is the same definition or as the empirical risk.
+[1621.2:1627.2] It's just it makes the dependent not on the data size,
+[1627.2:1633.2] but on the set because what we're going to do is we're going to swap some entry.
+[1633.2:1642.2] Right? So here s is our samples. Right?
+[1642.2:1650.2] So far, we were just using r sub n because we said the sample is an iid.
+[1650.2:1656.2] And all we cared about was the number. But now here it will be important to
+[1656.2:1664.2] to know the realization that we can swap. Okay? All right. Good.
+[1664.2:1669.2] Now here the expected generalization error.
+[1669.2:1679.2] Also here what we're looking at is the expected value of the true risk versus the empirical risk. Right?
+[1679.2:1689.2] So remember, as gives us a function. Right?
+[1689.2:1695.2] So given s, as you have lots function, everything is implicit in here.
+[1695.2:1705.2] It gives you a function. Right? And the function, the risk we can evaluate.
+[1705.2:1710.2] All right. Okay. This is clear.
+[1710.2:1717.2] So in this case, you can look at the expected not the supremum.
+[1717.2:1729.2] I expected in this case the expectation is taking the respect to the data.
+[1729.2:1735.2] So the expected loss maybe also to the randomness in the algorithm.
+[1735.2:1740.2] And expectation or everything.
+[1740.2:1746.2] So you can show that the expected generalization error is actually bound.
+[1746.2:1749.2] That's by the stability of the algorithm.
+[1749.2:1752.2] So which is actually fantastic. Right?
+[1752.2:1758.2] And I'll tell you why because there's something that you can more or less see what happens in practice.
+[1758.2:1763.2] Okay. So let's say we have two data sets.
+[1763.2:1767.2] There are IID samples size n.
+[1767.2:1773.2] And now think about the following augmented data set. Right?
+[1773.2:1779.2] You pick the index and a i prime, the i prime comes from s prime.
+[1779.2:1782.2] The rest comes from s. Right?
+[1782.2:1788.2] And now this set s with superscript i to says that at the i location,
+[1788.2:1794.2] I will take my data from s prime and everything else comes from s.
+[1794.2:1796.2] Okay.
+[1796.2:1799.2] Now let's take a look at this.
+[1799.2:1802.2] So we've distributed the s.
+[1802.2:1805.2] We're taking the expectation.
+[1805.2:1809.2] Here is the definition. Right? This is the empirical risk.
+[1809.2:1815.2] And remember, because s and s prime are coming iID with respect to the same unknown probability distribution,
+[1815.2:1819.2] you also have this one. Okay.
+[1819.2:1826.2] Now what we do is do this summation trick.
+[1826.2:1828.2] Okay.
+[1828.2:1833.2] So we can add and subtract the same value.
+[1833.2:1838.2] Remember, these are iID.
+[1838.2:1842.2] So let's see.
+[1842.2:1847.2] So here, this is the district s i.
+[1847.2:1851.2] Why?
+[1851.2:1853.2] This is the district s i.
+[1853.2:1859.2] This is the district s. Right?
+[1859.2:1865.2] So you can add subtract all of them are iID, the permutation variant.
+[1865.2:1873.2] And then, so here, you can use uniform stability to bound the first term.
+[1873.2:1879.2] The second term has the, because it's registered to the same distribution,
+[1879.2:1883.2] it has the same risk.
+[1883.2:1890.2] You take this term to the left hand side and a bound on this comes from the algorithmic stability.
+[1890.2:1895.2] Right? I mean, the details of this particular derivation is not that important,
+[1895.2:1896.2] but it is very elementary.
+[1896.2:1902.2] You just need to notice that the data has some exchangeability here.
+[1902.2:1903.2] Right?
+[1903.2:1908.2] And as a result, we get this algorithmic stability bound.
+[1908.2:1909.2] Right?
+[1909.2:1913.2] And what is interesting is that how we can use this impactness.
+[1913.2:1915.2] And this is what I want to talk about.
+[1915.2:1923.2] So, people actually worked on characterizing stability for various settings.
+[1923.2:1926.2] So let's say we have a parametric function class.
+[1926.2:1932.2] So consider the finite sum formulation for optimization.
+[1932.2:1940.2] And you can think about SGD that just grabs the term from fi and does the district has to create in the send.
+[1940.2:1948.2] And you can actually obtain the stability for the algorithms.
+[1948.2:1954.2] And the only good stability term comes when the problem is from complexity,
+[1954.2:1959.2] because, you know, so for beta-lipships and strongly commits,
+[1959.2:1961.2] the stability improves with 1 over n.
+[1961.2:1963.2] Which is fantastic.
+[1963.2:1969.2] Right? So, generalization there goes down the 1 over n.
+[1969.2:1975.2] And you can even compare, for example, averaging versus non-averaging and so forth,
+[1975.2:1977.2] which are in the stable.
+[1977.2:1980.2] There is even a result for non-convexity.
+[1980.2:1984.2] And the stability bound is not that great, but it's okay.
+[1984.2:1990.2] Remember here, if you stop early, then this with the data size,
+[1990.2:1993.2] which you make things go down,
+[1993.2:2001.2] but stopping early does not necessarily mean that your training area is small.
+[2001.2:2004.2] Right?
+[2004.2:2010.2] So your generalization from where you train can be made better.
+[2010.2:2013.2] Right? Except that if your training loss is not small,
+[2013.2:2020.2] then your generalization performance after this is not guaranteed to be good.
+[2020.2:2024.2] So luckily, if you stop your training earlier,
+[2024.2:2027.2] and that you have to a small training error,
+[2027.2:2029.2] then the algorithmic stability with this,
+[2029.2:2031.2] she says that you will also generalize on.
+[2031.2:2034.2] Right? So that's the point here.
+[2034.2:2038.2] Okay. So this example tells you the story,
+[2038.2:2040.2] which is really interesting.
+[2040.2:2043.2] It seems complicated, but it's not. Right?
+[2043.2:2047.2] So obviously, we cannot completely, you know,
+[2047.2:2050.2] it's just too much computation to get the stability bounds.
+[2050.2:2053.2] And what we can do instead is look at the differences in the promise,
+[2053.2:2056.2] train promise. Right? So what we were doing was
+[2056.2:2062.2] you were looking at the loss a s, a b to a,
+[2062.2:2066.2] this prime a b. Right?
+[2066.2:2069.2] So this was for the functions age. Right?
+[2069.2:2074.2] So imagine that we learn h-axis.
+[2074.2:2078.2] So suppose for one we get x star and for the other we get x star prime.
+[2078.2:2083.2] Right? What we can do is look at the difference between these two.
+[2083.2:2087.2] So this is that.
+[2087.2:2092.2] So you have, let's say, a data set s,
+[2092.2:2097.2] and you have a data set s prime that differs only in one parameter.
+[2097.2:2103.2] Okay? So you run let's say sgb on these two different data sets.
+[2103.2:2106.2] And you look at what, primarily you get.
+[2106.2:2111.2] So let's say the itchers on one are xk,
+[2111.2:2115.2] the itchers on the other one is x prime k.
+[2115.2:2121.2] Right? And you can look at the difference and take the norm.
+[2121.2:2127.2] Right? Ideally, with two data sets, there's one difference. Right?
+[2127.2:2130.2] And remember here, one data difference,
+[2130.2:2133.2] but the lowest function, the way the algorithms are initialized,
+[2133.2:2140.2] there are differences. Okay? There are differences.
+[2140.2:2144.2] Okay. So as a function of epoch,
+[2144.2:2146.2] which is a pass over the data.
+[2146.2:2151.2] So one epoch means that you make one pass over the data.
+[2151.2:2155.2] And in this case, as you can see,
+[2155.2:2163.2] you make more and more passes while the algorithms converge. Right?
+[2163.2:2170.2] And you can see that the parameter distances are large.
+[2170.2:2173.2] Hence the difference between your training error,
+[2173.2:2183.2] which can be zero, and your test error is also large. Right?
+[2183.2:2189.2] Have you seen if you run this same thing,
+[2189.2:2191.2] with one data sample difference,
+[2191.2:2195.2] and you saw that the parameters are nearly the same.
+[2195.2:2199.2] And in this case, if you've gotten a zero training error,
+[2199.2:2201.2] then you know that it will also generalize.
+[2201.2:2208.2] It is more like a stringent notion than the stability itself. Right?
+[2208.2:2218.2] These differences are, like the parameters are almost the same.
+[2218.2:2222.2] And hence your generalization error follows the same type of behavior
+[2222.2:2224.2] as your primary difference.
+[2224.2:2226.2] So if you want to know, you will generalize well,
+[2226.2:2229.2] you take a data state to swap one,
+[2229.2:2234.2] you run your SPD in both in maybe the same initialization,
+[2234.2:2241.2] the same type of step size decay and so on and so forth.
+[2241.2:2248.2] And if you notice that your SGD in the end gives you radically different parameters,
+[2248.2:2253.2] then you know that whatever error you get from the end with the training,
+[2253.2:2257.2] even if it's small, the generalization may not be as good.
+[2257.2:2260.2] Okay? So that's what it says.
+[2260.2:2266.2] That's notion of our mixed stability in action for generalization.
+[2266.2:2269.2] All right?
+[2269.2:2274.2] Good. Actually, we end up finishing a bit earlier today.
+[2274.2:2281.2] So what we're going to do this Friday is we're going to continue with our recitation on the homework.
+[2281.2:2288.2] So we'll have some T8 available on Zoom, answering your questions.
+[2288.2:2293.2] So enjoy your week.
+[2293.2:2300.2] If you have questions, feel free to email and we'll try our best to answer them.
+[2300.2:2302.2] Okay? So have a great week.
+[2302.2:2329.2] We'll see you guys later.

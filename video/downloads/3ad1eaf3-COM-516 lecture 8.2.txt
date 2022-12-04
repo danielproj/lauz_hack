@@ -1,0 +1,135 @@
+~COM-516 lecture 8.2
+~2020-10-30T17:30:25.738+01:00
+~https://tube.switch.ch/videos/3ad1eaf3
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:28.0] Okay, so let's start the lecture on Markov chain Monte Carlo, MC, MC, sampling method.
+[28.0:43.0] It's really one method, but one can, there is some flexibility of application and of algorithmic rules, as we will see.
+[43.0:62.0] Okay, so the remember the goal is to sample from a distribution pile, which is hard to sample from.
+[62.0:74.0] Okay, so it is a very beautiful idea, in fact, the idea here.
+[74.0:88.0] Well, it might seem obvious to you because for the notation of this distribution I used to buy, which is the notation we used as a stationary distribution in this class.
+[88.0:97.0] But if I had used a P or something or Q or something else, then I'm sure it would seem less obvious.
+[97.0:117.0] So the beautiful idea is to view pi as the stationary distribution and even the limiting distribution.
+[117.0:143.0] Even in fact, the limiting distribution, if it can be unique it's even better distribution of a Markov chain.
+[143.0:147.0] So here is where the Markov chain idea enters.
+[147.0:155.0] Okay, in the previous video there was no Markov chain.
+[155.0:183.0] So we will construct, so given pi, we will construct a Markov chain such that
+[183.0:198.0] pi is the unique, as I said, is much better limiting distribution.
+[198.0:205.0] Secondly, we would like that, and that's an algorithm, that's not so easy.
+[205.0:215.0] The first step is not so difficult, but the efficiency of the method comes from whether the convergence is good.
+[215.0:230.0] So you want the convergence rate, so this means the mixing time or the spectral gap, if you wish.
+[230.0:240.0] The convergence rate of the Markov chain to pi should be good.
+[240.0:246.0] Should be fast.
+[246.0:256.0] And so this way the algorithm is going to be efficient.
+[256.0:268.0] Okay, but of course it's difficult to study convergence rates as you saw with Wikipedia in the previous lectures.
+[268.0:279.0] And for this reason, and it's also not so easy to ensure that pi is the unique limiting distribution.
+[279.0:308.0] So for these reasons, usually almost always one considers a Markov chain that is erudotic and also satisfies detailed balance.
+[308.0:321.0] Okay, so erudicity is almost a necessary requirement so that you have a unique limiting distribution.
+[321.0:336.0] And that the chain satisfies detailed balance is more of a desire because that's the disorder of the chain that we are able basically to study.
+[336.0:361.0] Okay, but also the construction should be such that we beat these problems that we saw.
+[361.0:371.0] For example, if you don't even know the set of colorings in the coloring problem, you don't even know how to count them.
+[371.0:378.0] You don't know how to compute the probability of the states of the colorings in the easing model.
+[378.0:382.0] You don't even know how to compute the denominator of the distribution.
+[382.0:411.0] Okay, so it should be that pi is given but the construction should be such that we don't need to know too much about pi, too much about computing.
+[411.0:424.0] Whatever is hard in pi in the pi is okay.
+[424.0:449.0] So this is also a very important desire. Okay, and it turns out that in the 40s, a group of scientists in Los Alamos,
+[449.0:461.0] National Lab in the US where this is the lab where the first atomic bomb was conceived.
+[461.0:487.0] And a group of many scientists which were led by metropolis found a way to achieve this construction.
+[487.0:494.0] So the history of how it was achieved is interesting.
+[494.0:498.0] There are many, many famous people associated to this construction.
+[498.0:508.0] I think it stayed even secret for many years and it was disclosed publicly later after the war.
+[508.0:519.0] And the name of Hastings came much later. I don't think he was in Los Alamos.
+[519.0:533.0] So probably on the web page I will put a text about the history of the discovery of the metropolis algorithm which is today called metropolis Hastings.
+[533.0:544.0] But metropolis was not the only person involved. At least hate people, I think were involved and quite a few famous physicists.
+[544.0:555.0] Okay, but it's the name of metropolis that got stuck on the method.
+[555.0:566.0] Okay, so what is the construction? I'll give it in the form of the metropolis Hastings algorithm.
+[566.0:578.0] What's today called metropolis Hastings algorithm? It's slightly more general than the original metropolis algorithm.
+[578.0:606.0] So the algorithm is as follows. So as I said, it constructs a mark of chain that has by as limiting distribution in the following way.
+[606.0:623.0] First, you select an easy to simulate or to sample from.
+[623.0:643.0] Well, I won't say sample here. I'll say simulate, but it's the same thing basically. And easy to simulate, not distribution, but mark of chain.
+[643.0:660.0] Which has with transition probabilities that we call psi ij.
+[660.0:680.0] Okay, for states ij in s. Okay, so you have a state space s. Okay.
+[680.0:701.0] So we require that the chain that I call psi is a periodic and irreducible.
+[701.0:714.0] This also means that, for example, if s is finite, then it would be positive recurrent. But okay, we don't care about psi itself.
+[714.0:723.0] Okay, so psi might be a organic, but we don't really care about psi itself.
+[723.0:743.0] Yes, and we also require, so that's important, that psi ij is strictly positive, if and only if psi j i is strictly positive.
+[743.0:757.0] Okay, so if you can go from i to j there must be a way to come back. Okay, so we have these two requirements.
+[757.0:775.0] Secondly, we design. So this is reminiscent of the rejection sampling. We design what are called acceptance probability.
+[775.0:804.0] That we call a ij, which by definition are the probability that the transition given by the, okay, I didn't say here that psi is called the base chain.
+[804.0:825.0] Or the proposal j. Okay, and a move from i to j is proposed somehow.
+[825.0:842.0] Okay, and now, a ij is the probability that the transitions, the transition i to j of the proposal chain or the base chain.
+[842.0:860.0] So the base chain or proposal chain, these transitions, a transition, so there is one transition from i to j is accepted.
+[860.0:876.0] So you propose a move, you propose a move and a ij is the probability that this transition is accepted.
+[876.0:894.0] Otherwise, the transition is rejected with probability 1 minus a ij. And then you construct the MCMC chain. So the new chain.
+[894.0:912.0] So this could be called the metropolis hasting chain. Well, in fact, the metropolis hasting rule will really come a bit later.
+[912.0:930.0] So here I'm a bit sorry, but let me, let me call this the general MCMC algorithm.
+[930.0:942.0] Okay, and then I'll specialize it to get metropolis hasting and then we specialize further to get metropolis pure metropolis. So construct the new chain.
+[942.0:959.0] So this is the MCMC chain somehow with transition matrix or transition probability matrix.
+[959.0:968.0] As follows, so we call it p. Okay, and this p has matrix elements, the probability to go from i to j.
+[968.0:976.0] What is it is the probability of the proposed move, psi ij times the probability that you accept the move.
+[976.0:988.0] And this is if i is different from j. So you propose a move from i to j and with probability psi ij and you accept it with probability a ij.
+[988.0:994.0] And these two decisions are taken independently and the probability is our multiplat.
+[994.0:1007.0] If you would not accept the move, well, then you stay put here. Okay, so there is going to be a probability to go from i to i. That's a self-loop.
+[1007.0:1028.0] And this is then one minus the sum of all proposed moves, all probabilities that have of moves that you have rejected, which are psi ij for k different from i.
+[1028.0:1050.0] Okay, so here you have rejected many moves. Okay, so here are the rejected moves. Here is unaccepted.
+[1050.0:1065.0] Okay, so this is just a definition. Okay, a remark that can be useful sometimes when you solve exercise it's it's it's in the notes.
+[1065.0:1091.0] It is that p ii you have many ways to write it. You can write it as psi ii plus the sum of k different from i of psi ij1 minus here. Okay, so that's the probability to just make the self-loop or you make the self-loop according to the base shape or
+[1091.0:1110.0] then you make a move but and you reject it with probability 1 minus. Okay, and this is simply equal here to 1 minus sum.
+[1110.0:1134.0] Okay, but this this this form here is easier to interpret I think. Okay, so that's the algorithm and it's not obvious. Now we have not specified.
+[1134.0:1144.0] We have not specified the acceptance probability yet. Okay, so we don't know anything yet about this chain. We don't know if it's organic.
+[1144.0:1163.0] We don't know if by the limiting distribution and so on. Okay, but here I give you a theorem that I'll prove, which is in the notes and we'll call this theorem the metropolis.
+[1163.0:1192.0] So this is the following. We set so the rule is to set acceptance probabilities a ij to be the minimum of two numbers, the number one and the number pi j psi ji.
+[1192.0:1220.0] So you compare the ratio for these two moves here to one. Okay, and you set this and then the theorem says that the chain is the same.
+[1220.0:1243.0] So with matrix p above. Okay, on the previous slide is ergodic with stationary distribution by.
+[1243.0:1266.0] Okay, and this is under the hypothesis again that I outlined somehow here that type of base chain is a periodic or intusible and and that if there is a move from i to j then there is a move from j to i and reciprocally.
+[1266.0:1288.0] Okay, let's attempt a proof. A short proof is very short. So by assumption psi is irreducible.
+[1288.0:1316.0] So you have that ij positive is equivalent to psi j i positive. Okay, there, thus one can see that a ij here is going to be positive each time that.
+[1316.0:1330.0] That you have a move from i to j. Okay, so you fix you fix i and j and thus a ij will be positive and.
+[1330.0:1358.0] And also p ij which is psi ij ij will be strictly positive. Okay, and so this implies that the chain p is irreducible.
+[1358.0:1379.0] One can see that then the chain p is irreducible and moreover in this rule there will always be a self loops here.
+[1379.0:1395.0] And less for all i the sum is equal to one which we need to really pathological base chains and it's this will not occur.
+[1395.0:1410.0] And moreover, so p ij is going to be positive for some i. So the chain p is going to be a perionic.
+[1410.0:1426.0] There is at least one self loop. Okay, so you have an irreducible and a perionic chain.
+[1426.0:1433.0] Is it ergodic? Well, we should check its positive record. Okay, if the state space is finite that's enough to be ergodic.
+[1433.0:1443.0] But here we don't use this hypothesis. We will check in fact.
+[1443.0:1458.0] So for the moment the chain is irreducible and a perionic. Furthermore, we can check that detailed balance is satisfied.
+[1458.0:1471.0] So let me check this in a while. Okay, one can check.
+[1471.0:1495.0] That detailed balance is satisfied with the because of the metropolis has to move. Okay, so since detailed balance is satisfied and detailed balance means for the distribution pi,
+[1495.0:1513.0] this means that pi is the stationary distribution. So there exists a stationary distribution. So it exists.
+[1513.0:1526.0] Okay, so this also means that the chain p is positive record.
+[1526.0:1547.0] Therefore, we conclude that p is irreducible, perionic, positive record. This means ergodic.
+[1547.0:1567.0] So the limiting stationary distribution is unique and we know it's pi because of the detailed balance.
+[1567.0:1579.0] Okay, and this proves the theorem. So I didn't really check that detailed balance is satisfied. Let me do this quickly here.
+[1579.0:1608.0] So we just write the definition. So of detailed balance, we have to check that pi pi j is it equal to p j pi j high when we consider
+[1608.0:1623.0] a move and it's reciprocated. Okay, so let's start from the left hand side. I use the metropolis has to be rolled here.
+[1623.0:1641.0] So this is pi times the minimum between one and so one has to be always careful with the indices. So you have p j, but we'll have a way to remember them.
+[1641.0:1648.0] I'll tell you in a minute about interpretation of this ratio and this will be the good way to remember them.
+[1648.0:1663.0] So that's sorry, so something is missing here. I have p i and here I have psi i j.
+[1663.0:1690.0] Okay, because I have the base move times the acceptance probability and this is equal to pi times. So this can be written well term, many ways to do this, but this is the minimum of pi psi i j that I bring inside this minimum and then I have p j psi j i.
+[1690.0:1714.0] Okay, you see this here has simplified. Okay, and this is symmetric under i and j. Okay, this expression is symmetric under the interchange of i j.
+[1714.0:1734.0] Since it's symmetric, well then I can take the symmetric of that and this will be pi j p j i. Okay, so this proves the detail balance.
+[1734.0:1758.0] Okay, so to conclude, let me make two remarks. So two important remarks. So the first remarks is why is this a nice rule?
+[1758.0:1780.0] The metropolis fasting rule. And why does it help to sample from hard distributions?
+[1780.0:1790.0] So remember the hard distribution was for example, the indicator function of a proper coloring divided by z.
+[1790.0:1819.0] The easy model partition function distribution sorry divided by here z to sum of all assignments. Now in in the acceptance probability, which is the mean of one and pi j psi j pi divided by pi.
+[1819.0:1835.0] So i j the z will always simplify in the ratio by j over pi i.
+[1835.0:1848.0] Okay, and this is the central essence of why this method is efficient because we never have to compute z.
+[1848.0:1874.0] If you look at the methods of the classical methods I gave in the previous video, you would have to know that we never have here to compute z. Okay, also we will see that for example,
+[1874.0:1891.0] the ratio here often even if that simplify you you could say well, for example, hearing this sum over edges, there are so many edges if the graph is large, that it's not very efficient to compute this sum.
+[1891.0:1915.0] Okay, but we will see that very often even even these sums simplify partly and often this ratio at the end can be computed can be computed very easy even by hand.
+[1915.0:1926.0] Sometimes, sometimes.
+[1926.0:1946.0] Okay, so that's the first remark very important remark that explains essentially why this algorithm of metropolis and has things here is very much used.
+[1946.0:1961.0] And when we design acceptance rules, we always try to make this ratio of pi i over pi j pi appear somehow.
+[1961.0:1977.0] Second and last remark and then we'll end there is the following interpretation of the rule.
+[1977.0:1997.0] So suppose psi i j equals psi j i, I said that psi i j and psi j i cannot if one is non-vanishing the other is non-vanishing, but suppose even a stronger condition that they are equal.
+[1997.0:2021.0] So the proposal move transition from i to j and j to i have the same probability here. Okay, then then the rule simplifies and you find that a acceptance probability is just a ratio of pi j over pi pi take the minimum with one.
+[2021.0:2037.0] So this is called the metropolis rule is the original metropolis rule. I think has things added in the case where the base chain have non equal probabilities here.
+[2037.0:2062.0] But this has a nice interpretation because here you see that this is equal to one if pi j is greater than pi i and it's equal to pi j over pi i if pi j is less than pi i.
+[2062.0:2083.0] Now what does it mean here that pi j is greater than pi i? It means that for the stationary distribution the state j is more probable than i in the stationary state.
+[2083.0:2101.0] So if we sit at i we should certainly jump to j.
+[2101.0:2116.0] Okay, this is somehow and we will come back to that next time when we learn how to minimize functions thanks to this method and talk about simulated and delimless.
+[2116.0:2145.0] Okay, so however, when you sit at a state i and all the neighboring possible moves that you do are well suppose you sit now at a state i that that is maximal that has maximal probability with respect to the neighboring states then you would never move and you would remain stuck.
+[2145.0:2159.0] Okay, so it should be that sometimes you go towards towards smaller probability states and this is what the second possibility tells you.
+[2159.0:2184.0] Okay, but but sometimes you should move to lower probability states.
+[2184.0:2194.0] Otherwise you would be stuck. You could be stuck.
+[2194.0:2208.0] Okay, so it's the combination of these two somehow intuitions here that make the algorithm work.
+[2208.0:2218.0] Okay, that was it for today.

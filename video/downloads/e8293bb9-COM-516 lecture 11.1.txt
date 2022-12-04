@@ -1,0 +1,236 @@
+~COM-516 lecture 11.1
+~2020-11-22T20:32:52.557+01:00
+~https://tube.switch.ch/videos/e8293bb9
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:17.76] In these two videos we will treat the ising model.
+[17.76:32.480000000000004] And so for this model we will illustrate the metropolis algorithm but also another one called
+[32.480000000000004:41.52] Glauber algorithm or dynamics.
+[41.52:48.0] And this Glauber dynamics is a special case of a more general procedure called the heat
+[48.0:55.2] bath dynamics.
+[55.2:62.800000000000004] And at the end we will also talk about this heat bath dynamics.
+[62.8:69.8] So first I will explain what the ising model is.
+[69.8:72.39999999999999] I already introduced it.
+[72.39999999999999:80.64] And so once this is done we will go to these subjects here.
+[80.64:85.47999999999999] Okay, so a little introduction to the ising model.
+[85.48:93.92] So you consider a graph G which is made of vertices and edges as usual.
+[93.92:104.32000000000001] The vertices I will call them 1, 2, 3 up to capital N, the total number of vertices.
+[104.32:123.28] And I consider a binary alphabet, capital K which consists of minus 1 and plus 1.
+[123.28:133.16] And we have degrees of freedom.
+[133.16:143.2] Let me call them like that or the so called spins in the language of the ising model which
+[143.2:147.64] are binary variables attached to the variables.
+[147.64:154.72] So these binary variables they take values in the alphabet.
+[154.72:165.23999999999998] And V here is a vertex from the graph.
+[165.23999999999998:168.27999999999997] So the picture here is the following.
+[168.28:181.92000000000002] So suppose you have a graph it can be any graph say the complete graph.
+[181.92000000000002:192.08] For example, so let's take a complete graph here say for five nodes.
+[192.08:201.68] So you have this edge, this edge, this edge, this edge here is a complete graph.
+[201.68:210.88000000000002] And at each node you attach here sigma 1 which is a plus or a minus 1.
+[210.88000000000002:213.44] Maybe you have sigma 2.
+[213.44:225.07999999999998] So let me draw a special assignment here.
+[225.07999999999998:227.96] Sigma 1 would be plus 1, sigma 2 would be minus 1, sigma 3.
+[227.96:232.88] So suppose the plus 1 I draw it like that.
+[232.88:236.76] And for the minus 1 I put an empty circle.
+[236.76:239.72] So sigma 3 says plus 1.
+[239.72:241.8] So it's a black circle.
+[241.8:248.0] So it's a little bit like coloring except that you have only two colors here.
+[248.0:257.04] Sigma 4 might be again a plus 1 and sigma 5 might be a minus 1.
+[257.04:270.32] So this here is called an assignment or in the language of ising model has spin configuration.
+[270.32:285.04] And it's nothing else than a vector s or sigma, call it s or sigma which I underline.
+[285.04:294.76] And this vector has the component sigma 1, sigma 2 up to sigma n, the total number of
+[294.76:298.4] vertices.
+[298.4:308.56] So this assignment is a probability which I call mu here of sigma or this is our pi of
+[308.56:314.32] sigma in the rest of the class.
+[314.32:318.03999999999996] Let's call it pi here.
+[318.04:334.44] pi of sigma which is simply the exponential, let me write it here, pi of sigma equals to
+[334.44:346.64000000000004] the exponential of minus beta a cost function h of sigma divided by z, the normalization factor.
+[346.64:358.84] And the cost function, let me write it here, h of sigma is equal to minus some over all
+[358.84:363.28] edges vw element of an edge.
+[363.28:374.28] So here for example you have an edge and you have your v and your w here.
+[374.28:382.91999999999996] So this is the number of j v w are really number associated to the edge, sigma v sigma
+[382.91999999999996:394.23999999999995] w minus a sum over the vertices are really number associated to the vertex times sigma
+[394.23999999999995:398.08] v.
+[398.08:410.4] And z is the normalization factor, z of course is the sum of the numerator over all assignments
+[410.4:424.56] in the product binary alphabet, k to the power n of e minus beta h of sigma.
+[424.56:431.56] And this is called the partition function.
+[431.56:443.28] It's called the partition function, h here the cost is called the Hamiltonian.
+[443.28:451.2] So that's the standard language for the easy model.
+[451.2:457.76] You could consider any graph, the complete graph or the square grid, the example of the
+[457.76:464.56] square grid that we already introduced.
+[464.56:481.15999999999997] So another typical, well another important example is the
+[481.16:488.16] square grid included in zd.
+[488.16:499.16] So this we already talked about the model on a square grid.
+[499.16:513.1600000000001] Okay, so let's get some intuition about the model.
+[513.1600000000001:518.76] And of course the goal is going to be a bit later to sample from this measure.
+[518.76:523.9200000000001] Okay we want to sample from this measure by sigma.
+[523.92:530.92] So let's get some intuition.
+[530.92:551.92] The parameter beta, so the spins represent the values taken by
+[551.92:554.92] sigma.
+[554.92:560.92] So this intuition comes from physics.
+[560.92:578.92] So the spins represent magnetic moments which interact, which are carried by atoms, say.
+[578.92:585.92] Okay, in a crystal, say.
+[585.92:592.92] Okay, so you might have two neighboring magnetic moments here.
+[592.92:598.92] And these magnetic moments are act like little vectors.
+[598.92:609.92] If you simplify, you can simplify them like a vector which points up.
+[609.92:619.92] Okay, and this corresponds to a sigma equal to plus one, a vector that points down,
+[619.92:623.92] corresponds to a sigma which is minus one.
+[623.92:642.92] So this is a gross simplification with only two directions up or down for the magnetic
+[642.92:652.92] moments.
+[652.92:666.92] So the second point is that these spins or magnetic moments interact.
+[666.92:687.92] Okay, so the interaction is such that the energy of a configuration is equal to minus,
+[687.92:696.92] not well, the energy of a configuration of say two spins.
+[696.92:704.92] So take a spin here and a spin here and you have four possible configurations.
+[704.92:717.92] You can be up, up, down, down, up, or down, down.
+[717.92:729.92] Okay, so this means here that, so I'll call this vertex V and this vertex here W.
+[729.92:740.92] The energy of the configuration is in general, G, V, W, sigma, V, sigma, W.
+[740.92:751.92] Okay, and this is equal to minus J, V, W in the present configuration because the product here is plus one.
+[751.92:755.92] The product is a plus one, times plus one.
+[755.92:769.92] Okay, here the energy is J, V, W, sigma, V, sigma, W and is equal to plus because this product is minus one.
+[769.92:778.92] Here it's similar, the product here is minus one and this gives me a plus J.
+[778.92:791.92] And finally, here again when the two spins point down is like the first case, the product is plus one and this energy is like that.
+[791.92:795.92] So one distinguishes two cases.
+[795.92:811.92] The first case is the ferromagnetic case, what's called the ferromagnetic interaction.
+[811.92:828.92] In that case, J, V, W is positive, meaning that this is favorable here because the energy is minimized and this is also favorable.
+[828.92:848.92] So in the ferromagnetic case, it's favorable to align the spins as we say and is unfavorable to anti-align the spins.
+[848.92:867.92] The other case is what's called the anti-ferromagnetic configuration, anti-ferromagnetic interaction for which J, V, W is negative.
+[867.92:882.92] And then it is if J, V, W is negative, what is favorable is to have an energy plus J, W. So this is favorable.
+[882.92:896.92] The anti-alignment is favorable and the alignment is unfavorable. It costs more energy.
+[896.92:919.92] Now, if you have a general system, it can be that the science J, V, W are different on various edges and then you see the problem can be very complicated.
+[919.92:942.92] The simplest model corresponds to what is called the ferromagnetic model, which means that all J, V, W are positive.
+[942.92:957.92] So in that case, consider the special case where H, V, 0 for a minute,
+[957.92:981.92] and all J, V, W are positive, then the cost function or Hamiltonian, which is sum over V, W in E of J, V, W, sigma, V, sigma, W has two minima,
+[981.92:994.92] corresponding to all sigma V equal plus 1, or all sigma V equal minus 1.
+[994.92:1013.92] So if you think of the grid here, the two minima means that all the sigma Vs are plus 1. So the energy is minimized.
+[1013.92:1033.92] So that's this case, or all the sigma Vs are minus 1s. So this also minimizes the energy.
+[1033.92:1045.92] In the anti-ferromagnetic case, well, the situation can be more complicated and whether you have what happens might depend on the grid.
+[1045.92:1066.92] The ferromagnetic case will be true here if you have a complete graph.
+[1066.92:1084.92] So we say the model is anti-ferromagnetic, if all J, V, W are negative.
+[1084.92:1104.92] And then the situation is more complicated and will depend on the graph.
+[1104.92:1125.92] For example, if you take the square grid, well, the following is a minimum. So you could put a downstream, upstream, downstream,
+[1125.92:1140.92] down, up, down, up, etc. This is a minimum.
+[1140.92:1161.92] So it's called a staggered configuration. But you have also this, which is a minimum here. You can translate everything by one unit, and you have a second minimum.
+[1161.92:1184.92] Another minimum, second minimum. Which is the same by just a translation or a spin flip.
+[1184.92:1202.92] However, if you take the following graph here, take this graph, a little triangle, well, then it's unclear, right?
+[1202.92:1226.92] So you cannot minimize all terms simultaneously.
+[1226.92:1253.92] The difficulty here will come for large graphs, because you cannot minimize all terms simultaneously.
+[1253.92:1270.92] So you can use the same graph in H of sigma. So suppose you make this up and this down, then you have a problem here for the other one.
+[1270.92:1282.92] So you can then it's unfavorable here, but if you make it, it would be unfavorable here, but if you make it down, it would be unfavorable here.
+[1282.92:1299.92] So this is called the phenomenon of frustration. On a square grid, you can minimize all the bonds or all the edges simultaneously in this Hamiltonian.
+[1299.92:1307.92] For example, on a triangular grid, you will not be able to do so.
+[1307.92:1328.92] So now the study of optimization of H of sigma
+[1328.92:1341.92] and also of sampling from this measure, which is proportional to E minus beta H of sigma.
+[1341.92:1358.92] And let's write equality. Okay, it's a difficult problem for many reasons.
+[1358.92:1387.92] And especially for the so-called frustrated systems, with all possible signs, well, two possible signs for the bond intensity.
+[1387.92:1411.92] Okay. You also have the effect of the last term in the Hamiltonian of this magnetic field term here, which might complicate things,
+[1411.92:1427.92] and which might also take various possible signs depending on the vertex and this makes it even more difficult.
+[1427.92:1443.92] As a final note, let us give a small interpretation of the parameter beta.
+[1443.92:1464.92] This parameter in the physics model, this is interpreted as the inverse of the temperature of the system.
+[1464.92:1474.92] So beta is one over constant times the temperature.
+[1474.92:1484.92] Beta small. So first of all, beta is always positive.
+[1484.92:1507.92] Now, beta small, very small, if you send beta to zero, it corresponds to a nearly uniform measure on the state space,
+[1507.92:1525.92] which is this binary alphabet to the power. Okay, so the typical configurations, the typical spin configurations,
+[1525.92:1549.92] will be more or less uniform at random, or less uniform at random from this space, chi to the power n.
+[1549.92:1565.92] Okay, so you have typically completely disordered vectors.
+[1565.92:1585.92] So I'm not sure this is really a disorder of a vector, but you have typically something like that.
+[1585.92:1614.92] For beta large, well, e minus beta h of sigma divided by z, is px around the minima of h of sigma.
+[1614.92:1634.92] Okay, because if beta goes to infinity, which corresponds to very low temperature, so this is what's called the high temperature regime.
+[1634.92:1648.92] And because of the minus here, what will have more probability is when h is minimum. Okay, so the measure will be picked on the minima of h of sigma.
+[1648.92:1669.92] And the typical spin configurations will correspond will be, well, fluctuations around the minima.
+[1669.92:1684.92] And this then will depend on the lattice and on the sign of j vw. So for example, in the ferromagnetic model,
+[1684.92:1704.92] the typical spin configuration will be fluctuations of this or of this. Okay, but you see the measure sort of splits into, it is, is picked around around two regions of the state space, which are quite different.
+[1704.92:1715.92] One which region where the spins fluctuate around the all plus one and one region where the spins fluctuate around the all minus one.
+[1715.92:1722.92] So frankly, this is not a completely trivial measure.
+[1722.92:1741.92] In the case of the antiferromagnet, if the graph has many small loops like triangles because of this frustration, it's very difficult to have a good picture or of where the measure is picked.
+[1741.92:1749.92] Okay, and this is a famous famous problem.
+[1749.92:1764.92] Okay, so that was it for the intuitions. And now let me give you a bit of formal definitions here.
+[1764.92:1773.92] Before we can start studying assembling algorithms, formal definitions.
+[1773.92:1786.92] So one of the most important quantities that you want to study is what is called the magnetization.
+[1786.92:1806.92] The magnetization by definition is the quantity M, which will depend on beta. Okay, and it also depends on the set of magnetic fields, but let me, let me not write this here.
+[1806.92:1819.92] So by magnetic fields, I mean, maybe I'm not sure I said it, but so let me make it clear.
+[1819.92:1837.92] Here this here is a magnetic field and this here is an interaction.
+[1837.92:1866.92] Okay, so the magnetization will depend, of course, on the strength of interactions and magnetic fields, but it is defined as one over capital N, the sum over vertices that go from one to capital N of the average value of a spin at vertex feed.
+[1866.92:1877.92] Okay, where this notation sigma V means simply means expectation.
+[1877.92:1887.92] Okay, where we have this notation and this is a standard notation in the present context.
+[1887.92:1909.92] It's the expectation under a pi of sigma V. So the standard notation is this bracket notation. Okay, this is called the bracket notation.
+[1909.92:1931.92] So what is this? This is simply the sum of sigma V times the probability of the assignment sigma, where the assignment sigma is in the space of all binary assignments.
+[1931.92:1942.92] Okay, so how would you calculate this magnetization here?
+[1942.92:1971.92] So why is this called the magnetization? Well, first of all, intuitively, this is the total magnetic moment, the total average.
+[1971.92:1995.92] Magnetic moment. Okay, if M of beta is more or less zero, the system is not magnetized.
+[1995.92:2018.92] Whereas if M of beta is non-zero, we say the system is magnetized and you have a magnet.
+[2018.92:2037.92] Okay, that's for the physics intuition and we will see that this model displays phase transitions between these two situations.
+[2037.92:2066.92] Typically, has beta varies from a high temperature to low temperature.
+[2066.92:2076.92] So typically at high temperature, you have this typical spin assignments that are completely disordered random.
+[2076.92:2095.92] And the sum here will average to zero, whereas at low temperature, the spin assignments can be very much ordered, like here, because they are fluctuations of the minima here.
+[2095.92:2104.92] And then the magnetization, the sum will not vanish and the magnetization will not vanish.
+[2104.92:2115.92] And these transitions, they happen to be sharp, as we will see, and they are called phase transitions.
+[2115.92:2132.92] Okay, but the question is, how would you go about to calculate M? How would you calculate M of beta?
+[2132.92:2149.92] Well, one method, and this is used by the theories of magnetism, is to remark the following.
+[2149.92:2176.92] And this is a little exercise, that the average value of a spin at vertex V is equal to 1 over beta, the derivative, partial derivative with respect to HV of the log of Z.
+[2176.92:2201.92] So why is this? It's because Z is the sum over all assignments of exponential minus the sum over all edges of JVW sigma V sigma W.
+[2201.92:2211.92] You have a beta here plus beta sum of HV sigma V, where the sum carries over all the vertices.
+[2211.92:2222.92] Okay, so when you differentiate the log of Z, you will get a 1 over Z times the derivative of Z with respect to HV here.
+[2222.92:2232.92] And when you differentiate with respect to this HV here, well then the sigma V comes down the exponential here.
+[2232.92:2240.92] And basically you get this expectation.
+[2240.92:2260.92] Okay, so that's an important exercise to do, but this shows that you would like to maybe compute the partition function here, okay, and even its log.
+[2260.92:2289.92] But this is a difficult problem, but computing Z is difficult in general, in some cases it's possible, but in general it's impossible.
+[2289.92:2312.92] And because it's impossible, we could in fact attempt to instead of computing the magnetization for this formula, we could go back here to this formula.
+[2312.92:2334.92] And instead we go back to the following formula, so the formula here.
+[2334.92:2354.92] And observe that what we have to compute here is the average of a sum 1 over N, sorry, so the average of 1 over N sum of sigma V.
+[2354.92:2366.92] Which as I said is the expectation over pi of 1 over N sum of sigma V.
+[2366.92:2385.92] And consider an estimator, which would be M hat say of beta, which would be what?
+[2385.92:2406.92] Well, this would be a sort of limit when time goes to infinity of 1 over N sum of V of sigma V at time T.
+[2406.92:2416.92] Where sigma V at time T is the assignment given by an MCMC algorithm.
+[2416.92:2445.92] So this estimator is based on an MC algorithm. And here the chain sigma V at time zero, sigma V at time one, etc. sigma V at time T is an MCMC chain.
+[2445.92:2460.92] With stationary distribution by of sigma.
+[2460.92:2474.92] Okay, so this is the MCMC approach or something approach to compute such average. And with this approach we can compute many other things.
+[2474.92:2502.92] Okay, we can also compute any sort of average and this can be important. So you can compute the average of any function which depends on spin assignment sigma.
+[2502.92:2517.92] So for example, you could compute the internal energy of the system per site.
+[2517.92:2535.92] Okay, this is called the internal energy per vertex or per site.
+[2535.92:2564.92] So again, what you would take is a kind of limit when T goes to infinity. Of course in practice T will not go quite to infinity but take a kind of limit here of the following estimator, some over V of the vertex, the cost of the assignment sigma at time T.
+[2564.92:2588.92] Okay, and this is achieved by a set of MCMC algorithms.
+[2588.92:2602.92] Okay, so before I go on in the next video with the algorithms, let me give you a little bit of background on phase transitions.
+[2602.92:2621.92] A bit of background on the phase transition phenomenon that I talked about lately before.
+[2621.92:2633.92] Okay, but here we scratch the surface of the subject.
+[2633.92:2662.92] And to make the things simple, I'll consider the case where the graph V is a complete graph. JVW equals J and is strictly positive for all VW and edge.
+[2662.92:2686.92] And in that case, if you have the complete graph, in fact, you have to scale this appropriately and I put J over N. Okay, and the HV, I take it constant in R for all vertices.
+[2686.92:2705.92] Okay, so this is called the ferro-magnetic easing model on a complete graph.
+[2705.92:2722.92] And let me write the Hamiltonian one more. So sigma H of sigma is minus J over N here, the sum over all edges of sigma V sigma W.
+[2722.92:2736.92] So here, since you take all edges, you take all pairs VW in V square, because you have a complete graph.
+[2736.92:2760.92] But you want to count each edge only once, so essentially you might want to divide by two, maybe. Okay, minus H here, which I can factor, this is the same for all edges, times sigma V.
+[2760.92:2782.92] And it turns out that since you are on the complete graph, this you can write it down as sum over V equals capital V of sigma V square minus N, which comes from the sum of squares.
+[2782.92:2800.92] Okay, and there is going to be a half. The grams allowed the double products.
+[2800.92:2815.92] And you see this quantity, sorry, this quantity here, which was the total magnetization appears here and here.
+[2815.92:2833.92] And because this quantity appears here and here, it is possible to infect compute. So this is a model where it is possible to compute Z.
+[2833.92:2854.92] And also averages. And in particular, you can compute this average magnetization M of beta, which is the average of 1 over N sum.
+[2854.92:2866.92] So we are not going to do these computations, but I will show the result simply. And I will show the result qualitatively.
+[2866.92:2880.92] You can compute all that exactly quantitatively. And what you find is the following interesting behavior.
+[2880.92:2890.92] So what you find is the following.
+[2890.92:2910.92] He is eventually the following. So let me define precisely M of beta and H. Now I look at the H dependence precisely.
+[2910.92:2939.92] And so this is the average of 1 over N sum over all vertices of sigma V under the measure of the complete graph for this measure for the complete ferromagnetic.
+[2939.92:2959.92] You compute this quantity here. And then you plot.
+[2959.92:2977.92] You can plot the following quantity M plus minus equal to the limit when H goes to 0 plus minus.
+[2977.92:2997.92] If you are interested to see what happens when this bias H is not here. So remember, this is like a bias in the measure.
+[2997.92:3015.92] So this here acts like a bias in the measure exponential minus beta H of sigma. So here I remove the bias slowly.
+[3015.92:3037.92] And I obtain this quantity M plus minus of beta. So this is called the spontaneous magnetization.
+[3037.92:3057.92] Or the zero bias magnetization. Or also the zero field or magnetic field magnetization.
+[3057.92:3083.92] These biases are created by external magnetic fields in the land. And what you find is the following. So I plot now M plus minus of beta as a function here of kT, which is equal to beta minus 1K.
+[3083.92:3089.92] Just a constant. Forget about it. Or set it equal to 1.
+[3089.92:3099.92] Okay, so let's set this equal to 2 1 and plot as a function of t equal beta minus 1.
+[3099.92:3113.92] There is a critical point here as it's called t critical above which the M plus minus of beta has a limit which is 0.
+[3113.92:3133.92] So both limits here, 0 plus limit and the 0 minus limit are vanishing. But and this is the high temperature behavior.
+[3133.92:3153.92] Okay, so you have this average spontaneous magnetization which is 0. Of course because you have removed the bias. Otherwise it would not be 0.
+[3153.92:3171.92] And you can study the model further and the typical spin configuration is completely disordered.
+[3171.92:3189.92] Okay, so you have a bunch of plus and minus ones on this complete graph. Now if the temperature is lower than this critical temperature and this you can compute, okay, this critical temperature is equal to j minus 1.
+[3189.92:3207.92] Or j is the intensity here of the interaction. Below this critical temperature the M plus goes like that. So you have the plus curve and the M minus goes like that.
+[3207.92:3222.92] You have here the minus curve. Okay, and these two curves are symmetric and at zero temperature they tend to plus 1 and here 2 minus 1.
+[3222.92:3233.92] Plus 1 corresponds to all the sigma v's here being plus 1 and minus 1 corresponds to all these sigma v's being minus 1.
+[3233.92:3256.92] So this is the low temperature behavior where the average spontaneous magnetization is non-zero.
+[3256.92:3276.92] And the typical spin configurations are fluctuations of the all plus 1 and the all minus 1.
+[3276.92:3288.92] When beta is infinite or t zero you don't have fluctuation and you really have an all minus 1 or an all plus 1 when the temperature becomes finite, well you have fluctuations.
+[3288.92:3296.92] And that is the behavior. The point is that here you have a sharp transition.
+[3296.92:3314.92] Here you have a sharp phase transition which is sudden at t equal t critical equal j minus 1.
+[3314.92:3332.92] Qualitatively this kind of thing happens for the ferromagnetic model not only on the complete graph but basically on also on the square root and so on.
+[3332.92:3339.92] For the anti-ferromagnetic model it's more complicated.
+[3339.92:3346.92] So qualitatively in the ferromagnetic case this is the phase transition that happens.
+[3346.92:3359.92] Simply if you are not on the complete graph it's very difficult to compute things exactly and sometimes impossible to compute things exactly.
+[3359.92:3371.92] But this gives you an intuition here and any Markov chain Monte Carlo method that you will test.
+[3371.92:3399.92] If you test it on the complete graph well it should give you.

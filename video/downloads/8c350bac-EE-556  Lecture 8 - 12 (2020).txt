@@ -1,0 +1,259 @@
+~EE-556 / Lecture 8 - 1/2 (2020)
+~2020-10-26T11:07:32.099+01:00
+~https://tube.switch.ch/videos/8c350bac
+~EE-556 Mathematics of data: from theory to computation
+[0.0:2.72] All right, hello everybody.
+[7.84:11.200000000000001] Okay, so
+[19.28:23.2] I'm not there in a mask. I'm still in the classroom because of the teaching.
+[23.2:31.84] The speakers are a bit harder than normal, right? So the COVID cases have been increasing and these are results
+[34.24:38.56] aside from the first few years, the lectures are fully online.
+[40.0:45.28] All right, so what we'll do today is we're going to continue talking about deep learning.
+[46.239999999999995:51.760000000000005] But as you can see, maybe we'll talk more about some of the underpinnings of deep learning.
+[51.76:59.68] There was a recitation last Friday on some of the practical aspects of deep learning. I hope you enjoyed it.
+[60.56:67.28] If you have any comments, feel free to send me an email or to the FDA so that you can incorporate and make it go better.
+[69.36:74.72] So today we'll continue a little bit on the theoretical sides.
+[74.72:89.2] So if you recall in the last lecture, we hinted that the generalization of deep learning is not explained by the classical theories.
+[89.2:98.4] And I mentioned that in the next lecture, which is this particular lecture, I'm going to maybe elaborate a little bit more on this particular point.
+[98.4:121.36000000000001] So this is precisely what this particular lecture is going to do. Next week, we're going to delve more into practical algorithms for training with deep neural networks in particular some adaptive methods and their guarantees.
+[121.36:139.84] Now, what we would like to do is talk a little bit more about, let's say, this supervised learning framework and the concepts of training laws and the generalization laws.
+[139.84:147.2] And in particular, we'll talk about the population risk of expected risk.
+[147.2:156.16] And we're going to try to identify this trade off between the model complexity and the expected risk.
+[156.16:170.88] So for this, we put back our favorite work diagram. We have a generator that generates some data. We have a supervisor that uses these labels.
+[170.88:179.84] And as the learning machine, our job is to figure out a mapping between the input AI and labels behind.
+[179.84:191.84] Now, for this, we're going to have a simplified set of parameter domains that are nested.
+[191.84:204.8] You could probably make some theoretical statements about the unnested ones, but it gives the purpose of some of the points that we will make and makes things a bit more complicated than necessary.
+[204.8:216.8] So what we're going to do is we're going to consider some nested sequence of parameter domains.
+[216.8:223.76000000000002] And you can think of them as the stays from neural networks with I neurons.
+[223.76000000000002:233.76000000000002] By a neuron, let's think about maybe one hidden neural network and the width of this inner layer.
+[233.76000000000002:237.76000000000002] You will call it number of neurons unless you increase in the width.
+[237.76:249.76] So we'll say we're looking at the empirical risk estimates, which is something like 1 over n summation over the data points.
+[249.76:254.72] So let's talk about not the argument.
+[254.72:258.71999999999997] So argument will be this one, like x star i.
+[258.72:270.72] But let's think about the training error that you get by training on this nested set, the empirical risk, something that we can play with,
+[270.72:274.72] take, you know, statistic radians and the optimization.
+[274.72:278.72] And then take this argument and plug it back into the true risk.
+[278.72:284.72] So this is where we have the expectation over this AIBI pair.
+[284.72:294.72] So here we have this loss function, which AIBI, and here you have the expected loss function.
+[294.72:296.72] Okay.
+[296.72:304.72] All right. Now, if you recall in the last lecture, we defined this generalization error.
+[304.72:314.72] And the generalization error had a very exciting in the sense that you look at the true risk, like the population risk, the expected risk.
+[314.72:318.72] And you look at how different that is from its empirical estimate.
+[318.72:322.72] And remember, this is the one you do optimization with.
+[322.72:337.72] Right. And this is the one that we care because when you train a problem, when you, let's say, set this empirical visualization problem, you do optimization, you run a parameter, and you have a function.
+[337.72:342.72] So each, let's say, this is the primary tries version.
+[342.72:345.72] Sorry, let's see.
+[345.72:353.72] Um, I mean, let's see.
+[353.72:362.72] What you care is how this function performs on the population, the things that you have not seen so far.
+[362.72:363.72] Okay.
+[363.72:371.72] And if this risk that you're optimizing is close to the true population risk, ideally, we did similar performance.
+[371.72:380.72] And you can see how well you've been performing on training data. So you can kind of guess how well you're going to perform for samples that you have not seen before.
+[380.72:385.72] Right. And here, what we do is we look at the distance.
+[385.72:386.72] Right.
+[386.72:395.72] In absolute value, depending on what the loss function is and so on, so forth, the proof risk may go below.
+[395.72:401.72] But it just kind of approximates the population risk, the empirical risk, approximates the population risk.
+[401.72:405.72] And you look at the supreme over the primary domains.
+[405.72:410.72] And that's our worst case generalization error.
+[410.72:412.72] Okay.
+[412.72:418.72] Now this is a duration from the last lecture.
+[418.72:433.72] What you can do is you can characterize how much this parameter that you learn by minimizing the empirical risk and how much the true risk, for example, deviates from the empirical risk.
+[433.72:436.72] So this is minimum of the empirical risk.
+[436.72:441.72] And then you have this generalization error.
+[441.72:456.72] Now, if you think about it, is you increase the number of neurons? What you're doing is you're trying to train a model with increasing the more parameters.
+[456.72:464.72] So we end up choosing a more complex model, larger, more complex.
+[464.72:474.72] And let's try to understand what happens qualitatively when we increase the model complexity.
+[474.72:479.72] Now, if you think about it, the minimum empirical risk should decrease.
+[479.72:491.72] So if you think about the minimum over some domain, what we're doing is we're increasing, let's say, from 1 to 2.
+[491.72:499.72] So whatever the function is, if you take the minimum in this round, things that go right, these would be equal.
+[499.72:503.72] So these two terms would be equal.
+[503.72:511.72] But ideally, this one is a larger domain. So the minimum may actually occur here.
+[511.72:522.72] Whereas in the previous one, the minimum was at the boundary. So ideally, this is smaller than the one that has less prominent.
+[522.72:528.72] So the two, the empirical risk decreases.
+[528.72:533.72] But if you notice, the generalization error typically increases. Why?
+[533.72:544.72] Because now you're looking at the empirical estimates to the true population risk. And you're looking at it in a larger domain.
+[544.72:555.72] So whatever the distance was in a smaller domain, if you look at it from a larger domain that includes the previous one, it can only increase.
+[555.72:563.72] It's either equal or can increase because we're looking at the supreme one.
+[563.72:569.72] So in this case, it's interesting. Right? The empirical risk decreases.
+[569.72:575.72] But the worst case generalization error increases. Right?
+[575.72:581.72] So in this case, what happens to go through? Rest is the question.
+[581.72:587.72] Here is the bias, the variance tradeoff.
+[587.72:596.72] This is the classical curve. So it's a bit interesting to talk about this.
+[596.72:615.72] So here is this minimum empirical risk. So like what we were doing was we were looking at the minimum x in this parameter domain, R and X.
+[615.72:626.72] As we increase the complexity class, right? As we add more neurons, we describe that, you know, it decreases here.
+[626.72:632.72] This can all go down to zero.
+[632.72:640.72] Okay. Now the worst case generalization error.
+[640.72:646.72] It can only increase.
+[646.72:653.72] Let's think about this. I mean, from the description, right?
+[653.72:656.72] We're taking some functions. Right?
+[656.72:659.72] You didn't think about any dependencies at all.
+[659.72:666.72] We're looking at the distance between two functions and we're just increasing the realm in which we're looking and we're just taking the maximum.
+[666.72:671.72] So ideally, it should increase.
+[671.72:677.72] This is increasing. And then the bound we had is a summation of these two.
+[677.72:680.72] So we sum these two.
+[680.72:683.72] We get this.
+[683.72:692.72] It's fine. So this is the true risk.
+[692.72:700.72] All right. And there's something like a sweet spot here.
+[700.72:709.72] That kind of balances the model complexity with the minimization of the empirical risk.
+[709.72:716.72] And you know, people say that, you know, you want a simpler model because simpler is better.
+[716.72:723.72] And the outcomes razor arguments can't. So you want simple models.
+[723.72:726.72] They don't necessarily give you zero training error.
+[726.72:730.72] But they generalized there.
+[730.72:734.72] Right? This is the worst case generalization.
+[734.72:736.72] All right.
+[736.72:743.72] So let's just visualize the dangers.
+[743.72:747.72] So here's a function. Here's some data.
+[747.72:753.72] These are the empirical data at these dots samples.
+[753.72:757.72] All right.
+[757.72:767.72] And if you try to do a simple polynomial fit versus a large degree polynomial fit, you may get a radically different fit.
+[767.72:787.72] So if you take, for example, in this case, a 20 degree polynomial fit, you can have polynomials that are radical, like they're fitting exactly the data points and the zero training error.
+[787.72:797.72] All right. This is what you do is you form a cross function with the data. We call this the empirical risk.
+[797.72:805.72] So given these data points here, you can find the polynomial parameterized by some parameters that you call as X, I start, for example.
+[805.72:810.72] So I maybe is the degree of the polynomial.
+[810.72:818.72] And the 20, you can get zero training error. And what we care about is our generalization.
+[818.72:826.72] All right. So what we care about is our soup, our X minus Rn X.
+[826.72:830.72] Okay. So this is that guy.
+[830.72:836.72] This is that guy.
+[836.72:846.72] And as you can see, the supremum can be quite large. I don't know where the supremum is at thing, but it is pretty down large.
+[846.72:855.72] All right. And this is what is called as the overfitting because you explain the data by a function that is complex.
+[855.72:865.72] So you get zero training error. And yet look at the supremum over the parameters.
+[865.72:869.72] But there's a little functions. Right.
+[869.72:873.72] It's terrible. Okay.
+[873.72:883.72] Now, let's see this complexity versus this tradeoff in practice. So here.
+[883.72:887.72] What we're doing is looking at the classification test.
+[887.72:892.72] And we're using a one hidden layer network.
+[892.72:899.72] And what we're showing is the test performance, right, which is the true risk.
+[899.72:907.72] Or an estimate of the true risk in this case, right, because we don't know if an nest or C far have some underlying distribution.
+[907.72:914.72] We're looking at expectation and chat building on what we're doing is we're using a proxy for the true risk.
+[914.72:924.72] So we take the data settings put into two training things on test data and test data is a proxy for the true risk.
+[924.72:930.72] And what we're doing right. So there's an input.
+[930.72:935.72] So this is the number of so this is the hidden layer.
+[935.72:948.72] And the say, M is the number of hidden layers.
+[948.72:954.72] And what we're doing is we're trying to increase the number of hidden layers.
+[954.72:967.72] And we're seeing how the empirical risk changes and how the test error, the convergence is.
+[967.72:970.72] So as you can see, so both of them are at convergence.
+[970.72:979.72] As you increase the number of hidden units, you can actually get to zero error around 128 hidden units.
+[979.72:987.72] You reach zero error. And before that, you end up decreasing the test error.
+[987.72:990.72] So there's a bit of a decrease in increase here.
+[990.72:995.72] So the empirical error becomes zero for a wide enough network.
+[995.72:1001.72] So what do we expect to happen for even wider networks?
+[1001.72:1009.72] If you call the picture from before, it should increase.
+[1009.72:1014.72] It was very increasing the size of the complex of the class.
+[1014.72:1023.72] And the living execution on across two functions, ideally, they should increase.
+[1023.72:1033.72] And to our surprise, the class shagging, the same continues to decrease.
+[1033.72:1043.72] So you end up turning your networks that have even higher hidden units.
+[1043.72:1057.72] You again get zero error and yet the test error continues to decrease.
+[1057.72:1063.72] So this is what we're going to discuss today.
+[1063.72:1070.72] Any questions so far?
+[1070.72:1075.72] So this is the puzzling phenomenon in deep learning.
+[1075.72:1083.72] Right? Deeper or more complex, the better, somehow.
+[1083.72:1087.72] All right. So here's the mystery.
+[1087.72:1093.72] So when this paper was first out, it was heavily criticized.
+[1093.72:1101.72] I think it was rejected from a nerds. And then it got into ICLR or something like this.
+[1101.72:1108.72] I remember heavy criticism about this particular work.
+[1108.72:1116.72] So the title is very apt, in-read, perfect, understanding deep learning as we think in generalization.
+[1116.72:1120.72] Now here's the deal.
+[1120.72:1123.72] What they did is an empirical study.
+[1123.72:1130.72] And they basically showed us phenomenon that you make models more complicated and yet they still generalize.
+[1130.72:1135.72] In fact, they even did this for fitting random noise.
+[1135.72:1145.72] Right? And when you fit random noise to the neural network, ideally, the best performance you can have is, let's say, you try to guess the sign of the noise.
+[1145.72:1154.72] You need to get it 50% of the time. Right? So as you make the models more complex, the models actually reach closer to this 50%.
+[1154.72:1157.72] This is very, very interesting.
+[1157.72:1172.72] So when you look at it in practice, like, SGD can train neural networks to zero error.
+[1172.72:1181.72] So you can have zero training error, but yet it seems to notice there even if the neural network is a complicated one.
+[1181.72:1190.72] And if you think about it in the last lecture, we talked about classical notions of things like quantum complexity.
+[1190.72:1202.72] And they say they paint the opposite picture. And this is what is what is the mystery. Right? This is exactly the mystery.
+[1202.72:1211.72] One thing that I would like to highlight here, maybe you won't talk about this too much, but there are three pillars. Right?
+[1211.72:1217.72] One is the architecture.
+[1217.72:1223.72] So neural network architecture. We're talking about more complex things off. Right?
+[1223.72:1234.72] The other one is the algorithm. Right? The algorithm is also an important part. SGD for example is important. Right?
+[1234.72:1246.72] And the third one is the initialization, which I would like you to keep in this, keep this in mind that initialization is also important.
+[1246.72:1257.72] In this. So in this particular lecture, we won't talk too much about initialization, but notice these feet together play a role.
+[1257.72:1266.72] And the compositions of errors that you like to use. The moment you decompose, like in the other macro complexity.
+[1266.72:1277.72] Right? You look at the optimization error and the statistical error and the model error, then you will not be able to explain this because of deep learning.
+[1277.72:1282.72] You need to study them jointly. Do not decompose. Right?
+[1282.72:1286.72] So what we're going to do today is we're going to look at these two.
+[1286.72:1296.72] But know that there is a third component, which is the initialization of the algorithm, like hey, initialization, severe initialization.
+[1296.72:1301.72] There is also that also play a critical role.
+[1301.72:1307.72] Maybe an explanation we talk about.
+[1307.72:1311.72] We'll be talking about over dramatization.
+[1311.72:1322.72] Okay. So here is a stylized example to highlight some concepts.
+[1322.72:1331.72] When you have a neural network that has the capacity to fit all the data, what you can do, you know, actually some not even that.
+[1331.72:1347.72] Suppose you have a new network, you set up a loss function, then you look at the empirical risk. It's a non-comics optimization problem.
+[1347.72:1354.72] And by non-comics, it can have more than one local or even more than one global minimum.
+[1354.72:1363.72] So if you think about this, you can get the zero training error. Right? And maybe this is if you recall the previous plot here.
+[1363.72:1368.72] Right? So here there are different models. Right?
+[1368.72:1377.72] And they somehow get to different tests there, but they're different.
+[1377.72:1387.72] But they get zero training. Right? So for some parameters, let's say you get the minimum in various locations.
+[1387.72:1392.72] So if you think about it, there's the unique global minimum risk value.
+[1392.72:1401.72] But many parameters, many configurations can attain such value. Right?
+[1401.72:1409.72] And this particular case, because the parameter dimension is fixed, you can think about this with different initializations.
+[1409.72:1417.72] You can go to different global minimum. Right? Remember, initialization is important again.
+[1417.72:1431.72] So in this case, you know, the empirical risk might even have, so if you think about it, the true risk versus the empirical risk, they may also behave differently.
+[1431.72:1435.72] Right? So like here you may have a zero error. Right?
+[1435.72:1449.72] Here you may have a zero error and here you may have a zero error and yet your performance may differ.
+[1449.72:1457.72] But to highlight the effect of the algorithm. So not all global minimizes our same.
+[1457.72:1465.72] I mean, from this picture, they are not right. But here is something. Right? So here's a classification problem is a binary classification problem.
+[1465.72:1472.72] It's a perfectly separable data set. It's a 2D classification task. Right? What we do is we train.
+[1472.72:1479.72] So there is a global zero error and if the optimum, all those stochastic gradients are consistently making zero.
+[1479.72:1488.72] So you can actually use a fixed size, SGV and linearly converge. And here are some interesting classification ones. Right?
+[1488.72:1495.72] So here is a simple classification boundary. And here's a more complicated classification boundary.
+[1495.72:1511.72] So something like this. No? In the sense that this area is also, you want to this set. There is a, there is a nice separation.
+[1511.72:1524.72] And interestingly enough, STD with proper initialization, more or less, never lands here in this complicated boundary or percolated boundary classification boundary or decision boundary.
+[1524.72:1530.72] Whereas SGD typically lands in boundaries like this. Right? Why?
+[1530.72:1554.72] So let's try to explain this particular phenomenon where if it's the kind of find simpler models. Right? Okay. Now, this, these statements are not facts. They're observations, more or less. Right?
+[1554.72:1569.72] So what people have noticed is that SGD seems to find good minima by that, I mean low true risk, I generalize better.
+[1569.72:1576.72] And it has some sort of a bias for certain kinds of global minimizers, which we will explain.
+[1576.72:1592.72] Of course, this question is can the characterizes implicit bias? Right? Now for this, we're going to use it for formalism. And so for this, we're going to have a definition of algorithm.
+[1592.72:1604.72] So as they, an algorithm is a function that takes in some input and maps it, whoops, sorry.
+[1604.72:1619.72] Maps it to an output. And this, this, this input will be our Z and output, we will denote as the algorithm subscript Z, which is in some domain.
+[1619.72:1632.72] What's an example? So here gradient sends an example. So what we can do is we can give the gradients an initial point step size or even a step size schedule and a number of steps.
+[1632.72:1655.72] And the output of the gradient descent is our Z. Right? And the output will be in this primary domain X. I hope this is clear.
+[1655.72:1666.72] We can swap gradient descent to a certain gradient descent or suggested, stuck cast the gradient descent, stuck cast the gradient descent with momentum, whatever you add.
+[1666.72:1690.72] Now for this, let's consider a minimization problem. So maybe we have an f of x, which even could be a composite function.
+[1690.72:1700.72] And for this, for simplicity, we're going to think about the termistic algorithms. And I'll tell you some results about the stochastic layer.
+[1700.72:1714.72] So there is an input and we have an output. So given this setting, we're going to try to say that the algorithm does implicit regularization.
+[1714.72:1733.72] If actually that the output belongs to a set where you your cost function achieves the optimum and yet the algorithm minimizes some function while achieving the minimum.
+[1733.72:1745.72] And this will be clear in a little bit, but the idea is that the algorithm among all the local minima that it can have. Right?
+[1745.72:1757.72] Maybe there exists some other function h of x. And the algorithm gives you this one.
+[1757.72:1776.72] This is our h of x. This is our f of x. This is the set where f of x is equal to f x star, the minimum. Right?
+[1776.72:1787.72] And then within this minimum, but the algorithm within implicit bias does is there's some function h of x. Right? And it picks.
+[1787.72:1799.72] So remember, this is the set of points. Right? So this gives you a set of points.
+[1799.72:1819.72] And somehow the algorithm prefers among all of these some that minimizes maybe another function h of x.
+[1819.72:1831.72] In this case, we say that the algorithm is implicit regularization or implicit bias because it picks the one that has a particular property.
+[1831.72:1842.72] Now, let's look at this implicit bias or implicit regularization. Now consider the simplest thing to have a x is equal to b.
+[1842.72:1854.72] Now, you know, notation a could be like the concatenation of the data detectors, right? A is let's say we have n data points and n is less than the ambient dimension key.
+[1854.72:1862.72] Right? So in this case, this problem will pose their infinitely many solutions because a is an unshivial null space.
+[1862.72:1875.72] So if you take, for example, the true parameter and add any vector in the null space of the matrix a, you get same solution.
+[1875.72:1882.72] So h is in the null space.
+[1882.72:1897.72] So let's consider this optimization problem. So this is now our f of x. Among many possible solutions, which ones would an algorithm converge to?
+[1897.72:1915.72] So here's one example. So let's say so consider the following two example. So your a is just a role vector. Right? In this case, in two dimensions, what this does is create a one dimensional line.
+[1915.72:1931.72] So it's exactly this. So this is a x is equal to this is b. This is a. This is x. Okay? Let's say this is the origin.
+[1931.72:1947.72] And you initialize two algorithms. One is gradient percent and the other one is at a point. Okay? In this case, you can see the convergence of.
+[1947.72:1963.72] As a function of iteration. And the gradient percent gets the solution here. Which actually minimizes. Well, I will make this a bit more precise. The L2 norm.
+[1963.72:1974.72] And as at the grad gets the solution here, which if you actually carefully look, this is literally 45 degree angle.
+[1974.72:1998.72] And that this is 90 degree. So what gradient percent does is it works in the. So the thing I would like to highlight here is they converge to different points. Right?
+[1998.72:2010.72] One seems to converge to a closer point than the other one. And hence in this particular case, it even converges faster than the adaptive method, which is tuned.
+[2010.72:2019.72] So outcome. Right? Any comments?
+[2019.72:2035.72] Remarks. Is this clear? Is it too early in the morning? Do we have a bias against not answering online questions?
+[2035.72:2055.7200000000003] All right. I'll tell you. All right. So in particular, the state English will make it a bit more rigorous. All right. There is a comment.
+[2055.72:2079.72] It's probably. Okay. Now. The gradient percent in the previous example. So if you look at this. Thanks. This is 90 degrees.
+[2079.72:2086.72] In fact, I think this is something like 26 degrees.
+[2086.72:2100.72] So the gradient descent, the algorithm, A, Z, in this case, the gradient descent seems to converge to the closest solution in L2 norm.
+[2100.72:2117.72] So for this minimization problem, it looks like the gradient descent minimizes the distance to the initial solution in L2 norm.
+[2117.72:2128.72] Right? And this particular case, this result also holds for sarcastic gradient descent. Right? In this instance.
+[2128.72:2144.72] Now, let's understand why this is so. Okay. Now, if you think about it, when we do gradient descent, the gradients all live in the column space of a transpose.
+[2144.72:2159.72] So in the case, it lives in one two. All right. So no matter what you do here, you're literally computing a scalar in this particular case. Right?
+[2159.72:2177.72] And you just literally multiplying that by a constant. So you can only go in one direction. And incidentally, that direction is perpendicular to the mass space. Right?
+[2177.72:2196.72] Now, if you think about it, this falls for general A, that you have to move in the null space of a, which is the normal vector to this particular, quote, unquote, type of plan.
+[2196.72:2219.72] So what the gradient descent does is that it literally goes through the null space. So the solution set is whatever the true parameter or the minimum M2 norm solution.
+[2219.72:2239.72] Plus null space sectors. And because you work in the null space, when you get here, you literally minimize your distance to your initialization from whatever you started with.
+[2239.72:2256.72] There's what other grad does is it accumulates these gradients. Right? So like where you write down the other grad. So it is something like you have a diameter. You have some little tiny delta plus you accumulate the gradient norms. Right?
+[2256.72:2264.72] So you have gradient f, gradient f. You take the diagonal.
+[2264.72:2275.72] Transferse here. So what happens is that the state is very tiny. What you end up doing.
+[2275.72:2281.72] Is that you have a preconditioner, which is.
+[2281.72:2286.72] So so these summations are something like one.
+[2286.72:2306.72] Tentivate times constant. You take the square root element flies. You get one-two, you take the endes та, inquiry, take the disclaimer, take the inner patrol, take the IN adjustment take the inverse tree, take thelarını Veljida Insurance, company我跟你講, invent book Psycho.
+[2546.72:2549.8799999999997] Invote, Invote, Invote, Invote, Invote, Invote.
+[2550.08:2553.3599999999997] Invote, Invote, Invote, Invote, Invote, Invote, Invote, Invote, Invote, Invote.
+[2553.64:2561.2] Invote, Invote, Invote, Invote, Invote, Invote, Invote, Invote.
+[2561.4399999999996:2567.64] Invote, Invote, Invote, Invote, Invote, Invote, Invote.
+[2567.72:2572.7999999999997] Invote, Invote, Invote, Invote, Invote, Invote, Invote.

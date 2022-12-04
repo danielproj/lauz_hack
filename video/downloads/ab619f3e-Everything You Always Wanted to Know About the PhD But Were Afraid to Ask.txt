@@ -1,0 +1,352 @@
+~Everything You Always Wanted to Know About the PhD But Were Afraid to Ask
+~2020-11-30T15:26:40.732+01:00
+~https://tube.switch.ch/videos/ab619f3e
+~CS-451 Distributed algorithms
+[0.0:5.4] Again, if you already know for sure, there is no way you want to do a PhD field free
+[5.4:6.4] to disconnect.
+[6.4:9.8] I will not take that personally, but you may want to, it's going to be quick.
+[9.8:14.4] 10 minutes max unless you ask many questions while 10 minutes max.
+[14.4:17.6] I cannot guarantee, but it's going to be quick.
+[17.6:26.6] So these are general elements about PhD in general, especially PhD at EPFL.
+[26.6:34.4] So I will go through, I will address four questions.
+[34.4:35.900000000000006] What is the PhD?
+[35.900000000000006:39.6] I guess many people have no clue what it is.
+[39.6:43.3] How actually does the PhD work?
+[43.3:45.400000000000006] What does it mean to do a PhD?
+[45.400000000000006:46.400000000000006] Completely.
+[46.400000000000006:48.400000000000006] What is the work you need to do?
+[48.400000000000006:51.2] Why should you consider a PhD?
+[51.2:53.1] What are the advantages?
+[53.1:57.300000000000004] Why a TPSL or what does it mean at EPFL?
+[57.300000000000004:64.1] These are the four questions I want to address.
+[64.1:65.7] So what is a PhD?
+[65.7:69.3] A PhD is actually a discovery.
+[69.3:70.7] It's something new.
+[70.7:75.3] So it has to be something new and therefore it's discovering something.
+[75.3:80.5] You cannot just come and write about something that has been discovered a year ago or ten
+[80.5:83.5] years ago and decay a little or explain it to whatever.
+[83.5:84.5] That is not a PhD.
+[84.5:87.7] It has to be something new.
+[87.7:88.9] Is it anything new?
+[88.9:90.1] Is it any discovery?
+[90.1:91.7] Well, almost.
+[91.7:93.3] It has to be non-trivial.
+[93.3:95.5] And this is something hard to measure.
+[95.5:101.3] But coming with something obvious and say, oh, this has been shown for N and I'm going
+[101.3:104.1] to show that it applies to N plus 1.
+[104.1:107.3] It's not really, sometimes it's definitely not trivial.
+[107.3:114.25999999999999] But it has to be something that you cannot come up with without thinking at all.
+[114.25999999999999:118.82] So it requires some solid work.
+[118.82:120.22] So what is a PhD thesis?
+[120.22:121.86] So a PhD is a discovery.
+[121.86:127.3] A PhD thesis is typically 100 between 100 and 200 pages.
+[127.3:131.06] This is what you deliver at the end of the PhD.
+[131.06:136.94] It describes how the world was before your discovery.
+[136.94:141.14] It describes your actual discovery and how the world is better now.
+[141.14:145.9] Of course, when we say the world, it's the world of, at least in my group, it's concurrent
+[145.9:146.9] and distributed computing.
+[146.9:149.46] If you go to networking, it's the world of networking.
+[149.46:156.3] But you have somehow to say this area, of course, when I say the world, it's very general.
+[156.3:161.62] For example, you say concurrent computing has been doing this and that.
+[161.62:163.66] But there was this problem and that problem.
+[163.66:168.42] I propose this new notion of memory reclamation and this notion of memory reclamation is going
+[168.42:171.46] to simplify the world and makes the world better.
+[171.46:175.22] Of course, you have to sell a little bit what you're doing.
+[175.22:180.22] So for example, a PhD or a discovery can be a theorem.
+[180.22:182.3] It can be just one fundamental theorem.
+[182.3:186.98] For example, the consensus problem is impossible in an asynchronous distributed system.
+[186.98:190.57999999999998] So you have to explain why the theorem is important.
+[190.57999999999998:191.98] You give the proof of the theorem.
+[191.98:193.57999999999998] You give applications, et cetera.
+[193.58:195.5] Of course, it's typically several.
+[195.5:199.34] So this is what we call a pure theoretical thesis.
+[199.34:205.14000000000001] It can be a theorem about something possible or it could be something about complexity.
+[205.14000000000001:208.98000000000002] So you say to solve this problem, I need this number of instructions or whatever.
+[208.98000000000002:213.58] So these are examples of pure theoretical PhDs.
+[213.58:214.58] It could be an algorithm.
+[214.58:219.42000000000002] You could say, oh, this is a new universal construction or a new consensus algorithm, a new
+[219.42:225.01999999999998] comparison swap, of course, typically you have not only one algorithm, but you typically
+[225.01999999999998:226.5] come up with several algorithms.
+[226.5:230.73999999999998] So Igor came up with several algorithms in his PhD thesis.
+[230.73999999999998:236.66] The last one was the MA algorithm that he presented last week.
+[236.66:239.7] It could be an algorithm about something very practical.
+[239.7:242.1] So it could be an algorithm to detect spam.
+[242.1:243.57999999999998] So this is still an open problem.
+[243.57999999999998:248.38] How to best detect spam and it could be an algorithm about that.
+[248.38:251.46] It could be a smoke detector, a body tracker, what have you?
+[251.46:255.29999999999998] So it's not necessarily abstract algorithm.
+[255.29999999999998:258.86] It could be an algorithm applied to something very concrete.
+[258.86:261.02] It could be a new programming language.
+[261.02:265.98] Of course, it's rare today to have a PhD that defines an entire programming language,
+[265.98:269.78] but you can come up with a new model of checking scheme for scanner.
+[269.78:272.14] This could be a fantastic PhD.
+[272.14:276.74] It could be a new way to write parallel programming using Python or whatever.
+[276.74:280.78000000000003] So you come up when you present new construct.
+[280.78000000000003:287.58] It could be something also like a metric, which is an abstract notion and say, oh, for measuring
+[287.58:291.5] the complexity of a concurrent or a distributed program, we should measure this.
+[291.5:294.1] We shouldn't stop measuring messages and communication.
+[294.1:295.98] Maybe we should measure energy.
+[295.98:299.62] And you come up with the new complexity measure.
+[299.62:302.1] So here, the discovery is not an algorithm.
+[302.1:306.86] It's actually a metric how to measure the efficiency of a network.
+[306.86:311.22] You can say, well, I have noticed that current measures are not good because they don't reflect
+[311.22:314.46000000000004] this or that and coming up with a new one.
+[314.46000000000004:316.38] It could be a new hardware architecture.
+[316.38:321.94] You can say, I like to build machines and I would propose a new way of positioning processors
+[321.94:322.94] in a trip.
+[322.94:325.94] It could be a new internet.
+[325.94:327.46000000000004] You could say enough.
+[327.46000000000004:329.78000000000003] We don't want the internet to belong to the Gaffam.
+[329.78:335.46] I want a new internet, it is an oriented internet and you propose a new internet.
+[335.46:340.02] Of course, you are not going to experiment and implement a whole new internet, but you
+[340.02:343.82] can come up with an architecture and experiment it with you.
+[343.82:346.5] Two examples.
+[346.5:349.61999999999995] It could be an actual system that you implement.
+[349.61999999999995:352.21999999999997] So you implement a peer to peer stream video system.
+[352.21999999999997:356.02] One of my former student, Maxine Mono, who's now having a startup in Los Angeles, has
+[356.02:362.74] actually implemented a peer to peer stream video that you could use to watch the Olympic
+[362.74:366.09999999999997] games or the World Cup or whatever.
+[366.09999999999997:371.02] Detecting network intelligence is an example of a system synchronizing concurrent access
+[371.02:372.18] to shared memory.
+[372.18:381.21999999999997] So next week you will have Vasili Strigonakis, who did fantastic PhD thesis on how to actually
+[381.22:386.42] on a library to synchronize concurrent access to shared memory, mixing weight freedom and
+[386.42:387.42] locking.
+[387.42:391.58000000000004] He got a great position at Oracle because of his PhD.
+[391.58000000000004:393.74] So this was what is a PhD.
+[393.74:396.78000000000003] So a discovery, theoretical or practical.
+[396.78000000000003:398.82000000000005] Now how do you do a PhD?
+[398.82000000000005:400.26000000000005] How do you start a PhD?
+[400.26000000000005:401.78000000000003] How do you proceed?
+[401.78000000000003:407.94000000000005] Basically, what makes the PhD different from other kinds of work, engineering, more engineering
+[407.94000000000005:410.66] oriented work is that here you have to dive.
+[410.66:412.06] You dive, you dive, you dive.
+[412.06:417.14000000000004] The only way you can really discover something new is you become a real specialist in an area.
+[417.14000000000004:421.46000000000004] So you pick an area and we will discuss how you pick an area.
+[421.46000000000004:423.70000000000005] And then you say, oh, this area is intriguing.
+[423.70000000000005:424.70000000000005] It's interesting.
+[424.70000000000005:425.94000000000005] And then you start diving in it.
+[425.94000000000005:428.94000000000005] So for example, you say, oh, I like this memory reclamation thing.
+[428.94000000000005:432.06] Or I like the hierarchy of consensus numbers.
+[432.06:436.98] Or I like this idea of a new internet architecture.
+[436.98:438.46000000000004] And you start reading about it.
+[438.46:443.5] You start following the two dates about following videos, attending classes.
+[443.5:445.97999999999996] And you start asking yourself, can we do better?
+[445.97999999999996:446.97999999999996] Where are the problems?
+[446.97999999999996:448.65999999999997] So this is diving.
+[448.65999999999997:451.38] And you experiment.
+[451.38:457.9] You experiment meaning in the theoretical front, you will write, maybe propose a new
+[457.9:460.29999999999995] new theorem, try new proofs or whatever.
+[460.29999999999995:463.7] In the practical side, you will implement new systems.
+[463.7:466.5] So how do you know whether you are making progress or not?
+[466.5:468.41999999999996] Of course, it's very, very hard.
+[468.42:470.98] Your advisor, you will tell you you're doing well or not.
+[470.98:476.42] But the less subjective criteria, it's not completely objective, but it's the less
+[476.42:478.18] subjective are papers.
+[478.18:483.18] So basically you submit your work to conferences and journals.
+[483.18:486.38] And there you have the experts in the field who can say, oh, this is new.
+[486.38:487.38] This is great.
+[487.38:488.38] This is non-trivial.
+[488.38:491.58000000000004] Or they can tell you, oh, you didn't read that paper.
+[491.58000000000004:495.58000000000004] Of course, usually the role of the advisor is to give you some indications about the papers
+[495.58:500.14] you should read, especially in the beginning of the thesis to prevent the situation where
+[500.14:503.9] you submit your work after six months of hard labor.
+[503.9:506.3] And then you'll be told this was done.
+[506.3:509.06] Okay, so this is something.
+[509.06:513.74] So these experts are basically your peers, they are typically older.
+[513.74:518.54] So when you start, these guys are older and they judge your work, but eventually you also
+[518.54:520.5799999999999] become an expert.
+[520.58:525.94] So now Igor is becoming an expert in the sense that he's asked to review papers in his
+[525.94:527.94] field.
+[527.94:529.34] It's more and more anonymous today.
+[529.34:531.38] They were problems in the past.
+[531.38:536.7] You send the paper and then if the expert know you or know your advisor or whatever, sometimes
+[536.7:538.22] they were conflicts of interest.
+[538.22:544.0600000000001] Now most of the time this exercise of submitting your work and getting it evaluated is anonymous.
+[544.0600000000001:548.58] Nobody knows who has reviewed your paper or you don't know and they don't know who you
+[548.58:550.34] are.
+[550.34:554.5400000000001] So the first step is typically you read your papers, you choose a couple and you improve
+[554.5400000000001:555.5400000000001] on them.
+[555.5400000000001:558.74] So this is an exercise that usually goes with your supervisor.
+[558.74:564.0600000000001] Or you build the system and you not only or you always have to read something.
+[564.0600000000001:568.5] You build the system, you measure according to some respect, you see, oh my system consumes
+[568.5:572.4200000000001] less energy or less messages or whatever.
+[572.4200000000001:578.98] I have, as I said, recorded yesterday a video on what we believe to be an alternative to
+[578.98:580.7] the Bitcoin system.
+[580.7:586.14] So some of the students like Tanasis, whom some of you know from the distribution algorithm
+[586.14:590.26] course together with others, they implemented an alternative to Bitcoin.
+[590.26:596.14] They measured it and they could show that it's better than many alternatives.
+[596.14:601.78] So at the end you become an expert in the field, you wrote some papers and the last sprint
+[601.78:605.94] consists in compiling those papers into the PhD document.
+[605.94:609.5400000000001] So when you have a good PhD, this means you have few papers, you just put them together.
+[609.5400000000001:613.58] Of course, you need an introduction, you need to leave them somehow to describe your
+[613.58:618.46] discovery, you need a conclusion and you defend your thesis.
+[618.46:623.94] You have your advisor will invite some known experts in the field who are independent from
+[623.94:628.7] you, they didn't work with you and then they come to EPFL remotely, I mean to the internet
+[628.7:631.1800000000001] or physically and they judge your thesis.
+[631.18:637.9] Usually if your advisor tells you it's time to defend then usually things go well.
+[637.9:638.9] Is this challenging?
+[638.9:641.42] Of course it is because you have to dive.
+[641.42:648.78] So the main characteristic of a good PhD student is the ability to dive, to be stubborn.
+[648.78:649.9799999999999] It's not about being smart.
+[649.9799999999999:654.14] You are all smart when you finish an engineering degree at EPFL.
+[654.14:655.9399999999999] It's more about being persistent.
+[655.94:661.86] The ability to really do something be passionate about it and not get depressed if you don't
+[661.86:662.86] make progress.
+[662.86:665.94] But you are not alone.
+[665.94:672.9000000000001] You have the lab, the other students in the same lab, in other the school, you have other
+[672.9000000000001:676.7800000000001] professors besides your advisor, other students and usually the world.
+[676.7800000000001:681.58] Usually you can communicate with people working in the same problem, exchange and it's actually
+[681.58:682.58] a fun part.
+[682.58:687.46] You have to do that in the same area for several years.
+[687.46:688.94] So why should you do a PhD?
+[688.94:694.38] Well, the first to me, the first and most important thing is the notion of freedom.
+[694.38:698.94] If you go to a company, must of the time you are asked to do something and when you come
+[698.94:701.46] in the morning you know exactly what you know.
+[701.46:705.1] You have to do something, you have to do this part.
+[705.1:706.98] In a PhD you are more free.
+[706.98:711.82] You are free usually to pick the area you want to dive in and you can come and say oh
+[711.82:713.3000000000001] today I am going to explore this.
+[713.3000000000001:714.34] So I am going to explore that.
+[714.34:715.9000000000001] I am going to read that paper.
+[715.9000000000001:719.7] Of course you have periods of deadlines where you basically don't think too much about
+[719.7:720.7] freedom.
+[720.7:721.7] You have to work, finish your paper.
+[721.7:723.98] But most of the time it's a freedom.
+[723.98:728.86] And this freedom is something that you can find after the PhD.
+[728.86:729.86] Because you have a PhD.
+[729.86:732.0200000000001] It's also intellectually challenging.
+[732.0200000000001:735.6600000000001] So usually it's a nice exercise for your brain.
+[735.6600000000001:740.0600000000001] The PhD is something that stresses your brain in all dimensions.
+[740.06:744.6199999999999] And I pointed out stubbornness, the ability to dive.
+[744.6199999999999:746.78] And you work with interesting people.
+[746.78:753.4599999999999] So you interact with the top people in your field and this is rewarding.
+[753.4599999999999:756.5799999999999] So why do you need to have a PhD?
+[756.5799999999999:761.06] It's basically having a diploma, stating two things.
+[761.06:765.7399999999999] One is your ability to dive because really doing several years working on the same thing.
+[765.74:771.26] You actually show the work that you can concentrate on something and make, build a new generation
+[771.26:774.62] of systems, algorithms, theorems, whatever.
+[774.62:778.46] But also it's a diploma stating that you can write about it.
+[778.46:783.98] So sometimes people would hire you after a PhD, not because they want to explore your ability
+[783.98:785.94] to work on that particular area.
+[785.94:790.94] No, they want to explore your ability to dive and to tell the world about it.
+[790.94:795.1800000000001] So something about the PhD is that you learn to explain what you are doing.
+[795.18:798.9799999999999] You learn to write, you learn to present.
+[798.9799999999999:800.38] So why would you do a PhD?
+[800.38:803.9399999999999] Well, a PhD is necessary to become a professor.
+[803.9399999999999:805.9399999999999] It's necessary to become a researcher.
+[805.9399999999999:810.9799999999999] If you want to become a researcher, as we will see next week, in Oracle or Microsoft,
+[810.9799999999999:816.6999999999999] or in many startups today, they have these research development parts.
+[816.6999999999999:818.8599999999999] You have to have a PhD.
+[818.8599999999999:821.2199999999999] It's more and more enables fast promotion.
+[821.22:825.78] So you go to a company, if you have a PhD, it actually usually enables fast promotion.
+[825.78:829.5400000000001] Of course, if you compare your salary when you enter a company with someone who has been
+[829.5400000000001:834.22] five years in a small company, maybe the salary of that person is higher, but I'm not sure
+[834.22:838.0600000000001] that in the long run, you lose.
+[838.0600000000001:839.58] This is about a smaller company.
+[839.58:846.1800000000001] But now for big companies, the PhD is something very valuable, especially in a field like computer
+[846.1800000000001:847.1800000000001] science.
+[847.1800000000001:849.5] Today, everybody is almost as doing computer science.
+[849.5:853.22] You can get you can hire engineers from all around the world.
+[853.22:857.62] But hiring PhDs from good schools is hard.
+[857.62:864.02] And therefore, having a PhD degree is something that somehow puts you in a smaller club.
+[864.02:866.26] You take the city of many big companies.
+[866.26:870.82] They must of them they had PhDs from big schools.
+[870.82:873.22] So EPFL, PhD at EPFL.
+[873.22:877.42] So the nice thing about EPFL is that the school is now pretty big.
+[877.42:883.9] So you can choose to do a PhD in classical computer science fields, algorithms, computational
+[883.9:886.42] biology, distributed systems, operating systems.
+[886.42:892.4599999999999] You can also do a PhD in computer engineering, computer vision, architecture, in communication
+[892.4599999999999:893.4599999999999] systems.
+[893.4599999999999:898.8199999999999] So the nice thing about EPFL is it's a wide variety of topics.
+[898.8199999999999:903.78] Of course, you can have that at the big schools like MIT, Stanford, Berkeley, etc.
+[903.78:909.66] But what I usually tell students, I'm not sure I'm recorded, I hope I'm not, is that
+[909.66:913.86] if you get admitted to MIT, Stanford and Berkeley, go.
+[913.86:918.06] If you want to do a PhD, if you don't get admitted to those big schools, have the
+[918.06:919.9399999999999] rather stay at EPFL.
+[919.9399999999999:922.98] Because now EPFL is becoming one of the top schools in the world.
+[922.98:927.5799999999999] I'm not saying EPFL is not as good as MIT or Berkeley or Stanford, but going there gives
+[927.5799999999999:931.3399999999999] you another perspective if you have done all your studies here.
+[931.34:936.58] Let again, you can still do your studies here and then go for internships and work with
+[936.58:941.94] people from those schools and have a wider perspective.
+[941.94:947.22] So nice and prestigious place, as you all probably know, EPFL is very international, especially
+[947.22:948.7800000000001] at the PhD level.
+[948.7800000000001:952.02] You meet people from all around the world.
+[952.02:958.02] Usually except the COVID times, the PhD is the time for nice trips, nice conferences,
+[958.02:959.02] internships.
+[959.02:963.9] I hope that starting next spring, the students will benefit from this.
+[963.9:970.62] The salaries are not as high as what you would get if you go to a company immediately, but
+[970.62:972.26] they are fine.
+[972.26:979.18] If you compare with PhD salaries elsewhere in Europe or in the US, I mean the salaries at
+[979.18:981.06] EPFL are pretty competitive.
+[981.06:983.78] So this is what you get as a PhD student.
+[983.78:990.42] Sometimes there is one thousand more depending on what you do on things like that.
+[990.42:994.62] So you have to apply mid-December to start in September.
+[994.62:1000.3399999999999] So you apply mid-December if you want to start in September and what is crucial is the
+[1000.3399999999999:1001.3399999999999] recommendation letters.
+[1001.3399999999999:1006.5799999999999] Of course, your grades are important, but what's really important is make sure a couple of
+[1006.5799999999999:1010.78] professors or internships or prizes are right about you.
+[1010.78:1014.42] And if you have been working with the EPFL professor, that makes a difference to ask
+[1014.42:1017.1] him or her to write something about you.
+[1017.1:1021.8199999999999] So in the first year of a PhD, you take few advanced courses.
+[1021.8199999999999:1028.02] The goal is to really make sure that you understand what you want to do in terms of research.
+[1028.02:1033.18] And then the professors of EPFL will come and give you talks about their topics.
+[1033.18:1034.18] And then you can choose.
+[1034.18:1036.86] Of course, you can already know what you want to do.
+[1036.86:1042.62] But if you don't know what you want to do, you just want to discover and do a PhD, then
+[1042.62:1047.4599999999998] typically in September, the professor of EPFL come and give 10 or 15 minutes seminar about
+[1047.4599999999998:1051.82] the problems, the open problems they work on.
+[1051.82:1056.5] So for example, if you come to my group, I can tell you about distributed AI or concurrent
+[1056.5:1058.3799999999999] programming for this or that.
+[1058.3799999999999:1060.58] And you can say, oh, this is something I would like to do.
+[1060.58:1062.58] And then maybe Josh Kondair will tell you about that.
+[1062.58:1068.1799999999998] The professor will tell you about this, Dr. Fli BuDek and so forth.
+[1068.1799999999998:1069.9399999999998] So you find that this is the supervisor.
+[1069.9399999999998:1072.5] You pass what we call a PhD candidacy exam.
+[1072.5:1074.22] But that's almost a formality.
+[1074.22:1077.74] It's just making sure you know what you're going to work on.
+[1077.74:1085.46] And the rest are a few years of fun, hard time, and at the end, the proof somehow that you
+[1085.46:1088.8999999999999] you can dive and you can write about it.
+[1088.8999999999999:1089.8999999999999] Okay.
+[1089.8999999999999:1091.54] Thank you for your attention.
+[1091.54:1100.98] If you have a question about this, there was a question from Standard.
+[1100.98:1102.3] I would love to do a PhD.
+[1102.3:1105.18] However, I do not know in what area topic.
+[1105.18:1109.58] Do you have any tips on how to orient or how to find the right people to talk to?
+[1109.58:1115.58] So if you know you want to do a PhD in computer science, my suggestion is simply to apply to
+[1115.58:1117.18] the EPFL doctoral school.
+[1117.18:1121.22] You don't need to decide now what topic you would work on.
+[1121.22:1124.7] You can decide that if you, hopefully you get admitted.
+[1124.7:1131.42] Once you're starting September, the first month are usually there just to help you decide
+[1131.42:1132.42] what to do.
+[1132.42:1135.5] Of course, for those of you who already know what they want to do, the first month with
+[1135.5:1139.5] somehow help you really convince yourself that this is what you want to do.
+[1139.5:1144.14] So you do not commit to a topic when you apply.
+[1144.14:1147.98] Any other comments on the PhD front?
+[1147.98:1156.9] Info-devoire.
+[1156.9:1157.9] There is a question, Richard.
+[1157.9:1158.9] Sorry?
+[1158.9:1159.9] There is another question.
+[1159.9:1162.46] Does this work in the same way in different schools?
+[1162.46:1163.94] Oh, I didn't see that.
+[1163.94:1164.94] Oh, yes, yes, yes.
+[1164.94:1165.94] Thanks.
+[1165.94:1168.78] Does this work the same way in different schools?
+[1168.78:1172.8600000000001] I think EPFL follows the on-road tax model.
+[1172.86:1178.82] So the way it works at EPFL is the same as Cambridge Oxford MIT, Berkeley, Stanford,
+[1178.82:1180.9399999999998] and all those schools.
+[1180.9399999999998:1185.9799999999998] In some places of Europe, the scheme is a little bit different because you don't really
+[1185.9799999999998:1187.34] apply to a doctoral school.
+[1187.34:1191.34] You have to contact the professor directly and it's slightly different.
+[1191.34:1197.4599999999998] But the EPFL way is mapped on the Anglo-Saxon way on what is considered the best school
+[1197.4599999999998:1198.4599999999998] in the world.
+[1198.4599999999998:1202.5] Let's put it that way.
+[1202.5:1205.42] So thank you very much.
+[1205.42:1212.78] And I have, as I said, for those of you who come late, I registered yesterday a video explaining
+[1212.78:1216.94] the link between Bitcoin and the notion of consensus number.
+[1216.94:1221.42] You might find this completely different, but have a look.
+[1221.42:1225.14] And I think this will help you also see other applications of the notion of consensus
+[1225.14:1226.14] numbers.
+[1226.14:1227.38] Have a nice day.
+[1227.38:1228.38] Have a nice week.
+[1228.38:1231.42] And let's, I'm going to see some of you this afternoon.
+[1231.42:1232.42] Thank you.

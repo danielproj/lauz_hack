@@ -1,0 +1,45 @@
+~EE-556 / Mock Exam Solutions / Question 5 - 1/2 (2020)
+~2020-12-14T01:14:04.350+01:00
+~https://tube.switch.ch/videos/55768258
+~EE-556 Mathematics of data: from theory to computation
+[0.0:12.16] We will now go over the solution to exercise 5a, where we are asked to show that the solution
+[12.16:14.96] to the linear minimization oracle.
+[14.96:19.96] So I'll be right here.
+[19.96:26.76] It's given as follows.
+[26.76:40.800000000000004] Here we can immediately see that the minimization problem is just the definition of dual norm.
+[40.800000000000004:46.120000000000005] So we can equivalently ask for an x.
+[46.120000000000005:50.400000000000006] This is satisfied this equation here.
+[50.4:60.519999999999996] And when it comes to the shet norm, we can use the fact that the shet norm relies just
+[60.519999999999996:64.08] on the singular values of the matrix.
+[64.08:79.12] So it is invariant on the unitary transformation here, meaning that we can rewrite this norm
+[79.12:88.0] here in terms of singular value decomposition.
+[88.0:94.24000000000001] That's what's given in the exercise.
+[94.24000000000001:109.04] And we will assume that the solution decomposes similarly so that we can write the whole
+[109.04:113.52000000000001] matrix.
+[113.52000000000001:119.04] Update as follows.
+[119.04:139.0] Now for this guy here, in terms of the singular values, this is just the vector norm
+[139.0:142.6] of the one norm.
+[142.6:153.16] And the constraint we have is just on the infinity norm of x.
+[153.16:162.68] Further, it's also easy to show that it's equivalent to minimizing this inner product
+[162.68:163.68] here.
+[163.68:169.64000000000001] So what is the solution to this other problem?
+[169.64000000000001:180.04000000000002] Well to satisfy this constraint here, x has to be bounded component wise to 1.
+[180.04000000000002:193.48000000000002] We also know that sigma 1 or the one norm of sigma is just the sum over the components.
+[193.48:211.16] And for this inner product to actually be the sum of sigma, we can pick all the x
+[211.16:220.0] i's to 1, in which case it reduces to just the sum over sigma.
+[220.0:236.44] So we have a solution when the diagonal x is the identity matrix, which when transforming
+[236.44:251.8] back to the matrix will give us a solution, which corresponds to what we were asked to
+[251.8:256.84] show.
+[256.84:270.79999999999995] Now for the next exercise, 5b, we ask to write down the projection of this problem with
+[270.79999999999995:276.12] the formulation given.
+[276.12:294.88] We can simply write it as taking a gradient step and then projecting.
+[294.88:309.88] In terms of the per iteration cost, the projection will require to actually do SVD.
+[309.88:318.76] But same for the Frankfurt, we have right for the linear minimization or we need to know
+[318.76:330.4] you and me that we only get reaction to do SVD. So the cost is the same per iteration and
+[330.4:336.68] we will not prefer one over the other.
+[336.68:346.0] You then ask to argue for what method you would use if you were to pick any from the
+[346.0:349.56] first one.
+[349.56:352.64] Here it's no longer just a question of the per iteration cost, right?
+[352.64:365.44] It's also a matter of which one is most efficient, which one converges the fastest.
+[365.44:371.64] Here you could mention Fister, since it gives you acceleration.
+[371.64:378.64] The per iteration cost would still be the same, but the conversion rates would be better.

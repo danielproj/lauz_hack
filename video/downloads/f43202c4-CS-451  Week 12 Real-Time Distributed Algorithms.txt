@@ -1,0 +1,839 @@
+~CS-451 / Week 12: Real-Time Distributed Algorithms
+~2020-12-07T17:27:57.020+01:00
+~https://tube.switch.ch/videos/f43202c4
+~CS-451 Distributed algorithms
+[0.0:3.7600000000000002] I'm very glad and honored to be here.
+[3.7600000000000002:6.0] So as Rashid has mentioned today,
+[6.0:9.6] I'll be talking about how we can use distributed algorithms
+[9.6:10.8] and real-time environments,
+[10.8:13.64] so a bit more industrial environments.
+[13.64:16.56] And what would be interesting here is to see,
+[16.56:18.96] okay, how we learn things in class
+[18.96:20.92] and what becomes a little bit different
+[20.92:23.68] when we want to apply the concept of distributed algorithms
+[23.68:26.12] to industrial frameworks.
+[26.12:29.2] So first, I will start by telling you a little bit
+[29.2:31.52] about some of the products that we have.
+[31.52:33.64] So if we look at these,
+[33.64:36.879999999999995] ABB is when, once you search online at least,
+[36.879999999999995:39.2] you will see a lot of these instruments,
+[39.2:42.2] which are a socket for electricity,
+[42.2:43.64] you have multiple of them,
+[43.64:46.36] so you have two phase, three phase,
+[46.36:47.96] you have circuit breakers.
+[47.96:50.72] But luckily, this is not the only profile
+[50.72:52.64] and not the only things that we do.
+[52.64:57.64] This is included as part of a very much larger portfolio.
+[57.64:61.0] And typically, what happens to such industries
+[61.0:64.52] is that for industries like ABB,
+[64.52:69.32] when we have manufacturing physical products like this,
+[69.32:71.12] they had to change with time to be able
+[71.12:73.32] to adapt to what the market wants.
+[73.32:75.96000000000001] Meaning that what we really look into
+[75.96000000000001:78.44] is how to make these devices a bit smarter
+[78.44:81.76] and how we can enhance the control of these devices.
+[81.76:84.68] And then we move a bit by bit more
+[84.68:86.52] into having distributed control
+[86.52:91.52] and distributed systems that apply to an industrial format.
+[92.32:95.96] So what are some notions of projects
+[95.96:97.96] that we currently discuss at ABB
+[97.96:102.96] and that classify as distributed systems we're working on?
+[102.96:106.24] One is what we call a distributed control system.
+[106.24:108.36] And in such distributed control system,
+[108.36:110.8] typically you have multiple computers,
+[110.8:113.24] which are operating stations
+[113.24:115.28] and they control physical processes.
+[115.28:116.64] What do we mean by that?
+[116.64:118.72] For example, you have multiple tanks
+[118.72:120.32000000000001] where you need to measure the pressure
+[120.32000000000001:122.36] and the temperature of these tanks.
+[122.36:124.52] You need to have different tasks
+[124.52:127.04] for performing certain actions.
+[127.04:129.6] And typically they are controlled, as you can see here,
+[129.6:132.28] they are controlled by multiple search components.
+[133.24:135.12] But what is interesting is that
+[135.12:138.52] we have these components that split the tasks
+[138.52:139.44] amongst each other.
+[139.44:141.84] So you have a distributed scheduler
+[141.84:144.28] that tells you which tasks run where.
+[144.28:147.72] And what happens is that if one of these components fail
+[147.72:148.88] as we have learned in class
+[148.88:150.68] because the distributed algorithms,
+[150.68:153.72] we know that processes can fail at a point.
+[153.72:156.72] Then what is important is that all the rest
+[156.72:160.12] should have a consistent hue of who has failed
+[160.12:161.56] and who is still in the system.
+[161.56:164.28] Otherwise, they would be running the tasks strong.
+[164.28:166.36] And if they run the tasks strong,
+[166.36:169.76] this means that they will not be able to schedule things
+[169.76:171.56] properly and this might lead, for example,
+[171.56:175.4] the tank to explode or the pressure to go above a certain limit.
+[177.36:179.12] Besides the distributed control systems,
+[179.12:181.92000000000002] we also look into the concept of what we call edge
+[181.92000000000002:184.92000000000002] or fault computing and why is that important.
+[184.92000000000002:188.24] Typically whenever we commission certain industrial systems,
+[188.24:190.92000000000002] we commission them while over provisioning.
+[190.92000000000002:191.8] What does that mean?
+[191.8:195.32] It means that we take many of the hardware
+[195.32:197.68] that we install in certain factories
+[197.68:200.52] or in certain industrial sites.
+[200.52:203.88000000000002] And we put much more resources than we actually need
+[203.88000000000002:207.44] just to be safe and make sure that the system would operate
+[207.44:208.28] as needed.
+[209.28:212.92000000000002] And the question is, since you already have all
+[212.92000000000002:215.16000000000003] of these resources in place,
+[215.16000000000003:217.92000000000002] why don't we try to benefit from what is happening there
+[217.92000000000002:221.48000000000002] and try to reuse the spare capacity within the systems?
+[221.48000000000002:224.84] So what we do here is we try to look into ways
+[224.84:228.48000000000002] of how we can use, for example, if you take an example
+[228.48:232.04] of fitting at home, you have your router, you have your TV,
+[232.04:235.0] you have many other components that are not actually
+[235.0:236.79999999999998] used at their fault capacity.
+[236.79999999999998:239.12] So the idea is to use the spare capacity
+[239.12:243.28] within these components and run extra applications
+[243.28:244.07999999999998] that you might need.
+[244.07999999999998:246.64] For example, if you need to monitor the temperature
+[246.64:249.35999999999999] in your room, you don't need to install new devices,
+[249.35999999999999:253.79999999999998] but you simply install applications on existing hardware
+[253.79999999999998:255.56] in a very online fashion.
+[255.56:256.96] And the question that we face here
+[256.96:261.56] is how we can install such applications in an online fashion
+[261.56:263.91999999999996] and to execute it on multiple sites,
+[263.91999999999996:265.76] meaning not only in a single flat,
+[265.76:269.47999999999996] but across multiple flats or across multiple nations
+[269.47999999999996:271.24] or across geographical locations.
+[274.0:276.28] A third application that we work on
+[276.28:279.84] or a third type of systems that we work on is
+[279.84:282.76] regarding connecting physical devices
+[282.76:286.35999999999996] like smart sensors to analytics
+[286.36:288.40000000000003] and to cloud platforms.
+[288.40000000000003:293.56] So as you all know, one of the things that we fabricate
+[293.56:295.64] within ABB is a smart sensor.
+[295.64:297.92] And this smart sensor basically could be attached
+[297.92:300.04] to your devices, for example, you could attach it
+[300.04:303.76] to a motor and it will report many interesting KPIs.
+[303.76:308.76] For example, it reports how often this motor vibrates,
+[308.84000000000003:310.92] what is the current that is passing through,
+[310.92:313.52000000000004] what is the voltage, and from this information,
+[313.52000000000004:315.56] you can extract many interesting things
+[315.56:319.28000000000003] that would tell you if your motor is in good health or not,
+[319.28000000000003:322.32] and when do you need to change different parts of your motor?
+[322.32:325.68] However, these systems will need to communicate their data
+[325.68:328.76] because they're very primitive devices.
+[328.76:331.44] What they do is they simply extract the data,
+[331.44:333.76] but you need to send the data all the way
+[333.76:338.76] to certain distributed nodes over certain database,
+[338.76:341.56] data centers, and then you would
+[341.56:345.84] their construct algorithms to analyze this data, to do the control,
+[345.84:348.6] and to implement certain functionalities.
+[348.6:352.76] So here, for example, we use a lot of efficient broadcast
+[352.76:354.44] and multicast communication algorithms
+[354.44:356.12] that you also have designed in class.
+[358.28:361.44] Yet a fourth option is that we work on,
+[361.44:363.24] it's called smart studies.
+[363.24:367.32] The concept of smart cities basically is making the environment
+[367.32:369.92] that we live in much smarter.
+[369.92:373.28000000000003] In what sense, we embed certain devices
+[373.28000000000003:375.36] like the sensors that we have seen,
+[375.36:379.04] or for example, if you take the concept of having meters.
+[379.04:381.52000000000004] So we all have meters at our homes
+[381.52000000000004:384.6] that measure how much electricity we consume.
+[384.6:387.76] Nowadays, we even can produce our own electricity
+[387.76:391.24] by having certain solar panels or wind turbines.
+[391.24:394.64] And things are moving more and more in a way
+[394.64:397.8] that allow even individuals, for example, me,
+[397.8:400.52000000000004] I can sell my energy to my neighbor, my neighbor,
+[400.52000000000004:402.0] can sell their energy to me.
+[402.0:403.68] We can have a community.
+[403.68:406.68] And then we only go to the utility, which
+[406.68:410.72] means the company that produces a huge amount of energy
+[410.72:416.24] from huge generators, only when this efforts are not
+[416.24:418.64] enough, we buy the electricity from outside.
+[418.64:421.12] So we try to implement certain functions there,
+[421.12:423.72] and we try to control how things work.
+[423.72:426.08000000000004] And this, for this to be able to happen,
+[426.08:428.76] it means we need to share information,
+[428.76:432.28] and we need to ensure this information in a very timely fashion,
+[432.28:435.08] meaning that we have certain time limits
+[435.08:439.64] that we need to be very careful and not to violate.
+[439.64:441.44] Another application that we work on
+[441.44:444.28] is regarding collaborative robots.
+[444.28:446.47999999999996] Because as you know, robots are nice.
+[446.47999999999996:448.24] They help us do things efficiently.
+[448.24:450.79999999999995] However, they are blindsided in what sense.
+[450.79999999999995:453.88] They see the world from their own perspective.
+[453.88:457.12] And what is still missing in the aspect of robots
+[457.12:459.96] is for robots themselves within a certain industry
+[459.96:462.08] to be able to communicate together,
+[462.08:464.52] and together to have a collaborative decision
+[464.52:466.24] of what to do next.
+[466.24:468.44] And many of these, for example, are
+[468.44:472.32] gaining a large momentum, even in the domain
+[472.32:477.15999999999997] of self-driving cars, where cars would somehow,
+[477.15999999999997:479.71999999999997] to the future, try not to make a decision
+[479.71999999999997:482.08] on just the environment that they see,
+[482.08:484.84] but based on the input they have from other cars.
+[484.84:486.4] So it will be a collaborative decision
+[486.4:489.12] when to stop how to react and how to slow down,
+[489.12:491.15999999999997] so on and so forth.
+[491.15999999999997:495.8] Last but not least, we don't only fabricate,
+[495.8:498.68] or projects do not only rely on physical devices,
+[498.68:502.52] but they also have what we call service packages that we sell.
+[502.52:504.64] So as part of ABB and any industry,
+[504.64:506.47999999999996] we also sell services.
+[506.47999999999996:509.76] For example, we could sell a service that helps you
+[509.76:513.16] maintain products that you have bought with ABB.
+[513.16:515.52] And why is this something that would be considered
+[515.52:516.52] as distributors' system?
+[516.52:518.24] Some of you already are thinking,
+[518.24:521.2] how is a service related to a distributed system?
+[521.2:524.72] So the reason why such a service or a maintenance service
+[524.72:527.92] of your physical products that you buy is important,
+[527.92:531.96] is because simply when we have a contract between us
+[531.96:534.8] as ABB and any customer, we say, for example,
+[534.8:536.68] that we will maintain your products.
+[536.68:539.04] And we promise you that your products
+[539.04:543.8] will be operating, for example, with a reliability above 90%.
+[543.8:546.36] However, as part of this contract,
+[546.36:549.92] if the reliability of your product drops below 90%,
+[549.92:551.76] we are obliged to pay you a penalty,
+[551.76:556.24] because we have violated this terms of operation.
+[556.24:558.76] But when this situation actually happens,
+[558.76:560.28] it's a lot of effort, because everything
+[560.28:562.0] is maintained by paperwork.
+[562.0:565.12] And then whenever we need, or someone needs to prove
+[565.12:568.36] that this actually happened, or that we have such an event
+[568.36:570.52] that happened, then we start blaming each other,
+[570.52:572.48] and then we go over emailed, and we say,
+[572.48:574.32] no, this is not my fault, this is your fault,
+[574.32:578.12] we start gathering the proof to see who actually is responsible
+[578.12:581.6] for such a loss and reliability.
+[581.6:584.4] So what we work on there is how we can actually
+[584.4:587.5600000000001] automate this process, how we can make it really easy,
+[587.5600000000001:591.32] and how to make it secure and trustworthy for all the components
+[591.32:593.32] or all the parties that are there.
+[593.32:596.4] So this is why it becomes a problem of distributed systems
+[596.4:599.48] or distributed computing as well.
+[599.48:603.4399999999999] So I hope that by now I have given you a small view
+[603.4399999999999:607.92] of why distributed systems are important for ABB,
+[607.92:611.0] and how they could be applied in different rounds.
+[611.0:615.1999999999999] Despite the fact that ABB could be seen as a hardware company,
+[615.1999999999999:617.3199999999999] the way that things change with time
+[617.3199999999999:621.72] force us to go a little bit more towards having automated
+[621.72:623.1999999999999] and distributed control that helps us
+[623.1999999999999:625.4399999999999] control such physical structures.
+[625.44:627.1600000000001] If you have any questions at this point,
+[627.1600000000001:629.36] please don't hesitate to write them through the chat,
+[629.36:632.96] and then Rashid will relay them to me.
+[632.96:635.6800000000001] So the question is now, OK, given that we
+[635.6800000000001:639.6] have seen such applications to what you learn in class,
+[639.6:646.0400000000001] the question is how different do these algorithms
+[646.0400000000001:647.08] are in practice?
+[647.08:648.7600000000001] So once you design them in class,
+[648.7600000000001:651.36] and the way that you learn them with Rashid in class,
+[651.36:654.24] can we take them as is and just put them
+[654.24:659.2] in the current industrial domains that we have?
+[659.2:663.24] And we will see now first how do you design them in class?
+[663.24:664.4] So let's recap.
+[664.4:666.28] So what you typically do in class
+[666.28:668.44] is that you define an abstraction.
+[668.44:670.08] So you define the problem.
+[670.08:673.76] And of course, you are now familiar with two terms that
+[673.76:677.12] are called safety properties and livenous properties.
+[677.12:679.72] So we typically define any problem
+[679.72:682.0] by saying it has these safety properties
+[682.0:684.16] and these livenous properties.
+[684.16:687.76] If we take an example as reliable broadcasts,
+[687.76:690.52] we say, OK, we have no duplication.
+[690.52:691.68] We have no creation.
+[691.68:693.04] We have agreement.
+[693.04:694.8] These are safety properties.
+[694.8:695.9599999999999] And we have validity.
+[695.9599999999999:698.8399999999999] And this is a livenous property.
+[698.8399999999999:701.92] Once we have defined a reliable broadcast
+[701.92:705.0] into these terms, the second step is,
+[705.0:707.04] so we have the abstraction defined.
+[707.04:710.16] The second step would be to implement this abstraction
+[710.16:711.88] in a given system model.
+[711.88:717.52] And you have seen in class also that the basic or the common
+[717.52:721.84] systems that we have are split into synchronous systems,
+[721.84:725.84] partially synchronous systems, and asynchronous systems.
+[725.84:729.52] So the idea now is to do what is to take the abstraction
+[729.52:733.32] that we have, design an algorithm that would allow it
+[733.32:738.2] to implement these properties in each one of these systems.
+[738.2:741.64] Once this is achieved, so once we have a reliable broadcast
+[741.64:743.84] for example, for a synchronous system,
+[743.84:746.04] then we can reuse this.
+[746.04:748.12] So we reuse this whole concept, which
+[748.12:750.64] is the block which is called reliable broadcasts
+[750.64:754.0] and the synchronous system, to build on top of it algorithms
+[754.0:756.24] to implement for example, consensus.
+[756.24:758.48] And the same thing goes over and over again
+[758.48:761.04] for different for all the other systems.
+[761.04:764.76] So we can build certain abstractions,
+[764.76:767.24] and we can reuse them in a modular fashion
+[767.24:771.76] to build other abstractions on top of them.
+[771.76:775.04] So what is common though for all of these systems
+[775.04:777.28] that are typically addressed in literatures
+[777.28:780.8] that we study together in class is that they
+[780.8:784.36] have a never changing or never ending conditions.
+[784.36:786.44] When we say for example, asynchronous system,
+[786.44:790.44] we assume that the network, if we speak about asynchronous
+[790.44:792.32] network, we assume that the network always
+[792.32:793.96] has time bounds.
+[793.96:798.12] So we say within two seconds our message is delivered.
+[798.12:800.2] If we say a partially synchronous system,
+[800.2:801.9200000000001] we also have the same thing.
+[801.9200000000001:805.2800000000001] So we say that our system could be a bit fuzzy,
+[805.2800000000001:808.44] so not knowing exactly what are the time bounds.
+[808.44:812.72] But after a certain time, it is always time-bounded,
+[812.72:817.76] which means that it always will have these nice properties
+[817.76:818.9200000000001] applicable.
+[818.9200000000001:821.36] In an asynchronous system, it's a system
+[821.36:824.64] where we cannot say anything about the timing constraints.
+[824.64:826.4] And this is all the time.
+[826.4:829.88] So we don't have any time within the system
+[829.88:833.5600000000001] where we can have small windows that we can somehow leverage
+[833.5600000000001:835.52] on.
+[835.52:839.4] In practice, things are a bit different at least
+[839.4:841.16] when we come to the realm of what
+[841.16:843.48] we call cyber-physical systems.
+[843.48:845.08] And in these cyber-physical systems,
+[845.08:846.36] there's systems like what we've
+[846.36:848.44] called what we have seen before.
+[848.44:851.2] And we can focus if you want on the example of smart
+[851.2:853.24] properties or smart grids.
+[853.24:855.5200000000001] And what is different in these systems
+[855.5200000000001:857.48] is that first, for example, we see something
+[857.48:860.44] that we haven't seen before in the distributed computing
+[860.44:863.36] at least in class, is that many of these devices
+[863.36:864.72] are small devices.
+[864.72:867.4000000000001] So many of them operate using batteries.
+[867.4000000000001:871.6400000000001] And we have to take into account the energy efficiency
+[871.6400000000001:873.24] of the algorithms that we design.
+[873.24:876.24] Because otherwise, we would decleat the battery
+[876.24:877.6400000000001] of such devices.
+[877.6400000000001:879.88] And typically, these devices are mounted in places
+[879.88:881.56] that we cannot really change the battery.
+[881.56:883.16] So it's very tough to get through them.
+[883.16:886.48] So we want them to less as much as possible.
+[886.48:891.36] The other thing is that many of these systems,
+[891.36:895.88] as I have mentioned before, have very hard timing deadlines.
+[895.88:898.8] For example, in the concept of smart grid,
+[898.8:902.4399999999999] if we have a certain fault in a certain line,
+[902.4399999999999:904.64] we need to reroute the electricity
+[904.64:907.04] so that we don't have any blackout.
+[907.04:909.36] So a blackout is when we have this scenario,
+[909.36:912.08] when everything goes black, because we simply
+[912.08:914.96] weren't able to supply enough power.
+[914.96:919.88] If we don't react to a line that has been cut
+[919.88:921.92] or that has been damaged, for example,
+[921.92:925.4] within 20 milliseconds, which is a very short period,
+[925.4:929.4] then we risk having such blackout or even sometimes causing
+[929.4:932.6800000000001] certain hazard dysfunctions in certain areas.
+[932.6800000000001:937.04] So these systems are a bit strict in the amount of time
+[937.04:940.0] that they require.
+[940.0:942.36] This is on the level of what qualities
+[942.36:944.68] we want to have from the algorithm,
+[944.68:948.5999999999999] but also what changes in how we view the system.
+[948.5999999999999:950.48] The system is a bit different simply
+[950.48:955.16] because when you look at it here, there are multiple components.
+[955.16:958.0] So in a smart grid or in a smart city,
+[958.0:961.68] we have multiple communication media that are used.
+[961.68:963.48] We have, for example, wireless.
+[963.48:965.12] We have wired like fiber.
+[965.12:967.44] We have power line communications, which
+[967.44:971.4] are the lines, the electricity lines, which also
+[971.4:973.08] we can pass data on.
+[973.08:976.16] So we have multiple communication mediums
+[976.16:979.64] that we can use to transmit data between components.
+[979.64:982.16] And given that they are heterogeneous,
+[982.16:984.4] so they're different in nature, it
+[984.4:988.24] means that they have a different quality as well.
+[988.24:991.4] So what happens is that the network quality,
+[991.4:994.04] so we cannot simply say that it is synchronous.
+[994.04:996.24] We cannot say that it's partially synchronous.
+[996.24:998.9599999999999] We cannot say that it's completely asynchronous.
+[998.9599999999999:1003.4399999999999] We can say that the system has different quality.
+[1003.4399999999999:1005.52] So in certain phases, it is good.
+[1005.52:1007.1999999999999] In other phases, it's not so good.
+[1007.1999999999999:1008.52] Then it becomes good again.
+[1008.52:1009.7199999999999] Then it becomes bad.
+[1009.7199999999999:1012.76] Then so it varies according to time.
+[1012.76:1016.1999999999999] It has certain behaviors where it behaves nicely.
+[1016.1999999999999:1018.0799999999999] And other periods where it doesn't behave good.
+[1020.8399999999999:1023.7199999999999] So given that we have such differences,
+[1023.72:1026.3600000000001] so we have differences in how the system works.
+[1026.3600000000001:1029.48] And the differences in what we want to offer on top,
+[1029.48:1032.08] so we want in the system, we have these variants
+[1032.08:1033.3600000000001] in the quality.
+[1033.3600000000001:1035.4] And in terms of the properties, we
+[1035.4:1037.76] would like to have hard deadlines
+[1037.76:1040.32] in for the algorithms that we designed.
+[1040.32:1044.96] The question that remains is, so can we easily change what
+[1044.96:1049.28] we learn in class to be able to adapt it to a such scenario?
+[1049.28:1051.8] Let's try to walk through an example together
+[1051.8:1055.24] and to what extent that is easy to achieve.
+[1055.24:1059.44] So assuming that we have a communication model
+[1059.44:1063.0] where it is asynchronous, for now, we assume that processes
+[1063.0:1066.76] are like we consider in class, some might fail, some are
+[1066.76:1067.8] correct.
+[1067.8:1070.76] And we consider that these processes are synchronous.
+[1070.76:1074.72] It means that they behave in a timely fashion.
+[1074.72:1076.9199999999998] And let's assume that the links between them
+[1076.9199999999998:1081.0] are simply reliable links, but they are asynchronous,
+[1081.0:1084.4] meaning that there is no guarantee if we send a message,
+[1084.4:1086.6] there's no guarantee when the message will arrive.
+[1086.6:1090.84] But we know for a fact that it will eventually go through.
+[1090.84:1094.32] So the question is, how do we build such a broadcast?
+[1094.32:1096.88] So how do we build a broadcast protocol?
+[1096.88:1099.44] Just to also to refresh your memory a little bit,
+[1099.44:1102.28] so a broadcast, as you have learned in class,
+[1102.28:1103.76] has the following properties.
+[1103.76:1107.0] So no message should be delivered more than once.
+[1107.0:1109.92] If a process delivers a message, then
+[1109.92:1114.72] it should then this message should have been sent by some
+[1114.72:1115.16] process.
+[1115.16:1117.88] We cannot invent messages out of thin air.
+[1117.88:1120.88] If a correct process delivers a certain message M,
+[1120.88:1122.92] then every other correct process in the system
+[1122.92:1124.8000000000002] should deliver that message.
+[1124.8000000000002:1126.76] And we have the validity property as well,
+[1126.76:1130.68] which means that if a correct process broadcasts M,
+[1130.68:1133.68] then eventually every other correct process in the system
+[1133.68:1136.0] will deliver it.
+[1136.0:1138.96] So how can we implement these properties
+[1138.96:1140.92] in the asynchronous system that we have seen?
+[1140.92:1144.2] This should be very easy, because we should already have
+[1144.2:1146.08] designed this in class together with the sheet.
+[1146.08:1148.16] And the algorithm works as follows.
+[1148.16:1150.4] So it's a very simple algorithm.
+[1150.4:1155.24] Once we have a process that wants to broadcast a message,
+[1155.24:1158.8400000000001] it does so by sending the message to everyone in the system.
+[1158.8400000000001:1163.52] And then every process that receives the message will deliver it.
+[1163.52:1166.8400000000001] And then will eventually itself send it
+[1166.84:1170.04] to every other process in the network.
+[1170.04:1171.48] What does this give us?
+[1171.48:1174.9199999999998] It gives us that since the links are reliable,
+[1174.9199999999998:1180.04] and since the links will deliver the messages,
+[1180.04:1183.36] eventually everyone in the system will be able to receive
+[1183.36:1185.52] that message, and everyone in the system
+[1185.52:1187.76] will be able to deliver it as well.
+[1187.76:1191.56] So we will be able to implement this algorithm
+[1191.56:1197.3999999999999] with a partially synchronous system.
+[1197.3999999999999:1200.08] If we try to change the model a little bit,
+[1200.08:1205.8] so we said that when we move a little bit towards the industrial
+[1205.8:1207.3999999999999] domain, we have certain changes.
+[1207.3999999999999:1210.44] So let's try to apply these changes bit by bit.
+[1210.44:1214.56] So now instead of having a partially synchronous model,
+[1214.56:1217.0] where eventually things will happen,
+[1217.0:1219.48] let's try to have now a communication model
+[1219.48:1220.76] where we say the following.
+[1220.76:1222.56] So processes are still the same.
+[1222.56:1225.04] However, the effort, the communication,
+[1225.04:1230.4] every time we transmit a message, that message will get
+[1230.4:1234.76] through reliably, and within let's say one second,
+[1234.76:1237.0] with a probability p.
+[1237.0:1239.56] So there is a probability that the message gets
+[1239.56:1242.44] through within this nice properties.
+[1242.44:1245.84] And there is also a probability of 1 minus p
+[1245.84:1249.04] that the message will not go through.
+[1249.04:1253.44] So given that we have such a way of communicating,
+[1253.44:1257.6399999999999] how does that influence how we design the algorithm?
+[1257.6399999999999:1262.92] As some of you might be thinking, sending the message now
+[1262.92:1266.32] only once might not be enough, because as you can see here,
+[1266.32:1270.68] this link will not guarantee that q would receive the message.
+[1270.68:1271.52] Why?
+[1271.52:1278.2] Because sending it once happens with just a probability p.
+[1278.2:1281.72] So once I send it once, I have a probability p
+[1281.72:1284.56] of the message getting through in time
+[1284.56:1287.76] and reliably to the receiver.
+[1287.76:1292.8400000000001] And order to guarantee that the receiver would eventually
+[1292.8400000000001:1296.6000000000001] receive the message for sure, we have to repeat this process
+[1296.6000000000001:1298.8400000000001] for an infinite amount of time.
+[1298.8400000000001:1300.24] So what do I mean by that?
+[1300.24:1303.2] It means that we have still the same algorithm.
+[1303.2:1307.44] However, once we deliver, we need to repeat that again,
+[1307.44:1309.04] and again, and again.
+[1309.04:1310.48] So we never stop.
+[1310.48:1313.48] And this way, by never stopping, we
+[1313.48:1318.2] will guarantee that eventually all the messages,
+[1318.2:1320.92] so because we send infinitely often,
+[1320.92:1325.4] a message will get through and all the processes,
+[1325.4:1327.24] the correct processes in the system,
+[1327.24:1330.1200000000001] will be able to deliver.
+[1330.1200000000001:1332.6000000000001] However, as you can tell from this,
+[1332.6000000000001:1335.96] this is not a very nice design and it's not very efficient,
+[1335.96:1339.68] because simply the network might get congested.
+[1339.68:1341.56] What do we mean by the network congested?
+[1341.56:1345.6000000000001] It means that we will have a lot of messages flowing
+[1345.6000000000001:1349.72] in the system, and then this will cause even worse
+[1349.72:1351.24] performance for the whole algorithm,
+[1351.24:1352.44] and this will not help us.
+[1352.44:1355.3600000000001] So we will saturate everything that we have.
+[1355.3600000000001:1357.88] One way that we deal with it and that you have also learned
+[1357.88:1361.04] in class is to be able to know one to stop,
+[1361.04:1365.76] and one abstraction that you have studied in class
+[1365.76:1369.24] is what we call a perfect failure detector.
+[1369.24:1373.16] So this perfect failure detector helps us understand
+[1373.16:1376.96] who is correct in the system and who is not.
+[1376.96:1379.72] And assuming that by given magic,
+[1379.72:1382.92] we have such a perfect failure detector in the system,
+[1382.92:1387.04] it will tell us which processes are correct
+[1387.04:1389.48] and which processes have failed.
+[1389.48:1393.76] So given that we have this extra component in the system,
+[1393.76:1397.12] it becomes a bit easier to make the previous algorithm
+[1397.12:1398.76] a bit more efficient.
+[1398.76:1402.16] So we're still considering that we have a probabilistically
+[1402.16:1406.48] synchronous system, but now we have the help of what we call
+[1406.48:1410.04] a perfect failure detector.
+[1410.04:1412.8] So what we do now is the following.
+[1412.8:1417.04] Similar to before, we can simply send the messages
+[1417.04:1419.8799999999999] to all the processes as a broadcast,
+[1419.8799999999999:1422.84] and once we receive the message we deliver it,
+[1422.84:1424.52] and we send it again.
+[1424.52:1426.8799999999999] We keep on repeating this process.
+[1426.8799999999999:1431.6] So now, instead of repeating this process infinitely often,
+[1431.6:1435.6399999999999] we just repeat it until we receive enough
+[1435.6399999999999:1437.84] acknowledgments from correct processes.
+[1437.84:1442.52] So until actually all correct processes in the system
+[1442.52:1445.6] say that they have actually received the message,
+[1445.6:1447.84] this is when we stop sending the message.
+[1447.84:1450.8] And we are sure now that every other correct process
+[1450.8:1452.96] in the system has seen this message,
+[1452.96:1455.9199999999998] there is no need to send further messages.
+[1455.9199999999998:1458.76] And we are able to deliver and satisfy the properties
+[1458.76:1462.8] of a reliable broadcast.
+[1462.8:1464.0] Any questions so far?
+[1467.8:1468.72] OK, I guess not.
+[1468.72:1470.52] Then we can continue.
+[1470.52:1473.68] So given now that we have this concept,
+[1473.68:1478.36] we know that by having or changing the model a little bit,
+[1478.36:1481.84] we can still solve the problem nicely with the help
+[1481.84:1484.8799999999999] of the perfect failure detector.
+[1484.8799999999999:1487.36] The question is the following.
+[1487.36:1492.24] The question is now, does this system as we have seen it?
+[1492.24:1496.28] So we still have the probabilistically synchronous links,
+[1496.28:1498.8] meaning that every time we send, we
+[1498.8:1502.6] will receive it in one second reliably only with probability
+[1502.6:1503.4799999999998] pp.
+[1503.4799999999998:1506.4399999999998] We have still the perfect failure detector.
+[1506.44:1511.16] But now we add one property to the algorithm itself,
+[1511.16:1513.8400000000001] or to the abstraction itself.
+[1513.8400000000001:1515.92] And this property says the following.
+[1515.92:1521.64] If a correct process brought us the message at time t,
+[1521.64:1526.68] then every correct process in the system
+[1526.68:1532.4] will deliver this message by t plus delta r or plus delta,
+[1532.4:1533.76] which means what?
+[1533.76:1536.76] This is what we call a real time property,
+[1536.76:1539.08] or what we call a timeliness property,
+[1539.08:1541.8799999999999] meaning that we force the algorithm
+[1541.8799999999999:1546.08] to finish the broadcast or to do the broadcast within a given
+[1546.08:1548.96] time limit.
+[1548.96:1551.48] Given that we add this property, now
+[1551.48:1553.72] we want to implement this new abstraction, which
+[1553.72:1555.64] is exactly the same as before.
+[1555.64:1559.8] However, we just want this delta to be achieved.
+[1559.8:1562.12] So whenever we broadcast a time t,
+[1562.12:1565.3999999999999] we want every other correct process in the system
+[1565.3999999999999:1569.6] to deliver the message after a time delta from the broadcast.
+[1572.76:1576.0] Typically, if we were not running
+[1576.0:1578.08] in a virtual presentation, I would
+[1578.08:1579.36] have given it as a riddle, and you
+[1579.36:1582.84] would have had a small price to guess how we could do this
+[1582.84:1583.6399999999999] algorithm.
+[1583.6399999999999:1585.4799999999998] But since now it's virtual, it'll be a bit
+[1585.4799999999998:1587.52] hectic to get feedback from you,
+[1587.52:1589.9599999999998] or to have people talk at the same time.
+[1589.96:1593.52] But the gist of this is the following.
+[1593.52:1596.56] If we try to think, and even if you try to think really,
+[1596.56:1599.56] really hard about this problem, it's actually
+[1599.56:1603.16] impossible to design an algorithm that
+[1603.16:1604.96] would help you solve this problem,
+[1604.96:1608.96] even if we have a perfect field detector in the system.
+[1608.96:1611.32] And why is that the reason?
+[1611.32:1613.28] If we just investigate a little bit,
+[1613.28:1617.0] we can together reason why this is not feasible.
+[1617.0:1619.32] And this is why in industry, this challenge
+[1619.32:1622.28] becomes even harder and harder.
+[1622.28:1626.3999999999999] The reason for that is that even though a process p
+[1626.3999999999999:1630.6799999999998] might be corrected at all times, the messages that
+[1630.6799999999998:1635.48] are going out from p for any defined range,
+[1635.48:1637.96] so let's say for one second, for five seconds,
+[1637.96:1643.08] for one hour, for two hours, we have a non-zero probability
+[1643.08:1648.04] of having all of these messages simply lost.
+[1648.04:1652.0] So despite p being a correct process,
+[1652.0:1655.6] p could be simply a way, or could be disconnected
+[1655.6:1656.72] from the network.
+[1656.72:1661.04] And using a perfect failure detector does not help us,
+[1661.04:1662.92] because p is still correct.
+[1662.92:1666.32] The perfect failure detector will tell us that p is correct.
+[1666.32:1670.92] And we cannot simply distinguish whether p is correct
+[1670.92:1673.36] or not from the system perspective.
+[1673.36:1675.6] And this is what we call a timing failure.
+[1675.6:1677.92] And why do we call it the timing failure?
+[1677.92:1680.04] We call it a timing failure because we
+[1680.04:1681.88] have a correct process.
+[1681.88:1685.0] However, this correct process cannot
+[1685.0:1689.2] adhere to the timing of the network.
+[1689.2:1692.72] This is why even though the process is correct,
+[1692.72:1696.76] the timing assumptions or the ability of the process
+[1696.76:1701.3600000000001] to operate within any finite delta that we have
+[1701.3600000000001:1705.28] is a bit restrictive.
+[1705.28:1707.52] So the question is, OK, given that we
+[1707.52:1711.4] have this impossibility given that we have this problem,
+[1711.4:1713.0] so should we just quit?
+[1713.0:1715.28] Is there a way of getting around the problem?
+[1715.28:1718.56] Should we have things at hand that we could do?
+[1718.56:1720.04] The answer is yes.
+[1720.04:1723.4] However, the system becomes slightly bit more complicated.
+[1723.4:1728.04] And we will show where do the challenges come from.
+[1728.04:1731.56] So one way to do it is to help a little bit
+[1731.56:1733.08] our failure detector.
+[1733.08:1737.36] Since the failure detector can see that p is correct
+[1737.36:1739.3999999999999] and will tell us that p is correct,
+[1739.3999999999999:1743.3999999999999] however, let's assume that we can know or we can measure
+[1743.3999999999999:1745.6799999999998] when the messages from p are lost.
+[1745.6799999999998:1749.24] So what we could do is we could have another component
+[1749.24:1751.6] that we could attach to the failure detector
+[1751.6:1753.4799999999998] and we say the following.
+[1753.4799999999998:1758.24] If this component sees that the messages that are going out
+[1758.24:1761.0] from p, it can measure the messages going out from p.
+[1761.0:1767.1599999999999] And if these messages are lost for a given delta period,
+[1767.16:1772.96] then it will force the process p to crash itself.
+[1772.96:1777.64] So it will actually kill the correct process in the system.
+[1777.64:1779.64] What happens now?
+[1779.64:1785.72] What we do now is we implement a super failure detector,
+[1785.72:1788.0800000000002] so a super perfect failure detector,
+[1788.0800000000002:1790.0800000000002] which is the regular failure detector,
+[1790.0800000000002:1792.2] perfect failure detector that we know.
+[1792.2:1794.96] However, we give it extra power.
+[1794.96:1798.28] And this extra power allows it to do what?
+[1798.28:1800.6000000000001] It allows it to crash.
+[1800.6000000000001:1804.6000000000001] It allows it to go and to shut down processes in the system.
+[1804.6000000000001:1809.24] And it shuts down all the processes that cannot
+[1809.24:1814.04] or that have timing failures that span a period more
+[1814.04:1817.2] than delta order we need.
+[1817.2:1820.32] So given that we have now the super perfect failure
+[1820.32:1823.8] detector, how can we, so we call it tp,
+[1823.8:1827.76] how can we design an algorithm using tp
+[1827.76:1832.9199999999998] and satisfying the reliable broadcast?
+[1832.9199999999998:1835.3999999999999] The process would be also similar to before
+[1835.3999999999999:1837.6399999999999] and not very complicated.
+[1837.6399999999999:1841.44] Now that we have this, we can simply adapt the algorithm.
+[1841.44:1847.32] So we can say when a process p wants to broadcast a certain message,
+[1847.32:1851.56] it will do so by sending the message to everyone the network.
+[1851.56:1855.8799999999999] And then everyone else wants receiving can deliver.
+[1855.8799999999999:1857.76] And then we'll send the message over
+[1857.76:1861.3999999999999] to all the other parties in the network.
+[1861.3999999999999:1864.2] And this will repeat like before,
+[1864.2:1865.8799999999999] so we don't change the algorithm.
+[1865.8799999999999:1870.6799999999998] It will repeat until we have enough acknowledgments
+[1870.6799999999998:1875.8] from the correct processes in the network that this is true.
+[1875.8:1881.2] So every, so we would, this process would simply repeat itself
+[1881.2:1883.88] and will repeat again and again until it
+[1883.88:1887.92] has enough acknowledgments from the correct processes in the system.
+[1887.92:1890.4] Why would this concept work now?
+[1890.4:1896.1200000000001] Simply because the processes, even though they might be correct
+[1896.1200000000001:1900.24] and even though some messages might be lost,
+[1900.24:1903.24] these processes will be killed later on.
+[1903.24:1905.8400000000001] So they will eventually crash.
+[1905.8400000000001:1909.52] They will eventually be detected by the perfect failure
+[1909.52:1915.96] detector and then the algorithm will be able to gain its path
+[1915.96:1918.84] and will be able to submit or will be able to adhere
+[1918.84:1924.44] to the strict timing constraints that we need to enforce in the system.
+[1924.44:1928.72] Now, if we look precisely at this,
+[1928.72:1933.28] I tried to oversimplify the problem for you a little bit.
+[1933.28:1937.48] In a sense that we all know that as we have seen,
+[1937.48:1939.96] when I tried to explain to you how we design things
+[1939.96:1944.3600000000001] and distributed computing, we said we build boxes.
+[1944.3600000000001:1947.68] And this perfect failure detector, which
+[1947.68:1951.3600000000001] or super failure detector that we have seen before,
+[1951.3600000000001:1954.28] is actually a box that we need to build.
+[1954.28:1958.6] And when we say, when we say we need to build this box,
+[1958.6:1962.76] it means that this box has its own algorithm.
+[1962.76:1966.28] So there is an algorithm that implements this box
+[1966.28:1969.96] by sending messages around, measuring what is happening,
+[1969.96:1973.44] and it will try to detect, for example, if messages are failed.
+[1973.44:1980.44] So it will have its own logic to be able to implement this process.
+[1980.44:1983.6] Although, when I show you this, you would say,
+[1983.6:1985.3999999999999] yes, this solves the problem.
+[1985.3999999999999:1986.44] We are good now.
+[1986.44:1988.3999999999999] However, this is not true.
+[1988.3999999999999:1992.16] And I will not delve a little bit more,
+[1992.16:1994.8] because usually here we can try to do a small exercise
+[1994.8:1997.68] together on the board, but because we are in a virtual environment,
+[1997.68:1998.8] we will not be able to do that.
+[1998.8:2000.6] But what I want you to see is the following.
+[2003.2:2006.6] What we want to show here is that usually,
+[2006.6:2008.6399999999999] when we talk about process failures,
+[2008.6399999999999:2011.56] so when we talk about processes failing,
+[2011.56:2015.12] this is something that can be recognized
+[2015.12:2018.96] in the system basis everywhere.
+[2018.96:2022.96] So even if I stand outside, I will
+[2022.96:2026.96] be able to see which are the processes that failed.
+[2026.96:2031.68] However, when I want to judge timing failures,
+[2031.68:2035.08] this is very dependent on the algorithm itself.
+[2035.08:2035.96] Why is that?
+[2035.96:2037.64] Let me tell you why.
+[2037.64:2041.24] If you have different applications running at the same time,
+[2041.24:2047.44] and they all, for example, send messages through process P,
+[2047.44:2051.96] it might be the case that messages of algorithm
+[2051.96:2056.2400000000002] 1 will Pp as committing timing failures,
+[2056.2400000000002:2059.4] because it's sending messages, and all the messages have failed.
+[2059.4:2063.2400000000002] However, another application, sending messages through P
+[2063.2400000000002:2065.04] will see them getting through.
+[2065.04:2068.7200000000003] Because as you know, a process sends a message.
+[2068.7200000000003:2071.04] And every time it sends that message,
+[2071.04:2074.76] this message can get through or can get dropped.
+[2074.76:2077.88] So defining what is a timing failure
+[2077.88:2081.36] is not dependent on the system white,
+[2081.36:2085.7200000000003] so it cannot be implemented in a modular box,
+[2085.7200000000003:2089.36] but actually it depends on the algorithm itself.
+[2089.36:2093.36] And what is the conclusion of what I have told you now?
+[2093.36:2097.04] It means that what you have learned now in class,
+[2097.04:2099.08] we tried to implement it in industry,
+[2099.08:2100.76] but we had a small difference.
+[2100.76:2104.28] We can no longer implement these nice failure detectors
+[2104.28:2107.6400000000003] as boxes and build on top of them.
+[2107.6400000000003:2111.04] We are forced, since this is algorithm dependent,
+[2111.04:2114.68] we are forced to embed this failure detector
+[2114.68:2119.2799999999997] within our algorithm itself, which means that we allow
+[2119.2799999999997:2124.12] the failure detector to somehow view the messages
+[2124.12:2127.92] of the algorithm that we have, all the algorithms that we have.
+[2127.92:2131.16] And based on these, it will be able to detect
+[2131.16:2132.6] certain timing failures.
+[2132.6:2135.36] So we have now, we cannot do this nice approach
+[2135.36:2138.56] that we learned in class of building things on top of each other,
+[2138.56:2140.44] at least at this level.
+[2140.44:2144.52] We have to combine the failure detector within our algorithm
+[2144.52:2146.76] to be able to design distributed algorithms
+[2146.76:2150.88] that admit to certain timing constraints.
+[2150.88:2154.16] So with this now, I hope that I have convinced you
+[2154.16:2157.56] that what you've learned in class is super valuable.
+[2157.56:2159.0] It's super interesting.
+[2159.0:2162.68] However, other interesting challenges also
+[2162.68:2164.96] allow us to even think more in industry,
+[2164.96:2167.44] how we can apply them to different scenarios.
+[2167.44:2170.68] And although that we learn in class for different types
+[2170.68:2174.08] of algorithms and systems, we still have challenges
+[2174.08:2178.64] by adding simple few changes either to the abstraction.
+[2178.64:2182.0] So we require, for example, the reliable broadcast
+[2182.0:2185.2000000000003] to be timely and strict, or we require the network
+[2185.2000000000003:2187.2000000000003] to be varying with time.
+[2187.2000000000003:2191.36] These, although they might seem a bit trivial,
+[2191.36:2193.88] they induce non-treatable challenges for us
+[2193.88:2195.96] to make the algorithm work.
+[2195.96:2198.36] And this is why this is one setting
+[2198.36:2200.76] where we have distributed algorithms, where we even have
+[2200.76:2203.64] a lot of free search going into distributed algorithms.
+[2203.64:2206.88] But also many other challenges appear in other problems.
+[2206.88:2209.48] Here we just saw the concept of smart cities
+[2209.48:2211.84] and smart grids and what we require from there.
+[2211.84:2213.92] But also other interesting challenges come
+[2213.92:2219.52] when we apply things to other different domains as well.
+[2219.52:2225.52] So with this, I would like to conclude the talk for now.
+[2225.52:2229.6] And as Rashid has mentioned, we always
+[2229.6:2234.12] are open for taking interns and master thesis projects.
+[2234.12:2237.68] If you have any questions regarding the project itself,
+[2237.68:2241.6] if you have any questions related to what we discussed now,
+[2241.6:2243.48] we can elaborate a little bit about it.
+[2243.48:2247.08] Please don't hesitate to reach out to me by email.
+[2247.08:2251.56] And I leave here a few minutes to open for discussions
+[2251.56:2253.84] or questions that you might have noted throughout
+[2253.84:2257.6400000000003] the whole lecture.
+[2257.6400000000003:2258.48] Thanks for listening.
+[2258.48:2260.04] So Rashid, then.
+[2260.04:2261.84] Any questions?
+[2261.84:2266.1600000000003] It's usually that this format is harder for questions
+[2266.1600000000003:2267.1600000000003] than online.
+[2267.1600000000003:2268.48] Yes, yes.
+[2268.48:2270.92] It is very difficult, yes.
+[2270.92:2274.2000000000003] So I know that at some point, there was a,
+[2274.2000000000003:2276.6800000000003] maybe it was very very, I don't know, not very, very,
+[2276.6800000000003:2280.36] maybe, but it was eager to implement some blockchain system
+[2280.36:2281.6400000000003] and put it to work.
+[2281.64:2283.8399999999997] Is that still the case or?
+[2283.8399999999997:2284.68] Yes.
+[2284.68:2288.16] So as I mentioned here for these type of services,
+[2288.16:2292.3199999999997] and this smart city concept, this is where we are investigating
+[2292.3199999999997:2297.44] how we can use a blockchain as part of a bigger system.
+[2297.44:2299.3599999999997] So I gave you the idea, for example,
+[2299.3599999999997:2301.3599999999997] of the maintenance contracts.
+[2301.3599999999997:2303.96] So we provide the service.
+[2303.96:2308.7599999999998] And then we operate it on a thread basis.
+[2308.76:2312.1200000000003] So we say that different things need to happen.
+[2312.1200000000003:2313.88] And then there is a blame.
+[2313.88:2317.6000000000004] We need someone, or we need to assist them to enforce,
+[2317.6000000000004:2319.48] who is liable for what?
+[2319.48:2321.28] So for example, if I study a motor,
+[2321.28:2323.7200000000003] and I tell you this motor needs to be operated
+[2323.7200000000003:2326.48] at this voltage, I will maintain it for you.
+[2326.48:2328.84] And I will make sure that it operates well.
+[2328.84:2331.6400000000003] If it fails, there are many factors that come in.
+[2331.6400000000003:2334.1600000000003] First, I might not have maintained it well.
+[2334.1600000000003:2338.0] Second, you might have operated it above or below the voltage
+[2338.0:2339.64] that is recommended.
+[2339.64:2342.32] Third, it might be a lightning that has struck it.
+[2342.32:2343.64] So there are many factors.
+[2343.64:2346.96] And then once the problem happens, determining who is liable
+[2346.96:2348.52] is a very difficult problem.
+[2348.52:2350.8] So we have to enforce the trust.
+[2350.8:2354.08] Another way also where we try to apply blockchain systems
+[2354.08:2356.2] is actually for these smart cities.
+[2356.2:2361.56] So as I said, during the presentation,
+[2361.56:2366.12] now we all have the ability to generate and consume energy.
+[2366.12:2368.7599999999998] And we all now communicate directly to the grid.
+[2368.7599999999998:2371.72] But the idea is to create small islands
+[2371.72:2374.52] where people within these islands are
+[2374.52:2378.16] free to sell and buy energy from each other,
+[2378.16:2380.7599999999998] and then the excess is sold to the grid.
+[2380.7599999999998:2383.7599999999998] But to allow this to happen, it means
+[2383.7599999999998:2387.7599999999998] that these people should have a way of recording
+[2387.7599999999998:2388.8399999999997] what is happening.
+[2388.8399999999997:2391.2] Because then I can claim that I am selling you
+[2391.2:2392.8399999999997] green energy for this price, and I
+[2392.84:2396.6400000000003] could have a diesel generator in my backyard,
+[2396.6400000000003:2399.6800000000003] or I could have claimed that I tend to do this much energy,
+[2399.6800000000003:2402.1200000000003] and you actually didn't buy this energy from me.
+[2402.1200000000003:2404.7200000000003] So not only selling and buying energy,
+[2404.7200000000003:2409.52] but even applying other control operations over the grid,
+[2409.52:2411.28] it becomes a very interesting problem here.
+[2411.28:2413.52] And this is where we can, we see blockchain systems
+[2413.52:2415.1600000000003] helping us a little bit.
+[2415.1600000000003:2417.92] There is a question in the chat from Oliver
+[2417.92:2420.88] about the practical advantage of Kirina
+[2420.88:2424.92] process in the timely, reliable broadcast versus not killing
+[2424.92:2427.88] it, but maybe violating some safety property.
+[2431.08:2432.6800000000003] Yes.
+[2432.6800000000003:2436.6800000000003] So as we mentioned, the systems that we deal with are critical.
+[2436.6800000000003:2441.08] We cannot afford violating safety properties.
+[2441.08:2443.6400000000003] And what is interesting usually whenever
+[2443.6400000000003:2446.44] we speak about time in distributed systems,
+[2446.44:2449.0] because we are used to the concept of eventual,
+[2449.0:2451.48] we always regard time as liveness.
+[2451.48:2455.08] However, for us, time is actually a safety property.
+[2455.08:2458.28] So we cannot afford at all, because it's a hard deadline.
+[2458.28:2462.56] We need the algorithm to deliver within a given constraint.
+[2462.56:2466.56] So if the algorithm fails to deliver within a certain constraint,
+[2466.56:2470.24] we are better if we shut down the whole system safely,
+[2470.24:2473.08] rather than letting it break seriously properties,
+[2473.08:2475.92] where it could be, for example, it could put life's
+[2475.92:2476.68] endanger.
+[2476.68:2478.28] So this is where we don't want.
+[2478.28:2482.0800000000004] So what we would like, we would like to have the system unavailable.
+[2482.0800000000004:2485.4] So make it make the liveness of the system not so well,
+[2485.4:2488.4] put it all down in a nice and safe manner,
+[2488.4:2492.0] rather than operate and kill people or be danger
+[2492.0:2496.6400000000003] to to live or other hazardous conditions.
+[2496.6400000000003:2497.1600000000003] OK.
+[2497.1600000000003:2499.6800000000003] Well, it's two minutes before the time.
+[2499.6800000000003:2501.0400000000004] So thank you so much, David.
+[2501.0400000000004:2502.44] It was very clear as usual.
+[2502.44:2505.0] Please start clear, very pedagogical.
+[2505.0:2506.0800000000004] And thank you.
+[2506.08:2508.96] Yeah, really, thank you for taking the time to be there
+[2508.96:2510.04] and to give the talk.
+[2510.04:2510.56] Thanks.
+[2510.56:2511.2799999999997] Thanks a lot.
+[2511.28:2536.28] Thank you.

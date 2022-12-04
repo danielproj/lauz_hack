@@ -1,0 +1,490 @@
+~EE-556 / Lecture 4 - 1/2 (2020)
+~2020-10-05T14:34:22.489+02:00
+~https://tube.switch.ch/videos/39a1eeb9
+~EE-556 Mathematics of data: from theory to computation
+[0.0:1.0] How is everybody?
+[1.0:8.28] I'll begin the usual caveats.
+[8.28:14.040000000000001] I will take off my mask so that my voice is clear.
+[14.040000000000001:20.68] I think that there's enough distance to people and I'm covered by a screen that creates
+[20.68:24.52] a deficit of a shield.
+[24.52:29.68] So welcome back to math of data.
+[29.68:33.6] What we will do today is we're going to talk about something called compressive sensing
+[33.6:41.6] and we're going to use this as a running example to motivate non-summit optimization problems.
+[41.6:45.72] Alright, let's begin.
+[45.72:59.04] So so far, what we were doing was to look at statistical estimation framework.
+[59.04:62.76] With it, we were developing some estimators.
+[62.76:70.28] Given the estimators, we were thinking about optimization methods.
+[70.28:81.2] And then I argued that given certain structures in your optimization problem, we can actually
+[81.2:88.28] argue about convergence traits and then we could argue about lower bounds for those convergence
+[88.28:90.8] traits.
+[90.8:94.84] Using this, we motivated the accelerated gradient descent.
+[94.84:102.68] So for a little continuous gradient objectives, we said that the lower bound has a one-hour
+[102.68:111.44] case for a grade and gradient descent did not achieve the rate.
+[111.44:114.88] It was somewhat.
+[114.88:122.80000000000001] We then talked about the assumption that did achieve the lower bound.
+[122.8:128.24] And then we moved on to discussing things like the rate is not everything.
+[128.24:133.56] For iteration complexity also matters.
+[133.56:142.24] Because what we care is our overall total cost, which is nicely summarized in terms of time.
+[142.24:148.36] We discussed the forecasted gradient descent method, which more or less did not have any
+[148.36:155.84] dependence on the data size in the examples that we call it, especially for the finite
+[155.84:163.72000000000003] sum example, which is also closely related to this empirical optimization problem.
+[163.72000000000003:172.92000000000002] Now in certain cases, you may be interested in just some optimization problems that are
+[172.92000000000002:177.92000000000002] simply just written down in some form.
+[177.92:184.16] Now in those cases, you may necessarily have a non-sort of optimization problem.
+[184.16:187.35999999999999] Now begin when one here.
+[187.35999999999999:191.72] So in this simple example, suppose there are multiple functions.
+[191.72:199.76] So in this case, imagine the finite sum problem is opposed to minimizing the average of multiple
+[199.76:201.95999999999998] terms.
+[201.96:208.76000000000002] So there is the one of to minimize the maximum of each of these terms.
+[208.76000000000002:210.96] Does that make sense?
+[210.96:212.72] It's an example.
+[212.72:220.28] But you will see that minimizing maximum of forms is a fundamental optimization template.
+[220.28:224.76000000000002] We're going to get into this near the last third of the semester.
+[224.76000000000002:228.12] Let me talk about finally doing this.
+[228.12:234.56] Let's hear the simple example, where we have let's say K functions, and you would like
+[234.56:239.48000000000002] to minimize the maximum of these K functions.
+[239.48000000000002:247.28] Now in this particular case, if the functions are convex, so let's say each of these are
+[247.28:253.28] convex, the good news is the maximum of these functions is yet another function.
+[253.28:255.36] It is implicitly defined.
+[255.36:259.08000000000004] What is a convex function?
+[259.08000000000004:269.24] The bad news here is that even if the individual functions are smooth, the overall function that
+[269.24:276.6] you would like to minimize, so this one, can be non-smooth.
+[276.6:281.08000000000004] And here's a visual example.
+[281.08:291.0] Here's the quadratic linear, as you can see, this function has non-smoothness at the origin
+[291.0:299.12] and it x equals 2.
+[299.12:303.36] All right.
+[303.36:305.36] Good.
+[305.36:316.36] Now, you can think of this as an estimator example, where you just write down an estimator
+[316.36:319.2] and you try to solve it and it happens to be non-smooth.
+[319.2:325.92] Let's try to reach an estimator that is non-smooth using statistical arguments.
+[325.92:329.16] So let's think about this linear regression problem.
+[329.16:332.76] We have a data matrix, which is n by p.
+[332.76:335.12] We have some unknown parameter.
+[335.12:337.68] There is some additive noise.
+[337.68:343.72] And for the time being, we're going to assume n is greater than p. We're going to twist
+[343.72:346.88] this in a couple of minutes.
+[346.88:347.88] All right.
+[347.88:354.44] So in this case, if you recall, you can just say, I want to do least squares, which is,
+[354.44:358.4] which minimizes the quadratic laws on the observations.
+[358.4:366.4] Or we could motivate using the Gaussian noise model, if you recall, the ML estimator
+[366.4:371.44] in this case is the least squares estimator.
+[371.44:380.79999999999995] And there is a very nice solution to this that is explicit, which is the pseudo inverse
+[380.79999999999995:387.0] of a times d.
+[387.0:394.88] Now in this particular case, if the noise is heavy-tailed, meaning there are some outliers
+[394.88:398.88] in the noise that are large and you don't want this, like, let's say there are corruption
+[398.88:399.88] in the data.
+[399.88:402.72] And you would like to be robust against these corruption.
+[402.72:411.6] In this case, you can use the lab estimator, least absolute deviation estimator.
+[411.6:422.16] And while I'm not going to get into the theoretical justification of this, it is, you can show
+[422.16:428.16] that it is actually robust against a certain fraction of outliers in the noise.
+[428.16:432.44] It would be quite robust in the estimation.
+[432.44:433.44] Okay.
+[433.44:440.72] But the issue here is that it is now non-deferenceable because if the origin, the one known as the
+[440.72:445.68] king, and this case, we need to work with the subgradients.
+[445.68:446.68] Okay.
+[446.68:453.16] And we discussed this in this particular lecture.
+[453.16:461.88000000000005] But what we will focus on now is n much less than k.
+[461.88:471.36] Now first, we call this nice decomposition of air.
+[471.36:476.92] In the end, we talked about the practical performance of estimators.
+[476.92:484.64] And we argued that the data has quite a lot to do with this.
+[484.64:486.68] It's beautiful.
+[486.68:496.52] In particular, what we do is we run an algorithm to obtain an numerical solution to the estimator.
+[496.52:504.32] And what we cared about is whether or not our numerical estimation is good for the true
+[504.32:506.44] parameter.
+[506.44:512.16] So if you recall, you write down an optimization problem.
+[512.16:517.16] Right?
+[517.16:528.9599999999999] In this particular case, our algorithm will be trying to estimate the estimator.
+[528.9599999999999:534.48] We take iterations x t to get closer to x star.
+[534.48:541.3199999999999] What we truly care is how close we are to the true unknown parameter.
+[541.32:545.9200000000001] And this decomposition is a simple triangle in quality.
+[545.9200000000001:546.9200000000001] Right?
+[546.9200000000001:553.44] So you add x star and subtract x star and apply to triangle in quality.
+[553.44:556.5600000000001] Then you have this nice decomposition of air.
+[556.5600000000001:559.0400000000001] One is the numerical error.
+[559.0400000000001:562.2800000000001] One is the statistical error.
+[562.2800000000001:568.8000000000001] If you were using the maximum likelihood estimator, we do know that the statistical error is
+[568.8:574.04] order and divided by sort of n divided by p.
+[574.04:578.92] We've seen this over and over again several times.
+[578.92:584.5999999999999] And it depends on the structures in the optimization.
+[584.5999999999999:592.0] If the function you're minimizing was strongly complex, in this case, we could go and have
+[592.0:596.12] a good approximation of x star with a linear rate.
+[596.12:599.12] Right?
+[599.12:603.12] We discussed this in the last lecture.
+[603.12:604.12] Right?
+[604.12:607.64] But here's the issue.
+[607.64:619.76] If n is much less than p, in general, we don't have a good statistical error.
+[619.76:626.76] Meaning it's not a good idea to solve this estimator with our computational effort
+[626.76:627.76] in TIT.
+[627.76:636.36] In the end, we know that we're not going to get something valuable.
+[636.36:643.88] So the argument here is that when you use non-stimulf estimators, it can oftentimes help
+[643.88:647.92] reduce this particular error term.
+[647.92:649.92] All right?
+[649.92:651.92] Does this make sense?
+[651.92:654.92] Or is it too early in the morning?
+[654.92:658.92] All right.
+[658.92:664.68] So let's get back to the least squares estimator.
+[664.68:667.56] So here, the least unknown.
+[667.56:671.56] We're just interested in the least squares estimator.
+[671.56:679.8399999999999] Now in this particular case, when n is less than p, we know that the matrix A has a
+[679.8399999999999:686.76] non-trivial null space with an affine dimension p minus n.
+[686.76:693.76] So the fewer n is the larger the subspace in this.
+[693.76:698.92] In this particular case, if you think about it, you can basically take the pseudo inverse
+[698.92:705.24] of A applied to be, which would be the least squares solution.
+[705.24:708.7199999999999] Now, this is actually equal to the least.
+[708.7199999999999:715.56] Well, the least squares solution, sorry, I need to have a caveat here.
+[715.56:719.5999999999999] There are multiple ways to think about this.
+[719.5999999999999:726.48] If you were to take any vector in the null space of A, so by definition, this means A times
+[726.48:731.6800000000001] the vector h is equal to 0.
+[731.6800000000001:739.64] I mean, if it helps, think about A is just two-dimensioned one, one by two matrix.
+[739.64:742.84] I so put one minus two.
+[742.84:752.44] So let's say this is our A. So you can pick h to 1 and any multiple of this.
+[752.44:762.0] In many multiply A times h, you get 0.
+[762.0:763.24] So this is this.
+[763.24:774.44] You take this, apply A, A, assuming worse, B plus h.
+[774.44:780.8800000000001] Then you get the same measurements, B.
+[780.88:786.02] So there's this tip when you plug it in here, we'll give you the minimum, and there
+[786.02:789.4399999999999] are infinitely many of them.
+[789.4399999999999:791.84] So let's visualize this.
+[791.84:798.96] So let's take the stylized example where w noise is 0.
+[798.96:808.56] In this particular case, A x, if you think about it.
+[808.56:813.52] So because we generate the data using this two parameter, it needs to go through the two
+[813.52:817.0799999999999] parameters here.
+[817.0799999999999:827.0799999999999] But it is a p- and dimensional soft space that just extends.
+[827.0799999999999:829.4799999999999] You can pick any solution here.
+[829.4799999999999:834.88] It will satisfy the linear system.
+[834.88:843.2] Now, in this case, you can actually argue about the solution quality.
+[843.2:851.16] Here, I'm just literally talking about least for a estimator, the pseudo inverse estimator.
+[851.16:862.6] So our candidate estimator here is A3 to B.
+[862.6:869.24] Now, you can argue about the quality of this estimator, but you need to assume something
+[869.24:871.0400000000001] to be able to connect them.
+[871.0400000000001:878.5600000000001] In this particular case, in this case, what we did was to say that let's say A has some
+[878.5600000000001:880.5600000000001] IID random entries.
+[880.5600000000001:889.08] In general, we don't have IID random Gaussian entries, but let's say it is IID Gaussian random
+[889.08:890.08] entries.
+[890.08:898.1600000000001] In this particular case, what you can do is prove that the performance of this estimator
+[898.1600000000001:902.5600000000001] upper and lower bounded by, so you can think about this.
+[902.5600000000001:912.76] This is like roughly equal to 1 n minus p.
+[912.76:920.76] So let's assume that this is simply 1 for the state.
+[920.76:923.52] So let's think about relative error.
+[923.52:930.08] So just take this and put it into the denominator.
+[930.08:936.16] So our error is something like 1 minus n divided by p.
+[936.16:942.68] So when n gets to p, then we can make this error 0.
+[942.68:945.76] The candidate can give you the true parameter.
+[945.76:948.04] This is the noise of this.
+[948.04:955.36] But when n is much less than p, there's even a lower bound in performance.
+[955.36:957.6] Not just an upper bound.
+[957.6:960.36] An upper bound is different.
+[960.36:969.36] The minimum error you can have is something like 1 minus n divided by p, which is it?
+[969.36:970.36] Bad.
+[970.36:974.36] All right.
+[974.36:989.36] So, even in the absence of noise, this seems like a hard problem.
+[989.36:996.36] So, can we get away with n less than p?
+[996.36:1004.36] Let's say, can we get away with murder in this particular case?
+[1004.36:1009.36] Well, without prior information, this is impossible.
+[1009.36:1014.36] So what we can try to do is we can say, okay, so let's say we know something about the
+[1014.36:1017.36] vectors, the parameters of interest.
+[1017.36:1021.36] And one particularly important notion is far study.
+[1021.36:1029.3600000000001] Who has heard about sparsity?
+[1029.3600000000001:1030.3600000000001] Okay.
+[1030.3600000000001:1033.3600000000001] A few things.
+[1033.3600000000001:1046.3600000000001] So, I'll give you the simple, was there a question?
+[1046.36:1047.36] Okay.
+[1047.36:1053.36] There is somebody raising hand.
+[1053.36:1063.36] Alex Pujon is raising hand.
+[1063.36:1068.36] So, if you're in the video stream, it would be better to write down a question than a
+[1068.36:1075.36] raise hand.
+[1075.36:1082.36] All right.
+[1082.36:1091.36] So, okay, okay.
+[1091.36:1095.36] I think that's the no problem.
+[1095.36:1096.36] All right.
+[1096.36:1099.36] So, some audience can do the Zoom channel.
+[1099.36:1100.36] All right.
+[1100.36:1101.36] Thank you.
+[1101.36:1106.36] All right.
+[1106.36:1111.36] So, a p-dimensional vector can be anywhere in space.
+[1111.36:1112.36] All right.
+[1112.36:1121.36] But let's talk about sparsity that there is in p dimensions, meaning vectors that has at most
+[1121.36:1124.36] s-s non-zero entries.
+[1124.36:1126.36] It can be anywhere in space.
+[1126.36:1133.36] So, if you think about it, these are, these live in s-s-dimensional hyperplanes that are
+[1133.36:1136.36] aligned with the canonical coordinate axis.
+[1136.36:1137.36] All right.
+[1137.36:1139.36] So, just to give you an example.
+[1139.36:1140.36] All right.
+[1140.36:1151.36] So, if you think about two spars, vectors in three dimensions, they will be these two-dimensional
+[1151.36:1156.36] hyperplanes that are aligned with the canonical coordinate axis.
+[1156.36:1163.36] And as you can see, you know, as compared to the three-dimensional space, this looks like
+[1163.36:1168.36] it's much smaller.
+[1168.36:1178.36] Now, so, why is this model relevant?
+[1178.36:1185.36] It is relevant because it sexually forms the foundation of the compression that we use,
+[1185.36:1190.36] you know, you know, TVs, cell phones, cameras.
+[1190.36:1198.36] The idea is that while main signals or images, vectors are not sparsed by themselves, they
+[1198.36:1202.36] tend to be sparsed in some transform domain.
+[1202.36:1203.36] All right.
+[1203.36:1210.36] So, if you take the solar impulse picture and apply what is called as the VELA transform,
+[1210.36:1215.36] you will see that the coefficients will be a bit more compact.
+[1215.36:1220.36] There will be a lot of coefficients that will be close to zero.
+[1220.36:1221.36] All right.
+[1221.36:1226.36] So, in this image, if you look at this, blue is nearly zero.
+[1226.36:1229.36] Anything else is known zero.
+[1229.36:1231.36] All right.
+[1231.36:1239.36] As you can see, the significant coefficients occupy a much smaller space as compared to the
+[1239.36:1244.36] blue coefficients, which will provide a larger one.
+[1244.36:1249.36] So, it turns out that, you know, things like the outlets, discrete cosine transform,
+[1249.36:1256.36] and there are other constructs like the bore, curlots, shearless.
+[1256.36:1261.36] So, you take the data and kind of spars the time, meaning you literally just fill the essence
+[1261.36:1264.36] of it so that you can also compress.
+[1264.36:1269.36] You know that video is compressible, for example.
+[1269.36:1280.36] And actually learning dictionaries to compress data is also an important research.
+[1280.36:1281.36] All right.
+[1281.36:1286.36] So, let's see the impact.
+[1286.36:1291.36] So, let's say we have a general vector, general parameter vector, we have some matrix,
+[1291.36:1294.36] and we have observed some data, right.
+[1294.36:1296.36] And n is less than k.
+[1296.36:1304.36] So, we have fewer observations than the degrees of freedom in the vector.
+[1304.36:1312.36] Well, let's say this parameter, all right, is a sparster presentation in some dictionary
+[1312.36:1314.36] sign.
+[1314.36:1319.36] And so, here, what we have, let's say there's even an autonome.
+[1319.36:1328.36] So, like there's a one-to-one correspondence between the parameter, y-natule, and x-natule.
+[1328.36:1342.36] But let's assume that x is parameter x-natule, it's x-toss, meaning the L0, again,
+[1342.36:1359.36] it's not a null, it's not a semi-none, it's not a clause null, it's called n-culten-culten-none,
+[1359.36:1362.36] it's short-hand notation for counting non-zero.
+[1362.36:1370.36] So, if you think about the action of this vector, what you will see is that only a few columns
+[1370.36:1380.36] of this matrix A, so what you can do is combine this multiplication, right.
+[1380.36:1388.36] You have a matrix A, and we are in the familiar setting, D is equal to A times x-natule,
+[1388.36:1396.36] and the extreme, the x-natule, where it's sparster presentation, right, it is spars.
+[1396.36:1405.36] So, if you think about it, only a few of the columns of A are active.
+[1405.36:1413.36] Hence, if you knew which columns they were, you may be even an over-complete setting
+[1413.36:1421.36] in the sense that you have more measurements than the unknowns.
+[1421.36:1430.36] So, if you knew where the support of x-natule was, meaning the locations of the non-zero entries,
+[1430.36:1456.36] make it such chemical forms so we can recognize the data of the Pluto.
+[1456.36:1463.36] All right.
+[1463.36:1470.36] Good.
+[1470.36:1479.36] So I should not be.
+[1479.36:1484.36] I just wanted to borrow a power.
+[1484.36:1492.36] My laptop seems to have some trouble.
+[1492.36:1494.36] So this is a good question.
+[1494.36:1500.36] Can you always find such a faster presentation?
+[1500.36:1504.36] So.
+[1504.36:1508.36] But the mutations for example stand decades in coming up with data
+[1508.36:1509.36] representations.
+[1509.36:1512.36] They assume smoothness on images, things like
+[1512.36:1515.36] serverless spaces, there's those spaces, and then
+[1515.36:1519.36] argue about what the medical constructs that's fastified on.
+[1519.36:1520.36] All right.
+[1520.36:1522.36] Or you can do the machine learning approach.
+[1522.36:1524.36] You know that you have some data.
+[1524.36:1526.36] You would like to specify it.
+[1526.36:1528.36] You can set up an optimization problem.
+[1528.36:1532.36] An estimator if you will for your dictionary that
+[1532.36:1535.36] fastifies the data.
+[1535.36:1536.36] All right.
+[1536.36:1540.36] So there are ways of finding.
+[1540.36:1545.36] But if you think about it, if I give you just simply noise,
+[1545.36:1549.36] can be fastified just random noise.
+[1549.36:1552.36] So I'm not sure if it could.
+[1552.36:1553.36] All right.
+[1553.36:1556.36] So the existence of finding.
+[1556.36:1558.36] So the statement may not be true.
+[1558.36:1563.36] It may not be able to find always is fast-fine transform.
+[1563.36:1567.36] But oftentimes if the data has some structure,
+[1567.36:1571.36] that we can compress, we can somehow distill.
+[1571.36:1574.36] It lives on some sort of low dimensional space.
+[1574.36:1578.36] We may be able to do.
+[1578.36:1581.36] So I can actually do this particular question.
+[1581.36:1585.36] So those zero entries are exactly zero or can
+[1585.36:1587.36] be defined the value of zero.
+[1587.36:1588.36] All right.
+[1588.36:1591.36] This is exactly the point that I will make here.
+[1591.36:1596.36] In real life, those coefficients are never exactly zero.
+[1596.36:1601.36] Because real images are not exactly fast,
+[1601.36:1603.36] but they are compressible.
+[1603.36:1604.36] Okay.
+[1604.36:1608.36] So let me show you what compressible means.
+[1608.36:1611.36] Oh.
+[1611.36:1615.36] Compressible means that when you take the transform domain
+[1615.36:1619.36] quotations, when you sort them in degrees of magnitude,
+[1619.36:1623.36] they will have a more or less, they will satisfy a more or less
+[1623.36:1626.36] power low decay.
+[1626.36:1627.36] All right.
+[1627.36:1633.36] So if you think about it, so let's say we have the sorted coefficients,
+[1633.36:1641.36] they will be something like some decay.
+[1641.36:1642.36] Sorry.
+[1642.36:1647.36] In this case.
+[1647.36:1650.36] They will obey some sort of a decay.
+[1650.36:1659.36] The faster decay is, the better the representation power is.
+[1659.36:1662.36] So here is one photo.
+[1662.36:1665.36] And here are the wavelet coefficients sorted.
+[1665.36:1666.36] All right.
+[1666.36:1667.36] So it's sorted.
+[1667.36:1670.36] And this is logarithmic scale.
+[1670.36:1672.36] And this is also logarithmic scale.
+[1672.36:1676.36] So if you look at the coefficients here, they have amplitude one.
+[1676.36:1681.36] But if you look at coefficients here, they are like 10 to the 4.
+[1681.36:1686.36] So when you have coefficients, there are like as large as 10,000.
+[1686.36:1689.36] And you have a lot of coefficients.
+[1689.36:1693.36] So if you look at this particular area.
+[1693.36:1697.36] So let's say 10 to the 4 coefficients here,
+[1697.36:1700.36] but there are 4 times 10 to the 4 coefficients here.
+[1700.36:1703.36] There are significantly small.
+[1703.36:1709.36] So in general, they are not exactly as far as the picture compressible.
+[1709.36:1715.36] And compressibility actually gives us the real picture.
+[1715.36:1719.36] Because if you think about it, if you were to start with the same model,
+[1719.36:1724.36] so we have some two image, binational.
+[1724.36:1732.36] And this binational has some compressible representation for the real image.
+[1732.36:1738.36] Now, what we do with the statistical estimation is that we assume that there is some two parameters.
+[1738.36:1742.36] In this case, we assume that it is farce.
+[1742.36:1746.36] So if you think about it, this linear surface is in fact something like this.
+[1746.36:1751.36] So we have the real image, which is compressible.
+[1751.36:1758.36] We have, so you add plus minus the sparse approximation.
+[1758.36:1765.36] In this particular case, you can go back to A times sparse approximation
+[1765.36:1777.36] to us whatever the edited noise was, plus the sparse approximation of the representation.
+[1777.36:1783.36] Times this matrix.
+[1783.36:1789.36] Hence, you can have this setup.
+[1789.36:1794.36] But the noise is actually also called it the signal.
+[1794.36:1798.36] So things are not exactly as far as they're compressible.
+[1798.36:1809.36] The closer this is to a compressible model, the smaller this particular additional perturbation is.
+[1809.36:1823.36] And this actually gets back to the peeling the onion slides, which I'm yet to cover again.
+[1823.36:1830.36] But this actually example is great to explain the difficulty in statistical estimation.
+[1830.36:1834.36] So if you recall this particular picture, right?
+[1834.36:1840.36] So we have a generator. We have the supervisor.
+[1840.36:1846.36] And then we have this learning machine.
+[1846.36:1848.36] So the generator, the generator is data.
+[1848.36:1850.36] The supervisor gives you the labels.
+[1850.36:1857.36] And it's our job to learn what the supervisor is doing.
+[1857.36:1868.36] And sometimes the learner is to you for example, in this particular case, for the linear model.
+[1868.36:1870.36] So this is our linear model.
+[1870.36:1877.36] This is what the assume the supervisor is doing.
+[1877.36:1886.36] Whereas the supervisor may be doing, well,
+[1886.36:1893.36] supervisor may be using this real signal.
+[1893.36:1896.36] Right.
+[1896.36:1906.36] So when we run a optimization algorithm, what we care is they don't want to approximate this real signal.
+[1906.36:1912.36] In this particular case, if you apply this error decomposition again,
+[1912.36:1917.36] you will have our numerical error that we can be done by computation.
+[1917.36:1919.36] So we set up an estimator.
+[1919.36:1921.36] We tried to solve for the estimator.
+[1921.36:1924.36] You obtain a solution.
+[1924.36:1925.36] Right.
+[1925.36:1932.36] But the estimator is set up so that it tries to find this parameter.
+[1932.36:1944.36] And in this particular case, remember, if here this was Gaussian,
+[1944.36:1947.36] we could have written the maximum like view estimator.
+[1947.36:1951.36] And the maximum like view estimator will be the square there.
+[1951.36:1956.36] But because of the real signal that is not exactly as far as you have these additive terms.
+[1956.36:1963.36] So if you want to run the least squares estimator, you're not doing the maximum like view estimator,
+[1963.36:1966.36] which the noise itself is not IID Gaussian.
+[1966.36:1975.36] It's IID Gaussian plus this deterministic vector that we do not know.
+[1975.36:1981.36] So we could be trying to estimate this particular parameter, right,
+[1981.36:1991.36] except that this parameter is trying to estimate the real signal in this case or the image,
+[1991.36:1994.36] whatever the parameter.
+[1994.36:1997.36] I call this feeling the onion.
+[1997.36:2000.36] It has multiple layers and it makes you cry.
+[2000.36:2010.36] But I hope that you get the point that if your model was not good.
+[2010.36:2015.36] You can collect a lot of data.
+[2015.36:2021.36] So this one, for example, you can again make it go down with if you were doing MLS.
+[2021.36:2027.36] You can make this go down with, sorry, this is the opposite.
+[2027.36:2032.36] It's p divided by m. I think I made the same mistake.
+[2032.36:2036.36] You take more data and you make this smaller.
+[2036.36:2043.36] You stand more time here, you make this smaller, but you may actually not get this.
+[2043.36:2046.36] Because your model was wrong.
+[2046.36:2052.3599999999997] You assume the signal was far, there is it wasn't.
+[2052.3599999999997:2058.3599999999997] All right, it's important to understand this distinction.
+[2058.3599999999997:2060.3599999999997] Okay.
+[2060.36:2066.36] Now I'll give you some interesting factor.
+[2066.36:2070.36] So if you wanted to estimate, let's say we have this point.
+[2070.36:2075.36] So let's take the following case.
+[2075.36:2078.36] So let's say we have exactly S bars.
+[2078.36:2083.36] In this case, for any S bars,
+[2083.36:2093.36] there is a distinction. You need at least two S measurements.
+[2093.36:2097.36] Okay. So here I'm assuming A is two column rank.
+[2097.36:2100.36] In this case, row rank, sorry.
+[2100.36:2104.36] And what you need is the ability to distinguish two S bars signals,
+[2104.36:2109.36] which would have a two S non-zero entries.
+[2109.36:2115.36] So if A has two S, at least two S number of rows, then you can determine them.
+[2115.36:2118.36] But you need a combinatorial optimization.
+[2118.36:2121.36] You need to look at every possible combination.
+[2121.36:2123.36] And this is very extensive.
+[2123.36:2127.36] You need to look at entries two S for entries S.
+[2127.36:2130.36] No.
+[2130.36:2132.36] So too many to search.
+[2132.36:2136.36] And in general, you don't know what S is.
+[2136.36:2143.36] And there are some subtleties here. If you wanted to recover a single S bars vector and not all,
+[2143.36:2151.36] then the matrix A was random, then you need S plus one, some subtleties here.
+[2151.36:2161.36] And stable and robust means that, you know, perturbations of the noise will not explode the recovery performance.
+[2161.36:2166.36] So here, what I would like to do is mention a very important heuristic.
+[2166.36:2175.36] As you can see, searching for all subsets is very difficult to do.
+[2175.36:2182.36] So if you think about this, let's think about, you know, S bars vectors that are,
+[2182.36:2187.36] that live in some bounded box.
+[2187.36:2194.36] If you were to look at their convex hulls.
+[2194.36:2204.36] So here's, so this is basically one S bars vectors in three dimensions.
+[2204.36:2216.36] If you were to look at their convex hull, you get what is known as the Al-Mombo.
+[2216.36:2225.36] Now, as opposed to working with this non-combex set, what we can do is work with this convexified set.
+[2225.36:2230.36] I think I'll long there. Now give me more reasons for it.
+[2230.36:2236.36] But what I would like to say is that, you know, this heuristic, these two so-called Lus-2 problem,
+[2236.36:2241.36] these absolute string-teach-insolection operator.
+[2241.36:2247.36] So let me tell you what this operator or this optimization problem is.
+[2247.36:2251.36] So here is the Lus-2 estimator.
+[2251.36:2255.36] Lus-2 estimator has two terms.
+[2255.36:2259.36] One is our least squares objective, right?
+[2259.36:2265.36] Which we know does not give us the two parameters, right?
+[2265.36:2268.36] If n is less than p, right?
+[2268.36:2274.36] Which is irregularized with the regularization parameter rho.
+[2274.36:2284.36] And this convexified set, Al-1 known for S bars signals.
+[2284.36:2289.36] So rho here again is the regularization parameter.
+[2289.36:2295.36] And it trades off two objectives, right?
+[2295.36:2301.36] One is the data fidelity. You want to make sure that you fit the data well, right?
+[2301.36:2306.36] The second is sparsely.
+[2306.36:2312.36] It tries to sparsify the signals.
+[2312.36:2315.36] All right, let me tell you more.
+[2315.36:2324.36] But here's the point. Lus-2, this objective now is for makes, but it is non-smooth.
+[2324.36:2330.36] All right.
+[2330.36:2334.36] So here are some details.
+[2334.36:2336.36] Again, Lus-2 is an estimator.
+[2336.36:2340.36] And I'm talking about the fundamental performance of this estimator.
+[2340.36:2343.36] I'm not talking about an algorithm yet.
+[2343.36:2346.36] It's literally an estimator.
+[2346.36:2349.36] And I'm trying to argue about the performance of this estimator.
+[2349.36:2352.36] The statistical performance of this estimator.
+[2352.36:2355.36] It's going to be more and more samples.
+[2355.36:2357.36] All right.
+[2357.36:2362.36] So first, the way I wrote Lus-2 is a tractable convex program.
+[2362.36:2364.36] All right.
+[2364.36:2366.36] It's called a taken order-con program.
+[2366.36:2369.36] You will have a supplementary lecture on...
+[2369.36:2373.36] So I have some supplementary slides on distinctly convex programming.
+[2373.36:2377.36] Where it explains what a second order-con program is.
+[2377.36:2383.36] For the constraint quadratic programs, it is simulating programs or something.
+[2383.36:2388.36] It's a tractable optimization problem.
+[2388.36:2396.36] Now, if the parameter is S-fars and we have some Gaussian noise, all right.
+[2396.36:2403.36] Then the performance of this estimator is order
+[2403.36:2408.36] square of S log p divided by n.
+[2408.36:2411.36] Now, compare that to the ML estimator.
+[2411.36:2412.36] All right.
+[2412.36:2416.36] So ML estimator is p divided by n.
+[2416.36:2423.36] Whereas the Lus-2 estimator is the regularization parameters chosen appropriately.
+[2423.36:2427.36] We'll have S log p divided by n.
+[2427.36:2432.36] Now, a couple of remarks here are important.
+[2432.36:2439.36] So you can think of p as the degrees of freedom in the original estimation problem.
+[2439.36:2446.36] If you're looking at signals in p dimensions, the number of data
+[2446.36:2450.36] should be somehow proportional to this degrees of freedom.
+[2450.36:2458.36] Now, think about how much it would take you to encode S-fars sectors in p dimensions.
+[2458.36:2464.36] We need to encode the coefficients and their locations.
+[2464.36:2472.36] So we need more or less S log p fits to figure out the locations in the two dimensions.
+[2472.36:2477.36] All right.
+[2477.36:2482.36] So all of a sudden, by changing the estimator, what we did is we made it something
+[2482.36:2485.36] like the degrees of freedom divided by n.
+[2485.36:2496.36] All right. So you take number of data points, which is to measure with the degrees of freedom in the signal.
+[2496.36:2501.36] Except we now have a non-smooth problem.
+[2501.36:2508.36] All right. That's what I meant when I said non-smooth optimization may enable us to recover
+[2508.36:2515.36] the degrees for much fewer measurements.
+[2515.36:2521.36] Now, there are many models.
+[2521.36:2528.36] So here's the picture of my son, at the time.
+[2528.36:2532.36] Here's the the wave-lit transform of the time.
+[2532.36:2539.36] So it's far as the signals, like S-fars signals.
+[2539.36:2545.36] These are like S-dimensional hyperplanes that are aligned with canonical porn attacks in p dimensions.
+[2545.36:2548.36] But there are things like low-ranked matrices.
+[2548.36:2553.36] There are some nonlinear manifold models, which we will see.
+[2553.36:2562.36] Some of these things using nonlinear representations, such as neural networks.
+[2562.36:2565.36] All right.
+[2565.36:2568.36] I think this is a good time to take a break.
+[2568.36:2581.36] When we get back, I will talk about the general procedure in writing down these non-smooth optimization to match the structure in the vectors and signals.
+[2581.36:2588.36] So we take a 15-minute break.

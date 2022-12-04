@@ -1,0 +1,228 @@
+~COM-516 Lecture 1.2
+~2020-07-27T22:13:51.789+02:00
+~https://tube.switch.ch/videos/148d5e0c
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:8.76] Yes, so in this second video I first would like to finish something about the simple symmetric
+[8.76:12.68] run the MOOC which I forgot to say in the first one.
+[12.68:21.12] And I told you about the transition matrix and of course I told you that in this case
+[21.12:25.32] it's an infinite dimension and transition matrix so we cannot represent it, we can still
+[25.32:27.76] try of course, right?
+[27.76:35.0] And we can still write something like this, how does this matrix look like?
+[35.0:46.2] So remember this is this thing with PIJ is equal to 1.5 if I minus J is equal to 1 in absolute
+[46.2:49.6] value or 0 otherwise.
+[49.6:56.760000000000005] So you can still represent it even though it's infinite dimensional schematically like.
+[56.76:59.04] So it will have 0 on the diagonal, right?
+[59.04:67.32] There is no possibility to stay the run the MOOC is always moving either right or left,
+[67.32:69.44] right or up or down.
+[69.44:81.0] And so it will be actually what we call a 3-diagonal matrix where there is pretty hard to go up
+[81.0:86.03999999999999] and hard to go down.
+[86.04:93.44000000000001] And because this matrix is infinite dimensional we should actually, you know, it's an infinite
+[93.44000000000001:95.28] 3-diagonal matrix, right?
+[95.28:98.12] And after that it's all 0's here.
+[98.12:104.48] Okay, so we can still kind of have a representation of it even though it's infinite dimensional.
+[104.48:110.04] One thing we can certainly draw even though it's also an infinite graph is the transition
+[110.04:111.44000000000001] graph.
+[111.44:118.36] Okay, and the transition graph is the following.
+[118.36:123.16] So we draw the states with circles around it.
+[123.16:130.4] So 3, okay.
+[130.4:133.88] And of course it's an infinite graph so it goes on forever.
+[133.88:141.56] But now we can draw the graph of this chain so there is always a probability half to go
+[141.56:143.56] right.
+[143.56:144.56] Okay.
+[144.56:150.0] This goes forever.
+[150.0:160.04] And there is a probability half to go left.
+[160.04:162.04] And this goes forever.
+[162.04:164.88] Okay.
+[164.88:175.0] And again we will come back to this process because it's an interesting process.
+[175.0:180.76] Now I would like to tell you in the second video what I own my goal is to tell you about
+[180.76:186.6] the big question that are going to keep us busy for a whole part of the semester.
+[186.6:192.56] And before that I need to introduce a bit more definitions.
+[192.56:199.56] Okay, let's draw this arrow a bit better.
+[199.56:207.12] Okay, so I need to introduce some objects which are important.
+[207.12:220.16] So I will tell you about what is the distribution of the Markov chain at a certain time.
+[220.16:224.84] Because you know we have a stochastic process.
+[224.84:233.72] And so since we have a stochastic process this process doesn't follow a deterministic path.
+[233.72:237.12] So it has always some probabilities to be in some place.
+[237.12:240.96] So this is exactly what we define here.
+[240.96:250.0] We define PIN is the probability that the Markov chain at time N is in state I for N in N and
+[250.0:255.28] I in S.
+[255.28:262.28] And one of these properties is important is what we call the initial distribution of
+[262.28:272.44] the chain.
+[272.44:287.84] And it is simply PIN0 is the probability that X0 is equal to I for I in S.
+[287.84:293.28] Okay, so you could argue that we always know where we are at the beginning of time.
+[293.28:298.4] But sometimes it's interesting to model Markov chain that starts from a random position.
+[298.4:302.64] Let's say you don't have a complete knowledge of the system and you don't exactly know what
+[302.64:305.44] is your system at the actual time.
+[305.44:307.32] Where is the Markov chain?
+[307.32:313.64] So this is this allows for more flexibility to have what we call the initial distribution
+[313.64:315.47999999999996] for the Markov chain.
+[315.48:327.08000000000004] Rather than saying that X0 should be equal to a given I with 100% probability.
+[327.08000000000004:331.92] So these numbers PIN and PIN0 are in general PIN.
+[331.92:337.8] We know that of course all these numbers there are probabilities.
+[337.8:342.24] So they are all between 0 and 1 for every N.
+[342.24:349.84000000000003] And of course there's some when you sum all states there's some to 1.
+[349.84000000000003:354.08] Okay, for every N in N.
+[354.08:358.08] Because there are probabilities.
+[358.08:366.48] And one thing which is interesting to note that if you want to know the probability where
+[366.48:376.20000000000005] you will be a time N plus 1, well this is the protein that Xn plus 1 is equal to I, perhaps
+[376.20000000000005:380.96000000000004] let me call this GD.
+[380.96000000000004:387.48] Then we can know using the law of total probability we can always try to compute this with respect
+[387.48:391.08000000000004] to PIN.
+[391.08:397.24] And how do we do that?
+[397.24:402.76] Well, this is the sum of the I in S of the protein that Xn plus 1 is equal to J and Xn is
+[402.76:404.28] equal to I.
+[404.28:408.28] At time N I have to be somewhere in the state space S.
+[408.28:411.44] Okay, so this is certainly true.
+[411.44:421.03999999999996] And now I can write this as sum of I in S of the conditional probability using the
+[421.04:429.88] very definition of what conditional probability is times the probability that Xn is equal to I.
+[429.88:432.0] And so this thing here, what is it?
+[432.0:438.08000000000004] This is the transition matrix Pij, the transition probability from I to J, the element of the
+[438.08000000000004:441.04] transition matrix I to J.
+[441.04:451.88] And P, the probability that Xn is equal to I will be simply Pij.
+[451.88:461.04] So this can be everything as sum and I'm going to switch the order here, Pij and times
+[461.04:463.04] P18.
+[463.04:470.8] So if you know the transition matrix of your Markov chain, then you can deduce your
+[470.8:476.2] distribution at time N plus 1 very easily from your distribution at time N.
+[476.2:477.56] And so on and so forth, right?
+[477.56:485.16] So if you can then do this recursively and go back to Pi I0.
+[485.16:491.24] So if you know your initial distribution at time 0 and your foundation matrix P, you
+[491.24:498.36] can certainly deduce your distribution at time N for N.
+[498.36:507.72] This way of writing here can be viewed actually as a vector matrix product, right?
+[507.72:519.08] Because this is, if you view the pi as a row vector, what we have here is a multiplication
+[519.08:523.9200000000001] between a row vector pi and a matrix P.
+[523.92:530.12] It might be infinite dimensional but think of this of the finite case, right, for simplicity.
+[530.12:534.92] So we have a row vector times the matrix P.
+[534.92:556.12] So this can be written in vector form as pi N plus 1 is equal to pi N times P.
+[556.12:565.32] And when you iterate this equality, you obtain therefore that pi N can be written as pi
+[565.32:569.5600000000001] 0 times P to the N.
+[569.5600000000001:574.96] Because you have always a multiplication by a matrix P and you know you have always the
+[574.96:576.16] same matrix P.
+[576.16:582.52] So after two steps you get P squared, P cubed and so on until P to the N.
+[582.52:589.52] So this shows by the way that in order to have a better good understanding of how does
+[589.52:596.64] the Markov chain behaves, what you essentially need to know is how do these powers of the
+[596.64:602.48] matrix P behave as n goes to infinity, okay?
+[602.48:607.24] This will tell you what your Markov chain will do.
+[607.24:613.32] And that's where the interesting questions about Markov chains begin.
+[613.32:621.44] Because let me state the two main questions that we look at in this class in the first
+[621.44:625.6] part of the class.
+[625.6:639.5600000000001] So that's for the first part of the class.
+[639.56:668.7199999999999] A, when does when the spy N converges as n goes to infinity, to, sorry, to a limiting
+[668.72:687.64] towards limiting distribution pi.
+[687.64:692.9200000000001] So you know given what I just said before, let me go back there, I told you that pi
+[692.92:698.52] N is pi 0 times P to the N, what do we have here?
+[698.52:703.04] You might say okay, it's simple, just compute P to the N and you will be there, right?
+[703.04:706.12] You have a matrix P and just take the N's power.
+[706.12:716.24] Yeah, but in general it's not so easy to compute this N's power of the matrix P and sometimes
+[716.24:721.16] we would like to get an answer without having to do the explicit computation.
+[721.16:725.7199999999999] In particular, we have an infinite dimension, sorry, infinite dimension in state space,
+[725.7199999999999:726.7199999999999] right?
+[726.7199999999999:733.88] So and we will see that there is a, there is a nice characterization of Markov chains
+[733.88:741.8399999999999] for which this sequence of distributions by N do converge to pi and we have a classification
+[741.8399999999999:746.8399999999999] of Markov chains that will allow us answer this question.
+[746.84:754.0400000000001] So this will be the first question that we will try to address and the second question
+[754.0400000000001:758.2800000000001] will be when it converges.
+[758.2800000000001:769.76] So in the case where the answer to the question A is positive at what rate does it converge?
+[769.76:791.3199999999999] So we are asking is pi N and close to pi?
+[791.3199999999999:795.48] Here we are asking about the speed of convergence towards the limit, right?
+[795.48:800.88] Despite N and close to pi for a given value of N because of course if you have a convergence
+[800.88:808.9200000000001] theorem that tells you, you know, well, as N goes to infinity you have convergence,
+[808.9200000000001:814.12] but that N equals 1 trillion, you are still far away from the limit, then you do you don't
+[814.12:816.76] really care about convergence, right?
+[816.76:824.9200000000001] And so that's, so you need to analyze the Markov chains that you have and see when it
+[824.92:830.0] is the case that you're kind of close to what we call this limiting distribution pi which
+[830.0:832.4399999999999] is also called equilibrium distribution, right?
+[832.4399999999999:842.88] So this is a very important, these two questions are keeping busy many people for many practical
+[842.88:847.12] applications and so we'll see in the second part of the semester we see applications of
+[847.12:848.12] that.
+[848.12:858.04] So these are the questions we have in mind about Markov chains and there is still one thing
+[858.04:865.76] I want to tell you in this video before moving to this topic that will keep us busy for
+[865.76:869.68] some time which is the classification of Markov chains trying to decide things this
+[869.68:875.6] thing which, which Markov chains have an equilibrium distribution which don't and, you know, what
+[875.6:881.2] are the possibilities here?
+[881.2:889.44] But before that let me tell you still about one thing which will be quite useful and which
+[889.44:897.0400000000001] we call M step transition probability.
+[897.04:923.88] Okay, because let me define them as P ij M is the probability that you transit from i to
+[923.88:928.68] j not in one step but in M steps.
+[928.68:937.2] Okay, so we have a time homogenous Markov chain so here I have introduced a value of N,
+[937.2:941.84] you know, a starting point N and an endpoint N plus M but of course because the chain is
+[941.84:947.92] time homogenous it will turn out that these probabilities are actually the same as these
+[947.92:952.16] ones.
+[952.16:960.0] We do not depend on N so this can be proven via time homogeneity of the Markov chain.
+[960.0:962.24] Okay.
+[962.24:972.4] And of course, well that's interesting because it allows us to compute probability not
+[972.4:978.52] what will happen in one step but in two steps, in three steps and in general you might
+[978.52:985.52] think oh but these are complicated, not as compute this it will be a complicated computation
+[985.52:995.3199999999999] and it turns out not because of the Markov property these M step transition probabilities
+[995.3199999999999:1002.0799999999999] are actually quite easy to compute and this is what we call the Chapman-Coronogorov equations.
+[1002.08:1026.0] So this Chapman-Coronogorov equations, we will first do it for M equal to, actually for
+[1026.0:1032.48] M equal to, you will see the principle what happens and then you can do the marginal
+[1032.48:1039.16] computation but for M equal to it's quite nice, it's quite easy to see what happens.
+[1039.16:1042.6] So let me do it for M equal to 2.
+[1042.6:1054.2] Pij of 2 is the probability that X2 is equal to J given that X0 is equal to K. How can I
+[1054.2:1056.3600000000001] compute that?
+[1056.3600000000001:1064.92] Well, of course I know the transition probabilities, the one step transition probabilities.
+[1064.92:1069.1200000000001] So in order to compute the two step transition probabilities the idea is that let's use the
+[1069.1200000000001:1073.6000000000001] one step transition probabilities somehow right we will try to use this one step transition
+[1073.6000000000001:1081.3600000000001] probabilities and we will simply use here the fact that you know let me draw here something
+[1081.36:1093.84] I have state I at time n and use the arrow of time.
+[1093.84:1105.08] I'm in state J at time n plus 2 and of course in between I must have been somewhere right
+[1105.08:1113.8799999999999] I must have been in one place of the state space between between the two right so this
+[1113.8799999999999:1119.8799999999999] will be my time n plus 1 I must be in some position K right but of course we don't know
+[1119.8799999999999:1123.12] which one one of them.
+[1123.12:1130.1999999999998] So this you can write as this probability is the sum of a whole K in S of probability that
+[1130.2:1138.72] X2 is equal to J and X1 is equal to K X0 is equal to I again right this is the low of
+[1138.72:1145.64] total probability you have to be somewhere at time yeah n plus 1 okay let me just say
+[1145.64:1153.0] here 012 again we can do this for n n plus 1 n plus 2 and we will see that you get something
+[1153.0:1159.8] that is independent of n but let me just do it for 012 here.
+[1159.8:1166.8] So this is the conditional probability of the form this thing here is the conditional
+[1166.8:1175.36] probability of the form of A into B given C so using laws of conditional probability
+[1175.36:1186.24] you can rewrite this as sum of a K in S of probability that X2 is equal to J given that
+[1186.24:1196.1200000000001] X1 is equal to K and X0 is equal to I times probability that X1 is equal to K X0 is equal
+[1196.1200000000001:1205.72] to I and if you want to check this quietly so this is the probability of A given B into
+[1205.72:1215.8] C times the probability of B given C okay and you can check that you have a quality here.
+[1215.8:1222.04] Now here comes the important use of the marker property we have a process which is a
+[1222.04:1230.24] marker process so this here this conditioning on X0 is equal to I we can forget it because
+[1230.24:1234.76] we have a process that forgets its past if we want to know where we are in position
+[1234.76:1240.56] 2 given where we are in position sorry if we want to know where we are at time 2 given
+[1240.56:1246.04] where we are at time 1 we don't need to know where we were at time 0 that's exactly this
+[1246.04:1252.48] marker property and once we've done this we realize that what we have here are just
+[1252.48:1263.04] one step transition probabilities so this can be written as sum of a K in S of P KJ times
+[1263.04:1274.44] P I K which by the way I can swap the two probabilities and you will see why I do that
+[1274.44:1282.92] I can write this as P I K times P KJ and why do I do that because this is exactly a matrix
+[1282.92:1292.56] product now this is actually the same as the matrix P times itself in position IJ so
+[1292.56:1301.76] this is actually P squared in position IJ so what do I have I have that in order to
+[1301.76:1309.0] compute the two step transition probabilities P IJ of 2 I simply need to square the matrix
+[1309.0:1319.36] P and evaluate it in position IJ okay and you can redo this for M step transition probabilities
+[1319.36:1333.6] and you get that P IJ M in general will be P to the M in position IJ and that's very
+[1333.6:1339.24] convenient because then you can always you know you can you can compute M step transition
+[1339.24:1344.36] probabilities by just taking the power of the matrix P of course if M is large this computation
+[1344.36:1351.56] again has for some rest to become quite complicated but that's a very convenient rule which
+[1351.56:1357.6] is not true I mean if you redo this computation for every process you will not get this easy
+[1357.6:1361.8] computation rule because you don't have the marker property the marker property here
+[1361.8:1369.24] which I should write here is really crucial to getting this simple simple rule for
+[1369.24:1378.1] computing M step transition probabilities and one application of that for the simple
+[1378.1:1392.48] random box or example if you want to compute the M step transition of the random walk for
+[1392.48:1406.24] the for the simple symmetric on the walk that we saw before let's make one more well
+[1406.24:1414.84] it we get so if we compute actually if you compute well I'm not going to do it in general
+[1414.84:1423.48] but okay if you we just compute P 0 0 of N so I'm just computing here the transition the
+[1423.48:1429.48] M step M let me say M because I had an M before sorry let me just take a here into
+[1429.48:1438.8799999999999] his notation P 0 0 M here so I'm computing the M steps on this property starting from
+[1438.88:1446.96] 0 and coming back to 0 after M steps and this using the Chapman-Columbogram equations
+[1446.96:1459.16] you can compute it to be equal to the actually you have two cases you have the case where
+[1459.16:1470.88] if M is odd then this for this is simply 0 because coming back in an odd number of steps
+[1470.88:1475.28] to the same place where you are with a simple random walk is impossible right you always
+[1475.28:1484.4] have to have an even number of steps so let me now consider the other case where M equal
+[1484.4:1496.72] to K so even so in this case if M is equal to 2K we get simply the binomial coefficient
+[1496.72:1511.96] 2K K times 1 over 2 to the 2K okay and that's that's the M step transition probability
+[1511.96:1518.76] for the random walk transition from one state to the same you can generalize this computation
+[1518.76:1525.24] from one state to the next one state to the next and so on but okay just so just to be
+[1525.24:1541.16] clear what we have here is I'm computing so here I have an I'm starting position 0 and
+[1541.16:1547.8400000000001] I'm ending after 2K steps again in position 0 and I would like to know what the transition
+[1547.8400000000001:1555.72] probability between these two states in 2K steps and this turns out to be this expression
+[1555.72:1563.3600000000001] here so another way to compute this expression directly is to compute the number of paths
+[1563.36:1571.7199999999998] that go up and down you know something like this that would lead from 0 to 2K and you
+[1571.7199999999998:1576.04] can have also you can also get this combinatorial expression by just considering what other
+[1576.04:1582.32] possible number of paths that leads from these two points from one point to the other in
+[1582.32:1591.6799999999998] 2K steps okay and again we can redo this for other states right transition from I to
+[1591.68:1599.04] J for any I and any NG okay so let me stop here this second video and then we'll move
+[1599.04:1624.52] to the classification of states in the third video.

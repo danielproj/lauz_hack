@@ -1,0 +1,1324 @@
+~CS-451 / Week 9: Byzantine Quorums and Hyperledger Fabric
+~2020-11-16T18:19:25.208+01:00
+~https://tube.switch.ch/videos/9fc77c55
+~CS-451 Distributed algorithms
+[0.0:4.12] It's a great pleasure to, well, it's not pleasure to give a lecture like this virtually,
+[4.12:7.68] but given the talk, the DPR fellow is always a pleasure.
+[7.68:13.8] So I came to know this topic when I was doing my PhD, which has basically started 17 years
+[13.8:15.32] ago with Rashid.
+[15.32:18.6] And I finally still have fascinating topic, right?
+[18.6:23.84] So we're going to have an ambitious agenda without too much of an intro because I would like
+[23.84:28.12] you to understand what business in Faults are, how do we build business in protocols, some
+[28.12:31.880000000000003] lower bounds and basically some practical system and we should fit it in our, our
+[31.880000000000003:32.88] in 15 minutes.
+[32.88:35.36] So let's try to do it.
+[35.36:37.120000000000005] So why is Byzantine Fault tolerance?
+[37.120000000000005:43.36] So Byzantine Fault tolerance is essentially a Fault model in which you allow machines to
+[43.36:46.32] fail in an arbitrary way.
+[46.32:48.36] And so this is a Byzantine Fault model.
+[48.36:52.44] And Byzantine Fault tolerance is about building a system that's tolerated such faults.
+[52.44:58.36] So for example, if we have a machine with an intrusion server, which is included by
+[58.36:63.879999999999995] Hacker, James code, basically it can deny a service or send wrong service to its clients,
+[63.879999999999995:64.88] right?
+[64.88:69.8] So what Byzantine Fault tolerance is about is adding a few more, hopefully correct notes,
+[69.8:70.8] right?
+[70.8:76.08] And building a service that, like entirely as a whole masks these certain Byzantine
+[76.08:77.08] faults, right?
+[77.08:82.36] So as a whole, this service operates according to a specification.
+[82.36:85.04] So this is what Byzantine Fault tolerance in very short is about.
+[85.04:91.2] So essentially we are making these malicious faults a bit less malicious than we also
+[91.2:92.72] are not focusing on in replicas.
+[92.72:97.72] We also want to tolerate similar faults that by clients, right?
+[97.72:100.6] And normally we want to build systems that are as robust as possible.
+[100.6:102.84] So we want to tolerate as many failures as possible.
+[102.84:105.4] This is a classical requirement, right?
+[105.4:110.03999999999999] So this is just, so you have to know, so malicious behavior is typical to model with arbitrary
+[110.04:116.16000000000001] faults, so faulty processes allow to do anything it wants, to change its code, to send the
+[116.16000000000001:119.96000000000001] wrong messages, to send right messages when it wants, to change its local state wherever
+[119.96000000000001:121.12] it wants.
+[121.12:125.56] And for custom historical reasons, then you have a nice paper pointed there for further
+[125.56:129.32] reading these fault model is called decent reports.
+[129.32:133.32] With models different types, practical force, these are bugs, intrusions, and since the
+[133.32:138.48000000000002] advent of a blockchain in decentralized trust application, Rogan administrator.
+[138.48:142.28] So basically in blockchain, you don't have a single administrative domain, but you have
+[142.28:146.83999999999997] basically a network of nodes that teach a minister by different entities, and basically
+[146.83999999999997:149.72] they can do with their machines, whatever they want, right?
+[149.72:153.88] So this is the model where we have not senseless trust, it's really trust.
+[153.88:157.56] We're going to talk about the blockchain a lot.
+[157.56:163.04] So for the purpose of this lecture, blockchain is going to be basically a totally other
+[163.04:169.07999999999998] data structure that move like a link list of blocks which contains transactions, right?
+[169.07999999999998:175.84] As transactions are also ordered inside the block, we have a total order of transactions,
+[175.84:178.48] of blocks and concept transactions, right?
+[178.48:183.68] It usually starts from an initial block, which is called Genesis block, and then it carries
+[183.68:186.2] on and we build these data structures in different ways.
+[186.2:190.88] Usually we build a hash chain, you can also use digital signatures to authenticate the
+[190.88:192.72] data structure and so on.
+[192.72:197.04] So what's most important in a blockchain is basically in this network of untrusted nodes,
+[197.04:203.48] so basically where nodes can be failing by Byzantine faults that you just introduced,
+[203.48:206.68] you need to make these data structure replicated consistently.
+[206.68:212.48] So essentially the gist of a blockchain is that these data structures, if you just
+[212.48:216.64] sit on my laptop to which I'm talking to now, it's not really a blockchain, we need
+[216.64:219.4] to really replicate it across a network of untrusted nodes.
+[219.4:225.32] And we do it using Byzantine consensus or total order broadcast or state machine replication
+[225.32:226.32] protocol.
+[226.32:233.24] So these consensus usually in blockchain world, they're called consensus protocols, holding
+[233.24:237.48000000000002] this with algorithm consensus is usually a single short object as opposed to a multi-shot
+[237.48000000000002:238.48000000000002] object, right?
+[238.48000000000002:241.4] So we're here using a multi-shot object.
+[241.4:245.4] And the goal of the consensus protocol is really to these data structures replicated
+[245.4:246.4] in a consistent way.
+[246.4:251.48000000000002] So basically identical up to a certain degree of difference, right?
+[251.48000000000002:259.36] So basically if we can have a different pace of growing these data structures, but if
+[259.36:266.88] nodes have all reached block number 2035, all 235 plus genesis block need to be identical.
+[266.88:272.64] Some may have block number 2036, some might be late at any given point in time to have
+[272.64:276.32] this block, but as soon as they get it, it must be the same block.
+[276.32:282.08] So essentially this is the consensus that powers blockchain and I'm going to focus the
+[282.08:287.08] lecture today mostly about how to build consensus protocols in a Byzantine fault-oriented
+[287.08:288.08] model.
+[288.08:294.76] We're going to talk about first some simpler things to basically give you an idea how many
+[294.76:299.48] nodes you need to mask one Byzantine fault and it will give you an idea of Byzantine
+[299.48:300.48] form.
+[300.48:302.32] So let's get there.
+[302.32:307.68] So this lecture structure in two parts we're going to cover these BFT basics that I just
+[307.68:308.68] mentioned.
+[308.68:313.68] So some really really resilient lower bounds and how to implement BFT consensus in state
+[313.68:314.68] machine replication.
+[314.68:319.64] And in the second part, I'm going to talk about practical projects that we are doing
+[319.64:320.64] in IBM.
+[320.64:324.56] So one is the permissioned blockchain called high-collegial fabric and the other is the
+[324.56:330.28] most efficient BFT consensus to date for white area networks, which is applicable to permission
+[330.28:333.96] blockchists and this is our recent work called mere BFT.
+[333.96:338.67999999999995] So it's all on the same topic but we start from the very basics and we try to build to
+[338.67999999999995:343.88] the most recent and advanced protocols.
+[343.88:346.11999999999995] I also stopped at some point and take questions.
+[346.11999999999995:347.59999999999997] So at this point are there any questions?
+[347.59999999999997:348.59999999999997] Are we all fine?
+[348.59999999999997:353.96] We've got a Byzantine fault model is.
+[353.96:362.79999999999995] So typically the questions are given with the chat but so I cannot see.
+[362.79999999999995:366.35999999999996] Now I can switch like at some point because I need to do this.
+[366.35999999999996:368.52] It's going to be a bit annoying for you.
+[368.52:370.08] No, no, no, I can do it for you.
+[370.08:371.08] I can actually.
+[371.08:373.2] Okay, so let's do it like that.
+[373.2:378.24] For whenever you can, there is a question like, interrupt me or if I am in the middle of
+[378.24:381.2] a sentence, I will stop and ask you a new question.
+[381.2:386.56] Yes, I'll ask you guys if you have any questions, write it in the chat and I will translate
+[386.56:388.96] it to Mark at some very big.
+[388.96:389.96] Very good.
+[389.96:393.92] So let's start with this.
+[393.92:397.76] Basically, so what's important is that most of them we're building Byzantine fault
+[397.76:399.24] tolerance system at least recently.
+[399.24:402.2] Here our playground is the entire world, right?
+[402.2:406.88] So we are building the systems that operate on white area network with network with nodes
+[406.88:411.8] distributed across the internet and what we have usually there apart from Byzantine faults
+[411.8:414.24] in which we are interested.
+[414.24:415.24] Okay.
+[415.24:422.15999999999997] In this playground, you have asynchronous and network failures quite often, right?
+[422.15999999999997:425.4] So on the internet you don't have a reliable network.
+[425.4:433.28] So if you know this from message passing courses, this is called a synchronous message passing
+[433.28:434.28] model, right?
+[434.28:439.08] So messages can be in principle delayed for an arbitrary time, they can be dropped, lost,
+[439.08:440.08] etc.
+[440.08:444.0] And we also have multiple client accessing a replicated service concurrently.
+[444.0:449.47999999999996] So this is what makes problems like distributed protocols in this model quite complex, which
+[449.47999999999996:452.15999999999997] is this fault mark.
+[452.15999999999997:456.2] So let's start with simple, very, very simple BFD service.
+[456.2:463.15999999999997] So let's see how many replicas, very simple BFD service needs to tolerate a threshold
+[463.16:464.88000000000005] of BFD of Byzantine faults.
+[464.88000000000005:467.04] So let's focus on very simple case for T equals one.
+[467.04:471.72] So we want to mask one of these robust service that we discussed and we want to mask a single
+[471.72:473.52000000000004] Byzantine fault.
+[473.52000000000004:476.12] And I'm going to implement a simple concept.
+[476.12:478.48] So we are going to implement something like a Twitter, right?
+[478.48:481.24] We are going to call it BFD Twitter.
+[481.24:482.92] And the model of this is read write stories.
+[482.92:487.72] So this implementation is going to implement two operations.
+[487.72:492.6] It's going to write the value and read without taking any parameters to the return of
+[492.6:493.6] the model.
+[493.6:496.44] And this should do what you kind of expected to do, right?
+[496.44:501.32000000000005] So it should return to last time you've written and this BFD Twitter is initialized to
+[501.32000000000005:502.32000000000005] 24th probably.
+[502.32000000000005:504.32000000000005] So we model BFD Twitter with the register.
+[504.32000000000005:507.8] If you need multiple tweets, you need multiple registers, etc.
+[507.8:508.8] Right?
+[508.8:513.6] So let's see how to do it.
+[513.6:517.48] Let's assume that the replicated service on which we want to implement this is using
+[517.48:521.72] three servers and one of them can be Byzantine, right?
+[521.72:527.76] So when one client writes a tweet, let's say that this node is Byzantine, so the one
+[527.76:529.5600000000001] with a little devil there.
+[529.5600000000001:537.72] So essentially he tweets hello and when it tries to write to this server, this fails because
+[537.72:540.1600000000001] the server is Byzantine, right?
+[540.1600000000001:547.28] So the issue with this is that so there is an initial value to this register, which we
+[547.28:552.16] are modeling tweets and it remains with this node at this initial value.
+[552.16:554.68] Let's market as an empty string.
+[554.68:563.24] So we call notice that this is completely indistinguishable to do writer and other replicas.
+[563.24:567.88] This case when this replicas was Byzantine from the case that the replica was actually
+[567.88:574.64] correct, but cut you do to a synchrony network partition from the rest of the system.
+[574.64:576.8] So it's exactly the same, right?
+[576.8:580.88] So we use this indistinguish computing with this argument all the time and this is called
+[580.88:582.3599999999999] indistinguishability arguments.
+[582.3599999999999:587.7199999999999] So it steps to this particular node that still maintains the initial value, it's all indistinguishable
+[587.7199999999999:589.24] to us.
+[589.24:594.92] So when the reader goes and reads, we didn't stand so in this indistinguishable run, we didn't
+[594.92:600.12] spend our Byzantine force, so we are spending it to the nodes that sits on top.
+[600.12:607.12] And basically when the reader reads, it might not get a response from the nodes that's
+[607.12:608.12] on top, right?
+[608.12:609.52] Because it's Byzantine now.
+[609.52:614.5600000000001] And of course, this is different from the execution in which the writer actually wrote
+[614.5600000000001:619.76] due to concurrency only to a bottom-right node.
+[619.76:622.96] And this is the only node that has the data, right?
+[622.96:628.4] So should in this case, the reader returned hello or not, right?
+[628.4:638.24] Of course, hello might be essentially if this guy is Byzantine, basically it can turn
+[638.24:640.84] to the initial value as well.
+[640.84:648.6] So if, in this case, it turns to the initial value as well, we would need to return a
+[648.6:654.4] rogue value which is essentially the empty value.
+[654.4:659.04] And if you don't have data authentication inside, it can also change the tweet completely
+[659.04:660.04] something else, right?
+[660.04:664.68] So if you didn't authenticate the tweet from the writer, it could also change the tweet
+[664.68:671.52] to goodbyte and instead of hello, the reader would need to return goodbyte.
+[671.52:678.0] So essentially this very brief example tries to demonstrate you why you cannot implement
+[678.0:680.16] with three T replicas.
+[680.16:681.68] You cannot mask defaults.
+[681.68:685.0] So essentially you need more replicas than this.
+[685.0:692.64] And you're Byzantine quorum to which you are accessing to deduce which value to return
+[692.64:694.64] needs to be bigger than these two nodes, right?
+[694.64:697.92] So it needs to be to have simply more nodes.
+[697.92:702.2399999999999] And as you will see, even for much stronger services, we can use 3T plus one nodes and this
+[702.2399999999999:705.64] is the bound that appears quite often.
+[705.64:710.28] So with 3T replicas, we cannot even implement a simple read-write storage.
+[710.28:715.6] But for many cases, in different models, 3T plus one replicas are enough.
+[715.6:719.4] And the number of replicas may go down if we strengthen the assumptions.
+[719.4:724.16] So basically instead of facing a model with this net of partition that we saw play a
+[724.16:730.52] player's considerable role, we basically introduce the synchronous model or we change the
+[730.52:731.52] consistency level.
+[731.52:737.52] So we allow reader to return basically old tweets as well and not necessarily only the latest
+[737.52:745.64] tweets, but we might mention this in the lecture as well.
+[745.64:751.4] So this is just an illustration that we need quite a few replicas more to tolerate Byzantine
+[751.4:757.0799999999999] faults than crash faults for a certain class of protocols that you might have seen already.
+[757.0799999999999:759.1999999999999] Usually you need a majority of replicas.
+[759.1999999999999:761.72] So to be correct or non-faulty.
+[761.72:765.64] So here you need a two-third essentially majority of replicas and this is what is typically
+[765.64:769.16] considered a basic Byzantine core.
+[769.16:771.1999999999999] We'll see this later.
+[771.1999999999999:777.88] So I promise you to talk about consensus and state machine replication.
+[777.88:779.88] So let's see what state machine replication is.
+[779.88:786.36] So assume that you have a centralized service, which gives you the influence of any service
+[786.36:787.36] to its clients.
+[787.36:791.56] So of course, in our model, this service can be malicious.
+[791.56:796.56] But what we want with state machine replication is whether it's read right storage or anything
+[796.56:800.3199999999999] more complex, we want to make it robust to failures.
+[800.3199999999999:810.2399999999999] So we want this basic state machine replication to mask Byzantine failure such that it appears
+[810.2399999999999:814.0] to its clients as a single service that never fails.
+[814.0:817.52] So this is very powerful because this means that over state machine replication, you can
+[817.52:822.4] implement arbitrary service, so not only read right storage, but the arbitrary complex
+[822.4:823.8] service.
+[823.8:830.96] And it's so consistent that it basically gives the illusion to its clients like it's a
+[830.96:834.3199999999999] single centralized service that never fails.
+[834.3199999999999:836.6] So this is basically what state machine replication done.
+[836.6:841.0799999999999] At the essence of state machine replication, there are consensus protocol that we are going
+[841.0799999999999:843.36] to talk about.
+[843.36:845.36] So let me give you a bad news straight away.
+[845.36:851.64] So if you want to do something like this, basically this is impossible in the model that I introduced.
+[851.64:854.84] So this is known as the actual team possibility result.
+[854.84:861.36] And with pure asynchronous, with the like ability to cut off nodes the way I tried to do in
+[861.36:864.88] that lower bound sketch.
+[864.88:869.88] And if you have folds, even in their crash only folds, not even Byzantine, consensus
+[869.88:871.76] is impossible, right?
+[871.76:873.84] And we need to relax the model a bit.
+[873.84:878.12] So we are not going to work in asynchronous model, but in some other models.
+[878.12:882.72] But essentially, if you want to implement consensus, consult state machine replication,
+[882.72:887.1600000000001] this type of fault or end Byzantine faults, you can do it probabilistically with probability
+[887.1600000000001:888.1600000000001] one.
+[888.1600000000001:890.2800000000001] But we are not going to talk about these protocols.
+[890.2800000000001:893.48] If you want to do it deterministically, and this is the class of protocols that we
+[893.48:898.4000000000001] are going to discuss today, the system needs to express some amount of synchronous.
+[898.4000000000001:903.2800000000001] So essentially, the sufficient amount of synchronous in the system needs to express, it's called
+[903.28:907.4] the eventual synchrony, where messages cannot be delayed indefinitely.
+[907.4:912.52] If a two correct processes send messages to each other, they can not be dropped infinitely
+[912.52:913.52] many times.
+[913.52:916.8399999999999] They need to be eventually delivered, right?
+[916.8399999999999:922.64] And more formal, the eventual synchronous model is depicted in this slide.
+[922.64:928.76] So the system is they're still some unknown point in time, T, until that moment, it can
+[928.76:931.4] drop messages and delayed messages as it pleases.
+[931.4:936.04] But after this time, T, which is unknown to the nodes in the network, the system is
+[936.04:937.04] synchronous.
+[937.04:944.6] So a message sent after time T, capital T, is delivered with imperial delta.
+[944.6:945.6] One question, Marco?
+[945.6:946.6] Yes.
+[946.6:954.84] Is the state machine replication equivalent similar to the total order broadcast and its
+[954.84:956.68] implementation with consensus?
+[956.68:957.68] Question one.
+[957.68:962.64] Question two is eventually synchrony, similar slash equivalent to an eventually perfect
+[962.64:968.3599999999999] failure detector roughly speaking?
+[968.3599999999999:972.4799999999999] Inventual synchrony is not equivalent to eventually perfect failure detector.
+[972.4799999999999:976.76] It's more likely to want me to failure detector.
+[976.76:981.0799999999999] And for the first question is, yes, state machine replication, you can implement under
+[981.08:988.6] some assumptions using total order broadcast and we'll come back to that actually in the
+[988.6:992.32] second part of the talk, where I'm going to talk about high-collegiate fabric.
+[992.32:996.6800000000001] You can do it if you're the state machine that you're replicating is deterministic.
+[996.6800000000001:1002.64] So then you replicate, basically, you do total order broadcast all inputs to the state
+[1002.64:1009.24] machine and basically all replicas, we execute these inputs in the same order.
+[1009.24:1011.24] And then we basically do state machine replication.
+[1011.24:1012.24] So you definitely yes.
+[1012.24:1013.24] So it's very related.
+[1013.24:1021.24] So state machine replication is very related to total order broadcast, very related to consensus.
+[1021.24:1022.24] Good.
+[1022.24:1023.24] Good.
+[1023.24:1024.24] Any other question?
+[1024.24:1025.24] No.
+[1025.24:1026.24] Good.
+[1026.24:1041.08] So let's see one spatula of a practical protocol, right?
+[1041.08:1043.76] So let's see how to do BFT consensus.
+[1043.76:1049.68] And this will give us an idea how three T plus one nodes in this eventually synchronous
+[1049.68:1050.68] model are sufficient.
+[1050.68:1052.56] I'm not going to describe this protocol.
+[1052.56:1054.8] This is a fairly involved protocol.
+[1054.8:1058.1599999999999] It's one of the reasons Barbara Lisco got hurt during the war.
+[1058.1599999999999:1063.44] Basically, this is the work from Miguel Castro, currently Microsoft and Barbara Lisco from
+[1063.44:1064.44] MIT.
+[1064.44:1066.6] The dates back 20 years ago.
+[1066.6:1071.08] And it's considered a baseline for BFT and BFT consensus protocols.
+[1071.08:1078.08] And then we'll see later on in the talk how to improve.
+[1078.08:1083.6] This protocol will give us some basic insights in how BFT protocols work, but also give us
+[1083.6:1089.6399999999999] insights why, another insight why these three T plus one replicas are needed.
+[1089.6399999999999:1094.76] So just a second, I have some some key on the door.
+[1094.76:1099.76] I need to stop for two minutes.
+[1099.76:1116.08] Sorry for this, I get this in the COVID new normal situation.
+[1116.08:1118.6] So the protocol is described in this paper.
+[1118.6:1120.92] So practical business in full-tour and some proactive recovery.
+[1120.92:1122.24] I recommend you to read it.
+[1122.24:1128.8] Or it's short like initial version from OSDI 1999.
+[1128.8:1134.36] So it gives BFT state machine replication or total load of broadcast protocols followed
+[1134.36:1137.2] by the technistic replicate state machine.
+[1137.2:1143.68] So hence, as we discussed, state machine replication implementation, an eventual synchrony model
+[1143.68:1148.44] with three T plus one replicas, which is fairly optimal in this model.
+[1148.44:1153.8] Because even an eventual synchronous model can work on a read, write lower, like the
+[1153.8:1155.52] one I sketched before.
+[1155.52:1161.96] Because all this example that I give with writer and reader, you can do before time T when
+[1161.96:1166.84] the system becomes synchronous and then basically the proof is it's version.
+[1166.84:1171.96] BFT is a complex, fairly complex protocol that has many components.
+[1171.96:1176.52] So this is a common case of version, how the protocol works when more or less there are
+[1176.52:1182.28] no network partitions and not too many network, too many process faults.
+[1182.28:1187.96] And there is a sub protocol called view change protocol reconfiguration sub protocol,
+[1187.96:1193.0] which actually keeps seen when there are lots of network partitions and all lots of process
+[1193.0:1194.0] faults.
+[1194.0:1196.52] We are not going to discuss in too much details.
+[1196.52:1202.84] We're going to mention what may happen in view change, but we're not going to spell
+[1202.84:1204.08] out the entire view change.
+[1204.08:1208.24] We're going to discuss more of the common case operation.
+[1208.24:1214.96] And other aspects of the protocol such as garbage collection recovery and we are not going
+[1214.96:1219.72] to focus on this because I want to give you the principles of the basic operation.
+[1219.72:1224.36] So how the PVFT works in the common case is going to be hopefully depicted in this
+[1224.36:1225.36] slide.
+[1225.36:1233.6] So with 3T plus 1, now we are again have maximum of t plus 1 fold, isn't in fold.
+[1233.6:1239.4399999999998] And as I tried already to sketch, we cannot do it with 3N, so we're using 4N.
+[1239.4399999999998:1244.8799999999999] There is a client that basically submits transactions for state machine applications, so we are
+[1244.8799999999999:1248.1999999999998] going to actually use total order.
+[1248.1999999999998:1249.7199999999998] Clients is going to involve sign requests.
+[1249.7199999999998:1256.32] This is going to suggest from now on I will after invocation like remove the fact that
+[1256.32:1261.0] the request is signed, but usually you should assume that all requests involved by the
+[1261.0:1264.48] client are authenticated by digital signatures.
+[1264.48:1271.68] They are weaker, sometimes in protocols weaker authentication schemes are used, but digital
+[1271.68:1274.76] signatures are considered the most secure.
+[1274.76:1279.28] There are certain attacks if you don't use signatures but like max and vectors of max
+[1279.28:1280.28] and other things.
+[1280.28:1285.92] Anyway, it tends to a node, there is a node called primary, so PVFT has this rotating
+[1285.92:1292.0] primary, so it elects a leader among a set of nodes, and at this point of execution R1
+[1292.0:1293.52] is the leader.
+[1293.52:1298.52] So client tends to the leader who depends for basic sequence is the request, so it adds
+[1298.52:1304.8000000000002] the order number, you should think this is the basically positioning total order in
+[1304.8000000000002:1309.64] which this request will appear, so it depends on the number to the request and sends this
+[1309.64:1313.24] to all the other nodes.
+[1313.24:1321.24] This primary can be busy in T, nodes are going to talk to each other basically telling
+[1321.24:1325.52] to one another, well primary sent me this request with this order number, this is send
+[1325.52:1326.84] the same to you.
+[1326.84:1334.8] So this is the point of this total communication, and at this point if all except possibly T4
+[1334.8:1344.32] or N-T replicas, which in our case has been 3T plus 1 replicas equals 2T plus 1 replicas
+[1344.32:1353.2] confirm basically the same pair order and request, then basically all the nodes, a node commits
+[1353.2:1358.8] locally this pair order number and request.
+[1358.8:1364.04] Now for certain leaders that we are going to dive in very shortly, these nodes have to
+[1364.04:1369.6] do it once more, so it's not enough to stop and I will explain why after this second
+[1369.6:1370.6] phase.
+[1370.6:1375.92] So there is another phase of all to all communication that is necessary with 3T plus 1 nodes, not
+[1375.92:1382.96] necessarily if you use many more nodes to mask as T4s, for example 5T plus 1, but if you
+[1382.96:1387.48] want to optimally resilient service, you would need to do all to all communication step
+[1387.48:1394.72] one more, and only if again 2T plus 1 replicas confirm that they locally committed, so basically
+[1394.72:1402.64] they execute this second step here, they locally committed the same order number request
+[1402.64:1407.24] pair, only then it can be added to total order finally after the end of the first phase
+[1407.24:1411.28] and execute locally by all right.
+[1411.28:1416.88] So at this point, what the protocol guarantees is that at least T plus 1 correct replicas
+[1416.88:1419.2] agree on the order, right.
+[1419.2:1424.8400000000001] And this is basically sufficient to carry the protocol on.
+[1424.8400000000001:1431.44] So basically I failed here the R4, but in the animation assume that R4 didn't receive
+[1431.44:1435.1200000000001] any request because it was partitioned.
+[1435.1200000000001:1438.8400000000001] I don't have this animation working properly, but assume that R4 just didn't receive any
+[1438.8400000000001:1445.0400000000002] message, or stand to any message because it was partitioned due to a temporary net
+[1445.0400000000002:1446.6000000000001] of partitioned, right.
+[1446.6:1451.32] It might be Byzantine, so it's not replying, so basically you have a quorum of 2T plus
+[1451.32:1456.8] 1 node which talk to each other, but if the node was actually partitioned and R3 was Byzantine,
+[1456.8:1461.6399999999999] basically you would have T plus 1 correct replicas agree on order, which is basically what
+[1461.6399999999999:1462.9599999999998] I'm going to remind here.
+[1462.9599999999998:1467.48] So this is the explanation of why at least T plus 1 and not more correct replicas agree
+[1467.48:1473.36] on order because you might have some weird again combination of AC, crony and Byzantine
+[1473.36:1477.9199999999998] faults such that it means that only with T plus 1 correct replicas.
+[1477.9199999999998:1484.6799999999998] Okay, so the common case summary of PBFT, it's kind of simple, right.
+[1484.6799999999998:1490.4799999999998] So it has a three phase top protocol, it's fairly network intensive, but we'll see that
+[1490.4799999999998:1496.28] actually, you know, we're going to discuss at certain point of this lecture about whether
+[1496.28:1501.04] you know, what are the bottlenecks in PBFT, this is going to be interesting.
+[1501.04:1506.48] So client stands request of primary replicas, this composes in three phase top protocol,
+[1506.48:1512.44] the order or other replicas, and basically we need this 2, 3rd majority Byzantine quorum
+[1512.44:1517.84] of nodes to agree on the same order request there before we can add the request to the
+[1517.84:1521.6] total order and executes the request.
+[1521.6:1526.12] And this is how we build the DST total order and consequently BFT state machine replication
+[1526.12:1532.1999999999998] with the deterministic operations.
+[1532.1999999999998:1538.6] So let's see and this will give us insight into how also attack and basically arguments
+[1538.6:1542.1599999999999] that you may build for BFT work like this.
+[1542.1599999999999:1546.32] Again, we'll have some example of indistinguishability, argument and so on.
+[1546.32:1548.84] So why do we have three phases for agreement?
+[1548.84:1553.12] So let's see what happens to require a single phase, right.
+[1553.12:1558.8] If you have a single phase, this is clearly going to be easy, right, to show that it's
+[1558.8:1563.8] impossible because I have here two concurrent requests, so either got the request number,
+[1563.8:1571.1999999999998] yellow request from top client and red request, request two from the bottom client in red,
+[1571.1999999999998:1576.56] and it's going to basically send different orders to different rep.
+[1576.56:1581.4799999999998] And it's clear that you cannot stop the protocol after single phase because there's a leader
+[1581.48:1585.28] can be busy, so that's fairly clear and immediate.
+[1585.28:1589.84] But it's less clear why we cannot stop after the second phase, right.
+[1589.84:1591.8] So what if we have two phases on, right.
+[1591.8:1600.56] So again, we have this yellow request, basically we are exchanging having one all to all exchange.
+[1600.56:1606.32] And let's say that the protocol says if it's just confirmed by two T plus one rep because
+[1606.32:1610.08] then at this point we saw, right.
+[1610.08:1613.52] And the question is, can we really do this?
+[1613.52:1615.96] Because it's in Twitter, it seems okay.
+[1615.96:1620.36] And it's also seemed okay for Neo blockchain designers.
+[1620.36:1628.12] So if you know Neo blockchain, this is a protocol that tried to implement PVST protocol, but
+[1628.12:1636.6399999999999] decided at some point that this third phase doesn't, you know, you can just add because
+[1636.64:1640.5600000000002] you're locally committing the request, maybe you can just add it to the order at this point
+[1640.5600000000002:1645.1200000000001] and send lazily the third phase messages.
+[1645.1200000000001:1653.64] And basically there was a paper that appeared in financial crypto just this year, which
+[1653.64:1656.96] describes basically the attack, which is what I'm showing you here.
+[1656.96:1662.68] So they implemented PVST in a wrong way, which stops a variation of PVST, which stops
+[1662.68:1663.68] after two phases.
+[1663.68:1666.2] So let's see what goes wrong.
+[1666.2:1670.28] This example here is going to be a bit more elaborate because I'm going to assume seven
+[1670.28:1675.0] replicas and then I can fail in a Byzantine way to all of them.
+[1675.0:1681.1200000000001] So we're going to use the distinguishability arguments to consider two execution and I'm
+[1681.1200000000001:1682.32] going to throw them like this.
+[1682.32:1686.16] So on the left there is the execution one, on the right there is the execution two.
+[1686.16:1689.04] So both start in the same way.
+[1689.04:1692.8400000000001] So there are two components requests sent to the primary.
+[1692.84:1699.56] And in the first execution one, you see when there is a black line, this means that essentially
+[1699.56:1705.8] what what what is proposed by the primary for this order number for this equals number
+[1705.8:1707.0] is the top request.
+[1707.0:1712.24] So the basically request from the top client.
+[1712.24:1714.28] So this is the black line.
+[1714.28:1720.52] And the line in blue or purple is basically this denotes that primary proposed to these
+[1720.52:1724.04] replicas request number two.
+[1724.04:1727.24] So the request from the bottom client.
+[1727.24:1730.76] And in the execution two, there is a slightly different distribution.
+[1730.76:1736.76] So we see that in the execution one, R2, R3, R4, and R5 are basically proposed the request
+[1736.76:1741.52] from the top client and R6 and R7 the request from the bottom client.
+[1741.52:1743.8] And the different distribution is an execution two.
+[1743.8:1753.1599999999999] So it's only R4 and R5 to whom the primary proposes the request from the top client.
+[1753.1599999999999:1755.1599999999999] And let's say the execution one continues.
+[1755.1599999999999:1759.6] Such that of course primary can play is he's Byzantine, he can play to certain players.
+[1759.6:1763.2] Black message to certain nodes.
+[1763.2:1768.0] Blue message and in this case, R2 gets actually a quorum.
+[1768.0:1771.32] So it gets R-steam.
+[1771.32:1773.72] Second phase message is from five nodes.
+[1773.72:1778.6000000000001] So this is R1, R2, R3, R5, R4, and R5.
+[1778.6000000000001:1786.6000000000001] And in this execution, it gets also a quorum of messages, so N-steam messages.
+[1786.6000000000001:1791.88] But from primary itself, R3, R6, and R7.
+[1791.88:1795.92] So if you stop from the perspective of R2, the protocol ends here.
+[1795.92:1798.04] So this instance of constant distance here.
+[1798.04:1805.04] And it's very safe to commit in execution one to append to total order the top request
+[1805.04:1810.6] and in execution two to the bottom request.
+[1810.6:1812.6] And notice that there are three nodes.
+[1812.6:1815.44] And only three nodes that can distinguish these two executions.
+[1815.44:1821.04] So R1 can of course distinguish it, because it's playing different, it sends different messages
+[1821.04:1822.76] to different nodes.
+[1822.76:1827.96] R2 can distinguish it because in execution one it recends the black message and in
+[1827.96:1831.96] the size, basically the top request.
+[1831.96:1837.92] And in the execution two, it recends the blue message and it commits the bottom request.
+[1837.92:1841.0] And R3 gets different messages in these two executions.
+[1841.0:1846.88] Other nodes, they basically cannot distinguish these two executions.
+[1846.88:1851.88] And we are going to play this, so R4 and R5 received the same messages in both executions
+[1851.88:1856.72] and so do R6 and R7.
+[1856.72:1863.84] So assume that, due to ICC, there is no other message delivered in these two executions.
+[1863.84:1866.92] So we can easily do this because of ICC.
+[1866.92:1870.96] How the PDFT protocol works in this case is going to elect a new primary.
+[1870.96:1878.28] So let's see how this is done, but let's say R7 is going to be primary.
+[1878.28:1883.6000000000001] And I'm going to use the ability to temporarily partition certain nodes from other
+[1883.6:1888.9599999999998] replicas and I'm going to do it with R1 and R2.
+[1888.9599999999998:1893.56] So R3 is going to be malicious, so this means where we are spending our second visit in
+[1893.56:1899.76] fault and to pretend that it haven't received any messages from R1.
+[1899.76:1902.24] So let's go back to visualize this, right?
+[1902.24:1908.48] So what I'm going to do is basically I'm going to put in some apparent mode R1 and R2.
+[1908.48:1914.04] It's like the cut off the game and they never received anything.
+[1914.04:1924.72] And basically we are going to have an execution in which R3 is malicious and it pretends
+[1924.72:1927.48] it doesn't receive anything.
+[1927.48:1933.72] So basically in R7, so we cut off the node who committed the request, so we cannot ask
+[1933.72:1939.32] him what happened because it's cut off due to network partition and we are left only
+[1939.32:1941.8] to R7 leads.
+[1941.8:1947.88] Now the transition, this is called view change and basically can communicate only to R3
+[1947.88:1950.72] R4, R5, R6 and itself.
+[1950.72:1956.48] And it's trying to understand what happened in these two executions.
+[1956.48:1958.72] So what happened while R1 was the primary.
+[1958.72:1959.72] So what do they say?
+[1959.72:1965.24] R1 and R2 don't reply because of facing chrony, R3 is malicious and says I didn't see anything.
+[1965.24:1971.2] And this attack works even if you use digital signatures because R3 can always change
+[1971.2:1976.44] its page to an initial state where it just pretends it didn't receive any messages.
+[1976.44:1978.1200000000001] So it's a powerful attack.
+[1978.1200000000001:1986.16] R4 and R5 say we saw the top request being loaded by R1 and R6 and R7, they say we saw
+[1986.16:1990.48] the bottom request or the by R1.
+[1990.48:1995.28] So essentially they say the same in both executions.
+[1995.28:2000.3200000000002] So in these two executions, since we are talking to you, it's a deterministic protocol,
+[2000.3200000000002:2002.8400000000001] R7 needs to pick one of these two values.
+[2002.8400000000001:2008.8400000000001] We can decide in whatever way it wants and they basically assign an order to it.
+[2008.8400000000001:2014.6000000000001] If it decides if the protocol works in such a way that maybe propose a third value
+[2014.6:2018.8799999999999] to them, it's even more easier to see that we have a disagreement.
+[2018.8799999999999:2024.56] But let's assume that PBST needs to pick this broken two-faced PBST needs to pick one
+[2024.56:2025.56] of these two values.
+[2025.56:2027.8] So let's say it's the black value.
+[2027.8:2033.4399999999998] This means that in execution two, we have a violation of agreement.
+[2033.4399999999998:2039.6799999999998] And if it picks the blue value or the bottom value, we'll have the violation in execution
+[2039.6799999999998:2041.6799999999998] one.
+[2041.68:2048.6800000000003] So is this clear?
+[2048.6800000000003:2050.28] I see no question in the chat.
+[2050.28:2052.88] I hope I suppose it's clear.
+[2052.88:2053.88] Yeah.
+[2053.88:2057.7200000000003] So this is the, you know, the idea, but it's the best I can do, right?
+[2057.7200000000003:2060.08] So to give you an intuition, right?
+[2060.08:2064.48] So this shows that you need to continue the protocol at least to the third phase.
+[2064.48:2069.32] So if you continue to the third phase, it actually turns out that this attack won't work.
+[2069.32:2074.52] Basically, because there will be more lines on this plot, I will not be able to erase
+[2074.52:2082.8] these lines in such a way to make basically these two, when you delete these certain information
+[2082.8:2089.6800000000003] from the, from the executions, you basically are left with an identical execution, which
+[2089.6800000000003:2091.88] you cannot distinguish.
+[2091.88:2092.96] Okay.
+[2092.96:2097.6000000000004] So two phases don't work, but actually three phases work.
+[2097.6:2103.04] I won't give you a PDFT correctness proof, but just trust me that it works with three
+[2103.04:2104.52] phases.
+[2104.52:2107.7999999999997] So let's just, okay.
+[2107.7999999999997:2108.92] So let's check on time.
+[2108.92:2113.36] I think I'm fairly fine with time.
+[2113.36:2120.16] So let's switch gears and I'll come back to PDFT and optimize in PDFT, like to certain
+[2120.16:2125.64] yoghrux of PDFT performance wise, but let's switch gears a bit and talk about high
+[2125.64:2127.64] pleasure fabric.
+[2127.64:2135.12] We're going to come back to basically principles of state machine replication, like how do
+[2135.12:2140.2] we get state machine replication and what, given certain goals that we had with high pleasure
+[2140.2:2145.16] fabric, how did we change the usual way to do state machine replication in high pleasure
+[2145.16:2146.16] fabric.
+[2146.16:2148.2] So this is fairly recent paper.
+[2148.2:2155.7599999999998] It seems very old because it's really dynamic, the whole field.
+[2155.7599999999998:2159.8799999999997] It was published in Europe in 2018 and we have the link to this paper.
+[2159.8799999999997:2160.8799999999997] It's open access.
+[2160.8799999999997:2163.2799999999997] Of course, you will have access from PDFT also.
+[2163.2799999999997:2166.2799999999997] So I encourage you to read the paper for me.
+[2166.2799999999997:2170.8799999999997] So high pleasure fabric is permission block change.
+[2170.8799999999997:2177.9199999999996] So unlike Bitcoin and Ethereum and similar networks for permissionless, what anyone participating
+[2177.92:2181.8] in the blockchain network, so high pleasure fabric is meant for permission block change.
+[2181.8:2187.8] It's more for business use cases where you know whether the participants, so there is
+[2187.8:2192.6800000000003] some certain onboarding of participants to the network.
+[2192.6800000000003:2194.52] And there is membership essentially to the network.
+[2194.52:2197.08] This is the main difference with respect to permissionless block change.
+[2197.08:2206.32] But otherwise, we are talking the same blockchain setting that we discussed in the beginning.
+[2206.32:2212.92] And these transactions that I mentioned, that fit into the blockchain.
+[2212.92:2214.7200000000003] So they can be different things.
+[2214.7200000000003:2218.76] In Bitcoin, there are simple virtual cryptocurrency transfers.
+[2218.76:2226.6800000000003] And in more complex blockchain such as Ethereum or high pleasure fabric, they can be just
+[2226.6800000000003:2231.8] things just data related to arbitrary applications.
+[2231.8:2235.92] So these are called these arbitrary applications, are called smart contracts on Ethereum or
+[2235.92:2239.0] chain codes in high pleasure fabric.
+[2239.0:2244.2400000000002] And there is a, so I'm giving you, if you ask what the smart contract is, there is a
+[2244.2400000000002:2248.32] very informal definition that I give you here from the early days of Ethereum.
+[2248.32:2253.76] The smart contract is in the event driven program with state which runs on replicated shared
+[2253.76:2255.28] ledger.
+[2255.28:2259.2400000000002] So I highlight it's come keywords here, it put them in bold.
+[2259.2400000000002:2264.84] But basically, it's very easy to make a relation between smart contract and replicated
+[2264.84:2265.84] state-machines.
+[2265.84:2269.2000000000003] Except there is one key difference.
+[2269.2000000000003:2273.2400000000002] This is how I like to say things.
+[2273.2400000000002:2274.7200000000003] So this is from my point of view, right?
+[2274.7200000000003:2279.2000000000003] What is the difference between smart contracts and state-machines replication?
+[2279.2000000000003:2283.6000000000004] So the main difference is the state-machines replication approach, even if you replicate
+[2283.6000000000004:2288.56] the state-machines in Byzantine fault model, the application itself is trusted.
+[2288.56:2296.96] So it's a single trusted application that, you know, if the replication protocol says
+[2296.96:2301.56] the application needs to be deterministic, well, it's someone else's fault if it's not
+[2301.56:2302.56] deterministic, right?
+[2302.56:2305.92] It's not a fault of the replication protocol.
+[2305.92:2312.08] It also, if the replication, that's replicated, the state-machines implement things in its
+[2312.08:2317.48] loop, and as such, like at some point in blocks, this is not a problem of replication
+[2317.48:2318.48] protocol.
+[2318.48:2323.68] It's a problem of whoever designed such an application that blocks at some point.
+[2323.68:2328.64] In blockchain, it's different, and this is the main difference.
+[2328.64:2333.36] And in blockchain, you run multiple applications written by different people, different developers
+[2333.36:2334.92] at the same time.
+[2334.92:2341.8] So if, for example, you execute applications sequentially, you know, after each other,
+[2341.8:2345.2400000000002] and some of them has infinite loop, just think about it and we'll come back to that.
+[2345.24:2349.8799999999997] So these cases, issues and replications with respect to other applications.
+[2349.8799999999997:2352.3599999999997] And these applications are not necessarily trusted.
+[2352.3599999999997:2353.7599999999998] So they're not implementing again.
+[2353.7599999999998:2357.04] We're leaving this to be the trust domain.
+[2357.04:2361.4399999999996] So an application developer is unlike for state-machines replication of trust.
+[2361.4399999999996:2366.0] There are multiple application developers, and they might have different interests.
+[2366.0:2371.56] And we need a system in which, you know, running a certain application, which is obviously
+[2371.56:2379.56] coded or intentionally, you know, obviously coded with intentional bugs, does not block
+[2379.56:2383.16] or interfere with other applications.
+[2383.16:2385.2799999999997] So this is the main difference, I would say, between the two.
+[2385.2799999999997:2391.48] And it's important difference that drives a lot of design, design is to be fairly different.
+[2391.48:2395.88] So state-machines replication is kind of a simple problem than the multiple smart contract
+[2395.88:2397.44] execution on board.
+[2397.44:2398.44] Okay.
+[2398.44:2402.7200000000003] So how a bit of history, so how did the blockchain evolve?
+[2402.7200000000003:2407.76] Of course, with Bitcoin, with hard-coded cryptocurrency application, I'm ignoring here
+[2407.76:2412.6] the limited stack-based scripting language of Bitcoin, with which you can do certain things,
+[2412.6:2415.48] but certainly not code an arbitrary application.
+[2415.48:2416.48] It uses proof-of-for-constances.
+[2416.48:2419.12] We're going to just briefly introduce it.
+[2419.12:2422.7200000000003] I won't have time to dive into it a lot.
+[2422.7200000000003:2424.52] And basically it's a permission of blockchain systems.
+[2424.52:2429.36] So in this slide, what's bold was new and introduced by this particular system and what's
+[2429.36:2432.08] not in bold is kind of old.
+[2432.08:2438.6] So what Ethereum brought is this concept of arbitrary applications, smart contracts, and
+[2438.6:2439.6] domain-specific language.
+[2439.6:2444.64] So basically, it introduced a specific language in which you're supposed to code this smart
+[2444.64:2447.7599999999998] contracts and the associated virtual machine.
+[2447.7599999999998:2451.28] So this language is called solidity and the virtual machine is called Ethereum virtual
+[2451.28:2452.28] machine.
+[2452.28:2455.2400000000002] So in HyperLegiFabric, we had different goals.
+[2455.2400000000002:2463.8] So we wanted to actually take this nice thing from Ethereum to run so these things in
+[2463.8:2465.8] bold are not good.
+[2465.8:2468.0400000000004] So this would be the application should actually not be in bold.
+[2468.0400000000004:2472.6400000000003] This is the idea from Ethereum, so we are taking for HyperLegiFabric, so this is kind
+[2472.6400000000003:2473.6400000000003] of the same.
+[2473.6400000000003:2478.52] But what's new is definitely that we don't want to run applications that are coded in
+[2478.52:2480.0] domain-specific languages.
+[2480.0:2488.16] And the motivation here was to broaden the acceptance of such a system to allow many developers
+[2488.16:2490.84] to code in their favorite general-purpose languages.
+[2490.84:2495.56] In certain business applications, you need the cryptocurrency in certain systems.
+[2495.56:2500.6] So basically, our goal was not to use an 80 cryptocurrency and we didn't want proof
+[2500.6:2501.6] of work consensus.
+[2501.6:2504.44] We wanted a modular and plug-able concepts.
+[2504.44:2507.48] What should also be in bold is this multiple instances deployment.
+[2507.48:2514.16] So it was not meant to be a single network blockchain, like Bitcoin and Ethereum are.
+[2514.16:2520.2400000000002] But it was meant to be really meant as sort of a distributed operating system for blockchain
+[2520.2400000000002:2525.64] in which you deploy your multiple instances and then basically power a large number of
+[2525.64:2530.92] networks, which might, you know, interoperate with each other or might not.
+[2530.92:2535.48] So this was the goal for HyperLegiFabric.
+[2535.48:2539.8] The blockchain state of the art before HyperLegiFabric followed this order exactly to architecture
+[2539.8:2542.8] that we discussed.
+[2542.8:2548.44] So this is like this total order broadcast, which orders input transactions to the state
+[2548.44:2550.96] machine and then it's executed after order.
+[2550.96:2553.16] So this is basically order executing a natural.
+[2553.16:2559.28] So this is the state machine replication as we know it, just generalized to blockchains.
+[2559.28:2567.96] This appears basically I will just briefly introduce the proof of work, how Bitcoin and
+[2567.96:2572.6800000000003] Ethereum work and we will see that basically we have this order execute there.
+[2572.6800000000003:2580.4] So in Bitcoin and Ethereum basically 12, a block of transactions to the blockchain.
+[2580.4:2585.0] We take hash of the previous block root hash of the mercury of the transactions that
+[2585.0:2590.36] the node includes in a block and some non-st, right? And the whole point of the game is to
+[2590.36:2599.6] find the non-st such as the Chattu 56 hash of this components of that your hashing is
+[2599.6:2600.68] smaller than some difficulty.
+[2600.68:2607.72] Difficult is the number that starts with many zeros and basically as Chattu 56 takes
+[2607.72:2613.56] the pseudo-rondo function, the only way to do it is to try, you know, try from non-zero,
+[2613.56:2619.08] try non-swan, try non-stools or one until you get lucky enough to actually find such
+[2619.08:2625.24] a non-st that basically makes this hash smaller than this target difficulty.
+[2625.24:2630.6] So this is the whole game of mining, it spends a lot of energy, this is the separate lecture
+[2630.6:2631.6] essentially.
+[2631.6:2638.04] But after this, if miner is successful, you just go through the network across a block
+[2638.04:2640.08] across the network.
+[2640.08:2648.0] And what happens is basically that to verify that this block was successfully, that was
+[2648.0:2653.7599999999998] rightfully mined, I would say, all nodes need to execute the transactions in the block
+[2653.7599999999998:2655.64] sequentially.
+[2655.64:2661.48] And basically just the verify that the hash essentially is smaller than the difficulty.
+[2661.48:2663.96] And this is the order execute if you want.
+[2663.96:2669.88] So basically we're using the proof of work ordering protocol with dissemination, gossip,
+[2669.88:2671.76] dissemination across the network.
+[2671.76:2677.6800000000003] And what's happens in Bitcoin is that transactions are valid and sequentially.
+[2677.6800000000003:2683.56] In Ethereum, it would go sequentially through the transactions in this block number 237,
+[2683.56:2687.36] and execute the sequentially on each and every miner.
+[2687.36:2693.96] And of course, in permission blockchains, which are usually based on a BST protocol, for
+[2693.96:2697.88] example, such as TBST that we already saw.
+[2697.88:2704.44] Here the only differences block I initially discussed that basically I told about TBST
+[2704.44:2708.48] in the context of primary or the leader ordering the single transaction.
+[2708.48:2712.44] You actually can do this batching and order multiple transactions at the same time.
+[2712.44:2713.96] So this is what I'm doing here.
+[2713.96:2716.96] Then we have our three-phase protocol that we already know.
+[2716.96:2722.2000000000003] But then at this moment, we can execute transactions, which are included in this block.
+[2722.2000000000003:2724.32] And this is your order execute again, right?
+[2724.32:2727.6400000000003] So it's the same thing with different consensus products.
+[2727.64:2730.72] So here in Ethereum, we should prove for work.
+[2730.72:2736.92] Here we have some sort of BST, maybe PBST, but it works in the single.
+[2736.92:2741.0] So I mean, introducing this because hyperlaborographic does something completely different.
+[2741.0:2745.56] With these key requirements that I'm repeating here, so no native cryptocurrency, ability
+[2745.56:2749.4] to code distributed apps in general-purpose languages and modular and programmable consensus,
+[2749.4:2753.24] we essentially couldn't use order executes anymore.
+[2753.24:2756.0] And we did to change it completely, right?
+[2756.0:2758.0] And I just make a point, Marko.
+[2758.0:2759.0] Yes.
+[2759.0:2760.0] Yes.
+[2760.0:2762.48] I just want to tell the students two things.
+[2762.48:2768.76] First, don't panic if you did not understand all the details of what you have just heard.
+[2768.76:2772.28] We will come back to that next week and the week after.
+[2772.28:2773.28] That's fine.
+[2773.28:2778.44] Second, when you hopefully go to industry or research labs, you will get used to hear
+[2778.44:2782.92] a lot of words that seem similar to what you know, but are not exactly the same.
+[2782.92:2784.56] So it is a good exercise.
+[2784.56:2789.84] But I will come back in two weeks or maybe even next week to this concept.
+[2789.84:2790.84] So no panic.
+[2790.84:2794.68] I can see exactly the equivalence with what we have seen in the class.
+[2794.68:2795.68] Thanks.
+[2795.68:2800.04] If we need to think for future iterations, if we need to think just let me know, yeah.
+[2800.04:2801.88] So terminologies, not all.
+[2801.88:2802.88] I think, Marko.
+[2802.88:2803.88] Thank you very much.
+[2803.88:2804.88] It's very important.
+[2804.88:2809.08] So, what are the issues for these requirements?
+[2809.08:2811.12] Just think about this for a bit.
+[2811.12:2814.68] So, nonative crypto currents, the ability to call these really laps in general, purpose
+[2814.68:2817.0] languages, module, probable, constant.
+[2817.0:2818.2] What is the issue with order?
+[2818.2:2819.7999999999997] Why do we need to change it?
+[2819.7999999999997:2825.3599999999997] It's kind of not really obvious in the first look.
+[2825.3599999999997:2829.48] But one is this sequential execution of smart contracts post order.
+[2829.48:2830.48] Right?
+[2830.48:2834.68] So you're ordering input to smart contracts and then you're executing one sequence.
+[2834.68:2840.68] Now, here is the problem that essentially we are running multiple.
+[2840.68:2844.0] Smart contracts on the same network.
+[2844.0:2849.6] So if a certain smart contract basically takes longer, it has long execution latency,
+[2849.6:2853.2799999999997] long execution time, you can simply block and delay other smart contracts.
+[2853.2799999999997:2857.12] And this campus performance, and in the worst case, if you have a denial of service smart
+[2857.12:2860.2799999999997] contracts, which blocks in an infinite loop, then you're stuck.
+[2860.2799999999997:2862.2799999999997] So you're just stuck, right?
+[2862.2799999999997:2869.96] Because you execute smart contracts sequentially and if one blocks well, the other block.
+[2869.96:2876.8] So, if I would be seeing you, I would be asking you what Ethereum does and hope to get some
+[2876.8:2880.48] right answers, what Ethereum does to cope with this.
+[2880.48:2882.92] And the answer is of course, guess.
+[2882.92:2888.84] So it's the concept where you pay as a transaction submitted for every step of the computation.
+[2888.84:2892.4] So each step of the computation, if you access storage is a certain price, which is the
+[2892.4:2896.88] normative unit, if you do certain computations, it has a certain price.
+[2896.88:2902.28] And most important of all, you have the maximum budget for the entire transaction, which
+[2902.28:2905.2400000000002] you cannot actually see.
+[2905.2400000000002:2907.8] So there is only so much you can do, right?
+[2907.8:2912.6400000000003] So, and this is tied to a cryptocurrency clear.
+[2912.6400000000003:2917.6] And here you have this requirement that you want to get rid of cryptocurrency because many
+[2917.6:2924.36] use cases for different reasons, called them political, called them, you know, whatever.
+[2924.36:2929.44] But many, many business networks, you actually want to get rid of cryptocurrency, but get
+[2929.44:2936.8] some guarantees in case of distributed trust with many players on the network, but not
+[2936.8:2937.8] use cryptocurrency.
+[2937.8:2941.44] In some cases, you want, but in some cases, you know, one.
+[2941.44:2945.08] And here you have a systems problem, if you know, if a systemic problem, if you don't
+[2945.08:2950.2400000000002] use a cryptocurrency, then you might actually be jeopardizing security of the system.
+[2950.24:2954.9599999999996] It might not be clear what to do with the denial of service market contracts.
+[2954.9599999999996:2956.4399999999996] So this is the first problem.
+[2956.4399999999996:2957.9599999999996] The second problem is non-determinism.
+[2957.9599999999996:2959.4799999999996] This you already intuitive, right?
+[2959.4799999999996:2964.08] So in order to execute, if we just agree, don't order of transactions to execute, and
+[2964.08:2970.6] execution is non-deterministic, well, we just threw away our consensus because the final
+[2970.6:2975.7999999999997] state is not going to be the same across all nodes.
+[2975.8:2984.96] And this is why all the execute won't fly if the, you can actually, if your smart
+[2984.96:2986.96] context are non-deterministic.
+[2986.96:2991.84] So in Ethereum, this is the reason to introduce a domain specific language, which is actually
+[2991.84:2994.6400000000003] and the virtual machine, which are enforcing the terminus.
+[2994.6400000000003:2998.84] So basically to prevent this, this sort of problems.
+[2998.84:3004.1600000000003] And if you want to use general purpose languages like Go and Java, where our first two targets,
+[3004.16:3008.6] it's very, very easy to code non-deterministic things in these languages, right?
+[3008.6:3010.7599999999998] So sometimes they're intentionally non-deterministic.
+[3010.7599999999998:3017.8399999999997] Like if you iterate a map in Go, it's intentionally built in a non-deterministic way.
+[3017.8399999999997:3021.92] And of course, if you access system time, if you, for example, to verify if a certain
+[3021.92:3027.7999999999997] certificate is expired or not, if, of course, random number generations kind of obvious.
+[3027.7999999999997:3032.48] But there are many, many ways in which you can check non-deterministic execution on when
+[3032.48:3038.48] you use classical tools, which are basically meant for a centralized program.
+[3038.48:3040.64] So this is the challenge.
+[3040.64:3044.52] In flexible consensus, I think this is clear because this will be clear a more later
+[3044.52:3045.52] on, right?
+[3045.52:3050.2] Because there is no more specific circumstances, especially there was not when, in the
+[3050.2:3052.08] time when we designed high-pologiophabrics.
+[3052.08:3055.16] So we didn't want to hardcore the consensus protocol.
+[3055.16:3059.84] And there are two other conditions that I think I don't have too much time to dive into,
+[3059.84:3062.2] but there are other things.
+[3062.2:3067.68] So in one slide, what we did with order execute architecture, we changed it in fabric we want
+[3067.68:3070.48] to a so-called execute order value.
+[3070.48:3074.2799999999997] So we execute smart contracts before consensus.
+[3074.2799999999997:3078.52] And then we use consensus not to agree on the order of the input transactions to the
+[3078.52:3081.52] consensus, but on their outcomes.
+[3081.52:3083.72] So this is sort of a positive replication.
+[3083.72:3087.8799999999997] If you know from databases from one time ago, if you follow the database course and you
+[3087.8799999999997:3092.08] heard about passive replication, this is the similar concept, but 40 to the Byzantine
+[3092.08:3093.08] one.
+[3093.08:3097.04] So in passive replication, you usually have a primary replica executing something and
+[3097.04:3101.4] then establishing basically enforcing the order to other replicas.
+[3101.4:3105.68] But here you cannot, well, you can do it, but you need a BFT protocol and so on.
+[3105.68:3112.24] And then we are validating basically if the updates produced in the execution phase should
+[3112.24:3116.12] actually be applied to the state or not.
+[3116.12:3121.7599999999998] So essentially, this makes your applications split in two parts.
+[3121.76:3127.6800000000003] So this one makes programming fabric an execute order validate, blockchain is a bit more difficult
+[3127.6800000000003:3132.6000000000004] than order execute, but it's necessary in some sense if you want to specify the goals
+[3132.6000000000004:3135.6800000000003] that I just had.
+[3135.6800000000003:3138.44] So I'll try to sketch you for the whole details.
+[3138.44:3140.6800000000003] I would suggest you to go to the paper.
+[3140.6800000000003:3143.48] I hope it's well written.
+[3143.48:3148.76] And I will just try to give you an intuition of how this execute order validate architecture
+[3148.76:3150.92] is implemented in fabric.
+[3150.92:3155.88] And why does it address the problems, the challenges that I manage.
+[3155.88:3161.32] So here we have first separated a set of executing replicas.
+[3161.32:3166.6800000000003] These are called peers and in particular, endorsing peers for a given smart concept of
+[3166.6800000000003:3167.6800000000003] chain code.
+[3167.6800000000003:3174.16] There is a set of execution replicas called endorsing peers, which are executing this
+[3174.16:3176.16] smart concept or this chain code.
+[3176.16:3182.08] So the client sends them basically the transaction directly for execution.
+[3182.08:3184.64] They in an isolated environment, right?
+[3184.64:3187.7599999999998] So they stimulate the transaction execution.
+[3187.7599999999998:3193.8799999999997] So they use their local state, they immediately without any agreement applies the state to
+[3193.8799999999997:3198.08] their local copy of the state machine for this chain code.
+[3198.08:3207.48] And they produce the changes that so basically track which values this, this chain code
+[3207.48:3209.3199999999997] or smart concept red.
+[3209.3199999999997:3212.4] And this is registered in the read set.
+[3212.4:3214.56] And the change is it produces to the state.
+[3214.56:3216.52] This is registered in the right set.
+[3216.52:3221.96] And they stand back to the client, the find reply which contains this read set and
+[3221.96:3222.96] write set.
+[3222.96:3229.64] And write set are very often used in concurrency control in databases and so on.
+[3229.64:3235.36] So what fabric does it models the state as version key value store and it uses it to produce
+[3235.36:3236.96] this read set and writes it.
+[3236.96:3241.48] So it stands back to the client who waits to collect sufficient number of such messages.
+[3241.48:3247.44] Now sufficient number is here, vague and undefined because this is part of your, going to be
+[3247.44:3249.12] part of your validation protocol.
+[3249.12:3254.88] So sufficient number of endorsements is going to depend on your trust in this endorsing
+[3254.88:3255.88] peers.
+[3255.88:3260.12] It might be the case that you require all endorsing peers to execute to produce the same
+[3260.12:3265.8399999999997] read set and write set or just one out of three or one out of five or majority out of
+[3265.8399999999997:3270.4] you know, 25 or two or majority out of 13 or whatever.
+[3270.4:3276.96] So it's just some extraivity to basically say how many nodes are sufficient.
+[3276.96:3280.52] And this is the part, this is basically called endorsement policy and it's part of the
+[3280.52:3282.28] validation as we'll see.
+[3282.28:3286.44] Then the client, when it collects all sorts of signatures, tends to the ordering service
+[3286.44:3289.4] which is implemented by certain BFD protocol.
+[3289.4:3295.92] So we are kind of boxing this into an ordering service, but here there is all your PBSD
+[3295.92:3299.68] or actually similar stuff going on here.
+[3299.68:3306.36] And then after ordering, we have total order of reads, sets and writes that's essentially
+[3306.36:3311.96] output to both endorsing peers, but also some all the other peers on the networks.
+[3311.96:3313.6800000000003] So these are called committing peers.
+[3313.6800000000003:3317.84] Committing peers in the context, defined in the context of a chain code are the peers
+[3317.84:3320.0] who do not execute a transaction.
+[3320.0:3322.08] They just commit the same.
+[3322.08:3329.6400000000003] And what they do is they validate basically if the this endorsement policy satisfies,
+[3329.64:3336.56] whether the client actually waited enough of endorsing peers signatures as it should,
+[3336.56:3341.0] and this can be this two out of three, three out of three, whatever the endorsement policy
+[3341.0:3342.0] is.
+[3342.0:3348.12] It's validates also to the reads that didn't change from the simulation time.
+[3348.12:3351.52] So this is an important point and then it commits a transaction.
+[3351.52:3355.44] And this is done by all peers and this is essentially a validation step.
+[3355.44:3360.0] So you have basically this validation step, which is validation of the endorsement policy
+[3360.0:3368.2000000000003] and read set, whether the read sets is the same as in the simulation or not.
+[3368.2000000000003:3371.96] First you have execution and then order and then by the day.
+[3371.96:3372.96] So how does this happen?
+[3372.96:3374.96] Well, it helps.
+[3374.96:3377.64] For example, with non-deterministic execution.
+[3377.64:3382.32] So non-deterministic execution, if you have it, it might only happen that the client
+[3382.32:3386.4] doesn't receive enough replies from endorsers.
+[3386.4:3387.4] Right?
+[3387.4:3396.1600000000003] You have three out of three endorsement policy and the transaction means non-deterministic.
+[3396.1600000000003:3398.1600000000003] It says roll, roll a dice.
+[3398.1600000000003:3399.1600000000003] Right?
+[3399.1600000000003:3406.04] So there is only certain probability that I get the same response from three endorsing peers.
+[3406.04:3410.28] If it was deterministic and all endorsement peers are correct, the client would get three
+[3410.28:3412.1600000000003] out of three replies, no problem.
+[3412.16:3417.56] If you have a non-deterministic execution now because it's before ordering, it basically
+[3417.56:3418.56] transforms.
+[3418.56:3421.96] So you're not supposed to code non-deterministic transactions.
+[3421.96:3426.3999999999996] But if you code them, they just mean that this transaction might not be live or this
+[3426.3999999999996:3428.6] chunk would not be live.
+[3428.6:3437.08] If the client is able to get the endorsement that will pass the validation step later on,
+[3437.08:3444.36] it means that the transaction basically was turned from non-deterministic to a deterministic.
+[3444.36:3447.2] So the effects of it will be deterministic.
+[3447.2:3448.36] So that's one thing.
+[3448.36:3454.3199999999997] The other thing is if you code denial of service mark contracts, then you can use a local
+[3454.3199999999997:3461.48] endorsing peer policy to just stop without synchronizing with other endorsing peers execution
+[3461.48:3465.48] replicas to just abort the execution.
+[3465.48:3470.04] If it starts to exhaust certain resources, you can just use local policy to say, okay,
+[3470.04:3473.64] I'm not executing this anymore, I'm not requiring to decline.
+[3473.64:3475.28] Some others may decide differently, right?
+[3475.28:3480.88] So they may run till the end because this appeared to be infinite loop, but it's not.
+[3480.88:3481.88] It's actually terminates.
+[3481.88:3488.0] You will know from certain junkmen called during that did using this kind of difficult
+[3488.0:3489.0] way.
+[3489.0:3493.16] So some may run till the end, some may not.
+[3493.16:3498.04] But here is actually you're transforming this local policy decision to just another source
+[3498.04:3499.04] of non-determinism.
+[3499.04:3504.48] And we just discussed that for non-deterministic transaction, it's actually this scheme is
+[3504.48:3505.48] okay.
+[3505.48:3512.8799999999997] So it just might turn such a long executing smart construct or chain codes to non-lie
+[3512.8799999999997:3515.0] one, right?
+[3515.0:3519.12] And for what's important is that here we don't have a sequential execution.
+[3519.12:3521.7599999999998] For different chain codes, you might hear different endorsing peers.
+[3521.76:3524.5600000000004] And this execution runs in parallel for different chain codes.
+[3524.5600000000004:3530.6800000000003] It even runs in parallel for different concurrent transactions at the same chain code.
+[3530.6800000000003:3535.0400000000004] So basically you don't have this sequential smart construct the execution blocking
+[3535.0400000000004:3536.0400000000004] niche.
+[3536.0400000000004:3540.5200000000004] Validation is very simple and deterministic because the language, the expressivity of
+[3540.5200000000004:3542.6800000000003] validation policy is limited.
+[3542.6800000000003:3544.96] As you see here, we validate endorsement.
+[3544.96:3548.0800000000004] This is your validation of few digital signatures.
+[3548.08:3553.52] And we validate the reset and write sets, which is a simple deterministic check.
+[3553.52:3559.44] So this is the gist of, you know, related to, it's definitely related to Byzantine
+[3559.44:3565.16] fall tolerance, but it gives you an idea of what we needed to do for high-close of fabric.
+[3565.16:3566.84] And this is all driven by these goals.
+[3566.84:3569.2] I'll just quickly roll back.
+[3569.2:3574.44] It's interesting because it just comes from these three goals.
+[3574.44:3576.4] The whole architecture.
+[3576.4:3580.32] It doesn't seem that they're actually these complete three architectures needed until the
+[3580.32:3582.08] moment you dive into.
+[3582.08:3583.08] Okay.
+[3583.08:3584.84] So this was about half-pluged fabric.
+[3584.84:3589.4] Maybe I just take a few more questions here and encourage you to dive into the paper if
+[3589.4:3593.28] you have more.
+[3593.28:3594.6800000000003] So here we have certain summary.
+[3594.6800000000003:3598.76] So basically in execute order, validate non-deterministic transactions are not going to be guaranteed
+[3598.76:3599.76] to be live.
+[3599.76:3604.2400000000002] Whether in order execute non-deterministic transactions are not going to be, not going
+[3604.24:3607.64] to be guaranteed to be saved.
+[3607.64:3608.64] And yeah.
+[3608.64:3614.9599999999996] So with this, I would stop with high-close of fabric and go back to BST and show you how
+[3614.9599999999996:3620.08] to implement BST in really, really efficient way, starting from BST that you already kind
+[3620.08:3621.08] of saw.
+[3621.08:3623.08] Are there any questions at this moment?
+[3623.08:3625.6] I didn't see anything in the chat.
+[3625.6:3629.6] Any questions?
+[3629.6:3637.04] No, I don't see anything.
+[3637.04:3638.04] Okay.
+[3638.04:3642.6] So basically when we build fabric, why did we make this modular?
+[3642.6:3648.88] So at the time, so we were talking design time was 2016-17.
+[3648.88:3654.12] I spent a PhD with the RESTD, designing BST protocols, but kind of I was not happy for
+[3654.12:3659.0] we didn't never spend time too much on wide area networks with potentially a large number
+[3659.0:3660.0] of nodes.
+[3660.0:3667.8] So when I did PhD before Bitcoin, it was a hard sell to actually sell BFD even at four
+[3667.8:3674.2] nodes to tolerate one fault because we tried to sell in a model which is kind of a tolerating
+[3674.2:3675.2] bug with an intrusion.
+[3675.2:3681.2] So it's like you have a single administrative domain like a cloud and you might have bugs
+[3681.2:3686.24] and you know, so you're selling this technique to protect against bugs.
+[3686.24:3690.72] It's a hard sell with blockchain, it's a much easier sell, much much easier sell because
+[3690.72:3697.24] we have this model of this unit trust in which you essentially different nodes control,
+[3697.24:3700.9199999999996] different entities control different nodes on the network and they can change the code
+[3700.9199999999996:3705.4799999999996] they can do whatever they want and the model suddenly makes sense.
+[3705.4799999999996:3710.52] But it has a lot of players usually, definitely more than four, often more than seven and
+[3710.52:3717.72] so on and suddenly it needs to work over wide area network and it needs to scale in this
+[3717.72:3719.32] sense.
+[3719.32:3725.12] So in fabric we played with different ordering services but what's coming into fabric
+[3725.12:3730.72] is basically our recent work that we did to increase and boost the throughput on wide
+[3730.72:3732.32] area networks.
+[3732.32:3737.48] So the protocol that I'm going to go into describe you quickly is based on BST, it's very
+[3737.48:3743.36] very similar to PDFT but it took us 20 years essentially to get there and the idea is
+[3743.36:3748.32] very simple, I'll be able to explain hopefully into these slides.
+[3748.32:3753.36] But yeah, I mean so now it's simple and it took quite a long time to get here.
+[3753.36:3757.92] But so let's see what it is about.
+[3757.92:3761.96] So we're coming back to our front PDFT and let's try to understand well the scalability
+[3761.96:3762.96] button XR.
+[3762.96:3765.84] So scalability here is in the following sense.
+[3765.84:3771.44] When I grow the number of nodes what happens to the metrics such as latency and throughput
+[3771.44:3776.1200000000003] and things throughput in the first place.
+[3776.1200000000003:3783.6800000000003] So this is how PDFT works, we have three phases, this we already saw, I think this is
+[3783.6800000000003:3785.92] clear by now.
+[3785.92:3790.48] So if I would be seeing you I would ask you to raise hands and tell me where is the
+[3790.48:3793.04] bottleneck in this pitch.
+[3793.04:3798.68] So since we are not really interactive I'll try to answer this question on my own.
+[3798.68:3802.48] And it might seem that actually the bottleneck is in this second and third preparing commit
+[3802.48:3806.72] phase, second and third phase because there's seem like really expensive like coins,
+[3806.72:3812.08] square, total message complexity, it's actually not the case.
+[3812.08:3818.84] So these are very small messages because they're just these are messages trying to allow
+[3818.84:3825.04] replicas to agree on what primary sent and they can have a short representation of what
+[3825.04:3828.84] primary sender we know this is called a hash, right?
+[3828.84:3837.08] So essentially we have small preparing commit messages are about agreeing on what primary
+[3837.08:3842.1600000000003] sent and we are here agreeing on a hash of a batch.
+[3842.1600000000003:3846.88] It's actually the first message especially if you give the leader to disseminate the payload
+[3846.88:3850.52] if you don't give the leader to disseminate the transaction payload you run into many
+[3850.52:3853.96] sorts of problems and corner worst case called past.
+[3853.96:3857.8] So let's assume that you need to do it, you don't need to do it but eventually you don't
+[3857.8:3860.32] need to do it so let's assume you just do it.
+[3860.32:3866.44] So like leader is not transferring, he is not ordering a batch with caches of transaction
+[3866.44:3869.0] but full transactions.
+[3869.0:3876.2000000000003] And obviously as then grows well the the bandwidth that the primary has is limited, right?
+[3876.2:3883.56] So it's going to need to split this bandwidth outgoing bandwidth instead of across four nodes
+[3883.56:3884.56] maybe across 100 nodes.
+[3884.56:3890.48] And it's just going to be able to push a fewer number of batches per second if you want
+[3890.48:3894.3999999999996] because it needs to replicate in more of.
+[3894.3999999999996:3898.3199999999997] So this is the just so basically if the number of replicas grows on the left side the
+[3898.3199999999997:3903.24] size of this prepare message which contains the transaction payload grows linearly.
+[3903.24:3908.9199999999996] If it grows linearly then basically the throughput goes drops in burst proportional to the number
+[3908.9199999999996:3909.9199999999996] of replicas.
+[3909.9199999999996:3914.72] And this is like you don't need to deploy PDF to understand this and any leader base protocol
+[3914.72:3916.08] for this matter.
+[3916.08:3919.3199999999997] And if you deploy it you actually get this numbers all the time.
+[3919.3199999999997:3924.12] And what this means for blockchain you see how this on the right hand side decays, right?
+[3924.12:3928.68] So for four nodes it's fairly good and this is the world when you lived in during my
+[3928.68:3936.08] PISD, right? But now in blockchain you're somewhere down here and it's quickly going down,
+[3936.08:3942.68] right? And suddenly if you're at 100 nodes you're almost depending on your network connectivity
+[3942.68:3946.2799999999997] but you might be as low as Bitcoin or depending on implementation or not.
+[3946.2799999999997:3950.12] So you need to kind of do something with this and make this scale so this to describe
+[3950.12:3951.12] this.
+[3951.12:3953.8799999999997] And this is what we did with MIRBFT.
+[3953.88:3959.76] So what we did with PBFT, so we took actually from MIRBFT takes PBFT and just transform
+[3959.76:3961.92] this to a high efficient high throughput.
+[3961.92:3968.6400000000003] So PBFT is this nice version and this is because it was invented for UDP transport.
+[3968.6400000000003:3971.6400000000003] So essentially it allowed messages to be lost.
+[3971.6400000000003:3980.2000000000003] So what customers did they allowed the leader to send multiple to start different instances
+[3980.2000000000003:3981.7200000000003] of consensus concurrent.
+[3981.72:3985.3599999999997] So these are called watermarks if you read the PBFT paper, these are called watermarks,
+[3985.3599999999997:3986.3599999999997] high and low watermarks.
+[3986.3599999999997:3991.7599999999998] So you can start any consensus instance between low watermark and high water.
+[3991.7599999999998:3997.64] So we use this fact and basically but we use this fact to charge to tell the leaders
+[3997.64:4002.8799999999997] in this case node zero starts the agreement on block number zero, four, eight and twelve
+[4002.8799999999997:4003.8799999999997] in parallel.
+[4003.8799999999997:4009.16] So that's one thing but it doesn't help really with the you know leader bandwidth what
+[4009.16:4014.96] we're talking because we still is the single leader that sends all these blocks.
+[4014.96:4019.68] So here I'm depicting only pre-prepare only the first message right so for clarity you
+[4019.68:4023.24] can imagine if I had the stack and then third phase it would not be much of a readable
+[4023.24:4024.24] pitch.
+[4024.24:4029.52] It already is not when I add the other idea that MIRBFT has.
+[4029.52:4035.8799999999997] It's just to charge the number of the blocks basically it's it's the sequence number space
+[4035.8799999999997:4037.2] across different nodes.
+[4037.2:4042.56] Instead of a single leader let's have maybe all nodes as a leader maybe you know in this
+[4042.56:4049.0] example there are four nodes as a leader and they charge so node zero orders all blocks
+[4049.0:4056.6] which here which are zero module of four and no one basically no dye or orders is responsible
+[4056.6:4061.16] for leading blocks number i module four.
+[4061.16:4063.7599999999998] So it's fairly simple idea right.
+[4063.76:4072.6000000000004] So how come nobody thought about this before well they did right but there is a this is
+[4072.6000000000004:4076.28] simplistic right so the main problem with this is the request applications.
+[4076.28:4082.88] So for client send the same transactions to two nodes and notice that it needs to send
+[4082.88:4084.6400000000003] to at least f plus one nodes.
+[4084.6400000000003:4089.4] So again if I would be facing you I would ask you why does the client need to send to
+[4089.4:4095.0] at least f plus one nodes but I will also answer my question myself is because of the
+[4095.0:4096.72] sensor in the attack.
+[4096.72:4101.96] Since f up to f nodes can be busy in team if it's client sends to less than f nodes or
+[4101.96:4106.68] less than f nodes and learn about client requests they can drop this this transaction to the
+[4106.68:4111.56] floor and network never learns about.
+[4111.56:4118.96] So in principle the client needs to send to at least f plus one if you want if you want
+[4118.96:4125.12] to optimize resilience f is related to n we saw that it's like one third of n but it
+[4125.12:4130.96] grows usually with a number of nodes so this is all and like client needs to send to
+[4130.96:4134.92] all nodes and it will go off.
+[4134.92:4139.96] If this happens in this case my client is sending to two nodes no zero node one because
+[4139.96:4144.72] they don't talk to each other they can just add the great transactions concurrency to
+[4144.72:4145.72] the same block.
+[4145.72:4151.8] And it is the proposed at the same time well they will run this three phase protocol and
+[4151.8:4156.4800000000005] we'll have our good throughput which suddenly repeats the transaction so duplicate it
+[4156.4800000000005:4158.4800000000005] in such.
+[4158.4800000000005:4162.8] And in my example I duplicate it twice but the base is as I discussed in the worst case
+[4162.8:4165.92] you can duplicate it big old and times.
+[4165.92:4170.0] If you duplicate it big old and times your true your true put your good put basically
+[4170.0:4174.6] the number of unique transactions that go through the network is still in virtual proportion
+[4174.6:4175.6] to the number of nodes.
+[4175.6:4177.56] So you didn't do anything.
+[4177.56:4181.84] So essentially if you're going to allow multiple leaders you need to do something with request
+[4181.84:4188.76] duplication and this is the main novelty of this protocol essentially how to handle request
+[4188.76:4194.68] duplication and to have an efficient implementation that says that this elimination of duplicative
+[4194.68:4201.08] request is actually not penalizing performance.
+[4201.08:4205.28] So these are the main principles some of these things are not going to be clear to you
+[4205.28:4210.4] but so I'm going to highlight the most important ones.
+[4210.4:4217.16] The principles of mere BST it has multiple leaders as we already discussed.
+[4217.16:4221.96] Multiple leaders are allowed to propose requests and blocks in parallel as opposed to TBST
+[4221.96:4227.2] single leader and the share so basically it's like a multiplexer right so each leader
+[4227.2:4235.08] is responsible for its part of the of sequence space and then we multiplex this in the same
+[4235.08:4236.08] total order.
+[4236.08:4241.12] So if you have single total order in the end there is no sharding or anything but while
+[4241.12:4245.5199999999995] we are building the single total order there is the sharding of the sequence number temporary
+[4245.5199999999995:4248.04] sharding of sequence number per leader.
+[4248.04:4252.84] So it prevents request duplication and going to dive into this so I won't spend time
+[4252.84:4258.24] on this too much this slide it's coming in the next year for slides.
+[4258.24:4263.04] It's incrementally built of pdft and it's particularly hard and version called ART work.
+[4263.04:4269.56] So ART work is the paper that basically fixes some simple I would say performance attacks
+[4269.56:4270.56] on pdft.
+[4270.56:4277.28] For our purpose of our presentation you can or our lecture you can just assume that it's
+[4277.28:4279.12] incrementally built on pdft.
+[4279.12:4285.44] This is really important because actually we saw that neo designers try to optimize
+[4285.44:4292.76] bft protocol there are many many people trying to come with home like blockchain time I
+[4292.76:4296.4] would say because it's really important problem.
+[4296.4:4301.04] Many people say this looks easy let me give you the bft protocol and there are many of
+[4301.04:4305.2] these are wrong right so we saw the example of neo there are many many others.
+[4305.2:4309.08] pdft is one of the most prudent as protocols if you build on that protocol you inherit
+[4309.08:4314.88] the basic correctness impression in people's minds but also the correctness itself because
+[4314.88:4322.48] if you don't change the protocol too much it was actually proven to be correct.
+[4322.48:4327.04] Our implementation is really heavily parallelized we might talk this time permitting but I'm
+[4327.04:4332.5199999999995] going to explain this main principle of preventing requests duplication so basically the
+[4332.5199999999995:4334.96] thing that happens on this slide.
+[4334.96:4336.96] So how do we do it?
+[4336.96:4341.68] It's not a big deal so basically we partition the transaction into buckets.
+[4341.68:4347.28] So we use the cryptographic hash function we actually use shart.56 and we say basically
+[4347.28:4351.36] we then use shart.56 there is a payload of the transaction we hash the payload in the
+[4351.36:4358.4800000000005] transaction there is a hash coming up and this assigns transaction to a particular bucket.
+[4358.4800000000005:4364.88] Then we assign buckets to the leaders and say well each leader has a certain number of
+[4364.88:4370.24] active buckets and it can propose requests only that fall into that bucket otherwise they
+[4370.24:4376.76] are not allowed to propose this request and then we add this rotation and I will say explain
+[4376.76:4380.4400000000005] why again and that's it.
+[4380.4400000000005:4381.4400000000005] So let's see it visually.
+[4381.4400000000005:4388.16] So here I have the hash space from 0 to all f's essentially splitting for there are actually
+[4388.16:4392.12] many more buckets but this is an example right so in implementation usually the number
+[4392.12:4397.4] of buckets is a configuration parameter and you can configure the number of buckets as
+[4397.4:4400.08] you want independently of the number of leaders.
+[4400.08:4406.2] Here we have one active bucket per leader so essentially if the bucket is in the full
+[4406.2:4410.5599999999995] line this is an active bucket and the bucket in dashed lines is in active bucket in the
+[4410.5599999999995:4411.5599999999995] node.
+[4411.5599999999995:4417.08] So the blue bucket is active at the first node node 0, red bucket in node 1, gray bucket
+[4417.08:4422.6] in node 2 and turquoise bucket in node 3.
+[4422.6:4427.36] So which means that for example if the client tends to node 0 and node 1 and this request
+[4427.36:4433.2] hashes to the blue bucket basically it will fall into the node 0 bucket and it will
+[4433.2:4437.12] be the only node who can propose this bucket as well.
+[4437.12:4441.5199999999995] And similarly node number 13 it hashes to the gray bucket it falls to the node number
+[4441.5199999999995:4445.28] 2 and here you prevent request duplication right.
+[4445.28:4454.28] So if clearly the node number 1 so have the red active bucket so it cannot propose from
+[4454.28:4455.28] the blue bucket.
+[4455.28:4463.32] If it does of course we have control points where nodes will discard other replicas will discard
+[4463.32:4468.92] such blocks that contain transactions which are proposed from the wrong buckets.
+[4468.92:4471.12] This is very easy to detect.
+[4471.12:4478.12] Okay, but it is not sufficient because of course we can have our censoring attack for simply
+[4478.12:4483.88] you know if node number 2 is always responsible for the gray bucket and it fails.
+[4483.88:4489.2] Well there is no one to propose from the gray bucket right and hence these transactions
+[4489.2:4490.599999999999] will be styled.
+[4490.599999999999:4497.2] So what we do simply is we rotate periodically bucket assignment across the meters.
+[4497.2:4503.5199999999995] Basically after certain number of ordered blocks we are going to rotate this bucket assignment
+[4503.5199999999995:4505.24] and this is the whole gist of it.
+[4505.24:4511.28] So at some point we will have the node number 3 able to propose transactions from the gray
+[4511.28:4514.28] bucket.
+[4514.28:4522.76] So these are the details that are not that relevant because they explain how view change works.
+[4522.76:4529.4800000000005] They said it did not explain how view change works in TBS it would be too much to explain
+[4529.4800000000005:4534.12] it here but the main principle is in TBS you have the rotating primary.
+[4534.12:4538.360000000001] It is the only primary is the only leader who can propose requests.
+[4538.360000000001:4540.12] Here you have more leaders.
+[4540.12:4544.0] Of course if some leaders are fault if somebody actually fails you need to reduce the leader
+[4544.0:4545.64] set in the next iteration.
+[4545.64:4547.8] That protocol does automatically.
+[4547.8:4552.16] There are many policies for how to grow and shrink the leader set and we did not exhaust the
+[4552.16:4557.320000000001] whole space design space there but we have a really really simple mechanism there.
+[4557.320000000001:4564.400000000001] So there is a usually limited time for which a given set of leaders is allowed to be leaders
+[4564.400000000001:4569.92] and in a nutshell if they manage to order all the blocks they were supposed to order the
+[4569.92:4573.04] leader set can grow or not reduce.
+[4573.04:4578.32] And if they did not manage because of faults and partitions and what not to order as many
+[4578.32:4583.12] blocks as they were supposed to be ordered then the leader set shrinks.
+[4583.12:4590.28] But I will point you to the paper and Rashid please don't ask the details about this.
+[4590.28:4595.12] With certain verification so I am ending the end just to just to encourage you we are
+[4595.12:4599.72] ending the end of the talk so I have just one or two more slides and I will give you performance
+[4599.72:4604.08] numbers of this protocol and we will conclude.
+[4604.08:4610.04] But suddenly with this method what happens even on wide area network is unexpected a bit
+[4610.04:4617.88] so you reveal you remove the bandwidth bottleneck because there is no bandwidth bottleneck anymore
+[4617.88:4625.96] and suddenly we have on at least on ordinary cloud virtual machines we have essentially
+[4625.96:4627.4800000000005] computation bottleneck.
+[4627.48:4633.04] So suddenly remember that all requests that clients send are signed.
+[4633.04:4638.759999999999] So at some point of the PBFT and MIRBFT protocol nodes need to verify these signatures to just
+[4638.759999999999:4643.04] make sure that the client knows the authenticated properly.
+[4643.04:4647.839999999999] This actually becomes the bottleneck with the MIRBFT as I described it so far.
+[4647.839999999999:4653.12] So all transactions are actually signed and neglected this fact a bit although we mentioned
+[4653.12:4656.04] it initially with the signed request.
+[4656.04:4660.8] So instead of this optimization we implemented only in the very best case the node nodes
+[4660.8:4661.8] are leaders.
+[4661.8:4666.84] So in that case what would normally be done without this optimization is all like primary
+[4666.84:4672.04] would verify the client signatures of transactions but also this will be done with all by all
+[4672.04:4673.04] nodes.
+[4673.04:4679.84] And there is a simple optimization in which you declare just a set of F plus 1 validators
+[4679.84:4685.32] to be a certain validators for given set of clients and you can do even some sharding
+[4685.32:4690.4] there and only those verify the client's request and this is called signature verification
+[4690.4:4691.4] starting.
+[4691.4:4698.16] Basically reducing the fact that in a protocol as I described it so far three T plus 1 nodes
+[4698.16:4703.599999999999] verify each and every signature from the client will reduce this to T plus 1.
+[4703.599999999999:4711.12] And since we anyway require in the case where we apply this optimization which is the case
+[4711.12:4713.799999999999] of MIRBFT where all nodes are the leaders.
+[4713.8:4721.96] We anyway expect them to work basically to be correct in order for this to progress
+[4721.96:4726.16] with all leaders if they are not will basically reduce the set of leaders and optimization doesn't
+[4726.16:4727.16] apply.
+[4727.16:4731.84] We use this to boost throughput in very extreme cases.
+[4731.84:4738.360000000001] Okay, so F plus 1 nodes access validators so which guarantees that the least one correct
+[4738.360000000001:4742.96] validator validates the signature new transaction instead of the F plus 1.
+[4742.96:4745.28] So this is the optimization.
+[4745.28:4746.8] What did you do for performance evaluation?
+[4746.8:4755.8] This just gives you basically just an insight in experiments that we do to validate the
+[4755.8:4756.8] performance.
+[4756.8:4765.96] Actually this paper is available on the web and it has even much more experiments than
+[4765.96:4768.52] what I'm showing here but I'm just showing you the gist.
+[4768.52:4770.72] So we are comparing to PVFT as a baseline.
+[4770.72:4776.4400000000005] We are comparing to this is the protocol that I did with the sheet this chain for my
+[4776.4400000000005:4777.4400000000005] thesis.
+[4777.4400000000005:4783.08] Actually I completed my thesis in 2008 and this actually was published in a journal in
+[4783.08:4785.280000000001] 2015.
+[4785.280000000001:4790.6] So yeah, only who like people who go and do PhD and want to publish in journals would have
+[4790.6:4791.6] some tenacity.
+[4791.6:4793.64] I guess this is a message for them.
+[4793.64:4796.240000000001] So we compare it to Honeybanger BFT.
+[4796.24:4801.679999999999] This is one of the protocols that was popular and Leedra Hotsk has to liberate the protocol
+[4801.679999999999:4806.16] proposed by Facebook, VMware and Facebook in 2014-2019.
+[4806.16:4809.44] Actually I don't have this slot but I can cook it up if you want.
+[4809.44:4810.44] And this is a setup.
+[4810.44:4815.12] So we used 16 data sensors across the world.
+[4815.12:4816.12] Pretty decent machines.
+[4816.12:4819.76] So 32 virtual CPU 32 gigs of RAM.
+[4819.76:4826.0] And we took one gigabit link bandwidth between each for available to each of them.
+[4826.0:4828.68] We go up to 100 nodes.
+[4828.68:4835.0] We have 500 bytes microbenchmarks and these represent typical bitcoin size transaction
+[4835.0:4841.28] and a much larger transaction of 3.5 kilobytes which is fabric size transactions.
+[4841.28:4847.08] So one scalability it actually goes like this.
+[4847.08:4850.4] So me or without the signature optimization charting performs like this.
+[4850.4:4853.84] It doesn't scale perfectly with big transactions.
+[4853.84:4860.08] And the biggest reason is that essentially there is a lot of traffic and there is some
+[4860.08:4865.28] non-new informative of traffic of virtual machines that we are using.
+[4865.28:4871.64] But still the performance is impressive because you see in green how PVFE performs.
+[4871.64:4875.64] So this is decaying but then it becomes pretty stable.
+[4875.64:4879.16] At the level which is considered a bit higher than PVFE.
+[4879.16:4883.04] And the red line is important because remember high pledge of fabric.
+[4883.04:4887.12] So these signatures that we have in validation stage and so on.
+[4887.12:4891.04] Basically the red line is the valid fabric validation document.
+[4891.04:4899.88] So we were searching for a protocol that would allow us to stay above the red line for
+[4899.88:4902.44] any number of nodes that's relevant for permission and boxes.
+[4902.44:4908.6] So we stopped our experiments at 100 but actually the protocol performs really nicely even
+[4908.6:4909.6] with more nodes.
+[4909.6:4914.6] So we are currently doing some experiments with the variation of the protocol with 200 and
+[4914.6:4917.4400000000005] 300 nodes.
+[4917.4400000000005:4918.4400000000005] Even change.
+[4918.4400000000005:4921.200000000001] So chain is basically the protocol in which you just replicate.
+[4921.200000000001:4924.56] So this depicted in the upper right corner here.
+[4924.56:4928.160000000001] So the replication is optimistic and it just means to your orchestrate nodes in a chain
+[4928.160000000001:4930.84] and they pass the block to each other.
+[4930.84:4934.0] So that's funny because it works when there are no faults.
+[4934.0:4937.320000000001] If there are faults, you need to transition to a different protocol.
+[4937.32:4942.759999999999] So in my thesis I transition to PVFE from this visit to optimistic scheme.
+[4942.759999999999:4945.0] And here we are valid to the optimistic scheme.
+[4945.0:4951.32] So even that one performs much worse than the mere VST and space below of the fabric
+[4951.32:4954.24] validation button.
+[4954.24:4956.04] So it's more request.
+[4956.04:4958.5599999999995] And the situation is even more glaring.
+[4958.5599999999995:4964.12] So here we have mere with signature verification starting optimization delivering more than
+[4964.12:4967.88] 60,000 transactions of Bitcoin size with 100 nodes.
+[4967.88:4972.44] In blue there is mere without the signature verification starting optimization.
+[4972.44:4976.36] And then you have the similar performance of solidar based protocols.
+[4976.36:4978.5199999999995] They will always behave like what we saw.
+[4978.5199999999995:4985.28] So PVFE, you see this curve that we expected analytically and this happens with them
+[4985.28:4989.4] in the database protocol.
+[4989.4:4994.12] The typical duplication prevention, if you just to see that it's important, this is same
+[4994.12:5000.16] plot repeated for mere without signature verification, signature verification starting.
+[5000.16:5005.5599999999995] And if you switch off this duplication prevention, the number and you count the number of duplicates
+[5005.5599999999995:5010.36] requests, you post filter them and you count just the number of unique requests.
+[5010.36:5016.36] These are the gray and black basically plots.
+[5016.36:5021.16] These when client sends to F plus 1, so each request is essentially going to be repeated
+[5021.16:5026.759999999999] F plus 1 times, duplicating F plus 1 times, multiple cases that are sometimes.
+[5026.759999999999:5028.92] And the black one is when client sends to all.
+[5028.92:5033.12] So it's going to be multiple cases even more times.
+[5033.12:5038.12] And here basically the good puts a difference is huge.
+[5038.12:5042.24] What is the impact of bucket rotation was the interesting problem because bucket rotation
+[5042.24:5046.92] is what makes the things work in the end.
+[5046.92:5051.36] And it's very, very interesting because you see the kind of bogus in blue.
+[5051.36:5055.599999999999] So basically where I'm stopping with the cursor, if you see my cursor here, what I'm
+[5055.599999999999:5060.76] stopping here is the peak throughput of mere without rotation.
+[5060.76:5069.12] So it's one that wouldn't tolerate wouldn't provide lineness, wouldn't tolerate censorship.
+[5069.12:5073.5199999999995] And the mere basically without optimization and with rotation is here.
+[5073.5199999999995:5076.92] So the penalty of rotation is really small.
+[5076.92:5077.92] And that's really nice.
+[5077.92:5080.5599999999995] So these are classical items, the throughput plot.
+[5080.5599999999995:5084.72] And in the lower parts of the throughput plot, you can see actually was the typical latency
+[5084.72:5086.48] of such a protocol.
+[5086.48:5091.599999999999] So recall, so here this experiment is on 16, 16 data centers.
+[5091.599999999999:5097.32] And for the entire like, you know, we are working on this three phase, EVFT protocol and
+[5097.32:5101.84] it actually needs to commit, you have all things going in parallel and you are still committing
+[5101.84:5106.44] that the order of 1.5 seconds with low throughput.
+[5106.44:5111.84] PVFT would do better because it's like the latency in a very low throughput of PVFT
+[5111.84:5113.36] would be better.
+[5113.36:5119.08] But essentially, you're paying certain price in latency for much higher throughput.
+[5119.08:5124.2] And this is the protocol that we are basically so now transitioning from our concept to production
+[5124.2:5127.84] of EVFT livers.
+[5127.84:5131.04] And I included some links for you to watch here.
+[5131.04:5135.96] So she just said 16, 45 at latest and like this is in minutes like that.
+[5135.96:5138.76] So sorry for that, but this concludes my talk.
+[5138.76:5139.76] Thank you very much.
+[5139.76:5140.76] Okay, that's okay.
+[5140.76:5144.8] Again, as I told the students earlier, this is a good opportunity to see what you guys
+[5144.8:5149.96] are doing and then hopefully some of them might contact you for.
+[5149.96:5151.76] Yeah, please anytime.
+[5151.76:5157.56] I mean, I kind of hate this way of interaction, but like it's just me delivering the messages
+[5157.56:5162.56] that is not much interaction, but yeah, really hope this ends soon and we can, you know,
+[5162.56:5166.76] I can come and give lectures live and meet students and so on.
+[5166.76:5168.56] So here are some questions.
+[5168.56:5174.320000000001] I don't know, some of them maybe have been replied to, but let me just ask you the questions.
+[5174.320000000001:5175.320000000001] Yes.
+[5175.320000000001:5181.08] Is the signature optimization only performed for client messages and how about the signatures
+[5181.08:5184.5199999999995] for the rest of replica messages throughout the past?
+[5184.5199999999995:5185.5199999999995] Ah, great question.
+[5185.5199999999995:5187.04] We don't have them.
+[5187.04:5188.68] So there are two versions of PDFT.
+[5188.68:5195.76] One is with signatures in OSDI to 1999 and the talks version in 2002, which we were building
+[5195.76:5198.76] has actually no replica signatures whatsoever.
+[5198.76:5199.76] Okay.
+[5199.76:5204.4] So it's just point to point TLS about the indicator channels.
+[5204.4:5205.4] Okay.
+[5205.4:5207.4] Another question from Alexander.
+[5207.4:5211.719999999999] What's the typical number of nodes in a hyperledger fabric?
+[5211.719999999999:5214.599999999999] On the graph, it seems to say 100 nodes.
+[5214.599999999999:5219.4] However, I can imagine that these networks can become larger.
+[5219.4:5220.4] They can.
+[5220.4:5227.32] So when we started with, you know, when should we stop evaluating when, what are we targeting
+[5227.32:5228.32] with the design, etc.
+[5228.32:5232.12] Because if you need, if you need tons of thousands of nodes, you would be probably using
+[5232.12:5234.44] a bit different techniques.
+[5234.44:5237.16] It's interesting to see where this transition is.
+[5237.16:5245.48] Also to answer the question, most have like up to few dozen before ordering service nodes.
+[5245.48:5248.48] But so we call that there is steering in hyperledger fabrics.
+[5248.48:5250.72] We have ordering service nodes and peers.
+[5250.72:5252.72] So peers, you can scale more easily, right?
+[5252.72:5256.36] So we showed 100 nodes even in the euro's paper that's easy.
+[5256.36:5260.5199999999995] But the ordering service, you know, was to become a bottleneck immediately as it crossed
+[5260.5199999999995:5263.32] 10 nodes with state of the artworks.
+[5263.32:5264.88] So we needed to do something with it.
+[5264.88:5267.4400000000005] And we said, okay, we are going to throw up to 100.
+[5267.4400000000005:5272.24] Actually, this protocol works with more than 100 in the extreme case.
+[5272.24:5280.0] But if you ask me whether it worked for 1000, I would say, you know, there is some transition
+[5280.0:5283.72] basically maybe to sampling or something like that that you will need to consider.
+[5283.72:5284.72] So this is interesting topic.
+[5284.72:5289.84] It's not on IBM's first, as the first item on the agenda because we are not facing
+[5289.84:5290.84] the networks.
+[5290.84:5292.64] We want even thousands of nodes at the moment.
+[5292.64:5296.08] And for me, of course, this is a very, very interesting problem.
+[5296.08:5301.280000000001] I don't see anything else.
+[5301.280000000001:5303.4800000000005] I don't see anything else.
+[5303.4800000000005:5309.200000000001] So as I said, those who make me that some point to do a master thesis or I don't know,
+[5309.200000000001:5310.200000000001] internships as well.
+[5310.200000000001:5312.96] So IBM Zurich is an option.
+[5312.96:5313.96] Yes, yes, it is.
+[5313.96:5314.96] Please be me.
+[5314.96:5321.360000000001] We have limited, we don't have unlimited number of slots, but we do have slots and we
+[5321.36:5323.08] have them every year.
+[5323.08:5326.08] The earlier you contacted me, the better.
+[5326.08:5331.44] So if there are no positions, you know, we may ask you to keep your city at hand.
+[5331.44:5334.799999999999] Yeah, so feel free to write it.
+[5334.799999999999:5339.599999999999] So I will send you Mark who, there is another question.
+[5339.599999999999:5344.679999999999] Isn't there an indistinguishability issue with this signature optimization?
+[5344.679999999999:5349.12] How is F plus one very fires of its efficient?
+[5349.12:5355.16] So you modify the protocols in a sense that you require when you're waiting for these
+[5355.16:5357.12] forum confirmations.
+[5357.12:5360.12] So we said you're waiting for two T plus one.
+[5360.12:5362.36] On the time.
+[5362.36:5369.24] You wait for all T plus one of very first plus T of other guys.
+[5369.24:5373.2] So this is very nice question, very great question.
+[5373.2:5374.2] Okay, good.
+[5374.2:5379.48] And notice that the optimization is applied only when all nodes are delivered.
+[5379.48:5380.48] So it's very specific.
+[5380.48:5389.36] Okay, so I will send you the names of the two students who left before the end so that
+[5389.36:5392.5599999999995] if they apply for internships, whatever you can just.
+[5392.5599999999995:5398.2] Okay, I have not actually seen anything because I see only my thing.
+[5398.2:5399.2] It was a joke.
+[5399.2:5405.12] So thank you so much, Marco, and we can discuss at some point later and let me also tell
+[5405.12:5411.12] the students that next Monday would also be devoted to blockchain, but now to the competition
+[5411.12:5417.5599999999995] to startups and they will be too back to back very competing alternatives.
+[5417.5599999999995:5423.24] One presented by even an opinion from the affinity, which is a startup in Zurich located
+[5423.24:5424.44] in Zurich and California.
+[5424.44:5427.36] They claim to have something amazing.
+[5427.36:5434.679999999999] You'll see and right after her talk, they will be another competitor from Tendermint,
+[5434.679999999999:5435.679999999999] which is a company.
+[5435.679999999999:5436.679999999999] I don't know.
+[5436.679999999999:5442.16] It's Canada, I think it's from Canada and it's also based in Switzerland and the one who
+[5442.16:5444.36] will be given the talk.
+[5444.36:5451.16] Just just ask advice to students ask Adi about Tendermint single-leather bottlenecks
+[5451.16:5453.16] from what you learned in this course.
+[5453.16:5456.679999999999] Okay, so the presenter will be a mother from the student of the lab.
+[5456.68:5461.0] He is PhD in the lab and who is working with them now and he will tell you.
+[5461.0:5467.64] So you will have two other perspectives on how people implement blockchain mic protocols
+[5467.64:5471.4400000000005] and you can compare with hyper fabric and make your own life.
+[5471.4400000000005:5477.84] Okay, so thank you all and again, relax about the project and don't be too upset with
+[5477.84:5478.84] the TAs.
+[5478.84:5479.84] You can be upset with me.
+[5479.84:5483.12] Have a nice afternoon and Marco, thanks so much.
+[5483.12:5486.88] Thank you very much.
+[5486.88:5488.88] Hope to see you live next year.
+[5488.88:5518.84] Yes, yes, I hope to even be for next year.

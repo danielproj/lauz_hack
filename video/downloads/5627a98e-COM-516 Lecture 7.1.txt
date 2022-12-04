@@ -1,0 +1,198 @@
+~COM-516 Lecture 7.1
+~2020-09-29T22:36:10.184+02:00
+~https://tube.switch.ch/videos/5627a98e
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:9.32] Hello. So let me start by reminding you what we have seen in the previous two weeks.
+[9.32:15.4] We have seen the theorem that is in front of you that says something about the rate of
+[15.4:23.64] convergence per mark of change toward equilibrium. And we have seen in particular this rate of
+[23.64:32.08] convergence is dictated by this lambda star coefficient, which is the largest eigenvalue
+[32.08:45.760000000000005] in absolute value among all the eigenvalues of the matrix P, which are not one. And we have
+[45.760000000000005:50.760000000000005] seen therefore that we have this exponential decay. In this case where the chain is
+[50.76:59.32] ergodic, the state space is finite and we have detailed balance. Now the question is the
+[59.32:65.0] question that we want to address today is is it the end of the story? So it seems that
+[65.0:70.92] when you are proven in exponential decay, it seems that you are done, you have done the
+[70.92:76.47999999999999] most you can do about proving that something goes to zero, exponential decay seems like
+[76.48:92.96000000000001] a very good result. But as you will see, this is not the end of the story. So and in order
+[92.96000000000001:103.24000000000001] to try to understand when does this bound provide us something which is the best possible
+[103.24:112.11999999999999] for a problem and when it's not the case, we have to go for a matching lower bound. So
+[112.11999999999999:120.72] the first part of this course will be about the quest for a matching lower bound. Of course,
+[120.72:129.04] if we find a lower bound that is matching with the upper bound, then it says that we
+[129.04:136.72] are done, right? We have essentially proved that the upper bound is tight. Of course, we
+[136.72:147.76] are not going to get an exact matching lower bound. Let's see what we will get. So
+[147.76:159.0] partially let me state first what we will directly, what we will get. So this I can state as a
+[159.0:176.23999999999998] theorem which goes as follows. So under all the assumptions of the previous page,
+[176.24:202.12] and the additional assumption, that okay. So now I'm going, this assumption is a specific
+[202.12:206.8] one. It sounds like something very particular, but actually it's not. I mean, we will see
+[206.8:211.36] that the cases we have in mind, it will be satisfied for many cases. This assumption
+[211.36:219.8] will be verified as soon as you have some symmetry going on. But okay. So the additional
+[219.8:224.92000000000002] assumption is the following. It's an assumption on the eigenvectors of the matrix phi. So remember,
+[224.92000000000002:229.4] the lambdas are the eigenvalues of the matrix P. Sorry, the eigenvectors of the matrix
+[229.4:237.6] P. So the lambdas are the eigenvalues of the matrix P and the phi that we had last time
+[237.6:244.12] were the eigenvectors. So we are going to assume that these eigenvectors, they all have
+[244.12:254.96] a first component which is equal to one in absolute value. And also that all their other
+[254.96:268.12] components are less than one for every J in S. And this holds in general for every K between
+[268.12:274.44] zero and capital N minus one. So remember, K here is the index related to the index of
+[274.44:281.8] the eigenvector. And each eigenvector has a component in S. Okay. The J is here. Okay.
+[281.8:288.92] So we assume that for J equals zero, we have in absolute value and eigenvector which is
+[288.92:295.0] equal to one. And all the other phi J K should be less than equal to one for every K. Okay.
+[295.0:300.12] That's kind of a technical assumption to get something clean if this assumption is not
+[300.12:306.24] satisfied. We can get something also. But okay, let me just state it. You will see it's
+[306.24:311.36] not going to, it's not because of this technical assumption that we will guarantee that we have
+[311.36:317.0] a matching no bond or not as you will see. Okay. So for now, I'm perfectly aware that
+[317.0:324.32] this sounds like Mr. Euse, but stay with me and you will, you will be convinced I hope.
+[324.32:334.28000000000003] Okay. So under this additional assumption, it holds that the very same total variation
+[334.28:342.03999999999996] distance that we had before. Now, just that remark that here, I'm considering particular
+[342.03999999999996:346.64] I. So I'm considering the case I equal zero. Okay. And if I want to prove something for
+[346.64:351.79999999999995] an I, which is not equal to zero, then I should assume that phi K is equal to one. Okay.
+[351.79999999999995:358.0] I'm just going to, I'm just going to say, okay, we focus on the initial state being zero
+[358.0:365.52] of state. And okay, we can always name one state to be the state zero. So there is absolutely
+[365.52:373.56] no problem in assuming this. Okay. Then under this assumption, it holds that this total
+[373.56:381.24] variation distance can be lower bounded by non-dustard to the end over two. So if you compare
+[381.24:390.84000000000003] to the previous result, the only difference here stands in this, here we have this square
+[390.84000000000003:400.52] root of pi i factor. Okay. But for the rest, we have more or less the same formula. Okay.
+[400.52:409.76] So this sounds like a nice general matching lower bound. But we are going to see that
+[409.76:414.08] this factor of square root of pi i, which is missing in the lower bound, sometimes is
+[414.08:421.48] crucial. And when this, for some change, this pi i doesn't make a difference. For some
+[421.48:427.03999999999996] other change, it does. Okay. Yeah, I say pi i, but here it should be, or square root of
+[427.03999999999996:430.68] pi i, but here it should be square root of pi zero. Because of course, we have chosen
+[430.68:436.36] i is equal to zero. Okay. So we are missing the one over square root pi zero here. And
+[436.36:446.88] okay. And you will see that sometimes it's quite important to have this. This is a big
+[446.88:457.2] difference. Okay. So now I would like to prove to you this lower bound before we move on.
+[457.2:465.68] And for this, I need to start first with a small reminder about the total variation distance
+[465.68:472.68] because, so a reminder here, something you have seen in a previous exercise, but okay,
+[472.68:483.48] let me, now we are going to use it completely. So we have this, we have possible definitions
+[483.48:489.04] of the total variation distance. One is between two distributions, mu and mu. One is this,
+[489.04:499.20000000000005] right? Some of mu i minus mu i in absolute value. We have also seen that this could be
+[499.20000000000005:504.32000000000005] written as the maximum or the supremum. I don't know if I wrote maximum or supremum,
+[504.32000000000005:512.24] but okay, let me, let me, let me, let me, let me write it as a supremum here, although
+[512.24:525.64] all subset of s of mu of a minus mu of a, we remember that mu of a is the sum of i in
+[525.64:533.32] a of mu i. And there is a third characterization of this total variation distance, which
+[533.32:545.2] is given by half times the supremum over all functions phi from s to minus 1 plus 1,
+[545.2:554.6800000000001] to the interval minus 1 plus 1, of mu of phi minus mu of phi. And what is mu of phi here,
+[554.68:568.0799999999999] mu of phi is the sum of i in s of mu i phi i. So if, and same for mu of phi of course,
+[568.0799999999999:574.64] with, with mu i replacing mu i. Okay, so we have these three characterization of the, of
+[574.64:581.1999999999999] the total variation distance. And the third characterization here is the one we are going
+[581.2:603.24] to use to show the, the, the result. So here's how the proof goes. Let me, first, just
+[603.24:611.04] write what, what is this, just rewrite this third characterization of the total variation
+[611.04:619.6800000000001] distance. So this is going to be half times the supremum over all functions phi such
+[619.68:637.2399999999999] that going from s to minus 1 plus 1, of p 0 n of p minus pi of phi. Okay, and here we
+[637.2399999999999:644.12] have, why is it interesting to have this characterization of the total variation distance
+[644.12:650.52] in order to find a lower bound? Because here we have a supremum. And of course, now if
+[650.52:658.08] we want to get something which is smaller, we can just go and look for the functions
+[658.08:664.0] phi that leads to, you know, we can construct a function phi that will, that will give us
+[664.0:668.24] the best, the best possible lower bound, right? If you find the right function phi, the
+[668.24:674.0] one that achieves close to the supremum, we will get to, of course, we will get a lower
+[674.0:680.36] bound. And if we are careful in the choice of phi, we will, we will get, we will get something
+[680.36:687.72] which is a good lower bound. And what kind of function phi will, we consider here? Well,
+[687.72:694.28] we will consider function phi, which is actually an eigenvector of the matrix p. Therefore,
+[694.28:701.6] the computation of p 0 n of phi will, will be an easy computation. And why can we do that?
+[701.6:706.56] Because we have just assume about the, the eigenvectors and let me go back here. We have
+[706.56:712.28] assumed about the eigenvectors that in absolute values, these eigenvectors, they are all
+[712.28:718.0] less than one, right? Every component is less than one in absolute value. So indeed, this
+[718.0:724.36] function phi, we, we can view these eigenvectors as function phi from S to R, first thing to
+[724.36:732.84] observe, right? And this function takes value between minus one and plus one. So it is,
+[732.84:746.52] so here it's perfectly natural to replace this supremum by the one half times the supremum
+[746.52:757.92] over all values of k between one and n minus one, we are going to exclude phi 0, okay?
+[757.92:763.96] Because, okay, why? Actually, that's a good question. You can pause the video and realize
+[763.96:775.88] why, why we wouldn't like to use phi 0. I mean, I can always choose my eigenvectors as
+[775.88:780.12] I want. So I'm going just to choose all the ones that corresponds to eigenvalues which
+[780.12:786.84] are not lambda 0. But actually, if you think about it, if you do the computation, if you
+[786.84:794.36] will realize that when you plug here k equals 0 in this subtraction, then you get, you get
+[794.36:800.16] 0. The subtraction will just give you 0. So it gives us a little bound, but not someone,
+[800.16:805.28] not the one we are interested in, okay? So remember, this is really because we have assumed
+[805.28:815.3199999999999] that the phi jk are all less than equal to 1 for every j in s for every k, okay? So we can
+[815.3199999999999:824.76] do that. Okay, and now, let's see what expression we get for both this left hand side term
+[824.76:831.92] and this right hand side term. So perhaps notation is a bit troubling here, so let me just
+[831.92:840.24] go slowly about this. What is phi 0 and of phi k? By definition, it will be, you know,
+[840.24:845.28] the sum. What is the measure here? What is the distribution? It will be this distribution
+[845.28:860.8399999999999] at the time n of the chain, right? So this pn 0j, the entry 0j in the matrix p to the n,
+[860.8399999999999:868.9599999999999] which is this n step transition probability p0jn times phi jk, right? What I am writing
+[868.96:877.44] here is nothing but the definition that you have on the previous page, which is this one.
+[877.44:889.24] Okay, and as I said, this is nothing but the matrix pn multiplied by phi k in position
+[889.24:904.96] 0. And this is lambda k to the n times phi k0, because lambda k is an eigenvalue. We have
+[904.96:914.88] chosen phi k to be an eigenvector of p, so here we get lambda k to the n times phi k0.
+[914.88:923.88] Finally, if we compute phi of phi k, phi of phi k is, by the same definition, sum of
+[923.88:937.64] j, so phi j phi jk. And okay, here we will do another computation to get where we want.
+[937.64:954.76] And actually, I can rewrite this as sum of j in s of phi j phi jk times phi j0. I know
+[954.76:961.96] that the vector phi 0, phi 0 in parenthesis, this is the all one vector, so I just write
+[961.96:972.6800000000001] this, this is all equal to 1. And what is that? Well, if I transform these phi, remember
+[972.6800000000001:977.84] these phi's are transformation of u's, which are the eigenvectors of the matrix q related
+[977.84:989.4000000000001] to p, and these u's are orthogonal. So I can write this as this, because the factor
+[989.4:994.36] p j here, sorry, phi j can be decompositive to the square root of phi j times the square
+[994.36:1003.8199999999999] root of phi j, and this can be absorbed into the phi kj and phi 0j, and then I get this,
+[1003.8199999999999:1015.68] which is nothing but the scalar product of u k is u 0. And since I am assuming that
+[1015.68:1024.96] u k is orthogonal, since this was actually the origin of the u k are orthogonal, then this
+[1024.96:1031.9199999999998] is simply 0, phi vk, which is not equal to 0. And that is exactly what we have here.
+[1031.9199999999998:1038.6399999999999] So I let you check that if you choose k equal to 0 here, you will get not 0 in this second
+[1038.6399999999999:1044.6799999999998] expression here for phi of k, but the expression you will get compensates exactly the one,
+[1044.68:1052.52] you will get for p 0 n of phi k. So these two expressions will just be the same if you
+[1052.52:1062.44] choose k equal to 0. Okay, so remember here we are not assuming that k is equal to 0, so
+[1062.44:1069.28] that is what we get, because the vectors are orthogonal. And so what do we get at the end?
+[1069.28:1085.72] So this total variation distance p 0 n minus phi t v is equal to half times the supremum
+[1085.72:1094.3999999999999] over all values of k between 1 and n minus 1 of, well actually, so the second term is
+[1094.4:1101.4] 0, the first term is this one, so we get the absolute value of lambda k to the n times
+[1101.4:1111.8000000000002] phi 0 k. And of course, a product, eigenvalue of a product is the eigenvalue, sorry, absolute
+[1111.8000000000002:1120.1200000000001] value of a product is the product of the absolute values, and this is equal to 1 also by assumption.
+[1120.12:1132.52] And so we get that this is equal to half time lambda star to the n. So we have proven the
+[1132.52:1145.12] proposition, we have proven this lower bound. Okay, so since we are done and unless for
+[1145.12:1152.9199999999998] this technical condition and this extra condition we have for the eigenvectors phi 0 k and
+[1152.9199999999998:1160.9599999999998] phi j k, and things that we have closed the shop in all cases, right, because we have
+[1160.9599999999998:1171.4799999999998] kind of a matching lower bound and upper bound. But that's not actually the case. So actually,
+[1171.48:1184.92] so what we find now, let me recap, so under all the assumptions made, under all the assumptions
+[1184.92:1205.5600000000002] made, we have lambda star to the n divided by 2 is less than phi 0 n i in the spy tv less
+[1205.56:1222.0] than 1 or a square root of phi 0 times lambda star to the n over 2. Okay, so now let's
+[1222.0:1229.0] look at this term carefully, because depending on the mark of chain, you're considering
+[1229.0:1238.88] this term might be quite innocent and therefore this upper bound that we have, this exponential
+[1238.88:1246.56] decay will actually be there quite kind of very close to what the total variation is doing.
+[1246.56:1251.44] So if you compute this total variation distance, you will get this exponential decay and you
+[1251.44:1259.64] will see it if you run numerical simulations. But in general, this is not the case. Let me
+[1259.64:1271.28] do the first case where things are, where actually we find something which is close. So first
+[1271.28:1290.52] example, let's consider this psychic on the mark. Psychic on the mark on the state-based
+[1290.52:1300.68] S which is 0, 1 up to capital N minus 1. And of course, we have to choose an odd otherwise
+[1300.68:1309.28] we don't have something ergodic and we also have to choose transition matrix which is
+[1309.28:1319.68] equal to, which is symmetric, right, which is Pij, if J is equal to either i plus 1 or i
+[1319.68:1330.52] minus 1, of course, modulo n. Okay. The computation of lambda star in this case gives the following
+[1330.52:1342.2] thing. It's cosine of pi over n. And this is roughly of the other of 1 minus pi squared
+[1342.2:1357.44] over 2n squared when capital N gets large. Okay. So, so where perhaps let me write it here.
+[1357.44:1368.76] So lambda star to the power n is roughly 1 minus pi squared over 2 capital N squared to
+[1368.76:1378.0] the power n which is roughly when capital N is large exponential minus little n pi squared
+[1378.0:1383.88] over 2n squared. This is the approximation 1 minus x is approximately e to the minus
+[1383.88:1397.3600000000001] x. Okay. Okay. So what does now the two inequalities say in this specific case? So we have
+[1397.3600000000001:1407.5200000000002] that 1 half times exponential minus n pi squared. Of course, approximately, but again, this
+[1407.52:1420.2] approximation is very accurate for large values of capital N. We get this. So what is pi
+[1420.2:1426.56] 0? Well, the uniform distribution over s is the stationary distribution here. So pi
+[1426.56:1438.0] 0 is of other 1 over n. So here we will get square root of n over 2 times exponential minus
+[1438.0:1449.12] n pi squared over 2 capital N squared. And indeed, in this case, what do we observe? We
+[1449.12:1457.0] observe that the difference between the upper and the lower bound is not much. Actually,
+[1457.0:1462.1999999999998] oh, I should have said that, of course, we didn't mention anything here, but if you compute
+[1462.1999999999998:1469.32] the eigenvectors and eigenvalues of the matrix P in this setup, we have a very symmetric
+[1469.32:1475.76] situation here. And indeed, the additional assumptions I made before are satisfied. I mean,
+[1475.76:1482.0] you have eigenvectors, which are always less than 1 in absolute value. So you can check
+[1482.0:1489.8799999999999] that. We are in a good situation here. Okay. And so here we have an upper and lower bound
+[1489.8799999999999:1497.92] that do match. And actually, when for what values of little n does this expression become
+[1497.92:1508.3200000000002] small, this will be the case when, well, n, notice for this to be small, then this is
+[1508.3200000000002:1518.92] when n is say a bit bigger than n squared. When is this expression small on the right
+[1518.92:1524.3600000000001] hand side? Well, perhaps it's going to be small slightly different because there is this
+[1524.36:1531.6] factor squared of capital N in front. So here you would need probably n bigger than capital
+[1531.6:1540.12] N squared log n. You can check this slowly. If you only get little n, which is of all
+[1540.12:1544.9599999999998] the capital N squared, you will make the exponential small, but then there is the factor squared
+[1544.9599999999998:1551.1999999999998] of N in front. So if you want the whole thing to be small, this little n should have an
+[1551.2:1558.44] extra log n factor. So as to, you know, kind of kill this square root of N and make sure
+[1558.44:1566.0800000000002] that the whole thing gets small here. So what does that say? Well, it says that the mixing
+[1566.08:1582.36] time of this mark of chain, so mixing time of this mark of chain will be for epsilon,
+[1582.36:1590.0] for a fixed epsilon, will be of the order of, you know, something between all of N squared,
+[1590.0:1598.76] perhaps I should write it like this, something between all of N squared and all of N squared
+[1598.76:1605.68] log n. Yeah, okay. So here there is a log n discrepancy between the two, the two bounds,
+[1605.68:1614.24] but essentially around capital N squared time, that's the time where the, the, the convergence
+[1614.24:1619.88] to equilibrium has happened. If you wait for capital N squared step, so you let, you let
+[1619.88:1626.8000000000002] this cyclic random log evolve, there are n states to explore. If you let it evolve for capital
+[1626.8000000000002:1633.0400000000002] N squared steps, or perhaps slightly longer capital N squared log n, you will see that
+[1633.0400000000002:1640.6000000000001] you get close to the, to the stationary distribution, which is the uniform distribution. And,
+[1640.6:1651.08] okay, and this decree, this decay will happen more or less at an exponential rate, as written
+[1651.08:1655.9599999999998] here. Okay, so here in this situation, the difference between the lower bound and the
+[1655.9599999999998:1663.8] upper bound is minimal. And indeed, this analysis that we have done then tells the, the end
+[1663.8:1674.8] of the story. Okay, so now in the next video, I want to show you a situation where actually
+[1674.8:1681.84] it's not the case, and where the, the, this, this factor here, one of the scrolls pi
+[1681.84:1690.04] zero, as innocent as it might sound, creates a huge gap between the lower bound and the
+[1690.04:1695.24] upper bound. And indeed, in this situation, something completely different happens, which
+[1695.24:1725.2] is called the cutoff phenomenon. So, we will see this in the next video.

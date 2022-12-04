@@ -1,0 +1,51 @@
+﻿@using GinasApp.Data
+@using GinasApp.Services.Interfaces
+@inject IGptService GptService
+
+<div class="card" style="border-radius: 15px;">
+    @if (_explanatoryResponse != null && ExplanatoryRequest != null)
+    {
+        <div class="card-header align-items-center" style="height: 40px; border-radius: 15px;">
+            "@ExplanatoryRequest.Term" based on context is:
+        </div>
+        <div class="card-body">
+            <p>@_explanatoryResponse.Explanation</p>
+        </div>
+    }
+    else
+    {
+        <div class="card-header" style="height: 40px; border-radius: 15px;">
+            <p>Highlight the text in the file</p>
+        </div>
+    }
+</div>
+
+
+@code {
+
+    [Parameter]
+    public ExplanatoryRequest? ExplanatoryRequest { get; set; }
+
+    [Parameter]
+    public string UserId { get; set; }
+
+    [Parameter]
+    public string SessionId { get; set; }
+
+    private ExplanatoryResponse? _explanatoryResponse;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (ExplanatoryRequest == null) return;
+        if (string.IsNullOrWhiteSpace(ExplanatoryRequest.Context))
+        {
+            _explanatoryResponse = new ExplanatoryResponse { Explanation = "Could not get a context." };
+            return;
+        }
+
+        _explanatoryResponse = new ExplanatoryResponse { Explanation = "Nostoi in the archives ..." };
+        _explanatoryResponse = await GptService.GetExplanatoryAsync(UserId, SessionId, ExplanatoryRequest);
+        StateHasChanged();
+    }
+
+}

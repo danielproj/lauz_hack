@@ -1,0 +1,1116 @@
+~Lecture 4 (2021)
+~2021-10-11T16:30:36.134+02:00
+~https://tube.switch.ch/videos/LPlnvJIJ3k
+~EE-556 Mathematics of data: from theory to computation
+[0.0:7.0] Oh, right.
+[7.0:12.0] It's a bit of a technical issue.
+[12.0:18.0] For some reason, the Vibina option is no longer available in my Zoom account.
+[18.0:23.0] The Vibina is down.
+[23.0:25.0] You lucky here.
+[25.0:30.0] Currently, I think some of your colleagues and friends might be in contact.
+[30.0:38.0] I did send an email to EPL IT admin, just as well as almost room for EPL.
+[38.0:44.0] I don't think they're going to get it up in the next two minutes.
+[44.0:50.0] So I can have like an emergency room, room, room, room, room, room, room.
+[50.0:57.0] I need to try and how was your weekend?
+[57.0:60.0] Good.
+[60.0:70.0] Mine was okay. Thanks for asking.
+[70.0:83.0] So today, for this week, we begin the homework, business, and Friday.
+[83.0:89.0] The first homework.
+[89.0:93.0] The idea is that we go to these computer labs in PC.
+[93.0:99.0] And the thing is, the whole thing is the speed lab.
+[99.0:107.0] It is not taken over by certain guys.
+[107.0:116.0] And the idea is that you will see that the homework is set up for three weeks.
+[116.0:120.0] And you can see the natural split with three parts on it.
+[120.0:129.0] The idea is that if you paste yourself in the first week, you finish the first parts, second week, second part, same.
+[129.0:134.0] These are the third parts.
+[134.0:139.0] Now, you're allowed to pull each other for the homework.
+[139.0:142.0] But don't copy each other.
+[142.0:152.0] It's one of the things that the TAs are checking.
+[152.0:158.0] If you copy each other and you're not acknowledging, you will get a zero for the homework.
+[158.0:160.0] You repeat this all times.
+[160.0:166.0] The second time, you will get a zero for this course.
+[166.0:175.0] Please don't make me do a little bit of copying and escalating, shooting, and so on.
+[175.0:180.0] Just if you work with each other, acknowledge that you work with each other.
+[180.0:183.0] And then write you also, which I'm pleased.
+[183.0:186.0] I'm not preventing you from collaborating.
+[186.0:190.0] We like to collaborate.
+[190.0:200.0] But while handing in your own work, it needs to be your own, for your own credit.
+[200.0:202.0] Yeah, for your own great.
+[202.0:205.0] Is that clear?
+[205.0:209.0] Again, you're allowed to work with each other.
+[209.0:213.0] You can acknowledge the person that you work with.
+[213.0:220.0] I work with this person for this solution in the discussion.
+[220.0:223.0] Perfectly fine.
+[223.0:233.0] But if you find things that are just like directly copied, I repeat also for the people that are coming in.
+[233.0:240.0] First, you will get a zero for the homework, which is two points for this very first homework.
+[240.0:245.0] You do this one more time, it is zero for the course.
+[245.0:249.0] Not even one.
+[249.0:252.0] I understand this not what you want to hear.
+[252.0:257.0] This beautiful Monday morning, the best Austin weather.
+[257.0:273.0] It is.
+[273.0:276.0] Now, we will be back to regular schedule.
+[276.0:280.0] So on Monday, there will be lectures.
+[280.0:286.0] There will be another reservation of the turning later off.
+[286.0:293.0] I will be talking about some of the new working of the running when we do the lectures and the two of the stations.
+[293.0:299.0] I plan to do another reservation on some of the topics.
+[299.0:302.0] And metal learning.
+[302.0:308.0] For this year, there will be something on.
+[308.0:319.0] I will be talking about the training.
+[319.0:326.0] I hope you have a good time.
+[326.0:331.0] I hope you enjoyed the material.
+[331.0:337.0] Any questions?
+[337.0:340.0] Okay.
+[340.0:351.0] Now, so the way we've been covering the class, we talked about today's first time models.
+[351.0:354.0] Yeah, we wrote down some statistical models.
+[354.0:355.0] Interesting.
+[355.0:360.0] We talked about how to write optimization problems that is very nice.
+[360.0:366.0] And then we slowly kind of called into this algorithmic realm and started talking about algorithms,
+[366.0:369.0] so we talked about the algorithms.
+[369.0:379.0] And I said, these algorithms are great but maybe they're not optimal for certain structural assumptions that you can make on your objectives.
+[379.0:384.0] And then we talked about things like accelerated training to send.
+[384.0:389.0] And then we were kind of back to things like gradient to send and so cast gradient to send.
+[389.0:392.0] When we talked about non-found X problems.
+[392.0:402.0] So take a, again, look at this table that I provided the end of last lecture where I talked about low bounds for.
+[402.0:405.0] Minimization problems, certain structures.
+[405.0:415.0] Even the finite some structure gives you additional structure and you should be able to converge faster, which is very important.
+[415.0:422.0] And maybe we'll give out some sort of handout.
+[422.0:426.0] Because one of my group members compiled a nice.
+[426.0:432.0] This also for me, next round, if you will also discuss your own in this particular class.
+[432.0:435.0] So that you can have it, you know, just hang it on the wall.
+[435.0:438.0] Take a look at it and we design an algorithm.
+[438.0:443.0] You'll better about yourself because your algorithm is mentioned below about, for example, you know,
+[443.0:446.0] the safer.
+[446.0:455.0] So from the algorithms, we're going to get back to models because so far, you notice one of the key.
+[455.0:462.0] Structure that I've been relying on so far, we've been relying on so far was.
+[462.0:470.0] And from time to time, I try to remind you all that, you know, many of the two thirding problems.
+[470.0:475.0] In fact, the deep learning problems that I defined in the day for slager.
+[475.0:482.0] When you put things like values in your neural networks, you don't have it.
+[482.0:488.0] And what I want to do today is to argue that oftentimes we want to have notes.
+[488.0:495.0] If you're in data source, which is where things like known smooth models,
+[495.0:504.0] how can I want to, what I want to do today is to use these mouse with models using something called compressive sensing is a running example.
+[504.0:508.0] So anybody heard about compressive sensing before.
+[508.0:511.0] No, first.
+[511.0:512.0] All right.
+[512.0:518.0] So set it up for a ride then.
+[518.0:519.0] Okay.
+[519.0:521.0] So.
+[521.0:525.0] Here is the outline for today.
+[525.0:530.0] As I mentioned, I'll talk about the deficiencies of smooth.
+[530.0:534.0] Signal vector matrix tensor models.
+[534.0:538.0] The seems to be a common deficiency.
+[538.0:544.0] And then what we're going to do is talk about a very important size signal model volts, varsity.
+[544.0:550.0] I think some of you may have heard about this particular word, varsity.
+[550.0:552.0] Yeah.
+[552.0:560.0] Actually, today, the number of people with the number of species not that far.
+[560.0:562.0] They're interesting.
+[562.0:566.0] Last year was extremely far.
+[566.0:569.0] Nobody else.
+[569.0:578.0] And then we'll talk about what happens when you like to import these structures with the same norms.
+[578.0:581.0] And this is where I would use it from a cone perspective.
+[581.0:586.0] And then we're going to talk about non smooth minimization with the subgradient.
+[586.0:588.0] All right.
+[588.0:594.0] Now let's begin with a stylized example.
+[594.0:599.0] We've been talking about the organization of a function.
+[599.0:605.0] Now, you know, the function that we were considering the smooth.
+[605.0:611.0] But let's say what what happens if you want to minimize a bunch of smooth functions out.
+[611.0:616.0] And let's see if it comes.
+[616.0:621.0] So here's it here it is. Sorry. So let's say we have K functions.
+[621.0:627.0] And we want them all to be small.
+[627.0:629.0] Natural approach.
+[629.0:635.0] In some cases, it's the minimize the maximum.
+[635.0:646.0] Right. Does that make sense?
+[646.0:650.0] So in this particular case, there are some.
+[650.0:653.0] It's animating circumstances with all of them are convex.
+[653.0:667.0] And the maximum of from the functions is still convex, which is any need, you know, like you can make up functions like this.
+[667.0:674.0] And if you were to take the maximum.
+[674.0:677.0] It will be convex.
+[677.0:687.0] And the bad news here is that even if all of them are smooth, the maximum is not.
+[687.0:695.0] In general, unless we align the things that we still have a smooth function, you will end up having these king.
+[695.0:698.0] There are on that.
+[698.0:707.0] So use another three theory example.
+[707.0:713.0] The maximum of these functions is now.
+[713.0:716.0] Sorry, smooth form extensions.
+[716.0:729.0] All right, now.
+[729.0:737.0] I'll give you another notation, which could be the basis for the so called success.
+[737.0:742.0] So now, let's consider the classical linear regression problem where we have an unknown two parameter, it's natural.
+[742.0:748.0] Okay, increasing measurements here.
+[748.0:757.0] So in this particular case, just a couple notation, the matrix A is known to all the entries in this particular matrix is known.
+[757.0:761.0] It's an N by P matrix.
+[761.0:769.0] So P is the ambient dimension of the unknown factor ex superometer, ex natural.
+[769.0:772.0] N is the data size.
+[772.0:777.0] So the dimension of B is N by one.
+[777.0:783.0] And then we have some.
+[783.0:788.0] Now, how do we solve this problem?
+[788.0:798.0] Now, in general, if the columns of the matrix are not in general space.
+[798.0:801.0] It is ranked efficient.
+[801.0:808.0] You can use the three in the most and that could be need to put solutions.
+[808.0:812.0] But oftentimes.
+[812.0:819.0] If N is greater than or equal to P and that.
+[819.0:825.0] The columns in sorry, in this particular case, yes, columns are independent.
+[825.0:831.0] And we will have a neat solution, which is given by the student inverse.
+[831.0:838.0] And so a see the inverse D, the give you the solution.
+[838.0:845.0] Now, within the space, we also talked about what is called as the lattice and it is absolute deviation system or there.
+[845.0:854.0] And if you remember, even if you set this up to Gaussian, known sometimes using other estimators, maybe an advantage in James time estimator example was one that I gave.
+[854.0:860.0] You guys in this class, actually, a was identity.
+[860.0:873.0] Right. Even if you have Gaussian noise, it is there to take the vector and scale is slightly down the mistake to the dimension using James sign estimator, which uniformly dominate maximum likelihood.
+[873.0:886.0] So you can use other estimators, be minus a X one on in which phase, we will be more robust against the outliers in the noise.
+[886.0:890.0] That's wrong.
+[890.0:896.0] Now, this will give you less chance to be to find noise values, which is good.
+[896.0:905.0] You know, why not do this all the certain time, then.
+[905.0:909.0] If one formulation is giving you an advantage, clearly it is better.
+[909.0:915.0] So if you buy your Porsche, why not get the former package?
+[915.0:920.0] You do some advantages, but you pay for it. Right.
+[920.0:929.0] So the question is what are we paid for maybe having a better estimator.
+[929.0:932.0] All right.
+[932.0:937.0] Now, this number of the franchise will be the payment.
+[937.0:943.0] So you can see that many of the other ones that we described before was certain efficiency, the announcement objective.
+[943.0:953.0] Because you, I mean, so I did mention this in challenges for realization, you have to make your success somehow go down to zero.
+[953.0:966.0] Meaning that even if you have some global rhythm or something like this, you may need to carefully approach it, which makes you slow down.
+[966.0:976.0] Now, I'm going to read this example, even if N is greater than two with one long rule, maybe certain efficiency.
+[976.0:983.0] If you need the naive methods, but what I want to focus on right now is.
+[983.0:991.0] I'm going to try to introduce this not smooth, just an artistic passion to gain certain advantages in the face of maybe star state.
+[991.0:1001.0] And if I will be interested in next utilize will be and is much less than key and that there are infinitely many solutions for this problem.
+[1001.0:1011.0] All right. Now, what I want to do is put this into the context trade offs, which is important to keep in mind.
+[1011.0:1018.0] Especially for many problems and data science, you need to understand the trade offs.
+[1018.0:1023.0] And there are many, yeah, there are many trade offs.
+[1023.0:1032.0] What I want to do is focus on some simple trade offs, which is statistical precision versus the computation of complexity.
+[1032.0:1037.0] All right. So if you recall, when we were doing optimization.
+[1037.0:1042.0] Okay, so we set up our model, linear model.
+[1042.0:1048.0] All right. We said that the state we have a two.
+[1048.0:1052.0] Problem in the fear interested if this is what the trade about.
+[1052.0:1059.0] And then we set up an estimator whose solution we did all this X star.
+[1059.0:1064.0] And this particular distance.
+[1064.0:1075.0] And then we set up a statistical precision.
+[1075.0:1086.0] But because of the way world works, we need to somehow make the soul, the problem to obtain this statistical estimator.
+[1086.0:1096.0] So what we really care about is the precision of your all words, we get to it. So whenever you stop to do all, this is what we care about.
+[1096.0:1104.0] What does an algorithm do? It starts with some initial point and it will try to get.
+[1104.0:1108.0] To this one. Yeah.
+[1108.0:1116.0] If you're if you stop your algorithm at any given points or let's say you stop it here.
+[1116.0:1122.0] At time key, you put it right this further. Why wouldn't you? Well, maybe you had a deadline.
+[1122.0:1127.0] You have to stop. Maybe you were paying for Amazon cloud.
+[1127.0:1130.0] Over budget to have to stop.
+[1130.0:1133.0] Or just raising.
+[1133.0:1136.0] There's nothing wrong with that.
+[1136.0:1148.0] So what we care is this distance 18 time that you stop your all word and how well we're going.
+[1148.0:1151.0] To this to parameter.
+[1151.0:1159.0] And I will say this like a book and record, but things like early stopping precisely.
+[1159.0:1167.0] And then I will say that picture because people argue that the early stopping would do regularization.
+[1167.0:1168.0] Maybe.
+[1168.0:1170.0] In fact, there's some theory packing.
+[1170.0:1176.0] This kind of things up. I think the night chisartism in fact, it's beautiful.
+[1176.0:1188.0] Theory that shows that when you do a TV training with neural networks, even though you do maybe some lazy training, you end up having a solution pack that will get close to the true parameter.
+[1188.0:1192.0] Or neural network. And then we'll deviate towards the empty K.
+[1192.0:1202.0] We need to find some jargons, but there are some theoretical backup of this kind of behavior.
+[1202.0:1203.0] All right.
+[1203.0:1212.0] So your practical performance in the end is determined by this particular distance.
+[1212.0:1222.0] And I mentioned this the composition of error, which we can simply apply to try and do the quality and what you have is this network error.
+[1222.0:1227.0] Something that you can be with more computation.
+[1227.0:1228.0] Yeah.
+[1228.0:1230.0] The station of your problem is comics.
+[1230.0:1235.0] No worries. More computation. More better.
+[1235.0:1241.0] And then the statistical error.
+[1241.0:1257.0] Now the statistical error side we did mention things like maximum likely estimators and then we did establish the distinct in particular behaves like spread of key divided by and what key is the end of the intervention for the parameter vector.
+[1257.0:1263.0] And and is the amount of data. So more data more better again.
+[1263.0:1265.0] Yeah.
+[1265.0:1272.0] But I think that this particular. It also shows you what the trade off is in terms of having more data means that.
+[1272.0:1281.0] Third iteration of the algorithm somehow will be coming maybe mildly on the data size.
+[1281.0:1284.0] And we think of an algorithm.
+[1284.0:1288.0] Okay. So suppose you're doing gradient percent and grows.
+[1288.0:1292.0] What happens to your first Asian tire. It goes up to 10.
+[1292.0:1295.0] And you think of an algorithm.
+[1295.0:1302.0] Where the rotation time does not necessarily depend on.
+[1302.0:1304.0] The data size.
+[1304.0:1306.0] That's really exactly.
+[1306.0:1310.0] But does that mean the total complexity of a series in the time of the data.
+[1310.0:1314.0] The size.
+[1314.0:1317.0] Not necessarily.
+[1317.0:1328.0] If you have a rate and oftentimes you will have the data size in the numerator.
+[1328.0:1332.0] Sometimes directly sometimes.
+[1332.0:1336.0] And if you want to figure out how it does people with the people that I showed you.
+[1336.0:1340.0] You can see the dimension dependencies.
+[1340.0:1347.0] Okay.
+[1347.0:1355.0] Now the thing that you want to yield out today is that when you have non-south estimators.
+[1355.0:1357.0] Meaning you just.
+[1357.0:1365.0] Okay. So suppose you're minimizing the least square error, but we add a bit of spice on it.
+[1365.0:1371.0] So you just come in sort of non-southness.
+[1371.0:1376.0] And what I will argue is that the physical error can go down from something like.
+[1376.0:1381.0] Where to P to N to something like this actually.
+[1381.0:1399.0] And there.
+[1399.0:1405.0] Now this improvement initially will look like it's going to require more computational cost.
+[1405.0:1413.0] But one of the breakthroughs I've posted a way to is that you will see in the next lecture.
+[1413.0:1415.0] Friday.
+[1415.0:1419.0] Friday's the third quarter homework.
+[1419.0:1430.0] Is that the big revelation was that it turns out that some of these last two thousands of conservative as efficiently as if they were smooth using something called box operator.
+[1430.0:1437.0] And this is something that you cover in this possible long.
+[1437.0:1439.0] Okay.
+[1439.0:1443.0] Now let's get into the difficulty.
+[1443.0:1447.0] Alright, so let's take the linear model and the least for estimator.
+[1447.0:1458.0] So we're interested in minimizing D minus a x squared in order to find this unknown to vector to parameter x natural.
+[1458.0:1466.0] Now if a has full column rank and the student was of a times these need to be defined.
+[1466.0:1469.0] An attack to send you very efficiently estimated.
+[1469.0:1473.0] And again, I will mention this again, a broken record.
+[1473.0:1477.0] If you interested in solving linear systems, take a look at the linear algebra supplementary.
+[1477.0:1485.0] I also talked about things like points of gradients, which is one of the most efficient ways to solve linear systems.
+[1485.0:1495.0] But right now, if you're doing this with, I don't know, your Python or MATLAB, whatever your favorite junior use things like last hack.
+[1495.0:1497.0] Any algebra.
+[1497.0:1505.0] Tax that have numerical like people work on these decades made them very immediately robust to.
+[1505.0:1515.0] Let's say errors and so forth. They careful in propagating errors so that you can get to solutions to these kind of problems.
+[1515.0:1520.0] But the issue here is that the end is less than P and a does not have full column rank.
+[1520.0:1527.0] You have infinitely many solutions, meaning that there exists.
+[1527.0:1530.0] I use H.
+[1530.0:1541.0] So there exists a non trivial sub space where if you take vectors from the sub space and multiply with a.
+[1541.0:1544.0] You get zero solutions.
+[1544.0:1550.0] So this means that if you think about it.
+[1550.0:1565.0] And any of these vectors in the North face. Yeah, so you multiply a times a student was plus H.
+[1565.0:1570.0] So the first notification is you work a.
+[1570.0:1584.0] This is that plus a times h zero.
+[1584.0:1589.0] There exists infinitely many solutions to this.
+[1589.0:1603.0] And as a result by taking vectors and stitching them towards wherever you like in that sub space, you can make the error arbitrary large.
+[1603.0:1613.0] I'm not saying that you could do this, but I'm saying you could or one.
+[1613.0:1620.0] Now sometimes it actually helps to see this dramatically.
+[1620.0:1628.0] So the point that I want to make is that when you have end measurements.
+[1628.0:1633.0] So remember this matrix is and by.
+[1633.0:1646.0] There's a t minus and dimensional sub space. That's good result in zero or the matrix a.
+[1646.0:1649.0] Sub space is both origin.
+[1649.0:1652.0] So when you actually.
+[1652.0:1654.0] Set this problem up.
+[1654.0:1662.0] So what you do is you shift that sub space on top of true solution.
+[1662.0:1671.0] So here we know that a x natural solar state noise the stays because it makes the notation easier on me.
+[1671.0:1681.0] So we know that this point satisfies the linear system a b is a times a maximum.
+[1681.0:1697.0] Normally if you are looking at a sub space, this would be the sub space of a sub space is both origin because you are multiplied by a also need to do so.
+[1697.0:1713.0] So the solution to the thing is systems actually the sub space shifted by.
+[1713.0:1729.0] So if you have three dimensions and one major ones and one and there exists a two dimensional sub space which is this type of plane.
+[1729.0:1746.0] Minus and one dimensional sub space. So type of plane.
+[1746.0:1761.0] And infinitely many solutions you can really take a solution are different large here. It will satisfy your.
+[1761.0:1769.0] Does this makes sense?
+[1769.0:1787.0] Now, one thing you can do is among all of these solutions picked one that has the minimal out to know.
+[1787.0:1802.0] What is this whole list or something like this? So the idea is.
+[1802.0:1817.0] So do people remember things like the nine to four years.
+[1817.0:1835.0] We have lectures nine ten eleven or ten eleven twelve that are just beautiful on this particular topic.
+[1835.0:1848.0] The way you find the solution you can think about it, you know, like to a metric be find the solution.
+[1848.0:1863.0] So if you start to shrink it, it's interesting. The smaller the out to bowl is the better because this is what you're trying to achieve find an X that minimizes the out to bowl.
+[1863.0:1870.0] And the solution would be the place where the out to bowl barely touches that type of plane.
+[1870.0:1880.0] Where it can be pretend it's a hundred planes. There's a lot of geometrical things to unpack here, but.
+[1880.0:1887.0] For my purposes, this lecture is to surprise. Let's call this our candidate solution.
+[1887.0:1900.0] It is what we have prevent what we prevent in this one is to pick a solution that can be arbitrarily far away.
+[1900.0:1905.0] It gives you some sort of an actual sale here.
+[1905.0:1913.0] Does this make sense? If you imagine I can simply pick any vector in the North Bay is multiplied by.
+[1913.0:1921.0] Google Flex or one of the random numbers.
+[1921.0:1927.0] The numbers are numbers that you cannot even write in color form. They're bigger than any color form.
+[1927.0:1933.0] You know, like large numbers, you absolutely have a super large air.
+[1933.0:1946.0] So what we do is put the sale. Pick the one that has the minimum amount to know that is to hang out around the origin.
+[1946.0:1949.0] If you remember my zero estimated story.
+[1949.0:1952.0] But this still fails and end is less than three.
+[1952.0:1956.0] What you can do is take this.
+[1956.0:1964.0] So now you're where you take a matrix populated with I ID Gaussian random entries.
+[1964.0:1968.0] The unit. Sorry.
+[1968.0:1970.0] Standard.
+[1970.0:1979.0] And what you can do is in fact, had a high probability bound on the distance of the estimator to the.
+[1979.0:1987.0] And then what you can establish is that the relative error.
+[1987.0:1999.0] For this extent candidates minus the two parameter.
+[1999.0:2012.0] We'll behave something like.
+[2012.0:2017.0] The thing I want to highlight here is the lower bound.
+[2017.0:2030.0] Yeah, I've found the tape. There's a lower bound.
+[2030.0:2037.0] And this is the only valid that end is less than.
+[2037.0:2047.0] And here this is the idealized scenario where the notice is even.
+[2047.0:2050.0] So if you have house.
+[2050.0:2056.0] The amount of data. This means your error will be.
+[2056.0:2058.0] Lower bound that.
+[2058.0:2062.0] It's not an upper bound that your error will be less than a week to house.
+[2062.0:2068.0] What this is your error will be more or less house.
+[2068.0:2074.0] It's concentrated high probability.
+[2074.0:2077.0] All right.
+[2077.0:2084.0] This means that even in the absence of more is it cannot recover the two parameter.
+[2084.0:2095.0] And if you think about it is also terrible because there are expectations where the end of the intervention is absolutely large.
+[2095.0:2098.0] So some imaging expectations millions.
+[2098.0:2100.0] If not.
+[2100.0:2113.0] Billions right there was one time where the university was building a pixel image.
+[2113.0:2118.0] And the question is can you get away with murder.
+[2118.0:2126.0] When and as much less than key and yet we get the true problem.
+[2126.0:2130.0] Without a particular assumption on the signals of interest, you cannot.
+[2130.0:2132.0] That's what we try to establish here.
+[2132.0:2135.0] It's even if you take this out.
+[2135.0:2141.0] For example, which is a special case, even in that particular case, there's a lower bound.
+[2141.0:2146.0] Now one important signal model of interest of star.
+[2146.0:2148.0] So you think about it.
+[2148.0:2155.0] What we talked about so far was allowing the two parameters to be anywhere in space.
+[2155.0:2156.0] Yeah.
+[2156.0:2160.0] What we're going to do now is we're going to restrict it to be as far as the end of the.
+[2160.0:2166.0] At most S non zero entries, which means that they will.
+[2166.0:2171.0] So these type of vectors will be strength to live in estimation.
+[2171.0:2178.0] How to play is that are aligned with the normal code in fact.
+[2178.0:2184.0] So if you think about it, two far sectors in three dimensions.
+[2184.0:2188.0] Will live in these type of planes.
+[2188.0:2190.0] Align the code in Texas.
+[2190.0:2195.0] If you think about it all of a sudden we had reduced.
+[2195.0:2203.0] The allowable signals significantly by just making the simple assumption.
+[2203.0:2208.0] And oftentimes, you know, even you look at star and idea sort of it's kind of sparse.
+[2208.0:2211.0] But oftentimes.
+[2211.0:2223.0] Signals images data volumes are not far in the eternal into domain, but they are in fact sparse in some sort of a transport domain.
+[2223.0:2225.0] One is these two.
+[2225.0:2230.0] This because I transform which forms J tag and the other one is very less.
+[2230.0:2233.0] It forms the base of J tag 3000.
+[2233.0:2237.0] The idea is that you take an image like the solar impulse image.
+[2237.0:2240.0] You apply the data transform that has this nice.
+[2240.0:2244.0] The composition to high high low low whatever frequencies.
+[2244.0:2252.0] And you can see that most of the transform domain to make provisions here are two, which are new zero.
+[2252.0:2256.0] How do we learn these transformers?
+[2256.0:2257.0] This is a major.
+[2257.0:2265.0] This has been a major topic in fact, you know, like our president, Martin, that I was working on this topic and many.
+[2265.0:2270.0] See people like in the dishes comes to mind.
+[2270.0:2280.0] I think through the head of the mechanical society.
+[2280.0:2282.0] So how do we find such things?
+[2282.0:2284.0] You took the same additions on it.
+[2284.0:2290.0] They kind of grew for like 10, 20 years and you use these beautiful representations that expose structure.
+[2290.0:2296.0] But of course, you can also apply the computational thinking machine learning kind of the things to learn from data.
+[2296.0:2301.0] There are many ways of doing this.
+[2301.0:2305.0] So there are other dictionary representations.
+[2305.0:2311.0] So what does this mean?
+[2311.0:2319.0] Just to take a simple example, we have a completely non zero parameter vector one actual.
+[2319.0:2325.0] It's true that we know some transformation, we need transformation like DC to here.
+[2325.0:2336.0] And then all of a sudden DC to coefficients are far.
+[2336.0:2337.0] All right.
+[2337.0:2343.0] So how does the fast representations strike back at the empire?
+[2343.0:2346.0] So imagine you had the following problem.
+[2346.0:2347.0] You had a.
+[2347.0:2356.0] And then it's primary vector.
+[2356.0:2360.0] So let's say we have this matrix.
+[2360.0:2362.0] These are data.
+[2362.0:2364.0] But then it's less than.
+[2364.0:2367.0] Normally, we cannot solve this.
+[2367.0:2370.0] So we can give a solution, but you cannot get the problem.
+[2370.0:2377.0] But okay, so let's substitute this fast representation in.
+[2377.0:2380.0] Remember, this is no.
+[2380.0:2385.0] We assume we know the fast signs are formed.
+[2385.0:2390.0] And now we have fast coefficients.
+[2390.0:2396.0] So let's multiply these two because we know them.
+[2396.0:2401.0] Hold this a.
+[2401.0:2405.0] So we have a linear system B is equal to a times X natural.
+[2405.0:2412.0] X natural is a.
+[2412.0:2416.0] And this is less than.
+[2416.0:2422.0] And so in effect, the action of these fast coefficients is that it doesn't apply to the whole matrix.
+[2422.0:2432.0] It applies to S columns of a.
+[2432.0:2437.0] So what would be the effective ramps then?
+[2437.0:2438.0] Yeah.
+[2438.0:2440.0] It looks like you don't have a ranked deficiency system.
+[2440.0:2446.0] In fact, you might even have an over determined system.
+[2446.0:2450.0] If you were the fast coefficients for a particular uniquely bound.
+[2450.0:2453.0] Because you need to be figure jobs.
+[2453.0:2458.0] They're values.
+[2458.0:2466.0] Does this make sense?
+[2466.0:2467.0] Yes.
+[2467.0:2471.0] Can I have the use?
+[2471.0:2474.0] Yes.
+[2474.0:2477.0] Yeah.
+[2477.0:2487.0] That is right.
+[2487.0:2495.0] So can we know which entries are non zero?
+[2495.0:2499.0] There's actually a different question.
+[2499.0:2501.0] It depends on what the matrix is.
+[2501.0:2504.0] If you had the infinite computational power.
+[2504.0:2510.0] If all the columns of AR in general space, more or less random Gaussian than with.
+[2510.0:2514.0] And is equal to S plus one.
+[2514.0:2519.0] You can try out all the combinatorial versions and figure out what values are.
+[2519.0:2522.0] That's exponential complexity.
+[2522.0:2529.0] There exists a gray zone between this exponential complexity and for normal complexity.
+[2529.0:2533.0] That's a good open problem.
+[2533.0:2540.0] If you have a slightly increased in the number of samples, you can find all fast coefficients in polynomial time.
+[2540.0:2547.0] This is the point of this check.
+[2547.0:2561.0] What I want to show you here is that when you have fast coefficients, the system, the matrix, this wide matrix, in essence becomes.
+[2561.0:2571.0] Somehow, there are some nice, it's stimulating circumstances to make our lives a little bit better.
+[2571.0:2572.0] Okay.
+[2572.0:2575.0] Now, what I'm going to do.
+[2575.0:2581.0] Is to tell you a little bit about the reality.
+[2581.0:2586.0] So, I mean, I did tell you this first model in reality.
+[2586.0:2589.0] Real students are rarely exactly.
+[2589.0:2592.0] They are not necessarily the same.
+[2592.0:2604.0] But they're compressible in the sense that when you write the coefficients in absolute value and short end in the piece of magnitude that is like a power load that can up a bound with the tail.
+[2604.0:2611.0] So the small coefficients are not exactly small, but they're kind of tiny.
+[2611.0:2619.0] So there's the compressibility model that is out in compressibility model.
+[2619.0:2621.0] I give you some means at the end of this lecture.
+[2621.0:2625.0] There's like a whole three lectures you've all there on this.
+[2625.0:2630.0] But I used to give as part of this course around 2014 and 15.
+[2630.0:2634.0] If you're more interested in this, look at those references.
+[2634.0:2642.0] And then image, which is a photo in a MIT.
+[2642.0:2650.0] So here what I've done is to take it's tailored for efficient shortening because it magnitude.
+[2650.0:2658.0] And in fact, I had a patient nurse that show that are you that such for patients kind of can't.
+[2658.0:2667.0] And I can analyze prior to distribution and so forth. So here's the order statistics of generalized prior to distribution.
+[2667.0:2671.0] Here are the available coefficients and what's nothing that I can tell you, which is a fun experiment.
+[2671.0:2672.0] You can take an image.
+[2672.0:2675.0] You can take its favorite transform.
+[2675.0:2678.0] Sort the coefficients and make absolute value.
+[2678.0:2685.0] You can take another image to the same thing and swap the values.
+[2685.0:2700.0] You get almost the same looking image, but as if your TV, you know upscale or in-hensives in the news.
+[2700.0:2703.0] You get an effect like that one.
+[2703.0:2711.0] Which is maybe what the current team is are doing when you upscale from whatever 1080 to your 4k for example.
+[2711.0:2719.0] And we will be in checks on numbers that follow this order distribution.
+[2719.0:2730.0] In fact, I've done first in some experiments with some of my colleagues, where I looked, which is put synthetic data in order coefficients and show them the real image.
+[2730.0:2740.0] And this is this is a doctor image and they tend to say that the doctor, which is the real one, which is a funny thing.
+[2740.0:2743.0] I digest this for a chance.
+[2743.0:2751.0] All right, so I'll tell you the linear.
+[2751.0:2754.0] I'll tell you a little bit about the linear model.
+[2754.0:2757.0] We'll take a break.
+[2757.0:2767.0] So if you think about it, the realistic model here is that you don't have exactly faster presentation, but compressible one.
+[2767.0:2773.0] So if you think about it, what we have is the real model.
+[2773.0:2784.0] Let's say we think about the compressible representation, meaning that the first profitions get most of the error.
+[2784.0:2796.0] So in this case, the actual is a faster approximation of the real profitions. So like we say, the real profitions were like this.
+[2796.0:2799.0] We've got it some threshold.
+[2799.0:2803.0] Here's the tail.
+[2803.0:2806.0] So this was the real.
+[2806.0:2816.0] So what we say is this is my x2.
+[2816.0:2818.0] Spice approximation because the tail is kind of small.
+[2818.0:2822.0] So this model is so applicable in this sense that, you know, we have some editor noise.
+[2822.0:2827.0] Now we have this editor noise plus.
+[2827.0:2839.0] The real noise, which I really small.
+[2839.0:2844.0] So the first model is still in essence good.
+[2844.0:2869.0] Almost take a break.
+[2869.0:2876.0] So.
+[2876.0:2879.0] But I want to do with the simple.
+[2879.0:2882.0] Non compressible compressible signal model.
+[2882.0:2888.0] So tell you the story that we will actually time and again.
+[2888.0:2893.0] See in different forms.
+[2893.0:2902.0] So the point I want to make is that, you know, oftentimes we use models things like firstly as a approximation of reality.
+[2902.0:2911.0] But I tried to show here is constantly where with things like linear models, you can actually show the impact of the.
+[2911.0:2914.0] Of search approximation precisely.
+[2914.0:2920.0] So suppose, you know, there was a signal that was compressible.
+[2920.0:2923.0] There was a signal.
+[2923.0:2927.0] If you wanted to find it, you know, with less than.
+[2927.0:2931.0] With endless and peak kind of measurements.
+[2931.0:2932.0] We didn't at all.
+[2932.0:2935.0] We realized that it was kind of like.
+[2935.0:2937.0] We realized that it could make this faster.
+[2937.0:2940.0] As some show and everything is good and then the.
+[2940.0:2949.0] In terms of recovering it, you know, you know, what you know the end user agreements and user license agreement of, you know,
+[2949.0:2954.0] you know, you know, the first thing that we do is we do the administration, you could search.
+[2954.0:2958.0] Cominert, or really all subsets and maybe the turbine or something like this.
+[2958.0:2964.0] But the reality is that signals are never exact as far as what they're often compressible.
+[2964.0:2969.0] And then what I try to do here is to show you that this.
+[2969.0:2972.0] Compressibility approximation error.
+[2972.0:2976.0] And the kind of model into the observation model.
+[2976.0:2979.0] It's too signal.
+[2979.0:2983.0] We can have the real signal model.
+[2983.0:2987.0] We make an error by assuming that it was as fast, let's say.
+[2987.0:2988.0] Yeah.
+[2988.0:2995.0] And if this error is small, then you can assume just bundle of all up as to this edit it.
+[2995.0:2998.0] For observation, all we've done.
+[2998.0:3002.0] It won't be zero mean Gaussian error anymore.
+[3002.0:3007.0] Maybe it is something close to zero mean Gaussian error.
+[3007.0:3013.0] And the reality who says we do have exactly zero mean Gaussian error anyway.
+[3013.0:3014.0] Sure.
+[3014.0:3020.0] So this is where you know, this is a feeling the only end comes in place.
+[3020.0:3024.0] So if you remember, actually the end of lecture one, each.
+[3024.0:3029.0] I covered the end of it.
+[3029.0:3033.0] That you can think of the second position.
+[3033.0:3045.0] Having another layer because when we talk about approximation, what we really care about is this distance to the real model and not this X natural that we were putting.
+[3045.0:3052.0] And that has this numerical error, statistical error and a model error.
+[3052.0:3060.0] So if you think about it.
+[3060.0:3066.0] Because what we really care about is not being close to this hypothetically two parameters, fast parameters, because the real.
+[3066.0:3076.0] Image you're trying to recover your actual MRI image is not exactly fast and junior domain.
+[3076.0:3082.0] So what you really care is your error to the true real signal.
+[3082.0:3088.0] So ideally, if you have a model that is good enough.
+[3088.0:3092.0] This is small.
+[3092.0:3098.0] And then you can characterize how your statistical errors during.
+[3098.0:3106.0] And then given your fast model, if you were to set up some of the station, which we will discuss in this particular 45 minutes.
+[3106.0:3114.0] Make your numerical error also go to zero and whereby closing.
+[3114.0:3122.0] So at this point, I will maybe remind you in the next hour, just take a look at this decomposition of error stuff.
+[3122.0:3128.0] And mention things like, you know, when you're talking about approximating functions.
+[3128.0:3134.0] It may be an interesting idea to think about functions that can be universal approximators.
+[3134.0:3146.0] It's like neural network so that perhaps this error is zero.
+[3146.0:3149.0] Does that make sense?
+[3149.0:3157.0] No, maybe I'll take a maybe at this point.
+[3157.0:3161.0] All right.
+[3161.0:3165.0] So how do we find the fast sector?
+[3165.0:3168.0] Well, I didn't mention this.
+[3168.0:3172.0] So I make it a bit more precise here that you need to research this.
+[3172.0:3179.0] And then you need to see these two S subsets with carnalty S.
+[3179.0:3184.0] And then solve this restricted least squares problems for each of them.
+[3184.0:3193.0] And then pick the one that has the smallest error and you can be recover.
+[3193.0:3196.0] This S fast sector.
+[3196.0:3203.0] And here is that even if you do have error as long as n is equal to two s.
+[3203.0:3206.0] You can do that.
+[3206.0:3220.0] I don't know why I don't have a citation here.
+[3220.0:3233.0] There's a compressor sensing group that has all of these things.
+[3233.0:3238.0] What is teachers S?
+[3238.0:3241.0] Ever it is a bit longer.
+[3241.0:3244.0] Even though you can solve this, where's really fast?
+[3244.0:3251.0] Maybe not that many of them that fast at least.
+[3251.0:3256.0] Well, so another king in the plan in the cranks here.
+[3256.0:3259.0] People know what this is.
+[3259.0:3262.0] I can add another one.
+[3262.0:3269.0] Yeah, signals are compressible oftentimes.
+[3269.0:3275.0] But this particular plan.
+[3275.0:3281.0] So seems to work as long as the number of samples is twice as much.
+[3281.0:3287.0] Now what I want to do is introduce something for the album.
+[3287.0:3289.0] Now.
+[3289.0:3293.0] Let's think about the following.
+[3293.0:3302.0] Think about S fast sectors.
+[3302.0:3307.0] Now what would I do is think about just like one fast sector in three dimensions.
+[3307.0:3311.0] They live in this.
+[3311.0:3316.0] Now think about the complex hall of this set.
+[3316.0:3321.0] Yeah, just seem to feel combination.
+[3321.0:3329.0] What I will try to do is come up with some sort of a complex set that comes this set.
+[3329.0:3338.0] And it's as small as possible.
+[3338.0:3342.0] In the states.
+[3342.0:3344.0] Whatever the dimension is,
+[3344.0:3352.0] I think about the.
+[3352.0:3356.0] One fast sector is the maximum value.
+[3356.0:3362.0] If you think about the complex hall, that's going to be the alarm board.
+[3362.0:3365.0] I'll make this a photo size.
+[3365.0:3372.0] And what people do is they say, wow, okay, so this is shown that our signal lives in this ball.
+[3372.0:3375.0] This is not the first.
+[3375.0:3382.0] There's been tools that inside the those of those other vectors inside the combinations of.
+[3382.0:3385.0] But somehow.
+[3385.0:3392.0] This particular constraint has been shown to be extremely effective starting from 19.
+[3392.0:3395.0] I.
+[3395.0:3397.0] Chen and don't know who.
+[3397.0:3405.0] Is not a guide.
+[3405.0:3407.0] Next add from improvement.
+[3407.0:3414.0] Least access issues.
+[3414.0:3419.0] Activates.
+[3419.0:3421.0] Like this,
+[3421.0:3422.0] Alright, so what we're going to do is.
+[3422.0:3424.42] All right, so what we're going to do is,
+[3424.42:3427.36] is to post thinking about out to norm squares
+[3427.36:3429.6] and signal regularization.
+[3429.6:3432.2] Perhaps you try to find vectors that minimizes
+[3432.2:3433.76] the least square error,
+[3435.12:3437.48] penalized by their L-L-L norm.
+[3440.6:3442.56] And this particular penalization means,
+[3442.56:3446.08] you know, the R so-called regularizer.
+[3446.08:3449.24] The year there's a also a decomposable regularizer,
+[3449.24:3453.3599999999997] which would take some of the, the arrows of this literature,
+[3453.3599999999997:3455.6] because for the presentation,
+[3455.6:3457.7999999999997] the problem in the lowest-level regularization problem,
+[3457.7999999999997:3460.0] and then somehow I'll trace off
+[3461.7999999999997:3463.8799999999997] yet another aspect.
+[3463.8799999999997:3466.9599999999996] And this is, you know, what you want to do is trade off
+[3470.08:3472.08] the data development, so B minus A,
+[3472.08:3474.7599999999998] X, we want it to be small.
+[3474.7599999999998:3477.52] Somehow with things like,
+[3477.52:3481.96] we want the solutions to have a smaller L-L-L norm.
+[3481.96:3486.04] Now we did discuss solutions hitting small L-2 norm.
+[3488.0:3491.36] And one might ask, why is this different, Volta?
+[3491.36:3493.7599999999998] And you think we're asking that?
+[3493.7599999999998:3495.08] And I'll explain that.
+[3496.7599999999998:3499.36] Oh, the thing I would like to say here is that,
+[3499.36:3500.52] all of a sudden,
+[3503.0:3505.6] if you were to use L-2, sorry,
+[3505.6:3507.44] the particular regularization here,
+[3509.68:3511.12] what advantages do we get?
+[3512.48:3516.18] So here, this is m by T and n is Western,
+[3516.18:3518.48] G, but, you know,
+[3521.6:3524.44] the solution will still be wrong,
+[3524.44:3527.56] but we'll find it faster if we think about it.
+[3527.56:3532.56] Why? Very conditioning number.
+[3538.92:3541.96] Yes, in fact, you will have a strong convexity
+[3541.96:3543.56] in your objective.
+[3543.56:3545.48] What does strong convexity do?
+[3547.32:3550.2799999999997] This makes the gradient method, why?
+[3550.2799999999997:3552.92] To linear convergence, right?
+[3552.92:3556.84] So you'll find a solution to be wrong,
+[3556.84:3560.2400000000002] but you'll find it very fast if it makes sense.
+[3562.52:3564.4] So the point that I would like to make now
+[3564.4:3566.8] is when you plug in the L-1 norm,
+[3568.32:3570.44] you'll find a solution for no-no time,
+[3571.4:3573.44] but it will do the correct solution.
+[3577.2400000000002:3578.08] All right.
+[3579.32:3582.84] So the existence of the stable solution for no-no time,
+[3582.84:3587.84] so this L-2 comets formulation,
+[3588.84:3591.84] yeah, this L-1 norm regularized,
+[3591.84:3594.84] and I think maybe you should put it on a health care.
+[3597.6800000000003:3599.84] Let's call the signal-recon program.
+[3601.6000000000004:3602.84] Parking in the nose, you know,
+[3602.84:3604.92] how on that tower has a beautiful
+[3604.92:3607.2400000000002] code on this particular topic,
+[3607.2400000000002:3609.1200000000003] and then there's actually a supplemental lecture
+[3609.1200000000003:3610.44] on the system-conics program
+[3610.44:3614.96] that we will post at the end of this particular class.
+[3614.96:3616.64] It's not gonna be required of you,
+[3616.64:3619.36] but if you want more about some of these hierarchies,
+[3619.36:3620.64] just from the programming,
+[3620.64:3622.12] you can take down your things lectures
+[3622.12:3626.04] or take a look at that supplementary story
+[3626.04:3627.88] or a two-two reference,
+[3627.88:3631.92] if you can use after going to bigger and better places
+[3631.92:3633.44] than in the end.
+[3635.44:3636.8] All right.
+[3636.8:3641.8] So interestingly, when we had this particular
+[3641.84:3645.04] linear system, yeah, so B is a exponential,
+[3646.1200000000003:3648.76] then what you can do is that you show
+[3648.76:3651.2400000000002] that the solution x plus two
+[3653.8:3658.8] to the first parameter will have an error bound like this.
+[3661.04:3665.0800000000004] So this is, I think, the sigma squared.
+[3665.08:3670.08] So there's the noise standard deviation
+[3670.84:3672.68] showing up in the upper bound.
+[3674.92:3679.68] There's some condition number.
+[3680.84:3682.84] And I'll tell you more about that later on
+[3682.84:3684.36] so that the secret condition number
+[3684.36:3685.84] is something like a condition number
+[3685.84:3688.0] of these S subsets of the matrix.
+[3689.3199999999997:3693.12] Remember, when you're thinking about S-par city,
+[3693.12:3698.12] that's resulting in these subsets, yeah.
+[3704.16:3706.7999999999997] So it's like a condition number of,
+[3706.7999999999997:3709.52] maybe one of these first subsets, okay?
+[3713.16:3718.16] It choose N, T2 is S, there are many of them, okay?
+[3718.2799999999997:3719.56] How do you do this?
+[3719.56:3721.8399999999997] You can ask, but if you have a random matrix,
+[3721.84:3724.4] it can come from five to five to four to two.
+[3725.36:3730.36] But the key thing here, which I would like to emphasize
+[3731.2400000000002:3734.6400000000003] just remember this, if you don't remember anything else,
+[3734.6400000000003:3739.6400000000003] the error is S log of P divided by N.
+[3740.6000000000004:3745.2000000000003] So originally, we had something like P divided by N,
+[3745.2000000000003:3748.44] this is for maximum likelihood, this is for Lossou.
+[3748.44:3753.44] The point I wanna make is that the degrees of freedom
+[3755.04:3759.2400000000002] and encoding let's say T coefficients is P, right?
+[3759.2400000000002:3762.8] So with data size repeating that degrees of freedom,
+[3762.8:3765.52] what happens when you have S coefficients?
+[3765.52:3769.48] The cost of encoding S coefficients in P dimensions
+[3769.48:3770.88] is S log P.
+[3771.84:3776.04] And somehow you swap the degrees of freedom of P
+[3776.04:3779.12] for in the new degrees of freedom and what else?
+[3780.92:3783.88] Your data gets you a lot more.
+[3791.96:3794.24] Imagine that if S is one,
+[3794.24:3806.24] S log P divided by S log of N, yeah?
+[3809.56:3814.56] So you can take measurements N, which is order of S log P
+[3818.56:3821.56] and get a nice cost of capture of error.
+[3821.56:3823.56] Here's my son, up at home.
+[3828.56:3830.56] Here's his valid coefficients.
+[3836.56:3839.56] Yeah, to be another example,
+[3839.56:3842.56] it's huge example of S possibly.
+[3846.56:3848.56] But there are other examples.
+[3848.56:3853.56] But there are other parts to the related concise signal models,
+[3853.56:3860.56] for example, the set of low rank matrices also use such a model.
+[3860.56:3863.56] There are also some nonlinear models,
+[3863.56:3866.56] little manifolds and so on so forth.
+[3866.56:3870.56] It turns out that oftentimes when you have a concise signal model
+[3870.56:3873.56] that deals with this lower denonctionality
+[3873.56:3877.56] in the original space that we're interested in,
+[3877.56:3880.56] you can benefit, you can exploit it.
+[3880.56:3883.56] And sometimes you can even say,
+[3883.56:3886.56] but from the programs that you do,
+[3886.56:3889.56] still need to perform this.
+[3889.56:3891.56] All right.
+[3891.56:3893.56] So what I'm going to do,
+[3893.56:3897.56] which is going to confuse the whole lot of people at first look.
+[3897.56:3900.56] Something about atomic norms.
+[3900.56:3906.56] What is your name?
+[3906.56:3908.56] This is not complicated.
+[3908.56:3912.56] It's a natural generation of Al1 norm.
+[3912.56:3915.56] It tells you a.
+[3915.56:3919.56] A specific description if you will.
+[3919.56:3922.56] To make up your own norms.
+[3922.56:3925.56] All right.
+[3925.56:3930.56] So imagine, you know,
+[3930.56:3935.56] a set of vectors in whatever key dimensional space.
+[3935.56:3937.56] Just call them the atomic set.
+[3937.56:3940.56] And what we're going to do is we're going to consider signals
+[3940.56:3946.56] that are combinations of its few of these atoms.
+[3946.56:3949.56] Oh no, you can also call them molecules.
+[3949.56:3951.56] Whatever the name means.
+[3951.56:3954.56] It's kind of nice and has some sort of chemistry.
+[3954.56:3956.56] And it's a particular.
+[3956.56:3959.56] Atoms perform whatever signals.
+[3959.56:3963.56] That's the conversation that you're going for here.
+[3963.56:3964.56] So.
+[3964.56:3966.56] But the point I want to make is that you know,
+[3966.56:3972.56] like imagine you have a signal and that it is somehow combination of a few of these atoms,
+[3972.56:3976.56] where the set of vectors are given to you.
+[3976.56:3978.56] All you.
+[3978.56:3981.56] It could be your dictionary elements.
+[3981.56:3983.56] Okay.
+[3983.56:3986.56] So here's one trivial example.
+[3986.56:3989.56] Imagine these ones far sector.
+[3989.56:3992.56] So let's say that you have the clinical stars.
+[3992.56:4013.56] So you create some units vector that is do everywhere except the eye for the.
+[4013.56:4016.56] You know, them the a eyes.
+[4016.56:4018.56] E eyes are.
+[4018.56:4022.56] In P divations, you can take these unit vectors.
+[4022.56:4028.56] You can negate them so that the symmetric version is also in it.
+[4028.56:4029.56] Yeah.
+[4029.56:4030.56] So what's an S.
+[4030.56:4032.56] Spar sector.
+[4032.56:4034.56] If you consider an S.
+[4034.56:4039.56] For sector being a spot combination of atoms from this set.
+[4039.56:4043.56] Does that make sense?
+[4043.56:4046.56] I mean, it's not complicated and I'm not trying to both were complicated.
+[4046.56:4049.56] It's really as few as it sounds.
+[4049.56:4051.56] It is that.
+[4051.56:4052.56] Just.
+[4052.56:4055.56] S class sectors are simple.
+[4055.56:4059.56] Two combinations of elements from this set.
+[4059.56:4066.56] And what we're going to do is we're going to replace these canonical spark sectors with some other vectors.
+[4066.56:4070.56] And then wallast that will be the generalization.
+[4070.56:4073.56] Okay.
+[4073.56:4076.56] So if you have a dictionary.
+[4076.56:4080.56] They let's take all the regular vectors.
+[4080.56:4084.56] And for food closure, you take negations.
+[4084.56:4088.56] You also have them that will be on.
+[4088.56:4090.56] Up from its tech.
+[4090.56:4091.56] Yeah.
+[4091.56:4096.5599999999995] The point that I want to make is that the way I set things up, the coefficients are going to be non negative.
+[4096.5599999999995:4102.5599999999995] And it's not important.
+[4102.56:4107.56] So if you want to write a negative minus one vector.
+[4107.56:4113.56] You can't simply take the classical canonical vector that points the positive direction.
+[4113.56:4115.56] No, you take the one that.
+[4115.56:4119.56] Of course, negative direction and take a positive coefficient.
+[4119.56:4125.56] The reason will be it will become apparent because this is how we're going to put the norm value.
+[4125.56:4128.56] You don't want to have negative coefficient value.
+[4128.56:4133.56] So we're going to use the same information.
+[4133.56:4134.56] Good.
+[4134.56:4137.56] So in the case of the lawsuit.
+[4137.56:4140.56] Here are our sets.
+[4140.56:4145.56] Here are our professions.
+[4145.56:4146.56] All right.
+[4146.56:4154.56] One thing you can do is look at what is called the gauge or the convex solve of the set.
+[4154.56:4159.56] All right.
+[4159.56:4161.56] This is how we talked about the L one known heuristic.
+[4161.56:4168.56] If you remember, we were taking these elements and then you were looking at the minimal convex set that kind of fun.
+[4168.56:4169.56] Yeah.
+[4169.56:4172.56] And this is how we get the one long.
+[4172.56:4180.56] This is what we're going to precisely do when we have other dictionary elements and other set of atomic vectors and so forth.
+[4180.56:4184.56] We'll do the same thing.
+[4184.56:4189.56] So what is this then?
+[4189.56:4195.56] Given a atomic set.
+[4195.56:4197.56] All right.
+[4197.56:4205.56] The gauge function will be the smallest sailing of the set to touch the given vector.
+[4205.56:4210.56] So here.
+[4210.56:4213.56] This part makes it precise.
+[4213.56:4220.56] But what I realized over the years that I keep this is that repeating what it says there is not going to help.
+[4220.56:4222.56] It's like Paul Derrick.
+[4222.56:4225.56] You guys know all there.
+[4225.56:4226.56] In the physicists.
+[4226.56:4228.56] No.
+[4228.56:4231.56] This is the previous that I can explain which is already written there.
+[4231.56:4237.56] So what Paul Derrick would do if they asked him for a clarification, he would literally mean state the same thing.
+[4237.56:4244.56] What I want to do is give you some pictures so that some of the things that I'm introducing here are become become a little bit.
+[4244.56:4245.56] Better.
+[4245.56:4257.56] So we're going to talk about gauge functions given a set what a gauge function is the new sailing of the set so that the element that is seems to give to the set.
+[4257.56:4263.56] He is now in the development area of set or in the interior of the set.
+[4263.56:4267.56] So I give you a set.
+[4267.56:4269.56] I don't know.
+[4269.56:4277.56] It's the complex set but I think this is pure.
+[4277.56:4280.56] Here's my set.
+[4280.56:4288.56] The gauge value does is that so here's the origin.
+[4288.56:4289.56] You sail it.
+[4289.56:4294.56] Until the given points is in the set.
+[4294.56:4298.56] You think about the scaling so you can scale it even bigger.
+[4298.56:4304.56] Think about the minimum scaling so that the point is in the set.
+[4304.56:4313.56] That scaling value will be the gauge value.
+[4313.56:4320.56] And now what we can do is define a norm using this gauge value.
+[4320.56:4321.56] It will be a norm.
+[4321.56:4328.56] It will satisfy all the properties of a norm.
+[4328.56:4336.56] So given an atomic set you can define the gauge function given the gauge function you have an atomic norm.
+[4336.56:4341.56] And if you use the state atomic norm to do regularization.
+[4341.56:4343.56] Yes.
+[4343.56:4348.56] The representation of the signal in this atomic set is sparse.
+[4348.56:4360.56] The difference is that if you highlight some elements on certain conditions on the atomic set, this kind of a guarantee will fall.
+[4360.56:4368.56] You will have something similar.
+[4368.56:4373.56] Where this s lock p is going to replace with some sort of a.
+[4373.56:4378.0] All right, let's see this.
+[4378.0:4381.96] So here's our set.
+[4381.96:4385.360000000001] I give you this set there.
+[4385.360000000001:4391.400000000001] What would be the gauge value or the atomic norm for this point?
+[4391.400000000001:4399.400000000001] Anybody want to venture?
+[4399.4:4403.0] I mean, some of you do have access to the slice, so you can make the next slide.
+[4403.0:4407.24] It has the solution for phones.
+[4407.24:4409.28] Think about it for a little bit.
+[4409.28:4412.44] Yeah, so these thermical vectors is all from the L1 norm.
+[4412.44:4415.599999999999] So don't worry about geometry, about scaling this.
+[4415.599999999999:4419.44] Literally the L1 norm of that point.
+[4419.44:4421.04] So what is it?
+[4421.04:4426.0] One plus one over five is equal to 6 or 5 on point two.
+[4426.0:4429.36] It turns out that that same amount of work set.
+[4429.36:4442.32] It's precisely 1.2 is what we see a little one on, so that you hit that point.
+[4442.32:4455.24] How about this one?
+[4455.24:4469.0] So here you just take.
+[4469.0:4473.48] Here is our atomic norm.
+[4473.48:4475.4] Why?
+[4475.4:4479.88] Because set x1 to 0, it's a nice disk.
+[4479.88:4483.8] So it's the L2 ball over the x2 and x3.
+[4483.8:4491.400000000001] The point and s result in, if you just hit the ink for sections, the L1 ball.
+[4491.400000000001:4492.56] This one.
+[4492.56:4493.64] How do we find this?
+[4493.64:4494.64] It's like origami.
+[4494.64:4495.8] Here's the solution.
+[4495.8:4500.72] You can give out how to do that.
+[4500.72:4511.52] It's not what I'm trying to get at, but like I don't expect you can actually do things like this.
+[4511.52:4512.68] All right.
+[4512.68:4518.12] Look, there are other problems where some of these models are useful.
+[4518.12:4527.200000000001] So for instance, if you think about vectors that has just plus minus one values, what would
+[4527.200000000001:4529.68] be the atomic set?
+[4529.68:4533.4400000000005] The answer is literally a little bit more.
+[4533.4400000000005:4541.4800000000005] Because what we're talking about is a simple combination of plus minus one vectors.
+[4541.48:4543.12] You can create the set.
+[4543.12:4545.799999999999] You can look at its complex solve.
+[4545.799999999999:4547.719999999999] They'll be the L2 ball.
+[4547.719999999999:4553.959999999999] And here is how you get that.
+[4553.959999999999:4556.799999999999] I suggest you take a look at it in the next hour or so.
+[4556.799999999999:4561.0] And let me know if you have questions and have to discuss this also on the Friday, for
+[4561.0:4562.0] example.
+[4562.0:4567.36] For the sake of time, I'm not going to do the derivation case.
+[4567.36:4570.879999999999] But the point I want to make is that in this particular case, you can get the number of
+[4570.88:4574.16] samples bound to how close to the dimension, which is interesting.
+[4574.16:4576.92] This regularizer.
+[4576.92:4582.36] And this regularizer has an application moving our set.
+[4582.36:4590.2] Those of you who are doing the science, the market, where the box is, stick a little
+[4590.2:4591.2] difference.
+[4591.2:4592.2] All right.
+[4592.2:4593.2] Matrix completion.
+[4593.2:4594.2] So this is, it's a bad problem.
+[4594.2:4609.2] But if you made a splash on 2008 or 2009, I wish I bought an extra.
+[4609.2:4624.32] So the problem is this one.
+[4624.32:4633.16] You have a bunch of users that click on movies and watch them, even say that they like the
+[4633.16:4637.28] movie and not.
+[4637.28:4642.679999999999] And you have a lot of movies, you have a lot of users, but you think about it, not everybody
+[4642.679999999999:4647.88] to watch all the movies, just you don't have enough time to watch all the movies.
+[4647.88:4653.08] And oftentimes, one would really want to watch all the movies.
+[4653.08:4658.5199999999995] But what you want to do is maybe figure out which users would like certain movies, sort
+[4658.5199999999995:4662.2] of you properly, the page that they're looking at.
+[4662.2:4669.679999999999] This is literally a major thing, this research being in Netflix.
+[4669.679999999999:4676.04] I have some friends that are doing that.
+[4676.04:4683.48] So this was made of $1 million dollar challenge.
+[4683.48:4688.96] And the idea is that they give you partially populated matrix that has these ratings.
+[4688.96:4695.24] And they would like you to figure out the rest of the matrix.
+[4695.24:4701.16] And you know that in this challenge, within a couple of hours, there was one approach
+[4701.16:4709.08] that was like, and that approach was a simple, low-ranked, singular value decomposition
+[4709.08:4712.08] approach.
+[4712.08:4719.2] It's been being that this matrix cannot be any matrix.
+[4719.2:4722.76] And the users, there are some similarities in between, so that there's some sort of a
+[4722.76:4727.84] low rankness of this problem.
+[4727.84:4730.04] Now what's a low-ranked matrix?
+[4730.04:4740.5199999999995] Well, we can think about it as a matrix that is a few combinations of rank bomb matrices.
+[4740.52:4747.4400000000005] Which is, we know this is like faster, so combination of S-fast vectors, rank S or
+[4747.4400000000005:4751.8] rank R matrix is an R combination of rank bomb matrices.
+[4751.8:4757.84] Now R will be the atomic set is infinitely matrix, because the set of rank bomb matrices
+[4757.84:4761.84] are into many of them.
+[4761.84:4772.4800000000005] So what would be the atomic norm for such a set?
+[4772.4800000000005:4779.2] So what is the complex part of rank bomb matrices?
+[4779.2:4784.2] Now let's use the following trick with Jedi one trick.
+[4784.2:4789.4800000000005] What was the matrix arrow of the one more?
+[4789.48:4799.839999999999] It's a sign.
+[4799.839999999999:4805.839999999999] It's a symbol of value.
+[4805.839999999999:4810.719999999999] New pure norm, chapter 1 norm.
+[4810.719999999999:4815.639999999999] So what do you think the atomic norm for this set is?
+[4815.64:4829.76] So you can think about these partial measurements as an inner product.
+[4829.76:4833.76] So in the matrix phase, we have your A times X.
+[4833.76:4836.88] So A i transpose X will be B i.
+[4836.88:4837.88] Yes.
+[4837.88:4840.0] Same thing you can do with matrices.
+[4840.0:4843.56] And it will be matrix inner products.
+[4843.56:4849.52] So A i could be just some matrix that has zeroes everywhere except one notation and that
+[4849.52:4856.92] will be like the measurement that first holds that mu 0 and that mu 0.
+[4856.92:4865.52] So in this particular case, your measurements are the trace A i X, which is basically the
+[4865.52:4874.68] inner product of a inner manner similar to the linear model.
+[4874.68:4876.76] And you have the new pure norm.
+[4876.76:4878.76] And here's why.
+[4878.76:4880.6] Then again, take a look at it.
+[4880.6:4881.6] It's a sign clear.
+[4881.6:4883.6] We can talk about it later.
+[4883.6:4885.400000000001] For the sake of time.
+[4885.400000000001:4891.200000000001] Let's skip this particular trick.
+[4891.2:4897.84] Now, the own sparsity turns out that their initial structures are between exploit.
+[4897.84:4902.599999999999] For example, if you look at the valid provisions of images, they're not only spars, but they
+[4902.599999999999:4906.72] tend to cross across the branches of a scope of data tree.
+[4906.72:4912.16] So if you have an on zero coefficient in one of the leaves, we tend to have non zero
+[4912.16:4915.599999999999] coefficients across the tree all the way to the root.
+[4915.6:4923.08] This is called the root of 20 to 3 model and they tend to trace ages in an image.
+[4923.08:4927.08] The significant energy is.
+[4927.08:4932.96] And this kind of model made me a career.
+[4932.96:4934.200000000001] I have a paper on this.
+[4934.200000000001:4939.04] It has like close to 50,000 citations.
+[4939.04:4946.04] So you can have additional sparsity structures beyond trees over graphs, sparsity, which
+[4946.04:4949.2] you have the trees sparsity and so on and so forth.
+[4949.2:4954.36] And what they do is they decrease the number of degrees of freedom significantly.
+[4954.36:4957.84] Like really significantly.
+[4957.84:4962.64] And in the case of the multiple connected tree model, you can even drop S. Just put it
+[4962.64:4973.700000000001] to a big ru bout on this.
+[4973.700000000001:4981.0] So, that's the psychologist.
+[4981.0:4984.84] All right, so.
+[4984.84:4994.76] The natural question is, how do we design a, if you're to do like, if you try to exploit
+[4994.76:5000.76] these things, because for eyes and as infinite, so you can think of designing hardware that
+[5000.76:5003.360000000001] will take fewer measurements to get signals.
+[5003.360000000001:5009.28] And we can argue that, for example, infrared cameras, the infrared sensors are very
+[5009.28:5014.42] important, so maybe I can use a single infrared sensor to create a, a high resolution with
+[5014.42:5016.759999999999] infrared camera that is cheap and accessible by all.
+[5016.759999999999:5018.16] You know, feel like this.
+[5018.16:5024.66] In that case, you can try to come up with DMD, dynamic mirror arrays that try to turn
+[5024.66:5030.24] on all pixels and sum them up and do kind of food testing on all of these images and
+[5030.24:5031.24] give you certain advantages.
+[5031.24:5042.12] This is kind of like 2005, 2010.
+[5042.12:5046.28] The issue in this particular case is oftentimes that the matrix A is given to you by nature
+[5046.28:5049.08] and you cannot feel anything.
+[5049.08:5052.96] But in cases like MRI, you can discuss it simply.
+[5052.96:5058.679999999999] And the cessation one had this example on MRI that showed that people tend to select
+[5058.68:5065.68] which frequency lines that they scan with the MRI mission, so you can do certain tricks
+[5065.68:5067.56] there.
+[5067.56:5075.72] So see this reference for some extensive discussion on the matrices.
+[5075.72:5080.8] How do you select the regularization parameter?
+[5080.8:5088.56] Now in the case of Lesou, something like, load 2 divided by N, this is kind of a,
+[5088.56:5092.96] this is not so big.
+[5092.96:5094.280000000001] There are ways of selecting it.
+[5094.280000000001:5100.4800000000005] If you run what is called as a square of Lesou, you can in fact pick a constant one which
+[5100.4800000000005:5108.88] makes it easier to select but then the problem, what I mean by square of Lesou is this one.
+[5108.88:5120.72] So no square here.
+[5120.72:5124.64] In that case, you have an easy way of selecting the civilization parameter, but the problem
+[5124.64:5127.96] is to announce it.
+[5127.96:5129.96] In practice, we do cross-validation.
+[5129.96:5136.400000000001] I think VH-the-Word has a beautiful paper that talks about how to also do this cross-validation
+[5136.4:5139.679999999999] and specific action.
+[5139.679999999999:5144.5199999999995] There are other approaches like the covariance penalty of the wrong figure of six and I do
+[5144.5199999999995:5148.92] do some citations to really just learn more about this kind of selection of regularization
+[5148.92:5154.759999999999] parameters and the templates that we need to model and generalize the model.
+[5154.759999999999:5155.759999999999] All right.
+[5155.759999999999:5156.759999999999] Okay.
+[5156.759999999999:5157.759999999999] I've got 10 minutes.
+[5157.759999999999:5158.759999999999] I've got 10 slides.
+[5158.76:5167.08] Let's see what we can do.
+[5167.08:5169.08] All right.
+[5169.08:5170.08] Good.
+[5170.08:5177.16] So what I've done so far is introduce some to say non-smooth problems.
+[5177.16:5182.96] Oftentimes we have some sort of smooth loss punch in the BRUs too, but in addition, there's
+[5182.96:5189.16] some regularization from that tends to be non-smooth because it's engaged function.
+[5189.16:5190.16] Yeah.
+[5190.16:5191.16] It's an atomic norm.
+[5191.16:5195.16] It tends to have these whole numbers as well.
+[5195.16:5196.16] Yeah.
+[5196.16:5199.16] Which makes things a bit non-detangible.
+[5199.16:5200.16] Okay.
+[5200.16:5202.16] So here's the problem.
+[5202.16:5203.16] Setting.
+[5203.16:5206.76] If it's proper, it calls convex, but not everywhere.
+[5206.76:5207.76] The French.
+[5207.76:5214.16] Just to recall the sub differential that we covered in reservation two.
+[5214.16:5219.08] So if you think about convex functions, we talked about having tangent hyperplanes that
+[5219.08:5220.08] are below it.
+[5220.08:5226.64] And the definition of the convex function is such that if you look at any tangent hyperplane
+[5226.64:5230.360000000001] and the convex function needs to be above it.
+[5230.360000000001:5234.16] And then we talked about these tangent hyperplanes.
+[5234.16:5239.76] And you have a smooth function being unique at every point, unless you have these things
+[5239.76:5244.16] non-smooth points in which case you can have a bunch of them.
+[5244.16:5245.16] Yeah.
+[5245.16:5250.36] So the normal vectors of these tangent hyperplanes on those things create what is called
+[5250.36:5255.16] is the sub differential and have points on the an element form this sub differential
+[5255.16:5258.88] is for the sub gradient.
+[5258.88:5265.88] So when you have a smooth function, the sub differential sets as unique elements, which
+[5265.88:5267.88] is for the gradients.
+[5267.88:5268.88] Yeah.
+[5268.88:5278.88] Otherwise, you can consider vectors V for degree satisfying this.
+[5278.88:5279.88] Yeah.
+[5279.88:5283.88] And if you want to talk about generalized sub differential for non-tumbed x-thar ones, they
+[5283.88:5284.88] need to be local.
+[5284.88:5291.88] Yeah, because you can have a function like this.
+[5291.88:5298.88] So the supporting hyperplanes here, they can post the object.
+[5298.88:5299.88] Yeah.
+[5299.88:5304.88] We want them to be local.
+[5304.88:5305.88] All right.
+[5305.88:5311.88] So the example that I gave in our VT time and again is sub differential of the R1 law,
+[5311.88:5315.88] which is very relevant in this particular example is for keeping about regularizing the
+[5315.88:5316.88] sparsity.
+[5316.88:5317.88] Yeah.
+[5317.88:5321.88] I want more regularization.
+[5321.88:5333.88] So if we wanted to get the objective, how did we get the gradient now.
+[5333.88:5336.88] This slide.
+[5336.88:5341.88] So I'm so understated.
+[5341.88:5343.88] So one thing I want to mention, right.
+[5343.88:5348.88] So what I'm talking about so far is actually minimization of problems like this, where you
+[5348.88:5351.88] have some data loss.
+[5351.88:5355.88] And then you have a regularizer.
+[5355.88:5358.88] Yeah.
+[5358.88:5361.88] But in aggregate, this is one function.
+[5361.88:5365.88] So how do we get the sub differential of or sub gradient of this function.
+[5365.88:5374.88] So I thought that there's the more Rockefeller decomposition, which basically says that if you.
+[5374.88:5381.88] This is if F is a suit.
+[5381.88:5386.88] You can simply add the sub differential sub radians up.
+[5386.88:5389.88] So if I have concepts of three terms.
+[5389.88:5394.88] Add the radians or sub radians, it will be a sub differential or sub gradient for the estimation.
+[5394.88:5398.88] So this is what the achieves.
+[5398.88:5407.88] So in the case of.
+[5407.88:5420.88] So if you think about this objective.
+[5420.88:5432.88] You can have something like this.
+[5432.88:5433.88] All right.
+[5433.88:5434.88] Good.
+[5434.88:5436.88] Now.
+[5436.88:5440.88] This optimal to know it's a misficionary to know it's in the talk about.
+[5440.88:5444.88] You said that you know, we did a crystal point, it's a gradient is zero.
+[5444.88:5448.88] So what happens when you have a sub differential.
+[5448.88:5451.88] How do you characterize this.
+[5451.88:5454.88] Optimality.
+[5454.88:5458.88] Yeah, because you know, here's the one known.
+[5458.88:5460.88] Here we don't have a gradient.
+[5460.88:5462.88] So we can't argue that the gradient is zero.
+[5462.88:5465.88] So how do we say it is optimal.
+[5465.88:5469.88] When you have a set of sub radians there.
+[5469.88:5475.88] The way to figure this out is just to say that if zero is included in the set.
+[5475.88:5478.88] You're an optimum.
+[5478.88:5483.88] Yeah.
+[5483.88:5485.88] It's an inclusion.
+[5485.88:5492.88] In this case, or the convex problem, you would have this extra globally optimum.
+[5492.88:5498.88] It's an only if zero belongs to the sub differential.
+[5498.88:5507.88] So here there are many sub radians, yeah, an entrepreneurial sub differential set.
+[5507.88:5510.88] But notice that zero.
+[5510.88:5514.88] Which is this dude is in that set.
+[5514.88:5518.88] And that point is will be opening.
+[5518.88:5526.88] And he's a simple state of proof that you can simply use a definition of the sub differential.
+[5526.88:5533.88] And how do you both face of it and only.
+[5533.88:5534.88] Okay.
+[5534.88:5541.88] So what's the sub gradient method simple easy.
+[5541.88:5544.88] Because sub gradient and work with it, you know.
+[5544.88:5554.88] So as opposed to having the gradient at the point, you pick a point from the sub differential.
+[5554.88:5557.88] And you work with that one.
+[5557.88:5558.88] All right.
+[5558.88:5564.88] When I talk about the challenges to non-summit optimization, I mentioned that even if you're at the optimum.
+[5564.88:5567.88] You can get a non zero sub differential.
+[5567.88:5572.88] And so you need to set size to go down to zero.
+[5572.88:5575.88] That is the thing to keep in mind.
+[5575.88:5577.88] For the sub gradient message.
+[5577.88:5582.88] Assuming that the gradient sub radians are bounded for liptious functions.
+[5582.88:5588.88] This is definitely the case.
+[5588.88:5593.88] Suppose you start from a radius.
+[5593.88:5597.88] To the optimum solution, if you set up your set size such that.
+[5597.88:5603.88] You know, it is already by G sort of gave you never had.
+[5603.88:5607.88] Then you can show that the iterates.
+[5607.88:5612.88] The minimum of them will satisfy this.
+[5612.88:5613.88] What do I mean by that?
+[5613.88:5617.88] So this is a real thing to see in a conversion factorization.
+[5617.88:5622.88] Don't you think so?
+[5622.88:5625.88] Remember, you're in the sub gradient method.
+[5625.88:5626.88] You can.
+[5626.88:5629.88] You can go to the optimum solution.
+[5629.88:5631.88] Somebody give you that sub gradient.
+[5631.88:5634.88] You can move out of it.
+[5634.88:5638.88] But if you think about the history of the objectives,
+[5638.88:5643.88] you might have been to the overall.
+[5643.88:5645.88] But you don't know.
+[5645.88:5647.88] So you continue running it.
+[5647.88:5653.88] And what this says is that at one point in your iterations.
+[5653.88:5657.88] You will have a point that will satisfy this inequality.
+[5657.88:5659.88] That's what it means.
+[5659.88:5660.88] Number.
+[5660.88:5664.88] Or I say this before, but not this picture.
+[5664.88:5672.88] The sub gradient method is not necessarily a monotonic method.
+[5672.88:5676.88] And this trade is the slowest.
+[5676.88:5683.88] Yeah.
+[5683.88:5689.88] It turns out that if you have so test of radians.
+[5689.88:5692.88] You can attain the same rates.
+[5692.88:5694.88] The more data.
+[5694.88:5699.88] So for gradients versus a fantastic sub radians.
+[5699.88:5701.88] It's fantastic sub radians.
+[5701.88:5706.88] Great size of the same.
+[5706.88:5707.88] All right.
+[5707.88:5714.88] I think we can stop here and all start the next lecture with these examples.
+[5714.88:5717.88] Yeah.
+[5717.88:5719.88] So.
+[5719.88:5721.88] Just to wrap things up.
+[5721.88:5726.88] There are some references that you can take a look to learn more about
+[5726.88:5731.88] compressive sensing, varsity models and so on so forth.
+[5731.88:5732.88] They're interesting.
+[5732.88:5739.88] There's also like lecture on face transitions.
+[5739.88:5741.88] Overall interesting topics.
+[5741.88:5744.88] So see you guys on Friday.
+[5744.88:5747.88] Remember, there's no lecture.
+[5747.88:5750.88] We're going to start homework number one.
+[5750.88:5754.88] Next week, we continue from.
+[5754.88:5758.88] Here.
+[5758.88:5760.88] All right.
+[5760.88:5762.88] I'll take you guys later.
+[5762.88:5765.88] Have a great week.
+[5765.88:5775.88] Thank you.

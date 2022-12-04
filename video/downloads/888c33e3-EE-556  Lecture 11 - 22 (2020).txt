@@ -1,0 +1,705 @@
+~EE-556 / Lecture 11 - 2/2 (2020)
+~2020-11-17T10:54:49.410+01:00
+~https://tube.switch.ch/videos/888c33e3
+~EE-556 Mathematics of data: from theory to computation
+[0.0:2.7600000000000002] So maybe we can start recording.
+[2.7600000000000002:5.08] OK, fantastic.
+[5.08:17.68] So what I've done was to look at this min x max y problem
+[17.68:23.52] by xy and somehow exchange the limits.
+[23.52:27.8] And then I defined the problem in terms of y, which
+[27.8:30.16] is this d of y.
+[30.16:36.2] And the way you define it is that it's min over x, y, x, y.
+[36.2:39.36] I just would like to caution you here
+[39.36:44.64] that typically maximum over minimums
+[44.64:50.040000000000006] is not the same as minimums over maximums.
+[50.040000000000006:54.96] So typically minimum over maximums
+[54.96:58.36] is greater than maximum over minimums.
+[58.36:64.12] And a very easy way to see this is here are three functions,
+[64.12:66.76] f1, f2, and f3.
+[66.76:69.84] Now think about their maximums, which is this.
+[73.68:76.56] And the minimum of this is here.
+[76.56:80.88] OK.
+[80.88:85.68] Now how about thinking about the minimums of these functions
+[85.68:86.72] and taking a maximum?
+[86.72:97.32000000000001] So here, obviously, the minimum over these functions
+[97.32000000000001:98.48] is this one.
+[98.48:103.56] And their maximum is this.
+[103.56:108.16] So in general, you have this that you're
+[108.16:112.92] trying to solve a min max problem.
+[112.92:119.24000000000001] And in general, min over max is greater than max over min.
+[119.24000000000001:124.84] So flipping things is not necessarily a good thing to do.
+[124.84:127.68] In terms of x here is the solution.
+[127.68:129.36] And in terms of x.
+[129.36:131.76] So here's the max to min solution.
+[131.76:133.2] Here's the min max solution.
+[133.2:135.35999999999999] The solution are different.
+[135.35999999999999:137.88] So one has to be a bit careful here.
+[141.11999999999998:145.44] And in general, you can see this weak to all of the,
+[145.44:153.07999999999998] in the sense that if you were to do f star
+[153.07999999999998:157.56] will be in general bigger than d star.
+[157.56:160.44] So if you're considering this problem in general,
+[160.44:163.92] if you swap this particular order.
+[163.92:164.12] OK.
+[164.12:168.2] So we spoke about how to take this problem
+[168.2:170.07999999999998] and go to the quote in quote Lagrangian.
+[174.2:178.04] And again, remember here, we have maximization
+[178.04:181.44] over this dual variable y.
+[181.44:186.07999999999998] And that y acts as if it's a cup.
+[186.07999999999998:189.52] It just checks if ax is equal to d.
+[189.52:194.64000000000001] If it is not, it can take this term to infinity.
+[194.64000000000001:199.36] And the solution f star is infinity.
+[199.36:200.92000000000002] No, sorry.
+[200.92000000000002:202.72] A solution would be infinity.
+[202.72:206.68] So the only hope the x player has
+[206.68:210.76000000000002] is to pick an x that satisfies ax is equal to b.
+[210.76000000000002:216.56] Then the cup dual variable y says OK, fine.
+[216.56:220.76] It gives you OK.
+[220.76:226.0] So imagine we evaluate this at x star, which is f x star,
+[226.0:228.12] this.
+[228.12:243.36] And in general, so here, if you evaluate this in terms
+[243.36:254.96] of any y, also we have this x star, x star, y.
+[254.96:258.72] y is maximum sin.
+[258.72:270.88] So in general, we have that if you plug in x, y star,
+[270.88:276.44] x star, y, z.
+[276.44:285.88] So in general, OK.
+[292.32:296.08] So if you think about this, suppose there
+[296.08:302.59999999999997] exists another x that we can plug in that gives us
+[302.59999999999997:304.44] something smaller than x star.
+[304.44:306.56] For a given y, you can do that.
+[306.56:311.71999999999997] So here, I'm not putting my star.
+[311.71999999999997:314.79999999999995] What I am doing is I'm keeping y here.
+[314.79999999999995:317.12] So y comes here.
+[317.12:324.71999999999997] And this x star is the optimum solution, x star, y star.
+[324.72:329.84000000000003] So if for a fixed y, we can always find an x that further
+[329.84000000000003:332.68] minimizes this.
+[332.68:335.88000000000005] It needs to be smaller than x star.
+[335.88000000000005:342.40000000000003] And hence this, you get that phi x star.
+[342.40000000000003:350.40000000000003] So it means that phi x star y is bigger than minimum over x
+[350.40000000000003:352.56] phi x star y.
+[352.56:357.36] This is related to the remark that I made in general.
+[357.36:361.76] When you're doing minimax optimization,
+[361.76:367.04] there could be minimums for x that x wants.
+[367.04:370.32] And this could be possible if the opponent y
+[370.32:372.24] allows you to.
+[372.24:378.64] So if you get a local, if you think about this settle point
+[378.64:387.76] image, x is trying to minimize.
+[387.76:393.2] So here, this is let's say x star y star.
+[396.59999999999997:398.84] So let's say this is the x dimension.
+[398.84:400.36] This is y dimension.
+[400.36:403.96] If y allows it, x can go to something smaller for a given y.
+[403.96:411.03999999999996] So if you evaluate this function at x star, which let's say
+[411.03999999999996:415.59999999999997] is this coordinate, but for some other value of y,
+[415.59999999999997:418.52] you can actually get something smaller than what
+[418.52:422.35999999999996] you could get with x star, which is the solution to this problem.
+[422.35999999999996:424.4] All right?
+[424.4:429.24] So if y allows it, you can be infeasible.
+[429.24:433.76] All right, so here, if I don't put an f to the super large y
+[433.76:438.8] value, then I don't enforce the constraint that much,
+[438.8:443.16] which means that x can go below x star,
+[443.16:444.88] because it's infeasible.
+[444.88:447.72] And we'll get to this point a little bit more.
+[447.72:449.68] OK?
+[449.68:454.44] So remember, so what we've shown is that f star is greater or equal
+[454.44:456.96000000000004] to this.
+[456.96:463.0] So if you say a max over both sides, all right, max.
+[469.32:472.0] So we have this.
+[472.0:476.91999999999996] If you take the max, this is also equal to f star directly.
+[476.91999999999996:478.28] So you're done.
+[478.28:482.76] This means that f star needs to be greater than or equal to max
+[482.76:485.2] dual function b star.
+[485.2:489.59999999999997] If it be those, you just need to think a bit.
+[489.59999999999997:493.56] Like, I know I'm saying things kind of make sense,
+[493.56:496.28] but you really need to think about it yourself a little bit.
+[500.0:501.44] All right?
+[501.44:515.16] Because you can, you can, so you can take a max here.
+[515.16:517.52] All right?
+[517.52:518.52] You get this.
+[522.7199999999999:523.7199999999999] Sorry.
+[523.7199999999999:524.52] You get this.
+[529.4:531.4399999999999] So it's complicated.
+[531.4399999999999:536.4] But you just need to think through the same motions.
+[536.4:536.92] All right?
+[536.92:541.64] It just takes time to get used to.
+[541.64:542.8399999999999] All right.
+[542.84:547.08] Now, here's the strong duality for this.
+[547.08:550.76] I'm going to assume that you have a feasible solution.
+[550.76:553.12] And f star is less than infinity.
+[553.12:554.8000000000001] There are some qualifications that I think
+[554.8000000000001:560.9200000000001] we fixed in the final version of the PDF, but not here.
+[560.9200000000001:564.84] So in general, in the context from cave case,
+[564.84:572.1600000000001] if strong duality holds, then you have the existence.
+[572.16:575.3199999999999] And that you have a saddle point.
+[575.3199999999999:577.92] And the primal and the dual point side,
+[577.92:582.56] meaning exchanging min and the max, has no penalty.
+[582.56:584.76] All right?
+[584.76:587.04] And remember, the saddle point formulation
+[587.04:593.0] is that it, the optimal x star, y star, maximizes it.
+[593.0:598.48] And it device star, x star minimizes these things.
+[598.48:601.64] So you can have a saddle point.
+[601.64:603.3199999999999] OK.
+[603.3199999999999:608.28] Now, here, I'll give an example.
+[608.28:612.72] So f plus g will call this the primal x.
+[612.72:616.24] So let's say you have one norm and the two norm.
+[616.24:619.6] We know that the conjugate of this is the two norm.
+[619.6:621.3199999999999] And we know that the conjugate of this
+[621.3199999999999:625.52] is the element indicator function on the elliptine table.
+[625.52:628.28] It's also called support function.
+[628.28:630.08] Now, here's a property that is useful when you're
+[630.08:631.48] trying to take conjugations.
+[631.48:634.16] If you have this particular form, min max f
+[634.16:640.8000000000001] i and f minus conjugate, then by just doing some simple things,
+[640.8000000000001:642.6] you can show that the conjugate of this
+[642.6:644.0] is just this simple thing.
+[646.96:647.96] All right?
+[651.44:653.52] So you can write the primal problem
+[653.52:657.64] as a maximization over y these conjugates.
+[657.64:661.56] So the dual problem is simply this one.
+[668.48:669.0] All right.
+[671.96:674.76] And in this particular case, the dual of f
+[674.76:676.12] is just the quadratic.
+[676.12:679.3199999999999] And the dual of this g is the indicator function
+[679.3199999999999:683.2] over the l1 ball, l, l, l, l infinity
+[683.2:686.36] and the quibal unit l of d to the ball.
+[686.36:688.04] So here's an interesting thing.
+[688.04:691.52] So here is the primal, which is this.
+[691.52:695.8000000000001] And the dual problem is this one.
+[695.8000000000001:699.08] So here you have an indicator function.
+[699.08:704.4] So anything here goes to minus infinity.
+[704.4:717.0] So it is this minus infinity, you know?
+[717.0:727.72] And as you can see, the primal and the dual optimums
+[727.72:732.52] coincide, meaning f star is equal to, in this case,
+[732.52:735.12] p star is equal to p star.
+[737.92:742.56] There exists a primal dual optimum.
+[742.56:747.28] As well here, the y and x-axis are superimposed.
+[747.28:751.96] So x0, y0 is the same thing.
+[751.96:753.24] OK.
+[753.24:755.96] Let's get back to the convex form k of case
+[755.96:757.84] and think about a necessary institution
+[757.84:759.24] condition for strong duality.
+[759.24:764.4] So in general, the existence of a saddle point
+[764.4:768.4] is not automatic, even in convex form k of setting.
+[768.4:770.6] And for this, what we need, for example,
+[770.6:775.96] for this to happen, something called this latest condition,
+[775.96:779.32] which is a sufficient condition for this strong duality.
+[779.32:781.76] Meaning that if you have such a problem,
+[781.76:786.48] in general, you have weak duality, meaning the dual optimum
+[786.48:791.64] will be always a lower bound to the primal open value.
+[791.64:797.28] But if the primal solution exists and the slater's conditions
+[797.28:799.48] hold, then you have strong duality.
+[803.4:805.6800000000001] So what is the slater's condition?
+[805.6800000000001:808.76] Slater's condition says that in the relative interior
+[808.76:814.48] of the domain of f and intersected with the f
+[814.48:817.5600000000001] and the defined constraints, it's not empty.
+[820.6800000000001:821.2] All right.
+[821.2:822.9200000000001] So it's an interesting condition.
+[822.9200000000001:828.8000000000001] So here's a simple problem.
+[828.8000000000001:829.0] OK.
+[829.0:836.08] So let's say we have this domain, which is this, this disk.
+[836.08:838.5600000000001] And we have an f on constraint.
+[838.5600000000001:842.6] So here, you intersect the domain with the f on constraint.
+[842.6:849.9200000000001] Then you get this open-ended line.
+[849.9200000000001:851.2] Because what you're doing is you're
+[851.2:853.44] looking at the relative interior of the domain.
+[853.44:856.6] So the boundary is not included.
+[856.6:860.72] So when you intersect this line with the relative interior
+[860.72:863.08] of this domain, you get this line.
+[863.08:864.6] And this is not empty.
+[864.6:867.32] But if the constraint just touches the domain
+[867.32:871.0400000000001] at a single point, and you try to intersect the relative
+[871.04:874.28] interior of the domain with this line,
+[874.28:877.16] then there is no intersection.
+[877.16:880.0799999999999] Because the relative interior of the domain
+[880.0799999999999:883.0799999999999] is this here, does not include that point.
+[886.3199999999999:888.1999999999999] Does not include the boundary.
+[888.1999999999999:890.7199999999999] And this intersection occurs at the boundary.
+[890.7199999999999:892.68] Hence, this intersection is an empty set.
+[892.68:895.68] In this case, the slater does not hold.
+[895.68:899.8399999999999] And in this case, you have only weak duality.
+[899.8399999999999:900.88] All right.
+[900.88:904.28] And you can come up with the counter examples.
+[904.28:907.36] You can come up with examples where you can show that when
+[907.36:913.12] the slater doesn't hold, you would have only the weak duality.
+[913.12:913.4] All right.
+[913.4:920.2] Let's talk about maybe more about this problem.
+[920.2:920.4] All right.
+[920.4:922.72] So let's call this the f on constraint
+[922.72:924.48] from its optimization problem.
+[924.48:927.28] And think about the solutions, the properties, where
+[927.28:930.2] do the algorithms convert to?
+[930.2:933.5200000000001] In general, we cannot find an exact solution.
+[933.5200000000001:937.12] And we have to find some numerical solutions.
+[937.12:944.0] And if you recall time to reach some epitome of accuracy
+[944.0:946.44] is typically, you know, we run an algorithm, it's
+[946.44:947.24] a vol algorithm.
+[947.24:950.8000000000001] We do some iterations to reach the numerical accuracy.
+[950.8000000000001:955.2800000000001] And the total time is whatever that accuracy,
+[955.2800000000001:959.5600000000001] number of iterations to reach accuracy, times per iteration.
+[959.56:961.64] All right.
+[961.64:965.76] The in the unconstrained case, this was easy.
+[965.76:969.28] But the notion of f's on accuracy
+[969.28:971.68] is a bit difficult in constraint optimization,
+[971.68:973.0799999999999] such as this one.
+[976.16:978.9599999999999] So here's the deal.
+[978.9599999999999:981.0799999999999] In the unconstrained case, whenever
+[981.0799999999999:983.5999999999999] you talk about some epsilon-accus solution,
+[983.5999999999999:987.3599999999999] it has to be above the optimum value.
+[987.36:993.8000000000001] It has to be because all the domain, let's say, is feasible.
+[993.8000000000001:995.28] And this, the problem's commixed.
+[995.28:998.48] And we know that any local minima is global minima.
+[998.48:1003.0] So you cannot beat f star.
+[1003.0:1005.0] But imagine this.
+[1005.0:1006.36] So here's a simple quadratic.
+[1006.36:1008.44] Now I put a constraint.
+[1008.44:1009.64] Here's my constraint set.
+[1012.32:1013.36] All right.
+[1013.36:1017.6] So let's say x is greater than or equal to 1.
+[1017.6:1020.32] And this is just simply x squared function.
+[1020.32:1025.16] We know that the optimal curves without the constraint
+[1025.16:1026.76] at 0.
+[1026.76:1029.4] So that's the minimum.
+[1029.4:1031.84] And this is 1.
+[1031.84:1033.48] So if you're trying to minimize,
+[1033.48:1035.76] and if you're approximately feasible meaning,
+[1035.76:1040.88] you try to come up with a sequence that goes from here to there.
+[1040.88:1042.68] What you're doing basically is,
+[1042.68:1047.88] so this is our f star, you will be approaching f star
+[1047.88:1048.6000000000001] from below.
+[1051.96:1054.4] So this means that you can come up with it,
+[1054.4:1059.76] where the objective evaluates below the optimal objective
+[1059.76:1064.44] because, well, you're approximately feasible.
+[1064.44:1067.8] Not completely feasible, approximately feasible.
+[1067.8:1069.64] All right.
+[1069.64:1070.96] OK.
+[1070.96:1073.88] So for this, you can think of epsilon-academy solution.
+[1073.88:1078.28] So one thing you can think about is that you get some epsilon
+[1078.28:1079.8] in terms of the objective.
+[1079.8:1082.0] You can put an absolute value, but it doesn't matter.
+[1082.0:1084.92] As long as you get feasibility in the end,
+[1084.92:1087.4] this needs to be satisfied.
+[1087.4:1089.8] So here you can have absolute value or not.
+[1089.8:1090.4] It doesn't matter.
+[1090.4:1095.8] As long as you are within an epsilon threshold
+[1095.8:1099.28] of the objective, meaning it says, so whatever this is,
+[1099.28:1101.6] this is our f star.
+[1101.6:1104.36] So you need to be below here.
+[1107.92:1109.8799999999999] OK.
+[1109.8799999999999:1112.16] And then what it says is that you need
+[1112.16:1116.0] to have epsilon-academy, meaning
+[1116.0:1119.6399999999999] that you need to be here.
+[1122.92:1124.68] So what is interesting here is, you know,
+[1124.68:1128.08] you can have one epsilon here, epsilon 2 here.
+[1128.08:1129.8] And if the solution is unique, you can also
+[1129.8:1134.1999999999998] try to obtain a direct approximation to x star.
+[1134.1999999999998:1134.9199999999998] All right.
+[1134.9199999999998:1138.1999999999998] As long as, you know, you're feasible, of course.
+[1142.48:1146.1599999999999] But as you can see, there are complications
+[1146.1599999999999:1150.48] because now you have to make sure that you're also feasible,
+[1150.48:1152.72] meaning you also satisfy the constraints.
+[1152.72:1160.64] I mean, I hope this example is helpful, right?
+[1160.64:1163.4] It's just you can come to the optimal location
+[1163.4:1167.04] if you're feasible from below.
+[1167.04:1169.88] In unconstrained problems, you can never do that.
+[1169.88:1170.08] Right?
+[1170.08:1171.88] So like, if you're minimizing this,
+[1171.88:1175.16] you can never approach this from an objective value
+[1175.16:1176.52] from below.
+[1176.52:1180.32] But because you have a constraint,
+[1180.32:1184.56] you can try to approach this f star from below,
+[1184.56:1185.76] because you're not feasible.
+[1185.76:1187.32] So let's say this is your constraint set.
+[1187.32:1191.28] Again, it's important.
+[1191.28:1193.3999999999999] OK.
+[1193.3999999999999:1194.76] Good.
+[1194.76:1198.52] Now this primal dual minimax perspective
+[1198.52:1204.0] gives us the way of measuring our progress, OK?
+[1204.0:1204.52] All right.
+[1204.52:1212.04] So this is what we said is it's a way of measuring progress.
+[1212.04:1214.92] Another one is the duality cap.
+[1214.92:1218.32] Remember, let's say we have slaters
+[1218.32:1220.24] and we have existence of the primal.
+[1220.24:1225.68] So the f star is equal to d star.
+[1225.68:1228.32] In this case, so if you recall, let's say
+[1228.32:1234.16] we had this function, one known plus one half, two known.
+[1234.16:1239.5600000000002] And then we had this dual function that coincided.
+[1239.5600000000002:1244.44] Given any x and y points, let's say,
+[1244.44:1248.3600000000001] called star, what you can do is measure the cap,
+[1248.3600000000001:1250.6000000000001] the duality cap, the value.
+[1250.6000000000001:1255.92] So you can do this from here to there as well.
+[1255.92:1256.2] OK.
+[1256.2:1257.72] So what is this?
+[1257.72:1261.88] So the duality cap is literally,
+[1261.88:1265.5600000000002] so you're given x bar, right?
+[1265.5600000000002:1268.44] You maximize over y.
+[1268.44:1269.8000000000002] You're given y bar.
+[1269.8000000000002:1272.0400000000002] You minimize over x and you measure
+[1272.0400000000002:1273.48] this particular difference.
+[1277.92:1281.16] All right.
+[1281.16:1285.16] And this difference, so because you're
+[1285.16:1288.5600000000002] looking at this primal dual difference,
+[1288.56:1292.0] it's always non-negative.
+[1292.0:1295.6] And it is advantageous to get this quantity
+[1295.6:1298.6] small impact.
+[1298.6:1301.32] You can show that gap is always greater than equal to 0.
+[1301.32:1304.3999999999999] And the gap is 0, if and only if x star y star is
+[1304.3999999999999:1305.24] a saddle point.
+[1312.04:1312.56] OK.
+[1312.56:1313.76] So think about this.
+[1313.76:1315.6799999999998] So we have a primal problem.
+[1315.6799999999998:1318.0] We have a dual problem.
+[1318.0:1325.08] And the primal dual cap is literally, you evaluate the primal,
+[1325.08:1329.8] you evaluate the dual and take the difference.
+[1333.92:1336.48] It's a very strong notion of convergence.
+[1336.48:1339.48] OK.
+[1339.48:1342.52] I hope this is clear.
+[1342.52:1345.24] There are a lot of concepts that are being thrown at you,
+[1345.24:1347.16] I understand.
+[1347.16:1348.24] But I hope this is clear.
+[1348.24:1351.8400000000001] I think that you know, feel free to send me questions so
+[1351.8400000000001:1359.3600000000001] that we can answer if you have any difficulty understanding.
+[1359.3600000000001:1362.0400000000002] But some of these duality concepts are
+[1362.0400000000002:1364.72] I think covered in one of the prerequisites of this course,
+[1364.72:1367.8000000000002] the Stanyl Kun's course.
+[1367.8000000000002:1372.8400000000001] So I hope some of you remember this material.
+[1372.8400000000001:1374.8000000000002] OK.
+[1374.8:1380.44] So again, think about non-negativity.
+[1380.44:1384.76] So the dual function is always below the primal function.
+[1384.76:1389.12] And they're equal only at f star, p star.
+[1389.12:1392.2] So if you pick a y here, and if you pick an x here,
+[1392.2:1399.32] this particular difference is always non-negative.
+[1399.32:1404.48] So you try to find a y and x such that this is 0.
+[1404.48:1409.76] And that only occurs at f star is equal to this star.
+[1415.52:1417.96] OK.
+[1417.96:1418.68] OK.
+[1418.68:1420.3600000000001] So let's think about this.
+[1420.36:1427.36] OK.
+[1427.36:1430.52] OK.
+[1430.52:1436.8799999999999] So here is the minimax problem.
+[1436.8799999999999:1438.6] Let's say we have splatures and so on.
+[1438.6:1441.08] So for it's flipping minimaxes, OK.
+[1441.08:1444.1999999999998] And at the settle point or the local Nash equilibrium,
+[1444.1999999999998:1445.7199999999998] this is satisfied.
+[1445.7199999999998:1448.24] So let's see the non-negativity of the gap.
+[1448.24:1452.04] So the gap is defined as maximum over y,
+[1452.04:1456.0] given this, and minimum over x, given that.
+[1456.0:1457.1200000000001] OK.
+[1457.1200000000001:1466.36] So for a given x star, so for a given x star,
+[1466.36:1468.88] you're maximizing over y.
+[1468.88:1471.24] And this foldable is, we need to be bigger
+[1471.24:1474.2] than if you were to plug in only one y.
+[1474.2:1477.88] And in this case, let's say, y star.
+[1477.88:1479.44] Does this make sense?
+[1479.44:1488.3200000000002] So this term for any given x star, x bar, any x bar,
+[1488.3200000000002:1492.3200000000002] because y is maximizing, this quantity
+[1492.3200000000002:1495.0800000000002] is greater than or equal to, if you were to evaluate this
+[1495.0800000000002:1497.44] at any given point, one star.
+[1497.44:1502.3200000000002] And this is greater than or equal to that.
+[1502.3200000000002:1502.6000000000001] OK.
+[1502.6000000000001:1506.6000000000001] So this is just the definition of maximization.
+[1506.6000000000001:1507.8000000000002] OK.
+[1507.8:1518.28] So inequality, too, this one says that you have x bar, y star.
+[1518.28:1523.68] If you were to plug in x star, in the settle point definition,
+[1523.68:1525.12] this means for fold, right?
+[1525.12:1529.9199999999998] Because x star is minimizing given my star.
+[1529.9199999999998:1530.8799999999999] So this folds.
+[1535.48:1536.68] OK.
+[1536.68:1538.04] Good.
+[1538.04:1542.16] Given this, we plug this back in here.
+[1542.16:1543.8] So this, right?
+[1543.8:1550.48] So you can, given that y star was a maximizer for x star,
+[1550.48:1555.28] if you plug in y bar, any other y other than y star,
+[1555.28:1557.92] this would be smaller.
+[1557.92:1558.44] OK.
+[1558.44:1559.48] Good.
+[1559.48:1561.88] So what we have now is this one.
+[1561.88:1565.0800000000002] So phi, evaluated x star and y bar.
+[1565.08:1568.96] And then we're subtracting the function where x is
+[1568.96:1571.72] actually minimizing over all x.
+[1571.72:1575.72] So obviously, this is smaller than that one.
+[1575.72:1578.12] Hence, this is greater than or equal to 0.
+[1581.76:1582.9199999999998] OK.
+[1582.9199999999998:1589.28] So in this particular case, if y bar x bar, so y bar, what x bar,
+[1589.28:1593.3999999999999] y bar is x star, y star, then all inequalities are equalities
+[1593.4:1595.0400000000002] and the gap is 0.
+[1603.68:1604.2] All right.
+[1609.8400000000001:1611.3200000000002] OK.
+[1611.3200000000002:1614.48] So here is, I mean, right now, remember,
+[1614.48:1618.0400000000002] we are not talking about algorithms.
+[1618.0400000000002:1621.24] We're talking about some fundamental properties.
+[1621.24:1624.16] And we're talking about, for example,
+[1624.16:1628.52] where we want the algorithms to converge to things
+[1628.52:1630.48] like saddle points.
+[1630.48:1632.4] And we're trying to think about when
+[1632.4:1633.88] do these algorithms converge to?
+[1633.88:1636.4] When do we stop an algorithm, for example?
+[1636.4:1637.36] OK.
+[1637.36:1642.2] So thinking about, you know, absolute accurate solutions.
+[1642.2:1646.2] In the unconstrained case, finding epsilon accuracy is good.
+[1646.2:1647.92] Like if the problems come mixed, you
+[1647.92:1652.72] look at the gradient mapping, norm of the gradient,
+[1652.72:1655.68] the sequences, things are good.
+[1655.68:1657.76] But in constrained problem, especially
+[1657.76:1661.3600000000001] there's FI and constrained problems,
+[1661.3600000000001:1664.8000000000002] you can be infeasible.
+[1664.8000000000002:1668.16] If you're infeasible, then you can have objective rallies
+[1668.16:1670.8000000000002] that are below.
+[1670.8000000000002:1672.76] And because you're doing constraint optimization,
+[1672.76:1676.48] you can't just look at, for example, the gradient of f
+[1676.48:1677.24] to stop.
+[1677.24:1679.56] So here is our x star.
+[1679.56:1682.1200000000001] So let's say here's our problem.
+[1682.1200000000001:1686.04] We have a constraint which says x is greater than or equal to 1.
+[1686.04:1691.56] In that case, here, the objective gradient is not 0.
+[1691.56:1692.32] All right.
+[1692.32:1695.44] The objective gradient is 0 here, which
+[1695.44:1696.88] is eliminated by the constraint.
+[1696.88:1699.16] So the problem is a bit more difficult.
+[1699.16:1703.48] And you will see this primal dual type of games.
+[1703.48:1706.28] How it helps actually the algorithms, which
+[1706.28:1707.52] we will see in the next lecture.
+[1711.92:1716.8799999999999] So we call this x star y star a primal dual solution.
+[1716.8799999999999:1719.6] So here's our primal.
+[1719.6:1722.08] Here's our dual.
+[1722.08:1723.76] So we flip them in and the max.
+[1727.2:1732.24] And you know that it's a saddle point
+[1732.24:1736.2] if it satisfies this particular local Nashical,
+[1736.2:1736.68] Nashical.
+[1742.8:1749.64] There's a nice theory of writing this in terms of optimization.
+[1749.64:1754.88] This is called KKT conditions, Karush Kuntucker.
+[1754.88:1759.28] If it's first done by a master thesis in Karush,
+[1759.28:1762.68] and then Prune and Tucker kind of rediscovered the player.
+[1762.68:1763.8] They made it famous.
+[1763.8:1767.68] So it's now called Karush Kuntucker conditions.
+[1767.68:1770.04] So given a problem like this, how
+[1770.04:1771.84] do we characterize the optimal solution?
+[1771.84:1773.92] Remember, for an unconstrained problem,
+[1773.92:1779.32] we take the objective and then we set the gradient equal to 0.
+[1779.32:1782.84] This is for the non-sumult objective.
+[1782.84:1789.08] We set that 0 must be an element of the sub-diffransion.
+[1789.08:1792.24] So if f of x is the absolute value here,
+[1792.24:1795.52] you have a sub-diffransion.
+[1795.52:1798.72] And 0 must be an element of the sub-diffransion.
+[1798.72:1802.24] So for this, the KKT conditions also
+[1802.24:1806.32] say that if you look at this minimax problem,
+[1806.32:1807.96] we restrict the x.
+[1807.96:1809.56] We take the gradient.
+[1809.56:1813.72] It is non-sumult because it has this max format.
+[1813.72:1822.08] So if a min x max y f of x plus y,
+[1822.08:1824.1200000000001] it makes minus e.
+[1824.1200000000001:1826.28] You remember downskins.
+[1826.28:1829.84] So the gradient with respect to x
+[1829.84:1832.48] will be non-sumult because in general,
+[1832.48:1837.96] the dual function, sorry, in general,
+[1837.96:1840.88] there is a similarity between dual and primal here.
+[1840.88:1843.8400000000001] And in general, this particular primal function
+[1843.8400000000001:1846.44] is non-sumult because it has constraints.
+[1846.44:1850.8400000000001] It abruptly stops here, for example.
+[1850.8400000000001:1852.72] It goes to infinity here.
+[1852.72:1857.16] So there would be a sub-gradient here.
+[1857.16:1862.6000000000001] So the KKT condition says that at the optimum,
+[1862.6000000000001:1867.96] 0 must be an element of this sub-diffransion.
+[1867.96:1873.52] And that x star needs to satisfy the constraint.
+[1873.52:1874.76] OK?
+[1874.76:1876.4] So here my star is a given vector.
+[1876.4:1879.04] So this is a point.
+[1879.04:1881.92] Or it could be actually a multiple point if i star is not
+[1881.92:1883.28] unique.
+[1883.28:1886.44] And by Moro Rockefeller theorem,
+[1886.44:1894.16] that summation of two sub-diffransions is sub-diffransion.
+[1894.16:1898.4] You do what is called as the mean cosine.
+[1898.4:1899.6000000000001] OK.
+[1899.6000000000001:1902.6000000000001] Now let's think more towards the algorithm.
+[1902.6000000000001:1904.68] So here is the setting.
+[1907.92:1910.76] Is the function of x, phi is convex.
+[1910.76:1913.6000000000001] Is the function of y, if it's concave.
+[1913.6000000000001:1919.0800000000002] And phi is smooth in the sense that if you evaluate the gradients
+[1919.08:1925.32] at two different points, then this differences of the gradients
+[1925.32:1927.3999999999999] is that provided by the difference of the points
+[1927.3999999999999:1931.24] times the smoothness constant.
+[1931.24:1935.3999999999999] So what we would like to do now is find a place where both
+[1935.3999999999999:1937.72] gradients vanish.
+[1937.72:1940.84] All right, gradient will just get to x and gradient will just
+[1940.84:1942.12] move to y.
+[1942.12:1948.36] So what we can do is, let's say we start with some initial points,
+[1948.36:1954.7199999999998] we do gradient descent in x and gradient descent in y.
+[1954.7199999999998:1956.76] Does this make sense?
+[1956.76:1957.8] It kind of does, right?
+[1957.8:1960.28] Because you're trying to minimize the gradient.
+[1960.28:1963.6799999999998] And you can try to take the joint object
+[1963.6799999999998:1966.4799999999998] and use the gradient in both.
+[1969.52:1971.8] Or you can even alter it.
+[1971.8:1973.56] Right?
+[1973.56:1977.08] So here you can do simultaneous, right?
+[1977.08:1981.1999999999998] You just compute one gradient.
+[1981.1999999999998:1983.76] And then you do the other one.
+[1983.76:1988.04] Or you can do one gradient, you update x.
+[1988.04:1991.28] So here this is non-cooperative, so to say,
+[1991.28:1994.96] because you observe the gradient both players simultaneously
+[1994.96:1996.28] and then you act.
+[1996.28:2000.08] In the other one, one takes the decision,
+[2000.08:2003.4399999999998] you recompute a gradient at the new point,
+[2003.44:2007.3200000000002] and then you update it to do.
+[2007.3200000000002:2012.0] So there are some interesting things.
+[2012.0:2016.0] So even if this problem is by a fine,
+[2016.0:2019.28] I suppose it's x and y, it's just a product,
+[2019.28:2021.92] the simultaneous gradient descent
+[2021.92:2024.8400000000001] attend dynamic diverge.
+[2024.8400000000001:2028.04] It doesn't emerge, it just spirals out.
+[2028.04:2033.0800000000002] And the itils of the alternation, they don't diverge,
+[2033.08:2034.8] but they don't converge either.
+[2034.8:2037.9199999999998] They just circle around.
+[2037.9199999999998:2038.6799999999998] Right?
+[2038.6799999999998:2040.28] So here it is.
+[2040.28:2042.72] So think about the simple problem.
+[2042.72:2044.12] Here's the practical performance.
+[2044.12:2046.32] You initialize the algorithm here.
+[2046.32:2050.08] And what it will do is it will spiral out.
+[2056.04:2057.3199999999997] All right?
+[2057.3199999999997:2060.88] And if you alternate, meaning you do an update on x,
+[2060.88:2064.76] then y gets to observe the gradient at that x,
+[2064.76:2071.8] then it will simply circle around.
+[2071.8:2074.6] So the algorithm is not converge.
+[2074.6:2077.2400000000002] It certainly doesn't get the gradients to 0,
+[2077.2400000000002:2078.08] neither this one.
+[2082.48:2085.48] All right?
+[2085.48:2086.88] Good.
+[2086.88:2092.12] So I kind of pulled the rug underneath in the sense
+[2092.12:2102.6800000000003] that I mentioned that for non-comics, non-comcave problems,
+[2102.6800000000003:2105.92] the problem is too fridifical.
+[2105.92:2109.6] And then I gave you the simplest example
+[2109.6:2114.88] of a convex concave and a very natural algorithm.
+[2114.88:2117.12] You look at the gradient of the objective,
+[2117.12:2121.08] and then you do updates on both variables.
+[2121.08:2123.6] You can actually prove that this happens.
+[2123.6:2126.04] It's not just some observation.
+[2126.04:2128.48] They diverge.
+[2128.48:2130.92] OK.
+[2130.92:2135.28] So now let's think about in between.
+[2135.28:2136.32] OK?
+[2136.32:2145.44] So f, sorry.
+[2145.44:2145.7200000000003] In this case, let's say a non-comics,
+[2145.7200000000003:2147.48] we just picked x, a function phi.
+[2147.48:2150.36] But let's say it is concave, we just picked y.
+[2150.36:2154.96] So it is literally in between, between convex concave
+[2154.96:2158.7200000000003] to non-comics concave.
+[2158.7200000000003:2161.44] Now we know that for a non-comics f,
+[2161.44:2166.28] so if you define this like that, for example,
+[2166.28:2169.88] gradient descent reaches to an epsilon stationary point.
+[2169.88:2171.6800000000003] We discuss this.
+[2171.6800000000003:2179.48] And because this is concave, we just picked y,
+[2179.48:2181.6400000000003] so you can get either a descent direction
+[2181.6400000000003:2189.32] or some sub-gradient, or gradient, if it's singleton,
+[2189.32:2192.88] then you can actually try to do this.
+[2192.88:2196.2400000000002] So it is conceptually much easier than non-comics concave
+[2196.24:2204.2799999999997] case, but it's a bit more general.
+[2204.2799999999997:2205.3999999999996] OK?
+[2205.3999999999996:2206.7599999999998] Good.
+[2206.7599999999998:2210.64] So let me tell you what's going to happen in general.
+[2210.64:2213.8799999999997] So the simultaneous, the natural, the naive proposal
+[2213.8799999999997:2217.08] of doing simultaneous x, y updates will not work.
+[2217.08:2219.9599999999996] But in the convex concave case, you
+[2219.9599999999996:2224.2799999999997] can get one over x-long convergence.
+[2224.28:2228.1600000000003] The respect to the duality gap.
+[2228.1600000000003:2231.6800000000003] And for bounded domains, then we're all
+[2231.6800000000003:2234.44] to do this.
+[2234.44:2236.5600000000004] Shambol and Pock has the characterization
+[2236.5600000000004:2238.48] with respect to duality gap.
+[2238.48:2244.32] But because they don't have boundedness in the tool,
+[2244.32:2249.2000000000003] the rate they have has an infinity divided by k kind of field.
+[2249.2000000000003:2252.6000000000004] So we did something like this by using a smooth of cap
+[2252.6:2255.96] analysis that has an absolute optimality.
+[2255.96:2260.8399999999997] Some of these non-comics concave results are new.
+[2260.8399999999997:2266.4] So here's the earlier this year, a mic Jordan paper.
+[2266.4:2270.7999999999997] Here for the general non-comics concave case,
+[2270.7999999999997:2274.88] you get all tilde epsilon to 2.5.
+[2274.88:2279.56] And if it is strongly concave, which means there's
+[2279.56:2280.6] a unique solution.
+[2280.6:2286.64] And then you literally get the gradient
+[2286.64:2289.48] for the outer problem.
+[2289.48:2291.52] In this case, it's epsilon to 2.
+[2291.52:2294.72] So it's like this.
+[2294.72:2298.44] For general non-comics concave, it is hard.
+[2298.44:2301.6] And so here's the buffet of negative results.
+[2301.6:2303.96] And here's the dessert section.
+[2303.96:2313.88] Now, what I would like to say is that this may propose those
+[2313.88:2315.16] typically don't work.
+[2315.16:2316.92] But there are algorithms that converge.
+[2316.92:2320.08] Or there are things that you have to do in addition.
+[2320.08:2323.96] For instance, in the case of the alternating gradient descent
+[2323.96:2327.92] as send, what you can do is average the sequence.
+[2327.92:2335.44] So you circle around the point that you started for this bilinear
+[2335.44:2337.36] pifi and game.
+[2337.36:2344.48] If you start averaging the sequence, it will slowly converge just
+[2344.48:2345.96] like here.
+[2345.96:2349.52] So there are things that you need to do in addition.
+[2349.52:2351.48] So for our approach, for example, we also
+[2351.48:2358.4] needed averaging to get the cap to go to 0.
+[2358.4:2360.92] There are algorithms that you will see that handle this
+[2360.92:2363.84] particular case in the next lecture.
+[2363.84:2366.88] There is the question.
+[2366.88:2370.2] When we take max over y, we get infinity.
+[2370.2:2371.68] So how do we minimize after all?
+[2371.68:2377.04] So the question is this, when we take max xy over y,
+[2377.04:2378.72] we get the infinity.
+[2378.72:2380.76] That is correct.
+[2380.76:2386.0] And that's why the saddle point is only at 0 is 0.
+[2386.0:2391.96] So x has to be 0, in which case y can just 2 0.
+[2394.96:2396.2400000000002] So that's the saddle point.
+[2396.2400000000002:2397.0400000000004] That is correct.
+[2397.0400000000004:2399.44] So how do we minimize after all?
+[2402.6000000000004:2406.2000000000003] For the minimization x player, the only choice is 0.
+[2406.2:2407.2] So.
+[2409.2:2412.48] All right, hopefully this answered the question.
+[2412.48:2415.8399999999997] And in fact, I'm done for this, this particular lecture.
+[2415.8399999999997:2420.7599999999998] I can take more questions if you had it.
+[2420.7599999999998:2425.04] Like I said, the rest of the slides are for those of you
+[2425.04:2428.24] who are interested in conjugation of non-com x functions.
+[2428.24:2431.96] There's bunch of examples here in terms of structures,
+[2431.96:2435.3999999999996] varsity, recovery.
+[2435.4:2437.08] They're not easy material.
+[2437.08:2442.56] So this is all star-dex, so actually they put stars here.
+[2442.56:2445.8] But what you can do is, given non-com x functions,
+[2445.8:2449.56] you can try to minimize their comb x lower envelopes,
+[2449.56:2451.92] things like this that are useful.
+[2451.92:2452.92] So.
+[2456.96:2459.96] So Friday, we're continuing with homework.
+[2459.96:2462.76] And if you have questions, what you can do
+[2462.76:2464.7200000000003] is try to reserve my time as well.
+[2464.72:2467.7599999999998] So I can show up to the recitation.
+[2467.7599999999998:2469.72] If you want to have questions on the lectures,
+[2469.72:2471.7999999999997] you can directly speak with me.
+[2471.7999999999997:2473.52] You just need to schedule it with me.
+[2473.52:2478.08] All right, so if you want to talk more on these slides,
+[2478.08:2479.72] I'm happy to talk.
+[2483.68:2485.9599999999996] If you have questions about this lecture,
+[2485.9599999999996:2487.08] send me your questions.
+[2487.08:2489.08] I'll try to answer the email.
+[2489.08:2490.8399999999997] And if you want to meet, we can try to meet
+[2490.8399999999997:2493.2799999999997] on the during the recitation.
+[2493.28:2495.2000000000003] One thing that I would like to also say,
+[2495.2000000000003:2498.36] I think that Ahmed sent an email about this,
+[2498.36:2503.36] is that please don't expect the TA's to immediately answer
+[2505.48:2506.96] their human beings after all.
+[2506.96:2508.1600000000003] And they have weekends.
+[2508.1600000000003:2512.44] And so we have a discussion.
+[2512.44:2516.1200000000003] And now we have some rules to respond
+[2516.1200000000003:2518.32] to some of these questions.
+[2518.32:2520.44] Because it's an effort on all of us
+[2520.44:2523.08] to answer these questions.
+[2523.08:2525.88] And we're happy to do so.
+[2525.88:2531.4] But expect a bit of delays, because the course overwhelms
+[2531.4:2532.8] too much of the time.
+[2534.52:2536.44] So have a great week.
+[2537.48:2540.52] I know this course is like the last thing you see
+[2540.52:2543.2000000000003] on Fridays and the first thing you see on Mondays
+[2543.2000000000003:2544.64] to do too much.
+[2544.64:2547.52] But take a look at the materials and me questions.
+[2547.52:2550.96] If you have questions, I'm happy to answer.
+[2550.96:2553.88] If you want to talk about this, like an office hour,
+[2553.88:2556.04] just schedule something with me, I'm happy to show up
+[2556.04:2559.4] on Zoom and talk more about this,
+[2559.4:2563.32] because this is my own research in my group.
+[2563.32:2565.92] So it's quite dear to me.
+[2565.92:2566.88] All right?
+[2566.88:2570.24] So hopefully we'll see you guys more.
+[2570.24:2571.84] Enjoy the week.
+[2571.84:2578.56] And as usual, take leave.

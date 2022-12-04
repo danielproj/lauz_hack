@@ -1,0 +1,245 @@
+~COM-516 lecture 10.2
+~2020-11-15T21:30:57.322+01:00
+~https://tube.switch.ch/videos/76543a93
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:21.36] Okay, so here is the proof of the theorem.
+[21.36:37.72] So we call a set just a minute ago Xn, we have two chains, so we use a coupling construction.
+[37.72:41.28] We have our two coupled chains.
+[41.28:50.0] The first one is Xn starting at time zero.
+[50.0:72.36] So this is the chain starting at X0 equal little X, which is the proper initial coloring
+[72.36:83.0] and follows the steps of the algorithm.
+[83.0:101.96000000000001] So again, you select over Xv, at random, you select a color, C in 1 to Q at random.
+[101.96:108.8] Then you recolor if C is allowed.
+[108.8:113.44] And if not, you do nothing.
+[113.44:124.32] The second chain, I call it Yn, starts also at time zero.
+[124.32:140.44] But simply the second chain is the one that starts at some Y0 that is sampled according
+[140.44:147.2] to pi.
+[147.2:164.04] And then it evolves with the same steps than the chain X.
+[164.04:180.32] The point is that you take the same V and color C at each time step.
+[180.32:192.0] Okay, so that's where the coupling comes from.
+[192.0:200.12] So the chains are coupled.
+[200.12:209.88] So if you view V and see as two dices, you take exactly the same outcome of the result
+[209.88:212.84] of your dice.
+[212.84:225.16] And then you move accordingly for X, you recolor if the color C is allowed at vertex V.
+[225.16:230.92000000000002] For Y, you recolor if the color C is allowed at vertex V.
+[230.92000000000002:236.64000000000001] It could be that color C is allowed for X, but not allowed for Y.
+[236.64000000000001:241.64000000000001] It could be it's allowed for Y, not for X, or it could be it's not allowed for both, or
+[241.64:244.95999999999998] maybe it's allowed for both.
+[244.95999999999998:255.95999999999998] Okay, so these are the humming, the coupled chains.
+[255.96:273.8] I'll introduce the humming distance between the chains, so let me write it here.
+[273.8:285.16] humming distance between chains at each time step.
+[285.16:299.48] By definition, this is the distance between the assignment X at time N, the assignment Y
+[299.48:310.64000000000004] at time N, and this is the sum over all vertices of the indicator function that the assignment
+[310.64000000000004:321.8] the component V at time N is different than the component V of the assignment Y at time
+[321.8:322.8] N.
+[322.8:333.56] Okay, so this is just a standard definition of humming distance between the two assignments
+[333.56:337.36] at each time.
+[337.36:352.32] Okay, now when I use the random variables, I use the capital letters, I don't underline
+[352.32:361.84] just to keep the notation simpler, but when I use the realization, I use a small letter
+[361.84:367.64] and I somehow underline it to distinguish from the components.
+[367.64:373.64] Okay, I hope the notation is clear.
+[373.64:394.68] And since the chains are coupled, since this is some coupling between chains, and not
+[394.68:406.2] the necessarily optimal coupling, what you have is that the total variation distance between
+[406.2:414.2] the chain X when you start at assignment X, the initial assignment, and you wait, well,
+[414.2:421.2] any assignment for that matter, you wait at time N minus the distribution of the chain
+[421.2:428.96] Y at the same time, but the chain Y evolves according to the stationary distribution.
+[428.96:451.79999999999995] So at all times, at all times the distribution of chain Y N is pi, because pi is the stationary
+[451.8:459.96000000000004] distribution, okay, for the chain, and why is it the stationary distribution?
+[459.96000000000004:469.36] Well, because it's metropolis chain, and we wrote it in the language of the general metropolis
+[469.36:478.16] chain, and so the detailed balance is satisfied and pi is a stationary distribution.
+[478.16:485.08000000000004] So you have that this will be, which is equal to the infimum over all possible couplings,
+[485.08000000000004:488.68] but now you take some coupling.
+[488.68:497.08000000000004] So you get that this is equal to the probability distribution that at time N, the random variable
+[497.08000000000004:503.36] Y N is not equal to the random variable.
+[503.36:514.4] This N is different from Y N. Now this here, you should realize that this can be, is the
+[514.4:527.88] same event as the event that the distance, the humming distance between X N and Y N is greater
+[527.88:537.72] or equal to 1, because if the humming distance is 0, then the chain, the configurations
+[537.72:541.84] here of colors is the same, okay.
+[541.84:559.2800000000001] And finally by Markov's inequality, you can say that this probability is less than the
+[559.28:573.1999999999999] expectation of the distance between X and Y N divided by 1, okay.
+[573.2:594.8000000000001] So we have a nice inequality to start with, which is the following at the probability,
+[594.8:603.56] but this total variation distance is less than the expectation of the distance between
+[603.56:612.3599999999999] the chains at time N. And it's much easier to evaluate this expectation or to bound this
+[612.3599999999999:621.4399999999999] expectation than to work directly, directly with this quantity here.
+[621.44:639.44] Okay, so we are going to bound this expectation now.
+[639.44:645.96] And the bound on the expectation is this exponential decay, which is when Q is greater than
+[645.96:652.5600000000001] 3 delta, that we have in the theorem.
+[652.5600000000001:661.4000000000001] So we call the goal is to prove that this expectation is less than capital N exponential
+[661.4000000000001:670.64] minus little N over capital N1 minus 3 delta over Q. And this implies the result for the
+[670.64:672.64] mixing time.
+[672.64:679.64] Okay, so this is what we want to achieve now.
+[679.64:683.92] Fine.
+[683.92:703.12] So we will proceed by induction somehow.
+[703.12:732.4] So first we assume that the distance between X0 and Y0 is 1, prove the bound.
+[732.4:748.24] Okay, then we generalize to the situation where the distance between X0 and Y0.
+[748.24:765.88] So these are the distances at time N equals 0 is R. Okay, and finally we conclude.
+[765.88:771.6800000000001] Okay, this is the plan.
+[771.68:781.2399999999999] So first assume, so R greater equal to 1.
+[781.24:803.2] Okay, first assume at time N equals 0, the distance between the two chains is equal to 1.
+[803.2:816.5200000000001] So there exists a vertex V, okay, such that XV is different than YV at time 0.
+[816.52:834.8] So I don't write in the X0 and XW equal to YW if W is different from this.
+[834.8:850.7199999999999] Okay, this means that the distance at time 1 will be, you have three possibilities.
+[850.7199999999999:861.4] Once we will select a vertex at random and recolor it.
+[861.4:866.56] It could happen that the distance does not change.
+[866.56:869.24] So it remains equal to 1.
+[869.24:874.48] Or the distance changes but at the selected vertex only.
+[874.48:881.16] So the distance decreases or the distance increases to 2.
+[881.16:884.68] But these are the only possibilities.
+[884.68:912.9599999999999] So this implies that the expectation of X1 Y1 is going to be equal to 0 times the probability
+[912.96:928.1600000000001] that the distance between X1 Y1 is equal to 0 plus 1 times the probability that the distance
+[928.1600000000001:940.24] is equal to 1 plus 2 times the probability that the distance is equal to 2.
+[940.24:951.24] Now you can use that the probability that the distance equals 1 is 1 minus the probability
+[951.24:958.6] that the distance equals 0 minus the probability that the distance equals 2.
+[958.6:969.84] And this means that what you find here, you will find 1 minus the probability that the
+[969.84:977.44] distance between X1 and Y1 equals 0.
+[977.44:988.9200000000001] You have this term which comes from the first bluter plus.
+[988.9200000000001:992.96] And then you subtract this one from this one.
+[992.96:1003.32] So you get the probability that the distance between X1 Y1 equals 2.
+[1003.32:1016.76] So now we just proved that this expectation here is equal to this sum.
+[1016.76:1024.6] We are just going to estimate these two probabilities now.
+[1024.6:1026.68] So let me rewrite it here.
+[1026.68:1037.28] We have that the expectation at time 1.
+[1037.28:1048.56] If under the condition remember that X0 Y0 the distance at time 0 is equal to 1.
+[1048.56:1057.36] We proved that this is 1 minus the probability that the distance between X1 Y1 equals 0 plus
+[1057.36:1067.2] the probability that the distance between X1 Y1 sorry.
+[1067.2:1078.4] So this is equal to 2.
+[1078.4:1087.16] Let us estimate first this probability that the distance between X1 Y1 equals 0.
+[1087.16:1096.0800000000002] Since I have a minus I want a lower bound here to get an upper bound on the expectation.
+[1096.08:1101.56] So what happens here?
+[1101.56:1110.52] Remember we have the vertex V where the two chains are different and they are the same
+[1110.52:1111.52] elsewhere.
+[1111.52:1122.36] So let me draw here some graph to help a little bit with the argument.
+[1122.36:1132.04] So here you have the chain X at time 0 and then you have the chain Y at time 0.
+[1132.04:1144.4799999999998] You have also this vertex V and the two chains they differ only for the vertex V by assumption.
+[1144.48:1159.6] So let me say that this one is red and this one here is red.
+[1159.6:1173.04] So in order to have the same color at time 1 what must happen is that you select vertex
+[1173.04:1185.8] V and you recolor it.
+[1185.8:1189.28] So you have to select vertex V.
+[1189.28:1200.6] This will happen with probability 1 over n and then you will select a color C which is
+[1200.6:1206.84] the same color for both chains.
+[1206.84:1210.08] And this color C should be allowed.
+[1210.08:1219.6799999999998] So the color C if it is allowed it means that this color C will be different than the blue,
+[1219.6799999999998:1228.7199999999998] the green that you have here which is the same right in both.
+[1228.72:1232.56] Then you have a black here.
+[1232.56:1245.76] Well this is not a neighbor so we don't care about it so you have a black and then you
+[1245.76:1248.8] have some other color.
+[1248.8:1261.8799999999999] But the non-nabbers I don't really care for the moment so let me raise this.
+[1261.8799999999999:1272.56] So the color C in order to get the same color it must be that C is different than the
+[1272.56:1278.44] three colors blue, green and black.
+[1278.44:1292.24] So this is the number here of allowed colors at V divided by the total number of colors.
+[1292.24:1300.6000000000001] But the number of allowed colors is simply the total number of colors minus the degree
+[1300.6:1313.9199999999998] because you have three forbidden colors here delta equal three forbidden colors here.
+[1313.9199999999998:1321.8] So here is this lower bound on the probability and we are going to put this here.
+[1321.8:1328.0] Now let us look at the other probability, the probability that the distance between x
+[1328.0:1334.52] 1 and y 1 equals 2.
+[1334.52:1341.76] To evaluate such a probability you can see the following.
+[1341.76:1349.76] So you must go from one different color like on the picture here at vertex V to two different
+[1349.76:1352.28] colors.
+[1352.28:1380.92] So if the selected vertex called it w is not a neighbor of V, well what will happen?
+[1380.92:1386.16] Then the neighbors of w are the same in both chains.
+[1386.16:1397.8400000000001] So you might recolor w or not recolor w but you will do the same in both chains.
+[1397.84:1427.8] You will do the same recoloring or non-recoloring of w in both chains and the distance x1 y1
+[1427.8:1433.28] will remain one.
+[1433.28:1437.84] So this is not a possibility.
+[1437.84:1462.08] So this means that the event dx1 y1 equal 2 happens only if w is a neighbor.
+[1462.08:1473.32] So this means you will choose a neighbor in both chains.
+[1473.32:1479.04] So you will recolor the neighbor.
+[1479.04:1488.32] So let me not repeat the drawing here but let me just say that you will choose a neighbor
+[1488.32:1494.2] say you will choose this one.
+[1494.2:1498.56] And the colors are already different than if you want two different colors you should
+[1498.56:1503.9199999999998] recolor the neighbor.
+[1503.9199999999998:1511.8799999999999] The neighbor should be recolored with different colors in both.
+[1511.88:1518.3200000000002] Because if you recolor with the same color then it doesn't work or if you don't recolor
+[1518.3200000000002:1522.0] the neighbor then again it doesn't work.
+[1522.0:1551.56] So it should be that you recolor w in x and not in y or you recolor w in y.
+[1551.56:1562.44] So that the two recoloring are different.
+[1562.44:1567.12] So you have only two possibilities.
+[1567.12:1575.6399999999999] So how many vertices do you have here that are possibly recolored?
+[1575.64:1586.0] You have delta of them, so you choose delta of them over n possibilities of the vertices.
+[1586.0:1598.92] And then you have at most two possible colors that are going to be allowed so that you recoloring
+[1598.92:1607.8000000000002] x but not in y.
+[1607.8:1629.56] You should choose the most color here if you want to recolor in y but not in x then you should
+[1629.56:1637.8799999999999] recolor over the number of colors.
+[1637.8799999999999:1644.48] Once you have thought about this argument then you replace it up there.
+[1644.48:1658.52] What you find is that the expectation of d of x1 y1 is less than finally 1 minus 1
+[1658.52:1666.12] over n 1 minus 3 delta over 2.
+[1666.12:1675.08] So this is the first step.
+[1675.08:1684.36] Now we had assumed to remember that at time 0 the distance between x0 and y0 is 1.
+[1684.36:1697.08] Now we generalize to the case where the distance between x0 and y0 is r and we look again
+[1697.08:1703.04] what happens after one step.
+[1703.04:1712.7199999999998] Now if the distance between y0, x0 and y0 is r you have r colors that are different and
+[1712.72:1729.24] I claim by the irreducibility for 3 delta greater than q.
+[1729.24:1746.32] And in fact as I said before for delta greater or equal to so for q, sorry for a number of
+[1746.32:1758.56] colors greater than 3 delta or in fact for q greater equal to delta plus 2.
+[1758.56:1777.32] There exists a path between the assignments in the space of assignments x0 to y0 so you
+[1777.32:1801.76] can move from x0 to some z I call it z0 at time 0 to some z0, z1 sorry, z, so sorry.
+[1801.76:1808.4] The lower index is time.
+[1808.4:1829.8400000000001] And this index is the upper index is the label of the assignment.
+[1829.84:1840.56] And then you will go to some z0 r minus 1 here.
+[1840.56:1869.08] And this path is such that the distances here, the distances are all equal to 1.
+[1869.08:1880.0] So I claim that by irreducibility you can construct such a path.
+[1880.0:1888.72] And in fact in the quiz session we will discuss this at more length and see that we can do
+[1888.72:1900.04] such things for q greater or equal to delta plus 2 concretely so this consists of taking
+[1900.04:1906.4] the assignments x0 and y0 that have hard colors that are different and then you recolor
+[1906.4:1916.52] the vertices 1 by 1 and you manage to make this such a path.
+[1916.52:1940.36] Okay, and then now I let evolve the chains by one time units.
+[1940.36:1947.04] Everything always the same vertex and the same color for all these chains here.
+[1947.04:1958.4399999999998] And I get the path of assignments so at time 1 x1 the z at time 0 will evolve to an assignment
+[1958.4399999999998:1962.0] z at time 0 labeled by 0.
+[1962.0:1977.32] The second z will evolve at time 1 like that you have z1k z1 r minus 1.
+[1977.32:1983.12] Okay, so this is an evolution in time.
+[1983.12:1994.8799999999999] Okay, so this maps to here, this one maps to here, etc. and this one maps to here and
+[1994.8799999999999:2002.36] y0 maps to y1.
+[2002.36:2020.6799999999998] And now I remarked by the triangle inequality that the distance between x1 and y1 is going
+[2020.6799999999998:2031.6] to be smaller than the sum of all these distances, the distance between x1 z10 plus the distance
+[2031.6:2048.7999999999997] between z10 z11 up to the distance between z1 r minus 1 and y1.
+[2048.7999999999997:2052.72] And I can take the expectation here.
+[2052.72:2067.12] So we take the expectation, we use linearity for the expectation inside the sum and then
+[2067.12:2073.7999999999997] we use the result upstairs, this result here.
+[2073.8:2083.2400000000002] And now we can use this result because at time 0 we have this hypothesis here.
+[2083.2400000000002:2089.52] Okay, under the hypothesis.
+[2089.52:2102.76] And this then implies that the expectation of the x1 y1 is going to be r times because
+[2102.76:2116.96] there are r terms here, 1 minus 1 over n, 1 minus 3 delta over q.
+[2116.96:2130.1600000000003] Okay, so we have generalized the inequality above.
+[2130.16:2133.04] The generalization is very simple.
+[2133.04:2140.16] If you start with assignments that are distance r in the space of assignments, then the inequality
+[2140.16:2148.7999999999997] the upper bound is just multiplied by a factor r, this upper bound star is just multiplied
+[2148.7999999999997:2153.96] by a factor r here.
+[2153.96:2158.92] Now we mark that and now we are able to conclude the proof.
+[2158.92:2169.08] Now we are going to conclude the proof.
+[2169.08:2181.08] So we did this four times 0 and step 1 but we marked that by homogeneity of the mark of
+[2181.08:2189.7599999999998] chain because we take the same kind of steps at each time.
+[2189.7599999999998:2194.92] We have the same inequality between time n plus 1 and n.
+[2194.92:2205.44] So if we look at the distance between the chains at time n plus 1.
+[2205.44:2220.8] So given that the distance at time n is r, okay, this is going to be less than r times
+[2220.8:2228.48] 1 minus 1 over n, 1 minus 3 delta over q.
+[2228.48:2236.28] It's exactly this inequality here but applied between times n plus 1 and n.
+[2236.28:2247.68] Here it was between times 1 and 0 by homogeneity and just have the same inequality at time n.
+[2247.68:2263.7999999999997] So now we can average over r. So you write this as a sum over r of the expectation that
+[2263.7999999999997:2276.68] the distance between n plus 1 and y n plus 1 given that the distance is r times the probability
+[2276.68:2282.44] of the conditioning event.
+[2282.44:2291.44] Well this is what is the expectation between the distance at x n plus 1 y n plus 1 without
+[2291.44:2296.2799999999997] any conditioning.
+[2296.28:2312.48] Okay, you do this averaging and by doing this averaging what you get while you get that
+[2312.48:2325.7200000000003] this is less than 1 minus 1 over n, 1 minus 3 delta over q times the sum over r of r times
+[2325.72:2328.9199999999996] this probability.
+[2328.9199999999996:2338.9599999999996] Okay, this comes exactly from this inequality here and this, well it's nothing else than
+[2338.9599999999996:2348.0] the expectation of the distance at time n.
+[2348.0:2358.0] So let's write the conclusion on the next slide.
+[2358.0:2369.72] We find that the expectation of this distance here is less than the expectation of the distance
+[2369.72:2380.9199999999996] at the previous step times 1 over 1 minus 1 over n, 1 minus 3 delta over q.
+[2380.9199999999996:2390.4399999999996] Okay, and this means then you iterate this inequality and this will mean that this
+[2390.44:2403.2000000000003] is less than the expectation of the distance between x 0 and y 0 times 1 minus 1 over n,
+[2403.2000000000003:2414.7200000000003] 1 minus 3 delta over q to the power n to you iterate this n times.
+[2414.72:2421.72] But in general this expectation if there is no conditioning is less than the total number
+[2421.72:2432.9599999999996] of vertices, a very general bound.
+[2432.96:2444.4] So you get that the expectation of the distance here is less than capital n 1 minus 1 over
+[2444.4:2455.2] n, 1 minus 3 delta over q to the little n.
+[2455.2:2472.8399999999997] And then you use that 1 minus x is less than exponential of minus x.
+[2472.8399999999997:2478.16] Well, is this true?
+[2478.16:2488.8799999999997] So you look at a plot exponential of minus x is this curve at x equals 0 is 1, the case
+[2488.8799999999997:2492.08] like that.
+[2492.08:2505.08] Okay, and 1 minus x at x equals 0 is 1, so it's going to be the tangent here.
+[2505.08:2510.44] So this is true, then use.
+[2510.44:2516.64] Okay, and this proves the theorem.
+[2516.64:2524.72] Okay, so that was it for the proof.

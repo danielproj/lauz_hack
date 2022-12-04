@@ -1,0 +1,95 @@
+~EE-556 / Mock Exam Solutions / Question 1 (2020)
+~2020-12-14T01:13:19.809+01:00
+~https://tube.switch.ch/videos/fcc460c8
+~EE-556 Mathematics of data: from theory to computation
+[0.0:7.88] All right, let's get started with problem one on binary logistic regression.
+[7.88:20.6] The useful info for this exercise and the following, we have set of labels, bi that are
+[20.6:30.68] in zero one. We're told that if we're given x and ai and this of ai's, these bi's are independent.
+[30.68:41.36] And we also know that they're law, probability of observing bi, given ai and some unknown vector
+[41.36:53.08] x has this nice compact form sigma ai transpose x and bar of bi times 1 minus sigma ai transpose
+[53.08:64.68] x, the power of 1 minus bi where sigma is either just a function. So we have sigma of u equals
+[64.68:75.86000000000001] to e to the u over 1 plus e to the u, which we can also write as 1 over 1 plus e to the minus
+[75.86000000000001:84.80000000000001] u by simply facturizing by e to the u. So this function will play an important role in the exercise.
+[84.8:95.88] So it will be worthwhile to list some of its properties. So we have simply by the properties
+[95.88:105.96] of the exponential function that sigma of u is positive. From this form here, it is easy
+[105.96:114.44] to see that sigma of u is also less than 1, which in particular implies that 1 minus sigma
+[114.44:122.32] of u is going to be greater than zero. We'll be computing gradients at some point. So it
+[122.32:129.8] will be nice to have the derivative of sigma in hand. So if we have for all you sigma prime
+[129.8:137.84] of u by using this form here and the rules of differentiation of an inverse is equal to
+[137.84:148.52] minus differential of the denominator there. So it's into the minus u divided by 1 plus e
+[148.52:159.2] to the minus u squared. So what we'll do is just add 1 and subtract 1 on the numerator.
+[159.2:173.35999999999999] Then simplify this expression and we have sigma x minus sigma x squared. If we can facturize
+[173.35999999999999:184.76] sigma x times 1 minus sigma x. Alright. So we have all that we need to get started. The
+[184.76:197.35999999999999] first question asks us to compute the likelihood. So the probability of observing the whole set
+[197.35999999999999:213.56] of labels given and the annul vector x. This by independence is simply equal to the product.
+[213.56:222.84] We're observing bi given the whole thing. But since we know that the log bi only depends
+[222.84:233.76] on ai. It's going to be written. It's probably a tip bi given ai and x. Alright. The second
+[233.76:255.88] question asks us to express the maximum likelihood estimator as an argument of a sum of some functions
+[255.88:274.84] f and transpose x and bi. Alright. Let's do this. So we know that the maximum likelihood
+[274.84:299.4] estimator by definition is the one that maximizes the likelihood. This by using point a is
+[299.4:320.64] equivalent to solving. This optimization problem. Alright. So now we have a product we would
+[320.64:329.8] like to transform into a sum. This we can do with the use of the log function which is strictly
+[329.8:339.12] increasing. So it preserves the equivalence of the optimization problems. So here we have
+[339.12:354.44] some bi applying the log. The one final thing we need to do is add here. We would like
+[354.44:370.4] to have an argument. It's simply introduce a minus sign. Minus log. Probably do observing
+[370.4:386.67999999999995] bi. Alright. So what we find we find that our emel estimator is the solution of disarming
+[386.67999999999995:393.76] means has the form that we want except maybe let's write this here as fi and express this
+[393.76:410.76] another better way. So we have fi of x equals to minus log. By using the compact form given
+[410.76:423.71999999999997] in the problem text find that this is equal to minus bi times log sigma ai transpose x minus
+[423.72:445.0] bi. Alright. Great. The next question. This question seems. Access to compute the gradient
+[445.0:452.16] of the loss which we have defined the sum of the fi. So we immediately have that the
+[452.16:460.56] gradient of l will be equal to the sum the gradients of fi. So let's just compute the gradient
+[482.16:495.6] of the loss. Okay. Now if you're comfortable with computing gradients then you can do this
+[495.6:501.72] easily with whatever method you're most comfortable with. But in class we've been trying to
+[501.72:510.28000000000003] sell you this very mechanical approach that tries to use a chain rule. So let's do that.
+[510.28:517.9599999999999] So we'll just first begin by identifying the set of functions that are set of compositions
+[517.9599999999999:528.4] that are applied to compute fi of x. So first x is fed to this inner product here. So the
+[528.4:538.6] first function that acts on the vector x is a function that takes x and maps it to
+[538.6:546.48] the ai transpose x which we can view as a multiplication by a row matrix. And the
+[546.48:556.5600000000001] digicobian of g since it's linear is itself gives us transpose. Alright. Then this inner
+[556.5600000000001:568.1600000000001] product is then fed to the logistic function. And the logistic function we've already
+[568.16:576.12] computed the derivative at the start. So we know that equivalent sigma at x simply the
+[576.12:592.72] real number sigma x times 1 minus sigma x. And then this sigma is fed to this sort of
+[592.72:602.5600000000001] odd looking function here. The rewrite, so the third composition is just called it h takes
+[602.5600000000001:616.36] x and maps it to minus bi log of x minus 1 minus bi times log of 1 minus x. So it's
+[616.36:625.16] going to be the derivative h prime of x here is minus bi over x. Then the minus sign here
+[625.16:636.4] we can start with the minus sign there giving us plus 1 minus bi over 1 minus x. You can
+[636.4:651.66] simplify this. This is x times 1 minus x. We'll have minus bi plus bi x plus x minus bi
+[651.66:665.04] x. Which simplifies to x minus bi over x times 1 minus x. Okay great. So we've computed
+[665.04:673.1999999999999] all the functions that are composed to give us fi. So to get the Jacobian of fi we simply
+[673.1999999999999:684.68] apply the chain rule. So Jacobian of fi at x is the Jacobian g. G is the function. Oh
+[684.68:696.8] sorry. It's the Jacobian of h rather. And h is the outermost function that eats sigma
+[696.8:706.52] a transpose x times the Jacobian of sigma and sigma eats the inner product a transpose
+[706.52:715.28] x. Then finally we have Jacobian of g that is the inner most function. So by using our
+[715.28:726.1999999999999] previous computations here we have sigma and transpose x minus bi over sigma and transpose
+[726.1999999999999:735.4] x times 1 minus sigma and transpose x. Then the derivative of sigma which we've already
+[735.4:746.0799999999999] computed sigma and transpose x times 1 minus sigma and transpose x. Good. G is simply
+[746.0799999999999:763.84] constant the transpose. B things simplify. So we find the Jacobian. Is this romayfix
+[763.84:770.84] right here? So from this we can easily derive the gradient. So by transposing we find that
+[770.84:790.84] is sigma and transpose x minus bi. Great. Okay. Fourth question then asks us show the
+[790.84:813.0400000000001] expression. Hessian of l is psd at each point x. Okay. So we know how to prove that
+[813.04:825.5999999999999] the matrix is psd. So we call that the matrix m is psd to go through it to having this
+[825.5999999999999:835.68] quadratic form being positive for rv. So let's simply test this out for our Hessian.
+[835.68:852.68] So let's take x and rp and v and rp. We have v transpose Hessian of l, v equals 2 by using
+[852.68:880.68] the narity v transpose e i transpose v. This will make a nice square term appear. This
+[880.68:891.68] will be transpose e i squared. Now this is obviously a positive term. This by d and r
+[891.68:913.68] we did it to start as positive. This thing is also positive. So the entire sum is positive.
+[913.68:934.04] So now we can do the last question. The last question is find an upper bound l for the
+[934.04:948.16] largest eigenvalue of the Hessian. We would like this upper bound to hold for rx. So we
+[948.16:963.1999999999999] are given hints on how to proceed. We told that lambda max is given as a solution of
+[963.1999999999999:973.3199999999999] this optimization problem over this sphere. Now with v equals 1 of v transpose Hessian of
+[973.32:993.32] l, v, which we can simply rewrite by using a definition of the Hessian as the sum of
+[993.32:1012.6400000000001] sigma, n transpose x, n minus sigma, n transpose x times v transpose e i squared. Now we know
+[1012.6400000000001:1021.5600000000001] that the maximum of a sum is less than the sum of the max on each term. That's because
+[1021.56:1049.3999999999999] you can always beat this outer max here by maximizing each term individually. Now let's
+[1049.4:1063.5600000000002] try to get rid of the x appearing here. We use the fact that sigma x is inside 01. It's
+[1063.5600000000002:1075.2800000000002] better to write sigma vu is inside 01. This in particular implies that sigma vu times
+[1075.28:1083.04] 1 minus sigma vu can be less than 1 over 4. You can find this by simply maximizing the
+[1083.04:1096.32] function x1 minus x on the interval 01. From this we get that this term here, less than
+[1096.32:1124.1599999999999] 1 over 4. Now we have that star, this is the sum of this squared inner product. So to
+[1124.16:1132.72] bound an inner product, a classic tool is the Cauchy Schwarz inequality. So Cauchy Schwarz
+[1132.72:1143.44] tells us that v transpose e i is going to be less than norm of v times norm of e i. It's
+[1143.44:1173.28] going to be less than 1 over 4. So we have another bound
+[1173.28:1186.8799999999999] on our inner product so we can simply conclude that lambda max is less than sum.
+[1186.88:1203.3200000000002] So this answers the question. So if you have any questions or would like more details on
+[1203.32:1233.28] a particular set of steps that we took, you can always email.

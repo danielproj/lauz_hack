@@ -1,0 +1,147 @@
+~COM-516 Lecture 4.1
+~2020-07-30T22:14:55.550+02:00
+~https://tube.switch.ch/videos/c0c40350
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:8.0] Hello, so today our goal is to prove the agodic theorem.
+[8.0:13.4] So let me first remind you what we have.
+[13.4:19.64] We will consider therefore, you know, again, Markov chain X, so we state space S, transition
+[19.64:27.36] matrix P. And we assume that the following theorem has been proven, we don't, won't give
+[27.36:35.08] the proof of this one. So the first theorem here states that if X is, you assume X is
+[35.08:43.56] irreducible, then X is positive recurrent even only if it admits a stationary distribution
+[43.56:52.68] Pi. And in this case, Pi is unique. Okay? So assume this is given, what we want to prove
+[52.68:63.480000000000004] today is the agodic theorem, which says that assume that X is agodic, that is irreducible
+[63.480000000000004:71.48] apiodic and positive recurrent, then X admits a unique limiting and stationary distribution
+[71.48:79.12] Pi. And so given that we assume the first theorem has been proven, the only thing we need
+[79.12:86.0] to prove here is this word limiting. But that's a crucial word, right? This is what
+[86.0:91.0] relates the abstract notion of stationary distribution to the actual distribution of
+[91.0:99.72] the chain of a time. Okay, so this group will take quite a while. We will split in few
+[99.72:106.48] videos. And the first thing I want to do is to introduce some tools that will be also
+[106.48:130.92000000000002] useful for later in the course. And we will need some tools. So tools for the proof.
+[130.92:137.92] The first tool is the notion of total variation distance between two distributions.
+[160.92:167.92] So, here is the definition of what total variation distance is. If you have mu and mu,
+[190.92:201.92] so what we mean by this simply that you know these mu, the value of the mu i's and mu i's
+[201.92:210.0] are all between 0 and 1 because these are distributions, these are probabilities. And of course,
+[210.0:223.08] the sum of mu i is the same as the sum of mu i is equal to 1. And somehow we would like
+[223.08:229.92000000000002] to compare how close they are from each other. Like if we want to show convergence of
+[229.92000000000002:234.96] a sequence of distributions, there was a limiting distribution. We will also use this
+[234.96:240.52] same notion of distance to estimate how close we are from the final distribution. So,
+[240.52:246.12] the total variation distance is one possible distance but of course not necessarily the only
+[246.12:252.48000000000002] one but that's a convenient concept for purpose. The total variation distance between
+[252.48:272.88] mu and mu is defined as follows. So, mu minus mu we write it like T v distance is equal
+[272.88:287.36] to the supremum of all subsets of A included in S of mu of A minus mu of A. Okay, what
+[287.36:293.28] is mu of A? What is mu of A? mu of A is simply the total weight of the set A. So, it's
+[293.28:306.59999999999997] the sum of i in A of mu i and similarly mu of A is the sum of i in A of the mu i. And
+[306.59999999999997:313.44] so in order to compute the total variation distance, one way to do it is to look for the set
+[313.44:322.03999999999996] which has the most different ways according to mu and mu. Okay. And okay, that's one
+[322.04:329.44] possible definition of total variation distance. There are other definitions. So, with this
+[329.44:345.52000000000004] definition, you can see that the total variation distance, so here are some properties. First
+[345.52:353.32] of all, well, because we have absolute values here, the total variation distance is certainly
+[353.32:361.96] greater than or equal to zero. You know, it cannot be negative, but it cannot be greater
+[361.96:370.64] than one. And so, when is it zero? Well, simply if mu equals mu, if mu of A is equal to
+[370.64:377.0] mu of A for every A, then you will have zero here. You always have zero, sorry. And therefore,
+[377.0:388.08] the total variation distance is zero. When do you have one? Well, that's when actually,
+[388.08:399.8] when mu and mu have this joint support. So, mu gives a weight to a set A to which mu
+[399.8:411.12] doesn't give any weight. Okay. So, there exists A included in S, such that mu of A is one,
+[411.12:421.08000000000004] and mu of A is zero. In which case, of course, mu of A C will be zero, and mu of A C will be
+[421.08000000000004:427.76] one. Okay. So, the properties are completely disjoint, if you want. Okay. And if you think
+[427.76:432.36] about it, that's the worst case that can happen for the supremum. That's the case for the
+[432.36:437.52] supremum can be the largest, because we have here distributions, right? There's some
+[437.52:443.32] to one, so they can not some above one. And that's when the total variation distance is equal
+[443.32:455.71999999999997] to one. Another property of total variation distance is that it satisfies a triangle inequality,
+[455.72:468.92] therefore, the wording distance. So, mu minus pi TV, if I have two, distribution of mu
+[468.92:484.88000000000005] and pi, this will be always less than mu minus mu TV plus mu mu minus pi TV. Okay.
+[484.88:496.08] Basinert is easy to see it from the definition I just gave, but there is also another property
+[496.08:501.84] which helps you prove this very easily is the following. That's the total variation distance
+[501.84:512.44] between two distribution mu and mu can be rewritten as half sum of i in S of mu i minus
+[512.44:518.5200000000001] mu i. So, if you want this total variation distance, it's not far away from the L1 distance
+[518.5200000000001:523.1600000000001] of two vectors, right? There is this factor of one half here. Okay. So, it's an exercise
+[523.1600000000001:533.48] to prove that this is actually the case, but you can show the equality of the two definitions.
+[533.48:543.64] And of course, with this definition here, the triangle inequality becomes very easy to prove.
+[543.64:553.04] So that was our first tool. The second tool will be the notion of coupling between distributions
+[553.04:559.64] and that's a very important tool. That's why actually I prove, I want to prove this theorem
+[559.64:565.3199999999999] between, because the notion of coupling will come back. I mean, it's an important notion
+[565.3199999999999:572.36] in probability in general. It's something that deserves to be known.
+[572.36:595.48] So, again, let's mu nu be two distributions on S. And now we introduce notion of coupling.
+[595.48:619.24] So, a coupling, this is a definition, a coupling between mu and nu is a pair of random variables
+[619.24:645.72] x, x, y, with a joint distribution on S times S. So, funnel variables we were using S, right?
+[645.72:656.76] So, such that mu and nu are the marginals of x and y respectively. So, we have that probability
+[656.76:667.88] that x is equal to i is equal to mu i for every i in S. And probably that y is equal to j is
+[667.88:683.64] equal to nu j for every j in S. Okay, and one very important remark is to notice that
+[683.64:711.08] for a given pair mu nu, there are multiple couplings. You have actually very, we have many, many
+[711.08:717.4000000000001] different ways to choose a coupling of two distributions. If you want, this is the same story.
+[718.6:723.5600000000001] You can also view a coupling as a joint distribution. You have two marginals, mu and nu.
+[724.0400000000001:730.84] Now you have to find a joint distribution for which the marginals are mu and nu. And of course,
+[730.84:736.6800000000001] you have lots of choices in general. You can, marginals are one dimensional object.
+[736.68:742.92] The two dimensional distribution is a two dimensional object. The joint distribution is a two
+[742.92:751.9599999999999] dimensional object. Okay, let me just go for an example so that this thing is clear. So,
+[751.96:768.0400000000001] for example, if we take very simple state space, zero one, the simplest non trivial state space,
+[769.0:775.8000000000001] and then we take mu zero is equal to mu one is equal to half, and we take the same thing for
+[775.8:785.56] mu. New zero is equal to mu one is equal to half. Okay, two uniform distributions on X.
+[786.52:792.1999999999999] Twice, twice uniform distribution. So, of course, one possible coupling of these two
+[792.2:808.6] distributions would be to choose XY independently with probability that X is equal to I.
+[809.48:815.5600000000001] The joint party that X is equal to I and Y is equal to J is equal to one over four for every IJ.
+[815.56:827.0799999999999] So, this is a, this describes two independent coin tosses, right? And if you compute the
+[827.0799999999999:833.3199999999999] marginal of these distribution, these joint distribution, you get half half on both sides. So,
+[833.32:846.6] you have indeed coupling. Okay, but you could also choose, you could choose XY such that
+[849.5600000000001:856.7600000000001] probability that X equals Y equals zero is the same as the property that X equals Y equals one
+[856.76:869.64] is equal to half. Okay, and in this case, so in this case, far from being independent, X is equal to Y.
+[870.6:877.88] Okay, but that's also a coupling. The joint distribution is just the one which is concentrated on
+[877.88:884.04] the diagonal, right? Whenever X is equal to zero, Y has to be also equal to zero, whenever X is equal
+[884.04:891.0] to one, Y has to be also equal to one. Of course, you could also consider yet another coupling,
+[891.0:898.1999999999999] where, for example, yeah, let's do it and choose XY, search that,
+[901.3199999999999:907.7199999999999] call G that X is equal to zero and Y is equal to one is the same as the property that
+[907.72:914.44] X is equal to one and Y is equal to zero is equal to half. So, in this case, it's the opposite case
+[914.44:923.72] where X is, whenever X takes a value, Y takes the order value. Okay, so you see, and of course,
+[923.72:935.72] even with this simple example, we can have, we can have multiple and we could consider
+[935.72:943.72] either more examples, right? Of X and Y's, which will all be couplings of new and new.
+[946.9200000000001:956.44] Okay, now, why do I introduce couplings? What's the connection with what I told you about before,
+[956.44:961.32] which was a total variation distance? So, here is the very interesting connection.
+[961.32:967.32] And here is the proposition.
+[967.32:984.9200000000001] The proposition says the following, for every, literally every coupling
+[984.92:1001.0] of, sorry, coupling XY. So, a coupling, remember, it's a pair of random variables.
+[1003.64:1007.24] That is a coupling of two-distribution, new and new. We have
+[1007.24:1020.04] that the total variation distance between new and new is less than the probability that X is
+[1020.04:1032.1200000000001] not equal to Y. Does this is true? What's remarkable here is that this is true for every coupling.
+[1032.12:1038.6799999999998] Whatever, so-so. Well, in the example above, it's perhaps not that interesting because in the example above,
+[1038.6799999999998:1043.8] new and new are the same distribution. So, the total variation distance is zero. And of course,
+[1043.8:1049.2399999999998] this inequality will be satisfied. Notice that it will be satisfied with the equality for the
+[1049.2399999999998:1056.6] second coupling because in the second coupling, the probability that X is equal to Y is one,
+[1056.6:1061.8] for the probability that X is not equal to Y is zero. But for C and A, the probability that X is not
+[1061.8:1067.8] equal to Y in the first case is half in the other case is even one. So, this is really an
+[1067.8:1075.0] inequality here. Depending on the coupling you choose, you get something but that is very loose.
+[1075.8:1081.8] But the very interesting idea is that we can choose the best coupling. Of course, if you want to
+[1081.8:1087.8] control the total variation distance between two distributions, that what we have ultimately in
+[1087.8:1094.36] mind for proving, you know, convergence, we will be able to choose or coupling the best way
+[1094.36:1102.36] so as to prove one-perch. Okay, let me prove this simple inequality because it's not a big deal.
+[1102.36:1116.52] We solve first definition. So, I will rely on the definition, the first definition of total
+[1116.52:1123.7199999999998] variation. Let me go back to here on this one, right? The definition I gave here, the super
+[1123.72:1132.68] memorable all subset of A, minus new of A, in absolute value. So, I want to prove with this
+[1132.68:1139.72] definition that the total variation distance is less than the probability that X is not equal to Y.
+[1145.64:1151.88] For this proposed, let A be any subset. I will have to take a supremum afterwards,
+[1151.88:1162.3600000000001] but now let me take any subset of S. Okay, and I want to compute the difference between new of A and
+[1162.3600000000001:1171.88] new of A. So, new of A is the probability that X belongs to A because X is a coupling. XY is a
+[1171.88:1178.44] coupling of new and new, so sorry, this is the property. And now I'm going to rewrite this as the
+[1178.44:1186.92] sum of two terms as the property that X belongs to A and Y belongs to A plus the property that X
+[1187.8:1197.88] belongs to A, but Y does not belong to it. Same thing for new of A. New of A is the property that Y
+[1197.88:1205.64] belongs to A, which I rewrite in two terms, property that X belongs to A, Y belongs to A,
+[1205.64:1213.0800000000002] plus the property that X belongs to A, C, and Y belongs to A.
+[1217.5600000000002:1227.88] And now let me subtract new of A minus new of A with this equality here. And what do I get?
+[1227.88:1236.3600000000001] I get that this is equal to the property that X belongs to A, Y belongs to A, C, minus the
+[1236.3600000000001:1246.3600000000001] property that X belongs to A, C, and Y belongs to A. So, certainly, this is less than because
+[1246.3600000000001:1252.5200000000002] we have probably this here, which are non-negative, so this is certainly less than this,
+[1252.52:1260.44] right because I can forget the second term. And it X is in A and Y is in A, C, certainly X is
+[1260.44:1267.4] not equal to Y. So, this is still further less than or equal to POTE that X is not equal to Y.
+[1269.6399999999999:1274.68] But of course, I can also now do the same thing for new of A minus new of A.
+[1274.68:1284.68] I can rewrite it as a difference. Now, this will be the property that X belongs to A, C, Y belongs to A,
+[1284.68:1296.8400000000001] minus the property that X belongs to A, Y belongs to A, C, which is less than the property that X belongs to A,
+[1296.84:1304.9199999999998] and Y belongs to A, but that's also less than the property that X is not equal to Y.
+[1304.9199999999998:1311.3999999999999] And so, since I have these two inequalities now, I can of course now take the absolute value,
+[1311.3999999999999:1324.6] and so for every A included in S, the absolute value of A minus new of A is less than or equal to the
+[1324.6:1334.6799999999998] POTE that X is not equal to Y. But therefore, the total variation distance, which is the
+[1334.68:1356.28] superman of all such A's, which is the superman of all A in S of new of A minus new of A. Well,
+[1356.28:1361.0800000000002] the bound here on the right hand side does not depend on A, so this is less than the POTE that X
+[1361.08:1373.72] is not equal to Y. And so, this is the proof. So, we have here found a nice inequality,
+[1374.52:1387.72] and this will lead to a basic tool to prove the convergence of the stationary,
+[1387.72:1393.8] the convergence towards the stationary distribution. In the next video, I'll generalize this tool,
+[1393.8:1399.64] until I tell you not about coupling of simple distributions, but copying of full mark of change.
+[1399.64:1429.48] And we will do that in the next video.

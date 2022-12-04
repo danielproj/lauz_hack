@@ -1,0 +1,300 @@
+~EE-556 / Lecture 12 - 1/2 (2020)
+~2020-11-23T13:18:52.299+01:00
+~https://tube.switch.ch/videos/b85dac6a
+~EE-556 Mathematics of data: from theory to computation
+[0.0:8.56] there. Okay, fantastic. Alright, so we're going to continue, you know, our quest for
+[8.56:12.32] minimax optimization. So there we're going to continue with the primal dual methods.
+[19.52:24.560000000000002] And then, mix class, which will be, I think, our last lecture.
+[24.56:36.08] We'll be on additional methods for solving constraint problems scalable. Okay, so if you recall,
+[36.08:42.519999999999996] the end of last lecture, we were talking about the difficulty of
+[42.519999999999996:48.28] minimax optimization in the general case, especially if you had a function that is non-com
+[48.28:58.6] x non-tong cave in terms of the variables x and y. And we said that, you know, we need to
+[58.6:66.04] somehow focus on easier problems and comics, concave was one of them. Right? So what I will do
+[66.04:73.8] in this lecture is going to, I'm going to tell you some of the algorithm to solve such problems,
+[73.8:79.88] their performance and some of the underlying principles. So first, what we're going to do,
+[80.6:90.67999999999999] okay, so here is our problem template. Now, this function is convex in x and concave in y.
+[91.88:97.72] Alright, now I'm going to focus on this general case. So things can be non-linear.
+[97.72:104.76] 5 is smooth. And for this, we're going to cover the famous or the infamous,
+[105.64:112.12] approximately point method, extra gradient and optimistic gradient descent descent.
+[113.96000000000001:118.52] You will see that this optimistic gradient descent is not the standard gradient descent
+[118.52:125.16] that we talked where I showed you an example, even in the simplest by linear case,
+[125.16:134.51999999999998] that's algorithm diverges. I'll mention briefly the mirror descent in this context for completeness,
+[135.16:141.56] you know, responsible in the exam or in thing, but it is good to see where it is useful.
+[142.51999999999998:149.32] And then we're going to focus on this much more useful template, where there is some sort of
+[149.32:161.64] structure in terms of this function that is, it is convex in x and concave in y in this particular
+[161.64:167.95999999999998] structure, where this asterisk refers to the potential conjugation. You'll see, I mean,
+[167.95999999999998:173.56] I mean, maybe you recall how to write functions in their max form by plugging their
+[173.56:182.2] potential conjugates. And for this, we're going to cover ShumblePock, or primal dual hyper gradient
+[182.2:187.64000000000001] and its acoustic variant, from the Wu briefly and primal dual three operators splitting.
+[189.64000000000001:194.04] All right, without further ado, let's get into some of the details.
+[195.96:199.24] All right, so here's our again problem template. In this case,
+[199.24:206.04000000000002] we're going to consider the unconstrained setting. The constraint setting follows,
+[206.04000000000002:211.0] but that's not the point here. Let's understand the basic principles.
+[211.8:217.08] We're going to assume that phi is smooth, right, in the sense that if you recall that we
+[217.08:226.12] define these operators, right, so v of z. So z is the concatenation of the primal and dual
+[226.12:235.8] variables, v of z is the gradient of phi with respect to x and minus gradient of phi with respect to
+[237.16:243.72] y. All right, so this is like the derivative operator. So what we're going to do is we're going
+[243.72:253.48000000000002] to look at smooth functions in the sense that so if you query v of v at z1 and then z2, it will be
+[253.48:261.32] less than or equal to. So there's also the norm business here. So whatever primal norm you take,
+[261.32:271.64] you need to think about the norm here. So we're going to look at v z1, v z2, all times
+[273.24:276.92] z1, v z2, right, which is continuous gradient.
+[276.92:284.2] Now, in the setting in the last lecture, I showed that if you just do gradient
+[284.76:290.20000000000005] updates, so if you take z and update it with the negative v z, right, what you're doing is you're
+[290.20000000000005:298.44] doing simultaneously gradient descent and ascent descent in x because what you're doing is
+[298.44:303.08000000000004] rotating the x variable. You're updating it to the negative gradient with respect to x.
+[303.08:311.71999999999997] And then, so hence, this is the descent and then you're taking the y variable and then you're doing
+[312.44:320.36] the gradient ascent. Because there's a minus sign here, these minus signs cancel each other out.
+[320.91999999999996:329.47999999999996] So you have something like yk is equal to yk minus 1 plus step style style. In this case,
+[329.48:340.76] gradient with respect to y, y, so it's also an example. And in the last lecture, I tried to argue
+[340.76:349.08000000000004] that minimax optimization is in general much harder than optimization per se. In the sense that for
+[349.08000000000004:359.16] minimax, there are attracted, attracting internally chain transitive sets, which consists of
+[359.16:365.40000000000003] the solutions to the problem and the furious sets that are difficult to circumvent.
+[365.40000000000003:370.36] We saw that algorithms get into loops in all kinds of behavior.
+[373.64000000000004:379.16] Okay, so what I'll do is I'm going to tape this simple example.
+[379.16:386.6] So here zero is a minimax point.
+[391.40000000000003:402.6] So here, I'll just talk about something. So this is basically zk plus 1 is equal to zk minus
+[402.6:412.68] zk. So gradient descent descent. And as you can see, the behavior of the algorithm is that if you
+[412.68:425.40000000000003] initialize somewhere here, use a different color. It starts to tie verge.
+[425.4:439.47999999999996] Okay. Now one thing you can do is you can do alternation. In the sense that once you update x,
+[439.47999999999996:448.28] you don't use the gradient at the previous point, but in the current point. And that seemed to
+[448.28:455.96] just orbit around the origin. And it doesn't converge towards the origin.
+[456.91999999999996:461.23999999999995] And I mean, I mentioned that when you do averages here that you have a way of
+[462.03999999999996:471.08] converging that we will see in this lecture. Okay. So what I want to do is I'm going to give you
+[471.08:479.56] a preview of the algorithms we're going to talk about. In particular, same example. I'd
+[479.56:490.03999999999996] are running an example. This we're going to cover the proximal point method, extra gradient,
+[490.04:501.56] an optimistic gradient descent descent. And as you can see that here is gradient descent descent.
+[501.56:508.44] As deteriorations continue, it diverges. Right. So this is easy to see. But as you can see,
+[508.44:515.4] that proximal point, extra gradient and optimistic gradient descent descent seem to go towards
+[515.4:522.84] the solution, which is what you want to do. And what I'm going to argue is that first proximal
+[522.84:530.68] point method has very good convergence properties. And extra gradient and optimistic gradient
+[530.68:535.8] descent descent are basically approximations of this particular algorithm.
+[535.8:548.4399999999999] Okay. So what is proximal point methods? The proximal point method is
+[548.4399999999999:558.1999999999999] conceptually be one of the easiest methods to date. Now to explain it in the minimise
+[558.1999999999999:564.4399999999999] context, what I'll do is I'm going to explain first just the simple minimization problem.
+[564.44:569.96] And then we're going to extend it to the max. So in this case, consider just a simple
+[570.84:578.84] minimization problem given as depth size. The proximal point method is written as follows. You
+[579.8800000000001:589.1600000000001] take the fix and add this proximal term that is strong, you can make.
+[589.16:593.16] Okay. That uses the previous iterative as an anchor.
+[596.36:608.04] So the idea here is that you penalize getting away from this point xk and you try to
+[608.04:617.0799999999999] simultaneously minimise f of x while trying to go not so far away from xk. Because if you see this,
+[617.08:622.5200000000001] it penalizes you moving away from xk immediately.
+[625.0:629.72] Right. So here's xk equals 1. And if you recall the definition of prox,
+[631.24:643.4000000000001] so this is basically the tale here. So you have proximal tale f and then evaluated it
+[643.4:657.9599999999999] xk. So this is very simple. So xk plus 1 is prox tau f xk.
+[663.3199999999999:668.92] I mean, written nicely beautifully, right. But there are some caveats and let's make some of these
+[668.92:678.68] observations. So let's say, so this holds even if f is smooth or non smooth, right. So if you
+[678.68:686.28] have the proximal term, then you can do that proximal term. Fantastic. Now if f is smooth,
+[686.28:694.52] then there's an easier way to write this algorithm. Here, I show you the solution, but as you can
+[694.52:703.88] see, what you can do is that given this problem, the optimal condition says that at the solution,
+[703.88:711.0] so here the solution is xk plus 1. So I take the derivative of the first term, then I take the
+[711.0:720.68] derivative of the second term and evaluate it at xk plus 1, which is the solution at x star.
+[720.68:727.88] So this needs to satisfy. This is the optimal condition of this particular optimization problem.
+[729.16:742.12] And as you can see, you can in fact write xk plus 1 as xk minus tau times the gradient at xk
+[742.12:751.0] plus 1. Very simple. And you can see the twist as compared to the gradient to Sun that is here,
+[751.0:760.76] the gradient is computed at the next point. That's a good odd, right. The reason being is that
+[761.72:768.76] we cannot implement this. Because to be able to get the next point, you need the gradient at the
+[768.76:783.0] next point. So it's an implicit method. It's an implicit method. In the sense that you can write it,
+[783.0:801.0] it's nice, beautiful, but it is not implementable. Here's the other issue. I think that you probably
+[801.0:819.4] already guessed. How do we solve this? Now the issue is this one. Now this is somehow better
+[819.4:824.84] property in the sense that if f was the previous gradient, now this is also strongly convex.
+[824.84:833.5600000000001] But if f was thrown in convex, then you just added a bit more strongly convexity. So you can
+[833.5600000000001:838.0400000000001] think about solving this problem as can be as hard as just minimizing f.
+[840.6800000000001:851.08] But is this something better? Probably not. But the thing about this is a very good, I mean,
+[851.08:858.84] it has great convergence properties. We will see it in the minimax case now. But as you can see,
+[858.84:865.5600000000001] the proximal point method, it's like the regularized version of the trust region method in the sense
+[865.5600000000001:875.4000000000001] that you want to stay near where you were while minimizing x. Just to recap that it's an implicit
+[875.4:883.88] method that updates would require you to, for example, in the smooth case knowing what the next
+[883.88:893.8] point is. Now let's apply proximal point method to the minimax. So for this, just recall z and bz,
+[893.8:903.64] the operator. Well, proximal point method is given by this. If you remember gradient descent
+[903.64:910.68] descent, we had zk here, but the proximal point will have zk plus 1.
+[915.3199999999999:926.04] All right. So in essence, what you do is do the same way, the spirit is the same. You add
+[926.04:933.3199999999999] this term, which is strongly convex. And then this term, which is strongly concave for the
+[933.9599999999999:941.56] y-decision variable. And what you would like to do is give an point zk, which is xk, okay?
+[942.28:946.52] You want to remain close to these points while minimizing or maximizing.
+[950.52:954.36] And you can do the same trick. You can write the optimal to condition. So you can take the
+[954.36:962.12] derivatives equate them to zero, right? We just take the x derivative. This is a constant for
+[962.12:967.8000000000001] this goes away. We just take the y derivative. This is a constant for this goes away. And trust me
+[967.8000000000001:979.8000000000001] here that you just get these updates, which are written in this compact form here.
+[979.8:988.12] Again, for minimax, it's an implicit algorithm. But if you think about it, this,
+[990.12:993.9599999999999] you can write and solve it for this bilinear problem.
+[993.96:1011.72] So, if you think about it, you should be able to try it. You take the derivatives, you will see
+[1011.72:1023.72] that you can solve the updates. All right. So I'll give you the convergence properties of
+[1023.72:1033.8] ppm due to Rockefeller. Here, you can actually look at the average literates, not directly the
+[1033.8:1040.28] sequence with the average literates. And then you can show that distance to optimality goes down
+[1040.28:1048.04] the rate of 1 over k. So you take capital k iterations and you average these iterations.
+[1048.04:1056.44] You need to beat this initial distance to the optimal point. And then you beat it down with
+[1056.44:1063.72] this rate. All right. And if the phi function is from the convergence from the concave, then
+[1063.72:1070.44] you actually get a linear rate of convergence, which is very nice. But if you think about it,
+[1070.44:1079.16] this algorithm is in general not in compatible. Right. And in this particular case,
+[1081.56:1087.0] we need to have something that has these type of guarantees, but are implantable.
+[1088.28:1097.64] Okay. One thing I would like to highlight here is that it's interesting what happens when
+[1097.64:1104.6000000000001] tau goes to infinity. So let's just consider this case. Let's entertain ourselves.
+[1105.4:1111.4] All the convergence properties get better. Right. But if you recall, a lot of tau goes to infinity
+[1111.4:1117.4] meanings is that you actually solve the original problem. Right. This distance term goes to zero.
+[1119.0:1127.0] So if you can solve the original problem in one step, right. And you solve the original problem.
+[1127.0:1131.24] But you know that we can't really solve the original problem in one step in one of the
+[1131.24:1141.88] iterative. Okay. At this point, I would like to introduce what is called as the extra gradient
+[1141.88:1151.16] methods. Okay. Now the extra gradient method uses an extra gradient per iteration, hence the name.
+[1151.16:1161.64] Right. Now for this, what you do, actually the algorithm is very simple. So the proximal point
+[1161.64:1175.48] method, what it does is it does, if you prioritize this. Okay. So what would be a proxy for
+[1175.48:1186.92] zk plus one, a proxy for zk plus one would be zk minus tau v zk. So the idea in the
+[1186.92:1193.0] correct, extra gradient method is that this is computable. So as opposed to taking zk plus one,
+[1193.0:1198.76] which we don't have, well, plug this in there. Right.
+[1198.76:1211.64] Then do the update and hopefully this will help. All right. So in terms of the minimax template,
+[1211.64:1218.68] you can write it in this particular form. Given xkyk, you do gradient descent descent.
+[1220.84:1226.44] Perfect. You have these points. Now you take the gradients with respect to these points,
+[1226.44:1237.64] which is exactly this. Right. And if you think about it in terms of the bilinear game in the
+[1237.64:1245.64] level sets, right. So here's your current gradient. You go and you guess what the gradient at zk
+[1245.64:1255.96] plus one should be. And then you update with this gradient. That's what if you have something like this.
+[1257.64:1272.2] And it seems like it is somewhat close. You know. All right. Good. So for the extra gradient method,
+[1272.2:1279.56] there are a couple of things you can say. So here, this is the richest constant that we had
+[1281.56:1283.0800000000002] for the v variable.
+[1288.1200000000001:1296.44] Right. So this L. It's good. You can prove that the sequence remains bounded. And then the
+[1296.44:1303.56] average sequence has a 1 over k rate, just like the proximal point method. But in this particular
+[1303.56:1309.48] case, you can actually implement this one. Right. And the cost per iteration is just one additional
+[1309.48:1318.28] gradient. All right. And in the strong new comments from k case, you can again get the convergence,
+[1318.28:1337.08] which is nice. Now here is the optimistic gradient, the cent percent algorithm. So maybe we put
+[1337.08:1350.04] the cent percent. In the minimax case, it's optimistic gradient descent. Ascent. All right.
+[1350.04:1360.28] The origin of this is actually quite old. It goes all the way to pop-off. For the extra gradient,
+[1360.28:1367.3999999999999] it goes all the way to core pull-off. I think this was the extra gradient to publish it in
+[1367.3999999999999:1386.28] economics journal by core pull-off. A female scientist. So this was popularized around 2010 or 11
+[1386.28:1392.44] by Sasha Reckland and Siddharth. This was used for online learning.
+[1395.72:1403.72] So the algorithm is a little bit interesting. The algorithm, what it does is it does this reflection.
+[1404.84:1410.68] So if we or it does this momentum. All right. And the way it does is this.
+[1410.68:1420.68] So normally we do the gradient descent with this. So we have this additional difference.
+[1420.68:1426.28] All right. So it's like the Mestero acceleration. If you think about it, in the Mestero acceleration,
+[1426.28:1435.4] you take the current point and then you take a momentum term that comes from the previous point.
+[1435.4:1456.8400000000001] All right. So in the end, you can write it simply as zk plus 1 zk minus 2 d zk minus d zk minus 1.
+[1456.84:1467.08] This is known as the reflection in the monotone operator literature. And you can think of this.
+[1467.6399999999999:1474.6] There's a special case of the forward reflected backward method in Monsky and Tim.
+[1475.24:1479.72] I literally had some ties to one of the methods that video was in our group.
+[1479.72:1485.88] I'll give you a look forward backwards splitting by Bunkung Du and myself, which is.
+[1487.4:1495.4] You take V and then apply this this reflection. And if V is a linear operator. So in the bilinear case,
+[1495.4:1507.0] V is a linear operator. It becomes the same thing. Meaning V to zk minus zk minus 1 decomposes
+[1507.0:1516.12] to the zk minus sorry about the hand line zk minus 1.
+[1519.64:1526.04] Mine. Now the cool thing about this is actually you need only one gradient
+[1526.04:1531.96] for iteration. All you need to do is a bit of memory to store this, just like in the next
+[1531.96:1539.08] star was accelerated method. And then you're done. Same thing here. You only need one gradient.
+[1541.32:1547.08] Now, so this optimistic gradient descent descent method again,
+[1547.08:1554.92] approximates ppm. It's a bit harder to see. So we put a derivation that was done by Arjan
+[1554.92:1562.44] Mokhtari and his collaborators into the advanced material for you to take a look. It's again my
+[1562.44:1573.5600000000002] exam material is for you to know also for the case decisions to learn. But trust us that in the end,
+[1573.5600000000002:1582.44] what this reflection in helps with is that it it it this is a number of gradients that you need in the
+[1582.44:1587.0] extra gradient method and it still approximates the proximal point method.
+[1590.44:1600.1200000000001] Okay, so here the step size is a bit different. Again, the iterative remain bounded.
+[1600.68:1608.28] The parallel dual gap goes down to k and that you get linear conversions when things are strong
+[1608.28:1621.0] from x. And as you can see, like both methods here, they approximate the the proximal point method
+[1621.0:1628.28] quite nicely. Remember, the proximal point method is normally not implementable and they seem to be
+[1628.28:1641.72] really following like really close to this. And has the same type of campaigns.
+[1641.72:1658.76] Okay, all right, when you have constraints in this problem, there's there's you can do the extra
+[1658.76:1664.92] gradient again, but with something called the mirror maps. All right. So this is called the mirror
+[1664.92:1673.64] prox algorithm. And what the mirror prox algorithm does is it generalizes the descent in in the
+[1673.64:1680.6000000000001] out to norm to general norms. So for this, what you do is you introduce something called a distance
+[1680.6000000000001:1688.04] generating function, pregnant distance using a function that induces this distance. And the way
+[1688.04:1697.96] you do that is, you know, imagine you have this omega z. And what you do is given omega z,
+[1697.96:1705.56] you convex omega z, you linearize it at the say z prime. So that gives you something like this.
+[1705.56:1715.96] All right, I think we have a we have a sign stake here. I think
+[1720.28:1728.6] yeah, there's definitely a sign stake here. And if you think about it, comics functions are
+[1728.6:1737.9599999999998] always about their supporting hyperplanes. Then given the z time, if you pick any other z here,
+[1738.52:1745.1599999999999] so I say it's the z or it's that z, you can look at the difference between the actual function
+[1745.1599999999999:1753.0] omega z and its linearization, which is this. That's why I think that there's a type of here.
+[1753.0:1768.84] So this distance is literally omega z minus omega z prime plus gradient at omega z prime
+[1769.72:1778.2] z minus z prime. So this is always greater than or equal to zero. It is zero only at the linearization
+[1778.2:1788.76] point. All right. Now we pick omega as strongly convex to just take to some norms so that you
+[1788.76:1794.3600000000001] cannot have this case, you know, like you cannot have a flat surface and then you have this.
+[1795.16:1804.04] And then this equal in bunch of points, because it's strongly convex, the linearization also has
+[1804.04:1818.92] a quadratic. So what I mean is this omega z, if this is out to norm, mind you, right? Omega z prime
+[1821.24:1832.28] plus gradient omega z prime z minus z prime, this need to be right back to z minus z prime square.
+[1832.28:1839.8] All right. This, this only works in two norm. The general of strong complexity is maybe differently.
+[1841.96:1848.12] So here this is just general norm, which is nice there. All right. So you can define this distance
+[1848.12:1855.0] generating function. Right. It's the breakman distance. Again, the, the, the, the idea is very simple.
+[1855.0:1862.84] Comments functions are always about. And if you look at this linearization, right, there's always
+[1862.84:1869.0] a bit of slack between the linearization and it is only zero when z is equal to this z prime.
+[1869.56:1879.16] Hence this breakman distance is zero only at z is equal to z prime. It is greater than zero any other
+[1879.16:1889.96] place. And hence it induces the distance. All right. And the distance is a bit interesting.
+[1889.96:1893.0800000000002] So it's a bit of symmetric, but nonetheless, it's a distance function.
+[1894.92:1908.3600000000001] Now in this particular case, the, the mirror procs algorithm is written as follows.
+[1908.36:1916.28] So you take the previous point, write the omega z, we take the civilizations.
+[1918.76:1925.8] So you do the first gradient update to guess what the next gradient is going to be. You plug this
+[1925.8:1934.4399999999998] back in here. And when the omega is just, so when omega z is just one half quadratic, this is
+[1934.44:1941.4] exactly extra gradient. Then the question becomes why would you ever want to use this?
+[1942.3600000000001:1948.68] Well, it turns out that if you choose this distance generating function correctly,
+[1949.48:1956.28] the constraints disappear in the problems. All right. So this is called the mirror descent
+[1956.28:1962.2] algorithm. We, we have it in the advanced materials so far and you're again not responsible for
+[1962.2:1967.24] this, but it is, this is an important algorithm mirror plots. You can also apply this
+[1967.24:1973.48] monstermut problems to get faster rates. It's just idea of moving the heaven covered in this
+[1973.48:1979.72] because it's advanced material. But there's an implement of a log order them and when omega is
+[1979.72:1986.28] one half omega squared, then you literally get extra gradient and this is generalize the extra
+[1986.28:1998.12] gradient. All right. Now here, this is the constant to be. Here's the step size and you get one
+[1998.12:2003.8] of the cake convergence. And the nice thing about this is that when the mirror map is chosen
+[2004.68:2012.68] correctly, this constant is much better than the Euclidean case. All right. So the distances
+[2012.68:2017.72] are not measured in the Euclidean sense. You know, you get logarithm of the dimensions and the
+[2017.72:2036.3600000000001] bombs, which is nicer. All right. What's the team? So here, summarize the theoretical convergence.
+[2036.36:2045.4799999999998] We talked about the proximal point method and it gets a nice one over k-rate
+[2047.8:2055.0] for the context concave and it gets linear rates, but it's an implicit algorithm. All right.
+[2057.4:2062.2] Now extra gradient methods, it requires one extra gradient evaluation.
+[2062.2:2069.72] All right. And you can basically remove this dependence by using all of the
+[2069.72:2096.4399999999996] optimistic gradient descent descent with no obvious downside. All right. And again, like optimistic
+[2096.44:2108.76] and one gradient, you just need to store the previous vector. All right. Now, what we're going to do
+[2108.76:2118.36] is we're going to focus specifically on problems that have quite a bit of applications in the literature.
+[2118.36:2127.6400000000003] While maybe these applications were before the neural networks, but nonetheless, they're still
+[2127.6400000000003:2133.8] interesting. So what we're going to do is we're going to look for algorithms where the sequence
+[2133.8:2139.56] convergence to the optimal solution. All right. So for the minmax case, we were looking at average
+[2139.56:2147.32] sequences. So we're going to look for ideally algorithms that directly give you the optimal points.
+[2147.32:2154.84] We're done averaging. We're going to try to talk about their rates. And what we're going to do
+[2154.84:2162.6800000000003] is we're going to focus on this particular template, h of x, f of x, plus g of a of x.
+[2163.56:2170.04] And the way the connection to the minmax is that if you write this g in terms of potential
+[2170.04:2182.6] conjugate, this, this, so you have a min and a max, maybe some bounds and we have
+[2183.88:2192.7599999999998] concave in y, convex in x. Now, one of these terms, we're going to assume that it's
+[2192.76:2202.5200000000004] defensible. All right. And the other ones are proximal. We're going to assume that there's one
+[2202.5200000000004:2213.1600000000003] solution. So it's an inocuous assumption, but it can be a key assumption. I mean, if you think
+[2213.1600000000003:2221.2400000000002] about it, many problems, probably this, right? So here you can try to have one norm plus
+[2221.24:2230.2] let's say b minus a x two norm. All right. So let's say we have some regularizer here,
+[2230.2:2236.8399999999997] minimize. So this is called square root plus two. In square root plus two, there is a nice
+[2236.8399999999997:2246.52] view of selecting this regularization parameter. And in this case, what we can do is we can take
+[2246.52:2250.84] this two norm and write it in the minmaxy.
+[2258.7599999999998:2266.2] And then minus x. Now minus the indicator function of the two ball.
+[2269.24:2275.56] Or y. All right. And you can just take this as a constraint while it is such that y two
+[2275.56:2287.08] norm is less than equal to one. So this would be our g coin j good y. This is our by linear term.
+[2287.7999999999997:2293.72] Right. I mean, you can put plus minus here because of the matter.
+[2293.72:2306.3599999999997] And you have f of x, which is fox removal. You can even put, I don't know, here a strong
+[2306.3599999999997:2312.04] complexity mu over two x squared. And you have your h that is also different.
+[2313.3999999999996:2318.4399999999996] All right. There are variety of ways. If you do double regularization, it is really just
+[2318.44:2329.48] easily here. Okay. Now, what I'll do is I'm going to tell you more about this very famous
+[2329.48:2336.68] methods, chumble park methods or primal du hybrid gradient methods. So what it does is it looks
+[2336.68:2344.12] at the special case where you don't have an h of x. All right. So it's it looked at minmax
+[2344.12:2350.6] problems where you have f of x minus g coin j good y in this linear coupling.
+[2352.3599999999997:2357.56] All right. And the method is actually very simple. And somehow does this reflection trick.
+[2358.68:2364.2799999999997] So you do the proximal updates in my right. So you do the proximal
+[2364.28:2375.6400000000003] update in g coin j good. All right. So if you think about it, the gradient with respect to y here
+[2375.6400000000003:2384.76] needs to have this a x. I see you have this. Now, if you wanted to do the proximal update in terms
+[2384.76:2391.7200000000003] of f, the gradient of this with respect to x is something like a transpose y. So you have this.
+[2391.72:2403.56] And what is really magical is this reflection. I kind of like the optimistic method. I don't
+[2403.56:2416.8399999999997] have the reflected method. So in this case, we define the richest constant l as the
+[2416.84:2423.48] section known of the smith x a. What we need is to choose two parameters. Tao and sigma.
+[2423.48:2430.92] Sigma is the dual step size. Tao is the final step size. Such that Tao times sigma times l squared
+[2430.92:2436.6000000000004] is less than equal to one. So you can more or less choose Tao and sigma slightly smaller than
+[2436.6000000000004:2442.52] one over l. Right. Usually of choosing the step size. In this case, the primal dual gap
+[2442.52:2449.56] satisfies one over k. Now, the only issue in this particular convergence that we don't see is
+[2449.56:2458.6] that here, the dual is unbounded. This constant basically depends on the dual domain radius,
+[2458.6:2465.4] which can be infinity. But in any other case, this is a perfectly valid gap characterization.
+[2465.4:2472.76] You have a one over k convergence rate and that you can talk about convergence of the
+[2472.76:2485.56] sequence to x star y star. And if g and f are smooth, I mean, if g is smooth, then it is strongly
+[2485.56:2492.2000000000003] convex or concave in this conjugate part. You can make things go down, they're going to
+[2492.2:2497.3199999999997] k if they're also strongly convex, then you get mean new rates. So things are as expected,
+[2497.3199999999997:2507.08] but they're like a very performant method. Is this clear? I think it is worth taking a
+[2508.68:2514.7599999999998] a step. So like, if you think about it, the update here is just literally the proximal gradient
+[2514.76:2525.2400000000002] update. So if you think about this phi xy function, the gradient of phi xy with respect to x
+[2526.44:2536.36] is actually. So imagine we're looking only at the smooth parts. So forget about these,
+[2536.36:2543.2400000000002] because we're going to handle them with the pop storms. The gradient with respect to x is,
+[2545.2400000000002:2555.0] so you can think of a xy as equal to x, a transpose y. So this is linear and x, you take the
+[2555.0:2565.2400000000002] gradient, you get a transpose y. And then the gradient with respect to y, it's already linear
+[2565.24:2572.52] and y, so you get a x. So the point about this is that you're doing the proximal gradient
+[2572.52:2582.68] updates here, same here. And it's just the point at which you evaluate, for example, you
+[2582.68:2588.4399999999996] evaluate the gradient in x at this reflected point, which is really magical, remember.
+[2588.44:2594.84] And then you're doing the regular update in the dual with the gradient
+[2596.44:2606.12] after this particular update. Okay. So it's like alternation, whatever you're doing,
+[2606.12:2612.2000000000003] whenever you're doing the updates, you have the updated gradient here. And in this case,
+[2612.2000000000003:2617.4] you have this reflected gradient here. So we're just kind of guessing what the next gradient should
+[2617.4:2626.44] be. So it has all kinds of nice properties, the solid one and most. I think there's a good
+[2626.44:2654.6] place to take a break and we can continue at 1015.

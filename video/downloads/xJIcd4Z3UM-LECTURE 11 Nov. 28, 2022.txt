@@ -1,0 +1,504 @@
+~LECTURE 11: Nov. 28, 2022
+~2022-11-28T12:57:46.357+01:00
+~https://tube.switch.ch/videos/xJIcd4Z3UM
+~CS-438 Decentralized Systems Engineering
+[0.0:3.0] Okay, welcome back.
+[3.0:5.0] Let's go ahead and start.
+[5.0:12.56] We've been, so far, the most of the semester we've been focusing on, well, decentralized systems
+[12.56:20.64] broadly from functionality and to some degree, security perspective.
+[20.64:26.68] With this lecture, I want to switch to the privacy perspective and especially anonymous
+[26.68:29.88] communication.
+[29.88:35.64] And in this, even though it's not really the focus of this course, there's like throughout
+[35.64:41.48] the, you know, the history of the development of decentralized systems and computer science,
+[41.48:48.0] there's really been a very rich parallel history of development of decentralized privacy preserving
+[48.0:58.32] systems of different kinds, especially for anonymity and anonymous communications,
+[58.32:61.56] and the deep protection.
+[61.56:71.72] So out of curiosity, how many of you have, well, have heard of TOR, say, okay, how many
+[71.72:73.56] of you have used TOR?
+[73.56:74.56] Most of you?
+[74.56:75.56] Good, good.
+[75.56:77.56] How many of you have heard of mix-nix?
+[77.56:78.56] No, me?
+[78.56:84.03999999999999] Okay, so that's the earlier generation before TOR.
+[84.04:89.64] So, yeah, we'll talk about that a little bit.
+[89.64:92.12] Okay.
+[92.12:103.08000000000001] So let's first talk about just to get into the topic.
+[103.08:114.4] So, why might we want anonymity?
+[114.4:119.56] Why do people sometimes want anonymity?
+[119.56:127.75999999999999] And you know, for what purpose, right?
+[127.75999999999999:132.4] Why should, you know, who cares about anonymous communication and why?
+[132.4:133.4] Yeah.
+[133.4:137.76000000000002] You don't want to share a identity deal with or link to your case, but it's not working
+[137.76000000000002:139.76000000000002] on a safe, simple shared home.
+[139.76000000000002:140.76] Great, yeah.
+[140.76:141.76] So, yeah.
+[141.76:150.24] So, freedom of speech is keeping censorship.
+[150.24:177.76000000000002] Yeah, so, avoid speech being linked to your real identity, right?
+[177.76:182.56] Especially if, you know, what you're saying is sensitive, controversial, yeah.
+[182.56:183.56] All right.
+[183.56:184.56] Yeah.
+[184.56:188.79999999999998] So, okay, good.
+[188.79999999999998:190.92] That's a great start.
+[190.92:191.92] What else?
+[191.92:192.92] It's not the only?
+[192.92:193.92] Yeah.
+[193.92:194.92] Great.
+[194.92:195.92] Yeah.
+[195.92:210.16] So, if you just want to, you know, watch a video or use content that is only available
+[210.16:215.2] in, you know, one region and, you know, you're kind of stuck in some other region where it's
+[215.2:216.2] not available.
+[216.2:219.44] Well, it's nice to be able to pretend yourself.
+[219.44:221.95999999999998] You're somewhere else, right?
+[221.96:229.4] What else?
+[229.4:231.56] And I include both good and bad reasons.
+[231.56:232.56] Yeah.
+[232.56:233.56] Yeah.
+[233.56:234.56] Uh-huh.
+[234.56:235.56] Great.
+[235.56:245.56] So, typically, ad targeting.
+[245.56:252.56] And tracking.
+[252.56:253.56] Yeah.
+[253.56:261.76] You just don't want all of these, you know, ever-present internet advertising advertisers tracking
+[261.76:267.76] you so much and targeting you and, you know, kind of learning everything about you.
+[267.76:268.76] Yeah.
+[268.76:269.76] Anything else?
+[269.76:276.76] Sure.
+[276.76:277.76] Yeah.
+[277.76:278.76] Great.
+[278.76:279.76] Criminal is one anonymity, too.
+[279.76:280.76] Let's acknowledge that.
+[280.76:281.76] Okay.
+[281.76:282.76] Okay.
+[282.76:282.76] Okay.
+[282.76:283.76] Okay.
+[283.76:283.76] Okay.
+[283.76:284.76] Okay.
+[284.76:284.76] Okay.
+[284.76:284.76] Okay.
+[284.76:284.76] Okay.
+[284.76:284.76] Okay.
+[284.76:284.76] Okay.
+[284.76:303.76] Okay.
+[303.76:304.76] Yeah.
+[304.76:308.76] So, you know, anonymity is a double-edged sword.
+[308.76:315.76] And it can be used by good guys and bad guys alike.
+[315.76:318.76] And that's one of the, you know, fundamental reasons that it tends to be controversial.
+[318.76:324.76] Attracts attention.
+[324.76:335.76] On the other hand, you know, there's at least one flip side to that last bullet, too.
+[335.76:341.76] So, you know, if you're going to get a good point, you know, if you're going to get a good point,
+[341.76:342.76] you're going to get a good point.
+[342.76:347.76] Anybody else think of something else to add to the list?
+[347.76:350.76] I have at least one more of it.
+[350.76:351.76] Where's the one?
+[351.76:360.76] So, one of the interesting things, if you, if you go to a, you know, talk by, you know,
+[360.76:364.76] some of the tour people, one of the things that they'll point out very, very quickly,
+[364.76:372.76] and it's true, it's not just propaganda, is not just criminals use tour and an anonymity system,
+[372.76:376.76] but the cops do, too.
+[376.76:377.76] Right?
+[377.76:384.76] And they use it to have privacy while investigating online crimes.
+[384.76:403.76] So, in particular, especially, especially, you know, fairly sophisticated organized crime, you know,
+[403.76:411.76] criminals who are pretty tax savvy can totally tell if, you know, if somebody from, you know,
+[411.76:415.76] is a domain associated with a government or a police that's sniffing around their,
+[415.76:417.76] their fishing website and stuff like that.
+[417.76:424.76] And so, to investigate, you know, all kinds of criminal related websites and other services,
+[424.76:433.76] well, the, the, the investigators actually really need to, to make sure their connections are not obviously coming from,
+[433.76:440.76] you know, government or police related websites otherwise, you know, their investigations are not going to be effective.
+[440.76:443.76] Right? So, the police actually use tour literally.
+[443.76:444.76] Yeah.
+[444.76:449.76] It's not going to be a, do you think it's performing the shows you can be a criminal and a criminal,
+[449.76:450.76] can you ask for a second?
+[450.76:452.76] Yeah, yeah, sure.
+[452.76:472.76] It can, it can, it can, it can, it can be used to basically route around connectivity, you know,
+[472.76:479.76] connectivity issues blocking and stuff of all kinds, even, even just accidental, not just censorship.
+[479.76:484.76] Including just, you know, gnats that won't, you won't let you get to where you want to go.
+[484.76:485.76] Yeah. Good point.
+[485.76:486.76] Mm-hmm.
+[486.76:488.76] Okay.
+[488.76:490.76] Yeah. Good.
+[490.76:499.76] So, so there's, there's a lot of, you know, good reasons and some bad reasons and, and anybody gets used.
+[499.76:511.76] Now, let's, let's, let's think about, you know, some of the how, right?
+[511.76:515.76] Ways to get to achieve anonymity.
+[515.76:524.76] And before we get to tour, let's, let's talk about some of the simpler, you know, simpler ways that don't involve, you know, running a,
+[524.76:529.76] you know, a big complicated, complicated application.
+[529.76:552.76] Now, on the, on the, in the early days of the internet, a lot of people observe that the, just using, you know, the internet or using that as we discussed earlier in the course, felt pretty anonymous because, you know, you were usually, you know, speaking only, you know, in text with people, you couldn't, there was no, you know, there was only weak identities.
+[552.76:568.76] These people were, you know, only who they said they were, you could, you could, you know, use a pseudonym anytime you want, you know, you were just by, by default, identified only with an IP address or something like that, right?
+[568.76:583.76] And, and so, you know, this, this led to, well, many of you might have seen the famous New Yorker cartoon with, you know, two dogs using a computer and one of them says, hey, this is a great on the internet.
+[583.76:585.76] Nobody knows your a dog.
+[585.76:589.76] You can be yourself, whoever you are.
+[589.76:599.76] But, and, and, you know, this is what actually the internet felt like without any, any special apps or anything, right?
+[599.76:618.76] So, so, so, so, you know, so you can, you know, for, for, it's basically all, all, always been the case, you can get some kind of weekend in the, you know,
+[618.76:628.76] anonymity.
+[628.76:644.76] Just by, you know, signing up to online services or email address, email addresses or something via suit on and misaccounts.
+[644.76:661.76] So, you know, I'm not with us, dude, in them, you know, you know, my name is spot the dog, you know, and, and I can participate on Wikipedia and email and anything I want as spot the dog, right?
+[661.76:674.76] So, why is this, you know, why, why is this anonymity weak and, you know, what, you know, why, why do I potentially need something stronger than this?
+[674.76:685.76] Why is this not good enough for some people like the creators of tour, for example?
+[685.76:694.76] Because, you know, your musician, your pastor, kind of sitting in, also knows who you are, because anybody who's in the world, yeah.
+[694.76:711.76] Yeah, well, so, yes and no, like if we're, if you just sign up to an account, you know, on somebody, maybe, you know, maybe they make you fill out a capture to get the account, but, you know, the capture doesn't identify you.
+[711.76:721.76] You didn't tell them what your real name is, you know, but, right? So, they don't really know who you are, but, yeah, yeah.
+[721.76:739.76] So, typically, so the service, the service you sign up for the account with knows the IP address you logged on with, typically, you know, when you started and potentially,
+[739.76:749.76] at each, at each time, you, you use the service, they often keep records, at least for a while.
+[749.76:756.76] They often have to for legal purposes, if not otherwise.
+[756.76:784.76] So, IP address, port times that you are accessing, right? So, you know, they have a record of like, you know, at, from this time to this time, you know, if you, if you have a timeline, then, you know, they can say, well, from this time to this time, login off from IP address,
+[784.76:801.76] you know, X, Y, port Y, right? And then from this time to this time, you know, this, the owner of this account was logged on at IP address, X, Prime, port, Y, Prime, and so on, right?
+[801.76:818.76] Now, of course, IP addresses look pretty anonymous, but exactly as you said, well, you know, typically your ISP or wherever you, the network, your log, logged on through, typically knows,
+[818.76:840.76] and typically keeps records, at least for a while, of, of who used, who had, as particular IP address, at, at which times?
+[840.76:864.76] Right? So, of course, you know, in the early days of the internet, you know, most computers had, had fixed IP addresses these days, you know, at long past the IP address, crunch, most client devices don't have permanent IP addresses, but we get dynamically assigned an IP address by the network we're connected to,
+[864.76:882.76] often by our, you know, ISP or by an institution like IPFL, but, you know, either way, typically that institution knows who you are, you know, and, knows that you were assigned this particular IP address at this particular time, right?
+[882.76:906.76] If we've got the same timeline, then, you know, probably at a related time, you know, where the ISP knows that IPX was assigned to Bob, wherever Bob is, right? And, you know, at some other time, IP address X Prime was assigned to Bob.
+[906.76:935.76] Right? So, it doesn't, you know, so, for, like, like, if, if you're just trying to hide your identity from, you know, Charlie, the nosy neighbor next door, who has no special powers or privileges or access to network or access to any of these services, then actually, you know, the anonymity of a suit, suit, suit, pseudonymous account might be not so bad.
+[935.76:956.76] You know, there's no, no reason we expect, you know, Charlie next door is likely to be able to get this information and put it together, but of course the cops are sure, sure, right? If, if somebody, if the law is after you are investigating, you know, suspected online abuse, they can totally go to the, to the relevant online service.
+[956.76:973.76] And to the ISP, you know, with, with records of those IP addresses, and try to figure out exactly, you know, who was, who was using those addresses to access that service under the, you know, misbehaving suit, pseudonym at a particular time, right?
+[973.76:986.76] And this is just, you know, one simple example of a traffic core of what we call a traffic correlation.
+[986.76:1006.76] And, you know, one of the, one of the reasons that, you know, we want stronger, that we sometimes want stronger anonymous communications systems is to provide, you know, stronger resistance to this kind of, this kind of attack, you know, tracking.
+[1006.76:1022.76] So, so that you, it's not quite so easy for, for someone who's, you know, with access to either these services or who can monitor the network to, you know, figure out who's who, right?
+[1022.76:1026.76] Okay.
+[1026.76:1038.76] So, there's other, other, well, slightly stronger, but still weak approaches to anonymity that we can think of.
+[1038.76:1050.76] And if you think of like, you know, kind of stronger than just, you know, signing up by a pseudonym to a service, but weaker than say using Tor.
+[1050.76:1060.76] And you think of an approach that, you know, maybe many of you have actually used, it's fairly common. Yeah.
+[1060.76:1062.76] Yeah.
+[1062.76:1063.76] Yeah.
+[1063.76:1064.76] Yeah.
+[1064.76:1066.76] Yeah.
+[1066.76:1075.76] So, just like a commercial VPN service.
+[1075.76:1080.76] Yeah. So, and these exist all over the places, all over the place.
+[1080.76:1084.76] They're often used to circumvent geo blocking.
+[1084.76:1090.76] They're sometimes used for, you know, for some level of anonymity.
+[1090.76:1102.76] The fact that you can get one from many different countries means that, well, you know, if you think somebody in this country is after you, but you don't think that they can, you know, compel.
+[1102.76:1114.76] Somebody in that other country like a VPN service in that other country to disclose this same information about you, then maybe you get some additional strength, at least you get an extra hot, right?
+[1114.76:1121.76] So, so the VPN, similarly, right, can and probably does.
+[1121.76:1138.76] You know, the, let's say they incoming. To outgoing connection map, right, when you use.
+[1138.76:1145.76] When you use the VPN, right? And so if you're using VPN to, to.
+[1145.76:1154.76] You know, from your, I, I, I see to some online service that you had a student, synonymous account for on.
+[1154.76:1157.76] You're basically inserting an extra hot right there, right?
+[1157.76:1164.76] Between the service that you're accessing and the ISP that you're actually using to access the network.
+[1164.76:1190.76] So you're actually kind of creating a, you know, a free hop, you know, indirect access pattern that, you know, can provide a little bit more protection, but exactly as you say, you know, it's, you know, the VPN can be compelled to say, you know, by police or, or, you know, potentially, you know,
+[1190.76:1207.76] a powerful organization to, to disclose their, you know, mapping of the association of, you know, yeah, who was browsing you through from, from or to this IP address at this period of time, right?
+[1207.76:1216.76] And so, so it's still potentially, traceable, right? But, but it is a, it is a step up.
+[1216.76:1244.76] So there's, there's actually another, another example of this that, that was recently recently made mainstream by a very well known hardware software provider that like, so probably a lot of people are using VPNs now, just kind of by, through their devices, anybody here.
+[1244.76:1256.76] Yeah, I mean, it's some kind of VPN actually maybe stronger than a standard standard commercial VPN, but still probably not as strong as Tor.
+[1256.76:1266.76] One, anyone think of what this might be? Yeah.
+[1266.76:1289.76] Apple private really. Yeah. Yeah, excellent. So Apple decided that, you know, privacy was important enough to them. And, you know, that they want to provide it, provide some, you know, stronger tracking protection to basically all of their customers.
+[1289.76:1299.76] And so they implemented Apple private relay, which is quite, quite tour like, you know, in, in a number of respects.
+[1299.76:1317.76] Also somewhat like a VPN, but it's in my understanding it's stronger than a VPN in that any connection you make through Apple private relay goes from the user.
+[1317.76:1329.76] Through, say the, you know, the, your regular upstream ISP, but then it actually goes through two hops.
+[1329.76:1332.76] So Apple private.
+[1332.76:1339.76] Let's call this APR one, Apple private relay server one and APR two.
+[1339.76:1346.76] And then it finally goes to the service you're accessing.
+[1346.76:1355.76] So it's kind of, you know, right, right between Tor, which we'll get to and does does a three hop thing.
+[1355.76:1369.76] And, you know, commercial standard commercial VPN services that are typically only one hop Apple decided, well, yeah, let's, let's make it a little stronger than a standard VPN service.
+[1369.76:1384.76] And, but, but, you know, it's, it's actually somewhat interesting from a design perspective, because one of the, you know, one of the fights they decided they don't want to fight is the geoblocking thing.
+[1384.76:1391.76] So if you, how many of you have used have tried using Apple private relay out of curiosity.
+[1391.76:1410.76] Okay, no, you, you have, okay, yeah. So you might notice, you know, if you tried this, not useful for evading geo blocking like, like many VPN services are, well, why, well, Apple decided to get a bunch of exit relays.
+[1410.76:1421.76] You know, there's this second relay, we typically call an exit relay, the one that, that you connect through to the actual service you're trying to, trying to get.
+[1421.76:1426.76] And they, they get a bunch of exit relays in a bunch of different countries.
+[1426.76:1441.76] So that, and the exit relay they choose always matches the country that Apple thinks you're, you're entering from, right? So your country of entry is going to be the same as your country of exit.
+[1441.76:1449.76] And so, you know, at least country granularity geo geo tagging or geo blocking is is actually going to.
+[1449.76:1462.76] Rebeach is still revealing your true, at least country level location. I think they actually have a check box where you want to ask them for like country level or region level, like, you know, some.
+[1462.76:1472.76] Still large, but within a country, like, maybe US East Coast, US West Coast. I'm not sure how big those regions are, but.
+[1472.76:1486.76] You know, you, you have some, some choice as to, you know, kind of how big your anonymity set is in a given region, but you don't get to choose to a V. D.O. or geo blocking.
+[1486.76:1487.76] Yeah.
+[1487.76:1489.76] What is this?
+[1489.76:1500.76] Yeah, good question. Yeah. Why, you know, it sounds like they went, you know, to a bunch of trouble to create this, you know, to hop relay, but you can't, you know, you can't.
+[1500.76:1506.76] You don't get anonymity in the whole world. You at best get anonymity in your country. Yeah. So why?
+[1506.76:1517.76] So, yeah, good question. So, so I think, you know, my understanding is is, you know, they want to.
+[1517.76:1531.76] You know, they want to give you, you know, some reasonably strong privacy, an anti tracking protection, especially from advertisers that like to track you, you know, this is my understanding is there.
+[1531.76:1545.76] Their biggest threat model is advertisers tracking you, right? You know, and wanting to know your precise location or your identity as you browse to this or that and the other, the other website.
+[1545.76:1557.76] But they're, they're definitely not trying to, you know, enable people to, to evade, you know, geographic policy is a content restrictions.
+[1557.76:1576.76] And then you want to guess why this might be like why Apple avoided, you know, picking that fight where, you know, many smaller, many much smaller commercial VPN services are perfectly fine advertising their services. Hey, sign up for us. Pay us some money and we will definitely help you of a geo tracking. Right?
+[1576.76:1580.76] Why does Apple not want to be in that game? And it guesses.
+[1580.76:1592.76] Bingo, yeah, Apple has the iTunes store there. There, you know, video streaming services there.
+[1592.76:1604.76] It's the Apple part has a lot of stock in Disney or vice versa. I can't remember. There's a, there's some, you know, moderately tight relationship or is it Pixar?
+[1604.76:1632.76] I can't remember exactly, but, but there's, there's some fairly close relationship between Apple and some of the, some of the big content companies. Right? And, you know, I'm guessing I don't have any special information, but I'm guessing that, you know, Apple doesn't want to upset all of their media partners too much by, you know, coming straight out with a service that says, hey, everybody here's a way to avoid all that is all the geo blocking policies and stuff.
+[1632.76:1650.76] So that's a fight they don't want to fight, but, you know, within a country where supposedly the, you know, the geo, geo blocking policies should be the same. They're saying, yeah, we'll, we'll pick that fight and try to help you be anonymous, right?
+[1650.76:1670.76] Or more anonymous and tracking resistant. Yeah, so it's so so so so this is interesting. Okay. But, so let's let's now, let's now look at,
+[1670.76:1697.76] kind of more technically, and approaches to anonymous communication. And since we still have a little time before the break, let's, let's spend a few minutes looking at the previous generation, the earlier generation of anonymous communication approach before tour.
+[1697.76:1722.76] And in the in today's the, the model page for today, there's a number of readings, including readings about the earlier designs, so called mix network designs, such as mix minion and others.
+[1722.76:1736.76] So, so there's, you know, there's a good reason you none of you have heard of this. They, they, you know, basically predated tour and tour is already quite old, like a couple decades old now, right?
+[1736.76:1751.76] So, so we're talking, you know, from the 70s to the 90s or, you know, like, well, 80s, 80s to the through the 90s that, that mix networks were a topic.
+[1751.76:1766.76] What, what was the idea of a mix net? Well, a mix net existed in the time in which using that and email were the dominant and forms of communication online.
+[1766.76:1781.76] You know, using that me being the dominant kind of public broadcast to everyone for them and email being the, the dominant private, you know, point to point messaging for it.
+[1781.76:1794.76] And so, basically mix nets were to existed to anonymize email, point to point email.
+[1794.76:1822.76] And, and you could use this with use net to, for example, if you wanted to, let's say you wanted to post a message really anonymously to use net, you want to, you know, really protect your privacy and use a pseudonym to post to post a message to use net.
+[1822.76:1836.76] So, it's going to be, so you prepare the message.
+[1836.76:1864.76] You prepare a message that's, you know, going to have the normal, it's still going to have a from line because all messages, you know, have to have from, from, from lines, but you can have a pseudonym like from a non, you know, at, no where or, you know, something like that.
+[1864.76:1871.76] And it's still going to have a subject and another stuff.
+[1871.76:1875.76] And it's going to have a message, right.
+[1875.76:1890.76] And instead of posting it directly to the, to your local use net server, of course, you send it to a first mix note.
+[1890.76:1895.76] What does this mix do? Well, we'll dive into that.
+[1895.76:1900.76] A little bit more later.
+[1900.76:1912.76] But what the mix note is going to do in effect is going to take your message along with a big batch of others, a whole bunch of other messages over some period of time.
+[1912.76:1920.76] So, lump them together. It's going to shuffle them.
+[1920.76:1930.76] Take all batch of encrypted messages. I should mention that, you know, these are encrypted.
+[1930.76:1938.76] It's going to shuffle shuffle the messages and either decrypt a layer or re encrypt a layer.
+[1938.76:1945.76] And then send, well, let's go.
+[1945.76:1951.76] So there's, there's many different mixed apologies or many different ways you can build mix networks.
+[1951.76:1963.76] But let's take one of the simple examples of what we call a cascade mix where there's just a fixed set of mix nodes where all of the messages in a batch go through each of the mix notes.
+[1963.76:1970.76] So, so this call this mix node one. This is mix two.
+[1970.76:1974.76] And this is mix three.
+[1974.76:1979.76] So the whole batch, you know, the whole shuffle batch goes to mix two, the whole shuffle batch.
+[1979.76:1992.76] And, you know, mix two also shuffles and re encrypts or decrypts a layer sends the whole batch to mix three, which also shuffles it.
+[1992.76:1996.76] And re encrypts or decrypts a layer, right?
+[1996.76:1999.76] And then the message is coming out of mix three.
+[1999.76:2006.76] Go to go to wherever they're instructed to go mix three gets some instructions.
+[2006.76:2011.76] Hey, this message is supposed to go to Bob at, you know, food.com.
+[2011.76:2015.76] And this message is supposed to be posted to use net, right?
+[2015.76:2027.76] So, so this might be a, a, a, a using net server.
+[2027.76:2032.76] That's near mix three.
+[2032.76:2049.76] Right. So it's not necessarily near to to Bob the anonymous sender, but it's, it's near this, you know, mix three, which is what we would call the exit mix.
+[2049.76:2078.76] So, yeah, this is, this is a simple, you know, one, one simple approach. But, but of course, you know, much more, much more fancy complex approaches existed as well in, in particular with, with a whole topology of mix servers that have, you know, where, where messages.
+[2078.76:2085.76] You know, batches of messages or messages come in on some time basis to, to some servers.
+[2085.76:2095.76] And then the mix servers would, would basically forward some of them to some next node and some to others.
+[2095.76:2100.76] Different messages would follow different, different paths.
+[2100.76:2117.76] There's a whole lot of interesting theory and analysis about the relative security and anonymity and protection that you get from these kinds of mixed apologies.
+[2117.76:2131.76] And, you know, I, I don't want to get too deeply into that into that right now just for, for lack of time.
+[2131.76:2143.76] But, but this approach had some, some fairly interesting, both, you know, attractions to it appeals to it as well as some significant downsides.
+[2143.76:2154.76] So, so just, just based on, you know, and my high level description so far, what do you, what do you observe about this approach?
+[2154.76:2161.76] In terms of, you know, say practicality, anonymity.
+[2161.76:2173.76] So, do you expect this to be really strong or not so strong or, you know, what, what potential weaknesses do you see in anonymity or in just practicality?
+[2173.76:2183.76] What do you think?
+[2183.76:2195.76] So, I will say one thing, this, this whole approach pretty quickly got entirely replaced by Tor as soon as, kind of, soreners, Tor came out.
+[2195.76:2198.76] And there's, you know, there's a good reason for that.
+[2198.76:2205.76] Yeah.
+[2205.76:2213.76] Good question. Yeah. So, this actually varied from one, one protocol to another.
+[2213.76:2233.76] If I remember correctly, the most, the most, the most deployed, you know, mix, mix system during that period, I think, called mix minion, would basically let the sender choose their route for each message.
+[2233.76:2250.76] So, you know, a particular user like Bob, basically encrypts a message several times, like an onion, with a set of hot by hop instructions.
+[2250.76:2259.76] So, you know, this is going to, this message is going to go to a then b then c and then out to service s, right?
+[2259.76:2269.76] So, Bob is going to encrypt the message.
+[2269.76:2288.76] The innermost message to service s then, you know, then wrap it in a encryption to mix c, then wrap that in encryption to mix b and then that in an encryption to mix a so that, you know, a can be crypt its layer first to reveal the fact that the message is supposed to go to mix b net.
+[2288.76:2316.76] And then so on, right? So, this is a very rough, you know, diagram, but, but, you know, even before we get to tour, which, you know, which kind of did this at the packet level, but this is doing, you know, mix with, you know, mix next, we're doing this kind of the email message level, granularity, right?
+[2316.76:2332.76] The most common, yeah, the most common design was to basically let the sender choose the route through the set of mixed nest, and the first other senders are sending messages that choose other random routes.
+[2332.76:2346.76] And so that, that actually has implications and, and the difference between, you know, this and the cast cave mix designed that I showed at the top has some very non trivial trade off to it.
+[2346.76:2373.76] So it turns out that the cast the cast cave mix has much more easy to analyze properties. So if everything comes in batches and goes in a big batch and lock step through all three or, however many cast cave mixes, then you can, you know, then as long as the cryptography and a bunch of, you know, a bunch of systems elements are done correctly, you can actually get approval.
+[2373.76:2390.76] Very strong, movable and an emity property, right? So.
+[2390.76:2403.76] So of course, this is all proof, provable, you know, on the basis of a number of important assumptions like the cryptography works and, you know, that and at least one of these mixes is not malicious.
+[2403.76:2408.76] If they're all, you know, compromise and colluding against you, then I'll bet sure. Right.
+[2408.76:2428.76] But, you know, with a bunch of, you know, caveat important caveats, you know, the cast cave mix architecture at the top is, you know, easy easy is to analyze and actually provides very strong and an immody under certain context.
+[2428.76:2442.76] That approach is in fact deployed, well, it has been deployed in Switzerland. You know, for important government purposes.
+[2442.76:2453.76] So anybody, anybody guess what I'm referring to?
+[2453.76:2461.76] Not for not for forwarding, not for anonymizing using that emails, obviously.
+[2461.76:2476.76] Yeah, the evoting system, yeah, that Switzerland has been developing for the past 15 years uses a form of cascade mix as the key anonymizing process.
+[2476.76:2494.76] And, and they, you know, by, by regulation require four mixes in that, in that process that, that all kind of take each take a lockstep batch shuffle everything, make a proof that they shuffle it correctly passed on the batch to the next one and so on.
+[2494.76:2520.76] So, so that kind of mix is is very commonly used in evoting systems, including Switzerland's partly because it's easy to analyze and you can come, come up with formal proofs of the anonymity you get on the other hand, it's not very fast, you know, kind of all of the work, you know, kind of eat.
+[2520.76:2531.76] This is fundamentally serialized process, each node has a huge batch of work to do that it has to finish before the next mixed node can start its work and so on, right?
+[2531.76:2536.76] Because if you, if they aren't serialized, then security is compromised.
+[2536.76:2541.76] Or at least it becomes harder to analyze, right?
+[2541.76:2552.76] But, you know, if we're just, if we're shuffling votes and we've got 24 hours to shuffle a bunch of votes and all the votes are small and fixed size, you know, these are challenges we can actually manage, right?
+[2552.76:2570.76] Whereas if the messages are bigger, variable size, and, you know, we don't want each mixed node to be to have a huge batch of work to do and then nothing for a long time and then another huge batch, then, you know, that, that, that led the desires of mixed minions.
+[2570.76:2591.76] And then, you know, we're just going to have a huge amount of mixed minions to prefer more kind of more distributed diverse diffuse routes like this, but, you know, which sometimes can provide, you know, very strong security, but it kind of depends on who else is in the network sending messages at a given time, right?
+[2591.76:2610.76] If Bob is the only person sending a message at a particular time and there's nothing else for it to hide in or at least along that route, then it might be pretty obvious to somebody monitoring the network, you know, what's going on and who's talking, you know, who's talking to the service S, right?
+[2610.76:2625.76] But, you know, if a lot of stuff is happening, you know, this, this can also provide quite strong anonymity based on a, you know, somewhat more complex, hairy and narrowly just right.
+[2625.76:2628.76] Yeah.
+[2628.76:2641.76] So another, but another important property is with these mix nets, usually there was significant delay at each of these.
+[2641.76:2662.76] At each of these nodes, this was intentional partly because well, you know, these mix nodes weren't being used all the time, you know, and, you know, the, the body of users who wanted to send their messages through anonymity systems was not huge.
+[2662.76:2679.76] Right, and so if you, if you need other message, other traffic to be going through there in order to hide your message at all, you're going to kind of have to wait for other people's messages to show up and, you know, to, for your message to hide it, right?
+[2679.76:2701.76] So, so typically these nodes would, you know, hold a message for at least minutes, maybe hours, you know, to get maybe a threshold of other messages like, you know, let's wait until we at least have 10 to 15 other messages and then at some quasi random time, we're going to take that whole batch, mix them and forward them.
+[2701.76:2711.76] So, the messages are going to wait another, you know, a number of minutes or hours, you know, before getting shuffled and forwarded on, right?
+[2711.76:2719.76] So, this wasn't exactly a super fast or real time process.
+[2719.76:2743.76] You know, but it could be in principle be very secure by the, by the analysis, depending on, you know, how, how that works, right? But definitely not fast. And that was, you know, just that practicality issue, like, you know, at some point, the attention of people online kind of shifted from just, you know, delay tolerant messages.
+[2743.76:2762.76] And like this message and have it come out by tomorrow or the next day and that's fine. You know, people's expectations change, especially as the web arrived and everybody wanted to browse the web, you know, so it, you know, return from usenet's era to the Tim Berners-Lee, you know, the web era.
+[2762.76:2777.76] And, you know, expectations changed drastically and, you know, even the anonymity people decided, well, you know, we really need an interactivity. Otherwise, nobody's using, you know, these mixed re-mailies because they're just too slow.
+[2777.76:2801.76] And if nobody uses them, the anonymity sets, we get are very small too, right? You know, okay. If they aren't popular enough to attract enough people to create a non trivial anonymity set, then, you know, the only people who are ever using them are the three or 10 hard core, you know, usual suspects and that's not not really good protection it up, right?
+[2801.76:2818.76] So, so they, you know, the developers are for coming out of the mix mix net experience decided, well, we need, you know, highest priority. You know, we need more usability, more interactivity and and hence bigger anonymity sets, right?
+[2818.76:2846.76] And so that's why they created tour and they actually decided made a conscious decision to relax some of the security goals for with respect to the mix net era. So, tour is targeting a weaker security, you know, threat model than, then mix nets are, but in the interest of, you know, being being more usable, more and getting getting a lot more users and kind of bigger based anonymity sets.
+[2846.76:2861.76] Okay. Yeah. So that's some of the background. So it's time for a little break. So let's break now and come back at 1112 1113.
+[2861.76:2887.76] Okay. Let's continue. Yeah. So basically just their wrap up mix nets just just to summarize. So mix nets could in some cases provide very strong anonymity, but they tend to be, tend to be.
+[2887.76:2908.76] As a communication mechanism, they tend to be very slow and high latency. Meaning often hours. Right. And in practice, very few users.
+[2908.76:2926.76] Only the absolute hardcore privacy geeks and that meant effectively small anonymity sets.
+[2926.76:2947.76] So, you know, if there's just not many people using this system, you know, to hide in, well, you're not doing a very good job of hiding. Right. Okay. So, so this was, this was basically fixing this was the primary objective of tour.
+[2947.76:2968.76] It's originally standard for the onion router. But more recently, they just call it tour. Not even all caps as if it's not an acronym. Maybe it's not a not officially an acronym anymore, even though it certainly was initially.
+[2968.76:2982.76] But so, so tour. Well, and he was called the second generation, I mean, router. There was some early experimentation with this concept of onion routing. But.
+[2982.76:3008.76] So, what, what is tour doing? It's, you know, it's still. So, if you have a user like Bob, Alice, say, and Alice wants to connect with the service, a web server. Right.
+[3008.76:3016.76] She wants an interactive connection in this case to web service. She.
+[3016.76:3020.76] She contacts the.
+[3020.76:3034.76] So, the, the tour directory service, which we won't get into details and gets a big list of the available retar relays in the tour cloud.
+[3034.76:3043.76] So, this is a big cloud, international cloud of tour relays available. And she picks basically a random route.
+[3043.76:3048.76] Random three hop route through these relays.
+[3048.76:3055.76] Going out to the service she wants to get to. Right.
+[3055.76:3071.76] But she's basically creating a series of VPNs, a series of encrypted VPN tunnels. So, what she does is she first talks to relay a.
+[3071.76:3088.76] And negotiate a, an encrypted tunnel to relay a. Yeah, see.
+[3088.76:3096.76] I'll just do this very casually. So, this is the, the first tunnel that goes to relay a.
+[3096.76:3107.76] Then she's going to, you know, through that tunnel talk to relay a through one layer of encryption.
+[3107.76:3117.76] And she's going to ask that relay to open a second tunnel. In this case, to relay B.
+[3117.76:3132.76] And so that second tunnel we're going to say is green. And so that tunnel is, you know, within the first tunnel and going through to the second tunnel.
+[3132.76:3143.76] And then she's going to use that second tunnel to ask for a connection to relay C.
+[3143.76:3153.76] It's called this yellow example. So the yellow traffic is going to go through the first and second tunnels.
+[3153.76:3158.76] All the way to relay C. Sorry, that's not very visible, but.
+[3158.76:3172.76] And then finally, she's going to talk through those three tunnels to relay C and ask for a plain old HTTP or potentially HTTPS, TLS connection over to.
+[3172.76:3179.76] To a web server to the web surface, right?
+[3179.76:3190.76] And then, and then once this, and then once this setup is done, the actual traffic communication traffic isn't message based, but it's, it's packet based.
+[3190.76:3203.76] And so it's, it's this traffic is on all of these connections is basically a series of, I remember correctly, is it 256 by or 512 by packets?
+[3203.76:3211.76] Let me put a remember 256 by one of the other.
+[3211.76:3223.76] So, so, so, Tor breaks up everything that that flows on these connections into basically 256 by packets.
+[3223.76:3233.76] And regardless of which hop there on there, these series of 256 by packets, right?
+[3233.76:3245.76] Equal size packets, right? And then, and then of course coming out there, whatever, they're just normal normal TCP.
+[3245.76:3254.76] Or TCP with TLS connection to the to the final service.
+[3254.76:3263.76] And on the earlier connections, those are typically, you know, Tor specific streams over TCP or sometimes TLS as well.
+[3263.76:3266.76] Okay.
+[3266.76:3280.76] And then, you know, the one key difference between Tor and mix nets, you know, besides a lot of details, but the most fundamental difference is no.
+[3280.76:3294.76] There, there's no explicit delay, right? No deliberately added delay. So of course, you know, he just routers, you know, unavoidably delay each packet somewhat just by processing and stuff like that.
+[3294.76:3308.76] But they're not going to be intentionally adding any delays, which is going to, you know, as quickly as possible, get a 256 byte encrypted blob in, you know, strip one layer of encryption and forward it on and save in the reverse direction.
+[3308.76:3331.76] Yeah. And so, so because of, you know, the attempt to minimize delays throughout the path, this is what, you know, makes Tor at least moderately usable for interactive web browsing and interactive application. Right. Yeah.
+[3331.76:3351.76] Because Alice, you know, yeah, this is those, you know, it's generally so. So the list of Tor relays is totally public. It's in a public directory. I mentioned this directory service.
+[3351.76:3374.76] Yeah. So Alice first is going to, you know, look up the directory, the whole directory of Tor relays from these directory service nodes and the, you know, Tanner so directory service nodes are basically hard coded into the Tor binary.
+[3374.76:3387.76] And so those directory service nodes basically send Alice a, you know, big list of these, you know, few thousand relays and she just picks, you know, somewhat randomly. Now, not perfectly randomly.
+[3387.76:3401.76] I mean, she can bias her choice if she wants and she might want for performance reasons, for example. So she can do like Apple does and, you know, focus her choices on a region like a country,
+[3401.76:3418.76] which reduces, you know, kind of deliver deliberately reduce her anonymity set size, but possibly in improves latency. Right. So if I say I'm good with just anonymity within Switzerland or within, within Europe, I'm going to choose relays only within Europe.
+[3418.76:3435.76] You know, I'm going to be bouncing a little bit less around the whole world and only around in Europe. Well, I'm going to, you know, have a little less anonymity, but maybe better performance because my packets never have to go to Japan and back or something. Right.
+[3435.76:3440.76] So that's kind of, yeah, up to the users. Yeah.
+[3440.76:3454.76] And it's not like what is actually, you know, just, you like to change it. Yeah. Good question. Yeah. Yeah. So why, so tour, you know, picked this, you know, three intermediate hop design. Exactly.
+[3454.76:3463.76] Why three? What's magic about three? Right. So, you know, Apple chose to, you know, standard VPNs choose one.
+[3463.76:3475.76] Y three. Yeah. So, so well, for before we get to that, let's just say, well, why two and not just one, you know, I at least two.
+[3475.76:3493.76] Well, if you just have one, then, you know, the one relay, and you know, that you go through knows where you came from, you know, where connection came from and knows where it's going to. So, you know, if that one relay is attacked, compromised against you, of course, it can kind of completely be anonymity.
+[3493.76:3509.76] Right. So it should be obvious why, you know, why not just one, right. So, you know, that completely centralizes all information in that, that one relay. So, yeah. So, why, so with two on the other hand, you have basically.
+[3509.76:3524.76] So, this is called this the first one, whatever it is, it's typically called the entry relay. And these are the middle ones are called the basically the middle relay.
+[3524.76:3544.76] And the last one is called an exit relay. And these are not just joint sets. So, any any any relay can perform all three of the roles if it wants to, but, but that's actually configurable thing for each relay, especially the exit relay role.
+[3544.76:3560.76] Many relays are not exit relays because being an exit relay tends to attract more attention from like, you know, criminals and other just miss people, miss behaving and, you know, often do miss behave using tour.
+[3560.76:3572.76] And, you know, the owners of the angry web service is, you know, fairly often come, come say, hey, somebody's misusing this. They're going to try to trace it back. And of course, they're going to trace it back to an exit relay.
+[3572.76:3593.76] And, you know, complain to the exit relay or complain to the cops in the exit relays country and, you know, it attracts attention, right? You know, and so you have to be prepared. If you want to run an exit relay, you have to be prepared to talk to angry Web server operators and potentially cops who are, you know, not yet familiar with tour.
+[3593.76:3608.76] And you've got to explain this is how it tour works and how it's, you know, it's actually legitimate. It's not just for hiding criminals, although it does that sometimes. And here's how we can deal with, you know, with complaints when they happen.
+[3608.76:3628.76] You know, so it's not an unsolvable problem, but, you know, is running an exit relay is a real responsibility in, you know, in a way that like running an entry and middle relay is, you know, is a little less, less of a lightning rod, right?
+[3628.76:3646.76] Yeah, so, you know, relays can fulfill all of the roles they want to. Yeah, but, but yeah, good question. Why, why three is that so, you know, it's clear why we at least want an entry relay and an exit relay that, you know, that divides the information.
+[3646.76:3667.76] So the entry relay, you know, sees and knows, you know, the user whose traffic comes in, right? So the entry relay kind of knows or could reveal Alice's identity, but doesn't know where Alice is going to, who, who Alice is talking with, whereas the exit relay does know.
+[3667.76:3684.76] The entry is all, you know, who Alice is talking with, but they don't, the exit relay doesn't know that it's Alice, right? The exit relay counts, you know, reveal the information of like who it is that's talking to that web service, right? So ideally, you know, both are, you know, only one of them is compromised.
+[3684.76:3709.76] Totally, Alice still has protection. Yeah, so, so it's part, definitely partly that, you know, in general, it's, you know, there's a general principle of, you know, more hops is stronger, you know, under under certain conditions, right?
+[3709.76:3735.76] So just by adding a third hop in the middle, you know, we hope that, that, you know, it would increase, you know, increase the protection even further, so it would, for example, you know, even if, you know, two of the knowledge is compromised, you know, maybe the third can still protect Alice, right?
+[3735.76:3747.76] Now, I remember I, a more specific argument for three in particular, but I don't remember all of the precise details.
+[3747.76:3776.76] Well, my memory, my memory is that is that, you know, the more specific reason is if say either the entry or exit relay is compromised, you know, in a two hop topology, let's say we didn't have the middle relay, then if, if either, let's say, you know, law enforcement or criminal organization manages to compromise either the entry or exit relay,
+[3776.76:3790.76] then that compromise relay has a direct pointer to the only other node, the only other relay that the attacker needs to compromise if it wants to completely compromise a particular path.
+[3790.76:3819.76] Right, and so, so it's partly about, you know, more strongly resisting an adaptive adversary who's trying to, you know, follow a trail, either from Alice to a service or from a service back to Alice and say, you know, okay, we've compromised the exit relay, who is the exit relay talking to, right, if the exit relay is talking directly to the entry relay, then that's the only other.
+[3819.76:3839.76] Then, you know, okay, let's focus all of our attention on compromising the entry where relay and then we're done, right, whereas, whereas with at least one middle middle relay, there's, you know, arguably, well, when it went additional step for anyone who's trying to follow the path in either direction, right, yeah.
+[3839.76:3856.76] Is there anything preventing the end to know whether they had some kind of stability, good, so, so, what kind of civil attack, like, like pretending to be a lot of relays when it's only one.
+[3856.76:3864.76] Instead of like setting up the keys with me and see the levels, you don't even set it up with itself, or you just ignore the ball.
+[3864.76:3886.76] Well, so all of these relays that are listed in the directory are listed with, but with public keys, right, so, so, you know, this directory service serves a big list of relays, you know, relay one with, you know, public key one and so on, right.
+[3886.76:3899.76] And, you know, as long as Tor is not just totally broken, the client is authenticating like it is choosing, you know, kind of randomly out of that list and authenticating each one that it connects to.
+[3899.76:3918.76] So, you know, unless Tor is totally broken, a should not be able to prevent B for it to, you know, a should not be able to impersonate B and C or Alice as Alice is choice of B and C, you know, without actually compromising B and C or co you know colluding with B and C.
+[3918.76:3938.76] Well, it's using it is probably using Diffie Helman, but also using using using strong authentication public key authentication like, you know, sending a challenge of some kind typically and say, OK, prove you really are B, you know, there's a lot of different ways to do that.
+[3938.76:3954.76] So, that's exactly which challenge, you know, negotiation, political they're using in this case, but yeah, there, you know, Alice is definitely making B and C prove through the tunnel that you really are B, you really are C. Yeah, so that's that's important. Good question.
+[3954.76:3968.76] On the other hand, your first, you know, your first point was it's still very relevant is the whole directory service, simple, attackable. Right.
+[3968.76:3978.76] So, and it's actually true that in principle, anybody can start a tour, a relay and ask for it to be included in the list of relays.
+[3978.76:4005.76] It's, you know, not a very high threshold on the other. Yeah, so there are there are protections against simple attacks. That's one of the like you, you have to, you know, if you just start tomorrow and start a relay, you're actually not going to it'll be on the list, but it's not going to be getting much traffic because it's designed to kind of build reputation of relays over time.
+[4005.76:4019.76] And, you know, clients won't, you know, won't start picking you more, more, more often and until you've been online and apparently behaving well for for a good long while. Right.
+[4019.76:4026.76] So, so there's some conservatism based into the list of relays.
+[4026.76:4046.76] There's also some, you know, very sharp activist people watching the list of relays looking for, you know, anything suspicious and the list is totally public. It's, it's they don't, they deliberately don't try to hide the list of relays.
+[4046.76:4075.76] But, you know, nevertheless, they have discovered over over the years, there have been something like simple attacks on the list of relays like they, they discovered, you know, somebody, you know, somebody affiliate was, you know, somebody was apparently, you know, gradually trying to infiltrate the, the relays with a whole bunch of, you know, relays that had some similar properties that made them obviously connected to each other.
+[4075.76:4103.76] I think that in one case, actually, there was an academic research study that, that like did this maybe not even for nefarious purposes, but just like, you know, not, not really doing a good job of paying attention to people's privacy or, you know, and, and maybe for very experienced trying to, you know, put a bunch of.
+[4103.76:4111.76] You know, somebody, somebody temporary relays on the tour network that basically amounted to a civil attack.
+[4111.76:4120.76] And, and then, you know, they were caught in those relays kicked off and, you know, that kind of thing has happened a few times.
+[4120.76:4134.76] But, you know, it remains the case that yeah, an undetected civil attack could occur if, you know, if an attacker infiltrated the tour network with a sufficiently, you know, apparently diverse, you know, not obviously connected.
+[4134.76:4154.76] And, you know, that's the relays and then, you know, then you can at least increase the probability that Alice just gets really unlucky and picks three colluding, you know, nodes from this, you know, civil attack, from the civil attacker going through the network and, you know, that, that can be a problem.
+[4154.76:4171.76] And, we, as far as I know, we don't know how much of a problem that is because, you know, we know some of the civil attack attempted similar attackers that got caught that we don't know how many there, there might be that haven't gotten caught.
+[4171.76:4173.76] Yeah.
+[4173.76:4176.76] Okay.
+[4176.76:4190.76] So, another very important, so let's talk about strengths and weaknesses, right?
+[4190.76:4216.76] So, the big, so the big positive, of course, is usability low latency, at least, you know, it's still often feels slow.
+[4216.76:4236.76] You know, browsing through tour isn't necessarily a speed demagot experience, but at least, you know, it kind of kind of works. You can, you can browse websites and use interactive applications, right?
+[4236.76:4259.76] And in fact, they succeeded in getting larger base anonymity sets, at least, you know, much larger than the number of users that they that were consistently using the mix mix nets earlier, right?
+[4259.76:4273.76] Of course, there, you know, there's, there's downsides, right? There's, there's various weaknesses, some of which we already, already discussed.
+[4273.76:4291.76] But one, one, perhaps one of the most important weaknesses is against traffic analysis attacks.
+[4291.76:4304.76] So, we talked about, you know, the, the, the principle that, you know, more relays on a path is, is better security. Well, that's partly true, but partly not true, right?
+[4304.76:4333.76] Especially in the case of tour, because, especially because each of these relays is adding no delay, right? So, and what this means is, you know, one of the basic attacks that, you know, was always known, you know, that, that could be, could be done against tour is basically anybody say watching the traffic from Alice to a, right?
+[4333.76:4341.76] Alice to a, you know, is sending, sending some traffic and you can plot it on some histogram, right?
+[4341.76:4356.76] So, you know, kind of how many packets per second come, you know, at this particular time, you know, kind of, we see this burst followed by this burst two seconds later, and this burst one second later and something like that creates some kind of shape.
+[4356.76:4368.76] And if somebody happens to be watching the traffic on the other side from C to the service, they can also plot a similar histogram, right?
+[4368.76:4376.76] And they can just use basically standard information correlation, correlation techniques to kind of match things up.
+[4376.76:4393.76] Well, if you're watching a lot of, you know, kind of entry traffic and a lot of entry exit traffic, you know, the, the, just by the timing patterns, you know, when, when the burst arrive and how big they are, are basically going to, you know,
+[4393.76:4418.76] and least over time, uniquely identify Alice's communication with that web service because, you know, the characteristics of a burst, even though, you know, the content is totally encrypted and the attacker is learning nothing at all from the contents of those 256 by packets, nevertheless that their timings are getting preserved, you know, plus or minus to some degree across the path, right?
+[4418.76:4441.76] Kind of not a not a very fine granularity, but it a course of granularity, right? So, so if you watch them over time, you can just use standard correlation techniques to eventually figure out that, yeah, you know, Alice is sending something, something that has exactly the timing pattern of something coming out to that web service.
+[4441.76:4459.76] I don't even know, you know, anything about what middle know there, you know, how, how many middle node that might be going through, I don't care, because just, you know, just on those edges, I can kind of in principle defeat the protection.
+[4459.76:4484.76] So, this is a, this is a very important, you know, site channel weakness and, and, you know, it's, it's a reason that it's, it's actually debated whether having a middle node at all is really adding that much protection to tour, like, you know, should tour via, you know, three hops system, or should they just be a two hops system like Apple, you know, get the better performance of only two hops.
+[4484.76:4489.76] If the middle hop is, you know, not actually adding that much protection, right?
+[4489.76:4502.76] So, and I'm not sure, you know, the current state of the art of reasoning about that, but, you know, it remains kind of well, well known issue that there's that traffic analysis attack, right?
+[4502.76:4513.76] Yeah, yeah, so question comments about tour, of course, you know, there's a lot, a lot farther.
+[4513.76:4518.76] Interesting stuff we could dive into, yeah, but.
+[4518.76:4528.76] Yeah, good point. Yeah, so not all web services like tour users, right?
+[4528.76:4547.76] And it's easy to block tour because well, the set of tour exit relays is totally public, you know, it's this list of IP addresses you can look up.
+[4547.76:4558.76] And so if you don't like tour, yeah, you just block all the IP addresses addresses and that list and, you know, you're officially not privacy friendly or at least not tour friendly, right?
+[4558.76:4572.76] So basically the tour people are depending on web service or not too many services web services wanting to be labeled, you know, called out and labeled, you know, tour unfriendly or privacy unfriendly, but, you know,
+[4572.76:4585.76] so web services absolutely do say, hey, you know, we're we're getting abused by tour, you know, we are by, you know, misbehaving tour users, we don't want to deal with this block.
+[4585.76:4594.76] Right? So that's that's an issue.
+[4594.76:4623.76] Yeah, and yeah, there's other important considerations. Okay, good. So we have a little so, um, there's a lot, a lot farther we could go in that topic, but I want to have a little bit of time left to to cover briefly cover one more different approach to anonymous communications called dining cryptographers.
+[4623.76:4633.76] Or DC nets.
+[4633.76:4641.76] So has anybody heard of this approach before to animate?
+[4641.76:4665.76] So this is a, this approach has also been around a while, at least in principle. In fact, the original inventor of mix nets back in the 80s, the early 80s, was a very famous brilliant guy named David Chowam,
+[4665.76:4680.76] who came up and did published the first mix net paper in like 1981 or something, just a few years later, the same guy, David Chowam came up with this idea for for for
+[4680.76:4695.76] dining cryptographers and his dining cryptographers paper is also on the on the optional readings list for for today. So look, look up, look it up in in mood, if you're interested.
+[4695.76:4713.76] Because I know these are the two, you know, the only two known fundamental approaches to anonymity, right, poor and mix nets are fundamentally doing the same thing, just out of, you know, interactives low delay based packet basis versus a high latency message basis.
+[4713.76:4735.76] So basically, you know, kind of encrypting and doing and using an onion worth of encryptions and serially transmitting and, you know, wrapping or unwrapping it through a serialized set of relays, dining cryptographers is the only, you know, kind of fundamental approach that I know that I'm aware of that fundamentally does things differently.
+[4735.76:4755.76] It does not require rely on this kind of serial serial set of hops instead it basically uses information coding to achieve anonymity, not, not relay.
+[4755.76:4766.76] You don't have to relay anything at all in order to get anonymity with the top of it. So basically using information coding theory.
+[4766.76:4784.76] And besides those two, I don't know of any other, you know, plausible proposal proposes proposal general approaches for anonymous communication communication that anybody is proposed that don't obviously fit in one of those two categories and David Chowman, bened both of them.
+[4784.76:4789.76] Pretty, you know, pretty nice win, you know, for him, let's say.
+[4789.76:4804.76] Okay, so how does how does dining cryptographers work? So I definitely recommend reading his paper on it because it's it's a fun, interesting read, but to give you the quick summary.
+[4804.76:4827.76] Here's the story that he came up with to set it up. So suppose you've got a set of cryptographers sitting around the table. This is obviously inspired by the dining philosopher's problem, which hopefully you've heard of, the, you know, which is about deadlock of white and stuff like that, but, you know, but this is about cryptographers, not not philosophers.
+[4827.76:4846.76] So that we've got some cryptographers sitting around the table. Right. And they're, they're dining, they're eating their food and a waiter, the waiter comes and says, your check has been paid for by somebody anonymous who doesn't want to be named.
+[4846.76:4867.76] So the cryptographers is saying, oh, great, that's nice. But, you know, were there suspicious types? Was it one of us who anonymously paid our bill? Or was it, you know, was it the NSA's books over on the next table that are the real shady, mistrustful characters that we don't like? Right.
+[4867.76:4879.76] You know, so was it one of us or was it one of them? Right. So these are the cryptographers, the good guys in this case, right.
+[4879.76:4899.76] So what they want is some protocol that among themselves, they can use to allow, you know, if one of them, if one of us paid the bill, they went, went, went that person to be able to anonymously say, yeah, I paid, but without revealing this, the information about who paid, right.
+[4899.76:4911.76] You know, whoever paid obviously wants to remain anonymous and they want to respect that. So they want to allow any of the cryptographers to raise their hand without actually identify themselves if they pay.
+[4911.76:4922.76] Whereas, you know, if with the NSA's books on the other table, they want to learn that, right. That they had better be really worried and go, you know, adopt new identities and run away or whatever. Right.
+[4922.76:4943.76] Okay. So how are they, how are they going to do this? Right. So it's actually pretty simple and beautiful. So each cryptographer is going to privately share with their neighbor around the table, flip a coin.
+[4943.76:4966.76] So here's a cryptographers, a, b, c, d, and e and each pair of adjacent cryptographers is going to share a secret coin that only the two of them can see they, they flip it, you know, just under the edge of the table where the two of them can see it can see the coin, but nobody else, right.
+[4966.76:4990.76] So you've got to, got a secret coin flip between each of the pairs of cryptographers. Now each cryptographer can see the coin to his left and the coin to his, his or her right. Right. So each cryptographer can see two coins.
+[4990.76:5002.76] And most of the cryptographers just, X or the values of those two coins.
+[5002.76:5017.76] And right, the result of that X or on a napkin on the table. Right. So let's say, let's say this coin is one, this coin is zero. This is zero. This happens to be one and this happens to be one. Right.
+[5017.76:5023.76] One X or zero is going to be one. Right. Zero X or zero.
+[5023.76:5030.76] This cryptographer is obviously going to write a zero since zero X or zero is zero.
+[5030.76:5048.76] One X or zero for E is going to write one X or one is zero on his napkin on the table and everybody can see these napkins, right. Just not not the, not all the coins.
+[5048.76:5061.76] And he sees a one and a zero. So he's going to write a one in this case. Right. But let's say it, you know, in our God's eye perspective, we, it's actually Alice that paid the bill. Right.
+[5061.76:5070.76] So what Alice is going to do is he's going to lie about, you know, the napkin. She's going to X or in an additional one bit.
+[5070.76:5082.76] So a one bit that says, I paid. So this is going to be an additional secret one bit. Right.
+[5082.76:5096.76] And so Alice is going to X or those three things in the two coins. She can see and the secret one bit. Right. So one X or one X or one is going to be one. Right.
+[5096.76:5113.76] Now we've got some napkins on the table. Everybody can see what those are and then what do they do? Well, they just X or all of those together. Right. So we've got three ones and two zeros. That's going to X or those are all going to X or two one. Right.
+[5113.76:5118.76] That's an odd number of ones that produces one. Right.
+[5118.76:5129.76] So just magically that's bit, you know, that appears in the center of the table happens to be the same as Alice's. I paid bit. Right.
+[5129.76:5136.76] So totally magic. Right. No. And that's always going to be the case. Why is that always the case?
+[5136.76:5153.76] Very simple. Right. And can you see like, you know, why, you know, if Alice didn't put, you know, put in that secret secret one bit like if nobody put the secret. I paid bit, you know, in there.
+[5153.76:5157.76] The thing in the center would always come out here. Why? Yeah.
+[5157.76:5166.76] So you know, we're going to see this circle that anyone that's entered and so again. Um hmm.
+[5166.76:5177.76] Exactly. Right. Each coin, each of those random secret coins is affecting exactly two napkins, exactly two cryptographers napkins. Right.
+[5177.76:5188.76] In this big X or this basically something, you know, X oring together all of the coins. It's it's X oring together each of the coin random points exactly twice. Right.
+[5188.76:5194.76] So the effect of all of the random points is just disappearing.
+[5194.76:5209.76] So the final in the final X or they all they'll just X or out cancel each other out, leaving only the secret I paid bit if there is one. Right.
+[5209.76:5214.76] Yeah. So that's that's pretty cool.
+[5214.76:5225.76] It's attractive. So why, why is this interesting for a number of reasons. So.
+[5225.76:5231.76] So the appeals of DC nets.
+[5231.76:5255.76] So this is provable information theoretic. Well, with of course, based on certain certain assumptions, those assumptions are very important.
+[5255.76:5267.76] But you know, if the assumption, if the appropriate assumptions home, then you get provable anonymity protection against this group of this, you know, group of participants.
+[5267.76:5277.76] There's, you know, there's no way the NSA swoops at the net next table can possibly learn, you know, who paid, you know, which of the cryptographers paid this tab.
+[5277.76:5283.76] You know, if it was one of the cryptographers who paid. Right.
+[5283.76:5293.76] Again, based on very important assumption copy outs, but, but still it's you get strong and an anonymity protection.
+[5293.76:5298.76] Another thing that's really nice about it.
+[5298.76:5318.76] Is the security does not depend on anything serialized. It does not depend on, you know, kind of serial propagation through through different relays. Right. So it's.
+[5318.76:5329.76] That also worry.
+[5329.76:5335.76] So you could, could you pass it around. Yeah, so you could, you could.
+[5335.76:5350.76] There's actually a lot of ways you can, you know, change the message pattern is like to, to, you know, aggregate the claims as you go around or, you know, incrementally as you go around it to a topology and that can reduce the.
+[5350.76:5354.76] Say the message costs that can, you know, improve efficiency.
+[5354.76:5367.76] Is that what you're, what you're thinking here.
+[5367.76:5390.76] Yeah, yeah. Yeah. So you, yeah, there's a lot of variations like that. You can do that. And they have, they also have different security trade us. So, you know, since we're getting into that a little, you know, one of the things I wanted to mention is the.
+[5390.76:5399.76] So this, this, this circular topology is, is, you know, just makes it easy to think about, but it's actually not the most secure.
+[5399.76:5411.76] Because suppose, just consider, for example, suppose two of the cryptographers are actually compromised and colluding with the NSA books, right.
+[5411.76:5426.76] So this is when things start getting a little bit more tricky when, when some of the participants might be compromised, right. Let's say, let's say B and E are compromised and colluding with the NSA spooks, right.
+[5426.76:5437.76] Do you see a problem. So B and E are sending the information about the coins they see, you know, reporting to the NSA, right.
+[5437.76:5446.76] Do you see what might, what might go wrong here with this particular topology.
+[5446.76:5465.76] Yeah, exactly. So what, what they effectively do is if B and E kind of split the ring, they can see if somebody on one side or somebody on the other, so pay because, you know, kind of they, they see on which side of their split of their chord.
+[5465.76:5480.76] So this is the one bit, right. And in this case, if B and E are just are surrounding A, well, then they completely de-anonymize A, right. So if A paid then well there, you know, you're, you're not anonymous at all anymore.
+[5480.76:5493.76] So that's kind of unfortunate. So this can be, this weakness can be, can be addressed if you want to by, for example, having everybody share a secret coin with everybody else.
+[5493.76:5511.76] So that's all secret sharing topology, right. That's actually not that impractical. You can do use it, use Diffie Helmann secret sharing, you know, everybody has a Diffie Helmann chief quit does, you know, as Diffie Helmann secret construction with everybody else in the network.
+[5511.76:5524.76] So all of those coins, right. So that'll actually give you the best possible having an interview protection even in the case of, you know, that some knows you're colluding at the cost of some more computation, right.
+[5524.76:5532.76] But, but it's not, not necessarily the worst is not necessarily completely impractical.
+[5532.76:5550.76] So, there's other things you can do. It's so especially to increase the security wall while preserving scalability. This is, this is an area of research my lab did a number of years ago, we were working on this quite a bit.
+[5550.76:5567.76] So, you want to expand it to support thousands or tens of thousands of users without having this, you know, all to all secret sharing matrix, but stronger, but something stronger than just the ring topology.
+[5567.76:5582.76] You can, you can do something like having a small number of servers and a large number of clients, basically sharing coins, not with the other clients, but only with each of the servers.
+[5582.76:5596.76] Right. So all clients to all clients and all clients to all servers, secret sharing topology. This is, I'm just talking about the secret coins, not necessarily the communication patterns, right.
+[5596.76:5611.76] Then you get a property that, as long as at least one of the servers is uncompromised, then all of the clients have perfect anonymity, right.
+[5611.76:5625.76] Because the one server basically connects all of the clients to each other indirectly in a, you know, correct secret sharing topology, regardless of whatever the, what, what other server, what else the servers do.
+[5625.76:5653.76] This is what we call an any trust group of servers. So you get kind of perfectly, you know, perfect anonymity as long as the any trust assumption hold, but of course if the any trust assumption doesn't hold if all of the servers are compromised, then nobody gets any anonymity like there's an anonymity cliff that you really don't want to follow.
+[5653.76:5674.76] But this can also be attractive in other ways, because like the servers, the clients can come and go and the servers can adapt. We haven't talked about problems of like adapting to, you know, networks as as nodes come and go and another very important issue of
+[5674.76:5695.76] is is Janet. So if if somebody just kind of sends random bits all the time, you know, they, it's kind of by default easy to, to DOS attack the communication channel, right, because just prevent anybody from from saying anything useful.
+[5695.76:5709.76] And the attacker just because of the strength of anonymity, the attacker kind of is perfectly protected. How do you figure out who's jamming, you know, which participant is jamming the channel and kick them out when well, they're perfectly anonymous, right.
+[5709.76:5722.76] And there actually are interesting ways cryptographic and other others that that we can address that that kind of jamming, but, you know, it's an interesting, you know, deeper topic.
+[5722.76:5728.76] Any other quick questions or comments about this approach.
+[5728.76:5742.76] Yeah, I should also mention that, you know, in the past decade or so, especially a bunch of other interesting work has been building on both this and the onion type approach to anonymity.
+[5742.76:5760.76] Actually, a lot of a big interesting variety of different approaches, you know, proposed, at least in the research literature, most of them aren't really deployed yet like tour, but, but it's still a very active, active, interesting topic of research.
+[5760.76:5772.76] So hope that gives you a little bit of taste for decentralized anonymity systems. So, and this is this space is, of course, also fair game for projects if you're interested.
+[5772.76:5800.76] So, yeah, thanks and see you next week.

@@ -1,0 +1,281 @@
+~COM-516 Lecture 1.1
+~2020-07-27T22:12:49.402+02:00
+~https://tube.switch.ch/videos/e4b8c85c
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:8.0] Hello, so in this first video I would like to first define what is a Markov chain and
+[8.0:10.0] give you two examples.
+[10.0:21.0] Okay, so in this course we'll talk mostly about what we call time homogenous Markov chain,
+[21.0:23.0] whose definition is as follows.
+[23.0:39.0] So, a time homogenous Markov chain is a discrete time stochastic process.
+[39.0:50.0] Okay, which actually means nothing more than family of random variables.
+[50.0:77.72] And so, you know, Xn index-bison natural number n with values in a finite or countable or
+[77.72:82.72] countable set s.
+[82.72:88.72] And this set s is what we call the state space.
+[88.72:98.92] Okay, so we restrict here to finite or countable, but there is a whole theory of Markov processes
+[98.92:107.92] that also works for processes with values in R, for example.
+[107.92:113.92] And also there is a whole theory of Markov processes that are continuous time.
+[113.92:123.92] But okay, so these two generalizations either continue state space or a continuous time may
+[123.92:129.52] just the theory a bit more difficult, more technical and everything, but all the gist of what
+[129.52:134.92000000000002] is the Markov process really is in the discrete case.
+[134.92000000000002:140.12] So, discrete state space and discrete time and this is already enough for us, so we will
+[140.12:143.52] stick to this framework.
+[143.52:144.52] And so, what does that do?
+[144.52:150.04] It's of course not any family of random variables is a Markov process.
+[150.04:154.92] There is a property to be satisfied and that's the Markov property, which is the following.
+[154.92:164.51999999999998] So it says that the probability that that time n plus 1 you're in state j given that you
+[164.51999999999998:173.79999999999998] were a time n instead i, a time n minus 1 instead i minus 1 and so on and so forth until
+[173.8:180.56] x1 is equal to i1 and x0 is equal to i0.
+[180.56:192.04000000000002] So this conditional probability is equal to this conditional probability here where you
+[192.04000000000002:197.44] simply drop all the past of the process.
+[197.44:206.0] So this is saying exactly that if you know the whole history of the process and you want
+[206.0:214.04] to guess where you will be your next step and then this whole history doesn't, you don't
+[214.04:215.24] need this whole history.
+[215.24:220.12] Actually, if you want to predict where is the next step of the process only depends on
+[220.12:224.32] where you are now, not on where you have been before that.
+[224.32:230.23999999999998] And this equality here is really what we call the Markov property.
+[230.23999999999998:236.07999999999998] It's also sometimes say that the property of forgetting the past, right?
+[236.07999999999998:239.76] We have a process that is forgetting where it has been.
+[239.76:248.04] It always makes moves just based on where he is now but not on what happened before.
+[248.04:255.79999999999998] And so that's for the Markov property and if this conditional probability here on top
+[255.79999999999998:265.36] of that does not depend on n, we say that this process is time homogeneous.
+[265.36:271.52] So if these numbers are just PIJ that do not depend on n, we say that this process is
+[271.52:273.12] time homogeneous.
+[273.12:278.6] So these transition probabilities from i to j, this PIJ, do not depend on the particular
+[278.6:282.52] time n and which one looks at the process.
+[282.52:295.92] And this should hold of course for every n in n and for every j i i n minus 1 up to i 0
+[295.92:297.92] in s.
+[297.92:305.68] Okay, so let me just illustrate this with a small picture here.
+[305.68:312.12] So I have here the line, I'm drawing here representation of the process.
+[312.12:315.68] Of course we are talking here about probability and stochastic processes.
+[315.68:321.0] So we can just draw realizations of the process.
+[321.0:327.16] We will never be able to draw a random process because it has multiple possibilities, right?
+[327.16:328.96000000000004] But let me draw two of them.
+[328.96000000000004:335.48] Let's say I have a process x that has made these moves over time.
+[335.48:344.88] I don't know something like this and this something like this and perhaps another realization
+[344.88:347.64000000000004] with this.
+[347.64000000000004:351.44000000000005] And now let's say this is time n here.
+[351.44:359.24] And so if I want to guess where I will be at time n plus 1, well I can go perhaps here,
+[359.24:362.28] here or here at time n plus 1.
+[362.28:370.12] And one has probabilities here, so perhaps we're probably wanted to go down, wanted to stay
+[370.12:373.15999999999997] put and wanted to go up.
+[373.15999999999997:379.12] And what this marker property is saying is that for these two realizations that I have
+[379.12:384.44] here, either this one or this one, these transition probabilities are the same.
+[384.44:391.04] Because at time n, the process is twice, is always in the same position here.
+[391.04:395.88] So the next step would not depend on what happened before.
+[395.88:399.04] Okay.
+[399.04:401.24] This is the definition.
+[401.24:410.08] Let me, before telling you, giving you some examples of marker process, there are two
+[410.08:416.04] very important objects associated to a Markov chain or Markov chain or Markov process.
+[416.04:422.6] I will use it independently or like, yeah, we, we, officially these are Markov chains
+[422.6:424.72] because they are discrete time.
+[424.72:432.44000000000005] But we will use these two words in equality.
+[432.44000000000005:433.44000000000005] Okay.
+[433.44000000000005:436.76000000000005] So there are two important objects defined associated to a Markov chain.
+[436.76000000000005:444.12] And the first one we already written it down is what we call the transition matrix.
+[444.12:454.68] So it is the object, it is the matrix made of these numbers, P ij, which are these transition
+[454.68:455.68] probabilities.
+[455.68:463.24] And of course, these matrix, well, in the case where the state space is finite, is a finite
+[463.24:470.96000000000004] matrix, in the case where the state space is infinite, count the bus, but infinite, then
+[470.96000000000004:473.96000000000004] we have, we have an infinite matrix, right?
+[473.96000000000004:482.12] So it's a bit difficult to represent paper, but still we can always define this object.
+[482.12:486.4] And we don't need, we want to need to worry here too much about what it means to be an
+[486.4:488.88] infinite dimensional operator or whatever.
+[488.88:495.88] Just think of this as an infinite sequence of, not a sequence, sorry, an array, infinite
+[495.88:497.6] array of numbers, right?
+[497.6:500.56] With two dimensions.
+[500.56:502.04] What do we know about these numbers?
+[502.04:504.04] These are transition probabilities.
+[504.04:508.04] So in particular, they are probabilities.
+[508.04:516.84] So all the P ij are numbers between 0 and 1, for every ij in S, okay?
+[516.84:530.84] And because they are transition probabilities also, the sum of a j in S of P ij is equal to
+[530.84:538.88] sum of a j in S of this, for a given n, you know, this, by time homogeneity, this will
+[538.88:543.08] be true for every n.
+[543.08:548.72] And this is the sum of conditional probabilities, but of course, the fact that we have here
+[548.72:554.48] conditional probabilities doesn't change anything to the fact that this sum of a t has to be
+[554.48:558.76] equal to 1 for every i in S.
+[558.76:568.92] Because if it says here the sum of a j in S of this party that xn plus 1 is equal to j,
+[568.92:578.04] so this can be a revolution as the probability that xn plus 1 belongs to S given that xn
+[578.04:580.68] is equal to i, okay?
+[580.68:584.28] The sum of the port is, the port is of the union.
+[584.28:589.4399999999999] And of course, xn plus 1 has to be somewhere in S, right?
+[589.4399999999999:593.88] The process cannot disappear, so it stays with the probability 1 in the state space S.
+[593.88:602.1999999999999] And so this probability has to be 1, whatever the initial position i, okay?
+[602.1999999999999:608.72] On the contrary, so this is saying in very, very concrete for the transition matrix,
+[608.72:616.24] this is saying that the raw sum of the matrix P is 1 for every sum, for every row, okay?
+[616.24:627.8000000000001] On the contrary, if you sum over the columns, so for a given column you sum all the terms,
+[627.8000000000001:638.0] you get this probability.
+[638.0:642.4] And now this could be really anything in general.
+[642.4:648.2] So this is a number that could be even zero sometimes or plus infinity if we have an
+[648.2:655.0] infinite state space and we could have that if j is a certain point, then it could be
+[655.0:659.8] that from every position i, you go to this point with some positive probability and the
+[659.8:665.8] state space is infinite, so then you would have an infinite sum, okay?
+[665.8:670.92] So the raw sums are equal to 1, but the columns sums could be really anything for a transition
+[670.92:674.76] matrix P. Okay.
+[674.76:680.4] And there is another object associated to a marker chain, which is actually the same
+[680.4:685.24] thing, just it's a graphical representation of this object, is what we call the transition
+[685.24:686.4799999999999] graph.
+[686.4799999999999:695.76] And I will show an example in a second, but okay, what is the transition graph?
+[695.76:706.16] So you will draw, we will usually draw states as circles, then you know, this could be
+[706.16:716.76] the state ijk and we will draw an arrow between state i and state j if the value of pij is
+[716.76:718.6] positive.
+[718.6:723.4] And if there is no probability to go, for example, saying this example that there is no
+[723.4:730.3199999999999] probability to go from j to i, pij is zero, so we don't draw an arrow in the other direction.
+[730.3199999999999:738.8] But okay, here perhaps there is an arrow from k2, so this is pk i, positive and perhaps
+[738.8:744.0] we have another arrow here, which is pjk, okay?
+[744.0:750.48] And perhaps it is also the case that there is an arrow pkj, which is also positive.
+[750.48:756.08] Okay, so once you draw the transition graph, you of course can recover the transition matrix
+[756.08:759.08] if you specify the weights of the arrows, of course.
+[759.08:763.28] And similarly, if you know the transition matrix, you can draw the transition graph.
+[763.28:776.52] Okay, so let me look first at a simple example of a marker of chain, which is the following.
+[776.52:780.52] You can see that you are at a party.
+[780.52:792.52] And at a party you can be in different states because there is a concert happening somewhere
+[792.52:798.52] in the party.
+[798.52:812.28] There is a dance floor at another place, there is a bar and there is home, far away here.
+[812.28:819.68] Okay, so here we have a dance place and here we have the bar and here we have home.
+[819.68:826.04] Okay, and we will model your behavior at the party, your state as a mark of chain, with
+[826.04:831.52] the assumption that you kind of make moves randomly from one place to the other without
+[831.52:832.52] much structure.
+[832.52:836.1999999999999] Let's say you are enjoying your style, you are having lots of friends everywhere, you
+[836.1999999999999:844.28] go from one place to another, a bit like following impression or whatever.
+[844.28:847.64] So there is some randomness involved here.
+[847.64:855.04] Okay, and so we could say, yes, perhaps once you have gone to a concert, then perhaps
+[855.04:864.68] at some point you want to go and have a dance somewhere or perhaps you are tired and you
+[864.68:867.36] just want to go to have a beer.
+[867.36:873.4399999999999] Now if once you go dancing, then you know, after sometimes you are retired, so you always
+[873.4399999999999:878.3199999999999] go to the bar after dancing.
+[878.3199999999999:880.1999999999999] And if you are at the bar, what can you do?
+[880.2:887.2] When perhaps with pretty one fourth you go dancing or you go to a concert if you are
+[887.2:894.72] motivated to listen to music or perhaps you just stay at the bar because you enjoy the
+[894.72:899.32] company of your friends or perhaps at some point you are really tired and you just want
+[899.32:901.4000000000001] to go back home.
+[901.4000000000001:906.2] And once you are at home, it is unlikely that you will go anywhere else than just home.
+[906.2:908.2] So you stay here.
+[908.2:918.6] Okay, so doing this, I have drawn here the transition graph of my Markov chain and just
+[918.6:923.36] noticed that of course for this transition graph to be a valid transition graph, I cannot
+[923.36:930.6800000000001] draw any graph, I have to make sure that the sum of the outgoing arrow from a certain
+[930.6800000000001:934.9200000000001] state will always be one.
+[934.92:940.36] Okay, this is actually the property that I have here, is that the draw sum of the matrix
+[940.36:945.52] is one which is the piece here.
+[945.52:947.8] Okay, so what is the state space here?
+[947.8:954.4] We have the state space, okay, let me just with letters, we have the concert place, the
+[954.4:959.76] dance floor, the bar and whole four states.
+[959.76:967.6] And the transition matrix here would be simply what do we have?
+[967.6:977.28] So we have from the concert place, we don't assume that we stay at the concert but perhaps
+[977.28:983.16] we go to the dance place, we have to the bar, we have to the half and then we don't
+[983.16:985.52] get directly home.
+[985.52:991.52] Now if you're in the dance floor, then the next move is going to the bar with 41, so here
+[991.52:998.68] you would go directly here.
+[998.68:1009.12] And from the bar you have 41 fourths go everywhere else including staying at the bar and at home,
+[1009.12:1011.56] you just stay at home.
+[1011.56:1012.88] Okay.
+[1012.88:1021.2] So this is a simple example of a mark of chain with a finite state space.
+[1021.2:1026.8] Here I've just directly drawn the graph and written the transition matrix.
+[1026.8:1033.4] Now I would like to move to another example where the state space is infinite and we will
+[1033.4:1039.0] also for this example verify the mark of property, we will be a bit more mathematical
+[1039.0:1041.52] and describe what is the model, what are they?
+[1041.52:1045.84] They're lying random variables, here it's just really the graph and the transition matrix.
+[1045.84:1056.84] Let me call this example example one because now we move to example two.
+[1056.84:1068.0] So example two and this example is the very academic example.
+[1068.0:1075.0] Let's call the simple symmetric random mark.
+[1075.0:1086.56] But it's a very interesting process, a simple as it is, this process you can really spend
+[1086.56:1095.52] hours and hours studying it because it has give rise to a huge literature on the topic.
+[1095.52:1100.52] Okay.
+[1100.52:1112.0] So here the state space will be the set of integers.
+[1112.0:1120.24] And on this state space we will define a set of random variables which is not the mark
+[1120.24:1121.24] of chain.
+[1121.24:1126.6] Okay, but on this state space we will define, well, actually not on this state space,
+[1126.6:1137.52] sorry, we will just define now a set of independent and identically distributed random variables.
+[1137.52:1146.32] Okay, which I abbreviate by IID but let me since it's the first time I'm using it.
+[1146.32:1163.9199999999998] So this is meaning independent and identically distributed random variables.
+[1163.9199999999998:1170.6399999999999] And we will assume so that these random variables not only are IID but they also have the
+[1170.6399999999999:1173.52] property that actually there are just plus and minus one.
+[1173.52:1179.2] So the property that Xn is equal to plus one is the property that Xn is equal to minus
+[1179.2:1184.84] one is equal to half for every n rather than one.
+[1184.84:1185.84] Okay.
+[1185.84:1191.36] So they all have the same distribution and on top of that we assume they are independent.
+[1191.36:1194.24] So you know it's like independent coin tosses, right?
+[1194.24:1199.16] Toss the coin and then you toss another coin and this the first coin doesn't have an
+[1199.16:1203.68] influence on the second coin, okay?
+[1203.68:1207.24] So now what is the what is the process?
+[1207.24:1211.72] So the process the process is the following.
+[1211.72:1221.0800000000002] So the process that we define is start with s0 is equal to zero and then sn is X1 plus
+[1221.0800000000002:1229.1200000000001] Xn is the sum of the first n of these random variables for n greater than one.
+[1229.12:1255.9599999999998] And now the claim is that the process is n for nn is at time homogeneous.
+[1255.96:1264.96] Markov chain is a time homogeneous Markov chain period.
+[1264.96:1274.6000000000001] Oh yes and I can and and I will specify what is it's transition matrix after that.
+[1274.6000000000001:1275.6000000000001] Okay.
+[1275.6000000000001:1282.52] So I just realized here that of course there is a slightly type of mismatch here because
+[1282.52:1285.28] mismatch in notation because you have the state space which is s.
+[1285.28:1288.68] Of course this has nothing to do with the process which is sn.
+[1288.68:1289.68] Okay.
+[1289.68:1290.68] Okay.
+[1290.68:1305.36] So let me let me prove this for many but before that I can just draw you know simple
+[1305.36:1318.08] a sample path of what this process sn will be.
+[1318.08:1325.12] And so the process sn just starts from zero and then make move upwards or downwards with
+[1325.12:1335.9199999999998] this probability half always so you know this could be something like this.
+[1335.9199999999998:1345.1599999999999] So indeed a simple process right that is just going up or down by plus one at every move.
+[1345.1599999999999:1352.6] This is my this is my sn for a certain realization of the process.
+[1352.6:1358.04] Let me prove that this process is a Markov chain.
+[1358.04:1363.8999999999999] So we have to go back to the to the very definition of what a Markov chain is so
+[1363.9:1382.66] that this is a Markov chain.
+[1382.66:1388.92] We would like to prove that this probability I can simply erase the whole path of the
+[1388.92:1393.9] process here and just write it just as the probability that sn plus 1 is equal to j even
+[1393.9:1398.0600000000002] that sn is equal to i.
+[1398.0600000000002:1400.3400000000001] So what do you do?
+[1400.3400000000001:1405.3400000000001] Well first you can repri sn plus 1 it's very important to realize that your position
+[1405.3400000000001:1414.38] that time n plus 1 given the model that we have which I recall here sn is x1 plus xn.
+[1414.38:1419.7800000000002] So sn plus 1 will simply be sn plus xn plus 1.
+[1419.7800000000002:1427.94] So this I can rewrite as the probability that sn plus xn plus 1 is equal to j given that
+[1427.94:1429.94] sn is equal to i.
+[1429.94:1440.42] sn minus 1 is equal to i minus 1 until s0 is equal to i0.
+[1440.42:1448.74] Now given that I know that sn is equal to i this I can rewrite as the probability that
+[1448.74:1453.8200000000002] xn plus 1 is equal to j minus i.
+[1453.8200000000002:1460.1000000000001] I replace sn by i and I put it on the other side of the equality given sn is equal to i.
+[1460.1000000000001:1464.18] sn minus 1 is equal to i and minus 1.
+[1464.18:1466.7] s0 is equal to i0.
+[1466.7:1475.06] And here comes a very important observation that all this event here depends only on the
+[1475.06:1478.9] values of the run of variables x1 up to xn.
+[1478.9:1482.18] The positions of time n and minus 1 and so on.
+[1482.18:1489.46] The sn is x1 plus xn and sn minus 1 is x1 plus dot dot dot plus xn minus 1 and so on.
+[1489.46:1502.9] So since the x's are all independent this event is independent from this.
+[1502.9:1507.42] So perhaps I should write it here.
+[1507.42:1510.78] These two things here are independent.
+[1510.78:1517.9] And so when you have conditional probability of two independent events that simply the
+[1517.9:1526.66] probability of the event here which is xn plus 1 is equal to j minus i.
+[1526.66:1528.66] And what is this probability?
+[1528.66:1537.38] Well this probability will be equal to 1.5 if the difference between j and i is plus
+[1537.38:1547.7800000000002] or minus 1 which I can write perhaps a bit more formally as the absolute value between
+[1547.7800000000002:1558.3400000000001] j and i is equal to 1 and 0 otherwise because my xn plus 1 only takes value plus and minus
+[1558.3400000000001:1559.7800000000002] 1.
+[1559.78:1570.62] So what I have proven here is actually not depending on n.
+[1570.62:1576.3] So I have proved the time homogeneity but I haven't completely proved the mark of
+[1576.3:1577.3] property.
+[1577.3:1582.86] The mark of property is proving that this conditional probability that we have here is actually the
+[1582.86:1588.42] same as this conditional probability.
+[1588.42:1593.8200000000002] Okay.
+[1593.8200000000002:1599.7] And so if I want to finish the proof I should actually compute this conditional probability
+[1599.7:1605.5800000000002] and the thing here is that this conditional probability I can compute it exactly following
+[1605.5800000000002:1610.02] the same steps as above.
+[1610.02:1614.98] And I will get to the conclusion that this conditional probability I will have less things
+[1614.98:1619.94] in the conditioning but really the steps are the same I replace sn plus 1 by sn plus
+[1619.94:1621.94] xn plus 1 and everything.
+[1621.94:1631.06] And I get at the end that this will be equal to half if i minus j is equal to 1 and 0
+[1631.06:1632.74] otherwise.
+[1632.74:1634.78] Okay.
+[1634.78:1640.66] So I end up with the full proof of the mark of property because now I have really the
+[1640.66:1645.74] two conditional properties above and below here are the same and they are independent of
+[1645.74:1646.74] the time.
+[1646.74:1652.22] So we have that time homogeneity use mark of chain.
+[1652.22:1656.5800000000002] And the transition matrix here because the state space is infinite right you know the
+[1656.5800000000002:1661.74] here we can go the mark of chain of course in time by time it cannot go to plus infinity
+[1661.74:1666.22] or minus infinity but if you leave it in of time it can go arbitrary far away in the
+[1666.22:1675.82] pluses and the minuses so the transition matrix here is this p which is this set of p ij
+[1675.82:1685.7] and this p ij's are given by you know 1 half if i minus j is equal to 1 in absolute value
+[1685.7:1687.3] or 0 otherwise.
+[1687.3:1688.3] Okay.
+[1688.3:1691.54] And so this is for ij and z.
+[1691.54:1698.54] So of course it's not a matrix that you can write explicitly but you don't need to
+[1698.54:1704.46] you don't need to right so this is a perfectly well defined object even though it's infinite
+[1704.46:1705.46] dimension.
+[1705.46:1706.46] Okay.
+[1706.46:1733.3] So I'll stop here and we'll move towards other topics in the next video.

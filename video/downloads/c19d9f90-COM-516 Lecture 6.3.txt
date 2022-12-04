@@ -1,0 +1,196 @@
+~COM-516 Lecture 6.3
+~2020-09-23T09:51:54.506+02:00
+~https://tube.switch.ch/videos/c19d9f90
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:7.0] Okay, so now comes finally the proof of the theorem, right?
+[7.0:15.0] So we want to upbound this total variation distance between, remember what we are doing
+[15.0:16.0] here?
+[16.0:25.6] So, you know, this pi here is the distribution of the chain at infinity and plus infinity
+[25.6:36.400000000000006] somehow. And this pi n is a notation for the i-throw of the matrix p to the n, which
+[36.400000000000006:47.56] turns out to be the distribution of the chain at time n given that you start in position
+[47.56:53.760000000000005] i, the chain in position i. Okay, so this is saying the initial condition is x0 is equal
+[53.76:60.599999999999994] to i. Okay, and of course, so it's not except in very exceptional cases, x0 is equal to
+[60.599999999999994:72.28] i is not stationary distribution. So we want to check how much time it takes to get to have
+[72.28:79.16] these two distributions get close to each other. Okay, according, we have multiple definitions
+[79.16:84.0] for this total variation distance, but I'm going to use the simplest one, which is simply
+[84.0:97.0] half times the sum of a j in s of the absolute value of the difference, pi g of n minus pi g.
+[97.0:108.8] Okay, good. And we would like to upbound this. So what we did proving the algorithm is,
+[108.8:115.96] you know, proving that for essentially for every j we have convergence, but now we want
+[115.96:127.47999999999999] a proof for a fixed n. And it turns out that upbounding such a quantity is not that easy.
+[127.47999999999999:134.28] This is what we call an L1 distance in the journal because we are summing absolute values.
+[134.28:140.92000000000002] It turns out that will be simpler for us to upbound the squares. So we will use Cauchy-Schwarz
+[140.92000000000002:146.4] inequality here to get a sum of squares instead of having a sum of absolute values. In general,
+[146.4:151.04] perhaps, you know, if you have taken classes on signal processing, you know that whenever
+[151.04:159.32] we work in L2, right, this set of square integrable functions instead of the set of integrable
+[159.32:165.12] functions, which is L1, in L2, everything is simpler essentially because L2 is a Hilbert
+[165.12:169.88] space, right? It has a scalar product. And that's exactly what we are going to use here.
+[169.88:174.68] We are going to use the fact that we have a scalar product and we have some autobonality
+[174.68:182.56] relations. And it will allow us to get a better bound. So how do I transform an L1 expression
+[182.56:187.95999999999998] into an L2 expression? How do I transform a sum of absolute values into a sum of squares
+[187.96:193.72] using Cauchy-Schwarz? But one has to be a little careful here if we want to do things nicely.
+[193.72:205.4] So we will first rewrite this by just dividing and multiplying by a factor. And it will
+[205.4:212.24] become very clear in a second why I choose this factor. I divide by a square root of
+[212.24:223.4] pi j and multiply by a square root of pi j. Okay, so now this is my a j, this is my b j.
+[223.4:232.24] And remember Cauchy-Schwarz inequality is, you know, we have, we can see this as the
+[232.24:237.9] scalar product of the vector a and b. And Cauchy-Schwarz inequality is simply saying that this
+[237.9:250.6] scalar product, so j is of a j times b j is less than the square root of the product of
+[250.6:261.84000000000003] the norms, which is the square norm, which is this a j square times sum of j and s b j square.
+[261.84:269.0] So, you know, the scalar product is less than the product of the norm, the square root here.
+[269.0:275.56] And make that way, we are talking here about the product of the norms. Okay, so let me
+[275.56:285.58] apply this to the a j and the b j I have above here. And I am going to get half times
+[285.58:294.03999999999996] the square root. So I have a square root here and I have sum of j and s of the a j squared,
+[294.03999999999996:312.52] which are pi j and minus pi j squared divided by pi j times sum of j and s of pi j. Because
+[312.52:321.76] the square root of pi j squared is pi j. And okay, so this thing here, okay, perhaps
+[321.76:327.59999999999997] it doesn't, it's not completely clear what, why we have done this. But certainly one
+[327.59999999999997:334.03999999999996] thing is clear here is that this thing is just one, okay. So at the end, we have enough
+[334.04:342.64000000000004] above on the total variation distance, which is half times the square root of sum of j
+[342.64000000000004:353.52000000000004] and s pi j n minus pi j. And this I am going to rewrite actually. I am going to include
+[353.52:364.2] the pi j inside the parenthesis here. So P i j n over square root of pi j minus square
+[364.2:379.68] root of pi j squared. Okay. So this is the, this is the expression I have to bound. Well,
+[379.68:388.24] you will see that this square root of pi j is just here to make things nice. And as we
+[388.24:398.32] will see, it will help us writing down the next formula. So here we have transformed
+[398.32:406.8] the L1 norm into an L2 norm, right, with sum of squares. And the first question perhaps
+[406.8:413.8] you may have about this is why are we carrying about the total variation distance? Why don't
+[413.8:421.04] things we are going now to open on this square norm? Why, why did we in the first place
+[421.04:425.08000000000004] look at the total variation distance? The total variation distance is a very interesting
+[425.08000000000004:431.48] distance. It's a very interesting distance because remember, we say that the total variation
+[431.48:441.64000000000004] distance is zero when the, sorry, is zero when the, the measures are the same. So when
+[441.64000000000004:448.72] we get to consurgents, but it can be at most one. And so it is one when the two measures
+[448.72:456.08000000000004] have separate reports, right? These joint reports. And that's interesting because the
+[456.08:464.44] total variation kind of takes care of the, of the maximum, of the how maximally separated
+[464.44:470.0] to distributions can be. And we will see this next lecture that this is, this is a very
+[470.0:474.24] interesting feature. On the contrary, if you take the square distance, this distance from
+[474.24:481.36] the sum with the squares here, this can grow arbitrary large. And so when this square
+[481.36:490.08000000000004] distance is, let's say, you know, some value, it's still difficult to assess how far, how
+[490.08000000000004:496.04] close the two distributions are. So the total variation distance is more interesting for
+[496.04:507.76] this respect. Okay. So now, let me now enter into the core of the proof and try to express
+[507.76:523.36] what are these terms here. Okay. So we will state this as a lemma. That
+[523.36:546.28] P ij of n over square root of pi j minus square root of pi j. This we can compute as square
+[546.28:559.72] root of pi j times sum of a k equal 1 to capital n minus 1 of lambda k to the n times phi
+[559.72:570.04] i k phi j k. And this is true for every ij in s and for every n greater than or equal to
+[570.04:584.04] 1. Okay. So here, what we have exactly is a nice expression. In this expression, you
+[584.04:591.48] should notice first that here in the right hand side, we have only eigenvalues from 1
+[591.48:599.88] to n minus 1. We got rid of lambda 0 if you want. Okay. So that's what will help us
+[599.88:612.28] then obtaining the lambda star bound at the end. And what we're actually doing here is
+[612.28:620.68] nothing but computing p to the n because in pi j of n there is p to the n. It's the ij
+[620.68:628.6] entry of the matrix p to the n. What we're doing here is just computing the p to the n using
+[628.6:633.72] its eigenvalue eigenvector decomposition. Okay. So let me prove the lemma now.
+[635.64:643.4] And you will see how this goes. Remember, use your
+[643.4:662.1999999999999] u 0 up to u n minus 1. These were the eigenvectors of the matrix q, the symmetric matrix q. And
+[662.2:682.36] these were also an autonormal basis of rn. Okay. So because before going into trying to express
+[682.36:692.0400000000001] the expression, just don't to mention something general here. So for v, a vector v in rn, any vector
+[692.04:703.56] v in rn can be expressed in this basis. Right. And v will be sum over k equal 0 to n minus 1
+[704.28:714.04] of v transpose u k, the scalar product of v with u k times u k. Since we have an autonormal
+[714.04:723.64] basis, that's how we can write any vector v, which can be written in component as v j is
+[725.64:736.76] sum over k equal 0 to n minus 1 of the scalar product times u k j. So that's true for any vector
+[736.76:753.96] in rn. Let's go j s. Okay. So now I can choose v j to be this thing I want to compute p ij
+[753.96:767.5600000000001] of n divided by square root of p ij. And okay. So now I'm going to compute the transpose u k.
+[767.5600000000001:772.44] v transpose u k is by definition, this is a scalar product. So I'm summing over all components.
+[773.4000000000001:783.5600000000001] I get p ij of n divided by square root of p ij times u j k. But remember that u j k
+[783.56:790.5999999999999] were the eigenvectors of q and u j k over the square root of pi j were the phi j right,
+[790.5999999999999:801.88] the eigenvectors of p. So this can be written as sum over j s of p ij of n times phi j k.
+[801.88:815.32] And because, and this is what, this is nothing but the matrix p to the n times the vector phi k,
+[816.28:824.04] that's actually the component i of the vector p to the n times phi k. Remember here i is fixed
+[824.04:833.64] right. I fix i in s. Okay. So every v, I, not too burden, to have too much burden in the notation.
+[833.64:841.0] I don't put this i in the notation for v. So I fix an i in s and I choose v to be this vector v j,
+[841.7199999999999:850.5999999999999] p ij of n over square root of phi j. And because I have chosen here, I have here a vector
+[850.6:860.12] phi k, which is the eigenvector of the matrix p. This is equal to lambda k to the power n times phi ij.
+[860.12:887.72] Okay. So now, p ij n over square root of phi j is what is equal to, if I take this expression here,
+[887.72:900.28] I will get the sum of k equal to 0 to capital n minus 1 of this kind of product, which is lambda
+[900.28:919.16] k to the n times phi ik times ujk. And this I can rewrite because the ujk are equal to square root
+[919.16:927.16] of phi j. So this square root of phi j I can put it in front here times sum k equal 0 to n minus 1
+[927.16:942.8399999999999] lambda k to the n phi ik phi jk. Remember, the u is just the ujk is square root of phi j times phi jk.
+[942.8399999999999:948.68] So this is the replacement I have made here. And I'm nearly there because now I need just to
+[948.68:955.64] separate the term k equal 0 here. And what do I get for the term k equal 0? Lambda 0 we have
+[955.64:963.72] seen is equal to 1. And phi 0 is the all 1 eigenvector. So actually the term k equal 0 in this sum
+[963.72:972.92] here, what do you get? You simply get 1. So this I can write as, I can rewrite as square root of
+[972.92:987.56] phi j plus the sum of k equal 1 to n minus 1 lambda k to the n phi k i phi k j.
+[990.04:993.56] And that's the lemma. If you just put the square root of phi j on the other side,
+[993.56:1011.0799999999999] this is the end of the proof. So here really what we do is just using the eigenvector eigenvalue
+[1011.0799999999999:1020.1999999999999] expansion of the matrix p to write down this difference here, phi j over n, phi j over n divided
+[1020.2:1030.3600000000001] by square root of phi j minus square root of phi j. Okay, once we have this,
+[1033.0800000000002:1041.8] we can go back to or pick some. So now things seem a little messy, right? Because I have to plug
+[1041.8:1051.0] this expression inside this sum that I have here with the squares. So life will be a little messy
+[1051.0:1068.68] for a while, but as you will see there is a reason why we do all this. Okay, so PIN minus pi tv,
+[1068.68:1082.44] we have seen is less than half times square root of sum of j in s. And now I'm just going to
+[1084.92:1092.2] take the expression I have here. So I have to take this whole expression here to the square.
+[1092.2:1105.0] Okay, so I get, well first the square root of phi j becomes phi j itself. And then I'm multiplying
+[1105.0:1118.04] with sum of k from 1 to capital n minus 1, lambda k to the n, phi i k, phi j k, and this whole thing
+[1118.04:1137.96] square. So now I can reduce my square root here. Okay. Okay, now I have to expand the square.
+[1137.96:1149.96] So this square I will expand as a double sum sum over k and L ranging from 1 to n minus 1 of
+[1149.96:1156.92] lambda k to the n times lambda L to the n. You know, I'm just writing two sums and I'm just
+[1156.92:1169.0] dropping them together. Then phi i k phi i L phi j k phi j L. Okay, now it seems that we have
+[1169.0:1178.2] something even messier than before. Okay, but watch out. Now I'm going to switch these two sums here.
+[1178.2:1189.96] And this I'm going to rewrite as half square root of a very long sum. So I have first this
+[1189.96:1200.52] double sum over k and L ranging from 1 to n minus 1 times lambda k to the n, lambda L to the n.
+[1200.52:1218.92] phi i k phi i L and then I have the sum over j in s of phi j phi j L phi no p j k.
+[1218.92:1235.0] And just also try to put this a little better. So here I have phi j k phi j L. Okay.
+[1237.5600000000002:1246.2] And what is this? If I translate this into use, right? Because there is this correspondence
+[1246.2:1255.16] between the u and the phi. So u j k is in this square root of pi j times phi j k. So this I can
+[1255.16:1264.44] rewrite as u j k times u j L. And this is nothing but the scalar product of u k with u L.
+[1265.8:1270.6000000000001] Which is equal to delta k L because u is an autonormal basis.
+[1270.6:1277.9599999999998] So now what you see here is that this double sum simplifies into a single sum. All the
+[1277.9599999999998:1286.84] terms for which k is not equal to L just disappear. And so we get half. So here we have used heavily
+[1287.3999999999999:1294.1999999999998] this autogonality of eigenvectors. And we get something nice.
+[1294.2:1305.72] Which is the following. So a single sum or k equal 1 to capital N minus 1 of lambda k to the 2n
+[1307.0:1321.16] times phi i k squared. And that's really why we went to this sum with the squares.
+[1321.16:1326.3600000000001] Yes. Without this squares we wouldn't have been able to use this autogonality relation.
+[1327.24:1334.1200000000001] And we would have some we would have a bound but it will be slightly worse and slightly badly written.
+[1334.76:1341.48] Here this autogonality allows us to end up with a clean expression. And now we are very close
+[1341.48:1348.2] to the proof of the theorem. As you as you can notice and as I already mentioned before
+[1348.2:1355.48] we don't have any more lambda zero here. We got rid of lambda zero. Actually lambda zero disappears
+[1355.48:1363.0] in this term here. In this term. So because we are subtracting if you want the lambda zero is the
+[1363.0:1369.0] one that is connected to the stationary distribution. And we know that we converge to the
+[1369.0:1374.44] stationary distribution. So now we are computing the remainder of we know that we will get to
+[1374.44:1381.24] to the stationary distribution. And what's left is all included in the eigenvalues lambda one to
+[1381.24:1389.0800000000002] lambda n minus one. Okay. And now because these things are squares they are certainly non-negative.
+[1390.04:1400.28] So this thing each of these terms here is less than lambda star to the 2n. Because each of
+[1400.28:1407.48] the lambda k in absolute value is less than lambda star. And lambda star doesn't depend on k.
+[1408.2:1417.08] So I can still upper bound this with lambda star. So I take I take it out of the sum. I take it
+[1417.08:1421.96] out of the square root. So lambda star to the 2n becomes lambda star over n. And I end up with
+[1421.96:1436.76] lambda star 2dn sorry divided by 2 times square root of sum of k equal 1 to n minus 1 of p i k
+[1438.8400000000001:1447.64] square. And now I'm close to the I'm close to what I want. Actually here I already have something
+[1447.64:1453.72] very good. I have this exponential decay with lambda star. The last detail is about computing
+[1453.72:1460.6000000000001] this term here. Okay. But I have here already what I want in terms of rate of decay.
+[1461.4:1467.16] Lambda star will govern at which rate you convert towards equilibrium.
+[1468.76:1473.0] I should mention that here we are doing an important step, right? We are bounding every
+[1473.0:1480.2] eigenvalue lambda k by lambda star. In some cases it's a good approximation. In some other cases
+[1480.2:1485.08] of course it might be you know that all the eigenvalues of the matrix might be close to the center
+[1485.08:1491.32] close to zero. And there is just one eigenvalue which is close to one. And in these cases this
+[1491.32:1499.0] bond is a crude bond is a coarse bond. And therefore it might not be it might be loose. And we will
+[1499.0:1506.12] see this next week that if we if we are a little more precise we can get more precise result
+[1506.12:1511.08] about the convergence. Even though this seems a very good convergence because it's exponential
+[1511.08:1520.04] we can get even better. Okay. Okay so let me do the last detail here which is about computing
+[1520.04:1529.56] this square root this term here. Okay. So this is a bit technical but let me do it to be complete.
+[1533.6399999999999:1548.92] So last detail is well what we will prove actually is that some of a k ranging from one to
+[1548.92:1564.52] n minus one of phi i k squared is less than one over pi i. Because if this is true then let me go
+[1564.52:1572.2] back to the previous page then you get this one over squared of pi i. Okay which is in the in the
+[1572.2:1580.92] theorem. And okay so here there is again let me repeat so this one of the square root of pi i
+[1580.92:1585.96] say something interesting right. If you start from a state which is a popular state which is a
+[1585.96:1594.1200000000001] state which you go you will go back frequently this term is is reasonable. But if you start from a
+[1594.12:1603.2399999999998] very very rare state okay pi i is very close to zero then this becomes non-negligible and this
+[1603.2399999999998:1611.32] is saying yeah if you want to if you want to run a chain and get quickly to the equilibrium
+[1611.32:1617.9599999999998] you should start from the popular state and not from random places very far away from the where
+[1617.96:1628.2] the main action is okay. Okay so remember how do we prove this it's not the
+[1628.2:1634.3600000000001] orthogonality relation it's something here we are summing over the case right it's not like we
+[1634.3600000000001:1643.24] have a single vector of phi we have components of the same component of all the vectors phi so we
+[1643.24:1657.0] remember that we had for every for every V in R N we have that V j can be written as the sum of a
+[1657.0:1675.8] k or zero to n minus one of V transpose u k times u k j so I'm going to use this relation for
+[1675.8:1689.48] the vector V which is delta i j so this is the vector which is equal to one if i if j is equal to i
+[1689.48:1700.12] and zero otherwise and I write down this relation for this vector V so what do I get well the
+[1700.12:1714.4399999999998] the the scalar product is simply a u i k right be as soon as only one non zero component so
+[1716.84:1726.52] V j which is delta i j delta i j using this relation is the sum of a k
+[1726.52:1737.0] ranging from zero to n minus one of u i k times u j k okay that's a strange way to write
+[1739.08:1745.56] delta i j but that's a fact I mean this is something very general you can always write delta i j
+[1745.56:1756.04] as this if you have an autonomous but autonomous basis u and let me write this for i is equal to j
+[1756.04:1769.6399999999999] so when i is equal to j we have one is the sum of a k equals zero n minus one of u i k squared
+[1771.32:1775.96] okay you're going to say but why do you all do all this well this u i k I can read it to the
+[1775.96:1784.92] f k and I'm going to get finally what I want so let me express the u i k now in terms of the f k I get this times
+[1785.88:1800.92] pi i times phi i k squared and this I can still rewrite as I will isolate the k equals zero term
+[1800.92:1808.6000000000001] like I did before this is going to be equal to pi i times the zero term the zero term is one
+[1808.6000000000001:1821.5600000000002] right so plus sum of a k equal one to n minus one of pi i sorry pi i is in front of the sum
+[1821.56:1834.76] because it doesn't depend on k one plus sum of a k equal one two n minus one of phi i k squared
+[1837.08:1849.0] and now if I rewrite this sum I obtain that this equality sorry I obtain this phi i k squared
+[1849.0:1861.24] which is the thing I wanted to bound is equal to one of pi i minus one I simply divide by pi i on
+[1861.24:1867.4] those sides and I take the one on the other side and certainly this is less than one of pi i
+[1867.4:1878.1200000000001] okay so here the last detail is fixed and we have finally proven the theorem

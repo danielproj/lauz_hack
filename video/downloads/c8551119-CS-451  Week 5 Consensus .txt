@@ -1,0 +1,953 @@
+~CS-451 / Week 5: Consensus 
+~2020-10-20T04:08:55.476+02:00
+~https://tube.switch.ch/videos/c8551119
+~CS-451 Distributed algorithms
+[0.0:9.0] So why?
+[9.0:18.84] Okay, I hope that it is working.
+[18.84:28.560000000000002] So today I am going to talk to you about consensus.
+[28.56:33.44] It is a central problem in competitive and distributed computing.
+[33.44:40.08] In competitive computing is more central in the sense that it is a theoretical benchmark.
+[40.08:46.480000000000004] To some extent, in distributed computing it is clearly important both from a theoretical
+[46.480000000000004:48.4] as well as from the practical side.
+[48.4:54.519999999999996] I just had the one hour discussion with some Facebook colleagues and believe me Facebook
+[54.519999999999996:57.519999999999996] is not only doing advertisement.
+[57.52:60.28] They are also implementing consensus.
+[60.28:65.76] And they made come and give us a talk about what they are doing in this world.
+[65.76:70.4] So this class is a continuation of what I have presented you last week.
+[70.4:78.48] What I told you last week was that the strongest form of broadcast primitive that people have
+[78.48:84.80000000000001] been studying, which is very useful in implementing state machine replication and building
+[84.8:89.16] highly available services on the cloud is what is called total order broadcast.
+[89.16:92.92] It is a form of broadcast that totally orders messages.
+[92.92:97.64] And I told you that implementing that broadcast is very hard, very difficult.
+[97.64:105.12] But if we have a consensus abstraction, then we can easily implement total order broadcast
+[105.12:112.28] and the way we do it is what I presented last week through a series of instances of
+[112.28:115.52] consensus primitives.
+[115.52:121.32000000000001] Essentially, processes broadcast messages gather the messages they have seen.
+[121.32000000000001:126.36] And regularly, periodically, they use consensus to agree on sets of messages.
+[126.36:132.52] And every instance outputs every instance of consensus outputs the same set of messages
+[132.52:133.52] everywhere.
+[133.52:139.76] And then the problem is solved because we can use any deterministic rule to implement,
+[139.76:142.64] to sort out those messages.
+[142.64:152.72] I also told you that if you had total order broadcast, you couldn't.
+[152.72:156.07999999999998] The two problems are equivalent.
+[156.07999999999998:159.56] So now I'm going to zoom on consensus.
+[159.56:164.95999999999998] And the goal is, as we have been doing in this class, is to start by the simplest possible
+[164.95999999999998:167.12] algorithm for consensus.
+[167.12:172.4] And not surprisingly, the simplest algorithm is an algorithm that we typically implement
+[172.4:175.48000000000002] by making the strongest assumptions on the system.
+[175.48000000000002:180.28] So I'm going to make strong assumption on the system, show you how we do consensus,
+[180.28:182.28] and try to weaken the assumptions.
+[182.28:185.12] And of course, after some point, not of course.
+[185.12:189.6] After some point, I will try to explain to you that we cannot solve consensus anymore.
+[189.6:195.24] And like a library broadcast, a causal broadcast, which we could always solve in a synchrono
+[195.24:197.08] system, it's a matter of.
+[197.08:201.64000000000001] Assuming certain things about the number of correct processes.
+[201.64000000000001:206.4] But let's start with reminding the consensus problem.
+[206.4:211.32000000000002] The process has proposed values and have to agree on one of those values.
+[211.32000000000002:215.56] We want to go to the movies or we want to see nobody goes to the movies anymore.
+[215.56:221.08] We want to see the same movie, you propose movies on Netflix or whatever, and then consensus
+[221.08:225.88000000000002] box tells us, go see this movie.
+[225.88:230.88] But the consensus box is going to guarantee is first that the output is going to be the
+[230.88:232.79999999999998] same movie to all of us.
+[232.79999999999998:237.04] It's important to recall, and sometimes there is a confusion there.
+[237.04:241.84] The consensus box is not going to go with the majority or with the proposal of 99%
+[241.84:242.84] of whatever.
+[242.84:245.04] The consensus box does not care.
+[245.04:248.92] It outputs one of the movies we propose.
+[248.92:249.92] Period.
+[249.92:255.07999999999998] Or the series, if I'm the only one proposing picky blinders, it could output picky blinders,
+[255.08:259.72] and if the rest of you are proposing something else.
+[259.72:262.96000000000004] So we agree on one value.
+[262.96000000000004:267.68] The value decided is a value proposed, which is what I explained.
+[267.68:270.24] No two correct processes decide differently.
+[270.24:275.72] This is the non-uniform kind of consensus, because as for the other primitives we have
+[275.72:278.28000000000003] seen, there is a uniform under non-uniform.
+[278.28000000000003:281.84000000000003] The non-uniform adds correct to the picture.
+[281.84:286.11999999999995] The termination says every correct process eventually decides.
+[286.11999999999995:289.96] This is inevitable, not to decide sometimes.
+[289.96:292.23999999999995] And no process decides twice.
+[292.23999999999995:296.4] Typically people tend to ignore the last property of integrity.
+[296.4:300.55999999999995] We usually ignore it.
+[300.55999999999995:309.32] Because if you say no two correct processes decide differently, and it somehow implies
+[309.32:314.88] integrity if you formulated right.
+[314.88:320.08] It is important to notice that in the definition of consensus that I just presented, the
+[320.08:329.32] following execution
+[329.32:338.0] one process P2 decides one and P1 decides zero, which is still okay because one of them
+[338.0:339.52] is not correct.
+[339.52:343.84] And the property simply says no two correct processes decide differently.
+[343.84:345.88] So this is something, please keep in mind.
+[345.88:348.4] This is non-uniform consensus.
+[348.4:352.92] We only care about what correct processes decide.
+[352.92:359.56] And correctness is something you only see somehow in infinite run.
+[359.56:367.4] The uniform variance precludes this execution and says no two processes decide differently.
+[367.4:368.4] And correct or not.
+[368.4:380.28] So in this case, even if P2 fails, what it decides is the obligation on other processes.
+[380.28:383.2] So this is the uniform.
+[383.2:386.35999999999996] Any question at this point?
+[386.35999999999996:387.35999999999996] Clear?
+[387.35999999999996:396.67999999999995] Consensus has a simple interface properties and these properties are rather intuitive.
+[396.68:403.36] But what makes the power of consensus through history is that it is simple to formulate.
+[403.36:408.84000000000003] And it turns out that it is equivalent to many important problems.
+[408.84000000000003:414.56] So the interface of consensus is as I described last week, proposed V and decide V prime.
+[414.56:419.28000000000003] Proposed is an invocation, decides what we call an app call.
+[419.28000000000003:424.12] And we are going, I am going to show you how you implement consensus.
+[424.12:426.96] It's in a very easy setting.
+[426.96:429.0] The easy setting that I will consider.
+[429.0:433.76] The first one is we are going to focus on non-uniform consensus.
+[433.76:437.04] And I'm going to assume a perfect failure detector.
+[437.04:438.12] Perfect failure detector.
+[438.12:441.44] Remember, it is something very strong.
+[441.44:451.64] You can view it as the ability of the network to enable processes to know who has failed.
+[451.64:456.12] And if they get to know who has failed, they don't make mistakes.
+[456.12:458.28] So this is captured by two properties.
+[458.28:462.64] One of them is called strong completeness of the failure detector.
+[462.64:470.03999999999996] Every process that fails is eventually suspected by every correct process.
+[470.03999999999996:475.88] And another property called strong accuracy, which says if any process speaks, suspects
+[475.88:478.96] a process Q, then Q has failed.
+[478.96:485.59999999999997] No strong failure detector or perfect failure detector, which can be implemented if you
+[485.59999999999997:487.47999999999996] have a synchronous network.
+[487.47999999999996:493.91999999999996] Synchronous network means there is an upper bound on communication delays and process
+[493.91999999999996:498.88] relative speeds.
+[498.88:504.35999999999996] Then you can have timeouts and you can have the processes detect each other failures.
+[504.36:509.24] So this algorithm that we are going to see, we have a very simple strategy.
+[509.24:515.48] We organize the sets of processes into rounds of communication.
+[515.48:521.28] And we are going to use this kind of communication such that they somehow exchange their values,
+[521.28:528.48] more precisely they exchange the values of some leaders and then at the end they decide.
+[528.48:533.24] And they decide on the value of the non-suspected process with the smallest ID.
+[533.24:539.48] And then I am going to move to a slightly more sophisticated algorithm because this algorithm
+[539.48:542.16] implements uniform consensus.
+[542.16:544.72] It is still based on the perfect failure detector.
+[544.72:551.92] This algorithm here is from the book by Nancy Lynch, the professor at MIT, who has actually
+[551.92:553.76] worked a lot on these topics.
+[553.76:559.6] And then I will move to another consensus algorithm which is definitely more complicated,
+[559.6:564.72] but which is today really the corner store of many systems.
+[564.72:568.32] This algorithm, the third one, does not use the perfect failure detector.
+[568.32:572.72] It uses an eventually perfect which means a failure detector that can make mistakes.
+[572.72:577.5600000000001] I will come back to that, but I want you to already realize that this algorithm here
+[577.5600000000001:581.0] today is really the corner store of many systems.
+[581.0:585.96] I pointed out the fact that I was talking with some people from Facebook, they are implementing
+[585.96:587.28] something like this.
+[587.28:590.56] The Google file system is based on something like this.
+[590.56:595.16] Many blockchain implementations are based on something like this.
+[595.16:599.8] So this algorithm here, sometimes it's called Paxos, sometimes it's called, it has different
+[599.8:602.16] names, but it's very, very important.
+[602.16:607.72] And my goal is for you to understand this algorithm.
+[607.72:611.6] Of course you will understand the first algorithms because they are easy, but the goal is that
+[611.6:614.6] you understand this one because it's very important.
+[614.6:621.6] This is an algorithm, the third one, dates back to, as I said, the Paxos algorithm, DLS
+[621.6:624.6] for the work, Lynch and Stockmeyer or Shandranquil.
+[624.6:627.16] Many people were working on this at the same time.
+[627.16:628.16] Okay.
+[628.16:629.9200000000001] First, algorithm very easy.
+[629.9200000000001:633.4] And I really recommend that you always adopt this.
+[633.4:634.4] Yes.
+[634.4:652.0] In slide two.
+[652.0:655.0] Did they put that in slide two?
+[655.0:656.0] Okay.
+[656.0:658.0] Good, good, good.
+[658.0:659.0] Yes.
+[659.0:663.88] Yes, the question is, are these problems or equivalent?
+[663.88:665.64] The answer is no.
+[665.64:674.4] But consensus is sufficient to, is not, what I said is wrong.
+[674.4:676.6] Consensus is convenient, it's not necessary.
+[676.6:679.48] It's convenient to implement them all, I will come back to that.
+[679.48:680.48] Okay.
+[680.48:685.24] So if you solve consensus, they become easy to solve.
+[685.24:692.04] But consensus is not necessary neither sufficient sometimes, but they become easier.
+[692.04:693.04] Good question.
+[693.04:694.04] Okay.
+[694.04:697.72] So the first algorithm, very easy.
+[697.72:702.64] We are, we have end processes and we know who these end processes are.
+[702.64:707.52] So this is the first assumption that we have been making, which is rather strong.
+[707.52:712.5600000000001] As we will see later, when we go to what we call permissionless, for example, blockchain,
+[712.5600000000001:715.04] algorithms or whatever, you cannot make this assumption.
+[715.04:720.92] Here we have end processes, they have identities, P1, P2, P3 and Tlpn.
+[720.92:722.56] And then they know each other.
+[722.56:724.9599999999999] P1 knows that there is P2 and P2, etc.
+[724.9599999999999:728.9599999999999] So this is a classical assumption, which we will remove later in the class, but it's
+[728.9599999999999:732.52] important to understand the problems in this assumption.
+[732.52:737.5999999999999] So the processes, they are end of them and they go to rounds.
+[737.5999999999999:740.52] And the rounds, they go through are also end.
+[740.52:741.52] Okay.
+[741.52:743.92] They are end communication rounds.
+[743.92:747.4399999999999] And then, in each round, there is one leader.
+[747.4399999999999:748.4399999999999] Okay.
+[748.4399999999999:750.64] In each round, one process is the leader.
+[750.64:752.92] In round one, P1 is the leader.
+[752.92:754.52] Round two, P2 is the leader, etc.
+[754.52:759.4399999999999] It's like, I don't know, for STEM schools, at least in American schools, they have this
+[759.4399999999999:763.24] nice habit of for kids.
+[763.24:767.04] Every day, there is one of the kids who is the leader who stands up and tells the
+[767.04:768.04] weather.
+[768.04:772.48] So kids are very excited, but not all of them, some of them hate it.
+[772.48:774.4] Some kids are very happy when they are leader.
+[774.4:778.08] They stand up and they say, we are this day and the weather is like this and that, so
+[778.08:779.24] it gives them some.
+[779.24:782.32] So this is what we are doing here.
+[782.32:786.24] The leader of the round is going to do two things.
+[786.24:789.28] The leader of a round decides a value.
+[789.28:792.36] I'm going to explain how it decides a value.
+[792.36:794.4] And it broadcasts its value to all.
+[794.4:798.72] We say that the leader decides its current proposal, which I will explain.
+[798.72:802.2] A process that is not leader in a round does not decide.
+[802.2:803.2] It is in a waiting mode.
+[803.2:809.2] It is listening to the leader and defining its own proposed value.
+[809.2:810.2] Okay?
+[810.2:811.2] Let's see.
+[811.2:813.2] And I will come back.
+[813.2:817.84] Let's see how the algorithm is written.
+[817.84:825.6] So the algorithm uses, it implements consensus, the non-uniform consensus, and it uses two
+[825.6:830.48] underlying abstractions, the best effort broadcast and the perfect failure detector.
+[830.48:832.48] Okay?
+[832.48:833.84] So we assume that we have these.
+[833.84:836.84] The best effort broadcast we have seen how to implement it.
+[836.84:842.04] The perfect failure detector also, which underline means or assumes that we have a synchronous
+[842.04:846.88] system.
+[846.88:849.08] Has a bunch of variables?
+[849.08:852.88] The set suspected initialized to an empty set.
+[852.88:859.52] The round variable initialized to one, current proposal, nil, and then a bunch of variables
+[859.52:866.12] that would contain names of, that contains Booleans.
+[866.12:868.84] So they are initialized to fours.
+[868.84:870.0] Okay.
+[870.0:874.04] Given that we have a perfect failure detector, it means that we can, and I say, me, any
+[874.04:878.72] process can be informed about the failure of some process.
+[878.72:886.16] So when the process is executing this code, gets informed that process PI crashes.
+[886.16:893.3199999999999] I execute in this code, I remove PI from my list, I add PI to the list suspected.
+[893.3199999999999:899.7199999999999] In other algorithms, there was the variable correct, from which I remove processes here,
+[899.7199999999999:903.36] I add the process to the variable suspected.
+[903.36:905.88] What do I do when I start the algorithm?
+[905.88:910.16] I propose value V. I want to see the picket binders.
+[910.16:912.76] This is what I suggest to see tonight.
+[912.76:919.6] And according to this algorithm, what I do is I check if current proposal equals nil,
+[919.6:922.12] then I put current proposal equals V.
+[922.12:927.88] This is simply to prevent the situation where I may have proposed yesterday something else.
+[927.88:930.68] So I check if my current proposal is nil.
+[930.68:933.84] I can only propose one thing.
+[933.84:937.88] So this is proposed V.
+[937.88:946.2] Let me go to the slide after, let me skip one slide and I will go back.
+[946.2:951.6] So what I do is I check if I am the leader of the round.
+[951.6:954.88] So variable round equals one initially.
+[954.88:957.88] So initially P1 is the leader.
+[957.88:966.92] So if P round equals self means initially if P is P1, if the process is executing this
+[966.92:974.04] algorithm is P1 and broadcast equals false, I did not broadcast anything yet, which is
+[974.04:976.0799999999999] initially true.
+[976.0799999999999:982.5999999999999] And current proposal is not nil, which means that I have something to propose.
+[982.5999999999999:988.36] So if these three conditions hold, then I decide.
+[988.36:995.4] So if I am P1, indeed initially broadcast equals false, current proposal is not nil, because
+[995.4:1002.04] I already think of something I propose, PkBlinder, then I decide I want to see PkBlinders.
+[1002.04:1004.4] I immediately decide.
+[1004.4:1013.62] After deciding, I tell the rest guys I proposed in fact I already decided, we will see
+[1013.62:1014.92] PkBlinders.
+[1014.92:1020.04] And I put broadcast what I want.
+[1020.04:1021.76] So this is round one.
+[1021.76:1029.6] The round one, process P1, decides and then broadcasts its decision.
+[1029.6:1036.28] Now I go back to the previous slide and now I am executing the code of somebody who is
+[1036.28:1037.8] not leader.
+[1037.8:1046.8] In fact, so if I am not leader, I will deliver, in fact even if I am leader I am doing this,
+[1046.8:1048.28] but it is less interesting.
+[1048.28:1050.48] I deliver IMP2.
+[1050.48:1055.2] I deliver the message from P round one.
+[1055.2:1061.0] I am in round one, so as P2 or P3 or P4, we deliver the message of P1.
+[1061.0:1063.76] And that message of P1 contains a value.
+[1063.76:1072.3600000000001] So what I do is my variable, current proposal, which initially was 6 feet under.
+[1072.3600000000001:1075.0] Have you seen this series?
+[1075.0:1076.0] Excellent.
+[1076.0:1080.04] 6 feet under is almost as good as PkBlinders.
+[1080.04:1082.24] Maybe even better.
+[1082.24:1089.04] So P2 has a current proposal 6 feet under, but it gets the value from P1 and P1 tells
+[1089.04:1090.56] it PkBlinders.
+[1090.56:1097.76] P2 has the obligation to forget what it has in the beginning and change it with value.
+[1097.76:1103.76] So the current proposal of P2 as well as P3 and all processes who get this message is
+[1103.76:1109.76] going to be the value sent by P1.
+[1109.76:1114.16] And then P2 puts delivery of round one equals two.
+[1114.16:1118.64] So this is just to synchronize the rounds, the variable delivered.
+[1118.64:1126.36] And immediately when delivered round is true meaning for P2 that it has finished or delivered
+[1126.36:1134.48] the message of round two or if it suspects P1, then it moves to the next round.
+[1134.48:1135.8] So what did I explain to you?
+[1135.8:1141.72] I explained to you that this algorithm has the fellow detector when you propose, you
+[1141.72:1144.56] initiate your current proposal.
+[1144.56:1156.2] If you are leader of the round, your broadcast, whether you are leader of the round or not,
+[1156.2:1160.28] you deliver the message of the leader and you move on.
+[1160.28:1166.56] So processes who are not leader of the round, they simply wait either to get the message
+[1166.56:1170.24] of the leader or to suspect the leader.
+[1170.24:1172.28] And they move to the next round.
+[1172.28:1175.36] So processes who are not leader, they simply listen.
+[1175.36:1180.16] They wait until they get the proposal of the leader in which case they overwrite their
+[1180.16:1185.44] own proposal and they change it with the data of the leader or if they detect the failure
+[1185.44:1188.2] of the leader, they move to the next round.
+[1188.2:1195.92] So let's see to a picture this prototype.
+[1195.92:1200.8400000000001] Here I have P1 proposing zero, P2 proposing one, P3 proposing zero.
+[1200.8400000000001:1204.0800000000002] So zero is speaking blinders, one is six feet under.
+[1204.0800000000002:1209.88] So P1, what it does according to the algorithm, initially it is in round one, it immediately
+[1209.88:1215.8] decides its own value, doesn't care about the rest, it decides zero and then broadcast.
+[1215.8:1223.0] So if you start in round one, its obligation in round one is to wait for the message of
+[1223.0:1227.48] P1 or to detect the failure of P1, but P1 didn't fail.
+[1227.48:1232.3999999999999] So P2 has to wait for the message of P1, same for P3, they have to wait for the message
+[1232.3999999999999:1233.96] of P1.
+[1233.96:1240.52] When P2 receives, when both of them deliver the message of P1, they do two things, exactly
+[1240.52:1246.16] two things, they adopt, we call it adopting the value of P1 meaning they change their
+[1246.16:1250.92] own value and they both move on to round two.
+[1250.92:1253.0] P1 as well, moved to round two.
+[1253.0:1254.0] What happens in round two?
+[1254.0:1258.0] P2 is the leader, now P2 decides, what does it design?
+[1258.0:1263.08] It decides its current proposal, but its current proposal is not the proposal it had
+[1263.08:1268.24] before round one, it had already adopted the proposal of P1.
+[1268.24:1274.88] So it's going to decide also value zero and move on to the third round, process P3,
+[1274.88:1282.08] in round two it doesn't do anything, it doesn't decide anything, it waits, P3 in round
+[1282.08:1290.72] two waits for the message of P2 and again it delivers what P2 tells him to deliver
+[1290.72:1292.32] and moves on.
+[1292.32:1298.36] I hope you see that in this case nobody fails, everybody decides zero, okay?
+[1298.36:1305.0] What we have decided, what processes have decided is the value of the process with the
+[1305.0:1310.72] smallest ID which did not fail, okay?
+[1310.72:1316.72] This algorithm has an interesting characteristic, P1 decides in no time, doesn't need any
+[1316.72:1319.32] communication before deciding.
+[1319.32:1324.6799999999998] This is very important because if you have a consensus algorithm you basically want
+[1324.6799999999998:1326.8] decision very, very fast.
+[1326.8:1332.76] So you cannot do faster than this, this decision is by no time, of course by only one process
+[1332.76:1338.3999999999999] and it is not uniform, but meaning that you can do very fast consensus, this is very
+[1338.3999999999999:1339.8] important.
+[1339.8:1344.3999999999999] Now in situations where there is a failure it's important to also try to understand what's
+[1344.3999999999999:1345.3999999999999] going on.
+[1345.4:1350.2800000000002] Let's take the situation where P1 fails, okay?
+[1350.2800000000002:1356.92] So P1 proposes zero, it immediately decides and broadcasts, it broadcasts decision and
+[1356.92:1360.0800000000002] then slightly later on P1 crashes.
+[1360.0800000000002:1368.68] Remember that when you broadcast a message if you fail there is no, there is no guarantee
+[1368.68:1373.3200000000002] about atomicity or who is going to deliver it, who is not going to deliver it.
+[1373.32:1379.56] In this example I'm giving here, it turns out that P3 delivers the message of P1, but
+[1379.56:1382.76] P2 does not, okay?
+[1382.76:1386.24] Remember that when you use the best effort broadcast you don't have the guarantee that
+[1386.24:1389.2] everybody is going to deliver or nobody cannot deliver.
+[1389.2:1390.96] You can have a situation like this.
+[1390.96:1398.76] In this case P3 delivers the message of P1 which means that P3 changes its current proposal
+[1398.76:1401.0] to that of P1, okay?
+[1401.0:1410.08] The current proposal of P3 is actually still zero, but P2, please focus here, suspected
+[1410.08:1414.52] the failure of P1 and did not deliver the message of P1.
+[1414.52:1422.48] So at the end of round one when it moves to round two P2 still has as their current
+[1422.48:1430.96] proposal value one, it decides one and then in round two it forces P3 and then it's
+[1430.96:1438.44] to also decide one because P3 has to follow what P2 says in round two.
+[1438.44:1440.4] Both of them will decide one, yes?
+[1440.4:1445.1200000000001] Did the proposal that everyone decided to buy a value that absolutely does not exist
+[1445.1200000000001:1446.1200000000001] one of them?
+[1446.1200000000001:1451.92] Yeah, the question is, is it possible that everyone decides on a value proposed by a
+[1451.92:1452.92] faulty process?
+[1452.92:1459.0] Absolutely, it could have been the case here that indeed P2 delivered the message of
+[1459.0:1461.6] P1 and they will all decide to do.
+[1461.6:1467.4] So we don't guarantee that the message of the value of faulty process is not decided
+[1467.4:1471.88] upon.
+[1471.88:1477.96] So in order to, if I ask you to prove the correctness of this algorithm, I hope it will be very
+[1477.96:1482.88] easy and because it is easy, but I guess you should get used to it.
+[1482.88:1489.7600000000002] The way you could do it, they are always very different ways of proving something.
+[1489.7600000000002:1495.7600000000002] The way you could do it is, for example, you say, let's be I be the correct process
+[1495.7600000000002:1500.64] with the smallest ID in a round, a run is an execution and we want to show that in all
+[1500.64:1505.68] execution the algorithm is correct, we say consider any execution, any run are.
+[1505.68:1508.8400000000001] Let's be I be the correct process with the smallest ID.
+[1508.84:1517.3999999999999] If you PID decides V, some value V, then we say, if I equals N, problem solved, nobody
+[1517.3999999999999:1523.32] else decided, no other correct process decided, VM is the only correct process.
+[1523.32:1532.1599999999999] Otherwise, if I is not N, then in round I, this is important, all correct processes receive
+[1532.1599999999999:1533.9599999999998] V in that round.
+[1533.9599999999998:1535.12] Why?
+[1535.12:1542.84] Because we have a perfect failure detector, because PID is correct.
+[1542.84:1551.4799999999998] Therefore in that round, PID enforce a new proposition to all and from there on, everybody
+[1551.4799999999998:1553.4399999999998] will have that same proposition.
+[1553.4399999999998:1558.2399999999998] So we heavily rely on the fact that we have a perfect failure detector.
+[1558.2399999999998:1564.28] Now this algorithm, as shown here, is not uniform.
+[1564.28:1569.8799999999999] It's not uniform because it might happen that some processes decide the value, crashes
+[1569.8799999999999:1572.96] and another process decides a different value.
+[1572.96:1580.04] So I want you to think a little bit, how can we change the algorithm I just presented,
+[1580.04:1585.68] such that no two processes decide differently.
+[1585.68:1587.84] Be very faulty or not.
+[1587.84:1593.24] So I just presented to you this algorithm and I want you to think a little bit and the
+[1593.24:1597.24] challenge, the key of the challenge, don't change too much the algorithm.
+[1597.24:1600.4] Keep the same structure.
+[1600.4:1609.24] Try to change this algorithm in such a way that exactly.
+[1609.24:1614.56] I'm going to explain that, but I let you think a little bit.
+[1614.56:1616.56] Yes?
+[1616.56:1626.56] Okay.
+[1626.56:1641.48] So the question is, why does P2 go to round 3?
+[1641.48:1643.96] Why does P3 go to round 3?
+[1643.96:1651.24] Because the reason the way you go to round is, there is one of two reasons.
+[1651.24:1655.76] One of them is if you detect the failure of the leader and the other one is you deliver
+[1655.76:1657.72] the message of the leader.
+[1657.72:1661.8] If you look at the algorithm, sorry.
+[1661.8:1665.6000000000001] Where is it?
+[1665.6000000000001:1669.8] Over here.
+[1669.8:1671.52] The second part.
+[1671.52:1675.6399999999999] If you deliver or you suspect, you go to the next one.
+[1675.6399999999999:1681.4] So in order to prevent these cases where P1 decides 0 and the other processes decide
+[1681.4:1687.68] 1 and make the algorithm uniform, the simplest and not saying the best in terms of complexity
+[1687.68:1695.6399999999999] whatever, the simplest way is to have all processes not decide too early.
+[1695.6399999999999:1698.12] So what does that mean?
+[1698.12:1703.56] You basically force them to wait until round 3 if you have 3 processes.
+[1703.56:1707.9599999999998] But you might say, oh, does it change anything to let them wait until round 3?
+[1707.9599999999998:1715.28] Because maybe P1 will still wait until round 2 possible.
+[1715.28:1722.8] So if we make them wait until the end round, then the consensus will become uniform.
+[1722.8:1725.6] It's a simple transformation that I'm going to present.
+[1725.6:1727.36] It's not the most effective.
+[1727.36:1728.7199999999998] We can have better.
+[1728.7199999999998:1734.6] But now we are simply worried about correctness.
+[1734.6:1738.0] We still have the same algorithm in the following sense.
+[1738.0:1742.36] The processes go through rounds incrementally from 1 to n.
+[1742.36:1748.76] In each round, we still have this idea that process PI broadcast to all.
+[1748.76:1752.9199999999998] That processes do not decide until they reach the end.
+[1752.92:1757.92] So we remove this ability for processes to decide.
+[1757.92:1763.64] We still have this idea that in a round, a process that gets the message of a leader
+[1763.64:1767.8000000000002] adopts that message as it proposes.
+[1767.8000000000002:1772.0] When they reach the end, a process decides on the current proposal.
+[1772.0:1776.44] So it's really the same algorithm except that you decide at the end.
+[1776.44:1778.0800000000002] That's the difference.
+[1778.08:1783.72] When we are going to argue, first I'm going to define the algorithm slightly more precisely.
+[1783.72:1788.3999999999999] So we have a bunch of variables to basically synchronize the rounds.
+[1788.3999999999999:1792.1999999999998] We are still using best for both tests and perfect failed detector.
+[1792.1999999999998:1794.08] We start with round 1.
+[1794.08:1799.08] If the process is expected, we put it in the variables suspected.
+[1799.08:1804.0] If I propose, I put my current proposal to V.
+[1804.0:1810.68] So here, when I am sorry, I start from the leader to make things simple.
+[1810.68:1815.36] So if I am the leader on the round, still typically round 1.
+[1815.36:1822.2] If I did not broadcast anything yet, if I have something to propose, I broadcast my value.
+[1822.2:1823.2] I don't decide.
+[1823.2:1824.6] Exactly the same algorithm as before.
+[1824.6:1827.32] I remove line design.
+[1827.32:1837.04] What do processes do when they deliver a message in a round?
+[1837.04:1840.9199999999998] I am P2 and I deliver the message from round 1.
+[1840.9199999999998:1846.48] I simply put current proposal to value, which means I adopt whatever the leader tells
+[1846.48:1850.3999999999999] me and I put delivered to true.
+[1850.4:1858.4] So the audience in a round, they simply adopt the value of the leader.
+[1858.4:1864.2] And this last part of the algorithm simply says, if delivered round equals true, meaning
+[1864.2:1870.64] if I have already delivered a message from the round or if I suspected the process, I
+[1870.64:1872.24] go to the next round.
+[1872.24:1873.8400000000001] This is the else.
+[1873.84:1881.0] But if I have already reached round n, I am not going to n plus 1 and I did not decide
+[1881.0:1882.0] yet.
+[1882.0:1885.0] This is just to avoid doing this twice.
+[1885.0:1890.48] Then I just keep the proposal.
+[1890.48:1893.72] And I put decided to true.
+[1893.72:1899.28] So the algorithm is now like this.
+[1899.28:1903.32] Processes go from round to the other and then they decide if they stay alive until the
+[1903.32:1904.32] end.
+[1904.32:1906.72] So here P1 proposes 0.
+[1906.72:1912.8799999999999] It somehow imposes its proposal to all in round 1.
+[1912.8799999999999:1921.1599999999999] P2 adopt the proposal of P1, which means that in round 2, P2 is going to impose values
+[1921.1599999999999:1923.24] 0 to the others.
+[1923.24:1927.6] In round 3, P2 is going to impose values 0 to the others.
+[1927.6:1929.84] But they all have the same proposal anyway.
+[1929.84:1932.04] So they will decide.
+[1932.04:1934.12] They will decide the same thing.
+[1934.12:1941.12] In case of a failure, in case a process fails, let's assume, for example, the situation
+[1941.12:1950.2] of earlier where P1, so I'm trying to tell what happened in the slide before where we
+[1950.2:1952.08] violated uniformity.
+[1952.08:1956.44] We had P1 proposing deciding and proposing 0 and failing.
+[1956.44:1959.12] Now we tell P1, you don't decide.
+[1959.12:1960.84] You can propose 0 and fail.
+[1960.84:1961.84] Okay.
+[1961.84:1962.84] So there are two cases.
+[1962.84:1967.28] Either P2 gets P1's message or not.
+[1967.28:1975.24] If P2 does not get P1's message, then P2 is going to impose in round 2, value 1.
+[1975.24:1978.0] It's going to impose it on P3.
+[1978.0:1982.32] In round 3, P3 is going to impose on P2 value 1.
+[1982.32:1984.9199999999998] So they're imposing on each other the same value.
+[1984.9199999999998:1987.12] They're going to decide the same thing.
+[1987.12:1990.76] And P1 is not going to decide.
+[1990.76:1999.24] The other case is if P1 manages to get its value to P2 and then fail.
+[1999.24:2005.08] In that case, when P2 moves to round 2, it's going to impose value 0 to P3.
+[2005.08:2009.28] And in P3, in round 3, P3 is going to impose value 0 to P2.
+[2009.28:2010.84] They will decide 0.
+[2010.84:2018.08] In both cases, all processes that reach round n are going to decide the same thing.
+[2018.08:2021.36] Any question?
+[2021.36:2025.56] Any question from in the chat?
+[2025.56:2027.56] No question.
+[2027.56:2029.36] Good.
+[2029.36:2035.84] In order to reason about the correctness of this algorithm, things are slightly more
+[2035.84:2036.84] subtle.
+[2036.84:2041.12] Here, the argument, at least one argument to prove the correctness.
+[2041.12:2044.1999999999998] Here, we're proving agreement is to say the following.
+[2044.1999999999998:2046.24] To make the following observation.
+[2046.24:2056.16] If for process Pj completes round a, i, without receiving any message from pi and j is
+[2056.16:2070.76] bigger than a, i, then pi is either a process pi has imposed its value on Pj before round
+[2070.76:2074.36] i or it failed.
+[2074.36:2077.8] And this lemma is going to be crucial in proving agreement.
+[2077.8:2081.08] So to prove this, we say the following.
+[2081.08:2083.7200000000003] Suppose Pj is bigger than i.
+[2083.7200000000003:2086.2000000000003] Let's say j is 3 and i is 2.
+[2086.2000000000003:2093.6] Suppose Pj completes round i, round 2, without receiving a message from P2.
+[2093.6:2098.88] This means that P2 has failed because either P3 receives the message of P2 in round 2,
+[2098.88:2103.28] or it does not in which case P2 has failed.
+[2103.28:2106.8] And Pj completes round j.
+[2106.8:2109.4] We are going to show that this is a contradiction.
+[2109.4:2118.1200000000003] Since Pj suspects P i in round i, P3 suspects P2 in round 2, this means that P2 has crashed
+[2118.1200000000003:2123.32] before Pj completes round 2, before P3 completes round 2.
+[2123.32:2128.96] In round j, either P i suspects Pj, this is not possible because Pj has already suspected
+[2128.96:2135.8] P i, or P i receives round j message, which is also not possible because P i crashed
+[2135.8:2136.88] before.
+[2136.88:2140.88] So in both situations, we show that there is a contradiction.
+[2140.88:2147.84] So please, these are the kind of reasoning that I assume you should be able to do by
+[2147.84:2148.84] yourself.
+[2148.84:2150.2] It's not complicated.
+[2150.2:2154.68] I agree that the first time you see it, it might look, oh, what is he talking about?
+[2154.68:2161.2799999999997] It's Pj in round i, and then P i reaching round j, but we are basically saying that if
+[2161.2799999999997:2164.7599999999998] you make processes, weights, they will get the same value.
+[2164.7599999999998:2169.24] This is what we are saying in Twitter V.
+[2169.24:2174.56] And once we have this lemma, we say, consider the process with the lowest id, which decides
+[2174.56:2176.2799999999997] P i.
+[2176.2799999999997:2181.3999999999996] This means that P i process with the lowest id completes round n.
+[2181.4:2185.08] Why the previous lemma?
+[2185.08:2192.64] In all rounds, in particular, in round i, every Pj with j bigger than i has received
+[2192.64:2195.48] and adopted the value of P i.
+[2195.48:2201.48] So in this argument, we say, if P i is the process with the lowest id, if it is correct
+[2201.48:2204.44] and it completes in round n, we don't need whether it's correct or not.
+[2204.44:2211.36] We simply say, if it reaches round n, then in round i, it has imposed its value
+[2211.36:2212.36] on all.
+[2212.36:2214.08] That's what we are saying.
+[2214.08:2218.2400000000002] On all processes, who also reach round n.
+[2218.2400000000002:2220.04] Any question?
+[2220.04:2227.1600000000003] So here what I'm saying is, if P2 is the process with the smallest id, which survives,
+[2227.1600000000003:2232.36] then in round 2, P2 has imposed its value on P3.
+[2232.36:2239.1600000000003] It will mean P3 also survived.
+[2239.16:2245.16] So as if I look at the subset of processes which survive until round n, I pick the one
+[2245.16:2251.64] with the smallest id and I say, in the round corresponding to that id, this process has
+[2251.64:2258.12] imposed its value on all.
+[2258.12:2264.3199999999997] Not completely immediate, but please try to spend some time now or after this class,
+[2264.32:2270.6400000000003] thinking about the first correctness argument, which is almost trivial, for the first algorithm
+[2270.6400000000003:2274.2400000000002] and this one, which is slightly less trivial.
+[2274.2400000000002:2282.6000000000004] But which really explains the proof, you have to see proofs as arguments that convince
+[2282.6000000000004:2287.84] you why it works and why the algorithm is done the way it was done.
+[2287.84:2294.0] So here we really see this idea of waiting.
+[2294.0:2302.52] Question at this point?
+[2302.52:2306.56] No question from the chat, everything is clear.
+[2306.56:2329.16] So in none of the algorithms that I presented, in none of them, the processes decide on
+[2329.16:2333.48] the values, always decide on the value proposed by the correct.
+[2333.48:2340.88] It could be in both algorithms that the value decided is a value that somebody has sent,
+[2340.88:2347.04] especially somebody with the lowest process id, AP1, in both algorithms, P1 broadcasts,
+[2347.04:2351.36] processes they adopt the value of P1 and P1 fails.
+[2351.36:2357.0] So in both algorithms, you can decide the value of a failed process.
+[2357.0:2361.2] And the specification of consensus does not preclude that, it doesn't say it's
+[2361.2:2362.2] forbidden.
+[2362.2:2365.2799999999997] It's considered a good value.
+[2365.2799999999997:2366.2799999999997] Okay.
+[2366.2799999999997:2375.7599999999998] Now we are starting something more challenging, but I'm sure you will understand.
+[2375.7599999999998:2379.16] So remember, first algorithm is not uniform.
+[2379.16:2380.68] Everybody decides as soon as it can.
+[2380.68:2385.72] Second algorithm, we have them waiting until the end in order to guarantee certain things.
+[2385.72:2392.3999999999996] In both cases, in both algorithms, I assume a perfect failure detector.
+[2392.3999999999996:2393.64] And that is crucial.
+[2393.64:2397.52] In the first algorithm, if you remember the algorithm, I hope you do.
+[2397.52:2404.2799999999997] If I wrongly suspect the failure of a process, we can have these agreements.
+[2404.2799999999997:2415.24] Okay, let me go back because this is important.
+[2415.24:2420.52] In this algorithm, if for example, let's consider this case.
+[2420.52:2428.24] If for example, P2 suspects the failure of P1, consider P1 of having failed and P2 moves
+[2428.24:2435.3999999999996] down by proposing his own value 1, then it could be that P1 decides 0 and P2 decides
+[2435.3999999999996:2439.2] one, obviously.
+[2439.2:2448.6] In this algorithm, if P1 fails and then P2 does not wait for P1's message, that P2 suspects
+[2448.6:2457.04] the failure of P1, then it could be that P1 reaches round 3, assume P1 suspects everyone,
+[2457.04:2459.72] and P2 and P3 suspect P1.
+[2459.72:2462.8399999999997] They could all go to round 3 and decide differently.
+[2462.8399999999997:2463.8399999999997] Okay.
+[2463.8399999999997:2469.16] If I have a failure detector, which wrongly suspects processes, it could be that P1 is
+[2469.16:2470.16] P1 suspects.
+[2470.16:2474.48] P2 and P3, P1 moves to round 3.
+[2474.48:2480.16] P2 suspects P1 moves to round 2 and together with P3, they move to round 3.
+[2480.16:2486.7999999999997] In this case, P1 will decide 0 and P2 will decide one.
+[2486.7999999999997:2488.7999999999997] Okay.
+[2488.7999999999997:2495.6] So having a failure detector that is not accurate, can violate agreement.
+[2495.6:2497.56] They can decide on something different.
+[2497.56:2503.08] Having a failure detector that is not complete, which means that it does not detect failures
+[2503.08:2506.4] when it should, this algorithm can block.
+[2506.4:2507.4] Okay.
+[2507.4:2510.7999999999997] Because processes might not be able to move to the next round.
+[2510.7999999999997:2513.56] If the leader fails, it don't suspect the leader.
+[2513.56:2515.4] We together.
+[2515.4:2516.4] Good.
+[2516.4:2519.88] So the perfect failure detector is crucial in this algorithm.
+[2519.88:2527.7200000000003] Now the question that we're going to ask and the question that other people have asked,
+[2527.7200000000003:2533.04] 85, 86, is can we solve the consensus problem?
+[2533.04:2538.1600000000003] If we have a failure detector that is weaker, what is the failure detector that is weaker
+[2538.1600000000003:2546.2400000000002] than that we have studied, is the failure detector that guarantees completeness, meaning
+[2546.24:2555.24] if somebody fails, eventually we learn about it, this is completeness, and eventual accuracy.
+[2555.24:2560.64] Eventual accuracy means the failure detector can make mistakes.
+[2560.64:2563.9199999999996] So I suspect Sa'degov having failed.
+[2563.9199999999996:2568.0] And then, oh, I get a message from him and say, oh, no, no, actually he didn't fail.
+[2568.0:2572.68] I move on and I suspect him again of having failed.
+[2572.68:2577.9199999999996] And in the implementation of the failure detector, what would I do in this case?
+[2577.9199999999996:2583.56] If I suspect a process of having failed, and then I...
+[2583.56:2588.52] The timeout period that I used the first time and I double it, for example.
+[2588.52:2589.52] Okay.
+[2589.52:2590.72] And then I move on.
+[2590.72:2594.3999999999996] And then I suspect him again of, oh, my timeout was too short, still.
+[2594.3999999999996:2597.7599999999998] I double it again and I keep doing that.
+[2597.76:2606.1600000000003] And then we assume that the underlying system is eventually synchronous, which means that
+[2606.1600000000003:2613.44] we reach some time, some period of time, where there are communication delays, that there
+[2613.44:2616.0] are bounds on communication delays.
+[2616.0:2617.0] Okay.
+[2617.0:2621.88] If we make that assumption, so I suggest that we keep going and I finish earlier.
+[2621.88:2628.04] If I assume that my system is not synchronous necessarily, but it is eventually synchronous,
+[2628.04:2633.44] meaning eventually, there will be a bound on communication delays.
+[2633.44:2638.92] If I use the trick I just presented to you, which is whenever I realize that I made a
+[2638.92:2643.6800000000003] mistake about suspecting a process, I double the timeout.
+[2643.6800000000003:2645.92] And I double again.
+[2645.92:2653.04] And then I say, eventually, eventually, I would reach this period of time where the system
+[2653.04:2658.76] is synchronous, and now I will stop wrongly suspecting processes.
+[2658.76:2664.7200000000003] One observation here, one observation that is important, theoretically speaking, when
+[2664.7200000000003:2671.32] we say that we assume an eventually synchronous system, we mean there is a time after which
+[2671.32:2673.52] the system is synchronous.
+[2673.52:2679.04] I don't know what that time when that time occurs, but I hope that it occurs.
+[2679.04:2683.84] Of course, if the system starts being synchronous from the very beginning, that's fine.
+[2683.84:2688.32] My failure detector is perfect from the beginning, but if during some period of time it's not
+[2688.32:2691.44] synchronous, it's okay, I will make mistakes.
+[2691.44:2693.08] Are we together?
+[2693.08:2699.52] So eventually, perfect failure detector means the system can be unstable.
+[2699.52:2703.84] My algorithm tolerates instability, that's what it means.
+[2703.84:2709.88] So people have been looking for algorithms to implement consensus, even if the system
+[2709.88:2711.24] is unstable.
+[2711.24:2716.84] In practical systems, this means, for example, there are partitions of the network.
+[2716.84:2720.6] Partitions of the network means the network is cut.
+[2720.6:2725.2] And the servers in Europe cannot talk to the servers in Asia.
+[2725.2:2726.52] This could happen for some time.
+[2726.52:2729.8] We suspect each other.
+[2729.8:2736.56] Geographically replicated cloud services, I want consensus to be solved even during
+[2736.56:2738.04] partitions period.
+[2738.04:2742.32] Or at least, I don't want consensus to be violated.
+[2742.32:2745.44] Are we together?
+[2745.44:2753.2] So building consensus algorithms with an eventually perfect failure detector is important.
+[2753.2:2761.3599999999997] Because in practice, there is another motivation of why this is important.
+[2761.3599999999997:2765.9199999999996] Now I want you to focus a little bit before diving in the algorithm.
+[2765.9199999999996:2771.24] If you assume a perfect failure detector, which means, typically, when you do that, you
+[2771.24:2775.3199999999997] don't tolerate the inaccuracy of the failure detector.
+[2775.3199999999997:2781.8399999999997] If you make that, you take big time out periods, okay, because you are conservative.
+[2781.84:2783.6000000000004] You don't want to make mistakes.
+[2783.6000000000004:2786.2000000000003] So you use big time out periods.
+[2786.2000000000003:2792.88] If you have an algorithm that tolerates the mistakes of failure detectors, inherently
+[2792.88:2797.76] tolerates them because it was designed for an eventually perfect failure detector.
+[2797.76:2804.44] In that case, you can be less conservative and use a new short time out periods.
+[2804.44:2809.32] What is the difference between situation one, where you are very conservative and situation
+[2809.32:2810.32] two?
+[2810.32:2815.1200000000003] In situation one, if you use the time out period to be two minutes, this means that if
+[2815.1200000000003:2821.7200000000003] somebody fails, you are not going to react to the failure before two minutes, okay?
+[2821.7200000000003:2823.6800000000003] Because you don't want to make mistakes.
+[2823.6800000000003:2827.92] In the second case, you will immediately react to failures.
+[2827.92:2831.0800000000004] If you use the time out of one millisecond.
+[2831.0800000000004:2835.92] But if you make mistakes, it's not a big deal because the algorithm has been taught, has
+[2835.92:2840.64] been designed to tolerate those false failure suspicions.
+[2840.64:2842.2400000000002] Are we together?
+[2842.2400000000002:2843.2400000000002] Okay.
+[2843.2400000000002:2850.84] So this is the motivation of why people were thinking about these algorithms.
+[2850.84:2858.12] In this algorithm, and in fact, we will probably, I will come back to that later, this algorithm
+[2858.12:2861.28] is going to make an assumption that we have seen earlier.
+[2861.28:2864.92] We're going to assume that we have a correct majority.
+[2864.92:2871.0] This is a necessary condition if I don't have a perfect failure detector.
+[2871.0:2874.2000000000003] More precisely, if I have an eventually perfect failure detector.
+[2874.2000000000003:2881.0] In the previous two algorithms, both of them work even if all processors fail.
+[2881.0:2884.0] Of course, if all processors fail, nobody decides.
+[2884.0:2885.0] I don't care.
+[2885.0:2888.8] But if only one guy is correct on this site and everybody has failed, the algorithms
+[2888.8:2890.4] are correct.
+[2890.4:2896.44] Here I assume that if I have three processors, two of them are correct.
+[2896.44:2902.92] You have to remember that these assumptions actually what they mean is if more than a
+[2902.92:2908.56] majority fail, if more than half fail, I don't guarantee anything.
+[2908.56:2911.52] Okay, I'm not responsible.
+[2911.52:2914.0] This is what it means.
+[2914.0:2917.04] Sometimes people work on algorithms that will do the following.
+[2917.04:2923.72] They will say, okay, if more than half fail, I don't guarantee consensus.
+[2923.72:2931.52] But if consensus is violated, I can determine who has failed.
+[2931.52:2933.44] I'm not going to talk about that later.
+[2933.44:2937.64] It's topic of current research, but I will mention it later.
+[2937.64:2940.6] So here we say, I'm designing an algorithm.
+[2940.6:2943.56] I assume the correct majority.
+[2943.56:2945.24] I don't know what that majority is.
+[2945.24:2948.3599999999997] It could be P1, P2, P2, P3 or P1, P3.
+[2948.3599999999997:2949.64] I don't know in advance.
+[2949.64:2953.6] Plus, I assume that the failure detection is eventually perfect.
+[2953.6:2957.3999999999996] Under these assumptions, I'm going to guarantee that the algorithm is correct.
+[2957.3999999999996:2961.3999999999996] If either of these assumptions is violated, I don't guarantee anything.
+[2961.3999999999996:2963.6] Okay.
+[2963.6:2970.64] What we are going to do here is kind of similar to the algorithms I presented in the sense
+[2970.64:2973.64] that we have also rounds.
+[2973.64:2979.48] The rounds we are going to have here, they do more than what I have told you.
+[2979.48:2986.2] So I have the idea that in every round, there is one leader except that I don't stop at
+[2986.2:2987.2] any.
+[2987.2:2988.52] Okay.
+[2988.52:2993.92] I stop every process more specifically.
+[2993.92:3000.4] Every leader of around stops when it believes it can safely decide.
+[3000.4:3005.48] This is a crucial thing that I want you to understand for the last half hour.
+[3005.48:3008.52] Processes are going to go from one round to the other.
+[3008.52:3019.52] And in any round, the leader tries to convince the processes that they should adopt its value.
+[3019.52:3020.52] What does it mean?
+[3020.52:3021.52] Convince them.
+[3021.52:3028.92] The process is scared by one thing, a process who wants to decide in a round.
+[3028.92:3037.0] It is scared by the fact that other processes suspect him of being faulty.
+[3037.0:3045.6800000000003] And the leader decides such that other processes do not see its value and decide something different.
+[3045.6800000000003:3049.48] So let me illustrate this to a very simple case.
+[3049.48:3051.92] Assume IMP1.
+[3051.92:3053.2400000000002] I am the leader.
+[3053.2400000000002:3055.44] And I want to convince you of picky blinders.
+[3055.44:3060.04] If I want to guarantee consensus, not uniform consensus.
+[3060.04:3064.6] So I want to guarantee that I want to see picky blinders, but I want to guarantee that
+[3064.6:3068.68] if you don't fail by tonight, you also go into see picky blinders.
+[3068.68:3070.2000000000003] What am I going to do?
+[3070.2000000000003:3072.28] I broadcast guys.
+[3072.28:3080.56] I know that you might have different opinions, but IMP1, I'm the leader of P1, please adopt.
+[3080.56:3084.2400000000002] Adoptive means your client proposal can be picky blinders.
+[3084.24:3087.2] I broadcast a message.
+[3087.2:3094.3199999999997] I cannot blindly say, oh, then I decide, no, because maybe none of you deliver my message
+[3094.3199999999997:3098.9199999999996] and maybe all of you will move to round two because you believe that I fail.
+[3098.9199999999996:3100.68] We have an eventually perfect fair detect.
+[3100.68:3108.24] So what I do is I tell you, please stay in round one.
+[3108.24:3112.12] If you don't suspect that I have failed, stay in round one.
+[3112.12:3115.48] Wait for my message and respond to me.
+[3115.48:3118.3599999999997] Tell me, oh, yes, we got your message.
+[3118.3599999999997:3124.68] And if I know that you got my message picky blinders, I'm happy to decide.
+[3124.68:3132.3199999999997] More specifically, if I receive from a majority of processes, messages telling me,
+[3132.3199999999997:3134.96] act, I have seen your proposal.
+[3134.96:3136.56] I'm happy I can decide.
+[3136.56:3139.0] Are we together?
+[3139.0:3144.24] Really why? Because I assume a majority is correct.
+[3144.24:3153.16] So the next round, P2, the new leader, is going to tell the processes, ah, I want you
+[3153.16:3155.92] to decide six feet under.
+[3155.92:3158.72] Are you okay?
+[3158.72:3166.48] He cannot decide unless a majority tells him, yes, but see, a majority told me that you
+[3166.48:3172.0] are okay with me in round one for picky blinders in round two.
+[3172.0:3177.2] Those people who told me we are with you for picky blinders, they cannot tell him we
+[3177.2:3179.6] are okay with six feet under.
+[3179.6:3184.28] They should tell him, no, no, no, no, picky blinders has been adopted.
+[3184.28:3192.8] The nice thing about the majority is that they intersect even if, let's say we are five.
+[3192.8:3198.28] Three of you have told me in the first round, picky blinders and two of you have suspected
+[3198.28:3200.6400000000003] me of having failed.
+[3200.6400000000003:3207.44] In the next round, the new leader asks the processes, at least one guy in the first
+[3207.44:3212.28] round will be in the majority of P2 in the second round.
+[3212.28:3216.32] And that process will prevent P2 from deciding.
+[3216.32:3220.84] It will tell him, no, no, no, picky blinder has been proposing the first round.
+[3220.84:3223.1200000000003] Are we together?
+[3223.1200000000003:3228.96] So we are using the idea that in each round, the leader does not decide unilaterally.
+[3228.96:3231.1200000000003] The leader first asks the majority.
+[3231.1200000000003:3232.1200000000003] What do you think?
+[3232.1200000000003:3236.0] In fact, in fact, the leader asks the majority.
+[3236.0:3237.56] It doesn't enforce.
+[3237.56:3239.6400000000003] It only enforces in the first round.
+[3239.6400000000003:3245.36] But P2 does not try to enforce six feet under.
+[3245.36:3249.4] In the second round, P2 asks processes.
+[3249.4:3251.76] Have you decided something in round one?
+[3251.76:3257.4] Or have you committed with the leader of round one about a value?
+[3257.4:3258.4] Okay?
+[3258.4:3260.52] This is what happens in round two.
+[3260.52:3269.04] At least one process in the majority that could have helped P1 deciding will tell P2.
+[3269.04:3273.08] Oh, we have helped P1 decide picky blinders.
+[3273.08:3281.2799999999997] Therefore, you should yourself the new leader, six feet under if you don't want to buy
+[3281.2799999999997:3283.04] that consensus.
+[3283.04:3288.7999999999997] Then P2 will go back in round two to the majority and tell them, actually, I want to decide
+[3288.7999999999997:3290.12] picky blinders.
+[3290.12:3291.12] Okay?
+[3291.12:3298.16] Now, processes who have to P1 will say yes and the other one will say sure.
+[3298.16:3300.84] And are we together?
+[3300.84:3306.32] Now I'm going to go into the details, but if you understand this idea, you understand
+[3306.32:3310.08] a lot of the algorithms that I used today.
+[3310.08:3314.52] What is called Paxos, what is called draft, what is called, they're given all kinds
+[3314.52:3318.6800000000003] of names, round by round, whatever, all kinds of names.
+[3318.6800000000003:3327.8] But the idea is what I just described.
+[3327.8:3333.76] So in this slide, I'm simply explaining what I explained earlier that with eventually
+[3333.76:3338.04] perfect fail of the texture, the previous algorithms do not work.
+[3338.04:3342.48] So the algorithm we have here is round based.
+[3342.48:3346.88] Processes move incrementally from one round to the other.
+[3346.88:3354.0800000000004] Process PI is leader in every round K such that K model N equals I.
+[3354.0800000000004:3355.92] Why do I need that?
+[3355.92:3359.44] Because I cannot guarantee that I stop at round N.
+[3359.44:3360.76] Why?
+[3360.76:3367.32] Because processes they move from one round to the other if they suspect the current leader.
+[3367.32:3371.84] But even that my failure detector can do whatever it wants.
+[3371.84:3375.32] So to speak, it can detect wrongly processes.
+[3375.32:3380.84] Maybe in round two processes detect the failure of round one, sorry, in round one processes
+[3380.84:3385.2000000000003] detect the failure of process one and they moved round two in round two.
+[3385.2:3388.6] They can keep moving like that.
+[3388.6:3393.4399999999996] So we cannot guarantee that the algorithm is going to terminate at round N.
+[3393.4399999999996:3395.4399999999996] So what we do is we keep going.
+[3395.4399999999996:3396.8399999999997] Are we together?
+[3396.8399999999997:3405.8799999999997] So it's round based in round one P1 is the leader in round two P2 is the leader in round
+[3405.8799999999997:3411.64] three P2 is the leader and in round four P1 is the leader again in round five P2 is
+[3411.64:3412.64] the leader again.
+[3412.64:3417.44] This is the structure of the algorithm.
+[3417.44:3422.56] In any round I, P I, the leader tries to decide.
+[3422.56:3425.56] So this is the same as in the first algorithm.
+[3425.56:3427.4] In the first algorithm it doesn't try to decide.
+[3427.4:3428.4] It decides.
+[3428.4:3430.3599999999997] Here it is more cautious.
+[3430.3599999999997:3431.7999999999997] It tries to decide.
+[3431.7999999999997:3436.4] So let's see.
+[3436.4:3443.6] A process PI when it is leader it succeeds.
+[3443.6:3448.92] It succeeds to decide if it is not suspected.
+[3448.92:3453.64] Processes that suspect PI, they can get anything from you I suspect you.
+[3453.64:3455.44] Why do they tell him that?
+[3455.44:3459.7200000000003] Because if I am P1 in round one I send the majority.
+[3459.7200000000003:3462.36] I send you a message and I wait.
+[3462.36:3465.8] But if you move on and suspect me I could wait forever.
+[3465.8:3467.0800000000004] I don't want that.
+[3467.0800000000004:3472.52] So we say if you want to move from one round to the other tell the leader that you have
+[3472.52:3476.52] moved.
+[3476.52:3480.32] So PI succeeds if it is not suspected.
+[3480.32:3484.7200000000003] If PI succeeds and I will explain what it means to succeed it's what I explained but
+[3484.7200000000003:3486.92] I will come back.
+[3486.92:3490.04] If PI succeeds PI uses a broadcast mechanism.
+[3490.04:3493.48] It uses actually a reliable broadcast.
+[3493.48:3499.44] You send the disk into all and the reliability of the broadcast is important because I want
+[3499.44:3506.64] to preclude the situation where PI crashes some other process to deliver the message and
+[3506.64:3510.04] stop while the others keep going.
+[3510.04:3514.76] So this is important.
+[3514.76:3517.96] So 15 more minutes please of your attention.
+[3517.96:3519.56] This is important.
+[3519.56:3527.0] So to decide in a given round the leader of that round executes three steps.
+[3527.0:3531.92] The first step is not executed in the first round of P1 it's useless but in the subsequent
+[3531.92:3534.6] round it is important.
+[3534.6:3541.4] PI selects what does it mean to select all processes when they move to a round they
+[3541.4:3543.84] send a message to the leader.
+[3543.84:3548.7599999999998] They tell the leader we suspect you or they tell the leader.
+[3548.76:3558.48] Here is the latest proposal I adopted in previous rounds.
+[3558.48:3564.6800000000003] So processes they send that to the leader and the leader of the round selects the latest
+[3564.6800000000003:3566.4] adopted value.
+[3566.4:3570.4] Okay latest with respect to the round number.
+[3570.4:3575.32] And then so in round one there is no such a step.
+[3575.32:3581.88] In round two when we move to round two all processes will send P2.
+[3581.88:3584.2400000000002] Here is what I did in round one.
+[3584.2400000000002:3588.6800000000003] I told P1 that I'm happy to decide with him pick up line does they will tell that to
+[3588.6800000000003:3589.96] P2.
+[3589.96:3594.0800000000004] So P2 will not necessarily propose its own value.
+[3594.0800000000004:3600.52] It will look at what the majority tells it and will select the value that could have
+[3600.52:3602.7200000000003] been decided in round one.
+[3602.7200000000003:3604.2400000000002] Are we together?
+[3604.24:3607.8399999999997] So in round one I don't do step one.
+[3607.8399999999997:3614.4399999999996] I send everybody my proposal pick up line does if you don't suspect me you will not move
+[3614.4399999999996:3616.9599999999996] to round two you wait.
+[3616.9599999999996:3626.72] You tell me back sir yes sir pick up line does it is you turn your value I am happy.
+[3626.72:3630.64] If I don't die I will send you a message telling you this line.
+[3630.64:3632.04] But I might die.
+[3632.04:3637.12] In any case when you tell me sorry yes sir you moved to round two.
+[3637.12:3641.68] Process in round two Dahlia is the leader.
+[3641.68:3643.88] Here we need to do step one.
+[3643.88:3649.72] Step one consists of the processes in round two to tell Dahlia in round one some of you
+[3649.72:3654.04] will tell her in round one I didn't see P1 I suspected him.
+[3654.04:3660.04] Others will tell her no no in round one P1 told me that it wanted to decide pick up
+[3660.04:3663.08] line there and I told him yes.
+[3663.08:3669.4] Now if Dahlia sees this she will think oh I need to be careful I should not propose
+[3669.4:3673.2] to the processes six feet under.
+[3673.2:3678.88] I need to propose to them pick up line does because maybe P1 has decided pick up line does.
+[3678.88:3681.92] Are we together?
+[3681.92:3689.2799999999997] So in P2 the leader imposes the value it's elected from step one.
+[3689.28:3695.36] It does what P1 did immediately in round one without consulting in round two you consult
+[3695.36:3698.7200000000003] and then you impose okay.
+[3698.7200000000003:3708.0800000000004] P1 P1 I imposes that value at a majority any processing that majority adopts the value.
+[3708.0800000000004:3715.0800000000004] P1 fails to decide if it is suspected of course if I suspected processes will not tell
+[3715.0800000000004:3717.28] me we are with you they move on.
+[3717.28:3724.1200000000003] But if I'm not suspected you tell me we are with you I decide and I broadcast the decision.
+[3724.1200000000003:3729.7200000000003] I think I have a picture so here's the picture this is consensus algorithm three it goes
+[3729.7200000000003:3736.0] in rounds P1's round P2's round P2's round the round are are faster than before because
+[3736.0:3741.92] they are bigger of course there are many more rounds in practice if the system is synchronous
+[3741.92:3746.28] from the beginning we are not going to end rounds things are going to be very fast because
+[3746.28:3750.88] nobody is going to suspect P1 consensus is going to finish very soon.
+[3750.88:3756.52] But if the system is unstable they might suspect P1 we need to make sure that P2 does not
+[3756.52:3759.7200000000003] decide something different we use the majority.
+[3759.7200000000003:3769.1600000000003] Let's zoom into one round I'm zooming here into a regular round let's say round four.
+[3769.16:3776.44] Round four processes send there what they have seen a summary of what they have seen
+[3776.44:3781.68] in the past to the leader the leader from for is P1 what is the summary of what they have
+[3781.68:3789.24] seen the most important information is P2 tell P1 my current proposal is this and the
+[3789.24:3796.08] current proposal is what is a pair here I simply write a number is a pair constituted
+[3796.08:3810.04] of a value adopted that value between as the same P1 selects the value that has been
+[3810.04:3820.48] adopted the latest and then since this value in this case we are nobody has proposed anything
+[3820.48:3825.88] yet so there is no latest value it's the same nothing has been adopted.
+[3825.88:3834.88] So P1 proposes zero the process tells P1 okay P1 decides zero and broadcast the decision
+[3834.88:3842.56] okay in fact this is also what should be in round one except that in round one the
+[3842.56:3849.12] first step is not not necessary.
+[3849.12:3858.2799999999997] If P1 fails if P1 crashes then the processes move on and send P1 a message called NAC
+[3858.2799999999997:3864.6] means we suspect you and they move on but they always need to tell P1 that they suspected
+[3864.6:3871.88] him if they do so in this algorithm some process is to expect P1 some do not and they move
+[3871.88:3879.04] on so correctness in order to understand this algorithm going through this algorithm
+[3879.04:3883.8] arguments are very important I will come back to this algorithm because it's very important
+[3883.8:3891.68] but let me give you the the cracks affect to the proof argument.
+[3891.68:3896.12] Variety and integrity are trivial in this algorithm because the in the in the algorithm
+[3896.12:3901.4] process decides once and the validity the value this value is always a value proposed
+[3901.4:3906.2] let's look at termination how do we guarantee this is important how do we guarantee that
+[3906.2:3915.52] every correct process decides the reason is as follows or we say let assume it correct
+[3915.52:3921.8799999999997] process decides it uses reliable broadcast and if it is correct everybody decides easy
+[3921.8799999999997:3928.16] assume by contradiction that there are correct processes which by assumption we have
+[3928.16:3934.04] a majority and no correct process decides okay.
+[3934.04:3938.84] We are going to argue that it is impossible how are we going to argue that it is impossible
+[3938.84:3943.8] we say by the correct majority assumption and the completeness property of the failure
+[3943.8:3951.2799999999997] detector no process remains blocked in a round okay what retains the process in a round
+[3951.2799999999997:3959.16] is the fact that it is waiting for the leader if it has a perfect failure detector if it
+[3959.16:3964.72] has a complete failure detector if the leader fails the process affects the leader the
+[3964.72:3970.48] other thing that can block a process in a round is if the process is waiting for the
+[3970.48:3982.48] majority forever furthermore so the first bullet here says if no correct process decides
+[3982.48:3987.44] they don't block in a round they keep going okay good.
+[3987.44:3994.96] The accuracy property of the failure detector tells us that there is a round where some correct
+[3994.96:4001.2000000000003] processes is not suspected some leader is not suspected eventually perfect means there
+[4001.2000000000003:4007.12] is a round where we stop making mistakes so we won't suspect the leader at that round
+[4007.12:4014.64] okay so we go to that round the first round when the system becomes the failure detector
+[4014.64:4019.0] becomes perfect we zoom at the leader of that round and we say oh the leader of that
+[4019.0:4024.7599999999998] round is correct it's not going to get suspected so it decides.
+[4024.7599999999998:4031.8399999999997] Being go we have the argument consider now agreements how do we reason about agreement
+[4031.8399999999997:4039.96] we do a little bit like before except that now we say let's k be the first round in which
+[4039.96:4045.52] some process decides in the previous algorithms we said consider the process with the lowest
+[4045.52:4051.08] index which decides here we say we look at the rounds let k be the first round in which
+[4051.08:4057.7200000000003] some process decides some value okay meaning p i is the leader of that round and decides
+[4057.7200000000003:4066.04] value v okay this means and this is crucial that in round v k a majority of processes have
+[4066.04:4072.96] adopted k this is what you do in the authorization to decide in a round is if processes tell
+[4072.96:4082.32] you okay p k blinder okay six feet under whatever from that round on we can reason by induction
+[4082.32:4089.56] we can say in round k plus 1 the leader of round k plus 1 the first step it will see
+[4089.56:4096.0] at least one process is sending it value with round k that has been adopted in the previous
+[4096.0:4103.2] value this is the value with the highest round number that was adopted are we together this
+[4103.2:4110.92] is crucial if somebody decides in round k the leader of round k plus 1 will necessarily
+[4110.92:4117.72] adopt the value decided in round k why because a majority of processes have adopted the
+[4117.72:4124.52] value of a round k and at least one of them has moved to k plus 1 and informed the leader
+[4124.52:4153.64] okay questions adoption is monotonically increasing increasing means in this context I need
+[4153.64:4161.360000000001] to think what what's important to understand is any value decided in a round is adopted
+[4161.360000000001:4170.08] by a majority okay now you can move to maybe it is monotonically increasing in the sense
+[4170.08:4179.160000000001] that whenever you go to a new round you adopt new values but the values might be all values
+[4179.16:4184.36] in the sense that they are actually the initial value of p1 so it's not increasing in that
+[4184.36:4190.5599999999995] sense it is increasing in the sense that the more you go the more you might adopt new
+[4190.5599999999995:4205.5199999999995] values but not necessarily the majority that adopts can only grow larger no yes yes it's
+[4205.52:4209.88] good observation it can only grow larger it can grow larger in the sense that they could
+[4209.88:4221.64] be more processes that adopt the value that's true very good one last comment and I will
+[4221.64:4230.120000000001] stop here if we assume that we don't have a failure detector at all or we assume that
+[4230.12:4236.84] the failure detector not only it doesn't guarantee accuracy but also it doesn't guarantee completeness
+[4236.84:4243.88] the failure detector is completely unalliable okay my always suspect everybody or my never
+[4243.88:4251.92] suspect anybody it is easy to see that the agreement property is not violated in either
+[4251.92:4261.4800000000005] case agreement termination might be violated because if you are blocked in a round waiting
+[4261.4800000000005:4266.4400000000005] for the leader and the failure detector doesn't tell you it is failed you don't decide you
+[4266.4400000000005:4271.96] stop in that round wait or if the failure detector keep making you move from around to the
+[4271.96:4277.4800000000005] other without ever stopping at a round you may never decide okay so if you don't have a
+[4277.48:4282.919999999999] failure detector at all you might never decide but you will never violate agreement what is
+[4282.919999999999:4291.839999999999] important in this algorithm and that's why it is widely adopted today is because the agreement
+[4291.839999999999:4300.879999999999] is not fragile it doesn't depend on the failure detector agreement is always satisfied so
+[4300.879999999999:4307.28] agreement is not satisfied furthermore even if you don't have a majority of correct processes
+[4307.28:4313.4] the question question I'm asking you assume you don't have a majority of correct processes
+[4313.4:4324.719999999999] can you violate agreement I'll let you agreement what could happen is you violate termination
+[4324.719999999999:4330.44] again you are you are leader you're waiting for the processes of a round you wait for a majority
+[4330.44:4339.96] but the majority fails you can block so this is very important these algorithms that's
+[4339.96:4346.719999999999] why they are widely adopted I say these algorithms because I presented a rather simple version
+[4346.719999999999:4351.96] of this class of algorithms there are tons of optimizations of this algorithm optimization
+[4351.96:4357.2] consistent same for example I try to keep the same leader I try to whenever I decide
+[4357.2:4361.2] I immediately do a live broadcast instead of standing a message etc. but those are not
+[4361.2:4368.0] very important the essence of the algorithm is what I presented you go to a round look
+[4368.0:4373.96] for what could have been done selects the value that is most plausible to have been decided
+[4373.96:4380.16] propose it wait for a majority and decide this is the crux and this algorithm does not
+[4380.16:4387.5599999999995] rely for its agreement neither on the correct majority nor on the accuracy nor on the
+[4387.5599999999995:4396.4] completeness of the fail detector so please try to go back to the first two algorithms
+[4396.4:4403.72] they are not widely used today and there's some circumstances algorithm two is used sometimes
+[4403.72:4410.72] but algorithm three is widely used all over the place so it is important to understand it
+[4410.72:4415.6] of course I'm going to come back to it at some point because later on we will look at
+[4415.6:4419.84] the situation of process can be malicious and this and that but we are going to rely on
+[4419.84:4426.84] this idea
+[4426.84:4436.56] question last question from the chat
+[4436.56:4443.16] okay the question is when a process decides a value okay so when a process decides a
+[4443.16:4450.52] value it uses reliable broadcast and then half the reason why it uses reliable broadcast
+[4450.52:4457.6] is because we don't want processes to halt and then the message they send reaches another
+[4457.6:4464.72] process which also has preventing the majority from helping other processes so that's why
+[4464.72:4469.56] you only have if you use reliable broadcast this will guarantee that if you are correct
+[4469.56:4474.080000000001] the message will reach everyone if you are not correct you are not part of the majority
+[4474.080000000001:4479.360000000001] you are not doing any harm so you have after the reliably broadcast any other comment
+[4479.36:4495.679999999999] okay so yeah so the question is in the dive
+[4495.68:4510.4800000000005] pause at the same time no is this reality no not at all this is just the picture yes exactly
+[4510.4800000000005:4517.16] so we can have three processes between is asleep P1 convinced P2 to go with him they
+[4517.16:4525.4800000000005] decide P2 to sleep they go both of them go to round two or P2 goes to round two P1 decides
+[4525.48:4532.799999999999] using the reliable broadcast it informs P2 they both decide and then P3 wakes up okay now
+[4532.799999999999:4539.04] P3 wakes up if they are all done this means they have used reliable broadcast P3 will be
+[4539.04:4546.4] informed it is important that halting doesn't mean that they stop the algorithm halting
+[4546.4:4553.0] means they don't do any other step then what is underlying the implementation of reliable
+[4553.0:4567.36] broadcast are you with me okay good a process can propose the value after somebody has
+[4567.36:4577.0] decided after it has decided in a sense yes but see we assume that processes initially
+[4577.0:4582.04] they have a value to propose they they start they propose we are and then they get the
+[4582.04:4586.84] reliable broadcast then they have anyway okay

@@ -1,0 +1,127 @@
+~EE-556 / Mock Exam Solutions / Question 2 (2020)
+~2020-12-14T01:13:41.317+01:00
+~https://tube.switch.ch/videos/2a96871f
+~EE-556 Mathematics of data: from theory to computation
+[0.0:18.32] Okay, so we will solve problem 2 of the mock exam, it relates to adversarial training.
+[18.32:26.080000000000002] So for literal A, you want to write the objective of adversarial training, which is minimized
+[26.08:34.64] over the parameters of the model, maximize over the constraint of the additive perturbation.
+[34.64:55.56] And then we will minimize over x, expectation over the data of the maximum over the constraint
+[55.56:58.519999999999996] of the adversary of the loss.
+[58.52:64.72] So in this case, because our model is linear, it's inner product between A, x and A,
+[64.72:73.08] but A has the perturbation, which is additive, so we just add y and B. This is solved, but
+[73.08:84.4] then because our dataset consists of just one data point, this expectation because just
+[84.4:98.04] the sum over 1 data point, so it would be just max, mean max, y is an epsilon of loss
+[98.04:112.04] x. Now here we plug the first data point A plus y and the first label. This is solved
+[112.04:122.24000000000001] when we have A1 and B1, right? Our dataset was just one pair, A1, B1. So just to clear
+[122.24000000000001:131.92000000000002] up notation here, I realize it's better to denote these data points with the subterscript,
+[131.92000000000002:140.12] so A is subterscript 1, B is subterscript 1, denotes the first data label pair. And we
+[140.12:149.48000000000002] will use subscripts to denote the coordinates. So if A1 is a D dimensional vector, then A
+[149.48:171.92] subterscript 1 to a subscript B would denote its coordinates D. So this is the objective
+[171.92:184.16] and now for the rest, the exercise, we will see, we will use L, we'll either be the logistic
+[184.16:203.72] laws or the sigma laws. Now for the literal B, what we want to do for the literal B, what
+[203.72:213.72] we want to do is to obtain the set of perturbations that the adversely would make in order to maximize
+[213.72:227.56] this objective. For some choice, some choice of values of x, of xA and y. So we choose
+[227.56:238.76] x0, and we shall iterate for the parameters of the model will be 10. And we will say that
+[238.76:255.51999999999998] the data point is 1, 1, the label is 1, and this epsilon is 1. So for the logistic laws,
+[255.51999999999998:260.84] what you would have to, what the adversely would have to do is to maximize this, max of y,
+[260.84:273.28] norm of y at most 1, of log 1 plus exponential. And then when you do inner product, so yeah,
+[273.28:303.15999999999997] let's write down its minus 0 in the DCC inner product, 1 plus y, multiply by we1.
+[303.16:311.0] So what happens is the 6x0 is 1, 0. So this inner product will only leave us with the second
+[311.0:331.92] coordinate of this vector here. And this guy here is 1. So what we end up is max minus.
+[331.92:345.40000000000003] So we know that the second coordinate of a1 is 1 plus the second coordinate of the adversely.
+[345.40000000000003:353.0] Wait, no. So x0 is 1, 0. So when you do inner product, the second coordinate gets multiplied
+[353.0:358.68] by 0 and it's the first coordinate that gets multiplied by 1. So this is actually the
+[358.68:368.76] first coordinate. And here in order to obtain this solution, here the only thing that you
+[368.76:377.44] have to observe is that this logarithm is increasing. Exponential is increasing as the function
+[377.44:387.44] of this input here and then we have a minus sign. So actually maximizing logarithm of something
+[387.44:395.96] would be logarithm of maximizing the input here. And then we have the same. This is a constant
+[395.96:401.0] so we ignore it. So what we have to do is to maximize this exponential. But again, because
+[401.0:408.96] the exponential is increasing, what we have to do is maximize this input here to the exponential.
+[408.96:415.8] But because we have this minus, what we want to do in the end is to minimize subject
+[415.8:430.8] to our constraint. This value here 1 plus y1. And then if you check this constraint, so
+[430.8:436.04] we have the constraint is a circle here you have the first coordinate of y, second coordinate
+[436.04:444.32] of y. This radius is 1. And then we want to minimize 1 plus y1. So actually we can just
+[444.32:450.44] take this one out. It's just a constant. So we want to minimize the first coordinate subject
+[450.44:455.36] to being in this disk. And this is clearly attained only on one point, which is this
+[455.36:464.15999999999997] leftmost corner, which corresponds to the value y1 equal minus 1. And y second coordinate
+[464.15999999999997:471.71999999999997] equals 0. And this is unique. So this is for the logistic laws. And for the sigma it
+[471.72:482.48] equals, we do using a similar argument. We just have some monotonically increasing or decreasing
+[482.48:490.40000000000003] function. So we can just move the maximization to the inputs of those functions. And we will
+[490.40000000000003:497.64000000000004] get the same answer first. So for the sigmoid, the adversary would also choose these values
+[497.64:511.59999999999997] and this would also be unique. So this was the point where the adversary would choose
+[511.6:536.5600000000001] b. Now we go to c. It has got to find descent directions. So we want to descent direction
+[536.56:551.8399999999999] for max maximum over the constraint of the perturbation, loss function x a1 plus y comma
+[551.8399999999999:558.5999999999999] b1. So how do we go about obtaining a descent direction with respect to x, with respect
+[558.5999999999999:564.92] to the variable x? So what makes sense and then what we will justify later using DanSkin's
+[564.92:584.04] theorem would be to take the optimal value found that we found in the literal b. We plug
+[584.04:592.28] it here, we change, we replace y by that optimal value value. Then what we get is we obtain
+[592.28:602.88] a function that depends only on x and we get the gradient of that function. At the iterate
+[602.88:619.24] where we are, which was x0, we take it to 1, 0. So for the logistic loss, we call that
+[619.24:630.48] our objective was our optimal value was minus 1, 0. If I am not wrong, yes. So when you
+[630.48:641.4] do, when you have this loss function x, what is a1, I recall that a1 was 1, 1. Loss
+[641.4:654.88] the perturbation would be minus 1, 0. So this vector gets 1, which is 1. So what would
+[654.88:662.0] be, what would this be? This would be 0, 1. So what would this inner product be? This
+[662.0:668.24] would be the loss. Okay, so this applies to both losses because the perturbation was
+[668.24:676.5600000000001] the same. So what you get is inner product between x and 0, 1, which leaves you with the
+[676.5600000000001:684.16] second coordinate of the parameter x, because we are using subscripts for coordinates.
+[684.16:691.44] And b1 was just 1. So for the logistic loss, this would look as follows, logarithm of
+[691.44:702.7600000000001] 1 plus e to the minus x2. And then we have to differentiate this to get, we have to
+[702.7600000000001:706.44] differentiate this function with respect to both coordinates. So with respect to the
+[706.44:714.6800000000001] x1, this thing is constant. So it's just 0. And with respect to x2, we get that the
+[714.68:726.3599999999999] derivative is the following would be 1 over 1 plus e to the minus x2 times minus e to
+[726.3599999999999:741.16] the minus x2. And then we evaluate, evaluate at x0, which was 1, 0. So it means that x1
+[741.16:750.16] is 1 and x2 is 0. And so what we get here as answer would be the, so the first coordinate
+[750.16:755.88] is always 0. It's constant 0. And the second one, when you plug here x2 equals 0, what
+[755.88:771.72] we get is minus 1 half. So this would be our descent direction. And then for the sigmoid,
+[771.72:782.4] you do exactly the same. It works pretty similar. And your answer would be 0 minus 1 over
+[782.4:793.72] e if I'm not mistaken. So, yellow's paper, what is the only difference here is that you
+[793.72:798.84] have to differentiate, when you differentiate with respect to x2, when you get, instead
+[798.84:809.72] is the derivative of 1 over 1 plus e to the x2. And this is minus 1 over 1 plus e to the
+[809.72:821.1600000000001] x2 squared times e to the x2. So when you plug x2 equals 0, you get here 2, which is
+[821.1600000000001:826.84] square, so you get 4, so you get minus 1 over 4. And this e to the 0 would be 1. So this
+[826.84:832.64] is where you get minus 1 over 4 instead of minus 1 over 2. So this would be your descent
+[832.64:839.64] directions, which you're justified by the Dan Schinds theorem. But then point neutral D,
+[839.64:849.6] what asks is if Dan Schinds theorem provides a stronger conclusion rather than just descent
+[849.6:856.64] directions for these vectors that we just found. So we have to identify, we have to do a
+[856.64:864.64] little bit of notation translation. So in Dan Schinds theorem you have this phi of
+[864.64:880.92] xy, which in our case would be this L evaluated at x a1 plus y b1. So now we have two versions
+[880.92:893.4399999999999] of Dan Schinds theorem. One applies when, after fixing y, we get that phi of xy convex
+[893.44:914.48] for all y. And the other version is when that does not happen, is not convex for some
+[914.48:930.12] y. So what happens is that when L is the logistic loss, when all the logistic loss is convex.
+[930.12:941.84] So always when you put the logistic loss it's like this. This would be, yeah. When b,
+[941.84:953.2] so we call that we had like Lb prime, the losses like this. But we know that this b is 1.
+[953.2:961.1600000000001] This is 1 because our label was always 1. This b1 here was always equal to 1. And then
+[961.1600000000001:967.2800000000001] what you end up is with a function that looks like this. So it's convex. So for the logistic
+[967.28:974.28] loss we apply Dan Schinds theorem in the convex variant. And what it tells us is that
+[974.28:991.8399999999999] if the maximizer, so that's right. If the maximizer, this was our setting phi of xy,
+[991.84:1009.96] which in our case is loss. What the theorem tells us is if, is that if this objective
+[1009.96:1014.4] function is maximum, which corresponds to the problem of the adversely, has a unique
+[1014.4:1026.36] maximizer. Let's call it y star. Then the theorem concludes that the derivative of this
+[1026.36:1036.56] function after replacing y by y star, which is what we did in the previous literal. This
+[1036.56:1042.16] actually corresponds to the derivative, the respect to x of the function that we want,
+[1042.16:1063.92] which is actually the maximum. So for the loss, for the logistic loss, we can conclude
+[1063.92:1077.92] that 0 minus 1 over 2 is the gradient. Y because our function was convex for all fixed
+[1077.92:1086.16] y as a function of x. And then we also found that the perturbation, the optimal perturbation
+[1086.16:1092.3600000000001] is unique is just this value. So we have a unit maximizer for the inner problem. And
+[1092.36:1098.0] what happens with the sigma, for the sigma, what happens is that this phi of xy, this loss
+[1098.0:1127.96] function is not convex. So this is our phi of xy. But it is continuous, this can be checked
+[1127.96:1146.48] by some standard arguments, continuous, and has continuous partial derivatives. This can
+[1146.48:1154.8400000000001] also be checked with some elementary arguments. And then what we have is that we can see
+[1154.84:1161.9199999999998] that we have applied Dan Schind's theorem in its general version. And then here in this
+[1161.9199999999998:1169.6799999999998] case for the sigma, it lost, so this is for sigma, for the sigma, it lost, we also found
+[1169.68:1188.8] that the maximizer of the inner problem of this max was also unique. So max was unique,
+[1188.8:1202.24] it was 0 minus 1 over 4. And it just so happens that in the general version we also have
+[1202.24:1210.24] that if the maximizer is unique, then it means that the procedure that we just did, which
+[1210.24:1217.32] was finding the optimum, replacing the optimum as y and then getting the derivative, the
+[1217.32:1222.78] gradient, the partial derivatives would respect to x, then what we would have is that the
+[1222.78:1230.6399999999999] value that we obtain, which was 0 minus 1 for this vector is the gradient. Also in the
+[1230.6399999999999:1237.6] case of the sigma, it lost. So for both cases, the procedure that we did in the literal
+[1237.6:1250.48] C, what it deals is the actual gradient of the objective function, which is a maximum.
+[1250.48:1257.32] And why is that because both theorems conclude the same when the maximizer of the inner problem
+[1257.32:1264.36] is unique? So what happens is that if that maximizer is not unique, the conclusion will
+[1264.36:1270.0] be different. So for the convex version, if your function is convex, when you fix y,
+[1270.0:1276.56] what you can still conclude is that you would get subgradient because the Dan Schinds theorem
+[1276.56:1284.8799999999999] gives you a conclusion about how does the subgradient look of your max function. And for
+[1284.8799999999999:1291.8] the case of the general case, when you don't have convexity, then what Dan Schinds theorem
+[1291.8:1297.24] would conclude is that the vector that you obtain is just a descent direction. So we
+[1297.24:1327.2] cannot conclude something stronger than just a descent direction. And that's all.

@@ -1,0 +1,516 @@
+~CS-401 Lecture 5
+~2022-10-19T11:50:07.221+02:00
+~https://tube.switch.ch/videos/JqCNFf5fJq
+~CS-401 Applied data analysis - Fall 2022
+[0.0:7.0] I'm getting feedback.
+[7.0:10.0] Okay.
+[10.0:12.0] Okay.
+[12.0:18.0] Let me turn this bit down.
+[18.0:20.0] Welcome to lecture five of ADA.
+[20.0:23.0] Today we talk about regression analysis.
+[23.0:25.0] We'll start with some announcements.
+[25.0:26.0] Homework out.
+[26.0:28.0] Homework out is one.
+[28.0:30.0] Homework one is out.
+[30.0:34.0] As you know, and it is you at the end of next week.
+[34.0:37.0] So you have about 10 days left.
+[37.0:39.0] Normally it would be due on Friday.
+[39.0:41.0] So the next homework will be due on a Friday.
+[41.0:43.0] But since we released this one slightly late,
+[43.0:46.0] we'll also give you a grace period and give you the extra day.
+[46.0:49.0] And if you want, you can take the.
+[49.0:51.0] The extra day until Saturday night.
+[51.0:56.0] But note that we still will not answer questions on Friday.
+[56.0:58.0] So this will be the same.
+[58.0:60.0] You just get kind of an extra day.
+[60.0:62.0] But the rule will be the same.
+[62.0:65.0] We answer questions until Thursday night.
+[65.0:69.0] And during the last official 24 hours,
+[69.0:74.0] no question answering to avoid a mad rush on on Ed on the assistance.
+[74.0:79.0] So please plan ahead, you know, you now still have enough time.
+[79.0:84.0] Then project might not be one which you have already submitted.
+[84.0:88.0] So it will be the feedback will be released next week.
+[88.0:93.0] Such that you are ready to get rolling on milestone two.
+[93.0:96.0] As soon as the homework is handed in.
+[96.0:102.0] Friday's lab session will of course do a quiz quiz for about last week's material.
+[102.0:106.0] Then we do exercises on today's topic regression analysis.
+[106.0:111.0] And we will do office hours for the homework one.
+[111.0:114.0] If you have questions ahead of time,
+[114.0:118.0] then I really encourage you to register those questions on Ed.
+[118.0:121.0] We have an FAQ channel where you can answer questions.
+[121.0:125.0] So far, we guess how many questions we've had.
+[125.0:128.0] Zero, not a single one.
+[128.0:130.0] So like this, we can't help you, right?
+[130.0:132.0] Like please answer, ask your questions there.
+[132.0:137.0] And then we know how to prepare our answers properly.
+[137.0:138.0] No, you don't.
+[138.0:141.0] You ask the question regardless.
+[141.0:145.0] And then people can press a little heart and upvote your question that way.
+[145.0:148.0] And then afterwards we can rank the questions by heart.
+[148.0:151.0] And then we know which ones were the most frequently asked.
+[151.0:154.0] But the point is, even if your question doesn't seem urgent to you,
+[154.0:159.0] still ask it because maybe others have the same question and then they will upvote it.
+[159.0:160.0] Okay.
+[160.0:166.0] And then finally, the indicative course feedback is being collected.
+[166.0:169.0] So we have a sort of intermediate course evaluation.
+[169.0:172.0] This is open until Sunday, 23rd.
+[172.0:178.0] This Sunday, I'll also give you a chance to do this right here in the classroom.
+[178.0:181.0] A little bit later in the class.
+[181.0:184.0] Okay.
+[184.0:186.0] So regression analysis.
+[186.0:190.0] Regression is a versatile tool with many purposes.
+[190.0:194.0] I'm sure that many of you have seen regression before.
+[194.0:200.0] Really if data analysis was a car, then I would say linear regression is kind of the engine.
+[200.0:203.0] It's the workhorse that allows you to do many things.
+[203.0:207.0] And it's definitely a tool that you should know how to use.
+[207.0:210.0] So this is why we're dedicating today's lecture.
+[210.0:212.0] Who is topic?
+[212.0:215.0] Before I get started, some credits.
+[215.0:218.0] Most of the material.
+[218.0:222.0] Was taken from this great book about regression analysis by.
+[222.0:225.0] Galman and Hill.
+[225.0:228.0] And I really can recommend this book.
+[228.0:231.0] It's a very gentle introduction into the topic.
+[231.0:237.0] Really written for data analysts, rather than for mathematicians or statisticians.
+[237.0:241.0] And you can find it's publicly available.
+[241.0:246.0] I don't know how legit this link is, but it's out there on Google.
+[246.0:248.0] So feel free to read it.
+[248.0:250.0] And I especially recommend chapters three and four.
+[250.0:253.0] Should really contain the basics.
+[253.0:255.0] That's where I sourced today's material from.
+[255.0:258.0] Okay, you don't need to do this, but.
+[258.0:262.0] For those that want to learn more, this is where I got today's material from.
+[262.0:264.0] Plus a little bit of improvisation.
+[264.0:270.0] Okay, so let's start with what you should already know about regression analysis.
+[270.0:273.0] And in fact, for this, I would like to.
+[273.0:277.0] Like you to quickly fill this form.
+[277.0:280.0] Participate in this poll.
+[280.0:284.0] So I have a sense of what's your background with linear regression.
+[284.0:310.0] If you do, please scan the code or go to this link.
+[310.0:338.0] Okay.
+[338.0:345.0] Okay, so maybe 10 more seconds.
+[345.0:351.0] Five, four, three, two, one.
+[351.0:354.0] Okay.
+[354.0:359.0] Close this poll.
+[359.0:362.0] And show you the results.
+[362.0:368.0] So most people have are familiar with the math of linear regression.
+[368.0:373.0] This is great because then you have the perfect background for really understanding quickly.
+[373.0:374.0] What I'm going to tell you.
+[374.0:380.0] A lot of people actually a majority have used linear regression for making predictions.
+[380.0:382.0] It's also great.
+[382.0:386.0] And a minority have used it for descriptive data analysis.
+[386.0:389.0] Also great because then you will learn something new.
+[389.0:393.0] I will not talk about how to use linear regression for making predictions.
+[393.0:397.0] I will talk today about how to use linear regression for descriptive data analysis.
+[397.0:401.0] And a few people have never heard of linear regression.
+[401.0:403.0] For those.
+[403.0:409.0] The link that I showed to the Galman Hillbook will be a great resource for you,
+[409.0:411.0] which I recommend you look at.
+[411.0:413.0] Okay, great.
+[413.0:418.0] So I think the conditions are good for today's lecture to be useful for everyone.
+[418.0:420.0] So let's get started.
+[420.0:423.0] Here is linear regression as you probably know it.
+[423.0:425.0] You're given a set of end data points.
+[425.0:431.0] Every data point consists of a vector of predictors, also known as features.
+[431.0:437.0] We call the the feature vector of the I is data point X i.
+[437.0:440.0] And every data point also has a scalar outcome.
+[440.0:441.0] So this is a real value.
+[441.0:445.0] That is the outcome of this.
+[445.0:448.0] That you're interested in.
+[448.0:449.0] So we turn this.
+[449.0:454.0] Why I for the I a data point and the goal now is to.
+[454.0:457.0] Optimally model the outcomes.
+[457.0:462.0] Why as a linear combination of the features X.
+[462.0:471.0] So more formally, you want to find the optimal coefficient vector beta where beta has as many entries as the feature vectors X.
+[471.0:476.0] And you now want to approximate the outcomes why as a linear function of X.
+[476.0:479.0] So this is what this means.
+[479.0:483.0] This is a linear combination of the.
+[483.0:489.0] Of the features K features and you sum those up with those weights beta.
+[489.0:495.0] We can also write it in this in this.
+[495.0:501.0] Dot product formulation, which is more convenient than the lengthy explicit sum.
+[501.0:512.0] This really means that this is a dot product of two vectors X i is a vector data is a vector and you take a point wise product and then you build the sum.
+[512.0:518.0] And crucially what you want to achieve is so you can always write for every data set X.
+[518.0:522.0] Why you can always write it like this because we have a little term here.
+[522.0:528.0] This can be arbitrarily large if there's no good fit, but you can always write it this way.
+[528.0:531.0] There's always a way there's always some error.
+[531.0:538.0] What you want crucially is to find the beta such that this epsilon error becomes as small as possible.
+[538.0:539.0] Okay.
+[539.0:544.0] So you can you can explain as much as possible with the features themselves.
+[544.0:551.0] And you have very small error afterwards that you need to to make it fit exactly.
+[551.0:558.0] And by convention we usually take the first feature.
+[558.0:565.0] So X i1 for every data point I to be a constant of one.
+[565.0:572.0] So this way the first coefficient beta one is also just a constant intercept.
+[572.0:576.0] So here is what this looks like with one predictor.
+[576.0:583.0] So X here is a single number and Y is always a single number.
+[583.0:589.0] And so when we have our regression equation beta one plus beta two times X.
+[589.0:593.0] Then beta one is the is the intercept.
+[593.0:596.0] And beta two is the slope of this line.
+[596.0:605.0] And you want to fit the line such that the distance of the of the blue points to the point directly above or bigger.
+[605.0:614.0] And directly above or below it on the red line is as small as possible.
+[614.0:620.0] How can we formalize this what does it mean to be optimal what does it mean to be as close as possible.
+[620.0:627.0] So here formally we have the least squares loss as the optimality criterion.
+[627.0:633.0] So as I said intuitively we want errors to be as small as possible.
+[633.0:638.0] The difference between the prediction and the in the true outcome.
+[638.0:645.0] And more formally we want the sum of the squared errors to be as small as possible.
+[645.0:651.0] So this is the objective function that you then get.
+[651.0:655.0] This is just another way of writing epsilon.
+[655.0:658.0] Bring X i beta on the other side.
+[658.0:670.0] So this is epsilon i squared and you want to sum those up so you want to have as small as possible sum of squared errors.
+[670.0:679.0] This could make sense given that vast majority is already familiar with them with the mass of linear regression.
+[679.0:689.0] So we are all on the same page on those who are not familiar yet also know what we're talking about in terms of basics.
+[689.0:691.0] Okay, so what are use cases of regression?
+[691.0:697.0] I said earlier that linear regression is like the engine of the data analysis car.
+[697.0:701.0] So you can use regression for prediction.
+[701.0:712.0] So here you use the fitted model to estimate outcomes why for a new data point X that you have not seen during training during model fitting.
+[712.0:722.0] And my guess when I made the slides was that if you've seen regression before then you've probably seen it in the context of prediction and the pole that we just took exactly confirm that.
+[722.0:739.0] So this is the use case where most of you have seen regression linear regression when I say regression I implicitly mean linear regression today although they are of course other kinds of regression like logistic regression but just to save some words when I say regression today it's going to be linear regression.
+[739.0:743.0] The second use case is descriptive data analysis.
+[743.0:753.0] So here we're not we don't care about making predictions about new data points that we haven't seen yet but we want to analyze the data that we already have.
+[753.0:763.0] And so specifically regression linear regression then allows us to compare the average outcomes why across subgroups of data.
+[763.0:782.0] Even if those even if there are correlations between predictors and so on you'll see what I mean because this is going to be the topic of today's lecture and about it seems that about one third of you have used linear regression for these purposes but I'm sure that there will be a lot of new stuff to learn nonetheless.
+[782.0:804.0] And then a third use case of regression is causal modeling where you want to understand how the outcome why changes when you fiddle with the predictors X note how this is different from prediction because prediction doesn't care about causality prediction just cares about getting it right whereas causality cares about the why.
+[804.0:821.0] How are things connected if I turn this knob how will the outcome change okay whereas why just says if the world looks like this what does if a data point looks like this what does it mean not with if I change something like this what does it mean.
+[821.0:841.0] We're not talking about causal modeling today but next lecture is all about causality so we'll save we save it for then although we're not primarily use regression next lecture but we stay bit more basic about basic causal concepts but today descriptive analysis with linear regression.
+[841.0:852.0] Okay so I said that linear regression can be used in order to compare average outcomes across groups what do I mean by that and I'll show you with an example.
+[852.0:869.0] Let's look at example where we have one binary predictor so every data point is characterized by one single binary number zero or one which stands for no or yes and that binary predictor in this example is did.
+[869.0:898.0] So the data set consists of mothers and their children and the predictors X capture whether the mother finished high school so this can be yes or no which we call it as one or zero and every kid in a mother child pair can has a cognitive test score think of this as something like an IQ test it's not exactly an IQ test.
+[898.0:912.0] But something like that is some sort of test and here they can have any number between zero and 140 so we can just although these are integers we can just think of them as a continuum between zero and 140.
+[912.0:930.0] And so the regression equation that we then have is beta one just the constant plus beta two times X i so this is the coefficient for mother finished high school plus the error term epsilon which we want to get as small as possible.
+[930.0:957.0] If you fit that model to the data that we have so first this is the data that we actually have okay so we have two possible values of X we have zero and one mother not finished high school mother finished high school every data point is a mother child pair and so for each one of them we have.
+[957.0:978.0] The kids score on the Y axis this is the outcome really all the data points have exactly X equals zero or exactly X equals one they're just wiggled a little bit so you can actually see the data without too much overlap okay so here is one group and here's the other group and within each group X is exactly the same.
+[978.0:1003.0] Now if you fit the regression model this is what you will get you will get the model that has an intercept of 78 and it has a slope of 12 so by going from here to here going one step to the right we go 12 points up on the Y axis.
+[1003.0:1031.0] And that means that the average okay so the key inside is the following that the intercept captures the the average Y value in the group where X equals zero and intercept plus the slope captures the average Y value in the other group.
+[1031.0:1060.0] Why is that because for a given set of values for example Y values for X equals zero so for these Y values what is the value that minimizes the the average or the total distance to all the data points it's the mean right if I give you any set of numbers and I ask you to find the one number that has the lowest.
+[1060.0:1085.0] Lowest average square distance to all the numbers that you have then that's the mean you can do this on a back of the envelope it's quite fast to see but it's also quite intuitive right that the mean is the central point of any set of numbers that I give you so that's why the the least squares criteria on that linear regression has.
+[1085.0:1110.0] Namely to minimize the square distance the sum square distance or average square distance to all the points that means that the points that we will have for for any given X value on the Y value that we have for each value of X will be the mean of all the points that have that X value.
+[1110.0:1121.0] Follows from the fact that linear regression optimizes this squared loss and and that's where lost is minimized by those means.
+[1121.0:1135.0] Does this make sense or any questions about this because this is kind of the this is the basis from which all our usage of linear regression today will stem put it on an extra slide.
+[1135.0:1142.0] So how can we interpret the regression parameters.
+[1142.0:1157.0] Actually it should be the fitted well it's fitted parameters the two parameters beta one and beta two the intercept is the mean outcome for data points with X equals zero.
+[1157.0:1170.0] This is the mean of all these Y values and the slope is the difference in mean outcomes between data points that have X equals one and X equals zero.
+[1170.0:1178.0] So if you sum up the intercept at the slope you get the average Y value of the second group.
+[1178.0:1191.0] And the reason as I stated is that the means minimize the least squares criterion which exact is exactly what linear regression is supposed to do.
+[1191.0:1200.0] So here enters a protagonist of today's lecture the mean monkey who asks mean questions about means.
+[1200.0:1210.0] Yes well if linear regression really just computes for you the mean of those two groups why should I not just do it by foot.
+[1210.0:1223.0] I can just compute the mean of everything that has X equals zero and I can also manually compute the mean of everything that has X equals one and done like why do I need to run a regression model for doing this.
+[1223.0:1229.0] Okay monkey thanks for asking that question we'll come back to it later.
+[1229.0:1243.0] Okay so now the previous example was with a binary predictor and a continuous outcome now we look at another example where we have continuous predictor and also still a continuous outcome.
+[1243.0:1264.0] Okay so we still use the same the same topic here where we have mothers and their children so this is the same data basically but we now look at another feature as X we now look at the feature moms IQ mothers IQ which can be between 70 and 140 in this data set.
+[1264.0:1274.0] And we still consider the same outcome variable which is the cognitive test score of the child as before this can be between zero and 140.
+[1274.0:1281.0] The regression equation is still the same because we have one predictor and one outcome.
+[1281.0:1298.0] And here is the data so now you see the same the same y axis kid score and on the x axis you now have the mothers IQ and as you see all the data is between 70 and 140.
+[1298.0:1322.0] Now the math didn't change right so everything I said before still holds the intercept gives you the average kid score for mothers with IQ equals zero and intercept plus slope.
+[1322.0:1345.0] It gives all let's say we we're now interested in IQ 100 because that is the average IQ so if we say what is the expected or the mean kid score for mothers with IQ 100 then we have 26 plus 0.6 times 100 so that gives us 26 plus 60 that's 86.
+[1345.0:1358.0] Of course there is no one with IQ 0 so what does this mean the average the the mean kid score for moms with IQ equals 0 is 26.
+[1358.0:1372.0] It's just a situation that never rises so this is really here we cannot easily interpret the intercept although the math tells us this is the the mean for for data points that are here.
+[1372.0:1397.0] There's no support the data the data doesn't have any support here right so this is really not a useful number to look at so we will come back to this little guy later also how can we pre process the data such that we can actually directly read off something useful from the intercept rather than some hypothetical number about a situation that never arises.
+[1397.0:1407.0] So put that on the stack also we'll come back both to the mean monkey and to the to the little curious man here.
+[1407.0:1426.0] Okay so here's the equivalent of the slide that I showed you earlier for the one binary predictor here it is again for continuous predictor if you have this regression that has one continuous predictor then the intercept.
+[1426.0:1438.0] The intercept still means the same thing as in the binary predictor case the intercept beta one is the mean outcome for data points where the predictor equals 0.
+[1438.0:1448.0] And the slope is the difference in mean outcomes between data points whose x differs by one so if I go.
+[1448.0:1461.0] One step to the right now that I say this nearly as nearly embarrassing it's obvious the one step to the right and then you go slope value of slope up.
+[1461.0:1465.0] That you can interpret those as means that's the key thing.
+[1465.0:1487.0] Okay so now let's put the two previous examples together and we now set up a regression that has two predictors both of the predictors that we have separately considered before we now add the binary predictor did mother finish high school 0 or 1 no or yes.
+[1487.0:1504.0] And we also have now the continuous predictor mothers IQ score which is between 70 and 140 and we still use the same outcome as before that's the child's cognitive test score between 0 and 140.
+[1504.0:1519.0] This is the regression equation that we get then we have our constant term and now we just have the two terms that we had separately before we have both them and we sound them up.
+[1519.0:1527.0] Okay so let's look at what this data looks like.
+[1527.0:1551.0] We have we have two predictors right one is binary and one is continuous how can we put them both on one plot since one is binary that's kind of nice because we can just use different colors to there are only two values so we can use two different colors to visualize those two different values so data points that are black are those where mother the mother.
+[1551.0:1571.0] Did not finish high school and data points that are gray are those where the mother mother did finish high school okay so that's we visualize the first feature value with the color and the second feature value that's a continuous feature I moms IQ that we visualize again on the x axis as before.
+[1571.0:1600.0] And the outcome on the y axis is again the same kids score so now what this model gives us it basically gives us two separate regression lines it gives us one for each of the subgroups in the data it gives us one for the black points and it gives us one for the gray points how can we see this let's look at what if we fit the regression to the data we get the model that is specified here on top of the slide we get 20.
+[1600.0:1629.0] We get 26 constant plus six times mom with mom finished high school that's the indicator variable plus 0.6 time moms IQ what happens for the people where the mother did not finish high school well then we have to set mom high school to zero right that's what this means mother did not finish high school so then we get the we get 26 plus 0.6
+[1629.0:1658.0] times moms IQ okay so for those for those data points where the mother did not finish high school our regression actually reduces we kick out the yellow term and just becomes 26 plus 0.6 times moms IQ and that is the black line what happens when we look at data points where mother did finish high school then we have 26 plus six okay so that's 32 plus
+[1658.0:1682.0] 0.6 times mothers IQ so now we have a another regression line that has the same slope but it has a different intercept because we increase the intercept by six now for those cases where that binary feature equals one okay so now the regression was basically an
+[1682.0:1689.0] easy way to get a good one.
+[1689.0:1696.0] A nice way of getting these two regression lines in one goal for free.
+[1696.0:1710.0] Okay so something I'd like to point out is that this plot has now zoomed in on the range of X that actually matters okay so we don't go all the way to zero here but now we're just visualizing 70 to 140 which is where the data lies so that this is
+[1710.0:1736.0] where the data lies so this means that the intercepts also cannot be read explicitly off the plot anymore which maybe doesn't matter because again the intercepts don't really have a meaningful interpretation since still IQ equals zero doesn't really make sense it's not something that ever happened so that problem still persists from what we had before.
+[1736.0:1765.0] Now let's go even more complex and we will grow the model even further we now add an interaction of two predictors so as before we have as feature as input variables did the mother finish high school yes or no what was the mother's IQ and the same outcome so that is that model that we had earlier but now we add another term where we add
+[1765.0:1785.0] the product of these two did mother finish high school times what is the mother's IQ and now we fit this model just like a regular linear regression model this is still an all a linear regression doesn't matter that the two features or products of each other.
+[1785.0:1804.0] It's still linear in the predictors that's what matters right this is still a linear function of beta you can cook up whatever whatever future you want for for the predictors but now this gives us something quite cool if we
+[1804.0:1833.0] get that model we get we get the parameters that I have written in colors there at the top and now if we look at what does this model actually do then it gives us two different regression lines again as before but where's earlier the two regression lines had to have the same slope now the slope can vary why is that let's look at the case where mothers where the mother did not finish high school so mom
+[1833.0:1853.0] hs equals zero in this case we have minus 11 plus 1.1 times moms IQ both the yellow the black stuff that's behind the yellow and the black stuff that's behind the green goes away because in those cases mom hs equals zero
+[1853.0:1880.0] right so those go away so then we have a regression line that is just minus 11 plus so it has intercept minus 11 and slope 1.1 and in the case where mom hs equals 1 we have a model that is minus 11 plus 51 so that's that's 40 and then we also can group
+[1880.0:1908.0] together the green and the blue term because in those cases mom hs equals 1 so we can collect those two terms and then we get 0.6 so now we have a second regression line that has intercept 40 and slope 0.6 so from this model with an interaction we were able to model two different regression lines that have both different intercept and a different slope
+[1910.0:1922.0] note that in this example the non interpretability of the intercept becomes particularly striking because if you look at the
+[1922.0:1947.0] at this solid black line it has an intercept of minus 11 so that means that for mothers who have IQ zero the modeled mean kid score is a negative number which is not even feasible in practice the kid scores by definition by construction always between 0 and 140
+[1947.0:1966.0] but because there is no data there the model doesn't care about it's not penalized for doing anything wrong there so this is why we get those nonsensical numbers and it's yet another reminder we can only interpret the model in the range of data in the range where the data actually lies.
+[1966.0:1995.0] As I said we'll come back later to fix that okay so wait wasn't there something I was nagging feeling in the back of my mind all yes the mean monkey's question the mean monkey's mean question about means why don't we just compute the two means separately if we have two groups in this case how do I know we just compute the two means separately and then compare them by seeing which one.
+[1995.0:2021.0] The thing is that we can see which one is bigger to motivate this I would like to set up this little toy example again a regression with two input variables but I want to make it even easier now where we consider the case where we have two binary input variables in the previous case we had one binary and one continuous input variable did mother finish high school and what was what is the mother's IQ.
+[2021.0:2037.0] This even easier and I want to have two binary input variables so we keep did mother finish high school and we now use as the second input variable there's a second predictor does the mother drive a Mercedes or not.
+[2037.0:2066.0] This is the situation this is the I can there are four combinations of these two binary input features so this score summarizes the data perfectly let's say that we have for the combination mother finished high school and mother drives Mercedes we have an average kid score of zero for the combination mother did not finish high school but drives the Mercedes we have an average kid score of 78 and then.
+[2066.0:2095.0] An analogous numbers for the case where mother does not drive Mercedes the right hand side table I tell you how many data points are in each of those cells okay so we have we have overall 2000 women in this toy data set we have 909 where mother finished high school and drives a Mercedes we have another 909 where the mother did not finish high school.
+[2095.0:2124.0] And does not drive a Mercedes and then we have 10 in each of the other cases where either she doesn't drive a Mercedes either or she doesn't she didn't finish high school okay so what I like you to think about for a minute now is what is the mean outcome the mean kid score or Mercedes driving mothers versus non Mercedes driving mothers you can you can calculate the number of cases.
+[2124.0:2149.0] You can calculate this from these two tables and then I'd like you to compare the two means and think about what does the question tell you about the link between driving a Mercedes and your kids cognitive test score feel free to discuss this with your neighbors for a minute or think about it for yourself whatever you prefer.
+[2154.0:2156.0] you
+[2184.0:2186.0] you
+[2186.0:2193.0] you
+[2193.0:2200.0] you
+[2200.0:2216.0] you
+[2216.0:2232.0] you
+[2232.0:2248.0] you
+[2248.0:2264.0] you
+[2278.0:2294.0] you
+[2308.0:2328.0] you
+[2328.0:2344.0] you
+[2344.0:2360.0] you
+[2360.0:2376.0] you
+[2376.0:2392.0] you
+[2392.0:2408.0] you
+[2408.0:2424.0] you
+[2424.0:2440.0] you
+[2440.0:2456.0] you
+[2456.0:2472.0] you
+[2472.0:2488.0] you
+[2488.0:2504.0] you
+[2504.0:2520.0] you
+[2520.0:2536.0] you
+[2536.0:2552.0] you
+[2552.0:2568.0] you
+[2568.0:2584.0] you
+[2584.0:2600.0] you
+[2600.0:2616.0] you
+[2616.0:2632.0] you
+[2632.0:2648.0] you
+[2648.0:2664.0] you
+[2664.0:2680.0] you
+[2680.0:2696.0] you
+[2696.0:2712.0] you
+[2712.0:2728.0] you
+[2728.0:2744.0] you
+[2744.0:2760.0] you
+[2760.0:2776.0] you
+[2776.0:2792.0] you
+[2792.0:2808.0] you
+[2808.0:2824.0] you
+[2824.0:2840.0] you
+[2840.0:2856.0] you
+[2856.0:2872.0] you
+[2872.0:2876.0] you
+[2876.0:2892.0] you
+[2892.0:2908.0] you
+[2908.0:2924.0] you
+[2924.0:2928.0] you
+[2928.0:2944.0] you
+[2944.0:2954.0] you
+[2954.0:2970.0] you
+[2970.0:2986.0] you
+[2986.0:2990.0] you
+[2990.0:2998.0] you
+[2998.0:2998.0] you
+[2998.0:2998.0] you
+[2998.0:3014.0] you
+[3014.0:3030.0] you
+[3030.0:3042.0] you
+[3042.0:3058.0] you
+[3058.0:3062.0] you
+[3062.0:3078.0] you
+[3078.0:3094.0] you
+[3094.0:3110.0] you
+[3110.0:3126.0] you
+[3126.0:3130.0] you
+[3130.0:3146.0] you
+[3146.0:3156.0] you
+[3156.0:3172.0] you
+[3172.0:3176.0] you
+[3176.0:3192.0] you
+[3192.0:3208.0] you
+[3208.0:3218.0] you
+[3218.0:3234.0] you
+[3234.0:3244.0] you
+[3244.0:3260.0] you
+[3260.0:3276.0] you
+[3276.0:3286.0] you
+[3286.0:3302.0] you
+[3302.0:3312.0] you
+[3312.0:3328.0] you
+[3328.0:3332.0] you
+[3332.0:3348.0] you
+[3348.0:3364.0] you
+[3364.0:3380.0] you
+[3380.0:3396.0] you
+[3396.0:3412.0] you
+[3412.0:3428.0] you
+[3428.0:3444.0] you
+[3444.0:3448.0] you
+[3448.0:3464.0] you
+[3464.0:3480.0] you
+[3480.0:3490.0] you
+[3490.0:3506.0] you
+[3506.0:3522.0] you
+[3522.0:3538.0] you
+[3538.0:3554.0] you
+[3554.0:3564.0] you
+[3564.0:3580.0] you
+[3580.0:3596.0] you
+[3596.0:3600.0] you
+[3600.0:3616.0] you
+[3616.0:3632.0] you
+[3632.0:3648.0] you
+[3648.0:3652.0] you
+[3652.0:3668.0] you
+[3668.0:3672.0] you
+[3672.0:3688.0] you
+[3688.0:3704.0] you
+[3704.0:3720.0] you
+[3720.0:3736.0] you
+[3736.0:3752.0] you
+[3752.0:3756.0] you
+[3756.0:3772.0] you
+[3772.0:3788.0] you
+[3788.0:3804.0] you
+[3804.0:3820.0] you
+[3820.0:3836.0] you
+[3836.0:3852.0] you
+[3852.0:3868.0] you
+[3868.0:3872.0] you
+[3872.0:3888.0] you
+[3888.0:3892.0] you
+[3892.0:3908.0] you
+[3908.0:3912.0] you
+[3912.0:3928.0] you
+[3928.0:3944.0] you
+[3944.0:3960.0] you
+[3960.0:3964.0] you
+[3964.0:3980.0] you
+[3980.0:3990.0] you
+[3990.0:4006.0] you
+[4006.0:4022.0] you
+[4022.0:4026.0] you
+[4026.0:4042.0] you
+[4042.0:4046.0] you
+[4046.0:4062.0] you
+[4062.0:4078.0] you
+[4078.0:4082.0] you
+[4082.0:4098.0] you
+[4098.0:4108.0] you
+[4108.0:4124.0] you
+[4124.0:4128.0] you
+[4128.0:4144.0] you
+[4144.0:4148.0] you
+[4148.0:4164.0] you
+[4164.0:4168.0] you
+[4168.0:4184.0] you
+[4184.0:4188.0] you
+[4188.0:4204.0] you
+[4204.0:4208.0] you
+[4208.0:4216.0] you
+[4216.0:4216.0] you
+[4216.0:4224.0] you
+[4246.0:4262.0] you
+[4262.0:4272.0] you
+[4272.0:4288.0] you
+[4288.0:4292.0] you
+[4292.0:4308.0] you
+[4308.0:4312.0] you
+[4312.0:4328.0] you
+[4328.0:4332.0] you
+[4332.0:4348.0] you
+[4348.0:4360.0] you
+[4360.0:4376.0] you
+[4376.0:4380.0] you
+[4380.0:4396.0] you
+[4396.0:4412.0] you
+[4412.0:4422.0] you
+[4422.0:4438.0] you
+[4438.0:4448.0] you
+[4448.0:4464.0] you
+[4464.0:4468.0] you
+[4468.0:4484.0] you
+[4484.0:4488.0] you
+[4488.0:4496.0] you
+[4496.0:4506.0] you
+[4506.0:4516.0] you
+[4516.0:4532.0] you
+[4532.0:4536.0] you
+[4536.0:4552.0] you
+[4552.0:4562.0] you
+[4562.0:4572.0] you
+[4592.0:4612.0] you
+[4612.0:4628.0] you
+[4628.0:4632.0] you
+[4632.0:4648.0] you
+[4648.0:4652.0] you
+[4652.0:4668.0] you
+[4668.0:4672.0] you
+[4672.0:4688.0] you
+[4688.0:4692.0] you
+[4692.0:4708.0] you
+[4708.0:4712.0] you
+[4712.0:4728.0] you
+[4728.0:4732.0] you
+[4732.0:4748.0] you
+[4748.0:4752.0] you
+[4752.0:4768.0] you
+[4768.0:4772.0] you
+[4772.0:4792.0] you
+[4792.0:4812.0] you
+[4812.0:4816.0] you
+[4816.0:4824.0] you
+[4824.0:4828.0] you
+[4828.0:4832.0] you
+[4832.0:4836.0] you
+[4836.0:4840.0] you
+[4840.0:4848.0] you
+[4848.0:4856.0] you
+[4856.0:4860.0] you
+[4860.0:4864.0] you
+[4864.0:4866.0] you
+[4866.0:4876.0] you
+[4876.0:4880.0] you
+[4880.0:4882.0] you
+[4882.0:4886.0] you
+[4886.0:4890.0] you
+[4890.0:4898.0] you
+[4898.0:4906.0] you
+[4906.0:4910.0] you
+[4910.0:4914.0] you
+[4914.0:4916.0] you
+[4916.0:4926.0] you
+[4926.0:4936.0] you
+[4936.0:4938.0] you
+[4938.0:4940.0] you
+[4940.0:4942.0] you
+[4942.0:4952.0] you
+[4952.0:4962.0] you
+[4962.0:4964.0] you
+[4964.0:4966.0] you
+[4966.0:4968.0] you
+[4968.0:4974.0] you
+[4974.0:4978.0] you
+[4978.0:4982.0] you
+[4982.0:4986.0] you
+[4986.0:4988.0] you
+[4988.0:4992.0] you
+[4992.0:4994.0] you
+[4994.0:4996.0] you
+[4996.0:5006.0] but
+[5006.0:5008.0] but
+[5008.0:5012.0] because
+[5012.0:5022.0] When
+[5022.0:5034.0] Then we have B in, which is the coefficient for an indicator variable, which tells us whether the data point is from group P or from group S.
+[5034.0:5043.0] Okay. So it was the data point treated. If it's from group P, then this indicator equals one. Otherwise it equals zero.
+[5043.0:5050.0] And similarly, we have an indicator that tells us does this measurement come from time one or does it come from time two?
+[5050.0:5063.0] And then finally, we have the interaction of is the data point one that was treated and is the time the time where the treatment has already happened.
+[5063.0:5069.0] And now you can map these coefficients onto the plot basically.
+[5069.0:5082.0] Time one means that this variable here is zero. And if treated equals zero as well, then a, then this will also be zero. And we are just left with a.
+[5082.0:5094.0] So a will give us the value of s one. And now if we stick to we keep this time variable to zero. But now we go to the treated group. Then we have a plus B.
+[5094.0:5106.0] That gives this means that this difference is B. And similarly, when we keep the group fixed to group S and to go from time one to time two, then we have this increase of C.
+[5106.0:5112.0] And then if additionally, we are now in group P, then we additionally get this.
+[5112.0:5125.0] Everything in one goal, you have to keep in mind that real data wouldn't look like this, but real data would be such that you have a bunch of different people in each of the groups and they don't all have the same value.
+[5125.0:5134.0] So you have uncertainty also, but if you fit this regression model, then you get exactly the average treatment effect of the drug.
+[5134.0:5148.0] So you assume that these like things are linear really, but under that assumption, you will get this treatment effect D with all the diagnostics like P values conference intervals for free by running the regression model.
+[5148.0:5154.0] So this is a really neat way of doing it. And it's called difference in differences. Why is that?
+[5154.0:5166.0] So we look at the difference that happens for for one group and we look at the difference that happened. Sorry, we happen, we look at the difference with time.
+[5166.0:5177.0] We have one such different for each of the groups. And then we measure the difference in these two differences. And that's exactly what the captures.
+[5177.0:5185.0] Okay, so wow, what a treat. The mean monkey is finally satisfied.
+[5185.0:5193.0] And in the in the next lecture, we will actually move from a taste of causality to a bonanza of causality.
+[5193.0:5208.0] And it will be fully dedicated to how you can derive causal insights from data that was not collected in an experimental fashion. So data that can be full of confounds and biases and other nasty things.
+[5208.0:5219.0] Okay, so to wrap up linear regression is can be used as a tool for comparing averages across subgroups of data.
+[5219.0:5237.0] This use case is probably different from the typical prediction use case that you've seen in machine learning. How does how do can you do this? How can you compare means by doing a regression? Well, you read the group means off from the fitted coefficients.
+[5237.0:5251.0] The advantage over plain comparison of means by hand, which is what the mean monkey originally suggested is that by doing a regression, you, you are accounting for correlations among predictors.
+[5251.0:5269.0] And this is the Mercedes, mums and Mercedes example and you get the quantification of uncertainty for free from the from the table that is output by the regression function in your statistical library.
+[5269.0:5284.0] And you can have models. I don't know what's going on here. Maybe it's a sign that I, but I will wrap up soon. Don't worry. So you can get both additives or multiplicative models. All it takes is a logarithm.
+[5284.0:5299.0] But be careful. Of course linear regression is not a panacea. It doesn't solve all the problems because the only makes sense if the model is properly specified and otherwise you get nonsense results.
+[5299.0:5307.0] Right. If you apply a linear regression model to data that is not at all suitable for linear regression model because effects are not linear and additive and so on.
+[5307.0:5319.0] Then it's garbage in garbage out. So stay critical, run diagnostics, visualize the data, really try to understand it. Okay. So it's exactly 10 o'clock.
+[5319.0:5347.0] Boom. If you want to give us further feedback, then you have here the feedback form and you have our usual Google form and see you on Friday.

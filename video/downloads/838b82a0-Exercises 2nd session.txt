@@ -1,0 +1,457 @@
+~Exercises: 2nd session
+~2020-10-05T19:29:41.932+02:00
+~https://tube.switch.ch/videos/838b82a0
+~CS-451 Distributed algorithms
+[0.0:6.0] Okay, so we are ready to go. Welcome to the second
+[7.2:13.040000000000001] exercise session. Currently we have a deal of people in class because it's going to be quite weird.
+[13.76:23.52] So we're going to put an extra focus on the people on Zoom. First off, can we sample the room?
+[23.52:32.96] Does at least somebody hear me and at least somebody see the slides? As usually you can write in the chat.
+[32.96:38.480000000000004] Okay, that's something that is fine. As usually you can write in the chat and it's going to be very useful
+[39.2:45.760000000000005] if you stay on the chat, like keep the chat open so that we can interact quickly. Okay, whenever I ask
+[45.760000000000005:53.44] a question to the class, I'm going to assume a negative answer unless somebody says some
+[53.44:59.76] thing. So we're going to, you know, assuming a synchronous model of communication between us.
+[59.76:65.12] So I'll give you a few seconds to, you know, like basically raise your hand in the chat and then
+[65.12:73.36] you'll be able to write down your questions or answers and you have one and we'll read them to me.
+[74.16:78.64] So the structure of today is going to be like this. Last time we gave you two
+[78.64:89.68] exercises, two sessions worth of exercises, which means we gave you first the introductory logic
+[89.68:95.76] one ones the lights just to, you know, have a warm up on what it means to prove stuff and how can we,
+[95.76:100.56] you know, think logically, especially with respect to our distributed algorithms.
+[101.76:108.48] And then the second one, the second exercise was about gossip, right? We also gave you last
+[108.48:119.44] week a preview on the, on the reliable broadcast, right? And but we did not discuss those in class.
+[119.44:123.92] So what we're going to do is the following. Today I'm going to briefly go through the logic one
+[123.92:131.44] of one solutions and then we're going to go through the gossip links a little bit more in detail.
+[132.08:137.36] Finally, Yovan is going to take my place and he's going to introduce the, in more detail,
+[137.36:143.04000000000002] the exercises for which we gave you a preview last week about the reliable broadcast.
+[143.04000000000002:147.92000000000002] We are also going to give you again as a preview for next week and next week we're going to discuss
+[147.92000000000002:154.88000000000002] those more in detail the exercises on coastal broadcast, which you should have seen this week with
+[154.88000000000002:164.72000000000003] Rashid. Okay, so let's start with the exercises on logic. So first off, I'm going to skip through
+[164.72:177.44] the first, unless somebody has some question on the very initial ones, right? So I would skip
+[177.44:183.68] most of it. So the way we had these slides are from last year, the way we had done it,
+[183.68:189.52] because we had a little bit more time, because we had only one session last year, was they also
+[189.52:195.92000000000002] had some examples that I would have asked people in the class to, you know, work out with me,
+[195.92000000000002:201.44] but then we don't have people in the class and also we don't have much time. So examples are
+[202.72:208.24] completely non-mandatory, you were free to try and do them, but you were not expected to do them.
+[208.24:218.08] So I would like to discuss, just, I'm going to pick a few, a few proofs, if that's fine for you guys.
+[218.08:227.92000000000002] So I am at the slide 11, which is the one on the proof by contradiction, we get proof that a set
+[227.92000000000002:233.44] of prime numbers is infinite. Now, I'm going to give you a few seconds to write on the chat,
+[233.44:239.20000000000002] if you have any question about specifically the excess sizes, not the examples, because some of
+[239.20000000000002:244.8] them are more tricky and you're not expected to have solved them. So if you have some questions on
+[244.8:251.28] the exercises that precede the question example four, then let us know.
+[258.24:271.84000000000003] I'll say five, four, three, two, one. Okay. So I find that this proof, the proof that all,
+[271.84:277.52] the set of all the prime numbers is infinite, one of the most elegant and interesting proofs in
+[277.52:285.59999999999997] the theory of numbers, because it's remarkably simple. So we want to prove that the set of
+[285.59999999999997:295.28] prime numbers is infinite. So just as a polling, how many of you have seen this proof?
+[295.28:303.91999999999996] Well, I guess that you have one was I mean, asynchronously, because. Okay. So the idea here to prove
+[303.91999999999996:309.67999999999995] that the set of prime numbers is infinite is to go by contradiction. Contribution is one of the
+[309.67999999999995:319.84] techniques that we have for proving results. And the idea is to try and negate the, to try and
+[319.84:331.2] negate the, what we want to prove and to get to a contradiction, namely to get to an implication
+[331.2:336.96] that cannot possibly be true, right? Or a contradiction of what we, of the negation that we state
+[336.96:343.76] in the first place. So here, let's say that the set of prime numbers is indeed finite.
+[343.76:352.88] Right. So we're going to have some P1, P2, Pn, right. And now all these numbers, right,
+[354.08:360.8] should consider, we assume that P1 to Pn are all the prime numbers they are, right? Now,
+[361.44:370.48] if we multiply P1 times P2 times P3 times Pn, we get an arguably large, but nonetheless finite
+[370.48:377.44] number, right? And this number is going to be divisible by every single one of the pence,
+[377.44:382.48] right? Because we just multiply it all of them together, right? Now, what happens if we add one
+[382.48:391.20000000000005] to this number? Because this number, module P1 is one. This number module P2 is also one, right? Because
+[391.20000000000005:397.28000000000003] this number was zero module of every single prime number that we argued was all the, all the prime
+[397.28:403.67999999999995] numbers that were, right? Which means that this new number, the product of all the pence plus one,
+[404.4:411.28] is not divisible by any of the previous prime numbers, right? Which means one of two things.
+[411.28:419.35999999999996] Either this new number is indeed a prime number, which contradicts the assumption that we made,
+[419.35999999999996:426.15999999999997] which P1, Pn were all the prime numbers that were, or it's divisible by some other number,
+[426.16:432.16] which in turn needs to be a prime number because it's not included in P1, Pn. So that's the idea.
+[432.16:437.52000000000004] So either we, so if we assume that the set of prime numbers is finite, we can constructively build
+[437.52000000000004:442.64000000000004] another number, right? Which is not divisible by any of them, which implies the existence
+[442.64000000000004:447.84000000000003] of some more prime numbers, which proves that the set of prime numbers is necessarily infinite,
+[447.84000000000003:454.48] right? And I am the line that the moment you assume that the set of prime numbers is infinite,
+[454.48:459.12] you can no longer do this trick when you multiply all them together, right? Because if you multiply
+[459.12:464.32] all the prime numbers together, you don't get a number, right? You just get infinite. Okay,
+[464.96000000000004:473.76] so this was just a warm-up example. I would like to see with you what? Yes, I think this
+[474.40000000000003:483.6] exercise here with the grid, right? Where's it? Here, yes. So one technique that we use extremely
+[483.6:490.48] often when starting algorithms is induction. So a proof-buy induction basically says,
+[490.48:499.12] yes, a property, a property being some statement that can hold true or false on a set is defined
+[499.12:506.88] on the set of natural numbers, right? And we can prove that the property holds for the first
+[506.88:513.12] natural number, namely one, or z depends on how you want to look at it, but that's the same thing.
+[514.0:523.84] And then you can prove that if the predicate holds for n implies that the predicate holds for
+[524.4:530.72] n plus 1, then you can use this axiom of induction. I am the line that it's an axiom,
+[530.72:534.32] so it's something that we can likely believe to be true, but it is improbable.
+[534.32:544.4000000000001] And using the axiom of induction, you can say that this property holds for all natural numbers, right?
+[544.4000000000001:552.88] Prove-buy induction is very useful because it helps us think in a very step-wise
+[552.88:558.48] fashion, right? Where we develop our arguments a little bit at a time and we should be
+[558.48:564.8000000000001] proved that the argument holds all the way to infinity if necessary. So the exercise here was
+[564.8000000000001:572.16] we want to prove that an n-chest board, right, whose size is 2 to the n times 2 to the n, so
+[572.16:579.44] every time, at every step, right, we can quadruple the chess board by just redoubling it
+[579.44:593.2] in all these four places. So we want to prove that the chess board can be entirely covered with L-shaped
+[594.72:604.5600000000001] tiles, right? So you see the example here in the exercise that we gave you, right? So the idea
+[604.56:613.1999999999999] here is to go by induction. Namely, we first prove that we can do this, we can cover everything
+[613.1999999999999:620.0799999999999] for n equal 1, so we have a chess board 2 to the 1 times 2 to the 1, which means 2 by 2,
+[620.0799999999999:628.4] and then we're going to try and prove that if it holds true for 2 to the n, then it also holds
+[628.4:636.88] true for 2 to the n plus 1. So the base case is quite simple, right? You have the base case,
+[636.88:644.72] which is, you have only one, I mean, 2 to the 0 times 2 to the 0, so it's only one, you need
+[644.72:652.96] you can cover it with exactly 0 L-shaped tiles, right? I'm going to, sorry guys, I'm going to move
+[652.96:661.6] you so that I can read. Okay, so now let's do this inductive step and let's suppose that this
+[661.6:669.52] property holds true for n greater than 0, right? Now, so this means that, you know, we add
+[671.6800000000001:682.5600000000001] we add 1 to n and we have this quadruple quadruple large, quadruple large 2 to the n plus 1 times 2
+[682.56:691.04] to the n plus 1 times, right? Now, so what we are going to do by, what we're going to prove
+[692.9599999999999:700.2399999999999] by induction, okay, sorry, just one second, I think I have a technical problem here.
+[700.24:711.44] Okay, second.
+[731.2:737.04] Okay, sorry guys, I'm back online. Can you all hear me? Yes, I assume that it should be good,
+[737.04:741.76] it should be good because I can see it on your one screen. Okay, so what we're going to do by
+[741.76:748.48] induction is the following. We're going to prove by induction, right, that not only we can cover the
+[752.0:759.28] the grid with L-shaped tiles, except for one element, but also that we can put this element
+[759.28:765.1999999999999] anywhere on the grid. So this is what we're actually going to prove. I'm going to go back to the
+[765.1999999999999:772.88] previous slide. Again, we have, where is it? Here, yes. Okay, so in the base case, obviously we can have
+[772.88:780.0799999999999] the empty, the empty dot, which is left free from the, from the tile anywhere, specifically in the
+[780.0799999999999:784.64] only place that we can, where we can have it, which is, you know, the only square that we have.
+[784.64:794.0] And now let's assume that we can do this for a grid in the shape of the size 2 to the
+[794.0:800.88] n times 2 to the n, right, which means that, you know, whatever we want to put this empty tile,
+[801.76:808.08] we can put it, right. So now say that we want to build a 2 to the n plus 1 times 2 to the n plus
+[808.08:818.1600000000001] 1 grid, right. We can do that by putting together for 2 to the n times 2 to the n grid, right.
+[818.1600000000001:824.08] Now, for each of these, we know that we can put a, you know, the empty dot that is now covered by
+[824.08:830.5600000000001] the tiles in an arbitrary position, right. Now, let's say that we want to achieve, let's pick an
+[830.5600000000001:837.2800000000001] arbitrary position in the 2 to the, 2 to the n plus 1 times 2 to the n plus 1 grid. So let's,
+[837.28:841.36] let's, this is just an example, an arbitrary position in this. And we want to, we want to prove
+[841.36:849.52] that we can cover the entire larger grid with L tiles, leading only that specific square,
+[851.8399999999999:857.76] not covered, right. So how can we do it? We know by the inductive step that we can place,
+[858.3199999999999:863.28] that for each of these, we can, for each of those smaller grids, we can place, we can,
+[863.28:871.12] we can cover them in tiles and we can place the, the non-covert tile, the non-covert point in the grid,
+[871.12:877.4399999999999] anywhere we want. So we can specifically say, for all the tiles that do not contain the empty
+[878.16:888.16] square that we want to leave free in a larger grid, we put the tile that is left empty in a corner.
+[888.16:892.56] So you, you can see in the third image here, in the top left, we're going to put it on the bottom
+[892.56:897.8399999999999] right, on the top right, we're going to put it on the bottom left and so on as the first. By
+[897.8399999999999:906.56] doing so, we are leaving an L shaped tile at the, at the middle of the, of the larger grid,
+[906.56:912.56] except that we're leaving an empty square, which is, you know, where we want to do it in the
+[912.56:919.04] first place. So we can obviously cover it with an additional tile and we get the, the grid as,
+[919.04:925.4399999999999] we were supposed to have it in the first place. So, bind action, we showed that if you can cover
+[926.0799999999999:934.4] an A2 to the N times 2 to the N grid with L shaped tiles, leaving an empty square,
+[934.4:939.76] whatever you want. You can also do the same for 2 to the N plus 1 times 2 to the N plus 1 grid,
+[939.76:944.56] right. So this is what just, this was just the exercise, I'm not going to go
+[944.56:953.04] through anything else unless you, unless you guys have some question on something that,
+[953.04:958.9599999999999] that was pretty, previous to this. I'm going to allow for a few seconds and then I'm going to
+[958.9599999999999:966.88] just move on to the gossip exercises. Okay.
+[966.88:978.4] So here we go. Okay, this is the second, this is the second exercise, this exercise session,
+[980.4:987.12] about links and gossip. So we have discussed these in the last, the last session. So I'm going to
+[987.12:994.48] skip on, on, on, on these and directly, I'm going to go to exercise one on the connectivity
+[994.48:1000.4] of undirected graphs, right. So you have two vertices, A and B, such that A is connected to B.
+[1000.4:1004.24] You want to prove that B is connected to A. How many of you had
+[1005.76:1011.28] trouble with this exercise? You have five seconds to type me in the chat.
+[1015.28:1022.8000000000001] Okay. Now what's, what's useful here? I'm going to give you the feedback and I'm going to try
+[1022.8:1029.2] and so I, I invite you to try and focus on whether or not you got it right and be very honest
+[1029.2:1036.1599999999999] with yourself. Okay. So this one is actually quite simple. So if A is connected to B then we just
+[1036.1599999999999:1041.6] use the definition of what connectedness means, right. It means that, that is a path that goes
+[1041.6:1047.76] from A to B. Now a path is just a sequence of vertices that begins in A and in B such that
+[1047.76:1055.92] for an end to consecutive vertices in the, in the path are linked together. Now we have that the
+[1057.2:1063.92] the graph is undirected, right. So if V is adjacent to W, so it, then W is obviously adjacent to V
+[1063.92:1070.08] because it's undirected. So every link is also reciprocated. The 45 invert P into P prime that goes
+[1070.08:1077.6] just, you know, just goes backwards from B to A. Then we have the P prime is also path, right. Why?
+[1077.6:1084.08] Because for every capital in P prime, we have that the inverse capital is part of P, which means
+[1084.08:1090.08] that the inverse capital is linked. But since the graph is undirected, the capital in P prime is
+[1090.08:1097.28] also connected, which makes P prime a path. I underline that if P is a path, then all the
+[1097.28:1103.84] couples are joined, but also every element of P is disjoint, like they are all different elements
+[1103.84:1110.0] of P. You cannot go back onto yourself with a path, right. And this holds through also for P prime
+[1110.0:1116.48] because the elements that, you know, compose P and P prime are just the same, just in different order.
+[1116.48:1123.68] Okay. So this is a very simple warm up exercise on why connectivity is as a matter of property,
+[1123.68:1131.04] right. Now let's also prove that connectivity is transitive. Now, how many of you had troubles
+[1131.04:1134.72] with this exercise? I'm going to have five seconds.
+[1140.3200000000002:1150.96] None? Okay. So I'm going to show you the solution. And I have the feeling that, I mean, usually,
+[1150.96:1158.56] when I show the solution, at least some people, you know, fail for a small detail trick, which I
+[1158.56:1164.16] think is extremely telling in the way we write tools. So it's the fact that, you know,
+[1164.16:1169.6000000000001] connectivity should be a transitive property on an undirected graph makes a lot of sense, right.
+[1169.6000000000001:1174.16] Intuitively, connectivity means that you can walk from a point to another point, right? And so,
+[1174.16:1178.72] if you can walk between a and b, and then you can walk between b and c, then obviously,
+[1178.72:1184.72] intuitively, you should be able to walk between a and c. However, in this example of connectivity,
+[1184.72:1190.24] the proof might be slightly less trivial than one could expect, right. The hint that we gave you
+[1190.24:1196.0] here was to double check the definition of path. Specifically, we wanted to attract your attention
+[1196.0:1202.48] on the fact that a path is necessarily made up of disjoint elements, right. So let's say that,
+[1202.48:1209.2] you know, we know that p, sort of that a and b is connected, b and c are connected. So two paths
+[1209.2:1215.44] must exist, one that goes from p, sorry, to a, one path p that goes from a to b and one path q,
+[1215.44:1222.24] that goes from b to c, right. Now, intuitively, the first thing that we could want to do is to
+[1222.24:1227.2] just join them, right. It would just append the first one to the second one, probably most of
+[1227.2:1231.04] you notice that you should, you know, exclude the first element of the second one because you cannot
+[1231.04:1237.52] walk from yourself onto yourself. And, you know, probably some of you might have thought, okay,
+[1237.52:1245.44] I'm done, right. Although this concatenation of paths is not going to need to be a path, why?
+[1245.44:1253.6] Because paths need to be disjoint, right. So this is a, I think a good example of, you know,
+[1253.6:1266.24] when a proof feels completely intuitive, right. And one might feel like proving it the way his or
+[1266.24:1272.8] her intuition suggests, but sometimes our intuition falls a little bit short on us, right.
+[1272.8:1278.32] Now, in this case, this, I mean, the result, obviously still holds true, and I'm not sure
+[1278.32:1285.2] immediately how we can make it hold true, right. But then sometimes the fact that we have this
+[1285.2:1290.32] intuition and we prove things in our way that's not completely formal actually leads us to believe
+[1290.32:1295.36] that some results are true while they are not. And believe me, this happened to me personally,
+[1295.36:1302.56] many times in trying to prove new, slightly more complicated results. Okay. So we have this issue
+[1302.56:1309.36] that if we concatenate p and q, then we are not guaranteed to have disjoint paths. Sorry,
+[1309.36:1315.04] disjoint elements in this path, right. So we can, what we can actually do is to, is to, to,
+[1315.76:1323.28] 32 cases, right. In one case, c can be somewhere in p, right. So if you know to go from a to b,
+[1323.28:1329.36] you gotta go through c, then obviously a is connected to c because you literally won't
+[1329.36:1336.1599999999999] wear while going towards b, right. The other possibility is that c is not on this path, right.
+[1336.1599999999999:1344.9599999999998] Now, however, since c is, since b is in both paths, what we can do is to go through p, right.
+[1344.9599999999998:1351.9199999999998] So go through all the elements of b, b1, b2, b3, b4, and so on and so forth. And for each
+[1352.8799999999999:1358.7199999999998] of them check if that element is in you. If it is, then we use that element as a link between
+[1358.72:1365.28] p and q, we skip all the end of b and all the beginning of q and we keep going from that point on.
+[1365.28:1372.56] So let's say that the i is equal to w, right. What we can do is, what we can build the path that
+[1372.56:1380.32] goes b1, vi, which is also equal to w, right. And then all the way to w, m, right. In doing so,
+[1380.32:1388.08] we have a path that is indeed made up of disjoint elements and all of them are connected, right.
+[1388.08:1394.1599999999999] So it's slightly more tricky, still very much understandable. I would like to see if there's any
+[1395.4399999999998:1402.32] brave people that did not see this tiny detail and that are willing to say, yes, I didn't on the
+[1402.32:1411.6] chest. In the meantime, I'm going to go to exercise 3. Exercise 3 was, I think, quite simple and it
+[1411.6:1418.6399999999999] followed from exercises 1 and 2, right. We have that connectivity is transitive and symmetric, right.
+[1420.24:1428.8799999999999] Which means that nobody said anything. Okay, fine. So this means that we can use these properties
+[1428.8799999999999:1436.08] to quickly check if a graph is connected. The idea is we pick any vertex, and now we start
+[1436.08:1443.4399999999998] revertex in among the set of vertices, right. We initialize the frontier set as to this vertex,
+[1443.4399999999998:1449.36] right. At the beginning, we have only the frontier, which is the set of nodes that we recently
+[1449.36:1454.8] discovered, right. And then we initialize an interior set, i, to empty. Now, at any point in time,
+[1454.8:1461.6] the frontier is going to be identified as set of vertices that we discovered at the last step,
+[1461.6:1466.6399999999999] and the interior, the ones that we discovered, you know, that are kind of old and we discovered
+[1466.6399999999999:1472.56] previously, right. And so the idea is that we grow the frontier to explore every possible
+[1473.84:1480.24] vertex that we can reach from the area is until f is empty. We pick an element f,
+[1481.04:1486.24] mullf from the frontier. We remove f from the frontier and we added to the interior set.
+[1486.24:1492.32] Namely, we decide, okay, this element of small f has been processed, and now, you know, it's an old
+[1493.04:1497.68] it's an old discovered node that we have already processed, right. And now for every element,
+[1498.48:1503.76] for every neighbor of the of the f, the small f that we just picked from the frontier and we moved
+[1503.76:1509.6] to interior, yes, and it's not was not previously discovered. So for every neighbor, if the neighbor
+[1509.6:1513.68] was not previously discovered, namely, it's not in the frontier or it's not in the interior,
+[1513.68:1519.04] then we added to the frontier. And we keep doing this, right. And in the end, we're going to end up
+[1519.04:1523.1200000000001] with an empty frontier. This is three we have to see because the frontier, an element goes into
+[1523.1200000000001:1528.0] the frontier only once, no more than once, and it gets out of the frontier eventually. So eventually,
+[1528.0:1532.64] we're going to have the different area something and at that point, we wonder the interior set
+[1533.2:1540.24] did we cover all of the graph, right. If we did, that means that for every one of them, for every
+[1540.24:1546.96] element that ended up in the frontier, there must have been a path that went from the vertex
+[1546.96:1552.4] all the way to that to that element from the original vertex B all the way to the element of
+[1552.96:1558.08] the frontier. And this you can easily prove by induction, right. Because literally every time you
+[1558.08:1563.6] take an element f from the frontier, let me move it to to i, you're building a path towards whatever
+[1563.6:1570.56] neighbor that f has, right. Now at this point, we proved that, I mean, we have an algorithm that can
+[1570.56:1581.12] tell us if any, for any specific vertex, right. If from B, we can reach every element of the set,
+[1581.12:1589.04] right. Now this is interesting because then at this point, we can, we don't even need to loop
+[1589.04:1594.72] over all the other ones, right. Which intuitively, we might feel like we might want to do that.
+[1594.72:1600.8] We don't need to do that. Why? Because as we proved before, connectivity is transitive and
+[1600.8:1608.08] symmetric. So if you have two elements, so if you have two elements A and B and you can go from B
+[1608.08:1613.68] to A and from B to B, then you can also go from A to B and from B to B and the further you can also
+[1613.68:1619.76] go from A to B, which means that the, that the entire graph is connected, right. Now let's go to the
+[1619.76:1628.5600000000002] gossip. I hope you didn't have too many problems with the gossip. Just exercise on how much time
+[1628.5600000000002:1634.48] we have not so much. I'm going to, okay, I'm going to skip this exercise here, exercise four on the
+[1634.48:1641.44] gossip unless somebody has some problems with it. You have five seconds to say that you have a
+[1641.44:1645.1200000000001] question. In that case, I'm going to, I'm going to do it. I'm going to do it in a little bit more
+[1645.1200000000001:1654.24] detail, but the idea here was just to, you know, prove, prove timely. Every single step, you could
+[1654.24:1660.3200000000002] do it by induction and, you know, prove that that a gossip message could be delivered by to the
+[1660.3200000000002:1664.72] entire system as long as the sub-graphic process is connected. Okay, I'm going to skip over this.
+[1664.72:1678.24] Okay, so this exercise here in gossip or just an idea on how to make the gossip a little bit
+[1678.24:1683.76] more stable, right. So in this exercise here, if you lose D, you obviously lose connectivity. So
+[1683.76:1690.48] if we merge A and C and then A and D, then you can indeed just go through all of them and see
+[1690.48:1696.4] that whatever you remove, whoever is left is also connected to all the others, right. This was just a
+[1696.4:1705.2] simple visual exercise that, you know, you could even severely brute force it. So we defined
+[1705.2:1713.04] k connectivity, we defined robustness. I'm going to also skip on this one. No, I'm not going to skip.
+[1713.04:1717.44] I'm just going to, okay, let's say that I'm just going to prove the forward, right. Let's say that
+[1717.44:1723.3600000000001] the gossip is k plus 1 connected, then the gossip must be, the gossip graph is k plus 1 connected,
+[1723.3600000000001:1729.2] and the gossip must be k robust. Can we prove it? Yes, we can do it by contradiction. So we assume
+[1729.8400000000001:1735.2] that the gossip is indeed k plus 1 connected, but we can find k processes and killing them,
+[1735.76:1745.3600000000001] we disconnect A and B, right. So what we can do is we know by hypothesis that there are P1,
+[1745.36:1751.28] Pk plus 1 paths, right. All of them are distinct and they connect A and B. Obviously, in this
+[1751.28:1756.0] story, we cannot kill either A or B because A and B need to be correct processes in order to
+[1756.0:1764.24] communicate. Now, we have the all these paths except for A and B are all distinct, right. They
+[1764.24:1770.6399999999999] don't touch the same elements, right. So in order for us to completely cut all these paths,
+[1770.6399999999999:1774.7199999999998] we would need to remove at least one element from the path. However, the number of paths is
+[1774.72:1783.04] k plus 1. Before, to kill all these paths, you don't have enough processes to close to crash,
+[1783.04:1787.76] in order to actually kill the connectivity between A and B. So that was quite simple.
+[1788.4:1793.76] This one goes to the random failures. How many people were comfortable doing this? Sometimes,
+[1793.76:1800.64] we will have more exercises and probability. So if you have issues with that, just let us know,
+[1800.64:1817.0400000000002] we can go. Use what? I am going to go read down the chat one second.
+[1817.04:1838.0] I am going to admit right away that I do not know of many of your theorem, but I would love to
+[1838.0:1845.76] know more about it. I am going to go read that as well and I am going to be able to answer that
+[1845.76:1866.0] question. I started the converse. I don't remember seeing a proof for the converse.
+[1866.0:1872.48] I last year, I don't think we came to a conclusion about this, but I am actually going to do
+[1872.48:1880.08] is read if this theorem has a chance of giving us a solution. If that is the case, I am going
+[1880.08:1885.84] to talk about it in the next exercise session. Thank you for the pointer.
+[1887.3600000000001:1892.32] I am going to go back to the random failures, but that is an interesting pointer. I am going
+[1892.32:1902.72] to try and figure that out. So, random failures, yes. We are here studying a scenario where
+[1902.72:1910.6399999999999] we have that each process has some probability or failure. So we have the sequence. So we have
+[1910.6399999999999:1918.3999999999999] a series topology of links between A and B and we want to check if they are able to communicate.
+[1918.4:1923.3600000000001] So the idea here is that, in order for them to be able to communicate, all of the nodes in the
+[1923.3600000000001:1928.3200000000002] middle and you have them need to be correct and they are correct with probability 1 minus
+[1928.3200000000002:1935.68] F. Now for all of them to be correct, since each of them is faulty with an independent
+[1935.68:1940.4] probability, you just multiply the probability together. So all processes survive with probability
+[1940.4:1945.6000000000001] 1 minus F to the n, which means that the link can clash with probability 1 minus 1 minus F to the n.
+[1945.6:1953.76] Similarly in series, I have defined it is slightly different because this time the link stays
+[1953.76:1965.76] active as long as any of the processes are due to an A and B survive. And if so the probability
+[1965.76:1971.84] that all of them are going to clash is just P to the n. So S to the n, because each of them
+[1971.84:1977.04] has an independent probability F of failing. So in order for all of them to fail, you have a
+[1977.04:1982.8] probability of that happening F to the n. So 1 minus F to the n is the probability that at least one
+[1982.8:1994.8] of them is going to be alive. So this is the solution. Now finally we had many elements in series
+[1994.8:2002.0] and in parallel and the trick there was two abstracts away a little bit and assume that every,
+[2002.0:2009.84] you know, you could you could notice that every series of nodes has a previously computed probability
+[2009.84:2014.8] of failure. And for each of them, this previously computed probability of failure is, you know,
+[2014.8:2022.72] independent. So you could basically join the two previous exercises, the two exercises that we
+[2022.72:2030.8] previously did in one by treating one series as if it was one process with a greater probability
+[2030.8:2036.4] of failure, right? So that's exactly what we did. So 1 minus F to the n is the probability that any series
+[2036.4:2047.3600000000001] of processes is going to clash and then one minus F is the probability that any specific
+[2047.36:2053.6] series is going to survive and then one minus all of that to the n is the probability that at least one
+[2053.6:2059.52] of the series are going to stay alive. I kind of see that in the chat that has questions. So I'm going to
+[2065.92:2073.44] Okay, so I am going to swap with the Yover soon and I'm going to read properly the comments that
+[2073.44:2079.84] you had about the conversation in the chat and after this, I'm going to try and figure this out
+[2079.84:2085.44] properly and I'm going to write a post on Moodle about that. Thank you. Thank you very much for that.
+[2085.44:2090.96] I'm going to skip entirely about the story of the restaurant glass because simply we just don't
+[2090.96:2098.08] have enough time. So I'm going to give the laptop to Yover and I'll go to the chat. Bye guys.
+[2098.08:2112.88] Okay, hello guys. I hope you hope you hear me. Okay, so as I see we have 10 more minutes. So I guess
+[2112.88:2120.3199999999997] we'll probably go a bit, you'll probably be a bit after six. So I ask you to stay if you can
+[2120.3199999999997:2127.2799999999997] until we finish this slide because besides because this is the first type of exercise that
+[2127.28:2135.0400000000004] are going to probably happen on the on the exact. So okay, we start now talking about the first
+[2135.0400000000004:2142.32] like distributed topic in this in this exercise sessions and those are this topic is reliable,
+[2142.32:2148.0] broad. So a reliable broad has to speak to much a problem of ensuring some communication
+[2148.0:2153.92] among the set of participants that as the name suggests should be reliable in a word. What does
+[2153.92:2160.56] that really means? Well, that means that we need to ensure some of the properties that you can see
+[2160.56:2165.92] here. So the first property is validity property. That simply says that if a correct process
+[2165.92:2172.0] broadcasts a message and which means sends to pretty much all the all the processes in the
+[2172.88:2179.6] in the system, then all the processes correct in the system will deliver this message and here
+[2179.6:2185.7599999999998] we slightly play with the properties and say that that then the sender will indeed receive and
+[2185.7599999999998:2191.04] I mean delivered this message. Then we have integrity that says pretty much that message
+[2191.04:2196.3199999999997] is delivered by a process at most ones. So you do not have no duplication property. You do have no
+[2196.3199999999997:2202.08] duplication property that you can find in the in the book of the course and it that it can only be
+[2202.08:2210.4] delivered if it was previously broadcast also it is called integrity property in the book.
+[2210.4:2215.2799999999997] And lastly we have agreement that says that if a correct process deliver is then all correct
+[2215.2799999999997:2224.64] process eventually deliver. So that's pretty much it. So we see here we see the lazy reliable
+[2224.64:2233.7599999999998] broadcast algorithm that ensures property properties that we just talked about and it uses perfect
+[2233.7599999999998:2239.04] failure detector. So perfect failure detector is a very I would say powerful tool because it
+[2239.04:2246.64] pretty much gives hints to all the processes about all the processes that have that have crashed.
+[2246.64:2255.2799999999997] So perfect failure detector is described in using two properties. The first property is strong
+[2255.2799999999997:2260.4] accuracy property that simply says that no correct process will ever be suspected or detected
+[2261.44:2267.2799999999997] which is the same thing here when we when we talk about eventually perfect failure detector as
+[2267.2799999999997:2274.72] you will see this is not be the same. So here suspected is equal to detector. And the strong
+[2274.72:2282.24] completeness that says that eventually all correct processes eventually every faulty process
+[2282.24:2288.64] which means every process that crashed will be permanently suspected equals to detected by
+[2288.64:2294.08] every correct process in the system. So this algorithm should be pretty pretty simple and I will
+[2294.72:2300.3199999999997] just skip skip that if you of course have any questions we can we can discuss it in more details.
+[2300.32:2307.36] So the first exercise now simply asks you to implement the same thing so implement this
+[2307.36:2312.6400000000003] reliable broadcast that is also called regular reliable broadcast that you will see without
+[2312.6400000000003:2319.6800000000003] using failure detector. So now you pretty much do not have hints about which process processes
+[2319.6800000000003:2327.6800000000003] have crashed and you are still asked to implement this same abstract. The exercise 2
+[2327.68:2339.44] the exercise 2 asks you to kind of optimize a bit this algorithm that we see here which is
+[2339.44:2347.44] exactly the same one as in the previous slides in a sense that you are asked to garbage collect
+[2347.44:2353.7599999999998] or which means to clean in a way some of these some of these variables here. So we have a
+[2353.76:2362.2400000000002] from set in this implementation which will which can increase it definitely if you do not
+[2362.2400000000002:2367.6000000000004] kind of cut some of its content sometimes. So we ask you to do that and we also ask you to do
+[2367.6000000000004:2375.6800000000003] the same for the delivered set. Okay so I mentioned that the regular that the broadcast we talked
+[2375.6800000000003:2381.84] about was called usually regular reliable broadcast. Why is this the case? Well this is the case
+[2381.84:2387.44] because we have one variant of the agreement property that says that if a correct process
+[2388.1600000000003:2393.1200000000003] delivers a message then all the other correct process deliver a message which simply means that
+[2393.6800000000003:2400.0] if we have a process p that delivers a message and but then in million years for example
+[2400.0:2407.2000000000003] process p dies it is not ensure that any other correct process will deliver the same message.
+[2407.2:2415.04] Here we want to ensure even stronger guarantee that says if any process whether it is correct or
+[2415.04:2421.12] faulty which means that whether it's gonna let's say live forever or die delivers a message
+[2421.12:2427.4399999999996] then all correct process eventually deliver the message. So I hope that you understand the difference
+[2427.4399999999996:2432.8799999999997] between this two. I know that Russia probably emphasized it but if you have any questions please
+[2432.88:2439.52] let us know so we can answer because it is really important to distinguish these two versions
+[2439.52:2449.52] of the agreement property. So now here again we see the algorithm for a uniform reliable broadcast
+[2449.52:2456.8] that is what this stronger form of reliable broadcast is called and again this algorithm uses
+[2456.8:2464.2400000000002] perfect failure detector. Again I hope you saw this on on on the lecture so since we don't have
+[2464.2400000000002:2472.48] enough time I will just keep over it. Of course any questions you can. I have to go ahead if you
+[2472.48:2477.6800000000003] want to discuss in the bit just go ahead and do it. Okay. Take care because we will still upload
+[2477.6800000000003:2483.36] the video on website. Okay. So if you need to take a little bit more time I think it's better if
+[2483.36:2492.7200000000003] you just do it and then people can go on. Okay. Okay. Okay. So it was a good point from a tell. So
+[2492.7200000000003:2497.52] I will pretty much explain you this algorithm and if you need to go then since we are going to
+[2497.52:2503.36] go into post the video afterwards you can watch it. You can watch it later. So very good point. So
+[2503.36:2508.8] okay. So here we again use best effort broadcast which is pretty much nothing nothing nothing
+[2508.8:2516.4] else than simply sending a message to all participants we are perfect links but remember that we
+[2516.4:2522.32] using best effort broadcast we do not have any guarantees on who is going to indeed deliver the
+[2522.32:2528.32] message if the sender is fault. And again we use perfect failure detector with all the things that
+[2528.32:2535.6800000000003] we all the things that we mentioned before. So all two properties completeness and accuracy.
+[2535.68:2545.6] So what does a process do when it invokes this broadcast message? So it pretty much just sends
+[2545.6:2552.24] this message to everyone as we can see here I hope you see my cursor to every single process in
+[2552.24:2562.56] the system using best effort broadcast. Again upon the initialization of a process process takes
+[2562.56:2572.4] care of three I mean four variables. The delivered variable that is there to signal which messages
+[2572.4:2578.4] are delivered there is this pending variable that we are going to talk about in a minute correct
+[2578.4:2585.2] variable which simply states which processes are correct which means which processes are not
+[2585.2:2594.56] observed to have crashed and acknowledgement variable that again we are going to talk about
+[2596.08:2603.7599999999998] in a moment. So we said a correct process broadcast so a process since we are in a crash stop
+[2603.7599999999998:2610.3999999999996] denying for failure model a process broadcast message using best effort broadcast simply sends it
+[2610.4:2618.88] to every single process in the system in this one. What happens when a process delivers receives
+[2618.88:2624.64] let's call it let's say receives which means really to deliver but from best effort broadcast
+[2624.64:2632.7200000000003] obstruction please do not do not do not confuse this with the delivers with respect to
+[2632.7200000000003:2639.92] unit from reliable broadcast that we indeed want to achieve. So the first thing is it updates
+[2639.92:2649.04] is acknowledgement, acknowledgement variable which simply means okay now I know which processes
+[2649.04:2655.76] have seen this messenger. So if I receive a message if I deliver from best effort broadcast
+[2655.76:2662.4] a message sent by a process P I can be sure that process P have process P has seen this messenger.
+[2662.4:2670.8] What they do next then I check pretty much whether this is the first time I see this message. If
+[2670.8:2678.08] this is indeed the first time I see this message which is done by this track here I say I update
+[2678.08:2683.28] my pending variable that says yeah okay I saw this message now everything is fine and I do
+[2683.28:2688.08] the same I rebroadcast using best effort broadcast this message to every single person.
+[2688.08:2699.04] Okay what happens when a process gets a hint that some process has passed well it simply updates
+[2699.04:2707.52] the list of correct processes by simply removing that process from the list. And let's now talk
+[2707.52:2715.12] about the interesting part of the algorithm. Let's talk about when a process delivers a message
+[2715.12:2721.3599999999997] but now when I say deliver I mean deliver from the uniform reliable broadcast primitive. As I said
+[2721.3599999999997:2731.04] please do not confuse this with the notion of the delivery from the best effort broadcast that we
+[2731.04:2739.12] have there already implement. Okay so if I see that there is a message jam of course with some
+[2739.12:2748.3199999999997] with some sender S that I have seen which means that it is in my pending it is in my pending variable
+[2748.3199999999997:2756.4] and that I of course did not deliver this message but again deliver from uniform reliable broadcast
+[2756.4:2764.48] obstruction and this can deliver predicate it is true I can do that and this can deliver predicate
+[2764.48:2774.48] is true when when it is true when the set of correct processes that I know is subset of all the
+[2774.48:2780.88] processes that have acknowledged this message. So why is this important? Well this is important
+[2780.88:2792.32] because I now know that every single correct process has seen this message and this is why I can
+[2792.32:2801.6800000000003] this is why I can this is why I can deliver it because I know that there is not a correct process
+[2801.6800000000003:2809.2000000000003] that is unaware that there exists a messenger. So this is pretty much how we gain uniform
+[2809.2000000000003:2817.2000000000003] agreement. So this is why this is how it is insured that if any process faulty or correct delivers
+[2817.2:2824.16] a message there will the all other correct process will indeed deliver the message. So if you
+[2824.16:2834.56] have any questions please let me know I will give you a few seconds. I think you saw this in
+[2836.7999999999997:2843.7599999999998] in lectures so I guess it's going to be fine. Okay let's continue. So in the exercise 3
+[2843.76:2854.0800000000004] we simply ask you to tell us what will happen or what can happen if implementations of reliable
+[2854.0800000000004:2860.48] broadcast, regular reliable broadcast and uniform reliable broadcast with perfect failure detectors
+[2862.5600000000004:2870.0800000000004] fail in a sense that perfect failure detector loses its ability to achieve accuracy which means
+[2870.08:2877.2] that as you remember accuracy simply means that no correct process is ever detected by any process
+[2877.2:2883.2] or completeness which means that completeness says that eventually all correct process detect
+[2884.72:2894.72] all processes that that crash. Okay then we talk about the fourth exercise that again
+[2894.72:2900.9599999999996] similarly to the regular reliable broadcast asks you to implement uniform reliable broadcast but
+[2900.9599999999996:2907.2] now again without any failure detector. Let me just give you a hint I don't know whether you saw
+[2907.2:2915.12] this on lectures but the hint is that you must introduce another user to introduce another
+[2916.24:2920.72] assumption and that assumption should be on the number of faulty processes in the system.
+[2920.72:2930.56] So that is the exercise and this is extremely important exercise so please take your time with it.
+[2931.8399999999997:2944.48] Okay any questions? It looks fine. Okay so now we are going to conclude this session by talking
+[2944.48:2955.6] about causal broadcast. So now causal broadcast introduces another dimension on pretty much
+[2955.6:2961.44] guarantees that we want to provide and this simply means that we now want to establish some kind of
+[2961.44:2970.8] order between events in other words order between messages. So we define and we introduce this
+[2970.8:2978.32] relation happens before and we say that an event happens before event E happens before an event
+[2978.32:2986.0800000000004] E prime if one of the following three case cases calls. So the first case is simply that these two
+[2986.0800000000004:2991.6800000000003] events are executed by the same process by the same process and now of course you can order them.
+[2991.68:3002.72] The second case says that this event E represents an event of sending a message and where E prime
+[3002.72:3010.08] represents an event of receiving a message and lastly it is a transitive relation which
+[3010.08:3019.44] simply means that E happens before E prime if there exists some event is the condom such that E
+[3019.44:3025.52] happens before E is condom and E is condom happens before E. Okay let me just give a brief introduction
+[3025.52:3033.12] and a brief let me just discuss briefly what an event is. So what we usually do in distributed
+[3033.12:3041.36] computing is that we model processes as state machines and what state machines have is they have
+[3041.36:3050.0] some input events they observe they then react on them and produce some output events. So this is
+[3050.0:3057.6] the notion of events that we kind of talk talk talk about here. So usually I mean for the sake of
+[3057.6:3065.04] this course we can talk about events of sending the message a message receiving a message. Of
+[3065.04:3071.44] course if we if we have if we have perfect failure detectors and any failure detectors we can
+[3071.44:3076.8] talk about events of observing that across the scratch and stuff like that. So I hope that this is
+[3077.52:3084.56] at least a little bit clearer here but for this causal broadcast we are going to we are going to
+[3084.56:3096.48] focus on messages. So what we say here is that what we represent here is that this additional
+[3098.64:3108.96] additional guarantee that if we have one process that is the firstly broadcast domestic
+[3108.96:3117.36] jam and then M prime that we want to ensure that no process delivers M prime unless it has already
+[3117.36:3124.4] delivered M. It is important to mention here that this specification as we write it here is known
+[3124.4:3130.7200000000003] sometimes as a fee for order broadcast because we are just concerned about order of broadcasting
+[3130.72:3139.04] messages. But if you take a look at the book and if you if you want to generalize even more you can
+[3139.04:3148.3199999999997] say that if you have two messages M and M prime such that message M prime happens before message
+[3148.3199999999997:3154.8799999999997] jump prime which I will explain in a bit then no process delivers M prime before delivering
+[3154.88:3163.12] message M. However now this happens before relation is slightly different. So a message M happens
+[3163.12:3170.88] before message M prime or as Rochita refers to it in this book causes message M prime if
+[3172.88:3178.7200000000003] there is the same standard of both messages M and M prime and M is being broadcast before
+[3178.72:3188.0] message M prime which corresponds to this case or a process receives delivers message M and then
+[3188.0:3194.56] broadcast message M sends message M prime which pretty much corresponds to this case or again
+[3194.56:3201.9199999999996] there is some message M secundum such that M causes M secundum and M secundum causes M prime
+[3201.9199999999996:3206.16] which corresponds to this case. Do you see the difference and do you see the difference between
+[3206.16:3212.56] what they just talked about and from the and this specification that is written here.
+[3215.52:3223.7599999999998] Okay it looks like we are fine. Now we have this exercise 5 that says that is it possible to
+[3223.7599999999998:3229.3599999999997] device an algorithm or broadcast algorithm that does not ensure the causal delivery but only
+[3229.3599999999997:3235.6] non-uniform variant which means that no correct process delivers a message M to unless it
+[3235.6:3242.0] has already delivered the message M 1. So just think about it and see whether this makes sense
+[3242.0:3251.12] whether we can indeed do that. Then we give you similarly to the first part part of the session
+[3251.12:3259.2] we give you two algorithms of causal order broadcast and we ask you to optimize it by using
+[3259.2:3267.7599999999998] some some some kinds of some type of garbage collection scheme. exercise 7 also an interesting
+[3267.7599999999998:3277.52] question says ask you to say to us whether we can device a causal order broadcast but without
+[3277.52:3284.3999999999996] causal delivery with causal delivery property that we just discussed to to variants of it but
+[3284.4:3292.32] without that broadcast being indeed reliable. So which means that we do not want to have
+[3292.32:3296.7200000000003] agreement property. So take the specification of causal order broadcast remove agreement
+[3296.7200000000003:3303.2000000000003] property and tell us whether we can do it and whether that makes sense. And the last exercise is
+[3305.12:3312.4] is concerned with rating causal broadcast implementation of causal order reliable broadcast
+[3312.4:3320.8] and we ask you in this implementation we ask you if you take a look at if you take a look at
+[3320.8:3329.04] this line and implementation of this line since these are vectors is is given here we ask you why
+[3329.04:3339.28] do we not strictly use less than but so we use less or equal than but and we ask you why
+[3339.28:3347.52] why is this the right way to go and why don't we simply use just less than. And this is it for
+[3347.52:3355.6000000000004] this session thank you very much for for for sticking with us and if you have any questions before
+[3355.6000000000004:3368.1600000000003] we finish please let us know if now we can we can conclude this session. Okay thank you guys very
+[3368.16:3374.16] much and yeah see you see you next week bye

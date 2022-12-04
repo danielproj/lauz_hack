@@ -1,0 +1,471 @@
+~Lecture 1 (2021) part 1
+~2021-09-27T09:24:40.758+02:00
+~https://tube.switch.ch/videos/O1G2xRWzDD
+~EE-556 Mathematics of data: from theory to computation
+[0.0:3.0] So we are now recording.
+[6.0:12.0] So we normally record all of these lectures and post them after the course.
+[12.0:14.0] Okay.
+[14.0:20.0] Again, go to model, all the relevant links are listed there.
+[20.0:26.0] Switch to link, model link, PDF, material.
+[26.0:34.0] And if you want to go see all the slides from last year, so the PDF material, go to my lab page,
+[34.0:36.0] lions.dps.dh.
+[36.0:38.0] Look at the courses.
+[38.0:42.0] You can look at the math of data 2020 edition.
+[42.0:51.0] So all the PDFs are also listed there so that you can see how they feel as to what is coming.
+[51.0:59.0] All right. So what are we going to do today?
+[59.0:63.0] Again, so what people do.
+[63.0:66.0] Actually, I think I have an idea for the second hour.
+[66.0:72.0] What I will do is I'm going to have both PDFs here, maybe share the screen from here.
+[72.0:77.0] So that this is better and then share iPads separately and write.
+[77.0:81.0] Okay. So maybe give us some solution out.
+[81.0:89.0] What we're going to do today is I'm going to give you an overview of some of the goals I have for this course.
+[89.0:95.0] And we're going to start with what is called as supervised learning.
+[95.0:96.0] Okay.
+[96.0:101.0] We're going to do a little bit of risk minimization.
+[101.0:113.0] And then we're going to talk a little bit about statistical learning theory and some of the tenets of statistical learning theory.
+[113.0:114.0] All right.
+[114.0:118.0] Now, here is some recommended preliminary material.
+[118.0:125.0] When you go to model, you'll see three PDF files where there are lectures.
+[125.0:136.0] Now, I have some pretty good TA, some of whom asked if they can record lecturing about these PDFs.
+[136.0:141.0] So if you're interested, so the PDFs are already there for you to study.
+[141.0:149.0] So if there is demand, I can tell them, hey, you know, if you want to record one, you're welcome to record and they can put it on switch to.
+[149.0:150.0] Okay.
+[150.0:155.0] So let me know the first one is on linear algebra.
+[155.0:160.0] Now, this linear algebra actually really is the good linear algebra supplementary.
+[160.0:167.0] It really takes you from basic level to a little bit more advanced level.
+[167.0:173.0] There is even some tensed the compositions operator norm stuff that maybe you're not familiar with.
+[173.0:175.0] So it is good to learn.
+[175.0:182.0] What I'll do is I'm going to cover some material that I really need for the course myself.
+[182.0:185.0] Next week.
+[185.0:194.0] I think restitation to I cover some somewhat advanced but some linear algebra material myself.
+[194.0:198.0] There's a bit of basic probability.
+[198.0:213.0] And a little bit about complexity, right? So perhaps some of the computer science majors know about the big goal notation, little omega data notations, which we tend to use in the course.
+[213.0:218.0] If you want to learn more about them, it's in the complexity slides.
+[218.0:228.0] All right. And by the way, I will also provide two handouts.
+[228.0:233.0] One will be on probability with a recorded solution.
+[233.0:237.0] So the idea is that this is just a handout for you to study.
+[237.0:244.0] I think it will give you a good idea as to what we're going to do in this course or the kind of things we do in this course.
+[244.0:249.0] So I'll just give you the handouts. So there will be questions and so on so forth.
+[249.0:255.0] Take a look at it for three weeks and then we're going to release the solutions as well as a video about it.
+[255.0:259.0] And then there will be another handouts.
+[259.0:264.0] There won't be any homeworks until I don't know, maybe third or the fourth week or something like this.
+[264.0:267.0] Is this clear?
+[267.0:272.0] All right. If you have questions and marks, let me know.
+[272.0:278.0] Okay. Now let's begin.
+[278.0:287.0] So I don't know. The machine learning in my personal opinion is now becoming something like a new religion.
+[287.0:290.0] Because of the success it's having.
+[290.0:293.0] There are lots of followers.
+[293.0:298.0] You get the game quite a bit by understanding it.
+[298.0:310.0] And you can think of this course being at the intersection of machine learning a little bit about signal processing and optimization.
+[310.0:316.0] There are lots of information theoretic and statistical concepts that are in there.
+[316.0:323.0] And you will see that the course itself is a quite a bit of algorithmic emphasis.
+[323.0:331.0] So we what we do is we cover formulations.
+[331.0:335.0] And then we cover algorithms to solve these formulations.
+[335.0:348.0] And then we try to have a broad overview of the trade-offs that they incur in the face of data and some constraints.
+[348.0:354.0] Now, as you can see, and I think this is a very good description.
+[354.0:363.0] So what we do is we present data models, optimization formulations, algorithms, and some analysis techniques.
+[363.0:370.0] Now, for many of the things I talk about, there are proofs.
+[370.0:375.0] And I consider those proofs as advanced PhD material.
+[375.0:382.0] These proofs are oftentimes included at the end of the slides.
+[382.0:387.0] But you're not responsible for it in the homeworks nor in the exam.
+[387.0:392.0] So if you would like to study and understand these proof techniques, you're welcome to look at them.
+[392.0:395.0] I'm also happy to discuss them with you.
+[395.0:402.0] But you're not responsible for some of the proofs that are in the lectures.
+[402.0:407.0] Especially if the slides have a star on them.
+[407.0:415.0] So if you see a slide with a star on it, PhD material.
+[415.0:421.0] So don't be scared if you think on a first look it is a bit advanced.
+[421.0:431.0] So hopefully by following the course or you look at it later on at another time, you may want to look at them.
+[431.0:434.0] Alright.
+[434.0:450.0] Now, we'll also try to do a little bit of things on bias and some discussion on the ethical issues on machine learning.
+[450.0:456.0] So to have a broader perspective because you know, but the math exams can do so much.
+[456.0:467.0] There are other things that we need to bring in and these are important topics that people have discussions on.
+[467.0:469.0] Okay.
+[469.0:479.0] So what I'll do is I'm going to begin with the classical statistical learning framework of that Nick.
+[479.0:485.0] And the framework is very interesting.
+[485.0:492.0] So here is the framework we're going to use.
+[492.0:499.0] We're going to talk about statistical learning problems that have three elements.
+[499.0:505.0] One will be a generator that produces some samples.
+[505.0:508.0] Okay. Could be images.
+[508.0:512.0] I'm going to call them a eyes.
+[512.0:517.0] And there's a supervisor that takes in all of these.
+[517.0:528.0] Let's say features and then it finds a sample which is typically random variable based on some conditional distribution.
+[528.0:531.0] Yeah.
+[531.0:540.0] Then the third element will be the learning machine, which is a play on words for machine learning.
+[540.0:549.0] And the learning machine, what it will do is it's going to look at these a eyes.
+[549.0:556.0] So look at these be eyes and try to figure out the mapping from AI to be.
+[556.0:561.0] Is this clear?
+[561.0:567.0] Now what it'll do is it'll try to learn a functional mapping and this function.
+[567.0:571.0] I will refer with the letter H.
+[571.0:583.0] So this H will be in some function class, color, graphic, telegraphic H, all origin in some function space.
+[583.0:594.0] And with this kind of a block diagram, we're going to study regression, classification and density estimation problems.
+[594.0:601.0] So let's begin with a classification example to make things a little bit more concrete.
+[601.0:603.0] Yes.
+[603.0:608.0] The random variable we have told me about does not depend on data.
+[608.0:609.0] In the in this.
+[609.0:615.0] So the question is does the random variable be I depend on AI?
+[615.0:621.0] It does in supervisors model.
+[621.0:629.0] So perhaps an example would make things a bit clearer and let's go over three examples.
+[629.0:636.0] So that perhaps the questions will remain we can get back to it.
+[636.0:637.0] All right.
+[637.0:641.0] I don't know if any of you has done this.
+[641.0:657.0] 23 and the genetic test that taking some sample, there's some analysis and tells you certain things about you.
+[657.0:668.0] When I was at sabbatical in Taltek, I got a free one and I sent one in without thinking about implications.
+[668.0:675.0] So it does. It looks at things like whether or not you will have Alzheimer's.
+[675.0:679.0] Well, fortunately there wasn't anything in the genetic test.
+[679.0:683.0] But in retrospect, I was like, what am I doing?
+[683.0:693.0] Signs is at a point where with data, which is maybe the new fuel, you get to discover a lot.
+[693.0:700.0] You get to learn from other people's mistakes. Let's say a lot of phone this marks style.
+[700.0:701.0] All right.
+[701.0:707.0] So let's take this particular cancer prediction example.
+[707.0:714.0] So here we have a goal to assist doctors and prognostics of cancer.
+[714.0:718.0] The idea is that you get some data.
+[718.0:725.0] The generator is your genome data. How does it come? Well, nature or nurture.
+[725.0:729.0] However you want to explain it or God.
+[729.0:733.0] So you have your genetic data.
+[733.0:736.0] AI. All right.
+[736.0:739.0] Now there's this supervisor.
+[739.0:743.0] Again, I don't know. God or nature.
+[743.0:750.0] All right. Look at your genes and somehow determines you have cancer or not.
+[750.0:762.0] All right. So be I will be, let's say one, if you have cancer, minus one, if you do not have cancer.
+[762.0:771.0] Now your job is, should you truly accept it as the learning machine, try to figure out this functional mapping
+[771.0:777.0] that takes in your genome and predict whether or not you have cancer.
+[777.0:784.0] So obviously the label BI has some dependence on AI.
+[784.0:788.0] And so maybe the question just a little while ago.
+[788.0:797.0] And you know, this function somehow takes in genes or a description or a representation of genes
+[797.0:802.0] and then gives you a prediction.
+[802.0:806.0] We have ton of data. There are databases.
+[806.0:812.0] And we have actual diagnoses for people that do not they have cancer.
+[812.0:816.0] And we try to use this data to come up with methods.
+[816.0:821.0] Is this clear?
+[821.0:826.0] Use the regression example.
+[826.0:834.0] House pricing. Has anybody tried to buy any house here in Switzerland?
+[834.0:844.0] It's crazy. All right. So there are there are web pages.
+[844.0:854.0] In fact, some colleagues make money out of this particular business in that they look at where a house is located.
+[854.0:857.0] The prices of the neighboring area.
+[857.0:870.0] How far it is from the metro from the bus, whether or not it has a self orientation, whether or not it's a single house or split.
+[870.0:873.0] Whether or not it's close their road or not.
+[873.0:876.0] You know, we take in features.
+[876.0:880.0] And then the goal is to predict the price.
+[880.0:884.0] And banks for example are extremely interested in this.
+[884.0:891.0] The reason being is that house prices tend to be subjectives because people don't sell their houses.
+[891.0:895.0] For the actual price they made them.
+[895.0:898.0] There is always a supply and demand.
+[898.0:909.0] And what the banks do is that they use the learning machines taking these features and then give a price to a house.
+[909.0:912.0] Let's say two million.
+[912.0:915.0] Frank's crazy.
+[915.0:921.0] And that's like an entry house in a QB loan.
+[921.0:935.0] The idea being is that if the owner is killing it for three million and you would like to get a loan, the bank will never give you a loan beyond the actual value.
+[935.0:947.0] So when you need to put down the 20% of the house, you not only need to do that, but also cover the excess one million if you actually need to get a loan.
+[947.0:953.0] So there are some applications of this particular regression problem here.
+[953.0:959.0] So maybe you want to exist a home owner in selling their house.
+[959.0:965.0] Maybe you can tell them you can sell it a bit higher than they think.
+[965.0:969.0] Or you can help the bank evaluate the house.
+[969.0:976.0] So you take in features like location, size, orientation, view, distance, public transport.
+[976.0:979.0] And BIs are going to be the price.
+[979.0:985.0] Millions.
+[985.0:996.0] So here the supervisor role could be maybe home gates compared to the other website sites that actually.
+[996.0:999.0] Divy evaluations as well.
+[999.0:1006.0] And here the generators are of course, you know, the owners, the constructors and so on so forth.
+[1006.0:1020.0] And hopefully you'll be you can actually offer this this course, you can build regressors to do things like this.
+[1020.0:1023.0] Let me give you a density estimation example.
+[1023.0:1028.0] The density estimation problem is a fundamental problem statistics.
+[1028.0:1037.0] The idea is that you're given bunch of samples and what you would like to do is learn the distribution of these samples.
+[1037.0:1042.0] Now this is a bit of a tricky situation because let me tell you the following.
+[1042.0:1044.0] So in general.
+[1044.0:1047.0] What I mean by density learning.
+[1047.0:1053.0] It's tricky business. So let me just give you one example here.
+[1053.0:1061.0] All right. So let's say we have a density some nice thousand density.
+[1061.0:1065.0] In density learning problem.
+[1065.0:1071.0] You don't have this density what you have are samples.
+[1071.0:1078.0] Okay. The issue here is that it's not like somebody gives you a sample and then tells you its probability.
+[1078.0:1083.0] Right. Then it will be my very nice regression problem.
+[1083.0:1090.0] Okay. What they actually end up getting are samples in the following stands.
+[1090.0:1095.0] So you get let's say more samples here.
+[1095.0:1102.0] As you go away from the center of the gas. You get less.
+[1102.0:1108.0] And less samples. Okay.
+[1108.0:1117.0] So what you end up getting are these reds. Right. So the values here.
+[1117.0:1124.0] What you would like to do is learn this curve.
+[1124.0:1128.0] This is the density learning problem.
+[1128.0:1130.0] Does this make sense?
+[1130.0:1135.0] So the distinction from the regression should be clear at this point.
+[1135.0:1141.0] In that if I were to give you the samples and their probabilities.
+[1141.0:1144.0] Then this could be actually a regression problem.
+[1144.0:1148.0] Right. You're trying to fit a curve to the probability.
+[1148.0:1150.0] So here.
+[1150.0:1154.0] So this actually could be the probability.
+[1154.0:1156.0] But you're not actually given probabilities.
+[1156.0:1161.0] You just given some frequency data. All right.
+[1161.0:1166.0] Does this make sense clear clear?
+[1166.0:1169.0] Okay.
+[1169.0:1176.0] For example, there are bunch of important things.
+[1176.0:1179.0] For example, the face generation.
+[1179.0:1184.0] I think that there is like a deep fate.
+[1184.0:1187.0] Whatever exposition here.
+[1187.0:1194.0] But the idea is that what you do is you learn the density of faces.
+[1194.0:1197.0] Condition on the say some posts.
+[1197.0:1199.0] You can take a video.
+[1199.0:1203.0] There are very good poll estimators for the face.
+[1203.0:1204.0] All right.
+[1204.0:1208.0] What you do is you take the density estimator and then you.
+[1208.0:1213.0] You generate for example faces and switch it on the face of the person.
+[1213.0:1217.0] This way.
+[1217.0:1221.0] You can for example.
+[1221.0:1224.0] In Mandalorian have you know.
+[1224.0:1228.0] Luke come back with the younger self.
+[1228.0:1229.0] You know.
+[1229.0:1232.0] While this is interesting, there are more interesting examples.
+[1232.0:1236.0] So I had some colleagues at the EA sports.
+[1236.0:1238.0] What they do is.
+[1238.0:1242.0] To build cities and environments in computer games.
+[1242.0:1245.0] Money for the artists.
+[1245.0:1246.0] Okay.
+[1246.0:1247.0] Building.
+[1247.0:1249.0] Making the scenery.
+[1249.0:1251.0] And they've been doing that for a while.
+[1251.0:1253.0] What they want to do is learn.
+[1253.0:1258.0] A distribution on how a city should look like.
+[1258.0:1260.0] And then when you run your game.
+[1260.0:1263.0] It will generate.
+[1263.0:1265.0] Such a city for you.
+[1265.0:1266.0] Right.
+[1266.0:1268.0] I think this.
+[1268.0:1270.0] This gaming application.
+[1270.0:1272.0] I'm going to give you.
+[1272.0:1274.0] I wasn't actually going to integrate the.
+[1274.0:1276.0] Like all the way to the abla.
+[1276.0:1280.0] I don't know if anybody played the outlook before.
+[1280.0:1282.0] Maybe I'm getting Nord chills but.
+[1282.0:1286.0] In the abla, whenever you played it was a randomly generated.
+[1286.0:1287.0] Dungeon.
+[1287.0:1288.0] Right.
+[1288.0:1289.0] So.
+[1289.0:1290.0] You can do something like that.
+[1290.0:1292.0] If you learn the distributions over dungeons.
+[1292.0:1296.0] Then if you ask for a sample, you can get a dungeon off.
+[1296.0:1297.0] Right.
+[1297.0:1302.0] Let's say you're given some data.
+[1302.0:1307.0] Maybe you have frequencies or not.
+[1307.0:1311.0] And what you would like to do is maybe learn a density.
+[1311.0:1314.0] And here's another example.
+[1314.0:1317.0] So would you give a Rubankay sent?
+[1317.0:1320.0] Sent us an email about a new challenge.
+[1320.0:1324.0] So TNB put the bank.
+[1324.0:1329.0] Once you learn distributions over stock market data.
+[1329.0:1330.0] All right.
+[1330.0:1333.0] If you advanced well enough in this course,
+[1333.0:1335.0] you can enter that challenge.
+[1335.0:1341.0] The idea is that you want to learn a distribution in how stocks are behaving.
+[1341.0:1344.0] Maybe conditioned on some factors.
+[1344.0:1349.0] You can then make all kinds of risk predictions.
+[1349.0:1359.0] Having an ability to compute risk is super powerful in making certain decisions.
+[1359.0:1367.0] For example, do you such density estimations in order to sample in order to drive
+[1367.0:1375.0] sampling medical devices to reduce uncertainty about your, let's say, MRI image.
+[1375.0:1380.0] And I'll give you examples about that in the class.
+[1380.0:1382.0] Okay.
+[1382.0:1384.0] Now, how do we begin?
+[1384.0:1388.0] I so like, I hope the problem settings are clear to you.
+[1388.0:1395.0] Questions about the problem settings.
+[1395.0:1397.0] Again, I apologize to the classroom.
+[1397.0:1399.0] I haven't been able to solve.
+[1399.0:1402.0] I mean, this looks pretty slow.
+[1402.0:1405.0] But if you have a device computing computer,
+[1405.0:1408.0] you can simply look at the slides from noodle.
+[1408.0:1411.0] Hopefully that would be helpful.
+[1411.0:1412.0] Okay.
+[1412.0:1414.0] So how do we even begin?
+[1414.0:1415.0] Right.
+[1415.0:1416.0] Our objective.
+[1416.0:1419.0] So I hope that this setup is clear.
+[1419.0:1422.0] We have these a i's, the I's.
+[1422.0:1426.0] Is the supervisor that they're trying to mimic.
+[1426.0:1430.0] And we're trying to learn a function H.
+[1430.0:1435.0] What would be a good idea to do in order to learn such a function?
+[1435.0:1445.0] Any suggestions?
+[1445.0:1451.0] Well, when we make a prediction, at least our predictions should be correct.
+[1451.0:1454.0] On the data that we already have.
+[1454.0:1457.0] Does that make sense?
+[1457.0:1462.0] So how do we do that?
+[1462.0:1470.0] One thing we really need is to have the ability to figure out the data fidelity.
+[1470.0:1473.0] I so like.
+[1473.0:1478.0] We need some sort of a function that measures how well we are doing.
+[1478.0:1482.0] A merit function.
+[1482.0:1485.0] If you're an optimist, you can say it's a merit function.
+[1485.0:1490.0] If you're a pessimistic, maybe you'll call it loss function.
+[1490.0:1496.0] And of course, we're going to call it the loss function.
+[1496.0:1499.0] So loss function.
+[1499.0:1502.0] We'll take in some inputs.
+[1502.0:1506.0] In the space of these b's.
+[1506.0:1512.0] And it will satisfy certain properties of what is called a metric.
+[1512.0:1515.0] Okay.
+[1515.0:1521.0] And we use loss functions in order to measure the data fidelity in the following sense.
+[1521.0:1525.0] We're going to input, let's say the b.
+[1525.0:1531.0] As one input, we're going to input our prediction, which is H of a.
+[1531.0:1537.0] And the loss function will tell us how well we're doing.
+[1537.0:1542.0] And it's properties are as follows.
+[1542.0:1545.0] It needs to be non-negative.
+[1545.0:1549.0] So if you have a distance metric.
+[1549.0:1555.0] If you give it db1b2, it needs to be greater or equal to zero.
+[1555.0:1558.0] It needs to be definite.
+[1558.0:1561.0] Meaning that you give it b1 and b2.
+[1561.0:1562.0] It's zero.
+[1562.0:1566.0] It can only if b1 is equal to b2.
+[1566.0:1570.0] It needs to have the symmetry, meaning that swapping.
+[1570.0:1574.0] The argument shouldn't matter.
+[1574.0:1580.0] And then it needs to satisfy the triangle inequality.
+[1580.0:1581.0] All right.
+[1581.0:1587.0] So b1b2 distance will always be less than or equal to b1 to b3, b3 to b2.
+[1587.0:1588.0] Okay.
+[1588.0:1594.0] There are deviations along the same gain.
+[1594.0:1603.0] In fact, you can have pseudo metric that would satisfy non-negative symmetry and triangle inequality, but not defineteness.
+[1603.0:1610.0] The total variation pseudo norm would satisfy these.
+[1610.0:1617.0] If you want to learn more about the total variation, take a look at the linear algebra supplementary.
+[1617.0:1624.0] The total variation pseudo norm does.
+[1624.0:1627.0] It looks at the pairwise difference between a vector.
+[1627.0:1632.0] And if you have a constant vector, it will give you zero.
+[1632.0:1633.0] All right.
+[1633.0:1636.0] So in general, norms induce metrics.
+[1636.0:1640.0] Sudo norms induce pseudo metrics.
+[1640.0:1641.0] Okay.
+[1641.0:1647.0] Now again, maybe you mind you guys the needs on recitation to in class.
+[1647.0:1647.0] All right.
+[1647.0:1650.0] So we'll talk a little bit more about this.
+[1650.0:1654.0] There are also things called divergences.
+[1654.0:1655.0] All right.
+[1655.0:1662.0] There's some advanced materials on things like breakman divergences.
+[1662.0:1666.0] And I mean, I don't expect you to know them in this class.
+[1666.0:1671.0] There's material for in class that are star material.
+[1671.0:1678.0] In general, you know, they satisfy things like AMD, but not necessarily CND.
+[1678.0:1684.0] So the order in which you give the inputs matter to the divergence.
+[1684.0:1687.0] Okay.
+[1687.0:1688.0] Okay.
+[1688.0:1694.0] So let's have some examples.
+[1694.0:1699.0] So the first example I will give you is the hinge loss.
+[1699.0:1700.0] All right.
+[1700.0:1706.0] So suppose you're trying to predict labels, you know, plus, minus ones.
+[1706.0:1712.0] One loss function that would make sense is that, you know, if you correctly predict you incur no loss.
+[1712.0:1718.0] And if you mispredict, it incurs whatever you mispredicted.
+[1718.0:1725.0] And that would lead to what is called as the zero one loss.
+[1725.0:1725.0] Okay.
+[1725.0:1730.0] So here you can take a real input.
+[1730.0:1732.0] And maybe a binary input.
+[1732.0:1736.0] So B2, the second input is a binary, you know, plus, minus one.
+[1736.0:1743.0] The first input can be continuous value because what we will be doing is we're going to do optimization.
+[1743.0:1754.0] So we're going to be getting there with continuous values, so it would make sense to have a loss function that can give you some sort of a loss even for continuous inputs.
+[1754.0:1757.0] Okay.
+[1757.0:1764.0] Now this particular zero one loss is called a non tonnevex loss function.
+[1764.0:1767.0] All right.
+[1767.0:1776.0] We're going to talk about what this actually means specifically in presentation to I believe.
+[1776.0:1780.0] But there is a relaxation of it, which is called convex again.
+[1780.0:1788.0] I'll talk about this more and in glory details later.
+[1788.0:1789.0] Okay.
+[1789.0:1791.0] So it's a continuous relaxation.
+[1791.0:1792.0] This is called the hinge loss.
+[1792.0:1795.0] So it takes them this continuous input.
+[1795.0:1798.0] All right.
+[1798.0:1802.0] So if you guess something bigger than let's say one, it'll give you zero loss.
+[1802.0:1807.0] If you guess something below, it'll start to increase your loss.
+[1807.0:1817.0] The further you're away from one on the negative acts or on the towards the negative acts, it's the worst loss you will incur.
+[1817.0:1818.0] Right.
+[1818.0:1822.0] You can in fact put a quadratic here, something exponential here.
+[1822.0:1828.0] There are variations again, but this one is called the hinge loss.
+[1828.0:1830.0] There are LQ loss.
+[1830.0:1841.0] Corresponding to the q norms, which is basically looking at the distance of two points in a corresponding q norm.
+[1841.0:1842.0] All right.
+[1842.0:1848.0] So L1 norm here would be q is equal to one, which would look at, for example, its inputs.
+[1848.0:1854.0] Some of the actual values of entries, L2 loss would sum up the square root of the entries.
+[1854.0:1858.0] L infinity loss would look at the maximum loss within all the entries.
+[1858.0:1859.0] Okay.
+[1859.0:1864.0] The maximum absolute value entry within all the inputs.
+[1864.0:1866.0] There.
+[1866.0:1875.0] Because we talk about things like density estimation, something that will be relevant is the vastest time distance.
+[1875.0:1877.0] All right.
+[1877.0:1887.0] Now, the vastest time distance looks at two distributions and then looks at the minimal transport cost between them.
+[1887.0:1892.0] There will be a whole lecture of office just to give you a preview.
+[1892.0:1893.0] What it will do?
+[1893.0:1901.0] Was there a question?
+[1901.0:1908.0] If hinge loss only penalized, if B1 is lower than 1y, it's a convention.
+[1908.0:1913.0] You can penalize it if it is vast than 1 health, whatever you like.
+[1913.0:1918.0] But when people talk about hinge loss, they talk about this particular loss.
+[1918.0:1923.0] Is that clear?
+[1923.0:1940.0] So in the vastest time distance case, what it will do is it will look at the minimal effort it will take you to map, let's say, a mass here to the same mass there, to this particular mass here.
+[1940.0:1948.0] There will be an associated transport plan because you want to do this with minimal effort.
+[1948.0:1962.0] If you can define the effort as the distance, it takes you to take one, let's say, temple to a corresponding location in the second distribution, let's say, in the wide domain.
+[1962.0:1967.0] You want to do this by going the minimal distance.
+[1967.0:1984.0] So the vastest time one looks at this distance and accumulates the distances and then finds the transport plan that minimizes the transport cost and gives you that cost.
+[1984.0:1997.0] It's extremely important. And again, we will talk quite a bit about it when we talk about things like vastest time generative adversarial networks.
+[1997.0:2007.0] There's a lecture about this in gory details.
+[2007.0:2016.0] So now that we're equipped with, let's say a loss function.
+[2016.0:2021.0] So, you know, there are labels, we have a function, et cetera.
+[2021.0:2027.0] And what we would like to do is somehow solve a problem.
+[2027.0:2032.0] So what problem should we solve?
+[2032.0:2041.0] So just to recall, we have our block diagram here.
+[2041.0:2045.0] So here are the elements that we're interested in.
+[2045.0:2049.0] So we're going to have these samples.
+[2049.0:2059.0] So we're going to assume that they are IID independent and identically distributed.
+[2059.0:2063.0] This never ever happens.
+[2063.0:2071.0] And in fact, this is the main cause of bias.
+[2071.0:2086.0] But there with me, and in fact, I will later on in this particular year, give you some examples of fairness problems where you want to, for example, make sure that the worst case plots
+[2086.0:2095.0] does not suffer much when you want to, for example, learn classifiers so that you're not harsh on some classes.
+[2095.0:2098.0] All right.
+[2098.0:2102.0] We're going to have a set of functions.
+[2102.0:2106.0] So it's going to be h, all origin.
+[2106.0:2113.0] So it will take in some inputs from this A phase and method to be.
+[2113.0:2118.0] And then we're going to have a loss function.
+[2118.0:2120.0] Here's a question.
+[2120.0:2130.0] Is it clear that literally you are the master in choosing the loss function?
+[2130.0:2133.0] You can use zero loss function in the classification example.
+[2133.0:2141.0] You I described or hinge loss or out to loss or some pregnant divergence.
+[2141.0:2147.0] But I hope that you understand you commit yourself to a loss function.
+[2147.0:2148.0] All right.
+[2148.0:2152.0] So that's now an element in this particular setting.
+[2152.0:2155.0] All right.
+[2155.0:2159.0] So what I'll do is I'm going to tell you what the risk is.
+[2159.0:2160.0] All right.
+[2160.0:2163.0] Now let's assume.
+[2163.0:2172.0] A, B, follow some unknown probability distribution or actually let's say it follows some probability distribution.
+[2172.0:2175.0] Then the risk.
+[2175.0:2180.0] Corresponding to some function.
+[2180.0:2183.0] It's called.
+[2183.0:2188.0] This refers to the expected loss.
+[2188.0:2194.0] So meaning suppose you pick a function h.
+[2194.0:2199.0] You would like to look at the risk of this function, which you would like to minimize.
+[2199.0:2205.0] What it is is that you take the expected value of the loss.
+[2205.0:2208.0] We just picked to a and B.
+[2208.0:2210.0] Remember, this is random.
+[2210.0:2211.0] Right.
+[2211.0:2214.0] A is generated with a stick to some TA.
+[2214.0:2220.0] These are generated with respect to probability distribution, B condition on any.
+[2220.0:2225.0] And you have a joint distribution.
+[2225.0:2232.0] What we refer to as the population risk is simply the number.
+[2232.0:2237.0] For a given function, H, the expected value.
+[2237.0:2241.0] Of the loss evaluated in this session.
+[2241.0:2244.0] And this is now a function of H.
+[2244.0:2245.0] Right.
+[2245.0:2249.0] If I put a different function, I will have a different risk.
+[2249.0:2253.0] And what I would like to do is find.
+[2253.0:2257.0] The function within the function class.
+[2257.0:2262.0] That minimizes my risk.
+[2262.0:2267.0] Is this clear?
+[2267.0:2272.0] What is the distribution?
+[2272.0:2277.0] Well, the distribution is unknown.
+[2277.0:2285.0] So can we compute this expectation?
+[2285.0:2286.0] Maybe.
+[2286.0:2290.0] No.
+[2290.0:2292.0] Who says yes?
+[2292.0:2295.0] Who says no?
+[2295.0:2302.0] So there's a remark about Monte Carlo estimates.
+[2302.0:2303.0] Yes.
+[2303.0:2306.0] I like the positive.
+[2306.0:2309.0] So in general, we cannot.
+[2309.0:2311.0] Compute this.
+[2311.0:2314.0] But we can try to estimate it.
+[2314.0:2315.0] You know.
+[2315.0:2321.0] But the problems or the trouble doesn't end there.
+[2321.0:2325.0] You also don't know what the function class is.
+[2325.0:2326.0] Right.
+[2326.0:2330.0] Not only we don't know what the distributions are.
+[2330.0:2332.0] What is H 0?
+[2332.0:2334.0] Doesn't even exist.
+[2334.0:2335.0] We don't know.
+[2335.0:2337.0] And we'll continue.
+[2337.0:2352.0] After 15 minutes break.

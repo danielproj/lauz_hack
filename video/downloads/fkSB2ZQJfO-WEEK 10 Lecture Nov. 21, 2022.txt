@@ -1,0 +1,361 @@
+~WEEK 10 Lecture: Nov. 21, 2022
+~2022-11-21T15:04:34.820+01:00
+~https://tube.switch.ch/videos/fkSB2ZQJfO
+~CS-438 Decentralized Systems Engineering
+[0.0:2.0] Good morning.
+[2.0:7.0] To get started.
+[7.0:16.0] By the way, I apologize like if anyone online or offline was looking for the video recording from last week.
+[16.0:22.0] It's not there and I'm afraid it's not going to be there because I forgot to start the recording last week.
+[22.0:32.0] So anybody needs to refer to last week's lecture just refer to the one two years from two years ago that's on the switch tube channel.
+[32.0:39.0] So sorry about that. I'll try not to forget in the future.
+[39.0:51.0] And those of you on Zoom, if I do forget and you don't see the recording thing when you think it should be recording, feel free to remind me.
+[51.0:54.0] Thanks.
+[54.0:66.0] Okay. So last week we talked about the civil attack and different solutions or approaches to addressing the civil attack.
+[66.0:78.0] One of which was Bitcoin's use of proof of work, which was a very interesting, interesting approach.
+[78.0:90.0] It was somewhat new. It wasn't totally unprecedented, but certainly very interesting in that context.
+[90.0:105.0] But this week I want to go back to the problem of consensus that that Jacinda discussed several weeks ago, first of all.
+[105.0:110.0] But this time, so he focused on basic consensus like Paxos.
+[110.0:125.0] This time I really want to focus on Byzantine consensus.
+[125.0:142.0] Both, both permissioned and permissionless.
+[142.0:165.0] We'll come back to Bitcoin and similar cryptocurrencies. But before we get there, I want to bring in some more history of Byzantine consensus algorithms before Bitcoin.
+[165.0:183.0] But these are still very, some of these, let's say, permissioned or classic consensus approaches.
+[183.0:199.0] Are actually still very important and maybe more than ever. So what is a classic Byzantine consensus algorithm?
+[199.0:214.0] Well, before Bitcoin, the terms permissioned and permissionless didn't really exist. All of the consensus algorithms out there were permissions.
+[214.0:239.0] So I assume some fixed group of N nodes and some threshold T of which can, you know, are assumed to potentially fail.
+[239.0:265.0] So even Paxos assumed that, but what's the difference between Paxos and Byzantine consensus versions of the algorithm? Well, the fundamental difference is basically the ways that we assume those nodes are allowed to fail.
+[265.0:287.0] So whereas Paxos assumed the, well, let me make this more precise. So we have a threshold T usually, usually we say that F nodes can fail.
+[287.0:308.0] And the threshold is usually N minus F basically a threshold of nodes that you assume are going to be live and you can actually do something with that, which is by definition just all the F nodes that can fail.
+[308.0:337.0] So with Paxos and most of the other consensus algorithms that are widely deployed, including Rafft, if you've heard of or studied that many others, these basically use a fails dot model.
+[337.0:355.0] So or or fail silent, meaning if if one of these F nodes does fail, it just stops producing messages. It just goes silent, but otherwise doesn't do anything back.
+[355.0:370.0] Certainly, you know, the nodes don't don't try to maliciously be evil, right? Whereas with Byzantine consensus, the the F failing nodes.
+[370.0:374.0] And they can do anything, right?
+[374.0:397.0] Which is what what makes makes that model so challenging, right? Now this classic consensus model, as you can see, you know, kind of by definition assumes the symbol attack just doesn't exist or has already been solved before we created this group or, you know, something like that.
+[397.0:414.0] Which is kind of assumes that a group, a definition of a correct and no wage falls from the sky and, you know, completely ignores the question of well, can a symbol attacker or, you know, dynamically increase this group to create a threshold compromise.
+[414.0:432.0] So we talked about that earlier and so I'm not going to get back to it now, but, you know, just just thinking within this, this model for now, how do we, how do we actually get Byzantine consensus?
+[432.0:452.0] And what are the fundamental constraints now? Byzantine consensus algorithms tend to be very tricky and complicated and we definitely won't have time to, you know, get deep just in this lecture, you know, go through all the details, even of, you know, any particular one Byzantine consensus algorithm.
+[452.0:466.0] But I want to, I do want to look at some of the basic principles that are that underlie most of them, just to give you some, some a few examples.
+[466.0:477.0] One of the most famous Byzantine content classic Byzantine consensus algorithms was called PBFT or practical Byzantine fault tolerance.
+[477.0:500.0] And it was by Castro and Liskov, early 2000s, it's this paper is on the reading list for this week, so I encourage you to take a look at it.
+[500.0:522.0] Another Byzantine consensus algorithm is much more recent that's been getting a lot of attention recently in the, in the permission ledger blockchains base is called hot stuff by Dalia monkey and others.
+[522.0:537.0] And there's, there's been quite a few others recently like honey badger.
+[537.0:557.0] And various others. So how many of you have encountered, you know, Byzantine consensus algorithms or protocols before in some context?
+[557.0:570.0] Not in Rashid's class, not yet, maybe, maybe, maybe concurrently. Yeah, yeah, yeah.
+[570.0:594.0] So besides the, besides the, you know, the, just the problem statement, you know, what, what makes Byzantine consensus so hard? Well, let's, let's break, break this down and look, I mean it.
+[594.0:615.0] So, so let's first, first look at just as a reminder how Paxas work that you looked at a, a number of weeks ago.
+[615.0:629.0] With Paxas, you've, you've got well, several different, you've got nodes playing several different roles. The two most important ones will say our proposers.
+[629.0:636.0] Let's say we have two proposers. Now these can be the same as the acceptors, but they can also be different.
+[636.0:651.0] And the acceptors, which are the nodes that actually hold the state of the system and kind of determine, you know, whether consensus has been reached.
+[651.0:663.0] You know, what, what is the actual decided or not yet decided state of the system? And the proposers are basically trying to propose, trying to make proposals to change the state.
+[663.0:677.0] So, in the simplest case, from undecided to decided, right? And as, as always, the properties we want.
+[677.0:692.0] So, of course, this can be broken down, you know, more fine grain in, in terms of more fine grain properties, which, which, you know, receives course will certainly do is from a theoretical perspective of several more orthogonal properties.
+[692.0:705.0] But, but in systems, we usually just look at two main properties, namely safety and liveliness.
+[705.0:733.0] So, safety basically means that all nodes agree on any decision. So, if something is decided, if any value, if the acceptors collectively accept any decision, any value, then they will all accept the same value.
+[733.0:750.0] You'll never have, you know, two decisions or two proposal being being decided from the perspective of different, say, subsets of the acceptors or something like that, right?
+[750.0:766.0] Then, liveliness means that eventually something is decided.
+[766.0:783.0] So, as you, the general, you know, kind of safety, liveliness, breakdown, safety means, you know, nothing bad happens, meaning, meaning, you know, you don't, you don't agree, decide on two things at once, right?
+[783.0:793.0] Which is, and then liveliness is, you know, something good eventually happens, meaning a decision. It doesn't just deadlock forever and wait forever, right?
+[793.0:810.0] And so, with, with PucksSus, we basically had, let's say we have, you know, a typical group of, of n equals 3, f equals 1, right?
+[810.0:825.0] So, the threshold is n minus f, which is obviously 2, which means that we can make progress with any two proposers, even if the third fails, right?
+[825.0:827.0] Even if the third is silent.
+[827.0:850.0] So, any proposal that's going to try to get something done is going to send, you know, send a message or a series of messages out to all of the proposers and wait for at least two of the three to get back, you know, before, before doing anything, right?
+[850.0:877.0] And PucksSus used this two-phase protocol to do this. So, let's not get into, you know, we won't get into the details and the reasons behind that those two phases at the moment, but, but basically, even if one of these nodes is dead, then, you know, say this fails.
+[877.0:888.0] So, this, the, is no responses from that, that node never come back. Well, the proposal can still make progress with the other two.
+[888.0:903.0] And of course, the difficulty is when, you know, we've got potentially two or more competing proposers that are trying to, trying to get, you know, propose different values in their conflicting and in arbitrary fashion, right?
+[903.0:931.0] Now, with Byzantine consensus, if this, if this, if this one fail, you know, suppose we just try to flatten this scenario into Byzantine consensus land where the F node can not only just fail silently, but, but the evil, right?
+[931.0:949.0] The actively evil can do arbitrary things. And we don't, and we don't change the thresholds or the assumptions here. Let's suppose we stick with n equals three, F equals one, but this F failing node is actually Byzantine consensus.
+[949.0:964.0] And we've kind of got a problem at the outset independent of the details, right? So what's, can you see the, the problem?
+[964.0:979.0] But, we accept, acceptors who can hold state, one of them, one of them can either disappear entirely, or it can be actively evil in arbitrary ways.
+[979.0:1004.0] So, some arbitrary controls, and, you know, to flesh this out a little bit more, you know, let's assume all of these, all of these nodes exist in an adversary controlled network, right?
+[1004.0:1017.0] Meaning that, you know, an adversary actually, and schedule the messages can determine which messages arrived first, and, you know, which, which ones arrived later, and what order and stuff like that.
+[1017.0:1032.0] That's already kind of an underlying assumption, even in crashed off network algorithms like Paxos, you know, if you don't make any assumptions, you kind of have to assume that, well, the network could schedule things anyway, including adversarially.
+[1032.0:1061.0] If you want to be maximally robust, right? So, Byzantine consensus takes the usual kind of background assumption that the network is adversary controlled, and also adds the assumption that, well, the adversary can control, you know, up to F nodes, and, you know, so that those F, you know, Byzantine nodes are actually collaborating with colluding with the adversary control network to do something as bad as possible for the net for the network.
+[1061.0:1064.0] For the consensus, however, yeah.
+[1064.0:1078.0] Here, one of three of them, no longer a clean about what the people just want to decide to think of, and then you want to never answer, and then you didn't know the answer.
+[1078.0:1090.0] Great. Yeah, that's exactly the problem, right? So, you know, so let's say this, this proposal is honest.
+[1090.0:1110.0] And let's say, let's say, whoops, let's say that these nodes, the acceptors A and B are honest, right?
+[1110.0:1133.0] But let's say that, so I previously said that, well, actually, let me back up.
+[1133.0:1153.0] Let's say that these two are honest to avoid conflicting with whatever before. So let's say these two are honest, but.
+[1153.0:1166.0] But the adversary is because the adversary, so you know, this is the failing node, the failed node, but now it's in it now it's a business you know, right?
+[1166.0:1182.0] So, and because the adversary controls the network, the adversary can can can just say slow down this second honest node, this node C, make it look like node C has failed, even though it hasn't.
+[1182.0:1192.0] It's it's a perfectly good node. It's response will eventually arrive, you know, usually, you know, in consensus theory.
+[1192.0:1202.0] We often make the assumption that, you know, even if the network is malicious, it will eventually deliver messages between any two honest nodes.
+[1202.0:1216.0] In some finite time, there. It's so so, you know, that is something might seem a little doby is at the start, but it's actually not very fundamental.
+[1216.0:1225.0] It's just kind of basically assumes that, you know, if if a network split happens, somebody will eventually fix it.
+[1225.0:1248.0] But, but the real problem is is that it's just fundamentally impossible, you know, any particular amount of time in an asynchronous network to, you know, to know whether a node is perfectly live, but just really slow getting a getting a reply back or whether it has in fact failed, right?
+[1248.0:1262.0] So let's consider this scenario where node C, you know, is fine. It's honest. It's producing responses, but those responses are just taking a long time getting back, right?
+[1262.0:1277.0] And so, whereas this other node B is actually actively dishonest, right?
+[1277.0:1299.0] Now, so in an adversary-controlled network, let's call this proposal one, proposal two, the adversary can certainly use, let me use a different color to avoid massive confusion here.
+[1299.0:1319.0] So, the adversary, you know, if we had, if we're using these Paxos thresholds, then an adversary control network can certainly prevent any, you know, message from C to get from getting back to proposal one in any reasonable amount of time.
+[1319.0:1338.0] So, so as far as proposal one is concerned, node C appears to have failed, or at least it's very slow, right? And so, proposal one is, you know, by necessity relying on nodes A and B to make progress, right?
+[1338.0:1353.0] But what about this proposal B here? So, proposal B might be trying to make another decision, right? And again, the adversary controls the network.
+[1353.0:1374.0] What if the network decides to say to give proposal B the view that, so, proposal B is, you know, as before trying to send messages to all of these nodes.
+[1374.0:1392.0] But proposal B is, but the network is going to make a different view for proposal two that looks something like this, right? So, to proposal two is going to be able to talk with honest node C, no problem.
+[1392.0:1407.0] And he's also going to be able to get responses from dishonest node B, right? But the responses from honest node A are going to be really slow getting back, right?
+[1407.0:1426.0] So, proposal two is just going to have to, you know, assume that well, node A looks like it has failed, as far as I can tell, nodes B and C are responding. So, I'm going to go with what node B and C tell me, right?
+[1426.0:1449.0] So, to get to get to the crux of, of what this problem that you pointed out, right? So, the problem is, now, if, if dishonest node B wants to, it can basically facilitate a split, split brain, right?
+[1449.0:1461.0] So, it can, it can provide one set of messages to proposal one consistent with honest node A and operating in one universe, right?
+[1461.0:1477.0] And it can basically equivocate. It can send a different set of different inconsistent messages to proposal two that are inconsistent with proposal one's view, world view, but, but consistent with honest node C's worldview, right?
+[1477.0:1500.0] So, there are now two different sets of decisions with, with dishonest node B basically playing a, playing a role in both, wearing different hats, depending on, you know, which, which, which of these use he's trying to, trying to support, right?
+[1500.0:1521.0] And so, and so, proposal one thinks that the system is live. Well, you know, acceptors A and B seem to be working. It's all, all head go on, you know, on, you know, one particular value deciding one particular value.
+[1521.0:1532.0] Proposer B thinks a different, another different value has been decided because acceptors B and C seem to be supporting that worldview, right?
+[1532.0:1542.0] But, well, we've lost safety. We've lost one of the two most important properties across the system, right?
+[1542.0:1554.0] So, is this clear? You know, why, what, what goes wrong here? Any, any question so far?
+[1554.0:1568.0] So, how can we fix this? Right? So, what do we kind of have to do in order to fix this in this traditional permission model anyway?
+[1568.0:1583.0] I mean, you know, it's, you know, consensus defined in this way under these assumptions is obviously impossible with this particular, with this particular threshold instead of assumptions.
+[1583.0:1612.0] So, you should, like, require an authority because the basketball number of music to be given to you. Right? Yeah. So, to, to make, to make this work in a Byzantine model, right?
+[1612.0:1641.0] So, in general, the, the classic, uh, hacksaw assumption of n equals 2F plus 1, or n, and greater than or equal to 2F plus 1 is insufficient.
+[1641.0:1664.0] For exactly the reasons we just outlined. So, therefore, at least under this network model, we have to increase n to be minimum 3F plus 1.
+[1664.0:1681.0] That's a basic pretty, pretty easily, doable requirement, like, you know, without, without weakening something else, like weakening the adversaries control over network, making the system more synchronous or doing something else.
+[1681.0:1702.0] You can't get around the fact that, you know, n, n has to be at least 3F plus 1, not just 2F plus 1. And that's exactly as he said, because it has to tolerate, you know, we have to take, take account of the nodes, the number of nodes that might equivocate.
+[1702.0:1718.0] So, F nodes might equivocate, right? And so, why is, why is this solution sufficient? Right? So now, let's, let's illustrate this again.
+[1718.0:1736.0] Let's set up a new scenario with two, two proposers. As before. And this, this applies to algorithms like PBFT hot stuff.
+[1736.0:1748.0] And generally, anything in this, in this broad class of Byzantine consensus algorithms. Right? But now we have, so now we have four acceptors, right?
+[1748.0:1768.0] So, three, if F equals 1, then n must be at least 4, right? So, so, four acceptors is basically the minimum possible number in this, in this model for a non-trivial non-zero F.
+[1768.0:1787.0] Right? So, the proposers are going to be sending messages to all four acceptors. And they're going to be requiring and expecting answers from three of those four in order to, in order to proceed.
+[1787.0:1805.0] Right? So, let's look at how this scenario works out again. Accept, uh, proposal 1. So, here's proposal 1, 2, and then acceptors a, b, c, and d this time.
+[1805.0:1822.0] So, let's suppose an adversary is again going to try to break safety, but he has to try to break safety at this, this new higher, higher threshold, the three, three out of four threshold, right?
+[1822.0:1840.0] So, the adversary wants to create a world view for proposal 1, and same as before would like to create a different world view for, for, for proposal 2.
+[1840.0:1858.0] And those are going to have to overlap somehow, of course, because the adversary controls the network can, you know, play with, play with different things, but.
+[1858.0:1872.0] The adversary has only has Byzantine control for one node. Let's say, you know, in the usual worst case, let's assume both of these nodes are honest.
+[1872.0:1882.0] Of course, one of these nodes also has to be honest in this case, because the adversary only controls one node in this scenario.
+[1882.0:1891.0] This node is Byzantine. Right.
+[1891.0:1905.0] Now, so, none of the honest nodes, none of the honest acceptors or proposers know which, which acceptors are honest and which are dishonest, they just have the assumption that, you know, there exists.
+[1905.0:1919.0] You know, three honest nodes and potentially one unknown Byzantine node. Right. So nodes, he actually happens to be a Byzantine node from our view perspective. Right.
+[1919.0:1937.0] And, and again, the adversary can control the network messages to to make say either of those nodes in the middle look like they're, you know, faster or slower. Right.
+[1937.0:1956.0] In this case, the adversary has a problem in that the, you know, however, however, the adversary, you know, might, might deliver and delay messages.
+[1956.0:1972.0] Any correct decision that allows proposed, both proposer one and proposer to, you know, proceed and make a decision is going to have to include one honest note. Right.
+[1972.0:1983.0] The adversary can't, can't exclude all of the honest nodes from the intersection. Right. So there's a.
+[1983.0:2002.0] One honest node intersection between any two forums that can, that can, you know, proceed and make the system live. Right.
+[2002.0:2016.0] So in general, so, you know, this is a general requirement that, you know, applies regardless of whether, whether we're in, you know, kind of Byzantine or non Byzantine consensus territory.
+[2016.0:2029.0] It's just that in non Byzantine consensus, you know, all not, you know, all nodes are non-busy all nodes are honest. So it's kind of trivial and satisfied. Right. So if they're in intersection and in packs us, it's an honest intersection.
+[2029.0:2058.0] But in Byzantine, we have to, we have, we have to change the thresholds to guarantee not just one, not just a, at least one node overlap one node intersection, but one honest node intersection because that one honest node is the only, the only thing that's going to stop, you know, prevent, you know, an adversary of control network from delivery messages in such a way as to violate safety by creating.
+[2058.0:2087.0] Those two, two different world views. Right. So that that one honest node is going to, you know, if that one honest node proceeds in, you know, helping to reach a decision by composer one, then that that honest node's going to refuse to, to participate in a decision, you know, conflicting decision for composer two or vice versa.
+[2087.0:2107.0] Right. So that's, that's what preserve safety, even if the Byzantine node is perfectly happy to equivocate and, you know, play in both worlds and try to try to violate safety.
+[2107.0:2126.0] Yeah. So there are questions about about this so far.
+[2126.0:2141.0] Yeah. Good question. Yeah. How do you actually decide, you know, what the threshold should be and what the F should be.
+[2141.0:2155.0] It's just an assumption, right? So, and it's kind of an arbitrary assumption. It's kind of an assumption that the theorists came up with because, you know, they wanted to make the, you know, kind of the network model assumptions and the adversaries.
+[2155.0:2164.0] Then the adversarial threat assumptions as challenging as possible, you know, to make an interesting theoretical problem, right?
+[2164.0:2178.0] As theorists like to do. And they basically noticed that well, you can prove a theorem that's saying, you know, under these strong assumptions about, you know, both the network and some of the nodes being adversarial.
+[2178.0:2204.0] Well, you can prove a theorem that, you know, you need that threshold, right? And so, and so because of that, you know, usually when, when we talk about deploying, you know, consensus, their Byzantine consensus algorithms, we, we kind of ignore or, you know, that, that very important question of, well, what should the threshold be?
+[2204.0:2214.0] What reason do we have to believe that F is, you know, enough to tolerate the nodes that actually will be malicious, right?
+[2214.0:2223.0] Well, we don't, we don't have, you know, it's just, looks like the best we can do under these circumstances. So, I hope it's good enough, you know.
+[2223.0:2242.0] Tell me if it's not, right? So, yeah, so that's exactly where the typical F comes from, just the best we seem to be able to do, not because we have really good reasons to believe that that's actually enough, right?
+[2242.0:2261.0] Now, where we, where we do have a lot more wiggle room, of course, is what is in, right? You know, so if you can make N bigger, then, you know, I mean, N equals four, tolerate, obviously, tolerate only, only one Byzantine node in this model.
+[2261.0:2290.0] If you make N a lot bigger, 10, 100, 1000, you know, then, then F can, can be correspondingly a lot bigger. And again, we can, you know, we're still just hoping, but we hope that, you know, if F is a lot bigger, and hopefully they, you know, not so many nodes are colluding, then, you know, then hopefully it becomes, you know, much, much less likely that, that an adversary has managed to corrupt the whole.
+[2290.0:2315.0] You know, quarter of a, or third of, of all nodes, right? But, you know, usually the, you know, frankly, in practically all practical deployments, these thresholds are just, you know, deep throwing numbers around, right? This is what we can do.
+[2315.0:2322.0] You know, we hope it's good enough. Do we know that? Do we have strong reason to believe that? No.
+[2322.0:2343.0] Now, so there are things, you know, there are ways we can come a little closer, or we can make, we can, we can potentially evaluate the assumptions.
+[2343.0:2364.0] But almost nobody does this, right? So one of the things, you know, if you really wanted to come up with a deeper basis to kind of understand, well, you know, does, what is the probability that, you know, F nodes will be out of this cluster or will be compromised.
+[2364.0:2388.0] You have to do things like analyze the dependencies, like are they, are these four or 10 nodes really independent? Or do they have a lot of common dependencies in software hardware management or whatever that might, might make it easy for, for, you know, an attacker to compromise all or many of them at once, or are they truly independent?
+[2388.0:2416.0] It would, you know, would be hard for an attacker who compromises one to compromise the next one, right? So, so, and if you, if you actually can evaluate that independence, then from a perspective of factors like, you know, like if you, if you work hard and you hire four teams, four different teams to code the software for each of those four nodes, right?
+[2416.0:2427.0] Then maybe you have a strong reason to believe that bugs in one of the nodes software are independent of bugs from, you know, in, in one of the other nodes software.
+[2427.0:2444.0] And from that perspective, you, you perhaps have stronger reason to believe that, that, you know, if one of them is hacked due to a software bug, then, you know, there'll be a pretty low probability that the same software bug works in another one.
+[2444.0:2457.0] Therefore, you know, hopefully, you know, even your threshold of one or, you know, maybe a threshold of a few if you increase end to 10 and you've got to have to do a, have to do or three.
+[2457.0:2460.0] Yeah, like that goes three, and equals 10.
+[2460.0:2484.0] Then, you know, and you can reason that the probabilities of those, each of those nodes being hacked are truly independent because they were the software was made by independent teams, then you can calculate, you know, using statistics, the, the probability that three of the 10 nodes are compromised independently.
+[2484.0:2509.0] You know, so, so if the probability of one of them being compromised in, say, of course, of a, of course, of a year, what's the probability of three of them being compromised leading to a total total failure here in this case, right? It's pretty easy.
+[2509.0:2516.0] So, this gets compromised, you know, in a year with probability of peak.
+[2516.0:2532.0] What's the probability that the, that the whole system fails due to Byzantine threshold compromise over the same year.
+[2532.0:2560.0] You've studied basic statistics, right? Yeah, P to the P to exactly. Yeah, P times, P times, P, right? So if the probability of one node be compromised is one 10th, you know, over the course of this year, then again, assuming full independence, the probability that we get a threshold compromise is, is one in a thousand, which is a whole lot better.
+[2560.0:2580.0] Yeah, you know, I mean, to the extent that that probabilistic reasoning works, and we actually can rely on the independence principle, we get exponential benefit, right? So there, there are really good reasons to once say, you know, this kind of threshold or a higher threshold as opposed to a lower threshold.
+[2580.0:2599.0] But then how many, how many, you know, implementations of these kinds of algorithms actually have for or 10 or, you know, independent implementations built by, you know, by independent teams, well, very few unfortunately, right?
+[2599.0:2617.0] And this is even before we talk about, you know, correlated failures in the hardware level, at the management level, other things like that. So, so this is just, you know, this is kind of a very long answer to your question that, you know, I'm just kind of expressing, you know, kind of the theory is beautiful.
+[2617.0:2635.0] And the actual practice is pretty bad, right? Like in terms of our, you know, actual ability to have confidence that, you know, kind of, that these are probably, you know, giving us the properties we'd like in real deployments, I think, you know, there are ways we can get them better, right?
+[2635.0:2650.0] Yeah, there are, there are, there are glimmers of hope, but yeah, the situation is pretty bad at the moment. Yeah, the other questions or comments for now?
+[2650.0:2674.0] Well, so this is, so I just wanted to, you know, again, this is just the briefest toe in the water on kind of classic Byzantine consensus, but I wanted to at least make sure you're familiar with the basic, you know, paradigm, and especially the reason that, you know, the threshold has to be higher and in the way this works.
+[2674.0:2686.0] Byzantine consensus, the details of Byzantine consensus algorithms are fascinating and fun, so I do encourage you to read the papers, but, but so it's probably a good time for for a break now.
+[2686.0:2697.0] So we'll let's come back in 10 minutes at 11, 10, and then we'll switch to permission list consensus and look at the consensus part of Bitcoin.
+[2697.0:2706.0] With that, let's continue.
+[2706.0:2721.0] Okay, so let's now switch back to permission list cryptocurrency land.
+[2721.0:2734.0] And let's look at proof of work consensus like in Bitcoin.
+[2734.0:2745.0] And many other follow on lock chains and cryptocurrency systems. So of course, we talked about basic idea of a proof of work last time.
+[2745.0:2758.0] And how that price to be a solution to the civil attack, right? But we didn't really get into, well, how does Bitcoin work as a consensus algorithm?
+[2758.0:2762.0] How does it actually reach an agreement?
+[2762.0:2772.0] And and achieve, you know, something like these two critical properties of safety and likeness for consensus purposes.
+[2772.0:2786.0] So.
+[2786.0:2806.0] So as we discussed last time, just as a quick review, Bitcoin assumes we're we're building some kind of blockchain with the Genesis block and subsequent blocks, they block one, block two and so on.
+[2806.0:2829.0] And these all have hash links pointing back, right? And there's each block also has a hash have a mercury full of transactions.
+[2829.0:2843.0] Right? And these are the basic records that, you know, dictate, dictate, you know, who transfers, you know, when when somebody makes a makes a payment to somebody else.
+[2843.0:2854.0] You know, each transaction basically says, I Alice authorized a transfer of this, you know, point three bitcoins to Bob, right?
+[2854.0:2868.0] And, and of course, this is this consensus, this property, the safety property of having only one accepted history, right?
+[2868.0:2886.0] It's critical to the cryptocurrency aspect of Bitcoin because it's what prevents double spending. It's what prevents Alice from spending the same Bitcoin twice, one to Bob, one wants to Charlie and say two different histories, right?
+[2886.0:2907.0] And, you know, kind of getting the rewards in both histories while, you know, basically printing money, right? So, so, you know, that without getting deeper into the transaction protocol here at the moment.
+[2907.0:2931.0] You know, we need this consensus property in order to, in order to prevent double spending essentially, right? So, how does Bitcoin consensus actually work and what, and you know, what, what does it assume?
+[2931.0:2946.0] Of course, you know, Bitcoin is trying to, trying to use proof of work as a solution to the, to the civil attack problem that, you know, obviously the DBS, T and hot stuff, classic Byzantine consensus algorithms don't even try to solve that.
+[2946.0:2962.0] And so, this, this, to start with requires changing the threshold assumption. We don't have a particular set of n nodes, you know, to assume that only f, you know, for any particular threshold of those fail, right?
+[2962.0:2988.0] So, but it still has to make assumptions, right? So what are bit points, you know, threat model assumptions to replace the, you know, and greater than or equal to 3F plus one?
+[2988.0:3000.0] No, many of you are familiar with Bitcoin, you.
+[3000.0:3006.0] Yeah, anyone? Yeah.
+[3006.0:3020.0] What? Sorry, I don't need to know. Oh, great. Yeah. Do you remember like what, what is the threshold assumption that Bitcoin makes about the miners?
+[3020.0:3032.0] Majority, yeah. Majority counted how majority of n nodes, what are the n nodes? Yeah.
+[3032.0:3049.0] Great. Okay. Majority of computational power. Yeah. So, so Bitcoin took the old end nodes assumption and kind of tore that up. Like we don't have n nodes anymore because we have no idea what an it's how or how many participants there are going to be well, that's the particular principle.
+[3049.0:3072.0] So, many of them to be able to come and go as they want, but it changes the, the assumption into an assumption on computational power, namely the, you know, the total number of total amount of miners, investing time and energy in solving these otherwise completely useless proof of work puzzles.
+[3072.0:3080.0] So, you've got this big collection of miners.
+[3080.0:3101.0] And, you know, with a completely unknown end, I don't know, don't care what n is, the number of the specific number of miners or nodes, but those miners are in some proportion, investing time and energy continuously trying to solve these.
+[3101.0:3123.0] Proof of work puzzles, right? And at any given time, like, you know, there, there's, you can assume there's some, it might be hard to figure this out, like dynamically in practice, but at any given time, there's some mining power.
+[3123.0:3128.0] Break down, right?
+[3128.0:3140.0] Where, you know, we have miners M1, M2, M3, M4, and M5 here, let's say.
+[3140.0:3152.0] And, you know, minor, minor 2 is, you know, is investing quite a bit of, you know, mining power at this particular moment in time.
+[3152.0:3162.0] Minor 1 is investing, you know, a little bit and 4 is investing a little bit and 3 is investing quite a lot and M6 is investing quite a lot, right?
+[3162.0:3181.0] So, you know, we could, in principle, draw some kind of graph or pie chart or whatever, however you want to count it, kind of, apportioning to each miner, just, you know, kind of a percentage corresponding to the percentage of total mining power that that miner
+[3181.0:3197.0] happens to be investing at the moment, trying to solve these proof of work puzzles, right? Or at least the, you know, and this, this is always held in basically in number of hashes, you know, search through, right?
+[3197.0:3226.0] So, if the difficulty is, you know, remember the proof of work difficulty is the number of 0 bits at the beginning of the required hash, block hash. And so that takes, you know, approximately order of, you know, you know, difficulty D, it takes approximately 2 to the D, you know, trials to, you know, to find the matching block.
+[3226.0:3247.0] And so, you know, this breakdown is basically a major of, say, you know, hashes per minute or hashes per second, you know, at any given point in time that all of these miners are trying, right?
+[3247.0:3264.0] Yeah, and the threshold assumption is going to be.
+[3264.0:3285.0] So, majority meaning basically greater than 50% of mining power is honest, right?
+[3285.0:3313.0] So, you know, if, if these miners are honest, and this is 51% and, you know, these are 49% and these two miners are busy and they control 49% and the honest miners down there in the parts are control 51%.
+[3313.0:3325.0] Then Bitcoin is supposed to be safe and live. It's supposed to be good, right? Whereas if you've lit that around, of course, there's indeed a bit coin says, well, I'll bet, I'll bet.
+[3325.0:3354.0] So, it still has a very important assumption, but it's done in terms of mining power instead of, instead of a number of notes. Yeah.
+[3354.0:3366.0] Good question. Actually, in the Bitcoin protocol itself, basically no one computes that. Right? So, it's, it's something we assume exists.
+[3366.0:3377.0] You know, it's kind of part of the theory that like there exists at any given moment of time, a total amount of computational power that all of the miners collectively happen to be investing.
+[3377.0:3390.0] And, you know, kind of the theoretical analysis, you know, uses that assumption that that exists, but how do you actually calculate it? Well, you know, that's a lot harder and the protocol doesn't actually do that and doesn't.
+[3390.0:3402.0] Doesn't actually need to do that. Now, many, you know, kind of many companies invest a lot of effort, you know, analyzing blockchain, analyzing the miners, trying to figure out these kinds of things.
+[3402.0:3417.0] Well, you know, what is the total mining power for moment to moment and you actually can estimate pretty well, at least, you know, what is the total mining power by just looking at how quickly the blockchain advances and how much work.
+[3417.0:3440.0] You know, is basically, you know, invested in in the block at a particular high, you know, how, so how, so in a way, you know, so, so the miners actually do compute a proxy, a proxy to the total mining power periodically in, in adjusting the difficulty factor.
+[3440.0:3460.0] Right. So, so kind of a subtlety of the protocol is, is the protocol is hard coded so that all of the miners, at least all of the honest miners are going to try to adjust the difficulty of these proof of work puzzles so that, so that new blocks appear about every 10 minutes on average.
+[3460.0:3475.0] And they do that just basically by, you know, watching the current progression of the blockchain, is it happening too fast? Are we getting blocks to, you know, more often than every 10 minutes? Well, then we better.
+[3475.0:3491.0] Then it looks like there are too many miners for the current difficulties, so we better raise the difficulty. If we're if the blockchain is advancing too slowly, then well, it looks like we lost some miners, some miners lost interest, my total mining power went down.
+[3491.0:3513.0] So let's reduce the difficulty in in hopes of bringing bringing the, you know, the rate of advancement back to about when, when every 10 minutes, right. So this is a, so this is basically a dynamic.
+[3513.0:3531.0] So, the difficulty adjustment. The basically tracks and a desired period of basically every, you know, 10 minutes per block, right.
+[3531.0:3558.0] Yep, it's just a, just the concept, you know, that everybody agree, everybody participating, you know, you know, running the code that agrees on the code is basically saying, you know, yeah, by, by our agreement, let's all track this, you know, this 10 minutes, you know, average 10 minutes per block time.
+[3558.0:3575.0] And that actually, you know, the fact that miners might go their own ways on that, like, you know, kind of do not behaving in terms of tracking that agreement is one of the many ways that miners could be busy team, right.
+[3575.0:3595.0] It turns out that that's, you know, and it turns out that that's not a major difficulty. And if you look at the details of the way the protocol works, we're jumping up jumping ahead a little bit, but, but yeah, it's just by convention and by, you know, what's in the code, right.
+[3595.0:3608.0] And other cryptocurrencies change, you know, indeed, pick different constants, you know, Ethereum uses what 17 seconds or something like that instead of 10 minutes, they, they, you know, make it much more aggressive.
+[3608.0:3628.0] And there are, there are a set of trade-offs basically. So it's the 10 minute time was was for Bitcoin was chosen as a very conservative kind of upper bound for, you know, how long could it possibly take a block to propagate everywhere in the network.
+[3628.0:3647.0] So, you know, so, so that was a kind of very conservative upper bound other cryptocurrencies, you know, take more aggressive bounds that, you know, a little bit closer to to something that, you know, tighter bounds.
+[3647.0:3675.0] And, you know, with with later analysis, you know, we've learned more about the security performance trade-offs involved in in those adjustments. And, you know, indeed, if you turn that, if you turn that nod down too far so that blocks are happening too quickly with respect to the actual say global propagation of packets, then you can get both inefficiencies and potentially worth security in various ways.
+[3675.0:3687.0] So, you know, Bitcoin was was right, you know, to some degree in being conservative even though even though, you know, Satoshi Nakamoto didn't have the full theory.
+[3687.0:3695.0] But, you know, indeed, if, if it goes fast and gradually, you know, becomes chaotic and then insecure, right.
+[3695.0:3715.0] But, but yeah, it's just it's just a constant that the code tracks. Okay, but so this is the this is going to be the general principle that, you know, we're going to try to try to make the.
+[3715.0:3728.0] Try to make consensus happen based on this majority of mining power assumption. This isn't the only assumption though, right.
+[3728.0:3737.0] There's at least one other very important assumption that I want to come back to soon, but.
+[3737.0:3755.0] Well, actually, maybe now now is a good time. You know, so what's the key safety property again of any consensus algorithm? Well, we want all at least all honest nodes to agree on the same history, right.
+[3755.0:3774.0] And so when might not this happen? How might that not happen? Well, the the standard way that, you know, that might go wrong at any given time is if there's two versions of history like a blockchain is the same up to a certain point.
+[3774.0:3786.0] But there's actually two heads. So we get a fork with, you know, somebody proposes block B3 and somebody proposes block B3 prime different.
+[3786.0:3795.0] You know, so something different with a different set of transactions, right. And maybe Alice Alice's payment.
+[3795.0:3807.0] You know, maybe in one Alice pays Bob. But in another one, Alice pays the same Bitcoin to Charlie.
+[3807.0:3822.0] Right. So if Alice could get, you know, one exchange get Bob to believe history B3 and get Charlie to believe history B3 prime, then Alice would totally totally win.
+[3822.0:3834.0] You should be cheating the system, right. So it's in the interest of Bob and Charlie and everyone else to make sure that this, this doesn't happen. Right. So this is the safety violation.
+[3834.0:3843.0] You know, Bitcoin would like to prevent, right. Well, those Bitcoin actually prevent this still.
+[3843.0:3853.0] So, yeah.
+[3853.0:3878.0] Yeah. Exactly. So this is one of the totally brilliant things about Bitcoin design. Like this, this is one of the coolest things about Bitcoin coolest and cleverest things about Bitcoin consensus, which was, you know, really novel with respect to all the, you know, past Byzantine consensus algorithm.
+[3878.0:3890.0] So Bitcoin said, not safety, whatever. You know, I don't care about safety in the short term. Let's just care about safety in the long term. Right.
+[3890.0:3906.0] So take a take a long view perspective. Right. About safety. Right. Whereas, whereas, you know, prior consensus protocols have the property that we now often call immediate finality, meaning if the protocol succeeds one round.
+[3906.0:3917.0] You know, the condition that the decision is final and it's never going to change. But, Bitcoin takes, you know, much more cavalier attitude saying, yeah, whatever.
+[3917.0:3935.0] Let's tolerate at least brief safety violations. Let's say, OK, you know, two miners can, you know, in this big crowd here, actually can do independently, you know, discover the same block three at about the same time.
+[3935.0:3942.0] You know, and, you know, that they don't have to be dishonest to do this. This can just be luck. Right.
+[3942.0:3956.0] They, it's going to happen now and then with with some, you know, non-non-truvial probability that, you know, two miners mind the same block number at about the same time without knowing each other. Right.
+[3956.0:3965.0] And they're going to create these, you know, perhaps accidental works in the network. Of course, they could be malicious to, but they don't have to be right.
+[3965.0:3972.0] But, but so here's the thing. Right. So each, each of these chains.
+[3972.0:3976.0] Is going to have some amount of work invested in them.
+[3976.0:4003.0] And, and because of, you know, what you mentioned, the longest or it's actually better to, it's often called the longest chain rule, but it's actually better more precise to call it the heaviest chain rule.
+[4003.0:4020.0] And by heaviest, I mean, the amount of work invested, the total amount of mining power of, you know, useless proof of work solving power, the total amount of energy wasted in, you know, in these change. Right.
+[4020.0:4039.0] The difference is, is only so the difference comes into play when we consider that the difficulty and the dynamic adjustment. Right. So when, when if all nodes completely agreed on, you know, when and how to adjust the difficulty, then the, then there would be no difference.
+[4039.0:4051.0] Whereas, because nodes can, you know, have different perceptions of the current difficulty level, either either accidentally or even maliciously.
+[4051.0:4063.0] Well, using the heaviest chain rule, a total amount of mining power, that's secure. Whereas just counting blocked, would that would actually not be secure. Right. So, so it's a, it's a subtle detail.
+[4063.0:4079.0] But, but, but, but, you know, for most purposes, it's easiest just to think about the length of the chain. Right. So, so let's call this the longest slash heaviest chain rule.
+[4079.0:4091.0] So, as soon as, you know, any miner publishes and broadcast a new block at a given height or at a given new heaviest weight.
+[4091.0:4102.0] Then all other miners are going to basically pick the first such heavy, new heaviest chain and, and go start mining on top of that. Right.
+[4102.0:4117.0] And so in, in, in this case where, you know, two miners independently, you know, create a new heaviest chain that's that's tied for the moment. Well, some miners are going to start.
+[4117.0:4129.0] Some miners are going to start mining on this one. And maybe some other subset of the miners happen to see be three, be three prime first and they're going to mine on the other. Right.
+[4129.0:4146.0] So, we've independently got, you know, miners working on a B4, you know, on the upper chain and another subgroup of miners working on B4 prime, you know, candidates on, on the lower chain. Right.
+[4146.0:4152.0] You know, one of those, one of those groups of miners is going to win.
+[4152.0:4157.0] And again, it's all probabilities. Right. Either one might win.
+[4157.0:4172.0] But what are, what are the, what are the critical proportions? You know, how, what determines, you know, which group of competing, competing group of miners is more likely to win.
+[4172.0:4200.0] Yeah, the competition on. Exactly. Yeah. So some depending on the proportion of computational power that, you know, kind of converged on the upper chain versus the lower chain, if, say, if 30% of the miners happen to see be three first, then, you know, B3 will get 30% of the computational power and maybe the other 70% saw B3 prime first.
+[4200.0:4209.0] So, B3 prime will, you know, will basically have a 70% chance of getting, you know, kind of the next mighter.
+[4209.0:4222.0] You know, succeeding in B3, you know, will have only a 30% chance of, you know, kind of the next block that the first next heavier chain, you know, kind of beyond that.
+[4222.0:4231.0] Right. So, so, but, you know, again, Bitcoin says, OK, yeah, there's some assignment, but it actually doesn't matter that much.
+[4231.0:4240.0] Somebody somewhere will happen to produce a next block on top of these competing chains. Let's call it before.
+[4240.0:4257.0] And let's say that, you know, even though in this scenario, B3 prime actually had 70% of the power, well, it can still, you know, still the other chain can get lucky. And let's say in this case, the other chain did get lucky, even though it had only 30% of the power.
+[4257.0:4268.0] One of its miners 30% of, you know, miners in the 30% got lucky and got a B4 and published it first, right.
+[4268.0:4284.0] So what is the longest or heaviest chain rule say? Well, you know, as long as this B4 gets broadcasted in the network to a lot of to a high percentage of knowledge or ideally to all of them to the vast majority of nodes in the network.
+[4284.0:4298.0] So, you know, the next competing competitor at the height or weight before at the same height or weight, then all the nodes are going to just drop B3 prime. Kind of forget it.
+[4298.0:4309.0] Oops, that was an experiment that didn't work out. We're going to go switch over to this B3 chain with the new heaviest B4. Right.
+[4309.0:4321.0] So, yeah, until, you know, Alice's payment to Charlie in this case is just going to be, well, sorry, that didn't happen. Right.
+[4321.0:4332.0] If we thought it, we briefly thought it was happening, but well, it didn't happen. And so that's that decision, what decision is revoked in favor of the.
+[4332.0:4349.0] This new one, right. Now, of course, you know, this, this, this event of, you know, kind of these two B3 to B3 and B3 prime coming almost simultaneously.
+[4349.0:4361.0] You know, there's nothing that says that can't happen twice in a row. Right. They could, right. We could have, you know, kind of a B4 and a B4 prime down on the lower chain at about the same time.
+[4361.0:4369.0] And we could have a B5 on the upper chain and a B5 prime on the lower chain happened about the same time too. Right.
+[4369.0:4381.0] But what's the, you know, what's the reason, you know, why, why is it, why does it actually not come out of not consider that a huge problem. Yeah.
+[4381.0:4391.0] Yeah.
+[4391.0:4400.0] So, yes. So the certainly, you know, there one side or the other is probably going to be heavier.
+[4400.0:4409.0] Are going to have more computational power than the other one. But again, it's kind of just probabilities.
+[4409.0:4427.0] And it's kind of, you know, kind of, which, which one of them actually advances first or next or, you know, kind of whether, whether you actually do have, you know, both chains and advancing it about the same time or one advancing significantly before the other, right.
+[4427.0:4429.0] It's all probabilities, right.
+[4429.0:4432.0] Based on that proof of work.
+[4432.0:4449.0] But, but. So, so the Bitcoin paper basically says, well, before you consider it any transaction to be final, wait 10 blocks or no, six blocks.
+[4449.0:4450.0] Sorry.
+[4450.0:4471.0] So basically wait a now, right. If the block time is is around 10 minutes, then an hour is about six blocks. So if you want to, you know, make sure that, you know, if you're Charlie and you want to make sure that you really received those funds, then, you know, don't just look for block B.
+[4471.0:4482.0] B three prime, look for, you know, make sure block B three prime, continuing your transaction stays in the current, you know, block chain for the next six blocks, right.
+[4482.0:4490.0] For, you know, wait an hour and then make sure it's still there, you know, and the chain hasn't switched to to somewhere else, right.
+[4490.0:4510.0] And if you do that, then, you know, from a probabilistic argument, he's basically saying, well, it's super unlikely that, you know, after that point, your, your transaction, you know, the chain will switch away from, from the one containing your, your transaction.
+[4510.0:4529.0] Is that well again, it's just probability. So he's basically assuming that each, you know, each event of two blocks occurring at about the same time is, you know, is a small probability, you know, relatively, you know, it's a non trivial.
+[4529.0:4546.0] But let's say it's 10%, it's probably a lot less than that in this, in this fairly conservative design, but, you know, suppose the probability of, you know, each block, you know, each chain producing a, as the accessory about the same time is about 10%.
+[4546.0:4555.0] Well, the, the probability of the same thing happening again is going to be an independent 10%.
+[4555.0:4571.0] Right. So the probability of these two chains extend the being extended, you know, another level at the same difficulty at about the same time and therefore surviving is going to be, you know, 10% and then 10% and so on.
+[4571.0:4595.0] And these again multiply, right. So the probability of, of being six successive blocks on both chains at about the same time. So what's that in this, you know, in these, you know, a some based on these assumptions that each event happens with about 10% probability.
+[4595.0:4617.0] 1 over 10 to the 6, yeah, 1 in a million. Right. So now, the probability is probably a lot lower than that, but you get the idea. It's, it's, you know, assuming the assumptions hold and, you know, each of the, each of these can, bad concurrent block extension events on both chains occurs with a fairly small but independent probability.
+[4617.0:4630.0] Those probabilities multiply and it's, you know, that probability p to the 6th in this case of it surviving an hour and that probably because of that exponential, you know, reduction and probability.
+[4630.0:4637.0] It's, yeah, got to be a really low probability. We don't, it's hard to tell what it is, but it's got to be pretty low. Yeah.
+[4637.0:4666.0] So, if you, if you, if you, if you do have, if you can broadcast a block really quickly, you do have certain advantages. Yeah.
+[4666.0:4680.0] But, if Bitcoin is working correctly, right. And, and, you know, this 10 minutes delay is enough for, you know, kind of most everybody to, to hear about a new block.
+[4680.0:4694.0] Well, your advantage isn't that much. So, so yeah, you do have an advantage. Let's say, you know, be free. The, the minor of B3 has a really fast network and can get B3 to everybody really quickly, right.
+[4694.0:4703.0] And the minor of block B3 prime actually has a pretty slow network and, you know, takes a few seconds or even a minute to get that block to everyone, right.
+[4703.0:4725.0] So, B3 sounds like it has a major advantage and it does in that, you know, in this kind of, if B3 and B3 prime in fact, you know, get there, you know, discover their blocks at about the same time, then B3 block will almost certainly win because everybody will hear about B3 block first, right.
+[4725.0:4738.0] On the other hand, that's not the, that, you know, because of the, because the proof of work is slowing everything down, and that's the function of proof of work, just to slow everything down.
+[4738.0:4766.0] Because of that, it's, you know, what's actually going what we're, you know, what we actually need to pay attention to is, is, you know, what's the probability of, you know, B, block B3 and B3 prime actually being perceived by the whole network as, you know, kind of being observed by being received by a majority of knows about the same time, right.
+[4766.0:4795.0] So, so, you know, if B, if minor B3 is fast, but minor B3 prime is slow, then the actual kind of competition event that we care about is when B3 prime actually discovers the block somewhat earlier, like a second or a minute earlier than the minor B3, you know, so it just happens that, you know, despite their very different, you know, kind of delays getting their block.
+[4795.0:4805.0] It looks to the rest of the network that they came out at about the same time, they were revealed at about the same time by luck, right.
+[4805.0:4823.0] And, right, so, so, you know, in this case, well, you know, again, again, this is, this is just, just luck, but, you know, if, if the, if there is actually a majority of mining power behind B3 prime,
+[4823.0:4851.0] you know, like, you know, 70% on B3 prime and only 30% on, on B3, then, you know, over the course of that 10 minutes, it's still going to be, you know, the dominant probability is going to be that, you know, there's twice it, you know, the, the set of minor behind mining on B3 prime are going to be basically operating over twice as fast.
+[4851.0:4877.0] So, you know, so, so, so, whereas, you know, a minor mining on B3 might, you know, in expectation, get a next block somewhere around the seven minute, you know, range, you know, a minor mining on B3 prime, you know, some minor mining on B3 prime is likely to 60 to more like the three minute range.
+[4877.0:4900.0] Right, so that, so, you know, even though, you know, one was a lot faster than the other, well, the, you know, over the course of that 10 minutes, that actually, that's actually what is more likely to dominate in terms of, you know, kind of whose minor gets to, you know, most likely extends the, the blockchain first, right.
+[4900.0:4909.0] Does that make sense? Yeah. Yeah.
+[4909.0:4933.0] So, this is, for example, if we, if we, if we want to use it, basically the one that's active and people find, but people, people are usually found so all know we see the environment. It doesn't, it doesn't, there's no notion of like which, which chain is the correct one and which isn't the correct one.
+[4933.0:4954.0] So, so in a sense, it doesn't auto correct. Yeah, there's nothing to be corrected in a sense. Right. You know, the only thing to be corrected that actually that, that, that Bitcoin is really worried about is having two or more chains persists a long time.
+[4954.0:4971.0] Right. So, so as long as, you know, we don't have two chains, you know, both simultaneously existing for like six blocks. Right. That's the only real bad event that Bitcoin is really worried about as long as that doesn't happen.
+[4971.0:4982.0] Neither the change is better than the other from, you know, moral perspective or whatever. Right. You know, I, Bitcoin totally doesn't care who wins and who lose it.
+[4982.0:4997.0] If it might be three is faster than network, it will totally have an advantage at a block by block level. You know, if it gets close, you know, in time to some other minor than yeah, it's probably going to win, right. That block.
+[4997.0:5007.0] But, you know, in the long term, Bitcoin doesn't totally doesn't care who wins and who loses as long as two block chains don't persist for a long time.
+[5007.0:5029.0] Does that make sense? Yeah. So, you know, and that's that's part of the beauty of the algorithm that, you know, it kind of doesn't need, you know, to care about like, you know, that much about fairness at the individual block level, like the individual level Bitcoin only cares about the long term.
+[5029.0:5035.0] Right. What happens at periods of an hour or more, right.
+[5035.0:5057.0] Yeah. So, okay. Yeah. So that's the basic way this works. Now, there, I mentioned there, there's, there's at least one other very important assumption that Bitcoin makes to achieve its safety and likeness guarantees.
+[5057.0:5073.0] You know, compared to, say, classic consensus algorithms, what might that other assumption be, right. In what context might Bitcoin completely, you know, fail as a consensus algorithm? Say, yeah.
+[5073.0:5100.0] So, you're talking about the incentive, like the incentive to mine issue. Yeah. So, so that's a, that's a very important. So, like the whole economics of block rewards. What are the incentives to mine and stuff? I haven't really gotten into that there.
+[5100.0:5113.0] It's also very core to Bitcoin's argument that, you know, miners have an economic incentive to mine, importantly, because they get block rewards out of it as well as transaction fees.
+[5113.0:5131.0] And whether and the extent that that that incentive persists is actually an important, really important to Bitcoin security in, in some way, more subtle ways. And there, there have been very interesting papers written, you know, studies made on well, what happens as.
+[5131.0:5148.0] Bitcoin's block reward gradually decreases as it does and, you know, to a point where, you know, at some point there will, there's going to be no block reward at all. And miners will only be incentivized to mine based on the transaction fees they collect in all that transactions.
+[5148.0:5165.0] And there's some real interesting doubts as to whether whether the system will remain incentive compatible with whether miners will still be incentivized to behave well and, you know, keep the system secure after that happens, right.
+[5165.0:5183.0] And there might not that's, you know, that's a kind of difficult, subtlety question. Yeah. So, so really good point. I wish I had time to kind of get deep into the economics side of Bitcoin too, because it's really fascinating. But that's, but what I'm looking for here. So, yeah.
+[5183.0:5206.0] So, let me, let me just put a general. There, there's a, there's a whole, a whole set of important assumptions about economic incentive compatibility that Bitcoin does depend on.
+[5206.0:5217.0] And that, and, and these are actually a lot more subtle than than the original Bitcoin paper makes it make them out to be as we've discovered since then.
+[5217.0:5233.0] But independent of those, there's, there's another basic network assumption. Just standard non economic. How, you know, what do we assume about the network for Bitcoin to be both safe and like.
+[5233.0:5251.0] So, to start with is Bitcoin ever non live. There's Bitcoin ever lose live. No, right? Yeah. What?
+[5251.0:5268.0] Yeah. I mean, the only way it could lose live is is all every single one of the miners stops, right? Because if there's even one minor, all of that minor is doing is grinding these proof of works, right?
+[5268.0:5294.0] So, it doesn't actually need to have anyone else in the system in order to remain live, right? So, any subset of miners is going to remain live no matter what. So, what does this mean for Bitcoin's fundamental properties as a consensus algorithm? What does this mean for safety?
+[5294.0:5320.0] What conditions is Bitcoin safe is Bitcoin always safe? Yeah. Yeah. Exactly. So, there, there is a, there is a network connectivity or propagation.
+[5320.0:5332.0] Basically, in, you know, what we would call in theory, a synchrony assumption.
+[5332.0:5351.0] In particular, so that 10 minutes is a constant that, you know, that magic 10 minutes makes Bitcoin a very synchronous algorithm. So, from a, from a theoretical perspective, right? So, you know, it's really critical.
+[5351.0:5380.0] Even though it's 10 minutes is a, is a pretty generous conservative bound on the real network. Nevertheless, you know, it is a very security critical bound. And it means that well, you know, for Bitcoin to work and to remain safe. Then basically the vast majority, at least, you know, kind of the honest majority, the, the over 50% 51% of the mining power, this moving things forward had better be, you know, strongly connected and able to, you know,
+[5380.0:5389.0] connected and able to get their packets to out to each other within that 10 minutes. Right.
+[5389.0:5398.0] If that stops happening, for example, just because of a network split, right? You know, and the network split doesn't even need to be even, you know, it could be a.
+[5398.0:5411.0] So, you know, it could be a very approximately 50 50 from network split, or it could be a very unfair network split like 70% of the mining power is on this part of network partition and 30% of the mining power is on that network partition.
+[5411.0:5419.0] Well, nevertheless, both of those partitions are going to remain live. They're going to, you know, keep a deep things going.
+[5419.0:5437.0] They will both observe, you know, independently observe that oops, the block time time has suddenly jumped, right? You know, the partition with 70% of the mining power will go, oh, the block time has suddenly gone from 10 minutes to 13 minutes or so.
+[5437.0:5448.0] Right. That's bad. We better reduce the difficulty. The other, the small 30% partition will go, oh crap, the block time has jumped from 10 minutes to 30 minutes.
+[5448.0:5459.0] What happened? But still, well, we're just going to adjust. Okay, the will, you know, drop the gradually drop the difficulty down, you know, by a factor of 3.
+[5459.0:5465.0] So that, you know, it goes back down to 10 minutes if if this partition persists long enough, right?
+[5465.0:5472.0] But they're going to keep going and they're going to be producing their own separate and independent block change, right?
+[5472.0:5481.0] For as long as the partition persists, right? Now, what does this mean for safety eventually, right?
+[5481.0:5489.0] What happens when the partition eventually heals and these two groups come back together?
+[5489.0:5518.0] Basically, you know, anybody who was mining on, you know, was in the 30% partition is probably, you know, and was buying and selling stuff transferring money is going to be gravely disappointed because, you know, all of those transactions on that, you know, on that blockchain with the, had the smaller mining power.
+[5518.0:5527.0] And probably, you know, kind of was was moving, moving a lot less, less quickly because of that. Well, it's just going to be forgotten, right?
+[5527.0:5537.0] You know, as soon as the, the big, you know, the, the larger the heavier blockchain comes back into the picture and starts competing again.
+[5537.0:5545.0] Well, everybody's going to follow the longest chain rule and that, that minority blockchain is just going to be, you know, all gone, right?
+[5545.0:5559.0] So, and so, yeah, anyone who was depending on that for safety is just, you know, SFYL, sorry for your loss as they say, tend to say in, in these circles, right?
+[5559.0:5583.0] Yeah, so, so, you know, Bitcoin doesn't really, you know, provide a strong conservative safety property. It only provides safety under the very, whoops, under the important assumption that network connectivity holds in this synchronous model all the time, you know, and it better not be violated for too long.
+[5583.0:5589.0] Otherwise, yeah, you are going to have safety violations.
+[5589.0:5602.0] Okay. Good. Other, other quick questions or comments about this kind of consensus?
+[5602.0:5618.0] Okay. Well, good. So, hope that was a brief overview of a couple of, you know, different approaches to Byzantine consensus and we'll come back to this topic in more advanced consensus algorithms later.
+[5618.0:5634.0] Okay. Thank you. See you next week.

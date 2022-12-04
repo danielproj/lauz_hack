@@ -1,0 +1,421 @@
+~Exercises: 1st session
+~2020-09-28T17:57:34.102+02:00
+~https://tube.switch.ch/videos/d82a7150
+~CS-451 Distributed algorithms
+[0.0:15.76] So, hello everyone, welcome to the first class, access session of distributed algorithms.
+[15.76:20.16] So I'm going to briefly recap how things will work.
+[20.16:30.4] I'm going to present to both the Zoom people and the real people.
+[30.4:37.04] The real people, if they want to ask questions, they can do that whenever they want, just raise
+[37.04:41.16] your hands and I'll see you.
+[41.16:46.28] Not the same can be said for the Zoom people, the decision people even before, real people,
+[46.28:52.04] raise their hands, Zoom people just write in the chat.
+[52.04:59.36] We have one dedicated teaching assistant that's going to be there to read all of your questions
+[59.36:64.0] and comments and he is going to immediately relay them to me.
+[64.0:67.64] So it should be more or less immediate.
+[67.64:75.08] I should have disabled all of your audios, so you should not be able to speak and even
+[75.08:80.75999999999999] if you were able to speak, I knew to my computer just to make sure that I don't hear you.
+[80.75999999999999:88.44] So please write in the chat and Yavin will relay your comments to me.
+[88.44:97.92] Okay, so due to organization, we have had some access sessions that were not there in the
+[97.92:100.4] past few weeks because of vacations and stuff.
+[100.4:109.04] So what we had to do was to condensate a little bit of separate topics that would have been
+[109.04:114.2] included in separate access sessions in the same.
+[114.2:117.60000000000001] So what we're going to be doing today is the following.
+[117.60000000000001:126.52000000000001] And when I introduce two sets of exercises, one, the first one that you see displayed here
+[126.52:132.44] should be considered kind of not mandatory, you're free to do it if you feel like you're
+[132.44:133.44] in it.
+[133.44:137.04] It's kind of a good warm up on logic.
+[137.04:141.92] And then we are going to discuss a little bit more in detail the actual exercises for
+[141.92:146.04] this week, which are on links.
+[146.04:151.51999999999998] The first basic abstraction that you guys have studied in class.
+[151.52:158.52] However, also this week, we are going to give you as an e-cook on next week's exercises,
+[158.52:159.52] right?
+[159.52:166.8] So that whoever wants to have some advantage on next week's exercises, they will be released
+[166.8:170.08] on the web page, right?
+[170.08:175.12] So you can download them and, you know, have a look at them.
+[175.12:178.60000000000002] So what we're going to try to do is to keep doing like this.
+[178.6:184.0] You're going to try to give you one week ahead the exercises.
+[184.0:190.68] But the actual exercises that we will discuss day by day are going to be kind of related
+[190.68:194.84] to the topics that you have seen in class one week before this way.
+[194.84:200.6] You guys have a little bit of time to, you know, get a grasp of what has been discussed.
+[200.6:204.04] Now all ideas are simple and distributed algorithms.
+[204.04:209.23999999999998] So it might take a while for you to, you know, get a complete understanding and so that
+[209.23999999999998:215.39999999999998] when the exercise comes, you should be ready to handle them, okay?
+[215.39999999999998:219.12] As usual, we are available.
+[219.12:223.23999999999998] We should have office hours published on the website.
+[223.23999999999998:229.6] If we don't, I'm going to figure out as soon as this presentation is finished.
+[229.6:238.44] So if there are no questions in real life and no questions on Zoom, well, I'm going
+[238.44:239.44] to keep going.
+[239.44:240.44] Good.
+[240.44:246.51999999999998] So the three presentations are already online.
+[246.51999999999998:252.32] So you can go and download them from the DTL website in case you need them.
+[252.32:256.88] And anyway, you can see them projected on the screen.
+[256.88:257.88] Okay.
+[257.88:265.2] So the first exercise session that we usually do kind of separate from the next one, but,
+[265.2:270.6] you know, this week they're going to be together is a logic 101.
+[270.6:272.56] Why do we care about logic?
+[272.56:279.84] Because an important part of the development of distributed algorithms, since often, you
+[279.84:287.24] know, we make the security of extremely critical systems rely on them is to prove mathematically
+[287.24:292.28000000000003] that a distributed algorithm actually works.
+[292.28000000000003:298.76] So we believe that it's extremely important and it will be part of what we, you know,
+[298.76:301.36] of the requirements that we will have for you at the end of the course.
+[301.36:311.64] You are able to handle, you know, simple proofs of safety and correctness of some simple
+[311.64:314.36] algorithms, okay?
+[314.36:322.52000000000004] So this first exercise should be kind of seen as a warm up for whoever needs to catch up
+[322.52000000000004:333.12] a little bit on on how logic works and more precisely to get a sense of what constitutes
+[333.12:336.72] the proof and what does not constitute the proof, right?
+[336.72:343.92] Oftentimes we end up mixing up, you know, kind of an example, kind of an anecdote.
+[343.92:349.04] Or partial evidence for some facts as a proof.
+[349.04:355.96000000000004] Satellite proofs can be extremely contrived, can be, you know, every set needs to follow
+[355.96000000000004:359.76] precisely from the previous ones in a completely syntactical way, right?
+[359.76:364.84000000000003] It's not, it should not depend too much on the semantics of what you're discussing.
+[364.84000000000003:370.88] It should be more like about setting very rigid rules and applying them to form statements.
+[370.88:378.28] So the first few questions I'm not even going to, I'm not even going to go through them
+[378.28:379.6] too much.
+[379.6:385.64] The first exercise is on conditional statements, which we often have improved like if a,
+[385.64:387.08] then b, right?
+[387.08:393.04] So we briefly discussed what the converse, the inverse and the contropositive of a statement
+[393.04:394.88] are.
+[394.88:402.68] And then we ask you to do some simple manipulations of some statements to see if you got it.
+[402.68:410.08] So for example, if process x fails, then process y never receives message m, you know, this
+[410.08:416.68] is the kind of statement that you're going to see often in distributed systems truths,
+[416.68:417.68] right?
+[417.68:425.44] As will be throughout all of the course, I'm going to introduce, I'm going to briefly
+[425.44:431.08] go through the exercises with you, I'm going to show you the most interesting ones, right?
+[431.08:438.6] And then next week, we will discuss and if we'll be published on the website as well,
+[438.6:442.68] the complete solution of everything and we'll go through everything a little bit more in detail.
+[442.68:451.12] So we're going to have a little exercises on conditional statements, right?
+[451.12:456.84000000000003] We want also to test, you know, how warm that you are on what implies what, right?
+[456.84000000000003:460.72] So what follows from what?
+[460.72:468.12] And it's sometimes it's easy, not always it's trivial to identify, you know, which two
+[468.12:475.32] statements actually are the same statements, which two statements, you know, are the same.
+[475.32:484.96] So yes, so we have a little bit of exercises here, you just identify which ones.
+[484.96:496.04] So next after this brief logic warm up, we ask you to write a proof, okay?
+[496.04:502.88] So let x, y, z and q be natural numbers, right?
+[502.88:504.48] That's satisfy an equation.
+[504.48:513.72] Now you want to prove that q is even, if and only if x, y and z are all even as well,
+[513.72:514.72] right?
+[514.72:525.16] So what we're going to ask you to do here is to write the most accurate, the most syntactical,
+[525.16:531.8] the most pedantic and precise proof possible for the statement, right?
+[531.8:538.68] And I have a feeling that many of you will, you know, kind of sketch very good examples
+[538.68:541.36] that don't exactly qualify as proof.
+[541.36:546.56] And so we will try and, you know, traumatize you a little bit by showing you what the actual
+[546.56:550.48] proof looks like next week, okay?
+[550.48:561.36] So we have other bit more proofs, each proof leverages one specific style, right, of
+[561.36:562.36] proving things, right?
+[562.36:566.6] You can prove stuff by cases, by induction, by contradiction.
+[566.6:573.52] So we would like to see how you handle that.
+[573.52:578.6] So these are all exercises that you should feel free to do.
+[578.6:582.9200000000001] And then you have hints, right?
+[582.9200000000001:592.4] And, okay, and this fifth exercise along with bonus exercise should be really consider
+[592.4:593.4] bonus.
+[593.4:596.96] They're kind of like, kind of a logic trick.
+[596.96:603.48] And you've got to, again, prove what's asked in here.
+[603.48:610.28] I'm not going to go too much through in detail here because it's not too critical.
+[610.28:615.16] And it's also merged with the other exercise sessions.
+[615.16:618.4] So, you know, have a look at these.
+[618.4:624.6] And I'd like to see them next week how you guys handle this, okay?
+[624.6:630.08] So this is a brief overlook on the first set of exercises that we would like to give
+[630.08:631.08] you.
+[631.08:634.08] And these should, they are not for you, right?
+[634.08:642.0400000000001] They do not, they deliberately do not relate to the specifics of distributed algorithms
+[642.0400000000001:650.8000000000001] because that's not how, you know, that proofs do not relate per se to the topic they apply
+[650.8000000000001:652.12] to, right?
+[652.12:661.64] So we chose deliberately some exercises that were quite, you know, they only leverage
+[661.64:663.16] basic math, right?
+[663.16:667.32] So you're not expected to know anything to do these proofs.
+[667.32:672.28] And so yes, we'll discuss their solutions next week.
+[672.28:678.2] So the next topic we would like to discuss with you.
+[678.2:680.92] And I'm going to, no, wait, that's not how you do it.
+[680.92:681.92] Okay.
+[681.92:689.04] The next topic that we would like to discuss with you is going to be linked, okay?
+[689.04:695.76] So you have studied very first lesson of what a distributed system is.
+[695.76:696.76] It's a set of processes, right?
+[696.76:702.7199999999999] A set of, you know, you can see them as computers, but more in general, a process is, you
+[702.7199999999999:708.0] know, any subject that is capable of getting out a computation.
+[708.0:711.24] Anything that can execute an algorithm is a process, right?
+[711.24:715.2] The processes abstract in the real world most of the time computers, but they could be,
+[715.2:721.84] I don't know, people or whatever other agents that can, you know, can carry out instructions.
+[721.84:726.48] Now processes as we discussed are linked together, right?
+[726.48:731.92] So they can exchange messages along with what you can safely see as, I don't know, wires,
+[731.92:735.8] magic wires, the current messages across the system, right?
+[735.8:743.0] Now not always, and we will see a little more of this probably later in the course.
+[743.0:747.52] Now always all processes are connected to all processes, right?
+[747.52:753.4] We on the internet have often the feeling that every single computer is connected, you
+[753.4:759.0799999999999] know, to all the others, but this is not always a case most of the time.
+[759.0799999999999:765.1999999999999] Complex, large networks of processes will have a specific topology, right?
+[765.2:773.0] So you will have some nodes that are connected to each other, and in order for any process
+[773.0:778.76] to be able to reach any other process, we will need some, we will need the processes
+[778.76:779.76] to cooperate.
+[779.76:783.5600000000001] So for example, to relay messages to each other, okay?
+[783.5600000000001:791.2] So this second slash first access to accession is about this.
+[791.2:798.32] How do processes communicate, and I'm a little bit more realistic scenario where not everyone
+[798.32:803.44] has a direct wire to everyone else, okay?
+[803.44:812.8000000000001] So we start by introducing, well, you know, a classic, the cononic way to study networks
+[812.8000000000001:816.2] of processes is the graphs, right?
+[816.2:819.6] So graphs abstract networks, right?
+[819.6:826.24] So a graph is, okay, how many of you already know this, how many of you already know what
+[826.24:828.0400000000001] a graph is?
+[828.0400000000001:830.08] That's good, okay.
+[830.08:835.6] Anyways, a graph is a couple of where you have a set of vertices and a set of edges,
+[835.6:836.6] right?
+[836.6:843.48] And the set of edges are a set of couples, you know, that describe which two vertices
+[843.48:845.84] are connected, right?
+[845.84:851.2] And we say the two vertices are adjacent if there is an edge between them, right?
+[851.2:857.2] And an important property of graphs, okay, yes, we have the directed graphs, directed,
+[857.2:859.6800000000001] directed graphs means arrows, right?
+[859.6800000000001:862.2800000000001] And directed graphs means lines, right?
+[862.2800000000001:869.36] So intuitively, you know, let's say that I have a set of computers and I connect them
+[869.36:872.0400000000001] via, I don't know, Ethernet cables.
+[872.04:877.04] That's the best abstraction to describe a directed or an un-directed graph.
+[877.04:879.04] No one, come on.
+[879.04:883.04] I didn't hear that.
+[883.04:886.04] Very good, yes.
+[886.04:887.04] Why?
+[887.04:892.04] Because, you know, messages can go through an Ethernet table in both directions, right?
+[892.04:896.4399999999999] And we can safely exchange messages with each other.
+[896.44:905.44] You know, more contrived, more, you know, let's trivial examples can be found for how a
+[905.44:908.32] system could be modeled rather by a directed graph.
+[908.32:912.8800000000001] For example, let's say they have, I don't know, a laser transmitter that only, you know,
+[912.8800000000001:916.72] only one has the output and only one has the receiver and then you can propagate the messages
+[916.72:917.96] on anyone specific question.
+[917.96:922.12] This is, you know, this is a stupid case, of course.
+[922.12:927.5600000000001] But then when you actually study the Byzantine case of things, have you already discussed
+[927.5600000000001:930.12] what the Byzantine is, right?
+[930.12:932.12] Not or if you say no.
+[932.12:933.12] Oh, no, you don't.
+[933.12:934.12] Okay.
+[934.12:941.92] So the study of distributed systems usually involved two aspects.
+[941.92:947.12] The main aspect that you guys are going to study is the crash.
+[947.12:953.72] It's going to be the study of a cache full of the algorithms, right?
+[953.72:961.12] So the idea is going to be to design an algorithm that performs well even if some part of,
+[961.12:964.2] some parts of the system suddenly stop executing, right?
+[964.2:973.08] So a good example of what a crash full looks like is you're working at our computer, your
+[973.08:977.76] programmer is, you know, vacuuming and some of the strips over the wire.
+[977.76:981.48] The computer pops off and this is it, right?
+[981.48:985.9200000000001] So these are what we call crash failures, right?
+[985.9200000000001:993.76] And crash failures are a useful model in, you know, all those systems where you have complete
+[993.76:999.84] control, you have complete physical control over the processes that take part in the
+[999.84:1000.84] system.
+[1000.84:1005.12] And then obviously nature can sometimes break something, right?
+[1005.12:1010.76] So this is the first failure model that we have in distributed systems.
+[1010.76:1015.36] But there's another one which is quite more significant, quite more general and quite
+[1015.36:1022.88] hard to discuss often where the processes that fail, namely the processes that stop
+[1022.88:1029.48] executing correctly, they do not crash, they do not simply stop executing.
+[1029.48:1034.8] And actually they keep executing or they can keep executing except that they stop executing
+[1034.8:1042.24] your algorithm and they stop executing an arbitrary algorithm that can be designed with
+[1042.24:1050.2] your algorithm, my mind deliberately to compromise the correctness of your system, right?
+[1050.2:1057.4] So a more realistic scenario where this model applies can be for example in the presence
+[1057.4:1059.4] of hackers, right?
+[1059.4:1062.6000000000001] So say that you have a very large system, right?
+[1062.6000000000001:1067.3600000000001] And you know some nodes of the system had poor passwords, right?
+[1067.3600000000001:1073.24] Or I don't know, somebody could not someone's son and now they have the keys to some part
+[1073.24:1074.8000000000002] of the system, right?
+[1074.8000000000002:1078.3600000000001] Now this part of the system, which can be considered to be under the control of an arbitrary
+[1078.3600000000001:1082.0800000000002] adversity, right?
+[1082.0800000000002:1087.0800000000002] Has, you know, in principle, an arbitrary behavior, right?
+[1087.08:1094.08] So in these cases, this is all this discussion was just to say that in these cases, sometimes
+[1094.08:1101.1999999999998] not all processes can reliably acquire information from all the others.
+[1101.1999999999998:1107.32] Specifically, some processes given, I'm going to choose which other processes are going
+[1107.32:1109.8] to be communicating with sometimes around them.
+[1109.8:1115.12] And they're deliberately not going to accept in order to prevent malicious behavior,
+[1115.12:1119.6] and I'm going to accept messages from anyone, sorry from everyone, right?
+[1119.6:1124.08] But they're rather going to deliberately decide who they're going to receive messages from.
+[1124.08:1131.6] So in some other cases, direct graphs are going to be a useful option to study how information
+[1131.6:1132.9199999999998] propagates through our systems.
+[1132.9199999999998:1138.1599999999999] And this is mostly going to be in the Byzantine case, okay?
+[1138.16:1145.92] So again, a path, you probably have all seen it, a path between two vertices exists if
+[1145.92:1153.72] you can pop between two vertices, starting from one and going into the other, only using
+[1153.72:1156.76] couples of vertices that have edges between them, right?
+[1156.76:1162.44] And finally, the connectivity is an extremely useful to study how information can propagate
+[1162.44:1166.8000000000002] in a distributed system.
+[1166.8:1172.48] But you can intuitively, if you can reach any process from any other process, right?
+[1172.48:1178.44] By simply hopping through the graph, if you can go between two edges, that means that
+[1178.44:1182.9199999999998] intuitively all the processes can communicate and safely exchange information with each other,
+[1182.9199999999998:1184.72] right?
+[1184.72:1196.3999999999999] So we have a few exercises on the topic of graphs, and then more specifically on the topic
+[1196.4:1197.96] of communication, right?
+[1197.96:1200.4] The first ones are easy.
+[1200.4:1205.24] Prove that if A is connected to B, then B is connected to A. We're going to use only
+[1205.24:1208.8000000000002] undirected graphs in this case, I think.
+[1208.8000000000002:1214.3200000000002] Second exercise, prove that if A is connected to B, and B is connected to C, then A is connected
+[1214.3200000000002:1215.3200000000002] to C.
+[1215.3200000000002:1220.0] This should be all easy proofs that, you know, you should know how to do having warmed
+[1220.0:1223.92] up with the previous exercises.
+[1223.92:1229.8400000000001] And now we ask to, you know, a little bit more hands-on kind of exercise.
+[1229.8400000000001:1235.0] You would like you to write a piece of code.
+[1235.0:1237.52] You can choose the programming language, you're not going to run it.
+[1237.52:1242.64] It's just, you know, so they have a clear idea on how these things work that provided
+[1242.64:1243.64] with the graph, right?
+[1243.64:1249.96] Outputs, true or false, depending on whether the graph is connected, right?
+[1249.96:1252.48] Now, gossip.
+[1252.48:1254.56] Have you heard of gossip in class?
+[1254.56:1256.56] Was it discussed with you?
+[1256.56:1257.56] Okay.
+[1257.56:1264.84] So, gossip is a way through which we can achieve all to all communication, right?
+[1264.84:1271.44] Without needing all correct processes to, you know, directly interact with each other,
+[1271.44:1272.44] right?
+[1272.44:1281.0] As I was saying before, you can not always assume that all processes have a data flyer
+[1281.0:1282.4] to all the others, right?
+[1282.4:1286.88] So, what we, what we have to rather do is to accept that we have an arbitrary topology
+[1286.88:1289.72] like the one they have, they see here in the picture.
+[1289.72:1295.44] And that if you have a message that is issued by some specific process, that message is
+[1295.44:1299.64] going to propagate through the system by being related.
+[1299.64:1304.2800000000002] So for example, here we have process E that gives to its neighbors the message.
+[1304.2800000000002:1308.2] And then whenever the rule, the simple rule is when you, you know, you receive a message,
+[1308.2:1315.32] you give it to all of your neighbors so that the system is reached by other ones, right?
+[1315.32:1322.32] So it's easy to see that, it's intuitively that the gossip is correct.
+[1322.32:1324.0800000000002] Mainly everybody gets the message.
+[1324.0800000000002:1332.48] Only if the graph of the connections between the correct processes, so the processes that
+[1332.48:1335.56] do not fail is connected, right?
+[1335.56:1336.92] That makes a lot of intuitive sense.
+[1336.92:1338.96] We would like you to prove it.
+[1338.96:1339.96] Prove both implications.
+[1339.96:1342.6000000000001] So it's an F and O layer, right?
+[1342.6000000000001:1349.88] Okay, so now the next step in this example here, we had all the processes that were correct,
+[1349.88:1350.88] right?
+[1350.88:1353.0800000000002] My message safely propagates through them.
+[1353.0800000000002:1358.0] And in the next exercise, we ask a little bit more of a tricky question, which is what
+[1358.0:1362.96] happens if, you know, one process crashes, right?
+[1362.96:1370.32] So here we have a specific graph, right, that describes how the processes have connected
+[1370.32:1372.76] with respect to each other.
+[1372.76:1380.52] And what happens if one of the processes crashes is the gossip still correct.
+[1380.52:1385.96] So what you should do is to assume that any of the processes, any one of the processes
+[1385.96:1387.8] can crash.
+[1387.8:1396.12] Do you think that the gossip is going to stay correct or not if one of the processes crashes?
+[1396.12:1402.8] Okay, can you make an example of which node is vital to the correct functioning of the
+[1402.8:1403.8] gossip?
+[1403.8:1405.8] B, very good.
+[1405.8:1406.8] Yes.
+[1406.8:1411.12] So if you kill node B here, and D, for example, it's going to be disconnected, right?
+[1411.12:1412.12] Okay.
+[1412.12:1415.6] So now the question is, we want to make this algorithm secure, so we want to improve the
+[1415.6:1422.3999999999999] topology of this graph in a way that allows the system to stay connected, even if one,
+[1422.3999999999999:1425.36] any one of the correct processes crashes, right?
+[1425.36:1430.04] So start any one of the processes crashes, making it not correct.
+[1430.04:1436.8] So here we ask you to minimize the number of links that are necessary for this graph
+[1436.8:1438.8] to be connected, right?
+[1438.8:1439.8] Okay.
+[1439.8:1446.52] Now, let's generalize things a bit, right?
+[1446.52:1453.56] We say that two nodes are disjoint, sorry, two distinct vertices, K connected.
+[1453.56:1460.1599999999999] If there are K disjoint paths that go through them, right?
+[1460.1599999999999:1464.0] So you could see, like, I think we have examples later.
+[1464.0:1465.0] Yes.
+[1465.0:1466.0] Okay.
+[1466.0:1472.08] So the idea is here that you should be able to take multiple roads if you are K connected,
+[1472.08:1477.88] if two vertices are K connected, then you can take multiple roads to go from one to
+[1477.88:1479.4] the other, right?
+[1479.4:1487.6] And here the idea is F2 processes are K connected, and, you know, so there are K different
+[1487.6:1492.64] chains of processes between them, then probably the ability to communicate is going to be
+[1492.64:1498.5600000000002] granted with higher confidence, right? Because of course some of the paths can go offline,
+[1498.5600000000002:1501.0800000000002] but others, you know, stay up.
+[1501.0800000000002:1507.0] And this is essentially how the entire internet originally was designed, right?
+[1507.0:1513.24] It was designed as a network of computers that stayed connected even if some lines were
+[1513.24:1517.44] blown up by a nuclear attack or whatever.
+[1517.44:1524.56] So a Grostip, we say it's robust to K failures, it's not only F, you know, it stays correct
+[1524.56:1530.64] as long as no more than K processes, K processes trash, right?
+[1530.64:1535.8400000000001] So obviously, for example, in this case, we have the example, a simple example, a fully
+[1535.8400000000001:1542.72] connected graph is obviously robust to N phase, namely you can kill one of the other, all
+[1542.72:1546.68] the processes, and it's still going to be technically correct, including the case when
+[1546.68:1551.5600000000002] you kill all the processes, because all the claims that we do are about the set of correct
+[1551.5600000000002:1553.3600000000001] processes, the one that don't crash.
+[1553.3600000000001:1558.0] So if you tell me there's no correct process, everybody lies, it's a bad use proof, but
+[1558.0:1562.6000000000001] it's very simple to do a proof of correctness for such a Grostip graph.
+[1562.6000000000001:1569.44] Okay, so now we, you know, these two, these two ideas, as I discussed them, they're very
+[1569.44:1571.88] much linked to each other, right?
+[1571.88:1575.4] Connectedness are the level of graphs, and then robustness at the level of Grostip, you
+[1575.4:1580.52] like to you again, to prove the relationship between them.
+[1580.52:1589.0400000000002] So we're going to ask to prove that if the Grostip, SK plus 1 connects it, if the Grostip
+[1589.0400000000002:1594.2] graph is SK plus 1 connected, then it's also K robust, right?
+[1594.2:1602.1200000000001] Okay, now just to spice up things a bit, yes, we have a little bit of fun.
+[1602.12:1607.8799999999999] We're going to give you an introduction, a brief introduction to probability six stuff,
+[1607.8799999999999:1608.8799999999999] right?
+[1608.8799999999999:1612.6799999999998] So sometimes you cannot say how my process will fail, right?
+[1612.6799999999998:1618.2399999999998] But you have an idea on what's the probability that any specific process will fail, and
+[1618.2399999999998:1621.36] you can, I don't make safe assumptions about their independence, right?
+[1621.36:1626.52] So for example, let's say that you have a probability P that a node in the middle, set
+[1626.52:1631.84] a probability F, yes, fine, that node between alpha and beta, we crash, you know, you have
+[1631.84:1635.9199999999998] a probability that alpha and beta will not be able to communicate.
+[1635.9199999999998:1641.6399999999999] So the seventh exercise is what happens if we have a long line between alpha and beta,
+[1641.6399999999999:1646.76] alpha and beta want to communicate, and you have x1 to xn processes, all of which are
+[1646.76:1653.9199999999998] subject to failure with probability F. What is the probability that alpha and beta will
+[1653.9199999999998:1655.72] be able to communicate, right?
+[1655.72:1657.6] So this is the first example.
+[1657.6:1662.6] The second example is, instead of making everything in series, we make everything in parallel,
+[1662.6:1663.6] right?
+[1663.6:1672.7199999999998] So now we have alpha and beta, I've connected via, you know, n distinct one-hop path that
+[1672.7199999999998:1677.4399999999998] goes through n distinct processes, each of which again has a probability F of crashing,
+[1677.4399999999998:1683.6399999999999] and what's the probability that they will be able to communicate, and then we generalize
+[1683.6399999999999:1685.28] to both cases, right?
+[1685.28:1694.72] So again, we ask you to study the probability that alpha and beta will be able to communicate
+[1694.72:1701.3999999999999] if they're connected by n distinct paths, each long m, right?
+[1701.3999999999999:1704.96] And again, every process has a probability F of being.
+[1704.96:1709.24] I'm not going to go through the address you're going to get asked, but whoever wants
+[1709.24:1716.16] to suffer, they are free to read about them. They're an interesting topic, I think they're
+[1716.16:1722.4] quite cool, but then that's not, let's not do that, okay?
+[1722.4:1726.68] So you're free to have a look at the exercise bonuses, if, are the bonus exercises if you
+[1726.68:1727.68] want.
+[1727.68:1733.36] Before letting you go, I'm going to briefly say that the reliable broadcast exercises you
+[1733.36:1740.6799999999998] have seen reliable broadcast today in class, am I correct? Not, okay, great.
+[1740.6799999999998:1746.84] You have seen reliable broadcast in class, so we already have available to you the reliable
+[1746.84:1749.9199999999998] broadcast exercises, right?
+[1749.9199999999998:1754.4399999999998] We're going to see next week, right?
+[1754.44:1764.6000000000001] And they include two exercises, right? That three exercises that Rashid really has about.
+[1764.6000000000001:1770.8400000000001] So if you want to have a preliminary look at them, they are on the topic of building reliable
+[1770.8400000000001:1773.4] broadcast in the absence of failure of the sectors.
+[1773.4:1777.04] And finally, should correctly today you have seen how to build reliable broadcast with
+[1777.04:1778.28] their detectors.
+[1778.28:1788.16] And so we're asking you to think about how to reduce that assumption and try and do it without
+[1788.16:1790.92] that, okay?
+[1790.92:1797.04] So I think that might be all, I am within one minute of the end, this is incredible.
+[1797.04:1804.6399999999999] If anybody has questions, now it's a good time to talk, both online and in person.
+[1804.64:1811.4] But, oh, right, okay, also we had time, I am 15 minutes early, still exercise session is
+[1811.4:1815.8000000000002] probably going to be over because this was just an abbreviation to the exercises, so
+[1815.8000000000002:1820.92] we will have more time, we will use more time in the next week because we will actually
+[1820.92:1823.48] have to correct the exercises.
+[1823.48:1827.44] So this was mostly an introductory chat.
+[1827.44:1828.68] Any questions in real life?
+[1828.68:1829.68] Yes.
+[1829.68:1836.68] I will try to speak slowly.
+[1836.68:1849.76] Okay, so the question is, how do we, how do we prepare for the exercises, should we
+[1849.76:1861.52] write them up, I am repeating for the people on Zoom, we might not have heard, how do we
+[1861.52:1867.76] write them up and how it is going to be when we correct them.
+[1867.76:1873.76] So the way we have done last year is we have, so doing the exercises is completely up to
+[1873.76:1874.76] you, of course.
+[1874.76:1879.56] And I have a slide to, with the correction of every single exercise.
+[1879.56:1887.96] And what we care, okay, so the real useful point, when you really know that you are mastering
+[1887.96:1897.32] something is when your intuition on how much to understood something tends to be correct.
+[1897.32:1905.76] So it is important that you develop this skill where you know when something is on a firm
+[1905.76:1913.36] ground, right, without having to write it down to a hysterical level of pedanticry, for
+[1913.36:1914.44] example.
+[1914.44:1921.04] But then on the other hand, we also want you to know when something feels shaky, right?
+[1921.04:1932.08] So yes, do write stuff down as long as you are not completely sure whether or not you
+[1932.08:1934.8] have understood, right?
+[1934.8:1938.44] And this is probably one of the most tricky things to do.
+[1938.44:1945.2] Even now, I am not doing a PhD, I still assume that some things are going to be obvious,
+[1945.2:1946.2] right?
+[1946.2:1950.72] And then I go actually write a proof about them.
+[1950.72:1955.32] And I end up, you know, spending three weeks because I really think that thought that
+[1955.32:1958.04] something would be obvious when something falls, right?
+[1958.04:1963.1599999999999] So a good idea could be you write down things well at the beginning.
+[1963.16:1969.28] And then as you figure out that some proofs were completely matching, you know, what you
+[1969.28:1973.8400000000001] see in class, you know, you can relax a little bit more.
+[1973.8400000000001:1981.72] I'd love to ask just to stay awake a little bit, the people in class to participate, give
+[1981.72:1985.3600000000001] me opinions or possible solutions.
+[1985.3600000000001:1986.8400000000001] That would be very good, right?
+[1986.8400000000001:1990.8400000000001] Because otherwise, you know, we all fall asleep.
+[1990.84:1994.1999999999998] And yeah, any more questions?
+[1994.1999999999998:2000.1999999999998] No, wait for 12 minutes for another question.
+[2000.1999999999998:2001.1999999999998] No, I'm joking.
+[2001.1999999999998:2002.1999999999998] Any question on Nazum?
+[2002.1999999999998:2003.1999999999998] No, no.
+[2003.1999999999998:2010.1999999999998] There is a question that the decision was prepared solutions for reliable broadcast
+[2010.1999999999998:2011.1999999999998] session.
+[2011.1999999999998:2013.6799999999998] So I said that you'll go to that again.
+[2013.6799999999998:2014.6799999999998] Right.
+[2014.6799999999998:2020.76] And then you know, but of course, they want to, we can, we can deal with the level
+[2020.76:2025.52] of the question from you, but we never got to be discontent because that's one of the
+[2025.52:2028.92] most important topics we've got.
+[2028.92:2029.92] Okay.
+[2029.92:2030.92] Cool.
+[2030.92:2032.52] So thanks you guys and see you.
+[2032.52:2059.28] I would say next week.

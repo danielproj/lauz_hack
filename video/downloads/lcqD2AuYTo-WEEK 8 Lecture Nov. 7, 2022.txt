@@ -1,0 +1,394 @@
+~WEEK 8 Lecture: Nov. 7, 2022
+~2022-11-07T17:12:56.192+01:00
+~https://tube.switch.ch/videos/lcqD2AuYTo
+~CS-438 Decentralized Systems Engineering
+[0.0:7.0] Okay, let's go ahead and get started.
+[7.0:9.0] We'll come back.
+[9.0:14.0] So last time we focused on distributed hash tables,
+[14.0:20.0] well, structured storage and the structured search
+[20.0:24.0] in contrast with the unstructured search that we were
+[24.0:28.0] focusing on earlier.
+[28.0:38.0] And one of the, so again, back to the big picture,
+[38.0:43.0] structured search in comparison with unstructured search,
+[43.0:46.0] as we mentioned, is much more limited in the types of queries
+[46.0:49.0] we can make, especially distributed hash tables.
+[49.0:54.0] Basically, you can, they provide a depth set for key value pairs
+[54.0:57.0] and they just hash the key, right?
+[57.0:60.0] So you kind of have to know exactly what you're looking for
+[60.0:64.0] in order for a DHT to be useful.
+[64.0:68.0] If you want to run more general queries like we were talking about
+[68.0:72.0] with, like, Napster and Nutella, where you search for a predicate,
+[72.0:76.0] a search for approximate match of keywords or something like that.
+[76.0:81.0] Well, you can do that kind of thing with difficulty with DHTs,
+[81.0:86.0] but it's not so easy and it's fairly inefficient.
+[86.0:91.0] You might have to hash each of several keywords or variants of keywords
+[91.0:97.0] or apply some canonicalization to the keywords you want to do.
+[97.0:101.0] And then, you know, do, so there's a bunch of different kinds of play
+[101.0:105.0] if you want to do, you know, more sophisticated approximate
+[105.0:109.0] search with structured DHTs.
+[109.0:115.0] But, you know, they're really for, they're real purposes
+[115.0:120.0] to look up something where you know exactly what you're looking for, right?
+[120.0:129.0] Now, and of course, they get this very attractive feature of log-in efficiency,
+[129.0:133.0] at least asymptotically, for both storage and look-ups.
+[133.0:136.0] Each node only has to know about log-in.
+[136.0:142.0] Other nodes need to store pointers and, you know, information about only log-in.
+[142.0:147.0] Other nodes, and when a node is looking up another node or a piece of content
+[147.0:152.0] or executing a get or a put in principle, if it's implemented correctly,
+[152.0:160.0] there should be only log-in, basically, steps, network cops, log-in, work in general, right?
+[160.0:162.0] So that's a huge advantage.
+[162.0:169.0] Now, so let's take this in the context and pop up a level.
+[169.0:179.0] We've been basically talking about search, but let's actually apply this
+[179.0:192.0] to the problem of distributed storage.
+[192.0:200.0] So, so far, you know, in our, you know, in our distributed search algorithm,
+[200.0:209.0] we've been kind of neglecting the whole issue of, well, where is the actual content store, right?
+[209.0:221.0] So, if we look back at systems like Napster and Gunutilla,
+[221.0:244.0] so the content is just stored on, on just the local machines that are participating, right?
+[244.0:257.0] So, if Alice is sharing some file or some set of files, then her machine is just serving that directly
+[257.0:261.0] to whoever happens to search for it while she's online, right?
+[261.0:267.0] When she goes offline, well, her copy of the file, her publication of that file,
+[267.0:269.0] it's no longer available, right?
+[269.0:275.0] So, Alice has gone offline, Bob wants to find her file, well, you know,
+[275.0:282.0] even if he managed to search for it successfully and found it in the cache somewhere or a DHT,
+[282.0:286.0] well, Alice is no longer there to serve it, right?
+[286.0:290.0] So, at least he's not going to get it from Alice.
+[290.0:297.0] Maybe he can get it from somebody else that may have happened to make a copy of it in the network,
+[297.0:300.0] but Alice's copy is gone, right?
+[300.0:320.0] So, this means that basically availability depends heavily on sure.
+[320.0:327.0] So, Alice knows coming and going, you know, you might or might not find one you're looking for, depending on, you know,
+[327.0:334.0] who actually happens to be online in the moment, and he's gone offline in the past few minutes, right?
+[334.0:342.0] So, of course, it was, you know, widely recognized it, well, this isn't really an ideal situation.
+[342.0:349.0] So, it would be nice to have better approaches to distributed storage, right?
+[349.0:365.0] Now, in particular, we would like to have some, some,
+[365.0:378.0] we would like to have availability, availability of actual content be robust to individual node, right?
+[378.0:390.0] Let's say, node, individual node failures or nodes going offline and taking their data with it, right?
+[390.0:397.0] Of course, that's not the only thing we want.
+[397.0:416.0] We might, we, so, what are some other desirable properties we might want to have from a distributed storage mechanism,
+[416.0:428.0] say, you know, to store, to handle actual content, besides just say stronger availability. Any thoughts? What should our goals be?
+[428.0:436.0] And there are just, there are a ton of different distributed storage systems with lots of different properties.
+[436.0:440.0] So, you know, this is something that not everybody needs to agree on, let's say, yeah.
+[440.0:449.0] So, you know, I think that's the only way to address the problem.
+[449.0:451.0] Where, what?
+[451.0:454.0] Like, the final problem, yeah.
+[454.0:459.0] Make sure that one of the factors that I run, all of the, so.
+[459.0:466.0] So, resistance, or security against malicious actors to start with, right?
+[466.0:488.0] Which we often call Byzantine nodes.
+[488.0:498.0] And this is really hard in general, of course, but, but we'll, you know, we'll get to some of the attacks and defenses.
+[498.0:504.0] Of course, what might, you know, what kinds of attacks might a malicious node that we want to defend against?
+[504.0:516.0] I think you were alluding to like censorship or like a malicious node trying to prevent content from being, from being served or, or, or.
+[516.0:519.0] Did you have other attacks in mind?
+[519.0:529.0] Yeah.
+[529.0:547.0] Yeah.
+[547.0:560.0] This is, this is actually a form of censorship attack that's that has a particular name.
+[560.0:578.0] Well, the eclipse attacks in the context of a DHT, just to give you a quick idea to briefly summarize.
+[578.0:590.0] So, in a DHT, we mentioned that, you know, we're, especially a core DHT, but, you know, any any other DHT mostly.
+[590.0:599.0] We're going to have some redundancy factor, let's say, R, right?
+[599.0:618.0] And so the easiest way to do this is to have say the R replica, R adjacent replicas of some content C, right?
+[618.0:630.0] That belongs, that, you know, officially belongs in, in that first slice, but then, you know, kind of that and the R minus one subsequent slices story, redundant copies of it, right?
+[630.0:642.0] On the other hand, and so here's the node, you know, that is officially responsible for C, and it's R minus one backup nodes, right?
+[642.0:653.0] So this is the primary, and this is a backup, and you know, in this case R equals two, but there could be more backup nodes.
+[653.0:659.0] But one of the problems is, well, eclipse attacks.
+[659.0:672.0] So we talked about, you know, now, now the good thing is, again, this is a secure shop, say, shop 256, a hash space, right?
+[672.0:700.0] So, and if we use best practices for ensuring nodes pick their hash locations, you know, by using, so as we discussed, picking their node IDs as a secure hash of a public key, right?
+[700.0:714.0] Then no node is going to be able to take over exactly that node's position in this, in this pie, because that would involve breaking this, this secure hash function, which we hope and believe is secure.
+[714.0:734.0] On the other hand, that doesn't mean another node can't contrive to pick public keys that hash some, we're close to, say, a target nodes, particular hash position, right?
+[734.0:747.0] So what does a node have to do in order to get, say, you know, if a node wants to, wants to censor this particular piece of content, see, right?
+[747.0:768.0] And for example, but just by creating nodes, creating, you know, several nodes in the vicinity of C, maybe a node just before C between the current primary and the actual content, right? So if an attacker can get one node here and R minus one nodes here,
+[768.0:787.0] anywhere in those ranges doesn't have to be exact at exact points. Then the attacker basically controls all our replicas of, you know, of that content in the node can just say pretend it doesn't exist, right?
+[787.0:802.0] Or do whatever, or if, if that content is actually versioned, we haven't gotten to there yet, the attacker can do rollback attacks, say, well, okay, here's this old version and trust me, there's no new version, even though there actually is, right?
+[802.0:809.0] Or, you know, there's all kinds of bad things that an attacker can do if they can kind of eclipse a content or a node. Yeah.
+[809.0:819.0] Is this a general form or just random? Good question. Yeah, you just, so you tell me is how engineerable is this attack? What is the attacker having?
+[819.0:841.0] Yeah, but let's just do the math on this, you know, this is just math, right? How much work doesn't a attacker have to do to say, you know, forget a public key.
+[841.0:852.0] Let's say there are, let's say there are in nodes total.
+[852.0:870.0] About how much work does that attacker have to do? Say to pick to get of a public key who is asked, uh, gets say in the range somewhere between this primary and the, and the next, and the next.
+[870.0:883.0] And the successor to that primary. Right. So that's maybe not exactly the range, the attacker is looking for maybe the attacker's range is a little, a little tighter based on the content, but let's call that good enough for now.
+[883.0:895.0] So how much work does the attacker have to do? Does the attacker have to break the hash function?
+[895.0:902.0] So how do you quantify the amount of, you know, work?
+[902.0:913.0] Number of tries. So let's just do the attacker can't break the hash function, but what the attacker can do is just rerun it, you know, pick many public keys and rerun it. Yeah.
+[913.0:934.0] So the attacker can do like, and great order N. Well, why? Well, because this pizza, you know, is not in effect divided to into two to the 256 slices. It's divided into approximately N slices, evenly distributed around. Right.
+[934.0:945.0] One per note because these, you know, these are pizza slices divided up, you know, it's a pizza, you know, divided up basically N times for the end note. Right.
+[945.0:949.0] And so to get just within a node range.
+[949.0:967.0] Well, you know, each additional try to additional public key that the attacker minds and hashes is going to be, you know, have approximately one over N chance of hitting the particular node slice.
+[967.0:983.0] If we increase N to, if we consider N to be the maximum of the number of nodes plus the number of objects.
+[983.0:998.0] So that's irrelevant, you know, slightly larger perhaps larger N that we could choose. Well, you know, then it's still and you know, so, so this of course becomes becomes harder because it's a larger N presumably.
+[998.0:1017.0] But, but it's still only order N work to find a hash that gets between any two nodes or or objects in this in this slice. Right.
+[1017.0:1029.0] So this is not cryptographically hard. This is not a cryptographically hard attack anymore. It's just, you know, order N hard, which is not really that hard. Right.
+[1029.0:1040.0] So you could, you could have your own desktop machine probably crunching on a bunch of public keys and, you know, come on and do an eclipse attack in a reasonable amount of time.
+[1040.0:1054.0] If you tried on something like maybe IPFS, I'm not sure how big, you know, how, what how big N is at the moment in IPFS is a DHT. I'd be happy to happy to learn.
+[1054.0:1066.0] But, you know, for most, you know, values of N that are actually in use at the moment, they're not, these are not cryptographically hard large numbers. Right.
+[1066.0:1077.0] So, yeah, eclipse, eclipse attacks are important and real problems. So, yeah, keep that in mind. Any questions so far.
+[1077.0:1083.0] So that was a bit of a diversion from the distributed storage thing, but, but a very useful one. I think so.
+[1083.0:1094.0] I wanted to get into that. It's important to keep in mind the difference. Right. So, yeah, we would like to have security against malicious nodes.
+[1094.0:1112.0] But besides censorship or eclipse attacks, we'd also like say security against tampering with content like, you know, hopefully somebody shouldn't be able to change legitimate content.
+[1112.0:1138.0] Or if there's multiple versions of content, it would be nice if an attacker couldn't say rollback, you know, from a later version to an earlier version that used to be valid, but isn't the latest version anymore. Right. And rollback attacks are actually surprisingly difficult to guard against in these kinds of systems.
+[1138.0:1152.0] But, you know, there's others we could go into, but that's a overview of some of the security problems that were up against if we, if we really want security against malicious notes.
+[1152.0:1164.0] Okay. But so besides security against malicious notes, what other goals might we have in considering distributed storage, storage of actual bulk content?
+[1164.0:1180.0] What might what might be we want? Yeah. Great. Great. Excellent. Consistency.
+[1180.0:1197.0] And actually, before we even go there, something that this kind of implies, whoops, picked up a little too much.
+[1197.0:1223.0] Let's say modifiability. So, or mutability. Now, we don't always need mutability. And anytime you, you know, make a storage system mutable, makes a ton of things a whole lot more complicated.
+[1223.0:1233.0] So, we're going to start by discussing immutable storage systems. But, you know, often you do want mutability modifiability in some ways.
+[1233.0:1242.0] And the moment you have modifiability, you've got to deal with this consistency question. What kind of consistency model do you want?
+[1242.0:1252.0] And are you going to be able to enforce? For example, is it going to be strongly ordered?
+[1252.0:1267.0] So, you can make it strongly ordered. If you use consensus, for example, like we discussed earlier.
+[1267.0:1284.0] But, if you do that, you're going to be up against an inherent trade-off that basically comes from the cap theorem that between consistency and availability.
+[1284.0:1302.0] So, who knows that you, hopefully most of you have learned the cap theorem already encountered it, right? So, yeah. So, who can summarize quickly? What is the cap theorem? Yeah.
+[1302.0:1317.0] Great.
+[1317.0:1339.0] I'm on change. Yeah. Yeah. Yeah. Yeah.
+[1339.0:1354.0] Great. Yeah. Thanks. So, if you want strong consistency, then, you know, and your network is partitioned for any reason, then one side or the other of that partition has to lose availability.
+[1354.0:1370.0] Otherwise, you know, if you allow them to, you know, evolve independently, well, Bitcoin allows this, you know, and if you allow them to kind of keep going independently, one side is going to be a split brain problem inherently.
+[1370.0:1390.0] There's no way around that one side is going to lose consistency with the other. It has to. So, if you want consistency, that you have to pick one side or the other, you know, at most one side, maybe neither of the network partition to remit, retain availability and availability has to be lost on the other side, right?
+[1390.0:1409.0] On the other hand, if you're willing to weaken consistency. So, let's get that wrong.
+[1409.0:1430.0] So, we could say we could choose some form of eventual consistency or another week consistency model. There are many consistency models and we're not going to try to do a full taxonomy now.
+[1430.0:1445.0] But if you pick a weaker consistency model like causal consistency or eventual consistency, then you can kind of get around this. You can allow changes to happen on both sides or all, you know, all sides of a network partition.
+[1445.0:1462.0] But you might get into conflict of some kind, right? Two parties might either deliberately or unknowingly make conflicting changes on both sides of a partition, right?
+[1462.0:1475.0] And there's no fundamentally, you know, perhaps no way to detect it until hopefully the partition eventually heals and they go, okay, what happened and now what do we do?
+[1475.0:1484.0] Right? And so, you know, how bad of our problem this is depends heavily on, you know, what kind of application we're talking about.
+[1484.0:1509.0] If we're just say editing source code and get repositories will get and many version control systems are heavily oriented around this idea of eventual consistency where you can let people make their changes independently and then you different merge to try to, you know, kind of figure out well, you know, how do we resolve these, whatever conflicts to the best of our ability and we run into trouble.
+[1509.0:1523.0] You ask the human, hey, well, conflict here. What do we do? Right? And so things aren't necessarily, you know, automatically resolvable, but sometimes they can be.
+[1523.0:1551.0] Whereas, especially in the blockchain cryptocurrency space where we're talking about transferring the ownership of coins or tokens of some kind, then this consistency problem becomes a little bit more security critical because if well, if two people can double spend the same coin on two sides of a partition, especially if it's a partition, the temporary partition, the attacker somehow engineer, which is also possible in certain cases.
+[1551.0:1560.0] Then, then this can be really bad from a financial perspective, right?
+[1560.0:1571.0] Okay. Yeah, so so these are some of the very important issues that we deal with when designing distributed storage systems.
+[1571.0:1584.0] So any questions or other discussion, anything to add before I move on to it to one one approach to distributed storage.
+[1584.0:1595.0] Okay. So it's not let's let's start by looking at immutable.
+[1595.0:1608.0] And a read only distributed storage.
+[1608.0:1616.0] So there's been a lot of research work into space.
+[1616.0:1644.0] Some of which is quite quite interesting. I believe one of the papers I one of the optional reading papers I have on this week's webpage is called sfsro, which stands for secure file system.
+[1644.0:1649.0] This is this is pretty old work from early 2000s in the peer to peer.
+[1649.0:1654.0] Now networking space, which turned out to be quite quite influential.
+[1654.0:1659.0] And a lot of the.
+[1659.0:1668.0] And you know, there's out there's but but a lot of the subsequent practical work in this space built on the concepts.
+[1668.0:1681.0] In in sfsro in particular, the idea of self certifying.
+[1681.0:1690.0] Identifiers. Right. So IPFS is using this this concept all over the place now. Right.
+[1690.0:1708.0] Now in practice, a couple of the a couple of the key examples of this are well, I already mentioned IPFS.
+[1708.0:1722.0] That has a lot of recent traction and popularity that uses a lot of these these concepts. But before that. And and it's still in use. There's another very well known distributed content.
+[1722.0:1733.0] Storage and steering system that basically treats both content content as immutable. Right.
+[1733.0:1761.0] And so I'm I'm referring to bit toward this. Right. So this was this was also a very pragmatically focused but important and interesting protocol that that again came from this this emerged from this peer to peer this large amount of interest in peer to peer systems.
+[1761.0:1785.0] In the 2000s and and again it it basically takes takes the you know such the goal of saying well let's just assume somebody has created a snapshot of something and you know potentially a large piece of body of content and we just wanted to distribute it.
+[1785.0:1794.0] So efficiently among perhaps make it available to a lot of nodes efficiently. Right.
+[1794.0:1798.0] Now.
+[1798.0:1819.0] So so you know there's there's various ways we can do this and with with different tradeoffs of course but let's let's first maybe look at look at.
+[1819.0:1836.0] Yeah. Yeah. Well let's start with bit toward right. And one of the fundamental fundamental structures that that that torrent and other systems use which is basically.
+[1836.0:1864.0] A to organize content basically in Merkel trees right now you we covered Merkel trees the basic idea of Merkel trees in the in the cryptography lecture a few weeks ago right.
+[1864.0:1880.0] So we're going to be building on that but so what is a Merkel tree well just as a as a review.
+[1880.0:1900.0] So if you if you if you take say you know some data blocks or something block one anything that you can run through a hash function block two and so on.
+[1900.0:1916.0] Make you can hash each of those blocks and into a into a small summary of the whole block right.
+[1916.0:1939.0] So this is hash of B1 hash of B2 well you could put those two hashes or some number of block hashes together to form another another block right another piece of data right and you can similarly.
+[1939.0:1948.0] Put more hashes here right.
+[1948.0:1964.0] So what I'm sketching out here is obviously a binary Merkel tree you can pick any any erity you want there's different different trade off in making different choices here right but then.
+[1964.0:1969.0] You can of course you know take this.
+[1969.0:1979.0] And has has that right you could.
+[1979.0:1997.0] Take the intermediate level.
+[1997.0:2009.0] So I think that's the whole thing to produce what we call the root hash.
+[2009.0:2032.0] So if you have a hash of secure hash functions there's effectively you know without breaking the hash function there's no no way to compute this other than bottom up and any any even single bit change you might make anywhere in this in this tree will completely re randomize and change the root hash right.
+[2032.0:2045.0] So hash is basically a commitment to all of the potentially large amount of content committed to in that in that free right.
+[2045.0:2061.0] So that's just a review but let's let's look at some of the let's look at an important application in distributed storage right.
+[2061.0:2069.0] So storing or distributing.
+[2069.0:2076.0] Possibly large files right.
+[2076.0:2083.0] So as you might as you might expect.
+[2083.0:2093.0] So it's it's almost the case that almost always the case that you if you've got a large object like you know ISO filer of you know movie or or something like that.
+[2093.0:2106.0] You aren't going to want to in a distributed system you aren't going to want to pass around or deal with the whole whole thing all at once you're going to want to break it down right so this is where.
+[2106.0:2133.0] Chunking techniques come into play right so there's there's basically two elements of it you need to pick some kind of chunk size.
+[2133.0:2144.0] So divide a large large file or other piece of content.
+[2144.0:2151.0] And then basically build a.
+[2151.0:2175.0] A mercury. Right so in particular say when you're distributing a large file with bit torn what bit torn is doing is it's dividing the file up into a big.
+[2175.0:2185.0] A big set of blocks for chunks. Right each of them having its own has and then it's it.
+[2185.0:2204.0] Which all of the has to is into a shorter but still potentially long stream of has to so this we're going to call the level level zero then there's a level one you know which is only the hashes of the level zero blocks but that's cream you know might still be pretty big.
+[2204.0:2227.0] Right and so we're going to take this level one stream and divide that into chunks somehow right to produce a level two stream and so on right.
+[2227.0:2245.0] How many levels can we potentially have you know from a general analysis say complexity analysis perspective for a large file.
+[2245.0:2260.0] Yeah yeah so log base B for the for the chunk size basically.
+[2260.0:2289.0] You know take that in a different way log B of and basically yeah I mean there there's details if you if you want to calculate this precisely you'll want to take a taking into account the hash size and the ratio between the hash size and the block size and stuff like that but you know for for first order we'll call this good enough for now.
+[2289.0:2299.0] But yeah basically lot order lot worth the case right so that's that's nice in terms of efficiency.
+[2299.0:2316.0] And it also has a very nice property that let's say if one node is serving a file of a very large file and another node wants to wants to access it not just to download the whole thing like in Bitcoin torn but let's say you want random access to it.
+[2316.0:2328.0] This is a disk image you know a large say fixed disk image like an ISO and you want to randomly speak within it to pull just particular files out of it rather than.
+[2328.0:2356.0] And then you can start in the whole thing well if this is an ISO in a mercury and you have the root and you have a way to request particular blocks within both the metadata levels and the data level you can basically you know kind of started the root hash looking for any particular block find the path down the tree corresponding to that block and and just.
+[2356.0:2371.0] Log in reads of blocks going down the tree to to retrieve any particular level zero block you might want right so that's nice.
+[2371.0:2381.0] It's also really nice in terms of integrity right if you start with the correct with as the root hash that you know is the correct one the one you want.
+[2381.0:2407.0] And everything you get you know reading down into the tree you can also validate based on its path so so that there's there's no no way an attacker could have tampered with the content other than that by breaking the cryptographic function or somehow getting you to accept the wrong root hash that's always a you know starting with the wrong thing is always a risk you have to keep in mind.
+[2407.0:2418.0] Yeah so so this has some very nice attractive properties in that regard.
+[2418.0:2446.0] Now so it goes further so suppose suppose what we want to store is not just a big file like an ISO image but an actual say a directory structure.
+[2446.0:2463.0] Right so I want to store an immutable copy of a whole file system with directories and sub directories and sub directories and finals sprinkled all all through those right.
+[2463.0:2470.0] So I can I can effectively use the same principle right I can have file one.
+[2470.0:2481.0] If file one happens to be big maybe I need a mercury tree you know several levels of mercury metadata over it right.
+[2481.0:2492.0] I can have another file to with another mercury of some size appropriate to file to now.
+[2492.0:2506.0] But I want to have a directory containing file one and file two and some other sub directories maybe right so what am I going to do I'm going to invent some kind of format I'm just.
+[2506.0:2514.0] Who's main so I'm going to have a basically a directory file.
+[2514.0:2526.0] It's going to represent a directory but it's just information it's just going to be a stream of bits in some encoding that we decide is going to be the metadata for this directory.
+[2526.0:2534.0] And you know it's going to have a metadata entry for file one and a metadata entry for file two.
+[2534.0:2557.0] And you know maybe some other metadata for some other files and what are the two most you know important relevant pieces of this metadata right you can add a whole bunch of other stuff to if you want but you know what what two pieces is this certainly going to have for each file in this directory.
+[2557.0:2575.0] Yeah good. Maybe maybe length so so yeah there's going to have to be some way to limit figure out you know how long each of these records are but maybe they could be fixed fixed length records depending on the format you pick right.
+[2575.0:2583.0] But independent of so but you said address what what what is an address in this case what kind of.
+[2583.0:2599.0] Yeah where to get the file so we've been kind of I've been kind of avoiding talking about like where to get these things in part because well I hope you have some way to find them maybe in a D.H.T.
+[2599.0:2609.0] or we'll we'll get to that or or maybe just on the the same node that you know some node that you search for.
+[2609.0:2624.0] So what what do you definitely you know independently of how you find the file some but or somebody just serve the file what do you definitely need in order to say securely link.
+[2624.0:2633.0] You know each of these immutable immutable files into an immutable directory that represents a snap track of those files.
+[2633.0:2647.0] So let's just use a hat to get.
+[2647.0:2672.0] I'll just say H the hash here and maybe the name so double you know f1 in quotes if that happens to be the name of the file right.
+[2672.0:2684.0] So that's basically what a directory is right it's just a set of names.
+[2684.0:2695.0] And you know something that allows us to uniquely link a particular file the content of the file in the directory right.
+[2695.0:2711.0] So this directory representing this snapshot you know containing many files we can just deal with it's self as a file right if it happens to be a big directory with a lot of files then this metadata file might be big but well we know how to deal with that right.
+[2711.0:2719.0] If it's big we're going to divide it into chunks as usual and create a Merkel tree.
+[2719.0:2727.0] So we have to do many levels as many levels as needed right and then we have a root hash of this directory right.
+[2727.0:2736.0] If this directory is actually a sub directory of some other directory then.
+[2736.0:2749.0] You can treat it as basically the hash in another entry called say D1 for this is you know directory one.
+[2749.0:2777.0] And you know in some other directory we can have an entry that says okay here we have a sub directory named D1 in this case and the metadata content for that sub directory is going to be in whatever this particular hash identifies in that hash identifies well the the Merkel tree root of the mercury containing all the content of that directory right.
+[2777.0:2797.0] And again you know this can we can do this for any number of directories arbitrarily large complex file system link other directories into it if we want.
+[2797.0:2826.0] And at the top let's say if this is the root directory then the top of the then then the hash we get from there at the very top top most the top of the Merkel tree of the root directory will be the basically the file system root hash.
+[2826.0:2851.0] Right so the whole file system however big big it might be you know you build everything bottom up you get the you know the very top most hash of the top most Merkel tree of the top most directory the root directory that's the root hash basically committing to the entire contents of the of the whole file system right.
+[2851.0:2862.0] And then again if you have some way of you know finding nodes or asking those if you have you know do you have this lock this that that block the other block.
+[2862.0:2878.0] You can even just identify in the blocks by hash because they're cryptographically unique if you have a way to ask no tape you have this has you have that hash you can start from a particular file system root hash and work your way down.
+[2878.0:2886.0] To you know read anything you want in a particular directory you know access that directly directory with ready max this.
+[2886.0:2906.0] The send down find a file you want well access that file with random access and so on right so so the whole the whole thing might be arbitrarily large but it's it totally supports fairly efficient random access with basically log in work per actual.
+[2906.0:2911.0] Direct re-level directory or file level here right.
+[2911.0:2930.0] With a very strong integrity so this is nice right now of course it doesn't solve all possible problems but it does nicely solve some of the issues that that we often want to solve in these context okay so.
+[2930.0:2945.0] So that that's a starting point we have we're going to have a ways to go yet so it's probably good time for a break so let's let's take a 10 minute break and come back at 11 15.
+[2945.0:2974.0] You can see it. Okay let's continue so yeah so so we've been talking about basically one very very convenient useful way to organize immutable potentially rich file.
+[2974.0:2979.0] System or other storage structures with Merkel trees.
+[2979.0:2994.0] Let's let's focus now a bit on more on how how we actually communicate these things so let's just start with take a quick look at look at bit part.
+[2994.0:3023.0] Now I'm so you should read the bit torn paper that's that's one of the assigned readings in this week's on this week's moodle page and it you know what one of the interesting things about about bit core bit torn is it's instead of structure so basically if you want to to download some.
+[3023.0:3036.0] Some some piece of content which you know typically just a large file like an ISO but it could be again a whole directory structure or something.
+[3036.0:3040.0] You basically you know build a build a big.
+[3040.0:3066.0] Go tree it has some kind of at the top it has a route hash that's effectively what I what I identify it well so a dot torn file is a little bit more complicated than that it's actually kind of typically a list of blocks and so it's so it's.
+[3066.0:3076.0] But you know it's it's something that could be you know so it's it's more like metadata than than just a route hash but you know for now let's just.
+[3076.0:3086.0] Use this simple paradigm and if if somebody wants to serve.
+[3086.0:3103.0] This if you know any any nodes you know particularly want to kind of announce to make available this this push they basically act as seeds.
+[3103.0:3129.0] Into basically a cloud of nodes that's either interested in downloading or interested in serving or both basically just in nodes that are interested in this particular piece of content this file identified by this route hash right.
+[3129.0:3143.0] So typically there's you know some some number of seeds that that already have hopefully complete content copies of all of the chunks in this.
+[3143.0:3149.0] So at all of the different levels of whatever.
+[3149.0:3175.0] So we might have right and then other nodes can come and typically they first talk to the well known you know one or more of the well known route seed servers to find say okay who else is is in this big cloud of of nodes interested in this file can I have a few more content.
+[3175.0:3198.0] And they kind of build a randomized peer to peer peer peer structure where basically anyone can talk to and ask anybody else hey do you have copy of block three you have a copy of block 15 you have a copy of you know the block with this with this cryptographic hash right.
+[3198.0:3210.0] And they basically act as a gossip network for you know blocks in this in this particular piece of content.
+[3210.0:3225.0] And there's a lot of interesting you know incentives and you know to for tap kind of kind of things that go on in terms of optimizing this incentivizing nodes to offer blocks to other nodes that don't have them yet.
+[3225.0:3245.0] Yet while still all continuing to download the blocks that they don't have from other nodes right and so so that's interesting but I don't really want to go into it into the details on that at the moment because there's a lot more interesting stuff to cover right.
+[3245.0:3265.0] But that's you know that's the essence of the idea so you know and and the nice thing is no matter who you do or don't get a particular block from.
+[3265.0:3284.0] Every block is independently checkable against its hash and it's positioned in this this Merkel tree so integrity is always.
+[3284.0:3313.0] With respect to the Merkel tree and the well known root hash anybody you know offering you a block in this anywhere in this content you know you should be able to tell immediately just by hashing it well is it in fact the block you want.
+[3313.0:3329.0] Untampered with or you know if it's not then you just stop stop trusting and stop talking to that pure and use use other peers right so it has a really nice solution to the integrity proper.
+[3329.0:3340.0] Okay so any questions so far on this super super quick high level summary of bit torrent.
+[3340.0:3360.0] Okay so it's not let's continue to do other approaches so another classic approach which is.
+[3360.0:3377.0] So I pfs or at least in certain configurations in certain uses can follow can follow under this category.
+[3377.0:3392.0] And there's there been important research systems including ivy which is one of the which is the other assigned assigned reading paper for today.
+[3392.0:3407.0] And there have been quite a few other interesting designs for basically using using distributed hash tables not only as their structure is but a storage structures right so.
+[3407.0:3424.0] And it's it's you know the basic idea is kind of easy and obvious you have you know let's let's say again we're using cord we have the cord ring.
+[3424.0:3446.0] And you know you have you have a bunch of nodes and you want them to store a bunch of blocks but now.
+[3446.0:3465.0] Again as before we're we're storing key value pairs but the values are blocks or chunks pick your term renaly.
+[3465.0:3483.0] Right so for each key and often whoops and usually and usually as whoops as before.
+[3483.0:3506.0] These are hashes right at least for normal data blocks. So if this is say 64 kilobytes of data so that's the value and then.
+[3506.0:3515.0] Pass of the value right will be its key.
+[3515.0:3523.0] Well for some for some block size.
+[3523.0:3550.0] So so of course we could just you know in principle these these nodes could store you know we could have arbitrary arbitrarily large amounts of data and just you know associate a key with one really big file like a you know giant 10 may 10 gigabyte ISO image or something like that.
+[3550.0:3557.0] And put that just in in one position here why don't we typically want to do that.
+[3557.0:3573.0] Why do we really want to you know break things up into just here in this case the db storage.
+[3573.0:3595.0] So it's all about low balancing right so if you know we we use this using this statistical the statistical properties of the hashes we've ensured that you know the nodes get relatively evenly distributed around and also the keys get relatively evenly distributed around right but.
+[3595.0:3613.0] If we focus a huge amount of data on just just you know one position in in here and just one node then there's just one node or a few you know a small r number of replicas that are responsible for storing that huge amount of data.
+[3613.0:3636.0] So that might that might overload those those particular unlucky nodes it's it's unfair anyway especially if that content proves to be popular everybody might be asking those nodes you know for data for that particular popular file and none of the other nodes are contributing much right so.
+[3636.0:3663.0] In general it's nice for from a load balancing perspective right when we if we divide a large piece of content into blocks right just like we discussed before block one through block and and you know each of them is going to have to something different so this block might go here this block goes here this block goes here and so on right.
+[3663.0:3678.0] So for all of the blocks both in the leaf level or in the intermediate level they're just blocks they're just key value blocks and you know the data blocks in that.
+[3678.0:3706.0] So this one might go here this one goes here and so on right so for all of the blocks both in the leaf level or in the intermediate level they're just blocks they're just key value pair to where the value is the data that he is attached and it goes somewhere you know they they all get basically uniformly distributed around this around this tree.
+[3706.0:3724.0] So what are what are some of the upsides and downsides or the advantages and risks of this kind of this kind of organization.
+[3724.0:3744.0] So one of the advantages is clear the DHT is a search structure it can find this right if you know the hash of a block you're looking for you can find it just by looking it up in the DHT that's what the DHT is for.
+[3744.0:3771.0] How much as I'm talking about how much total work are you going to go through or how much delay or latency might you go through to get to a particular to retrieve a particular block in a particular file in this piece of content.
+[3771.0:3776.0] There's quick rough analysis.
+[3776.0:3783.0] Let's say how many network latency hops total.
+[3783.0:3789.0] Any ideas.
+[3789.0:3804.0] It's fairly trivial but not completely trivial. What do you have to account for.
+[3804.0:3820.0] Mine you can do this.
+[3820.0:3827.0] How much work does it take to look up one thing.
+[3827.0:3842.0] Log in. Yeah so to look up one thing we're going to potentially do log in hops of network activity talking with various other cord knows to find that one thing right.
+[3842.0:3854.0] Okay so how many things do we need to look up potentially in order to find a block in a say in a mercury.
+[3854.0:3869.0] Say we start by by having only the root hash we know the root hash of the thing that we're looking of the ultimate block that we're looking for but we don't need we don't have the intermediate metadata blocks in that mercury.
+[3869.0:3873.0] We need to find those right.
+[3873.0:3897.0] Let's just say this file this piece of content is is order and size. It's a big you know big piece of content in bit torrent land that might be the only piece of content like this whole DST is a big cluster is a big is just a way to organize a big cloud of nodes that are all interested in this one big piece of content divided in up into this huge
+[3897.0:3909.0] virtual tree that's you know a classic bit torrent way to organize things so that might actually be the case right.
+[3909.0:3924.0] Log base B right yeah great yeah and let's ignore the the log basis and just talk about as I'm talking notation so it's basically.
+[3924.0:3933.0] We're going to use log we're we're going to need to just understand you know down the tree log in levels right.
+[3933.0:3938.0] And each of those log in levels we're going to potentially have to do.
+[3938.0:3943.0] Log in amount of you know kind of network activity along the way right.
+[3943.0:3951.0] So yeah so it's basically log in times log in right so log squared in.
+[3951.0:3968.0] If you know if we just kind of merge all that ignore the you know the differences between the size of the final and the number of nodes and stuff like that just call in an upper bound on all of the relevant sizes then it's basically logs where dead.
+[3968.0:3979.0] Okay yeah so it's a you know it's something but it's still at least asymptotically it's pretty efficient.
+[3979.0:4001.0] Yeah good question yeah so so if we're if we're replicating everything all of these blocks the leaf blocks and the metadata blocks and everything by say a constant replication factor are.
+[4001.0:4025.0] Then basically ours are is going to be the multiplier for everything right the like if if R is one then we would only be storing one copy of everything but if R is five we're going to be storing five copies of everything including the you know five copies of all the leaf blocks five copies of the intermediate metadata blocks and so on right.
+[4025.0:4044.0] So that's that's one way to do it and it's basically result results in an expansion total expansion factor of five right over just storing it without replication now on the other hand that might not be the only replication policy we want we might want to consider right.
+[4044.0:4073.0] Can you can you see a potential reason to for example vary the replication factor for different blocks maybe how often their access might be one reason great yeah so some blocks might be way way more popular than others and just to spread the load of serving those blocks one way to to spread that is increase the replication factor of popular blocks so that you know more nodes can serve them that can be.
+[4073.0:4102.0] Found in more places there's also other ways to to spread the load of actually serving the blocks another another way optimization that some dhc based towards the use is when when a node is popping through the dhc trying to find a particular block it's going to hit some intermediate nodes along the way to the target block.
+[4102.0:4126.0] And if it knows that well all the all those intermediate nodes are are are saying okay I see that you're finally that you're searching for block you know block with this particular hash I don't immediately have it but when you find it could you send me a copy to because I'm getting a lot of requests for that block from other nodes too right.
+[4126.0:4151.0] So so and then you know and then when the when the node are finally find the block you know they might send it back to some of the intermediate nodes they encountered in along the search and and those nodes might kind of opportunistically pass cash copies so that other nodes that later come along later and are similarly on the way to that to finding that.
+[4151.0:4163.0] That's super popular block they might be able to end their search early without actually getting to the final node this you know this is nice because it.
+[4163.0:4175.0] It you know just makes it faster to retrieve those popular blocks and it also lightens the load on whatever node got unlucky enough to you know be assigned to to have that super popular block.
+[4175.0:4200.0] Land in in their pizza slice right so all the all the other blocks kind of along the way or all the other nodes that are kind of along along the way year but not at that position are kind of helping them out spreading the load by keeping cash copies of popular blocks and saying yeah I already I already have that you don't need to go to the core victim who who actually is is assigned that block right.
+[4200.0:4227.0] So that's nice so yeah there's various ways to just friend load and and ultimately redundancy we need to increase redundancy so how about can you see if we're if we're using mercury like this and you see a possible availability like robustness related reason that we might want to change the replication factor.
+[4227.0:4245.0] For different blocks let's say for example this is not just a mercury on a single file but suppose this this this cluster of nodes is storing the whole big directory structure a whole file system like this yeah.
+[4245.0:4273.0] Great so the route like you know every everything say the you know at the top of that tree is kind of super critical right if if you know so happens that all of the replicate replicas of the block immediately under you know the block that the route has points to if follow those disappear or get successfully attacked or something then.
+[4273.0:4302.0] Nobody can access anything in this whole file system that you know arguably might be a lot worse than well all of the replicas of this chunk of this file down here got lost oops we lost that file you know or or that file can no longer be completely reconstructed but everything else in the tree we can still get to right maybe that's better right then losing the whole tree just because we can't reconstruct.
+[4302.0:4330.0] You know the some some block way up at the route right so you know if depending on you know the probability is in the risk the churn that you might expect or the churn that you observe it might be a worthwhile to turn up the redundancy dial toward the top of the tree and leave it maybe a little bit lower down at the bottom it's a policy and and configuration choice.
+[4330.0:4359.0] So there's other ways of course just you know to manage briefly that you might want to to handle these kinds of available the robustness trade off so if you study the network coding information coding and information theory courses and things like that you could you could do that here as well there's there's a lot of interesting research on coding based improvements to to this kind of system but that's not.
+[4359.0:4374.0] So those can work well too but i'm not going to get deeply into into that for now okay.
+[4374.0:4394.0] Good so now so this this work can it can be robust depending on you know depending on the configuration parameters and how reliable the nodes are stuff like that is this going to be a high speed file system.
+[4394.0:4418.0] So in practice how long do you think it'll it's going to take to access you know file say very deep into a in a directory structure under some under some root hash right we already kind of as ontodically analyzed we're talking you know order log squared and.
+[4418.0:4425.0] So that's not the most possible option of the network network.
+[4425.0:4445.0] So if you can optimize it with hashing but hashing doesn't always doesn't always help and each of those each of those steps is potentially going to be a you know one or more network ground trips possibly global right so if if this is a global set of nodes then.
+[4445.0:4463.0] So we're holding these peaches licenses are probably distributed all over the world right so so every new hop we're going to going to use it likely to be somebody somewhere else on arbitrarily far in the world right so these can actually be fairly long hops.
+[4463.0:4488.0] And that's true you know then that one of the downsides of these is you know even though the as an todics work out reasonably well pretty pretty efficient in practice the you know the constant factors of latency here often pretty bad you know these are not these don't tend to be speed demand file systems just because of you know all the hops and indirect.
+[4488.0:4500.0] So you know searching and stuff you have to do for all the different queries to get down each level or stuff like that right.
+[4500.0:4506.0] But but it is very scalable that's that's nice.
+[4506.0:4532.0] So anything else about about this so far. Okay so if not let's let's take let's look quickly at the problem of read right file systems.
+[4532.0:4548.0] Of course that's its own really huge topic and like I alluded to already there's a lot of ways different ways to deal with that you can have strongly consistent approaches or you can have weekly consistent approaches.
+[4548.0:4567.0] So let's since we already talked about consensus let's let's focus for now on more weekly consistent.
+[4567.0:4588.0] And I'll take for as an example the IV file system that's where you can read the paper in the that's one of the assigned reading readings so in IV so I I.
+[4588.0:4608.0] I.V. uses a DH the cord cord DHT as usual and and it uses you know for for storing a particular version of a particular file or directory structure it's going to do exactly what we just talked about.
+[4608.0:4632.0] The only problem is these are not immutable we don't want them to be immutable anymore and so so basically we have to we have to have.
+[4632.0:4657.0] Well so let me actually back up we have to have to have a change log of rights so let's first consider just the case of a single participant a single.
+[4657.0:4678.0] Say it's a single user or more generally a single writer let's say only one party can actually change a file system maybe others can read it but only one person can change a file system.
+[4678.0:4692.0] And this is actually a common case of this is is where is when you publish a web page on IPFS.
+[4692.0:4721.0] You're basically typically you know hashing your public key and and putting a record in the D.H.C. saying hey you know this is my IPFS web page associated with this hash of my public key and I'm periodically going to come up with a new version of my website.
+[4721.0:4730.0] And this is going to be basically a log of versions.
+[4730.0:4750.0] You could you could see it as a blockchain if you want so version one the first version version two well is going to contain a hash backlink back to version one but that's just going to be its own version version if version three comes later.
+[4750.0:4772.0] That might have a hash backlink as well but what's actually going to define the content in all of these versions well often typically just a Merkel tree right with say the file or directory structure that represents that version.
+[4772.0:4798.0] And another thing that these versions might contain is the signature of the owner.
+[4798.0:4813.0] Right so if the author the owner of a IPFS web page is producing a series of versions of the web page well each time they release a new version they sign it.
+[4813.0:4828.0] Create a new version number hash link you know back to the previous version number and you know with a little integer saying well this is version three it's it should replace the prior versions right yeah.
+[4828.0:4839.0] Good question yeah that's that's a problem so how does somebody who's following my web page right so.
+[4839.0:4865.0] So if this is Alice if Alice is the publisher here and Bob is trying to read and follow Alice's web page how does Bob find the latest version so that's that's you know one of the difficulties now here's the here's the easy way that you know here's the way that it typically works.
+[4865.0:4880.0] And yeah we work somewhat reliably depending on how things go so if so this is Alice's node ID right.
+[4880.0:4903.0] Which happens to the hash of may you know Alice is nodes public key now depending on the configuration the Alice might have a different public key representing this log we're representing this web page or might be the same as the node ID but let's assume it's.
+[4903.0:4913.0] Well let's assume it's the same so this is the hash of.
+[4913.0:4920.0] The public key associated with with Alice's web page.
+[4920.0:4932.0] Now that's the hash of a public key not the hash of a piece of content if you have to any any one of the actual versions that's going to hash into different places so this is where.
+[4932.0:4948.0] Version one has just to right you know the version one is just a block of data you know I'm a metadata record containing the root of the mercury containing all the content right.
+[4948.0:4971.0] All the content blocks map to other random places but you know version one happens to map there and it's a key value pair with the with the version one the actual content of the version one metadata that version one block there right and then.
+[4971.0:4983.0] That has to version to there's the block containing version to and you know somewhere else there's a hash of version three.
+[4983.0:4995.0] With the content of that block right but these are all completely unrelated to the hash of the you know public key itself right so how does how does.
+[4995.0:5011.0] Somebody find how does Bob find what's the latest version of Alice's web page well in the ht land or you know ipfs land basically the only way is to find.
+[5011.0:5039.0] You know follow the pointer to the public key and ask the nodes or the are redundant nodes that are associated with that hash hey what's the you know what's the latest version of content signed by this public key right so this node here are so.
+[5039.0:5068.0] So in this case you know in this case Bob is just might just be asking Alice directly on the other hand if it's just as you know maybe maybe this isn't the public key for Alice is node but maybe it's just the you know what her web page has to and so she she herself doesn't actually need to stay online instead you know the public be has to the public key for her web page might fall in some other nodes territory or you know our.
+[5068.0:5091.0] Consecutive random nodes are basically responsible for that those particular are pizza slices at the moment and those nodes are supposed to remember what's the latest version of Alice is locked right so when Alice is when Alice publishes a new version.
+[5091.0:5120.0] So this is so this is called this Alice is page and and this is actually Alice is node which you know may not even be participating in this you know as a server in this or maybe maybe somewhere else so Alice is Alice publishes.
+[5120.0:5125.0] Version 3 right.
+[5125.0:5130.0] Alice is going to you know first.
+[5130.0:5149.0] What version 3 so basically do do the you know do the get the point operation needed to find the position of version 3 in the court ring and you know get the our nodes that are that are assigned to that piece of content.
+[5149.0:5154.0] Just store those copies of that block right.
+[5154.0:5165.0] But then so that's that's for the actual content of the top level version 3 but then Alice is going to need to.
+[5165.0:5169.0] Contact these are nodes here.
+[5169.0:5179.0] And makes some other requests like say update.
+[5179.0:5198.0] In form those nodes hey there's a new version signed by Alice associated with that public key and see here's the signature you can verify that indeed this is signed by that public key and the version number is higher than the version number that you had before.
+[5198.0:5212.0] So that's the basis on which those nodes even though they don't know Alice and you know they don't trust anybody but they can see proper signature associated with this public key larger version number than the one I had before.
+[5212.0:5222.0] Okay I'm taking this as a new version and I promise to you know give that new version to anybody that that comes along and asks.
+[5222.0:5251.0] Yeah so this is well yes and no it is a sign to the DHT notes right so it is the responsibility of those are DHT nodes around the position that you know where the public key has to do is their responsibility and those nodes don't have anything necessarily to do with Alice.
+[5251.0:5258.0] They're just you know trying to hopefully doing their job just like they would do their job if they were actually storing content right.
+[5258.0:5275.0] The different so you know if we call all of this the DHT then they are part of the DHT and you know so the this you know up to dateness this this you know versioning information this latest version information is stored in the DHT but it's not content.
+[5275.0:5304.0] It's not stored as immutable content because well it's not it's not immutable anymore right that's why we have to you know for the storing the actual content of the versions we were able to just attach the data to to form the key that was good enough but from you know from you know for multiple stuff we we have to you know hash a public key and use this slightly different process to you know this this versioning process and so so these nodes.
+[5304.0:5319.0] Have to know about this you know the difference of this update process and say okay I already had something that looked like version two but now I have version three so I promise to start announcing version three instead of version two now right.
+[5319.0:5329.0] So it's an important part of the protocol but but it can at least be done in decentralized fashion so that makes sense.
+[5329.0:5358.0] Of course again it's kind of up to those nodes to you know keep their promise they might disappear and lose that information about the latest version they might like I like I mentioned try to try to do a rollback attack tell Alice yeah sure all I'll announce your version three but then secretly keep handing out version two or version one to other people.
+[5358.0:5386.0] Who might come now this redundancy you know if we have our nodes and we hope that at least one of those is honest and they haven't successfully performed an eclipse attack you know then maybe you know maybe the redundancy will ensure that like you know a bomb contacts all of the our redundant nodes to see well you know get get answers from all of them and uses the latest.
+[5386.0:5406.0] You know that highest version that it gets from all of all of them then maybe that's one way to to tolerate you know one or two of those nodes that might you know either accidentally or maliciously be handing out older old versions of Alice's website right I don't know if I pfs actually does this.
+[5406.0:5431.0] You know this kind of defense against against role version rollback attacks but that's one way to do it anyway it's not perfect and you know again it's vulnerable to eclipse attacks to if somebody really wants to roll back to your website you know they can eclipse attack you and just hand out an old version of their choosing.
+[5431.0:5449.0] Okay so that's yeah so that's that's one way you know when we have just a single right now we're not going to have time to go into much detail on on multi writer protocols but just to give you a quick.
+[5449.0:5474.0] So you should read the IP paper to to get one of many different interesting approaches on how to do that but the basic idea is each writer is going to have their own locks.
+[5474.0:5503.0] Right so writer one produces this log or blockchain of changes writer to as another blockchain or list of changes these are all versions but they're going to be basically they're they're going to be watching each others logs as as much as availability permits and they're going to be following it each other by version vector.
+[5503.0:5527.0] Right so when when writer one sees that writer to has may has made some updates to this logical file system then writer one's next next entry is going to basically acknowledge acknowledge writers to you know log writer to log up to this point and say okay you know kind of like get merges.
+[5527.0:5543.0] You know going to say okay this this new version of the file system that I'm publishing accounts for everything I did up to that point and also merges in writer to changes up to this point this particular causal.
+[5543.0:5562.0] I commit point and then I'm making some additional changes on that right and then writer to and the other writers can independently kind of watch each other changes merge their changes whenever they see them whenever they happen to become aware of them and then you know commit a and publish.
+[5562.0:5591.0] I each new entry of their of their own log publishes basically okay here's my latest version of the whole file system you know with this root hash and everything and it's based on you know version three of that writers updates and version two of that other writers updates and everything in my own history up to this point right and so it's a basic you know it's kind of a big get like different merge game right so now of course.
+[5591.0:5611.0] Since we're in week consistency territory we can get issues of conflicts and you know have to decide what to do when a conflict arises to writers simultaneously change the same file all what now right and that's that's another another interesting topic but.
+[5611.0:5631.0] But again that's that's one way to handle this course another way is to have a consensus algorithm in which case we can just have only one log we get strong consistency but you know the corresponding downsides to availability and possibly performance right.
+[5631.0:5651.0] Okay okay so that's that'll have to do for today although you know there's a lot a lot more in in this space to talk about but I hope it gives you a quick sketch of some of the interesting ways of handling distributed storage okay thanks see you next week.

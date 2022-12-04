@@ -1,0 +1,264 @@
+~EE-556 / Lecture 6 - 2/3 (2020)
+~2020-10-15T00:23:06.346+02:00
+~https://tube.switch.ch/videos/547c7548
+~EE-556 Mathematics of data: from theory to computation
+[0.0:2.0] Is that okay?
+[2.0:4.0] Does this look okay?
+[4.0:6.0] All right.
+[6.0:8.0] Right.
+[8.0:14.0] So, as I was saying, think about a pseudo-cupusel.
+[14.0:16.0] Which one would be easier?
+[16.0:20.0] The various sparsely populated pseudo-cupusel?
+[20.0:24.0] Or, you know, every number is in there
+[24.0:26.0] and then you just need to fill in one number.
+[26.0:28.0] Which one would be easier?
+[28.0:30.0] Or, you know, either the second one would be easier.
+[30.0:32.0] All right.
+[32.0:34.0] But somehow it is very hard to make this
+[34.0:36.0] with such problems when you actually treat the data
+[36.0:40.0] and the computational aspects separately.
+[40.0:42.0] All right.
+[42.0:46.0] So, going back to my lemonade example.
+[46.0:48.0] All right. So, which one would be easier?
+[48.0:50.0] All right. So, suppose you have a deep glass
+[50.0:52.0] and I tell you that you would have to squeeze
+[52.0:56.0] up to the atoms for lemons to fill that glass.
+[56.0:58.0] All right.
+[58.0:60.0] Or, I give you 100 lemons and say,
+[60.0:62.0] just fill this in.
+[62.0:64.0] You don't care about squeezing all the lemons.
+[64.0:66.0] So, you may actually fill it faster.
+[66.0:68.0] Right? That's the idea.
+[68.0:70.0] Okay.
+[70.0:76.0] So, what we're going to do is we're going to now treat the data
+[76.0:78.0] and the computational aspects jointly.
+[78.0:80.0] Okay.
+[80.0:82.0] All right.
+[82.0:84.0] So, again, so, let's think about this decomposition.
+[84.0:86.0] All right.
+[86.0:90.0] So, what I just argued is that for this particular problem,
+[90.0:94.0] the medical methods take longer to reach an accuracy.
+[94.0:98.0] But the statistical model becomes more precise with data.
+[98.0:100.0] And it's very interesting, for example,
+[100.0:102.0] if you think about it,
+[102.0:104.0] if the noise is very I.D. Gaussian,
+[104.0:108.0] its norm is also scaling with N.
+[108.0:110.0] So, there's some cancellation
+[110.0:112.0] that your statistical error actually
+[112.0:116.0] saturates at the noise standard deviation, for example,
+[116.0:118.0] with the constant factor phi.
+[118.0:122.0] So, you can never basically get rid of the norm.
+[122.0:126.0] This is also an interesting point.
+[126.0:128.0] All right.
+[128.0:130.0] So, what I will argue is that the time effort
+[130.0:132.0] has a significant diminishing returns.
+[132.0:136.0] And while we will not get into the details of it,
+[136.0:140.0] the data effort also has a significant diminishing returns.
+[140.0:142.0] All right.
+[142.0:144.0] So, the second part of the lecture will also connect nicely
+[144.0:146.0] with this one.
+[146.0:148.0] Okay.
+[148.0:152.0] So, what I'm going to do now is I'm going to talk about the estimator formulation.
+[152.0:158.0] All right. So, what we will try to do is we will directly try to get an error bound here.
+[158.0:160.0] All right.
+[160.0:164.0] We will not separately treat them.
+[164.0:168.0] And I'm going to give you guys a continuous trade-off between the two.
+[168.0:174.0] So, I'm going to use more data to make algorithms faster or vice versa.
+[174.0:178.0] Right. With more time, I will try to take less data.
+[178.0:180.0] All right.
+[180.0:184.0] So, if you think about it with data and time,
+[184.0:186.0] there is some computation lower bound
+[186.0:188.0] and there is some statistical lower bound.
+[188.0:190.0] And we're going to trade off between the two.
+[190.0:192.0] How cool is that?
+[192.0:196.0] All right.
+[196.0:200.0] And in the second half or in the later half,
+[200.0:204.0] we're going to talk about some other trade-off that is very interesting.
+[204.0:206.0] Okay.
+[206.0:208.0] Cool.
+[208.0:210.0] Fasting your speed-house.
+[210.0:212.0] All right. We're going to talk about some fundamental trade-offs.
+[212.0:214.0] There is no algorithm.
+[214.0:216.0] It is geometry.
+[216.0:218.0] Okay.
+[218.0:220.0] Cool.
+[220.0:224.0] So, to make things a bit more general,
+[224.0:228.0] I'm going to put an f of x here.
+[228.0:230.0] You can think of a gauge function that we talked about.
+[230.0:232.0] You know, like you can put, for example,
+[232.0:238.0] out one long here.
+[238.0:240.0] You can put out infinity norm here.
+[240.0:242.0] All right.
+[242.0:244.0] You can put, let's say, if this was a matrix problem,
+[244.0:246.0] nuclear norm here.
+[246.0:250.0] The arguments all reply.
+[250.0:252.0] Cool.
+[252.0:256.0] Again, to make the discussion a bit easier,
+[256.0:258.0] I have removed the noise.
+[258.0:262.0] Okay. So we're going to have a linear constraint.
+[262.0:264.0] B is equal to a x.
+[264.0:270.0] What we care about is hyperplane constraint.
+[270.0:276.0] In the links that I gave in two lectures ago,
+[276.0:280.0] there are pictorial representations of the one
+[280.0:282.0] that also has this out two non-constrained.
+[282.0:284.0] Okay.
+[284.0:286.0] But I kept the easier one for this lecture that I go over,
+[286.0:290.0] sort of the explanations are a bit clearer and,
+[290.0:292.0] let's say, easier.
+[292.0:294.0] If you're really interested in this,
+[294.0:298.0] you can look at some of the supplemental lectures that I have.
+[298.0:302.0] What I will have to do now is I'm going to assume that this matrix A,
+[302.0:306.0] which should be about the is matrix,
+[306.0:310.0] is again, has some random distribution.
+[310.0:312.0] Okay. I did also assume 0,
+[312.0:316.0] 0, 0, n, n times.
+[316.0:322.0] Okay. This is, if this is stylized for the sake of making these geometric arguments to see,
+[322.0:324.0] the fundamental properties or the,
+[324.0:328.0] the convex geometry of this linear inverse problem.
+[328.0:330.0] Okay.
+[330.0:332.0] So the question here is, what's the minimum number of samples,
+[332.0:336.0] so that this x star is equal to,
+[336.0:338.0] x-nastro.
+[338.0:342.0] Why? This is the question we're interested in.
+[342.0:346.0] This is where these complicated looking images start to pop up,
+[346.0:348.0] but they are not complicated,
+[348.0:350.0] so just stay with me.
+[350.0:352.0] All right.
+[352.0:356.0] And you will see that this is very simple to understand.
+[356.0:360.0] So let's assume,
+[360.0:368.0] for the sake of an argument, you know, that x star is not x-nastro.
+[368.0:372.0] Meaning that there exists an x-nastro,
+[372.0:378.0] that has an objective value, f of x-nastro.
+[378.0:382.0] If you remember, how do we evaluate these gauge functions?
+[382.0:386.0] You literally plug the vector in and it will give you its value.
+[386.0:394.0] So the value of this border is just f of x-nastro.
+[394.0:396.0] Right? Same thing here.
+[396.0:402.0] Now, for x star to be the solution,
+[402.0:406.0] it needs to have a smaller objective value.
+[406.0:410.0] Right? Otherwise, it cannot be a solution,
+[410.0:414.0] because we're seeking to minimize f.
+[414.0:416.0] So if you plug in,
+[416.0:422.0] so this dashed blue is f of x star,
+[422.0:426.0] the value of the body there.
+[426.0:430.0] Now, remember, we have this under-determined equation.
+[430.0:432.0] So in the two-dimensional case,
+[432.0:434.0] you can do one under-central.
+[434.0:436.0] So it's actually a line.
+[436.0:440.0] And because x-nastro satisfy it,
+[440.0:444.0] it has to go through x-match of here.
+[444.0:448.0] Right? So this is our b is x into the x.
+[448.0:452.0] Right? And I did mention that there is this null space of the matrix,
+[452.0:456.0] and then you can take vectors in the null space,
+[456.0:458.0] and just go along this null space,
+[458.0:462.0] and you still observe the same measurements.
+[462.0:466.0] Right? You satisfy a x is equal to b.
+[466.0:468.0] And as a result,
+[468.0:474.0] x star must be also on that line,
+[474.0:478.0] because it's the solution of this problem,
+[478.0:484.0] and by the definition, it needs to satisfy the constraints.
+[484.0:486.0] So let's think about this.
+[486.0:492.0] Right? So I'm going to start arguing along the lines of this null space.
+[492.0:494.0] So if you think about it,
+[494.0:498.0] if this convex body here,
+[500.0:504.0] right? Here's our null space of a.
+[504.0:506.0] So I'm going to basically get rid of b.
+[506.0:512.0] Right? So it is a bit easier to think along
+[512.0:516.0] without b, right? So like x-nastro can be anything.
+[516.0:520.0] So let's make this a bit problem.
+[520.0:523.0] Let's focus more on the fundamental parts of the problem,
+[523.0:525.0] especially a particular x-nastro.
+[525.0:529.0] Okay? Although it will play a little bit of a role later.
+[529.0:533.0] All right. So if you think about it,
+[533.0:543.0] we are looking at places where x-nastro plus delta
+[543.0:547.0] is less than fx-nastro, right?
+[547.0:551.0] Because x star lives in a smaller fx-value, right?
+[551.0:557.0] And that there is an error vector, which is x star minus x-nastro.
+[557.0:561.0] Okay? So far so good.
+[561.0:563.0] It is important that you understand that part.
+[563.0:567.0] I'm going to pause to see if the audience has any questions.
+[567.0:571.0] Okay? I literally just talked about
+[571.0:575.0] the solution of this optimization problem.
+[575.0:577.0] There's no algorithm.
+[577.0:581.0] I said, okay, let's have an x star that satisfies the constraints,
+[581.0:585.0] but has a smaller objective value.
+[585.0:587.0] Remember, you're trying to minimize.
+[587.0:591.0] Let's not worry about how we found this minimum.
+[591.0:593.0] Let me find it. Okay?
+[593.0:595.0] X star, it's just there.
+[595.0:597.0] Actually, even though we don't find it algorithm,
+[597.0:599.0] it's still there.
+[599.0:603.0] That's the fundamental part of this whole expression.
+[603.0:605.0] Okay? This problem.
+[605.0:613.0] Now, it will actually help us.
+[613.0:619.0] So maybe I defined this with a delta.
+[619.0:624.0] So maybe we correct some of these.
+[624.0:632.0] So what I will do is I'm going to reduce this problem to an intersection problem,
+[632.0:634.0] intersection of two complex bodies, all right?
+[634.0:636.0] It's beautiful.
+[636.0:640.0] It's going to put tears into your eyes if you understand it.
+[640.0:644.0] And it will always put tears into your eyes when you don't understand.
+[644.0:646.0] So tears can't be here.
+[646.0:648.0] All right?
+[648.0:650.0] All right.
+[650.0:656.0] Now, there is this complex supplementary literature
+[656.0:661.0] where I talk about things like complex bodies, cones, and so on and so forth.
+[661.0:665.0] If you've taken Daniel Koons' cost, I think you learn about these things, right?
+[665.0:668.0] Which is a prerequisite to this particular cost.
+[668.0:673.0] But the cone is basically, let's say you have a complex body.
+[673.0:678.0] So this is like the strawman or this is like the naive explanation of it.
+[678.0:680.0] So we are here.
+[680.0:686.0] Imagine you hug the convex body and you let it go till infinity.
+[686.0:687.0] All right?
+[687.0:693.0] A convex cone here is the shifted version of the origin that does the same thing.
+[693.0:695.0] Just mimics you.
+[695.0:699.0] It includes everything in between.
+[699.0:703.0] So this is the layman's explanation, right?
+[703.0:707.0] So if you hit a body like this,
+[707.0:711.0] the convex cone here, so let's say this is the origin.
+[711.0:717.0] So you hug this corner, right?
+[717.0:720.0] It would be the same thing like that.
+[720.0:723.0] Also, it would be, this is the convex cone.
+[723.0:727.0] If you had something like this and you're looking at it from here,
+[727.0:729.0] when you hug it, it's a flat.
+[729.0:735.0] So let's say this is the origin, your convex cone will be this house space.
+[735.0:736.0] All right?
+[736.0:741.0] Let's say you have a circle, you're here, you try to hug,
+[741.0:743.0] but locally it is flat.
+[743.0:749.0] So your convex cone would again be this house space.
+[749.0:750.0] All right?
+[750.0:753.0] Whatever you can hug.
+[753.0:754.0] All right?
+[754.0:759.0] So this is our cone of the so-called descent direction.
+[759.0:766.0] All right?
+[766.0:771.0] If you pick any direction in this cone and you edit to this point,
+[771.0:776.0] you decrease or not increase the objective.
+[776.0:780.0] And that's the point of hugging.
+[780.0:784.0] You literally hug what you can descend on.
+[784.0:785.0] All right?
+[785.0:787.0] Is this clear?
+[787.0:790.0] It's important that this is clear.
+[790.0:793.0] This is called the descent cone.
+[793.0:795.0] You have a convex function, right?
+[795.0:801.0] Think about it.
+[801.0:804.0] So you look at its level, says, right?
+[804.0:809.0] You just pick a point and you try to figure out where you can descend on.
+[809.0:812.0] There will be a set of directions.
+[812.0:816.0] Remember, directions does not necessarily mean unit directions, right?
+[816.0:821.0] It could be a direction that goes outside the screen.
+[821.0:826.0] So the set of all directions, it will create a cone,
+[826.0:830.0] literally like an ice cream cone.
+[830.0:833.0] All right?
+[833.0:840.0] So if x star is here, right?
+[840.0:842.0] There will be a direction in between.
+[842.0:844.0] We call it delta, right?
+[844.0:858.0] That means to live in the descent cone of the function at x natural.
+[858.0:859.0] Okay.
+[859.0:862.0] I think that it is good to stop here.
+[862.0:866.0] Take a 15 minute break, digest, and then we restart.
+[866.0:869.0] I apologize that my computer died.
+[869.0:873.0] I mean, I was tracking it at 33% or something like this.
+[873.0:877.0] And it literally went to zero.
+[877.0:879.0] So we lost a little bit of time.
+[879.0:883.0] But I think we can actually finish this lecture on time.
+[883.0:887.0] We can just take a 15 minute break.
+[887.0:914.0] We'll see you in 15 minutes.

@@ -1,0 +1,1190 @@
+~Recitation 2 (2021)
+~2021-10-02T15:28:42.871+02:00
+~https://tube.switch.ch/videos/DzK41ojFkX
+~EE-556 Mathematics of data: from theory to computation
+[0.0:2.2600000000000002] All right, let's get started.
+[2.2600000000000002:3.7600000000000002] Stittle down people.
+[14.36:15.4] How was everybody?
+[21.72:26.46] So what we're gonna do today is
+[26.46:30.700000000000003] cover some basics of linear algebra.
+[30.700000000000003:36.2] So these reservations are more or less background work.
+[36.2:37.4] Okay.
+[37.4:41.5] So if you know already how to take back to their within,
+[41.5:45.519999999999996] is it you know already how to what set
+[45.519999999999996:49.260000000000005] from next sets are, so to set this to be more like a review.
+[52.540000000000006:56.260000000000005] What we're gonna do next week is we're gonna start covering
+[56.26:58.5] optimization algorithms and I thought that it is good
+[58.5:62.699999999999996] to have a refresher before and this particular
+[62.699999999999996:63.54] recitation.
+[63.54:65.14] All right.
+[65.14:70.9] Now there should be a handout to also posted on mobile today.
+[70.9:75.7] I'll take a look at it to post the solutions of the handout.
+[75.7:82.22] We'll send out a thank you for, let's say the homework.
+[82.22:83.53999999999999] Okay.
+[83.54:86.54] So let's get started.
+[86.54:95.54] So what we will do today is maybe again things that you know,
+[95.54:98.54] we're gonna look at definitions of norms,
+[98.54:102.54] but we're gonna talk about maybe more sophisticated concepts,
+[102.54:105.86000000000001] things like operator norms, the proven norms,
+[105.86000000000001:109.34] dual norms that will be useful in the strictly course.
+[109.34:115.34] We're gonna talk about some function properties, set properties.
+[115.34:117.34] And then we're gonna talk about you know,
+[117.34:122.34] some general calculus concepts on convergence of sequences and so forth,
+[122.34:126.34] which we will use when we talk about algorithmic sequences
+[126.34:128.34] and their convergence.
+[130.34:136.34] And next lecture, we'll be creating this time.
+[136.34:141.34] Okay. So we begin with something that I discussed when we talked about
+[141.34:144.34] loss functions.
+[144.34:147.34] And that was metrics.
+[147.34:151.34] Now metrics are defined simply as solos.
+[151.34:158.34] It takes two arguments and gives you a non-negative number.
+[158.34:164.34] In this particular case, it is non-negativity is one of the properties.
+[164.34:166.34] So it's not a two-input system.
+[166.34:170.34] It's to be greater than or equal to zero.
+[170.34:173.34] And we would have definetness.
+[173.34:177.34] So if you give it the same inputs for both arguments,
+[177.34:179.34] you should get zero.
+[179.34:185.34] And that should happen is and only if they are the same.
+[185.34:187.34] You have the symmetry.
+[187.34:190.34] And you have the triangle inequality.
+[190.34:197.34] And you have the same matrix that satisfy a, b, and sorry, a, c, and b,
+[197.34:200.34] but not necessarily b.
+[200.34:207.34] Things like total variation, semi known, which could be a student.
+[207.34:214.34] They're also the divergences that satisfy subset of the properties.
+[214.34:218.34] I have some examples on what is called as grademan deurgence.
+[218.34:225.34] And the end of the recitation, which is a trans material.
+[225.34:227.34] All right.
+[227.34:230.34] Now.
+[230.34:235.34] Typically, we will talk about known as metrics.
+[235.34:239.34] So it is on day there, the right also from the metrics.
+[239.34:245.34] So a norm would satisfy the same thing for a single input.
+[245.34:251.34] In the sense that we're taking input in.
+[251.34:254.34] It means to be non negative.
+[254.34:260.34000000000003] If it's zero, even only if the argument is zero.
+[260.34000000000003:262.34000000000003] You have positive homogeneity.
+[262.34000000000003:270.34000000000003] So if you scale the inputs, the output would be positively scaled with the absolute value of the filling.
+[270.34000000000003:274.34000000000003] And then it satisfies the triangle in part.
+[274.34:280.34] The difference between the two is that not takes a single input.
+[280.34:286.34] The metric would take two inputs and using norms, you can define metrics.
+[286.34:293.34] For example, being the d x1 x2 is something like a norm.
+[293.34:298.34] Some minus.
+[298.34:304.34] So don't let this formalism.
+[304.34:307.34] I mean, I'm not trying to insult your intelligence.
+[307.34:310.34] It's just the regression.
+[310.34:320.34] So in particular, we are interested in how few norms that are from a guy's by a single pronger to.
+[320.34:324.34] They go from one to infinity in the case of infinity.
+[324.34:331.34] So the final entry in the inputs, and we define over the vector fields, vectors.
+[331.34:334.34] So some of the examples are really familiar.
+[334.34:336.34] The median norm.
+[336.34:340.34] One norm.
+[340.34:352.34] Some forward in the maximum norm or the infinity norm, which looks at the absolute values of the entries and picks the largest.
+[352.34:362.34] So there are things that you will see when you read research papers.
+[362.34:364.34] This is the kind of thing you're interested.
+[364.34:368.34] So what I wanted to do here is to tell you a little bit about the moment and pleasure.
+[368.34:370.34] They mean simple things.
+[370.34:375.34] It's good to see this as once, maybe in your life.
+[375.34:377.34] So that you understand the jargon.
+[377.34:382.34] But it is the screen clear for you guys.
+[382.34:383.34] I apologize.
+[383.34:385.34] There's some.
+[385.34:390.34] I think we should have behalf in terms of this screen.
+[390.34:396.34] Having the eye to having the book right and then project at the same time.
+[396.34:402.34] Unfortunately, well, fortunately, unfortunately last year, I was giving this to an empty bus.
+[402.34:404.34] I didn't have to look at this.
+[404.34:407.34] So this is something new for me.
+[407.34:417.34] As a result, I haven't found a clear solution.
+[417.34:420.34] Again, semi norms and pseudo norms.
+[420.34:423.34] And there are some examples here.
+[423.34:430.34] So this LQ norm for two lists and one is what is called as the causing norm.
+[430.34:435.34] So causing norm would satisfy all these properties except the triangle in quality.
+[435.34:442.34] It satisfies the triangle in quality with a protein called spike factor constant.
+[442.34:454.34] And the total variation standing on would satisfy all the properties except the definetness.
+[454.34:462.34] And the total variation norm, which is defined as let's say looking at the discrete gradient of the inputs.
+[462.34:466.34] You can have an all constant factor.
+[466.34:469.34] Which is non zero by all means.
+[469.34:475.34] But because the total variation semi norm looks at the element wise differences.
+[475.34:477.34] It would give you a zero.
+[477.34:479.34] So you would have a zero output.
+[479.34:487.34] So although you have a non zero input that size for the pseudo norm or semi norm.
+[487.34:493.34] Just to let you know that you can't have zero entries for non zero.
+[493.34:494.34] All right.
+[494.34:498.34] Now there's also the famous L zero code and quote norm.
+[498.34:502.34] It's not a semi norm. It's not a super norm. It's not a norm.
+[502.34:508.34] What it does is it comes with a sparsity of a different vector.
+[508.34:514.3399999999999] Meaning just except the number of non zero entries and reports that value.
+[514.3399999999999:521.3399999999999] So if you have a five dimensional vector with one non zero entry, you look at the L zero norm.
+[521.3399999999999:523.3399999999999] Again, it's a quote and quote.
+[523.3399999999999:525.3399999999999] It's not a norm.
+[525.3399999999999:530.3399999999999] But somehow this particular norm and creature is stuck in the literature.
+[530.3399999999999:533.3399999999999] So people will quote the L zero norm.
+[533.34:539.34] And I will just give you the non zero entries, the number of non zero entries.
+[539.34:540.34] Okay.
+[540.34:543.34] Just for highlights, you know, it does not satisfy property.
+[543.34:548.34] It's neither a quasi nor a semi norm.
+[548.34:551.34] All right.
+[551.34:557.34] So when you look at the visualization is of these objects and.
+[557.34:566.34] So say, the dimensions, they look beautiful. For example, if you look at the L zero.
+[566.34:569.34] Quote and quote norm is less than equal to two.
+[569.34:574.34] This means the test of pictures that have at most two non zero entries.
+[574.34:584.34] And you can see this set is a union of two dimensional hyperplanes that are aligned with the kind of important axis.
+[584.34:590.34] Quote and quote, non atomic shape, which we will describe in this particular lecture.
+[590.34:594.34] There is the L one house fuzzy norm.
+[594.34:600.34] The geometry of these things will be useful in, for example, sparsifying solutions.
+[600.34:605.34] As you can see, this is like a very pointy object.
+[605.34:610.34] And in even in higher dimensions, it becomes really, really pointy.
+[610.34:615.34] Here's the out one long ball, the diamond shapes.
+[615.34:622.34] Out two is a sphere of infinity and a TV.
+[622.34:627.34] Now, here's maybe we're going to be sitting outside the comfort zone.
+[627.34:630.34] So when you ask the old hemisphere.
+[630.34:635.34] You think we asked your problem, maybe a digital or maybe a elsewhere.
+[635.34:640.34] Or is this a first occurrence key?
+[640.34:643.34] Who says it's the first occurrence?
+[643.34:646.34] Bumpy shot.
+[646.34:651.34] Okay, so others do know what a do normalness.
+[651.34:655.34] Hopefully, by the way, I have no way of seeing the audience.
+[655.34:659.34] If there are questions for me, I'm maybe should be able to let you know.
+[659.34:663.34] Because I don't have the zoom screen in front of me.
+[663.34:669.34] I have no idea if people are asking questions.
+[669.34:672.34] I cannot hear you.
+[672.34:675.34] Oh, yes.
+[675.34:679.34] So it's just a short introduction.
+[679.34:688.34] So how do I do that from here?
+[688.34:696.34] Yeah, I cannot.
+[696.34:698.34] Oh, there you go.
+[698.34:703.34] So I go to participants.
+[703.34:710.34] Aha.
+[710.34:716.34] Okay, sorry for the introduction.
+[716.34:720.34] I'm not sure if we have some issues to deal with.
+[720.34:728.34] So given a norm, we're going to define what is called as the do norm.
+[728.34:734.34] Now, the utility of this on a first look is not clear.
+[734.34:740.34] Okay, but trust me, it is extremely useful.
+[740.34:745.34] In particular, when we talk about things like non-simil optimization problems,
+[745.34:750.34] we're going to use this form to make the objective differential.
+[750.34:754.34] And we're going to apply some sophisticated algorithms.
+[754.34:757.34] So here's the definition.
+[757.34:763.34] Here's those given a norm could be the one norm to norm.
+[763.34:770.34] The two norm, you typically define it with an asters and top.
+[770.34:779.34] There are other also notations, you can bracket one back to show the differences between final and the launch.
+[779.34:792.34] So it is the supreme of this particular product given different strings of your norm less than you could do now.
+[792.34:799.34] Now, you can basically replace this with the maximum because oftentimes you can obtain the value.
+[799.34:805.34] So the difference between supreme and maximum, maybe you know.
+[805.34:810.34] So for all practical purposes, think of this as a maximum here.
+[810.34:825.34] So the dual norm, you give an input, you would it's the maximum between the given input and some vector that lives within the non ball unit norm ball.
+[825.34:830.34] Is this clear? Okay.
+[830.34:837.34] Now with this definition, there are certain observations that you can make one is that the dual of the dual.
+[837.34:844.34] Is the primal or the original.
+[844.34:853.34] Now, if you're given, if you're working with these q norms, the dual of the q norm using this holder is inequality.
+[853.34:862.34] It would be a norm that would set aside a particular summation. So one of which you just want to work to is equal to one.
+[862.34:871.34] So from this, maybe you can immediately guess that the dual of two norm is.
+[871.34:883.34] One, one house, one house is equal to one. Dual of one long would be the infinity norm.
+[883.34:895.34] And the way to get this is why are the folders in quality is if you think about it, you maximize the particular product.
+[895.34:904.34] We have an upper bound to that particular product and the holders in quality. So you're looking at, for example, this particular object.
+[904.34:909.34] In absolute value.
+[909.34:927.34] We know that it is in fact, sorry. We know that it is less than or equal to X, Q, Y, T.
+[927.34:934.34] This is the holders in quality. Now, this is an upper bound to this maximization objective.
+[934.34:949.34] And it is achievable. And the thing that would maximize this, if you already know that this is less than equal to one, then the value would be this.
+[949.34:964.34] Because the constraint says this norm is constrained and hands, this is how you get this normal norm. Why are holders in quality.
+[964.34:982.34] Alright, good. I mean, I understand maybe not not entertaining material for a Friday evening, but this is what I got guys. Ladies and gentlemen.
+[982.34:998.34] These are not some magical unicorn objects. I would like you to get used to them. It is really important for a data scientist to understand these matrix norms.
+[998.34:1006.34] So if you want to turn this up to 11, you would get tensor norms.
+[1006.34:1016.34] Look at the supplementary material that I have for linear algebra is like, I don't know, 20 slice of covered tensor norms.
+[1016.34:1028.3400000000001] But you're not responsible for tensor norms in this particular class. But if you're interested in learning more about them, it would get this particular supplementary material.
+[1028.3400000000001:1030.3400000000001] It's in Moodle.
+[1030.3400000000001:1033.3400000000001] And there's star material.
+[1033.3400000000001:1041.3400000000001] I hope he actually is. If you want to maybe get a bit more tech.
+[1041.34:1054.34] Alright. Now, in a very similar to vector norms, matrix norms, taking matrix objects and have the same properties as if they're metrics.
+[1054.34:1060.34] So you have an on the activity definition of maturity and finding quality.
+[1060.34:1072.34] This is where perhaps the comfort zone begins to end. So with vectors, we have inner products.
+[1072.34:1081.34] So I can give you a vector and I can define my inner product as this summation x i dot i.
+[1081.34:1091.34] This is you can also in a very similar to this define this inner products. Same.
+[1091.34:1102.34] Alright. And in fact, what it would be is in fact summation of i j ai j.
+[1102.34:1111.34] Literally, you can take a matrix, vectorize it.
+[1111.34:1113.34] Big element wise.
+[1113.34:1116.34] But that's sum it up.
+[1116.34:1118.34] Same deal.
+[1118.34:1120.34] Nothing magical.
+[1120.34:1130.34] And if you want to write this in matrix notation, it's in fact this particular trace, so that you get this.
+[1130.34:1134.34] Is that here?
+[1134.34:1137.34] It's nothing magical.
+[1137.34:1148.34] Define in a way that is similar to vectors.
+[1148.34:1150.34] Okay.
+[1150.34:1154.34] Now,
+[1154.34:1162.34] in a way, you can define, for example, and revise maximum for a matrix.
+[1162.34:1169.34] What's your interest in which is unique to matrices are there the states.
+[1169.34:1175.34] So there are even values, there's singular values and so on.
+[1175.34:1183.34] So what I'm going to do is define some norms that act like alto norms, album loans.
+[1183.34:1191.34] But not on the matrix entries, but on to the spectrum of a given matrix.
+[1191.34:1193.34] Is this clear?
+[1193.34:1198.34] So you can always define a matrix norm that is a maximum entry in a matrix.
+[1198.34:1206.34] But there are interesting norms that are called the shatter norms.
+[1206.34:1216.34] That have similar connotation, but on the singular values of a matrix.
+[1216.34:1222.34] So the first one is defined as the nuclear norm.
+[1222.34:1226.34] When you have a symmetric matrix, it's also known as a trace on.
+[1226.34:1232.34] If you're working on quantum form of a particular example, trace norm is what we would work with on the density in H.
+[1232.34:1236.34] So we have the same matrix as the matrix.
+[1236.34:1246.34] Provenious norm, which is in fact, the alto norm of the vectorized matrix.
+[1246.34:1256.34] And then the spectral norm, which is the largest singular value.
+[1256.34:1266.34] The nuclear norm or the shatter one norm as one.
+[1266.34:1272.34] Would look at the out one norm of the singular values.
+[1272.34:1280.34] Shatter two norm, which is especially named as the forbidden is norm would look at the alto norm of the singular values.
+[1280.34:1288.34] And then shatter infinity would look at the maximum singular values.
+[1288.34:1294.34] Clear? Who has seen shatter norms before?
+[1294.34:1306.34] One, two, well, for being is many of you see?
+[1306.34:1312.34] Let's see, things like the look that.
+[1312.34:1316.34] There's something called an operator norm.
+[1316.34:1320.34] An operator norm is defined in this particular way.
+[1320.34:1329.34] So an operator norm between two norm spaces of L2 and LR.
+[1329.34:1337.34] R are between one and infinity.
+[1337.34:1341.34] You would define in this particular fashion.
+[1341.34:1345.34] So what you would do is if you're going from Q.
+[1345.34:1347.34] You constrain the Q.
+[1347.34:1351.34] You look at vectors living in some two norm ball.
+[1351.34:1357.34] And then you take the matrix and you see the image of these.
+[1357.34:1359.34] If there is in the Q.
+[1359.34:1363.34] And find the largest.
+[1363.34:1366.34] Arnorm.
+[1366.34:1369.34] This is called.
+[1369.34:1374.34] Q to our operator norm.
+[1374.34:1380.34] There are some fundamental properties that come out from this particular definition.
+[1380.34:1392.34] So for example, two to two would be the sector norm or shatter infinity norm.
+[1392.34:1396.34] And the way to see this is the star loss.
+[1396.34:1403.34] So the definition of two to two is you put the two constraints here and you would get the.
+[1403.34:1410.34] Now let's do the following.
+[1410.34:1414.34] The singular value decomposition of the given matrix.
+[1414.34:1419.34] So you sigma transpose X.
+[1419.34:1421.34] Now here's the deal.
+[1421.34:1426.34] If you're looking at something like the two norm and you have a military matrix.
+[1426.34:1428.34] You.
+[1428.34:1435.34] You have a military matrix.
+[1435.34:1438.34] So you have a military matrix.
+[1438.34:1440.34] Why?
+[1440.34:1442.34] Because let's look at this.
+[1442.34:1445.34] So you times some vector.
+[1445.34:1447.34] We're looking at the two.
+[1447.34:1449.34] What is this?
+[1449.34:1451.34] This is.
+[1451.34:1458.34] You.
+[1458.34:1463.34] So we have we transpose you transpose you.
+[1463.34:1476.34] Remember the matrices in the singular value decomposition are you necessary, meaning you transpose you is equal to identity.
+[1476.34:1482.34] Hence you have we transpose we.
+[1482.34:1485.34] Hence you have.
+[1485.34:1494.34] So what what I'm trying to get at is that when you look at this consider this as little V.
+[1494.34:1498.34] So I'm kind of dropping you here.
+[1498.34:1504.34] You see this.
+[1504.34:1508.34] Again, you know, I apologize for the resolution here.
+[1508.34:1511.34] I think that there's a position.
+[1511.34:1516.34] So I'll come up with a solution for the second.
+[1516.34:1518.34] All right.
+[1518.34:1521.34] Is this.
+[1521.34:1523.34] Now, take a look at this.
+[1523.34:1527.34] We have another unit in a matrix.
+[1527.34:1535.34] And our constraints is units how to both.
+[1535.34:1542.34] I argue that I should be able to simply think of dropping this V.
+[1542.34:1550.34] And instead think about this rotated to both constraints because it's the same thing.
+[1550.34:1557.34] My constraints that doesn't change if I rotate around because it's it.
+[1557.34:1561.34] How to go.
+[1561.34:1566.34] Is this.
+[1566.34:1568.34] I constraints that doesn't change.
+[1568.34:1575.34] So the way to go from here to there is I I let the transpose X to the Z.
+[1575.34:1582.34] Now I just realized, oh, this is the same.
+[1582.34:1583.34] Okay.
+[1583.34:1589.34] So we are down to here where we have a diagonal matrix sigma.
+[1589.34:1593.34] Multiplying a vector.
+[1593.34:1595.34] Wow.
+[1595.34:1602.34] The diagonal matrix has sigma i squared.
+[1602.34:1605.34] So you can do the multiplication.
+[1605.34:1610.34] The eyes will just multiply the singular values.
+[1610.34:1612.34] Now, here's a constraint.
+[1612.34:1619.34] What we would like to do is maximize the square of some sigma i squared with this constraint.
+[1619.34:1621.34] What would be the maximum.
+[1621.34:1630.34] Well, in this constraint, you would simply pick one of the eyes corresponding to the maximum.
+[1630.34:1637.34] The singular value to take the largest number, which is one.
+[1637.34:1641.34] Because we are trying to maximize this quantity.
+[1641.34:1645.34] Hence it will just be fixed in my next.
+[1645.34:1652.34] And hence this is the shape and infinity or the spectral norm.
+[1652.34:1659.34] Is this clear.
+[1659.34:1662.34] What.
+[1662.34:1667.34] There are other.
+[1667.34:1669.34] There are other norms you can define.
+[1669.34:1674.34] For example, from L infinity, space to the infinity.
+[1674.34:1678.34] It will be the maximum roll known some.
+[1678.34:1682.34] There is one to one.
+[1682.34:1685.34] And you can see how these things are done.
+[1685.34:1690.34] Because if you're doing, for example, some L one norm, you would pick the column.
+[1690.34:1701.34] If you're looking at it in the element, infinity, you would look at you would literally pitch the signs of your constraints vector.
+[1701.34:1708.34] To match, maybe the signs of the matrix entries so that the sum is maximize, you know.
+[1708.34:1713.34] And you can actually check and verify that these are correct.
+[1713.34:1719.34] When in doubt, by the way, always remember the definition.
+[1719.34:1729.34] So if you look at this, what this is, you're looking at maximum, let's say some vector in one infinity norm.
+[1729.34:1733.34] And you're looking at a x infinity norm.
+[1733.34:1737.34] So what does infinity norm do after the multiplication?
+[1737.34:1743.34] If you look at the entries of the solution, they can try to pick the maximum value right.
+[1743.34:1751.34] So it is clear that it is somehow going.
+[1751.34:1756.34] If someone looking at maximizing the individual entries.
+[1756.34:1759.34] How can we maximize the individual entries?
+[1759.34:1766.34] Well, when you have an element, clicking on constraint on the vector, what you can do is look at.
+[1766.34:1771.34] The entries of the matrix.
+[1771.34:1779.34] But remember, you can choose vectors either within the element, the normal ball.
+[1779.34:1785.34] So what, how can you maximize this particular sum after multiplication?
+[1785.34:1790.34] Well, if this is plus, if this is, you know, so I'm just going to make up some numbers.
+[1790.34:1797.34] Two minus one, one point five minus three minus five.
+[1797.34:1802.34] So let's say this is one role for the matrix A.
+[1802.34:1808.34] And I need to multiply the sum matrix whose infinity norm is less than or equal to one.
+[1808.34:1811.34] And I want this product to be maximized.
+[1811.34:1816.34] So what I will do here is literally here, I will pick a plus one, I will pick a minus one.
+[1816.34:1829.34] And then I multiply, I would simply sum up two plus one plus one point one plus D plus one.
+[1829.34:1832.34] That's how you would get the operator norms.
+[1832.34:1837.34] All you have to do is think a little bit about this and you'll get it.
+[1837.34:1839.34] It's nothing scary.
+[1839.34:1841.34] It's very simple.
+[1841.34:1847.34] Basically, it's good work and the basic task to us.
+[1847.34:1852.34] Right.
+[1852.34:1859.34] They are always.
+[1859.34:1864.34] So this will give you this particular.
+[1864.34:1868.34] So the question is how come it is also on this.
+[1868.34:1879.34] How come we reach here?
+[1879.34:1884.34] So if you think about it, you need to find one that's on maximize.
+[1884.34:1892.34] So we know that for any of the roles, you can pick this sign pattern to get the maximum.
+[1892.34:1897.34] And if you so that will give you the potential maximum in each role.
+[1897.34:1903.34] All you have to do is actually figure out which one has the maximum role sum.
+[1903.34:1912.34] Because the rest of the interior.
+[1912.34:1923.34] So maybe we talk about this in break because you just hit the comment.
+[1923.34:1929.34] So we can communicate it and use.
+[1929.34:1930.34] All right.
+[1930.34:1934.34] Now here's a very nice analogy.
+[1934.34:1939.34] For vectors, one known would correspond to the nuclear norm.
+[1939.34:1945.34] Remember the nuclear norm would act as if it's the one norm on the singular values.
+[1945.34:1950.34] Similarly, two norm and the four being as norm are analogous.
+[1950.34:1956.34] All right.
+[1956.34:1967.34] Now, in a way, we have for this holders inequality, the dual of one norm is a infinity norm to norm is south to.
+[1967.34:1974.34] Infinity norm has one norm as it's.
+[1974.34:1989.34] Same thing here, the nuclear norm and signal norms are true for being a norm is south rule.
+[1989.34:1995.34] So a bit more on the matrix definition.
+[1995.34:2004.34] For symmetric matrices, we will need this definition of semi-definiteness or positive semi-definiteness.
+[2004.34:2008.34] How many of you have seen this concept before?
+[2008.34:2011.34] Almost all fantastic.
+[2011.34:2014.34] Who has not seen it?
+[2014.34:2018.34] Okay, some of you are shy.
+[2018.34:2022.34] Who wants to obtain anything?
+[2022.34:2025.34] Thank you.
+[2025.34:2029.34] All right.
+[2029.34:2035.34] So we would call a symmetric matrix positive semi-definiteness.
+[2035.34:2043.34] If for any x that is non zero, you would have this particular inequality.
+[2043.34:2053.34] And this goes to the semi-definiteness, the eigenvalues need to be non negative.
+[2053.34:2058.34] Which means that the smallest singular values to be non-negative.
+[2058.34:2065.34] Or in this particular case, eigenvalues because we're talking about symmetric matrix.
+[2065.34:2074.34] So strictly that strict definite nests would imply strict inequality here.
+[2074.34:2083.34] So negative semi-definiteness, you just replace the design.
+[2083.34:2088.34] And you can actually have ordering semi-definiteness ordering between matrices.
+[2088.34:2095.34] I think if you're taking Daniel Coons cross, we're going to understand this particular ordering.
+[2095.34:2098.34] Who's taking Daniel Coons cross?
+[2098.34:2103.34] One, single two.
+[2103.34:2108.34] Going four months, five, soul, only two.
+[2108.34:2113.34] It's a very good basic course that talks about quality.
+[2113.34:2119.34] Definitely interested in some of the basic social.
+[2119.34:2130.34] So definite, definitive ordering means, you just look at the difference and that needs to be a single.
+[2130.34:2131.34] Good.
+[2131.34:2135.34] So some inequality here that I will flash.
+[2135.34:2137.34] I don't expect you to memorize them.
+[2137.34:2139.34] They're kind of intuitive.
+[2139.34:2141.34] Take a look at them in your.
+[2141.34:2144.34] Okay.
+[2144.34:2153.34] Good. Now, what I want to do is define some terminology that is like.
+[2153.34:2161.34] I don't know if it's the language when you read any paper when they talk about functions and assumptions and functions.
+[2161.34:2162.34] These are important.
+[2162.34:2166.34] So try to pay a little bit of attention.
+[2166.34:2171.34] And know them for later.
+[2171.34:2173.34] We also talk about function.
+[2173.34:2179.34] We'll say they're continuous, the electricity, and so forth.
+[2179.34:2182.34] So we talk about continuous functions.
+[2182.34:2189.34] Basically, continuous functions that they're limited points.
+[2189.34:2196.34] I mean, some of the formalism here, maybe.
+[2196.34:2203.34] You see it once and hopefully the intuition, the kicking later.
+[2203.34:2205.34] What is interesting?
+[2205.34:2209.34] So the class of continuous functions, we will be noted in this class of this.
+[2209.34:2211.34] How to get it.
+[2211.34:2220.34] Now, one thing that is interesting is the so called lip shit continuity.
+[2220.34:2227.34] We will call a function lip shit continuous.
+[2227.34:2230.34] Then there exists a constant.
+[2230.34:2235.34] Such that when you look at the differences of the function values,
+[2235.34:2245.34] the value that two given inputs x and y is up or bounded by the difference of the points times a constant.
+[2245.34:2250.34] In this case, the whole of the continuous in long two.
+[2250.34:2254.34] You can do the same thing over different norms.
+[2254.34:2257.34] Then you will be a little just continuous in a given norm.
+[2257.34:2261.34] You can give you can have matrix.
+[2261.34:2266.34] So, you can use the functions that taking matrices.
+[2266.34:2271.34] And you can use matrix norms here.
+[2271.34:2279.34] For a social media matrix value function, I think with the graphic from model learning,
+[2279.34:2284.34] I had something like minus load depth x.
+[2284.34:2286.34] It has a matrix inputs.
+[2286.34:2294.34] And you can argue about its lip shit continuity.
+[2294.34:2297.34] All right.
+[2297.34:2302.34] In the domain of all matrices, it's not going to be this particular function is not going to be the continuous.
+[2302.34:2305.34] It's going to be start from coordinates.
+[2305.34:2311.34] But on some restricted domain that the single value is, it will be the system.
+[2311.34:2317.34] It's a very beautiful exercise to come up with the lip shit continuity and the constant constraints.
+[2317.34:2320.34] With school frameworks.
+[2320.34:2325.34] But I hope that this definition is clear.
+[2325.34:2330.34] What it is is that it says that the function doesn't change much.
+[2330.34:2335.34] And so if you think about it, this means that with any given point x,
+[2335.34:2341.34] you can see the growth of k.
+[2341.34:2348.34] That would say that the function would fall within this particular area of calm.
+[2348.34:2350.34] So that's what it means.
+[2350.34:2355.34] When that constant is still the function is you vary.
+[2355.34:2359.34] Cannot change much.
+[2359.34:2365.34] Now this does not mean the function is differentiable.
+[2365.34:2369.34] So you can have a zigzag here.
+[2369.34:2375.34] It just looks at the variation of the pension.
+[2375.34:2378.34] Is this clear?
+[2378.34:2381.34] All right.
+[2381.34:2383.34] The friendship code.
+[2383.34:2392.34] So we would call a function k times differentiable.
+[2392.34:2402.34] If it is, you know, it's k times partial derivatives exists and I'm continuous on the given domain.
+[2402.34:2409.34] A key quantity in this particular class is the first or the derivative of a function.
+[2409.34:2420.34] The district is arguments which could be a vector valid argument or a matrix salad argument.
+[2420.34:2422.34] I'm going to give you the vector definition.
+[2422.34:2428.34] The matrix definition is just similar.
+[2428.34:2432.34] So the gradient of the function.
+[2432.34:2440.34] The way you would write it is you would take a partial derivative of the function for a particular.
+[2440.34:2443.34] For the input.
+[2443.34:2447.34] And then you set them into.
+[2447.34:2450.34] So the input here is feed dimensional.
+[2450.34:2455.34] In this particular case, you would take the partial derivatives.
+[2455.34:2463.34] You would take the each of these arguments, take them into a vector and that'll be our.
+[2463.34:2467.34] Radiance.
+[2467.34:2470.34] For k is equal to two.
+[2470.34:2471.34] Use this.
+[2471.34:2473.34] Nubless squares.
+[2473.34:2476.34] Which we would dub is the patient.
+[2476.34:2486.34] The function.
+[2486.34:2491.34] The IJ entry is the I and J partial derivative.
+[2491.34:2497.34] Now we're going to maybe set into some interesting territory.
+[2497.34:2502.34] So what I would like to do is I'm going to I want to go over this at the beginning of next lecture.
+[2502.34:2506.34] So why don't we take a 15 minute break now?
+[2506.34:2509.34] So I'm going to start maybe slightly earlier.
+[2509.34:2510.34] 13.
+[2510.34:2519.34] Because I want to actually start a fresh with this particular thing because I think if anything, this will be useful for later.
+[2519.34:2520.34] All right.
+[2520.34:2526.34] Let's take a break 15 minutes.
+[2526.34:2532.34] So we are back.
+[2532.34:2534.34] Okay.
+[2534.34:2537.34] Now.
+[2537.34:2548.34] So I just define in like well, not just just if you're just watching this video, it's just just now, but we had a 15 minute break.
+[2548.34:2553.34] I defined the gradient is just partial derivatives.
+[2553.34:2561.34] So what I'm going to do is I'm going to try to define the derivatives in a way that kind of comes from the Taylor series.
+[2561.34:2562.34] Okay.
+[2562.34:2571.34] So one way to think about the gradients is somehow, you know, do the first order Taylor series expansion.
+[2571.34:2577.34] So imagine you look at f x plus you minus f x.
+[2577.34:2584.34] So somehow.
+[2584.34:2589.34] Maybe this is the time now.
+[2589.34:2596.34] So imagine this is going to you are at x, you have x plus you.
+[2596.34:2601.34] And somehow you make this you vector go towards zero.
+[2601.34:2604.34] I am advised go towards zero.
+[2604.34:2607.34] Okay.
+[2607.34:2611.34] In this particular case.
+[2611.34:2614.34] The gradient will satisfy.
+[2614.34:2617.34] So if.
+[2617.34:2621.34] X plus you minus effects.
+[2621.34:2622.34] You take an inner product.
+[2622.34:2626.34] So imagine there's a vector G here.
+[2626.34:2632.34] Whenever this G satisfies that this absolute salary divided by the norm goes to zero.
+[2632.34:2635.34] That'll be your gradient.
+[2635.34:2641.34] In the case of smooth functions, you'll see that it is actually unique.
+[2641.34:2646.34] But this definition will generalize it somehow.
+[2646.34:2649.34] So just to give you an example.
+[2649.34:2656.34] So think about f of x being the true norm squared.
+[2656.34:2662.34] So you can obtain that it is this, but maybe.
+[2662.34:2668.34] So perhaps it's not a great idea, but I'll add a bit.
+[2668.34:2676.34] So let's think of f of x is a x plus the square.
+[2676.34:2680.34] So f of x plus you will be a x.
+[2680.34:2684.34] You plus the square.
+[2684.34:2689.34] Now imagine subtracting from this f of x.
+[2689.34:2694.34] So a x plus d squared.
+[2694.34:2697.34] So what do we get?
+[2697.34:2704.34] So we get a x squared.
+[2704.34:2712.34] Actually.
+[2712.34:2719.34] I get a x plus the square inner product.
+[2719.34:2722.34] A x plus d.
+[2722.34:2724.34] A u.
+[2724.34:2727.34] Two times.
+[2727.34:2730.34] Plus.
+[2730.34:2734.34] A.
+[2734.34:2744.34] So what I did is here I wrote this is a x plus a square.
+[2744.34:2749.34] So I took the known square.
+[2749.34:2757.34] The inner product.
+[2757.34:2761.34] And then another known squared minus this.
+[2761.34:2764.34] Okay.
+[2764.34:2766.34] So this.
+[2766.34:2768.34] Cancels out.
+[2768.34:2774.34] So what we need to do is look at the following a x plus u minus f of x.
+[2774.34:2783.34] Now what we need is this inner product with you.
+[2783.34:2785.34] Okay.
+[2785.34:2787.34] So I'm going to keep the a you on the right hand side.
+[2787.34:2790.34] So now take a look at this particular term.
+[2790.34:2793.34] So let me go to you.
+[2793.34:2796.34] A x plus d.
+[2796.34:2798.34] A you.
+[2798.34:2802.34] Now I'm going to argue that this is equal to a transpose.
+[2802.34:2807.34] A x plus the.
+[2807.34:2810.34] You see it.
+[2810.34:2812.34] It's an inner product.
+[2812.34:2815.34] So I have you in a product with me.
+[2815.34:2817.34] So let me achieve this.
+[2817.34:2820.34] So that the notation doesn't get confusing.
+[2820.34:2823.34] This is a transpose B.
+[2823.34:2827.34] So if I have a matrix B.
+[2827.34:2831.34] This is a transpose matrix.
+[2831.34:2832.34] Right.
+[2832.34:2836.34] And I can take n transpose a transpose B.
+[2836.34:2838.34] So the matrix.
+[2838.34:2841.34] From one end of inner product to the other end,
+[2841.34:2844.34] just transpose it and shape it.
+[2844.34:2847.34] Okay.
+[2847.34:2849.34] Very good.
+[2849.34:2851.34] Then.
+[2851.34:2853.34] So what do we have here?
+[2853.34:2856.34] In fact, what we have here is this two factor comes in.
+[2856.34:2867.34] So we have f of x plus u minus f x minus two times a transpose a x plus d.
+[2867.34:2869.34] You. Right.
+[2869.34:2872.34] Take the absolute value.
+[2872.34:2874.34] Yeah.
+[2874.34:2875.34] What do we have?
+[2875.34:2879.34] We have a u squared divided by the norm of u.
+[2879.34:2882.34] This is what definition must.
+[2882.34:2887.34] Here.
+[2887.34:2892.34] Sorry.
+[2892.34:2893.34] Okay.
+[2893.34:2896.34] Let you go to zero.
+[2896.34:2899.34] I'm not going to rigorous the proof.
+[2899.34:2902.34] I'm going to go to zero.
+[2902.34:2907.34] Because you have a square in the numerator.
+[2907.34:2910.34] It's out in the denominator.
+[2910.34:2916.34] If you let you go to zero, you use all kinds of both the rule and whatever.
+[2916.34:2918.34] Imagine that term goes to zero.
+[2918.34:2923.34] So what would be the gradient of this?
+[2923.34:2928.34] It would be two times a transpose a x plus d.
+[2928.34:2934.34] Very simple.
+[2934.34:2942.34] Yeah.
+[2942.34:2945.34] You can apply this a lot of problems.
+[2945.34:2949.34] If you have any doubt, you can actually go over this.
+[2949.34:2952.34] Today is surprising and very powerful.
+[2952.34:2954.34] All right.
+[2954.34:2960.34] Is this okay?
+[2960.34:2962.34] To be or not to be.
+[2962.34:2965.34] So.
+[2965.34:2969.34] You will run into functions that are continuously differentiable everywhere.
+[2969.34:2974.34] You will have functions that are differentials almost everywhere.
+[2974.34:2977.34] So if you think about the absolute value.
+[2977.34:2979.34] It's not differentiable.
+[2979.34:2984.34] Because if you think about this particular definition.
+[2984.34:2988.34] If you take the limits.
+[2988.34:2992.34] Which way you approach to limit in this particular case.
+[2992.34:2996.34] To give you a difference.
+[2996.34:2998.34] Gradient.
+[2998.34:3002.34] You'll extend on this in a little bit.
+[3002.34:3005.34] All right.
+[3005.34:3009.34] Gradients of vector value functions.
+[3009.34:3012.34] I gave you the Taylor way.
+[3012.34:3016.34] I'm going to formalize it with the Jacobian way.
+[3016.34:3020.34] Who remembers this from their calculus course?
+[3020.34:3023.34] Jacobians.
+[3023.34:3024.34] There you go.
+[3024.34:3026.34] I love it.
+[3026.34:3029.34] Then this will be more like a review.
+[3029.34:3031.34] So hopefully.
+[3031.34:3034.34] This is like a deconstructed approach to taking derivatives,
+[3034.34:3038.34] and at the same time, it turns out that the modern computing infrastructure is not
+[3038.34:3040.34] in computing.
+[3040.34:3042.34] Just a software.
+[3042.34:3043.34] Those automatic differentiation.
+[3043.34:3048.34] So maybe many of this is for also like myself.
+[3048.34:3053.34] You just write it in the symbolic toolbox and take the derivative.
+[3053.34:3055.34] But it makes an error.
+[3055.34:3057.34] You will never know.
+[3057.34:3061.34] Unless you take this course and study this.
+[3061.34:3064.34] Okay.
+[3064.34:3067.34] So the Jacobian.
+[3067.34:3071.34] It's basically a matrix of partial derivatives for.
+[3071.34:3072.34] For given function.
+[3072.34:3075.34] So we've been altered with a J.
+[3075.34:3080.34] The subscript denotes what the function is.
+[3080.34:3082.34] The I jth entry.
+[3082.34:3083.34] So the I entry.
+[3083.34:3086.34] The first thing that comes to you.
+[3086.34:3087.34] You know.
+[3087.34:3091.34] If you have an F that is vector values.
+[3091.34:3094.34] I'm not talking about a single article thing.
+[3094.34:3097.34] I'm talking about literally, you know.
+[3097.34:3102.34] A X, for example, is a function that takes in X.
+[3102.34:3106.34] And then gives you another vector, which is a X.
+[3106.34:3111.34] So the Jacobian office or Jacobian of a new network office.
+[3111.34:3115.34] So you can think about a functional mapping.
+[3115.34:3118.34] You can think about the derivatives of it.
+[3118.34:3121.34] But for every output.
+[3121.34:3122.34] All right.
+[3122.34:3125.34] That's what we call as the Jacobian.
+[3125.34:3127.34] Okay.
+[3127.34:3129.34] So F i.
+[3129.34:3133.34] X j for the jth entry.
+[3133.34:3140.34] With this definition, you notice that if the output of the function is a single.
+[3140.34:3148.34] So functional and simply the transpose of the gradients the way we defined it.
+[3148.34:3149.34] Yeah.
+[3149.34:3153.34] Gradients is a let's say P by one vector.
+[3153.34:3157.34] For the same function, it will be a one by P.
+[3157.34:3159.34] Jacobian.
+[3159.34:3164.34] Simply transpose.
+[3164.34:3166.34] Just the rotation.
+[3166.34:3172.34] And thinking in terms of Jacobians, awesome.
+[3172.34:3180.34] Because you can really use the chain.
+[3180.34:3182.34] So.
+[3182.34:3184.34] Chain rule by Jacobians.
+[3184.34:3188.34] So let's think you have a compositional form.
+[3188.34:3191.34] This is what I mean by the deconstructive way of taking.
+[3191.34:3193.34] There what is here.
+[3193.34:3196.34] Meaning you can write.
+[3196.34:3201.34] Let's say a function which takes X by F.
+[3201.34:3206.34] You take the output method with another function gene.
+[3206.34:3211.34] All right.
+[3211.34:3219.34] So if you remember what you were looking at the parametric modeling.
+[3219.34:3224.34] A, B are given loss is given the neural network parameters.
+[3224.34:3225.34] Yeah.
+[3225.34:3228.34] So you can think of this as F of X.
+[3228.34:3232.34] Then you can think of the whole thing as G of F of X.
+[3232.34:3237.34] Yeah, a composition like this one.
+[3237.34:3238.34] This is the beauty of it.
+[3238.34:3241.34] Super general.
+[3241.34:3242.34] Okay.
+[3242.34:3248.34] What would be the Jacobian of this composition.
+[3248.34:3255.34] We have Jacobian G compose F X.
+[3255.34:3262.34] Chain rule says we take the Jacobian with respect to G of F of X.
+[3262.34:3267.34] And then you take the Jacobian with respect to J of F X.
+[3267.34:3269.34] Remember Jacobians are matrices.
+[3269.34:3274.34] So it's a product of matrices in the end.
+[3274.34:3277.34] Is this clear?
+[3277.34:3281.34] Let's demystify it with an example.
+[3281.34:3284.34] Perhaps that's a bit easier.
+[3284.34:3289.34] So it's the same Taylor series expansion question,
+[3289.34:3292.34] but with a minus sign on D.
+[3292.34:3293.34] All right.
+[3293.34:3296.34] So what would be the derivative?
+[3296.34:3298.34] So the derivative.
+[3298.34:3302.34] I established the Taylor Bay with this minus sign.
+[3302.34:3303.34] It's this one.
+[3303.34:3304.34] Yeah.
+[3304.34:3308.34] So can we see this with the Jacobian this chain rule?
+[3308.34:3309.34] Yeah, sure.
+[3309.34:3313.34] So let's have a function that gives you the F-mathing.
+[3313.34:3316.34] Yeah, what would be the Jacobian of this?
+[3316.34:3319.34] Well, the Jacobian of this is the, you know,
+[3319.34:3323.34] you take the derivatives of A X minus C with respect to X.
+[3323.34:3327.34] Minus B doesn't matter.
+[3327.34:3328.34] Right.
+[3328.34:3329.34] Because it's a constant.
+[3329.34:3330.34] So it was away.
+[3330.34:3335.34] The derivative of A X, we just take the X.
+[3335.34:3337.34] What is it?
+[3337.34:3340.34] A.
+[3340.34:3342.34] Got it here.
+[3342.34:3350.34] So the Jacobian, we just take the S of X.
+[3350.34:3352.34] Simple.
+[3352.34:3353.34] Right.
+[3353.34:3359.34] In fact, you pick the functions or compositions in a way that you know the answers.
+[3359.34:3361.34] Okay.
+[3361.34:3364.34] What would be the radians of this?
+[3364.34:3365.34] X squared.
+[3365.34:3368.34] We just discussed it.
+[3368.34:3372.34] The gradient of it would be 2x.
+[3372.34:3373.34] But the Jacobian is what?
+[3373.34:3375.34] It's transpose, right?
+[3375.34:3378.34] So it's 2x transpose.
+[3378.34:3382.34] Yeah.
+[3382.34:3383.34] Okay.
+[3383.34:3386.34] So the composition here.
+[3386.34:3392.34] Is this one we take A X minus C and plug it into the two norm?
+[3392.34:3393.34] Okay.
+[3393.34:3398.34] So we have.
+[3398.34:3402.34] The Jacobian we just take the G need F of X.
+[3402.34:3403.34] Yeah.
+[3403.34:3404.34] So what is F of X?
+[3404.34:3410.34] Well, F of X is A X minus C.
+[3410.34:3415.34] So Jacobian we just take the G A X minus C times Jacobian we just take the S.
+[3415.34:3416.34] Okay.
+[3416.34:3418.34] What is the Jacobian we just take the S?
+[3418.34:3421.34] It is A.
+[3421.34:3423.34] What is the Jacobian we just take the G?
+[3423.34:3425.34] It is 2x transpose.
+[3425.34:3426.34] Yeah.
+[3426.34:3428.34] So you just plug this in.
+[3428.34:3429.34] So it is.
+[3429.34:3439.34] So the Jacobian of G composition F is 2 times A X minus B transpose times A.
+[3439.34:3440.34] Then what would be the radians?
+[3440.34:3443.34] It's transpose.
+[3443.34:3446.34] It's transpose of the Jacobian here.
+[3446.34:3447.34] Yeah.
+[3447.34:3453.34] You take the transpose you get to A transpose times A X minus B.
+[3453.34:3457.34] What are.
+[3457.34:3460.34] I hope you follow this.
+[3460.34:3466.34] Was this clear?
+[3466.34:3474.34] All right.
+[3474.34:3479.34] Something a bit harder.
+[3479.34:3483.34] So logistic loss.
+[3483.34:3491.34] Here is F of X is equal to log 1 plus exponential D A transpose X.
+[3491.34:3498.34] But you will see this is not difficult when you understand this chain rope.
+[3498.34:3501.34] So we're going to use two functions.
+[3501.34:3504.34] One is A transpose X.
+[3504.34:3508.34] Jacobian is simply a transpose.
+[3508.34:3509.34] Yeah.
+[3509.34:3511.34] Then GU is log.
+[3511.34:3513.34] So this is a scalar even.
+[3513.34:3514.34] Yeah.
+[3514.34:3515.34] So think about this.
+[3515.34:3520.34] This function G takes the scalar gives you a scalar.
+[3520.34:3521.34] So you.
+[3521.34:3523.34] Times B.
+[3523.34:3524.34] Yeah.
+[3524.34:3527.34] So the one by one Jacobian is simple derivative.
+[3527.34:3530.34] So you take the derivative divided by the.
+[3530.34:3533.34] And so what.
+[3533.34:3540.34] You know, the derivative of log X is what the derivative of the inside.
+[3540.34:3545.34] The puts the term inside the denominator.
+[3545.34:3550.34] I'm tired.
+[3550.34:3551.34] All right.
+[3551.34:3552.34] So you just take the derivative.
+[3552.34:3557.34] The derivative of this is minus the exponential in you to put this thing inside.
+[3557.34:3558.34] Yeah.
+[3558.34:3563.34] So then what's the Jacobian of F is decomposition H.
+[3563.34:3567.34] You plug in H of X here.
+[3567.34:3570.34] In this case, you literally take.
+[3570.34:3574.34] This guy plug it in here.
+[3574.34:3575.34] Yeah.
+[3575.34:3579.34] And then the Jacobian H comes here.
+[3579.34:3582.34] What's the gradient transpose it.
+[3582.34:3585.34] Simply transpose it.
+[3585.34:3588.34] Hit the second.
+[3588.34:3590.34] Is this here?
+[3590.34:3592.34] It's very mechanical.
+[3592.34:3597.34] And just, you know, when and I'll think about the definition.
+[3597.34:3601.34] G composed of F.
+[3601.34:3608.34] First, the Jacobian with the state of gene plug in in flood what F of X was in there.
+[3608.34:3613.34] And you put the Jacobian of G plug in what X was there.
+[3613.34:3615.34] No.
+[3615.34:3618.34] Sorry.
+[3618.34:3626.34] And then do the matrix multiplication transpose it to get your gradient.
+[3626.34:3627.34] Simple.
+[3627.34:3629.34] Easy.
+[3629.34:3630.34] Easy.
+[3630.34:3637.34] And more complicated example.
+[3637.34:3640.34] Here's what this example is.
+[3640.34:3645.34] You take an input, you apply an F in transformation.
+[3645.34:3650.34] Then you pass through a sigmoid and you have another F in transformation.
+[3650.34:3656.34] It's a function that we shall not name.
+[3656.34:3660.34] Yeah.
+[3660.34:3664.34] What would be its gradient.
+[3664.34:3666.34] Compositions.
+[3666.34:3668.34] Simple.
+[3668.34:3671.34] Easy.
+[3671.34:3675.34] So here I'm going to identify three functions.
+[3675.34:3680.34] First, the F in transformation.
+[3680.34:3681.34] Yeah.
+[3681.34:3684.34] So this input.
+[3684.34:3691.34] Second element wise non-dinarity.
+[3691.34:3695.34] Say a value.
+[3695.34:3696.34] Okay.
+[3696.34:3699.34] Then the output.
+[3699.34:3703.34] The last layer.
+[3703.34:3706.34] Supply.
+[3706.34:3709.34] How do we take the derivative?
+[3709.34:3713.34] So what do you think automatic differentiation does?
+[3713.34:3716.34] When you ask it to differentiate.
+[3716.34:3720.34] Can you guess?
+[3720.34:3724.34] Oh, it takes matrices and somehow multiplies them.
+[3724.34:3727.34] Wouldn't be nice.
+[3727.34:3730.34] If you know how to do a fast matrix multiplication.
+[3730.34:3733.34] Things like this.
+[3733.34:3736.34] All right.
+[3736.34:3738.34] So you literally go over the motion.
+[3738.34:3744.34] F is K composition, G composition, H.
+[3744.34:3747.34] What are the Jacobians?
+[3747.34:3749.34] Simple linear transformation.
+[3749.34:3753.34] Jacobian is a matrix.
+[3753.34:3755.34] Element wise transformation.
+[3755.34:3757.34] What would be the Jacobian?
+[3757.34:3762.34] It's a diagonal matrix with the derivatives and P was.
+[3762.34:3765.34] Yeah.
+[3765.34:3767.34] Here's a linear transformation.
+[3767.34:3768.34] Jacobian.
+[3768.34:3770.34] There you go.
+[3770.34:3773.34] The start vector.
+[3773.34:3775.34] Put them in there.
+[3775.34:3776.34] You will get.
+[3776.34:3778.34] So JK.
+[3778.34:3781.34] It actually doesn't care what this is because it's the constant.
+[3781.34:3784.34] So W2 transpose.
+[3784.34:3788.34] Jacobian of G with H of X inside.
+[3788.34:3794.34] So the Jacobian of G is this diagonal matrix with these derivatives of your
+[3794.34:3797.34] activation functions.
+[3797.34:3800.34] It's a diagonal matrix.
+[3800.34:3802.34] But you need to plug in H X.
+[3802.34:3804.34] What is H X?
+[3804.34:3809.34] This F I transformation comes here.
+[3809.34:3815.34] And I'm multiplied by the Jacobian with the 6th H, which is W1.
+[3815.34:3817.34] What would be the gradient?
+[3817.34:3820.34] Take the transpose.
+[3820.34:3823.34] You get W1 transpose from here.
+[3823.34:3829.34] Well, you have this component wise product of two things.
+[3829.34:3835.34] You can see that this is a diagonal matrix multiplying W2.
+[3835.34:3836.34] Easy.
+[3836.34:3840.34] It's the vector that has element wise products.
+[3840.34:3849.34] Here's the derivatives and neural net search.
+[3849.34:3851.34] Simple.
+[3851.34:3854.34] So,
+[3854.34:3857.34] it's easy.
+[3857.34:3859.34] Yeah.
+[3859.34:3861.34] All right.
+[3861.34:3865.34] So who thinks it's easy?
+[3865.34:3867.34] What's the shine?
+[3867.34:3870.34] Who thinks it's easier?
+[3870.34:3873.34] Easier.
+[3873.34:3875.34] Easier.
+[3875.34:3877.34] No.
+[3877.34:3885.34] I'll ask you guys to maybe look at it a little bit more and convince yourselves that this is really easy.
+[3885.34:3892.34] And know that you will not have to do that in reality in Python.
+[3892.34:3900.34] If you're using your deep learning package, you literally define the derivative with the simple command.
+[3900.34:3905.34] People have done it so that you don't have to.
+[3905.34:3912.34] But if you're doing research on it, you may want to know a little bit about this.
+[3912.34:3913.34] Okay.
+[3913.34:3919.34] Now, some tests.
+[3919.34:3925.34] By the way, so I hope this review was useful.
+[3925.34:3929.34] We all know it, but it is useful to see it.
+[3929.34:3937.34] Sometimes it helps us, you know, hearing it in another perspective, for example.
+[3937.34:3942.34] So the Taylor series is a is perfectly fine to do this.
+[3942.34:3951.34] But I would recommend the Jacobian, which is really, you know, to be constructive problem into little ones and apply simple for none.
+[3951.34:3954.34] And take a transpose.
+[3954.34:3956.34] You get the gradient.
+[3956.34:3959.34] It's just a simple.
+[3959.34:3960.34] No confusion.
+[3960.34:3963.34] You take the root of simple stuff.
+[3963.34:3971.34] And if you're really interested in knowing maybe some resource, take a look at the matrix book.
+[3971.34:3973.34] On the internet.
+[3973.34:3980.34] Just beautiful collection of derivatives and whatever for matrices as well.
+[3980.34:3986.34] So some sets.
+[3986.34:3988.34] A set is closed.
+[3988.34:3991.34] The different things all of its limit points.
+[3991.34:3995.34] The closure would be.
+[3995.34:3998.34] The smallest sets.
+[3998.34:4002.34] That includes whatever the given sets.
+[4002.34:4005.34] So some of these things, I mean.
+[4005.34:4006.34] Just a refresher.
+[4006.34:4009.34] What is interesting is the context of sets.
+[4009.34:4012.34] You would call a set context.
+[4012.34:4022.34] If you take two elements from the set and connect it to the dot of line and the whole dot of line remains in the set set.
+[4022.34:4023.34] Okay.
+[4023.34:4026.34] So here are some examples.
+[4026.34:4027.34] You take two here.
+[4027.34:4028.34] You connect.
+[4028.34:4031.34] You know, you can pick any points here.
+[4031.34:4032.34] Connect.
+[4032.34:4035.34] All these lines would be within the set.
+[4035.34:4039.34] Then you would call the set comments.
+[4039.34:4042.34] You would call it strictly convex.
+[4042.34:4045.34] If it is within the closure, no.
+[4045.34:4050.34] Sorry, it's within the within the interior relative interior of the set.
+[4050.34:4054.34] So here if you take this two points on the boundary.
+[4054.34:4058.34] So the set is still comics, but it's not strictly connects.
+[4058.34:4062.34] But this would be a strictly convex set.
+[4062.34:4065.34] And this would be a.
+[4065.34:4070.34] Not a convex set, which we call as non-combat sets.
+[4070.34:4075.34] Because here the line is not.
+[4075.34:4078.34] Within.
+[4078.34:4079.34] The given set.
+[4079.34:4084.34] Okay.
+[4084.34:4087.34] Comics hall.
+[4087.34:4092.34] So you can talk about comics hall of points or sets.
+[4092.34:4094.34] It's the smallest.
+[4094.34:4096.34] Convex sets.
+[4096.34:4100.34] That includes all the given points.
+[4100.34:4106.34] One way to get this is to consider all simplicity or combinations of the points.
+[4106.34:4110.34] Meaning you take all rated combinations, not negative rated combinations.
+[4110.34:4113.34] Some of the one in terms of space.
+[4113.34:4116.34] Then you would get the convex.
+[4116.34:4119.34] And you give you some points.
+[4119.34:4122.34] You look at.
+[4122.34:4126.34] I think the diamond shape would include all the points.
+[4126.34:4134.34] So you look at all the combinations.
+[4134.34:4141.34] That would be the convex set.
+[4141.34:4145.34] Now convex to the other functions.
+[4145.34:4151.34] Now we're getting some.
+[4151.34:4153.34] We will call.
+[4153.34:4157.34] A function connects.
+[4157.34:4160.34] If you take two points.
+[4160.34:4162.34] You take a simple.
+[4162.34:4164.34] Civil combination again.
+[4164.34:4166.34] So you take alpha.
+[4166.34:4168.34] Simplicity is.
+[4168.34:4171.34] You know the probability complex.
+[4171.34:4173.34] Probability sum of the one.
+[4173.34:4176.34] And probabilities are always not negative.
+[4176.34:4178.34] Right.
+[4178.34:4181.34] The simple combination comes from the probability.
+[4181.34:4184.34] That's why I am somehow overloading on to this.
+[4184.34:4185.34] This words.
+[4185.34:4191.34] It's the list of the combinations like a probabilistic combination.
+[4191.34:4192.34] All right.
+[4192.34:4194.34] So when I talk about a simple.
+[4194.34:4196.34] Combination of two points.
+[4196.34:4198.34] I literally mean that we have.
+[4198.34:4200.34] Some alpha.
+[4200.34:4203.34] And that means zero and one.
+[4203.34:4206.34] We take alpha times one point one minus alpha.
+[4206.34:4207.34] The other point.
+[4207.34:4208.34] Why?
+[4208.34:4210.34] Because alpha plus one minus alpha.
+[4210.34:4212.34] Is equal to one.
+[4212.34:4215.34] And they're both not negative.
+[4215.34:4216.34] All right.
+[4216.34:4220.34] That's what I mean by a simple combination.
+[4220.34:4225.34] It satisfies alpha times f plus one minus alpha times f.
+[4225.34:4230.34] If this is satisfied, so do I make it speaking?
+[4230.34:4234.34] This means that you take two points on the functional space.
+[4234.34:4237.34] Okay.
+[4237.34:4243.34] It says that anything in between on the function is below this line.
+[4243.34:4251.34] So alpha times x f x one plus one minus alpha times f x two
+[4251.34:4257.34] would be this line here.
+[4257.34:4263.34] The function is below the connecting line.
+[4263.34:4266.34] It would be called complex.
+[4266.34:4272.34] If it is always a ball, it is called concave.
+[4272.34:4275.34] If it crosses, then it is non-comnet.
+[4275.34:4276.34] So here.
+[4276.34:4277.34] The line.
+[4277.34:4284.34] Sometimes about sometimes below.
+[4284.34:4287.34] This is you will see if you like complex functions this
+[4287.34:4290.34] patient for minimization.
+[4290.34:4294.34] We like concave functions for maximization.
+[4294.34:4303.34] You don't like non-comnet functions, but we have to live with them.
+[4303.34:4309.34] There's always one in family.
+[4309.34:4315.34] Can't do without.
+[4315.34:4319.34] All right.
+[4319.34:4321.34] So.
+[4321.34:4326.34] There are some extensions of functions.
+[4326.34:4330.34] That we will talk about when we talk about constraints.
+[4330.34:4336.34] It's an elegant day of incorporating constraints into a function.
+[4336.34:4341.34] And you can let functions take in infinity value.
+[4341.34:4349.34] So you can have a function like this.
+[4349.34:4355.34] And I shot the infinity.
+[4355.34:4361.34] It's not a function.
+[4361.34:4367.34] These are called extended view value from the function.
+[4367.34:4371.34] And within some domain.
+[4371.34:4374.34] And it's infinity outside that domain.
+[4374.34:4380.34] And it will be an elegant day of handling constraints.
+[4380.34:4384.34] We call them extended view value functions.
+[4384.34:4387.34] Okay.
+[4387.34:4390.34] So some examples here.
+[4390.34:4395.34] As you can see norms are from this.
+[4395.34:4397.34] Matrix norms.
+[4397.34:4401.34] The ones that we discussed are from this.
+[4401.34:4402.34] Third.
+[4402.34:4404.34] Okay.
+[4404.34:4409.34] So maximum of convex functions.
+[4409.34:4417.34] Middle of concave functions in a similar way.
+[4417.34:4421.34] There are some functions on the eigenvalues, convex, and so on.
+[4421.34:4425.34] For some examples here, maybe some of them you already know.
+[4425.34:4426.34] Others.
+[4426.34:4429.34] Just something to see.
+[4429.34:4433.34] Okay.
+[4433.34:4440.34] By the way, you can let me know if I'm going slow in terms of material.
+[4440.34:4443.34] Or whether or not I'm just covering things that you already know.
+[4443.34:4445.34] And this is not maybe used to it.
+[4445.34:4447.34] You can send me an email.
+[4447.34:4453.34] Give me feedback and I will appreciate that.
+[4453.34:4454.34] All right.
+[4454.34:4460.34] Alternative definitions of function convexity.
+[4460.34:4465.34] So we define the epigraph of the function.
+[4465.34:4468.34] Is the set.
+[4468.34:4470.34] Of.
+[4470.34:4477.34] X U pairs where f of x is less than or equal to you.
+[4477.34:4488.34] So if you have a function like this, the epigraph would be basically the same.
+[4488.34:4494.34] So you would call this function convex if it's epigraph is convex.
+[4494.34:4506.34] And as you can see, convex functions in convex sense are inherently.
+[4506.34:4511.34] Alternative definitions of function convexity.
+[4511.34:4513.34] All right.
+[4513.34:4516.34] So let's say we have a smooth function.
+[4516.34:4518.34] Okay.
+[4518.34:4523.34] So for a given smooth function, what you can do is look at its tangent type of plane.
+[4523.34:4527.34] At any given point, you put a tangent type of plane.
+[4527.34:4531.34] Or you do it as normal vector.
+[4531.34:4534.34] You would call a function convex.
+[4534.34:4537.34] If it's always about.
+[4537.34:4541.34] It's tangent type of friends at any given point.
+[4541.34:4543.34] So how do you write this?
+[4543.34:4546.34] How.
+[4546.34:4549.34] Given the function.
+[4549.34:4550.34] You can look at it.
+[4550.34:4553.34] Let's say it points.
+[4553.34:4561.34] And you can look at the hyperplane here, which would be f of y plus the gradient at y x minus y.
+[4561.34:4564.34] Or any ex.
+[4564.34:4569.34] If it is greater than this, you would call the function from it.
+[4569.34:4576.34] And if you do in convex analysis, this is your bread and butter.
+[4576.34:4587.34] At that inequality is the D inequality.
+[4587.34:4595.34] Here's another one you would call a function convex before I make you guys second this day from these definitions.
+[4595.34:4600.34] These are useful definitions.
+[4600.34:4611.34] If the gradient is a monotone operator.
+[4611.34:4615.34] What it means is a think about it.
+[4615.34:4617.34] What the gradient is an operator.
+[4617.34:4619.34] It takes in.
+[4619.34:4622.34] Let's say vectors in some states.
+[4622.34:4630.34] And that's an into other vectors in the dual space.
+[4630.34:4640.34] And in this particular space mapping, it's actually like an operator acting on even vectors.
+[4640.34:4643.34] Like you were talking about operator norms.
+[4643.34:4650.34] Like, you know, the matrix taking a vector and nothing is another vector looking at different norms.
+[4650.34:4656.34] Gradients are in general operators.
+[4656.34:4661.34] And if the gradient satisfies this inequality.
+[4661.34:4664.34] For any two points x and y.
+[4664.34:4667.34] It is called a monotone operator.
+[4667.34:4672.34] And the case of the operator corresponding to a gradient.
+[4672.34:4674.34] The function.
+[4674.34:4681.34] This is convex.
+[4681.34:4687.34] There's some complicated chain of reasoning.
+[4687.34:4690.34] But this is the segment.
+[4690.34:4690.34] All right.
+[4690.34:4694.34] Alternative definitions of function convexity.
+[4694.34:4703.34] You would call a function convex if this is a question is positive semi-definite.
+[4703.34:4711.34] All right.
+[4711.34:4719.34] Which means that if only has either zero or positive some upward curvature.
+[4719.34:4729.34] It's like it always rises about starting from some global minimum.
+[4729.34:4734.34] And it's the same.
+[4734.34:4735.34] No negative curvature.
+[4735.34:4739.34] So it's you start from here you only can go up.
+[4739.34:4744.34] You cannot curve around.
+[4744.34:4749.34] Otherwise the Haitian would have negative values.
+[4749.34:4751.34] Negative curvature.
+[4751.34:4752.34] Sorry.
+[4752.34:4754.34] I can now.
+[4754.34:4757.34] All right.
+[4757.34:4765.34] Same definition, but we don't have less than or equal to you have strictly less.
+[4765.34:4773.34] So the epigraph of the function is strictly convex set.
+[4773.34:4779.34] So this wouldn't be a strictly convex function, but this would be because the line.
+[4779.34:4782.34] Would never remain on the boundary for any two different points.
+[4782.34:4785.34] It would be always interior.
+[4785.34:4788.34] Yes.
+[4788.34:4791.34] Zero.
+[4791.34:4796.34] Zero.
+[4796.34:4798.34] Oh yes, you're right.
+[4798.34:4799.34] Good point.
+[4799.34:4801.34] Good catch.
+[4801.34:4810.34] I've been teaching this course for, I don't know, since 2014.
+[4810.34:4814.34] So 10 points to the computer.
+[4814.34:4826.34] I did too, but I really I missed this a great catch.
+[4826.34:4831.34] Yeah, so we should correct this one.
+[4831.34:4841.34] Yeah, so the remark is that we don't include the.
+[4841.34:4844.34] All right.
+[4844.34:4846.34] Good.
+[4846.34:4850.34] This is important.
+[4850.34:4854.34] Subdifferentials and subgradients.
+[4854.34:4858.34] Remember the Taylor way.
+[4858.34:4864.34] So if you look at, you know, let's say, F of Y.
+[4864.34:4867.34] You look at this particular inequality.
+[4867.34:4872.34] Here, when we have the smooth function, you have a single term.
+[4872.34:4874.34] You have a non smooth function.
+[4874.34:4876.34] You can actually have multiple.
+[4876.34:4880.34] Terms V there that would satisfy the particular inequality.
+[4880.34:4881.34] Right.
+[4881.34:4884.34] What that means is this would take this function.
+[4884.34:4890.34] This means that you take the point and you can put more than one hyperplane.
+[4890.34:4891.34] In.
+[4891.34:4896.34] And the normal vector of those hyperplanes would be your gradients.
+[4896.34:4899.34] Or or in this case, subgradients.
+[4899.34:4905.34] Meaning that there is a set of vectors that set aside this inequality,
+[4905.34:4908.34] which would be the subdifferential set.
+[4908.34:4916.34] An element from this set is called a subgradient.
+[4916.34:4919.34] Does this make sense?
+[4919.34:4922.34] So for a smooth function, you pick a point.
+[4922.34:4926.34] You can only put one tangent hyperplane.
+[4926.34:4930.34] Which would be written like this.
+[4930.34:4935.34] And you would have the gradient of F.
+[4935.34:4936.34] Right.
+[4936.34:4940.34] But if you have a non smooth function with a kink.
+[4940.34:4941.34] Right.
+[4941.34:4942.34] You can put more than one.
+[4942.34:4947.34] Yeah. So let's take this one example.
+[4947.34:4950.34] You can probably put more than one hyperplane.
+[4950.34:4964.34] So there's a set of vectors that satisfy this inequality.
+[4964.34:4969.34] We call that set the subdifferential.
+[4969.34:4973.34] You pick an element from that set.
+[4973.34:4976.34] It should be our subgradient.
+[4976.34:4983.34] So if you have an F of X is equal to absolute value of X,
+[4983.34:4987.34] take a look at the origin.
+[4987.34:4996.34] You can have between minus one slope to plus one.
+[4996.34:5000.34] So if you ask me what is the derivative at zero,
+[5000.34:5004.34] I cannot tell you what is the subdifferential at zero.
+[5004.34:5008.34] So if you ask me what is the derivative at zero,
+[5008.34:5013.34] I can tell you that minus one to one all real numbers.
+[5013.34:5016.34] What would be a subgradient there?
+[5016.34:5019.34] Anything you can pick in this set.
+[5019.34:5021.34] Zero would be a subgradient.
+[5021.34:5023.34] Plus one would be a subgradient.
+[5023.34:5025.34] Or minus one would be a subgradient.
+[5025.34:5026.34] People in that.
+[5026.34:5028.34] Does that make sense?
+[5028.34:5030.34] Okay.
+[5030.34:5035.34] L-lipsych gradients.
+[5035.34:5039.34] So if you remember the lip-schism of functions,
+[5039.34:5045.34] now we're going to think about the gradients and lip-schism of gradients.
+[5045.34:5048.34] Meaning you will take a look at the differentiable function,
+[5048.34:5051.34] and then you're going to query it at two points.
+[5051.34:5054.34] It's a difference between the gradients.
+[5054.34:5056.34] It's bounded by a constant time.
+[5056.34:5059.34] It's the differences of the points.
+[5059.34:5065.34] We call the function L-lipsych gradients.
+[5065.34:5071.34] Sometimes we call it L-smooth.
+[5071.34:5072.34] It's interesting.
+[5072.34:5077.34] An L-lipsych gradients function.
+[5077.34:5079.34] A function is L-lipsych gradients.
+[5079.34:5086.34] If and only if the function H is for this.
+[5086.34:5089.34] So check I learned from Marktable.
+[5089.34:5092.34] You can use to give this as an exercise.
+[5092.34:5097.34] This one works Marktable is the famous optimizer.
+[5097.34:5103.34] It's the L-lipsych gradients.
+[5103.34:5109.34] It's one of the legendary optimizers.
+[5109.34:5114.34] You can put this definition for the Hessians of the functions.
+[5114.34:5117.34] It will be a second order.
+[5117.34:5123.34] If the Hessians, for example, have this structure.
+[5123.34:5129.34] If you look at the differences of the curve which are in the how they are doing.
+[5129.34:5136.34] It will change the points.
+[5136.34:5140.34] You can make a third order on tensors.
+[5140.34:5144.34] This is the third order.
+[5144.34:5151.34] It's a good spot to stop in terms of an optical factorization.
+[5151.34:5156.34] These definitions are used.
+[5156.34:5162.34] Let's take an example.
+[5162.34:5166.34] We'll just take regression.
+[5166.34:5170.34] We'll just take a regression example.
+[5170.34:5174.34] We'll describe in the previous restitution.
+[5174.34:5181.34] You can prove that this object is convex.
+[5181.34:5185.34] It's gradients.
+[5185.34:5194.34] L-lipsych with a constant that is equal to the spectral norm of A transpose A times 1.4.
+[5194.34:5204.34] This is the model of a Marxist.
+[5204.34:5208.34] If you guys get to struggle with the limin
+[5195.860000000001:5218.34] but actually, the least for how you can do it.
+[5218.34:5246.34] You will get the gradient using the Jacobian tricks.
+[5246.34:5274.34] You will get the gradient.
+[5274.34:5302.34] You will get the gradient.
+[5302.34:5330.34] You will get the gradient.
+[5330.34:5358.34] You will get the gradient.
+[5358.34:5386.34] You will get the gradient.
+[5386.34:5414.34] You will get the gradient.
+[5414.34:5442.34] You will get the gradient.
+[5442.34:5470.34] You will get the gradient.
+[5470.34:5498.34] You will get the gradient.
+[5498.34:5526.34] You will get the gradient.
+[5526.34:5554.34] You will get the gradient.
+[5554.34:5582.34] You will get the gradient.
+[5582.34:5610.34] You will get the gradient.
+[5610.34:5638.34] You will get the gradient.
+[5638.34:5666.34] You will get the gradient.
+[5666.34:5694.34] You will get the gradient.
+[5694.34:5722.34] You will get the gradient.
+[5722.34:5750.34] You will get the gradient.
+[5750.34:5778.34] You will get the gradient.
+[5778.34:5806.34] You will get the gradient.
+[5806.34:5834.34] You will get the gradient.
+[5834.34:5862.34] You will get the gradient.
+[5862.34:5890.34] You will get the gradient.

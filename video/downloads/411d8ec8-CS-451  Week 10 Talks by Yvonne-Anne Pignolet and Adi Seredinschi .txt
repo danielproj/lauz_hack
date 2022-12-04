@@ -1,0 +1,842 @@
+~CS-451 / Week 10: Talks by Yvonne-Anne Pignolet and Adi Seredinschi 
+~2020-11-23T17:54:11.833+01:00
+~https://tube.switch.ch/videos/411d8ec8
+~CS-451 Distributed algorithms
+[0.0:4.24] We can be here today and to tell you a bit more about this entity.
+[4.24:9.8] So, well, she wasn't sure if it's okay to call us the startup.
+[9.8:10.8] It definitely is.
+[10.8:19.84] We were finally the few years ago and got funded by a bunch of venture capitalists.
+[19.84:23.92] We are now working on the vision of building the Internet computer.
+[23.92:35.68] We are currently 130 people, mostly working on engineering and research of this, not
+[35.68:38.160000000000004] realizing, to realize this vision.
+[38.160000000000004:47.36] And I'm now going to tell you a bit more about what this is and then focus on some distributed
+[47.36:51.0] algorithm that is crucial for it.
+[51.0:54.68] So, what is the Internet computer?
+[54.68:62.76] Well, today, the Internet is mainly made up by protocol called TCPIP and then we have
+[62.76:67.6] a bunch of application protocols on top like HTTP and SMPP.
+[67.6:70.76] They make the Internet work as we know it.
+[70.76:77.28] For example, if you click on the link somewhere in your browser, then that makes the browser
+[77.28:82.96000000000001] system request to a server and interpret the answer and so on.
+[82.96000000000001:90.16] And this means if you want to offer some service to the world, then you have a couple of
+[90.16:91.16] options.
+[91.16:99.0] For example, you can connect your own computer or you can rent a rack space or you can rent
+[99.0:104.0] a virtual machine on Google, Amazon or Microsoft.
+[104.0:114.12] And whenever you want to offer some service, then you typically need a bunch of other things
+[114.12:122.64] behind like you need to have identities, you need to manage how you use this connect
+[122.64:124.72] to your application.
+[124.72:136.28] And also for that, many big tech companies offer solutions, but this is not very distributed
+[136.28:137.28] and open.
+[137.28:143.52] It's actually a few big tech companies that control the Internet and how we use it today.
+[143.52:147.92] And that's something that we want to change at the infinity.
+[147.92:156.72] So from a user's perspective, we want to turn the Internet into a serverless cloud.
+[156.72:159.72] So you can run your software on your time computer.
+[159.72:168.72] If it was a computer sitting somewhere in your place, instead of worrying about how
+[168.72:178.0] these connections between different servers take place, it should all be transparent to
+[178.0:181.52] the developer of such an application.
+[181.52:190.0] And the whole protocol that makes sure that this becomes a reality is a protocol, an open
+[190.0:193.44] protocol like TCP, no HTTP.
+[193.44:199.52] And this protocol then defines how the resources are allocated and it also manages where the
+[199.52:201.52] software is run.
+[201.52:208.4] So that will let you use the Internet computer just like the computer on your desk.
+[208.4:213.0] And it's even better because you don't have to worry about upgrading your memory or buying
+[213.0:216.52] a new computer because you're from a lot of hard disk space.
+[216.52:220.76] That will all be taken care of by the protocol.
+[220.76:226.51999999999998] And most importantly, it's going to be secure by the file.
+[226.51999999999998:234.56] And the network itself that provides this service is constructed from a hierarchy of building
+[234.56:235.56] blocks.
+[235.56:242.32] At the bottom, we have independent data centers that host specialized hardware nodes.
+[242.32:249.48] And then they communicate with each other using the IP protocol or with the Internet.
+[249.48:258.76] And then they run the ICP, this Internet computer protocol to provide the services that I've
+[258.76:261.84] just described on the previous slide.
+[261.84:268.8] And on the Internet computer, you can then deploy calluses.
+[268.8:276.08] You can think of a calluses as a smart contract or just as a software module that will run
+[276.08:279.96] on top of the Internet computer.
+[279.96:286.71999999999997] These canisters, they can call each other, they can be called by users and they can offer
+[286.71999999999997:292.68] any service you can think of.
+[292.68:299.47999999999996] They can be written in any language, they're compiled to web assembly.
+[299.47999999999996:303.15999999999997] And that makes them very versatile.
+[303.16:310.16] You can build anything you want if you just want to host a website or if you want to build
+[310.16:321.68] better email service or some FENTAC application that you can all do with Canada's.
+[321.68:332.96000000000004] And at the affinity, some of us work on making these, making developing these Canada's
+[332.96:339.96] developers, finding the app possible, offering libraries to help the developers build them
+[339.96:340.96] more easily.
+[340.96:351.76] But we also are not a lot of engineers and researchers that work on the protocol itself to ensure
+[351.76:359.35999999999996] that nodes in the data centers communicate with each other correctly and take the data
+[359.35999999999996:362.76] for the native faster.
+[362.76:369.76] So there is any question about what the Internet computer is.
+[369.76:375.52] Okay, so there was one comment, the concept is definitely interesting.
+[375.52:377.08] This was one comment.
+[377.08:379.88] Then I think there is a question.
+[379.88:386.4] The main characteristic of serverless computing is that LAM does are stateless.
+[386.4:389.84] Does the same go for canisters?
+[389.84:394.08] No, that's all, thanks for this question.
+[394.08:398.96] The canisters, they combine state and code.
+[398.96:408.12] So each canister has its own state and you don't need to worry about deploying data
+[408.12:409.44] based bits, etc.
+[409.44:417.15999999999997] You can simply assign variables in the canisters and this state will then be maintained.
+[417.16:423.64000000000004] So it goes beyond stateless functions.
+[423.64000000000004:425.64000000000004] No more questions for now, thanks.
+[425.64000000000004:429.32000000000005] Good, then let's look behind.
+[429.32000000000005:435.36] So we have seen that we have these nodes and they talked each other via the Internet
+[435.36:437.72] computer protocol.
+[437.72:448.0] Then we have developers that can decide to deploy a new canister on the Internet computer
+[448.0:456.56] and we have users that send messages to triggers some operations in these canisters and
+[456.56:461.72] somehow the Internet computer needs to decide what to do next.
+[461.72:473.24] So this is our first call from user A or from user B.
+[473.24:479.40000000000003] Probably you have talked about state machine replication in this class and it's not that
+[479.40000000000003:483.6] I'll briefly talk about what exactly it is.
+[483.6:494.8] So we can view as the Internet computer as one machine that stores and executes operations
+[494.8:503.6] over data and we want to make sure that we observe some safety and likeness guarantees.
+[503.6:510.72] We don't want to trust a single one of these machines, of these nodes in the data centers.
+[510.72:518.4] So that's why we replicate this state over multiple machines but we want them to always
+[518.4:522.6] represent the same state.
+[522.6:532.08] And beneath the machines or the nodes they are connected to each other via a protocol
+[532.08:535.6] that I will not go into more detail here.
+[535.6:541.8000000000001] For us it's good enough to assume that we have some way of communicating between these
+[541.8000000000001:545.8000000000001] nodes.
+[545.8000000000001:556.52] Each machine has its own memory and can execute calls and for to be able to provide the
+[556.52:564.0400000000001] state machine replication primitive they need to agree on the order of the input and
+[564.04:567.48] that they want to work on.
+[567.48:576.48] We also need to ensure that execution is deterministic and actually quite a lot of effort is going
+[576.48:586.8] into that to make sure that the way we execute weather sampling is actually done in a deterministic
+[586.8:587.8] way.
+[587.8:596.3599999999999] And if all the nodes have the same state to begin with and if they agree on the order of
+[596.3599999999999:600.12] outputs then they will come to the same output.
+[600.12:607.12] If you look at this a bit more formally we can say that at the beginning we have a starting
+[607.12:617.3599999999999] state S0 and we can look at the sequence of states numbered from S0 to St.
+[617.36:624.96] And to go from one state to the next we have a transition function that takes a set
+[624.96:634.6] of inputs plus the state and computes the next state out of it and we have an output function
+[634.6:642.6800000000001] that allows the outside world to look at the based on the input what the current output
+[642.6800000000001:644.6800000000001] is.
+[644.68:654.8] As long as we agree on the starting state and on the order of inputs then we will be
+[654.8:667.04] able to update the state on the different machines in a deterministic fashion then we will
+[667.04:674.04] have achieved this goal that for outsiders it will look as if we just have such a state
+[674.04:684.9599999999999] machine and we don't want it to be visible that actually the execution is replicated
+[684.9599999999999:687.48] over many machines.
+[687.48:698.12] Now we have seen that we need to agree on the input and probably you have heard in this
+[698.12:705.76] class that it's not always easy to reach agreement and in particular in the model that we
+[705.76:716.04] are looking at here we have to guarantee that we have a system that handles malfunctioning
+[716.04:723.16] components which might give us conflicting information and still end up with the same
+[723.16:724.16] decision.
+[724.16:731.8399999999999] So, exactly we can look at this situation in terms of a group of generals of the price
+[731.8399999999999:740.0799999999999] and fine army that are camped with the troops around the enemy city and these different parts
+[740.0799999999999:744.1999999999999] of the army they can only communicate with each other by messages.
+[744.2:752.12] Yes, the generals must agree on a common battle plan and if they don't know if one or
+[752.12:758.6] more of them may be traitors and messages with wrong messages to confuse them then they
+[758.6:766.96] need to be extra careful and what we want to achieve is to find an algorithm that ensures
+[766.96:774.76] that the loyal generals, the generals, the behave and they should, that they reach agreement
+[774.76:782.8000000000001] on how to attack and we can actually show that using only such messages, the problem
+[782.8000000000001:788.24] is thoughtable if and only if more than to prefer to the generals are loyal.
+[788.24:795.6] So otherwise it won't be possible to reach agreement and this is actually the problem
+[795.6:804.24] that we also need to solve here otherwise it might happen that some machines think we
+[804.24:811.12] execute these messages versus some other machines think no, no, we execute something
+[811.12:822.96] out and if these operations happen to be payments then I'm sure that not everyone would
+[822.96:829.32] be happy if there's no agreement on which account should be debited.
+[829.32:837.1600000000001] So in short we want to solve the problem where we have end notes and all of them have an
+[837.1600000000001:845.76] idea of what should be done next, this is the input value value and he out of the end
+[845.76:853.04] notes maybe dishonest, we can think of them as being controlled by an adversary and yet
+[853.04:868.4] we want to ensure that all honest notes agree on the same output value and we want to ensure
+[868.4:877.28] that actually the input is that what we agree on is actually a value that at least one honest
+[877.28:884.56] note has proposed and last but not least we want to make sure that all honest parties
+[884.56:891.88] do defy and we don't remain in place forever.
+[891.88:902.12] And I'll tell you that sources that sources is called probabilistic rule if it ensures
+[902.12:910.84] that nothing bad happens so it comes from safety guarantees and if we can ensure that something
+[910.84:917.08] good will happen eventually so that it will terminate eventually.
+[917.08:927.08] And what we also need to make sure is that this can be executed at reasonable speed in practice
+[927.08:934.2800000000001] and that's what the remainder of my talk will be about.
+[934.2800000000001:944.0] So a while ago a simple protocol called practical by the time fault tolerance was proposed
+[944.0:954.0] that in a nutshell works like that and we first choose the leader then this leader proposes
+[954.0:963.0] a message everyone every note in the system checks if they agree with this message and
+[963.0:969.6] then if they do great and we terminate and if that's not the case we repeat the whole
+[969.6:979.9200000000001] thing and that's reasonably simple and works well enough.
+[979.9200000000001:989.24] However we will now look at how we can do this how we can make things a bit more efficient
+[989.24:1001.52] and in order to do that we first look at the blockchain data structure so consider data
+[1001.52:1009.44] structure where you just add and add and add items you never remove anything and instead
+[1009.44:1018.64] of having all of them individually you batch them you batch a bunch of messages into a
+[1018.64:1030.4] block and always reference the previous block like that we can create a sequence of all
+[1030.4:1041.76] items and in each of the block we just have a bunch of items in our case the items will
+[1041.76:1052.76] be the input so the instructions of what the candidates should execute next and when
+[1052.76:1059.56] such a data structure is created and maintained in a distributed setting then this is an ideal
+[1059.56:1071.52] building block for achieving our goal so what we need to do is to agree on one path of
+[1071.52:1077.84] such blocks that where each block reference is a previous one and this then yes is an
+[1077.84:1090.52] ordering of all the input values so if we combine this with the leader based consensus algorithm
+[1090.52:1101.28] that we've just seen before then instead of just finding agreements on one message we
+[1101.28:1111.28] can find agreements on a block and not terminate but simply repeat again and again and again
+[1111.28:1120.36] and again the agreement try to agree on what more to be in the next block and like that as
+[1120.36:1128.76] long as we are able to agree on the instructions in the next block this will then ensure that
+[1128.76:1137.68] we can get to state machine but the occasion and we use the terminology that we will use
+[1137.68:1145.4] is a bit different here so we intend on having a leader we talk about the block maker and
+[1145.4:1154.08] this block maker then propose with the block containing instructions of what to execute
+[1154.08:1167.4399999999998] next everyone can update the chain and we repeat and what is important to observe here
+[1167.4399999999998:1174.8799999999999] is that basically like that we just have a sequence of agreements and instead of trying
+[1174.88:1189.0] to fully agree on each of these rounds individually we can amortize the cost of agreement and like
+[1189.0:1198.3600000000001] that by not doing it every round but just every few rounds we can save considerable amount
+[1198.36:1213.6799999999998] of resources so from starting with the in possibility we solve that we if we if we have too many
+[1213.6799999999998:1224.0] if you have too many bad notes or if we don't have any synchrony assumptions that in that
+[1224.0:1233.4] case we basically can't do anything to algorithms that are able to find agreement in a probabilistic
+[1233.4:1240.88] fashion or then later with this leader based algorithm I will now show you how we can
+[1240.88:1250.72] reach agreement with this having this advertised way and that's actually the algorithm that
+[1250.72:1259.16] you use. Ask a question you point out earlier the motivation for this consensus is still
+[1259.16:1264.88] in replication you want to replicate some services but my question is how many nodes are
+[1264.88:1270.4] supposed to run consensus and are supposed to have replicas of some service.
+[1270.4:1280.48] That depends on what kind of guarantees you want for your service if you if you care a lot
+[1280.48:1289.16] you're happy to pay for it then we can talk we can use more nodes if you if it's not so
+[1289.16:1303.0] important then you can use fewer. But are we talking hundreds thousands and any order of
+[1303.0:1318.64] does work with with a lot of nodes but what we are using right now is between 20 and what do
+[1318.64:1330.88] we use like 150 but it does scale beyond that. Okay one question from Elvric here is his
+[1330.88:1336.16] question if I understand correctly amortize here means then rather than agree on individual
+[1336.16:1345.0400000000002] messages every time we agree on blocks containing many messages. That's one part of the amortization
+[1345.0400000000002:1353.5200000000002] that we agree on blocks instead of just individual messages but in a distance instead of having
+[1353.52:1361.72] to fully agree on a block and then go to the next block we can amortize even over several
+[1361.72:1370.52] blocks and we will see that in the next few minutes. And coming back to receive a question
+[1370.52:1379.08] about the number of nodes that this works on please remind me at the end to say a bit
+[1379.08:1386.08] more about that as well because I think if I say now you're just confused but I don't
+[1386.08:1397.12] want to forget it. Okay. Okay. So how do we do that? First of all as you probably have
+[1397.12:1404.04] seen in a bunch of algorithmic lectures randomness is something very powerful and actually randomness
+[1404.04:1412.3999999999999] is also one of the key ingredients in this algorithm. And if you have looked at how current
+[1412.3999999999999:1419.8] cryptocurrencies and blockchains how they deal with the agreement problem is that many of
+[1419.8:1432.52] them use proof of work in the sense that the in order to be able to decide what the
+[1432.52:1447.52] next block is the so-called miners need to prove that they have solved hard problem and
+[1447.52:1457.76] this could be used to to divide randomness from. However proof of work by definition is
+[1457.76:1466.08] very expensive and we don't want to solve the whole problem in each whenever we create
+[1466.08:1473.04] a block because that would fundamentally limit our throughput. So we've come up with
+[1473.04:1486.92] a different way. And maybe the next idea is that the well as long as the chain has
+[1486.92:1497.48] sufficiently random input then we can divide some randomness from that. However that would
+[1497.48:1504.0800000000002] then open a lot of product would lead to a lot of problems that we need to take care
+[1504.0800000000002:1514.48] that you can't influence how this randomness is created by manufacturing some very specific
+[1514.48:1525.64] input to the that will end up in the blocks. And it also requires that everybody agrees
+[1525.64:1533.16] on what is in the chain and then we're actually back to the problem that we want to solve.
+[1533.16:1546.26] So that's not exactly easy and last but not least whenever we're trying to give
+[1546.26:1557.44] us some randomness from interactions between many parties we have to make sure that we
+[1557.44:1567.48] don't introduce so-called last-activirus where the last party that does something can actually
+[1567.48:1576.68] influence what the outcome is in the easiest way even just by deciding not to do something.
+[1576.68:1584.88] So for example if a miner doesn't like the blocks it can simply discard it and similarly
+[1584.88:1592.1200000000001] with the commitment revealing schemes there if you if you're not happy with what you see
+[1592.1200000000001:1599.2800000000002] that odd data revealed then you can simply decide not to open your commitment.
+[1599.2800000000002:1611.24] And to overcome this problem we use a so-called threshold group in our algorithm.
+[1611.24:1622.6] Now what is the threshold group? It's a it's a nice property that we that some
+[1622.6:1630.0] pictographic primitives offer that you need to have K out of N members that do something
+[1630.0:1638.52] and if they do then this is both then you will have a desired outcome.
+[1638.52:1647.16] For example there are so-called threshold signatures where you need at more very
+[1647.16:1654.8799999999999] you need at least K out of N nodes that find something to them and then these signatures
+[1654.8799999999999:1665.72] can be combined into a fully a fully variable signature whereas whenever you have fewer
+[1665.72:1672.0] than K then it will not be a valid signature.
+[1672.0:1686.88] And other examples exist for think for for things where you can encrypt something that
+[1686.88:1697.44] can only be decorative if K out of N members help in the decryption process.
+[1697.44:1708.2800000000002] Using such primitives we can then create a mess with the threshold group.
+[1708.2800000000002:1714.6000000000001] And while this is less expensive and then proof of work it is still not exactly cheap.
+[1714.6:1723.0] So we want to reuse the randomness that we create here as much as possible.
+[1723.0:1731.56] And there we can use this very nice property that if we have a deterministic function to
+[1731.56:1738.04] get some one value to the next in a suit of random function in that case a greening
+[1738.04:1747.1599999999999] one will ensure that we always agree and we not the only ones to exploit this.
+[1747.1599999999999:1750.76] Outer and relive on this as well.
+[1750.76:1758.6] Now how exactly we do it is by using BLS threshold signatures.
+[1758.6:1768.9599999999998] So BLS threshold signatures are a signature scheme that has a nice property that they
+[1768.9599999999998:1770.36] look very random.
+[1770.36:1773.36] So it's not predictable given an input.
+[1773.36:1780.6399999999999] It's not predictable what the signature will be because if it was otherwise it wouldn't
+[1780.6399999999999:1784.8799999999999] be a very good signature scheme.
+[1784.88:1793.8400000000001] There are distributed key generation methods that ensure that the keys that are necessary
+[1793.8400000000001:1805.16] to create these signatures that you don't need to trust someone to obtain these keys.
+[1805.16:1811.16] What is very important and also very different from many other threshold signatures schemes
+[1811.16:1819.88] is the fact that for every message there exists exactly one valid signature.
+[1819.88:1830.8000000000002] And it doesn't matter which subset out of the end nodes that sign something.
+[1830.8:1842.32] As long as K members of the group sign you will end up with this one single valid signature
+[1842.32:1845.8] when you combine their signature shares.
+[1845.8:1848.96] And last but not least it's a non-interactive scheme.
+[1848.96:1855.1599999999999] So each of the nodes can find a message individually without carrying what the other signatures
+[1855.16:1867.0400000000002] are and then collecting signatures from other nodes and assume as you have K out of them
+[1867.0400000000002:1872.52] you can reconstruct the valid signature.
+[1872.52:1883.6000000000001] So what is important to remember here is that BLS allows us from a given message as input
+[1883.6:1895.08] if K out of the end nodes sign it then with the signature shares that they create we can
+[1895.08:1905.6399999999999] reconstruct the full signature and I might use K shares from one group and the other
+[1905.6399999999999:1911.76] sig might use K shares from another group but when we reconstruct it we will end up with
+[1911.76:1913.24] the same signature.
+[1913.24:1922.2] But this is together with pseudo randomness but we then will explode.
+[1922.2:1928.32] Is there a question regarding this?
+[1928.32:1930.76] I don't see any question let me just raise one.
+[1930.76:1932.92] What do you mean by consensus without consensus?
+[1932.92:1935.52] Is this the marketing or is there something?
+[1935.52:1947.6] So it's not really what I say here is not about consensus it's just that even though we
+[1947.6:1959.6399999999999] don't talk to each other we will only be one valid signature.
+[1959.64:1966.6000000000001] So it's not really consensus without consensus that's a stupid title I should remove it.
+[1966.6000000000001:1968.64] No more questions for now.
+[1968.64:1969.64] Thanks.
+[1969.64:1979.76] Okay so now we have the necessary background to look at how we actually want things.
+[1979.76:1986.24] So consider a bunch of users that send messages for a candidate to the Internet computer
+[1986.24:1995.0] they are denoted here by blue dots and then our P2P network layer will make sure that
+[1995.0:2005.56] all the nodes have these messages and each node can now create a list of candidate messages
+[2005.56:2010.48] that they think they want to execute next and we call this a block proposal.
+[2010.48:2023.96] So for example if I'm a node I will take the following 16 messages and form the next
+[2023.96:2031.48] block, block 26 out of it and I will make a proposal that I should will make a proposal
+[2031.48:2040.72] for all the nodes that the care will make a proposal referencing the previous block and
+[2040.72:2046.2] now we need to agree which proposal to execute next.
+[2046.2:2054.32] In order to do that we first create a random beacon value and this random beacon value
+[2054.32:2063.36] we create with the BLS signature scheme so we take the beacon value from the previous
+[2063.36:2073.36] round and we sign it and by combining K out of n signature shares on this we now have
+[2073.36:2083.2000000000003] the new beacon value then all nodes here called block makers proposed a new block and using
+[2083.2:2087.6] this random beacon we can rent the block proposal.
+[2087.6:2097.8399999999997] So if we have the random beacon for round 23 then this might give the order that node
+[2097.8399999999997:2105.72] 1 has slot 0, node 4 has slot 1 and so on whereas in the subsequent round the random
+[2105.72:2115.4399999999996] beacon that I said is a combination of signature shares from the previous round that will then
+[2115.4399999999996:2125.04] be used to create the banking for the next round and so on.
+[2125.04:2130.8399999999997] So I see there's a question in the chat that I have two questions.
+[2130.84:2136.4] What is the random beacon?
+[2136.4:2145.1600000000003] The random beacon is just a special signature on the random beacon value from the previous
+[2145.1600000000003:2157.1200000000003] round which is then used to make this banking and there is a lower bound on the K that
+[2157.12:2172.7999999999997] we use to achieve consensus and it's related to the lower bound of the number of nodes
+[2172.7999999999997:2185.2799999999997] that we need to have consensus so in our case we need two thirds of n.
+[2185.28:2198.44] Okay then so with this random beacon that is basically as I said just the signature of
+[2198.44:2205.6000000000004] the signature of the signature so in every round we find the beacon of the previous round
+[2205.6000000000004:2212.8] to get the next one at this distance of the banking this is one in Greek and then in
+[2212.8:2224.1600000000003] addition when we have received a block proposal then each node ranks the block proposal
+[2224.1600000000003:2233.0] spaced on this random beacon and a node finds only the highest banked block proposal
+[2233.0:2242.2400000000002] and broadcast this signature and again we use a threshold signature scheme so we have
+[2242.24:2250.24] the beacon broadcast to share and by gathering signature shares on the block proposal as
+[2250.24:2258.3999999999996] soon as K or more nodes have signed the proposal we consider it not derived.
+[2258.3999999999996:2265.9599999999996] This is illustrated here so replica one we see the block proposal for height 30 and using
+[2265.96:2277.84] the banking from the random beacon we denote checks or the sees that this is the highest
+[2277.84:2284.48] round proposal it has so far it finds it and broadcast it's not derived and if we
+[2284.48:2289.76] then we see some more not derived shares from other nodes it can combine those into an
+[2289.76:2300.5200000000004] ultrification and we repeat the same game in the next round and this is not quite enough
+[2300.5200000000004:2309.92] to reach consensus because we don't have the guaranteed that all the nodes receive
+[2309.92:2320.4] the messages in the same order and therefore I might consider one message to be the highest
+[2320.4:2327.16] bank yet and the node tries it whereas some others have seen some other messages and
+[2327.16:2338.48] therefore we have another round of operations the so-called finalization round and if I happen
+[2338.48:2350.2] to have a round where only one block was not derived then this block I find this block
+[2350.2:2358.2400000000002] again broadcast the signature this is then called the finalization share of for this block
+[2358.2400000000002:2367.2400000000002] and we repeat the same threshold signature game we collect enough finalization shares
+[2367.24:2375.3599999999997] on this block and if it has K or more then we say it is finalized and then it comes the
+[2375.3599999999997:2382.64] neat trick that allows us to amortize the cost if we finalize the block then we also retrospectively
+[2382.64:2393.12] finalize its parent and like that we can then ensure that we have a chain so let's consider
+[2393.12:2402.2] the following situation we have not just a sequence of blocks but we actually have a tree
+[2402.2:2414.3599999999997] so and for each of those slots we happen to have notriizations and now through the finalization
+[2414.36:2425.32] process we see here that the block block 36 was the only one for height 36 so there was
+[2425.32:2434.28] no other height produced was no other block for this height and through the finalization
+[2434.28:2445.48] signatures we can actually prove this and we can therefore market as finalized and then
+[2445.48:2452.76] go back in the chain and mark all its parents and grandparents and so on finalized as well
+[2452.76:2462.0800000000004] as this then gives us the chain property so in summary we have seen that we can use
+[2462.08:2471.24] the pseudo random threshold signatures scheme to create randomness in a joint way and using
+[2471.24:2479.48] the two steps for notriizing and notriizing blocks and if there has only been one notrized
+[2479.48:2489.7999999999997] block in a round then issue a finalization like that we can get agreement and together
+[2489.8:2498.44] these two allow us to have efficient consensus.
+[2498.44:2506.48] Now that's just one of the topics that touch distributed computing and we have some more
+[2506.48:2516.36] on the different layers and a divinity and maybe some of you of the you finish your
+[2516.36:2523.6400000000003] study will be joining us and helping to figure out the rest of them.
+[2523.6400000000003:2532.28] What happened at finalization if there are two or more blocks at a certain age in particular
+[2532.28:2547.1200000000003] picture 34 slide 34 slide 34 so I think actually that slide is more helpful here so in the
+[2547.1200000000003:2558.48] picture I 34 here so yeah here we have we have two notrized block one at the top and
+[2558.48:2566.64] one at the bottom but that's 30 okay we we simply want execute them straight away we
+[2566.64:2574.4] will only execute them once we have a finalization and since we will only issue finalization
+[2574.4:2590.04] if that was the only block in this round and therefore only if enough other honest notes
+[2590.04:2596.32] have the same opinion only then we will have this block finalized and like that if we only
+[2596.32:2601.92] ever execute the messages after this finalization then we're good does that help Danya?
+[2601.92:2610.48] I guess so she didn't react so I guess so yes what is the status of the implementation?
+[2610.48:2622.16] Well the basic implementation is up and running yes correct the finalization is only happening
+[2622.16:2627.52] when there's one block we have an implementation up and running at the moment this running
+[2627.52:2633.44] in data centers are on the befitties control only and this will change actually in December
+[2633.44:2640.8] in January where we'll be running at the data centers that are not under our control and
+[2642.48:2648.88] yeah let's let's hope it will work fine in other data centers as well
+[2649.68:2655.92] Another question is there any downside of using the BLS based randomness instead of
+[2655.92:2665.36] a rant-hound heads? I'm not familiar with rant-hound and hurts so I don't think I can answer this question
+[2666.32:2672.48] Another question is what is the performance introduced into compared to a traditional centralized
+[2672.48:2688.0] solution I guess will you just have one machine? I don't know numbers I don't know but I mean
+[2688.0:2697.28] it would just have a centralized solution then you can just execute as you receive the input
+[2697.28:2710.0800000000004] whereas here you have these three broad compounds per per block and in addition we also
+[2711.0400000000004:2717.0400000000004] 35 our outputs and we create we have a separate step to create randomness in case you want to
+[2717.04:2728.08] use randomness in your in your application so it's a hefty overhead yeah it's the price to pay
+[2728.08:2735.84] for high availability and security so it's not surprising yes and now I remind myself of the question
+[2735.84:2743.7599999999998] about scalability so here I've always mentioned that we can that's all the nodes do something but
+[2743.76:2753.1200000000003] actually to be more scalable we can use the random beacon to select a committee of nodes
+[2754.0:2764.1600000000003] so a subset of nodes that sends the noterization and the finalization shares and like that we can
+[2764.16:2775.2] scale to thousands of nodes okay yes there is a white paper for this it's not very readable
+[2775.92:2784.3999999999996] we are working on a better version but if you look for a white paper and affinity you will find it
+[2785.52:2790.24] okay and the last question maybe what's the expected latency from sending the input to get in the
+[2790.24:2804.24] output because of because of the fact that we will have replication across the globe
+[2806.08:2814.9599999999996] we don't aim at low latency at all we are focusing more on throughput so
+[2814.96:2827.28] but we would recommend developers to compute with it's like five seconds okay good so let me thank you
+[2827.28:2833.52] very very much and thank you for your time I know you guys are very busy in the startup mode and
+[2833.52:2840.0] the export taking the time and I would also like to tell the students that the offices you have in
+[2840.0:2846.48] Zurich are very nice and they are also very the bunch of smart people they are working including
+[2846.48:2853.12] former students of EPSL and my group Nikolak Niziewicz and others so the place is really nice and
+[2853.12:2862.0] warm and smart so thanks thanks thank you very much and I guess now it's the turn of Adi Serdinci
+[2862.0:2867.28] who is going to talk to you about another perspective on the same kind of technologies but now it's
+[2867.28:2872.88] it's a different startup slash consortium I don't know why these guys like to talk to themselves
+[2872.88:2878.88] consortiums because maybe they pay less taxes I have no clue but in many cases it's called consortium
+[2878.88:2885.36] and Adi will tell us more about that so Adi finished his PhD in the lab one year ago or two years ago
+[2885.36:2891.6800000000003] he will one year ago he was working on he was a student like you and then he did his PhD on
+[2891.68:2898.8799999999997] Byzantine resilient computing and the things that you have heard from Ivan An and he joined the
+[2899.68:2905.9199999999996] the the interchain I guess that's the name and he's working in the innovation park so it's just
+[2905.9199999999996:2911.68] across the street and he will tell you more about that thanks Adi for accepting to take the time
+[2911.68:2917.52] to give the your talk the floor is yours I hope you can share the slides I didn't see any slides
+[2917.52:2924.16] shared my pleasure should we start right away because in the email it was mentioned the pause
+[2924.16:2929.44] of Rossi 15 minutes before I start but I'm really okay to start right away yeah I think it's
+[2929.44:2934.16] better to start because I like from my experience the students who disconnect they don't come back
+[2934.16:2938.72] and I think for them it would be a shame not to listen to the the the perspective your perspective
+[2938.72:2950.8799999999997] on on the matters my email is forget my emails yep makes me okay I'll share my screen so can you
+[2950.8799999999997:2955.9199999999996] see yes so I will take care of the chat don't worry about that just focus on your talk
+[2956.72:2962.72] and if there is any question I might interrupt you and ask perfect so then thank you Rashid
+[2962.72:2969.3599999999997] for the introduction and for the opportunity to be here we will talk a bit about what
+[2970.48:2977.68] what we do at my company and in that context we will also talk a bit about what is
+[2979.3599999999997:2986.3199999999997] what some companies are trying to do once they have achieved something of the sort of what
+[2986.32:2993.1200000000003] I've shown you so some people are thinking about now that we have a global computer
+[2994.56:3000.6400000000003] what are some other cool things that we can do with a consensus algorithm so I call it beyond
+[3000.6400000000003:3008.32] blockchains first I also want to say a couple of things about my team so we're not that many it's
+[3008.32:3013.36] about 20 of us almost 20 now we're a bit spread around the globe like Rashid just mentioned
+[3013.36:3019.04] some of us are in the innovation part we're not using the office that much as you might expect
+[3019.92:3028.0] we also have people in Vienna we have people most of us are in Toronto Paris, Zoug a couple
+[3028.88:3039.2000000000003] in Berlin and also Serbia and here you can see actually everyone and on a more technical side
+[3039.2:3046.3199999999997] we have so Rashid said that I joined he was right the company I joined was a foundation it was
+[3046.3199999999997:3051.4399999999996] called Intertune Foundation however in the meantime we have split from the foundation because
+[3051.4399999999996:3058.0] we want to have our own company so the foundation accumulated more and more engineers and researchers
+[3058.64:3065.2] and at some point we all decided that it's better if we have a full-fledged company instead of
+[3065.2:3070.48] being part of a foundation and this is what informal systems is and it allows us a bit more
+[3070.48:3076.48] flexibility because we're not focusing so much or we're not focusing exclusively on building
+[3076.48:3083.7599999999998] consensus algorithms but we're focusing also on building tools to help other startups so
+[3084.64:3094.0] we're focusing on systems but also organizations and we come from the perspective on a system
+[3094.0:3099.36] side we come from the perspective that it is ideal that when we build the systems we make them
+[3099.36:3104.32] as correct as possible so we put a focus on formal verification actually that's why we're
+[3104.32:3113.28] called ourselves informal systems so when we build these systems we re-emphasize the aspect of
+[3113.28:3119.92] correctness and I'll go into a bit of more details that and when it comes to organizations we are
+[3119.92:3127.2000000000003] also building tools to help organizations like us survive that's a year so for instance one
+[3127.2000000000003:3134.08] thing one part of our vision is that just as you write get in it to start some repository
+[3134.96:3141.6800000000003] you also write startup in it so that you do not have to go through all sorts of hassle with
+[3141.6800000000003:3147.36] bureaucracy and administration and all those other things to to start the company and we have
+[3147.36:3152.2400000000002] this idea that we would be really creative humans could organize themselves much much easier
+[3152.2400000000002:3158.56] just like the organized systems of machines so that's as much as I have about our company
+[3161.2000000000003:3168.0] and now I will go into more technical part of the talk I structure it around this to idea
+[3169.1200000000003:3175.36] so in the first part we will talk about consensus the consensus algorithm specific one
+[3175.36:3182.2400000000002] and this is how my company was started this is how all the people got together and this is what
+[3182.2400000000002:3188.4] people know us for the tenderment consensus open and then what happened the tenderment consensus algorithm
+[3188.4:3194.1600000000003] and then in the second part of the talk I will talk a bit about what I mean by the end blockings
+[3194.1600000000003:3200.0] and it's a it's a suit of protocols that are called inter blockchain communication and well
+[3200.0:3208.24] you will see more about what that means so let's start with the tenderment core when
+[3210.24:3216.08] when we talk about consensus you have this definition from a couple of sessions ago
+[3216.08:3220.8] and in the lecture that the workshop gave you that consensus basically means that you have a
+[3220.8:3228.4] bunch of processes and they normally they all propose values and they try to reach agreement on
+[3228.4:3233.12] one of those values and it's a very important problem you have also seen this problem
+[3234.1600000000003:3240.48] this starts both in the b9 case and now more recently with what Marco was talking about and what
+[3240.48:3246.48] Ivanan was talking about in the last two lectures in the presence of Byzantine processes that
+[3246.48:3257.44] this process that may may have bugs that may try to lie to cheat still and so on so this is a
+[3257.44:3263.52] slightly different model we still use the eventually perfect failure detector to build
+[3264.08:3272.0] systems in this model but now we also have digital signatures and I also want to make a bit
+[3272.0:3276.96] of a distinction between consensus and blockchain because people have different
+[3278.16:3282.96] understandings of what the blockchain is so I guess the most common understanding of what a
+[3282.96:3288.7200000000003] blockchain is the precise data structure of in the form of a linked list with chains
+[3289.52:3295.04] with blocks linked to each other I want to lose I want to use that term a bit more loosely
+[3295.68:3300.8] so I mean that the blockchain is basically this whole stack where there is an application
+[3301.68:3308.48] that is built on top of a consensus layer and that consensus layer has also some networking
+[3308.48:3314.64] you know some basic ability primitives to point to point communication or to broadcast
+[3315.36:3319.84] is that some primitives that you're already very familiar with and they're quite simple and
+[3319.84:3325.68] these two boxes are that they are tackled by the tenderment core algorithm and then I call
+[3325.68:3330.4] this whole box including the application or including the logic of the application which
+[3330.4:3338.32] sits on top of the consensus algorithm I call this whole box the blockchain and I also want to
+[3338.32:3344.88] say something that will be a bit relevant later on that's something that this used to be called
+[3344.88:3352.56] the replicated state machine so it's exactly what it sounds like it's a state machine it's
+[3352.56:3358.1600000000003] important that is deterministic and the other essential feature is that it's replicated that
+[3358.1600000000003:3366.8] it sits on multiple also seen multiple data centers on the block so in terms of the properties
+[3366.8:3372.5600000000004] that the tenderment consensus offers you you're familiar with them already except for this
+[3373.44:3380.8] slightly more exotic even though very very simple validity property we have we have the
+[3380.8:3391.36] property here that in order for value to be even potentially decided then that value must have
+[3391.36:3397.76] been passed through a filter you can think of it it's just a filter which is a predicate called
+[3397.76:3407.04] indistence instance valid and otherwise the three other properties are should not be to different
+[3407.04:3412.96] hand but you already know you have the agreement property that any two processes if they are correct
+[3413.52:3420.6400000000003] they should have for the same let's say the same height in the blockchain the same consensus
+[3420.64:3424.96] instance they should have the same decision and right now we're talking about just one consensus
+[3424.96:3431.52] instance so not to correct processes decide differently then we have a termination that eventually
+[3431.52:3438.16] you want to reach decision on a certain value and of course integrity that you are not going to
+[3438.16:3444.0] decide and then decide again if you're a correct process if you're a Byzantine process you can
+[3444.0:3452.4] misbehavior which very so you can break any of these properties and are there questions so far
+[3452.4:3464.0] I'll just gonna take a pause everyone's you know are in any case okay so continuing with algorithm
+[3465.68:3471.92] just want to emphasize that there are some similarities between this algorithm and the consensus
+[3471.92:3479.76] algorithm thing that you have seen and also the throughout this presentation I will not be going
+[3479.76:3485.52] into very very hardcore details about what is happening in the algorithm so there are certain
+[3485.52:3492.08] corner cases that I will not discuss and I'd be glad to discuss them no part of questions but
+[3493.04:3500.64] what I want you to take away is that it is as in the same spirit as consensus algorithm three
+[3500.64:3506.08] and it you can also think of it as an adaptation to the Byzantine model of the consensus algorithm
+[3506.08:3515.04] three it has the same assumption of the majority except this time we have to adjust it to the presence
+[3515.04:3521.8399999999997] of Byzantine nodes so just having a correct simple majority which is half plus one like we have
+[3521.84:3529.6800000000003] for the benign case that's no longer enough so I think yeah I have this this other
+[3531.04:3536.88] transition here that in the benign case in the actual original algorithm that is for the
+[3536.88:3543.1200000000003] just crash faults you you can get away with just using two plus one nodes in this case however we
+[3543.12:3552.56] have to use three plus one nodes and then we also use this idea of rounds so there are certain discrete
+[3552.56:3559.2] steps in the way the protocol evolves and they're called around each round has a definite
+[3559.2:3564.88] predefined proposal so this is a deterministic choice of who is that proposal in that specific round
+[3564.88:3574.2400000000002] and the intuitive gold within around is that as many correct processes lock on a vacuum and
+[3575.52:3581.44] once sufficient processes lock on a value that value is basically decided this is just an
+[3581.44:3589.76] intuition that actually locking happens in a specific step in the evolution of the protocol as you will
+[3589.76:3599.44] see I think this is the last slide I have about the system model which is which ties in with your
+[3600.4:3608.88] your idea or your knowledge of an eventually perfect failure detector so we don't in this algorithm
+[3608.88:3616.6400000000003] we don't try to eventually say whether a node is dead or not we do not have a failure detector
+[3616.64:3622.4] but in the same spirit as the as the eventually perfect failure detector we have an assumption
+[3622.4:3628.48] that says that eventually you reach a node if you're going to if you're going to be try sufficiently
+[3628.48:3640.4] often and the this is called the partial synchronous system model so the the communication between
+[3640.4:3648.32] processes is reliable and timely bounded with delta after a specific point in time so imagine
+[3648.32:3655.28] that you start your system and your you have four nodes for instance you're you are trying to
+[3655.28:3662.64] reach agreement among those four nodes and there may be an unbounded amount of time until you know
+[3662.64:3668.0] that you can reach all of those four nodes so it can take some time in the beginning maybe in
+[3668.0:3676.32] practice you can think of this is TCP handshakes going on and so on but it's it's it's a rather theoretical
+[3676.32:3685.84] construct that it's useful in practice and another important point that distinguishes a bit
+[3685.84:3692.88] this algorithm from other algorithms is that is an assumption that there is a gossip player so
+[3692.88:3701.44] this is roughly speaking broadcast primitive that once you release a message into this primitive
+[3701.44:3707.36] so once you you try to broadcast it to everyone if there is the correct process that has that is
+[3708.4:3716.0] delivering that message delivering is basically seeing it and you are after GST so after the
+[3716.0:3723.68] global synchronization time or global stabilization time if if a correct process observes that message
+[3724.72:3732.8] then it will not take longer than than delta time for the other correct processes to also see that
+[3732.8:3742.0] same message and you can imagine that this is basically the primitive that ensures that if I
+[3742.0:3748.24] see the message then I'm gonna I'm gonna put it back on the network and push it at other nodes
+[3748.24:3753.36] so that I make sure that this message doesn't get lost and that's kind of the intuition of what
+[3753.36:3772.7200000000003] discussive communication in this means yeah so going back to rounds we have maybe on high
+[3772.7200000000003:3780.48] test too just so that we can focus on this part so the way tendermint works is like many other
+[3780.48:3787.52] many other consensus algorithms that that execute in multiple instances so you have instances
+[3787.52:3793.12] that are changed together so you have an instance here at what is called the height 0 and then you
+[3793.12:3797.68] have another instance at height 1 and then you have another instance at height 2 and so on and so on
+[3799.36:3806.08] and within a certain instance you're trying to decide a single value and so you do for the next one
+[3806.08:3812.7999999999997] and so on and also within a certain instance you have rounds that are changed together so you
+[3812.7999999999997:3818.24] have the first round for a certain node is a proposer and then another one and then another one
+[3818.24:3826.3199999999997] and the rounds are further decomposed into three deterministic steps the first step is you
+[3826.3199999999997:3832.72] propose a value the second step is you pre-vote on a value and then the third step is you pre-commit on a value
+[3832.72:3842.72] I have I'm probably just rehashing the same ideas in text here so that just emphasize a bit so
+[3843.68:3851.2799999999997] once sufficient nodes reach the pre-committed step then a decision is reached and we will see
+[3851.2799999999997:3859.9199999999996] a bit more detail what that means another important point is which I mentioned is the idea of
+[3859.92:3866.8] locking the value so if you're a process and you are executing this algorithm locking means that you
+[3866.8:3876.7200000000003] have you're you're gonna try not to change your mind anymore so once you receive a value that
+[3876.7200000000003:3882.56] has been pre-voted a number of times if there are many many nodes in the network that all of them
+[3882.56:3887.52] tell you that they agree with this proposal and agreeing with the proposal means a pre-vote message
+[3887.52:3894.72] once you see all of this this majority of nodes agreeing with that value or pre-voting for that value
+[3894.72:3900.32] you're gonna lock on it and this is the idea of this is the idea that you kind of save the value in
+[3900.32:3908.0] your in your in your store in your data in your local data structures so that you can remember in
+[3908.0:3913.68] the future what you have pre-committed on because once you lock on it you send your pre-committed
+[3913.68:3918.48] and you're gonna try to not to change your mind anymore at least that's the idea within the
+[3918.48:3924.96] same round you're not gonna change your mind and if sufficiently many nodes send the same pre-commit
+[3924.96:3931.04] or sufficiently many nodes lock on the same value then you you can essentially it's impossible
+[3931.04:3937.44] to go back from deciding on that value you just finish deciding on that value and I will be talking
+[3937.44:3945.12] how just the machine very briefly these two local values that the process or node holds it's
+[3945.12:3950.08] a locked value and a locked round the locked value it's the value itself you can think of it as the
+[3950.8:3956.64] the block with the transactions that we're trying to reach the decision on in this constant
+[3956.64:3964.32] substance and the locked round is is this round number zero one two three and so on normally if
+[3964.32:3970.56] all goes well and there are the network is behaving well so you can reach all the nodes in time
+[3971.76:3977.6800000000003] there are no faults for trying to mess up with the messages that are being broadcast and
+[3977.6800000000003:3983.1200000000003] those that are lying essentially then you actually reach the decision in the first round and then
+[3983.1200000000003:3987.6000000000004] the locked round just becomes zero the locked value becomes the first value that is being broadcast
+[3987.6:3996.16] and I think this is exactly the scenario that we will talk a bit in a second this is just an
+[3996.16:4004.0] overview of the life cycle of the consensus algorithm you start from a proposal actually you
+[4004.0:4010.3199999999997] start from this new height and a new height means that okay I'm done with the block at position zero
+[4010.3199999999997:4014.96] and now I start block a position one then you do the same now I start with block a position two
+[4014.96:4021.12] and so on and the first step when you start a new consensus instance or a new height in this
+[4021.84:4027.52] in this terminology you you propose as I was saying so the three steps are proposed pre-vote and
+[4027.52:4034.4] pre-commit and when you propose if that block is valid so if I if I receive a block in a proposed
+[4034.4:4038.8] message and that block is valid this is the valid in the validity property that I mentioned
+[4038.8:4044.2400000000002] earlier then you're going to pre-vote it once you pre-vote it you're going to wait for a certain
+[4044.24:4052.72] number of pre-votes and the number of those pre-votes should be should go up to a threshold of
+[4053.4399999999996:4060.72] or at least a threshold of two thirds out of the all node in the system and once you have those
+[4061.4399999999996:4067.2799999999997] you are you are locking on a vote you you are locking on that block and that's when you send
+[4067.28:4075.0400000000004] your pre-commit I in the in the terminology of this algorithm it's it's it's called that the
+[4075.0400000000004:4082.1600000000003] nodes are doing the polka dance because they are locking POLC proof of lock change it's it's
+[4082.1600000000003:4087.6000000000004] kind of like an internal joke but you can think of it as the nodes they all notice that all
+[4087.6000000000004:4093.0400000000004] nodes are doing something together and then they're joining those other nodes into doing the same
+[4093.04:4100.96] thing and they call it the polka dance um so once you reach that step you're going to send
+[4100.96:4106.48] your pre-commit so this is the third phase of the algorithm and similarly like for the pre-vote
+[4106.48:4111.5199999999995] you are waiting for a certain number of nodes to do the same thing to to notice that they are also
+[4111.5199999999995:4117.36] pre-committing on the same value and once two thirds of them do that then you you actually have
+[4117.36:4122.799999999999] reached the decision so locally you update your your data structures and you say I don't have to look
+[4122.799999999999:4129.12] back at this certain height I commit I can now commit on it and I can go to the next time
+[4129.12:4134.0] and this is what happens in the good case it's possible to have time-outs for it's possible to have
+[4134.0:4140.16] invalid blocks here it's possible to have pre-votes that are not enough to reach two thirds or
+[4140.16:4143.5199999999995] pre-committed there are not enough to reach the thirds so slightly more complicated
+[4143.52:4151.040000000001] picture emerges then you would be for instance also starting from the proposed step and it's
+[4151.040000000001:4158.0] possible that the block is outdated it's not valid it's late and then you're not going to send any
+[4158.0:4162.88] pre-vote so the step you're going to take is it's not going to agree with that block that was sent
+[4162.88:4168.96] maybe no block was sent at all and then you're just going to send a message that said that says I
+[4168.96:4174.64] pre-vote for nothing I agree with nil for this consensus height for this round I want a vote for
+[4174.64:4184.56] nothing and that's what nodes do locally once they once these preconditions are fulfilled and
+[4184.56:4190.96] then you're going to wait for two thirds of the same type of messages so either there will be two
+[4190.96:4197.92] thirds of other nodes that they will also be pre- agreeing with nil that they will also time-out
+[4197.92:4204.0] and they will say yeah I want a vote for nothing and then actually you'll be going into this
+[4205.12:4210.56] this part of the diagram where you say okay so everyone wants to vote for nothing so we all
+[4210.56:4217.92] lock on voting for nothing which means that I'm going to pre-commit on nothing and then you wait
+[4217.92:4228.4] for pre-commits basically on the nil value so once you reach a similar like we did in the
+[4228.4:4233.28] common case in the good case now you're just going to also wait for two thirds of nodes
+[4233.28:4239.4400000000005] pre-committing nothing and then you you start a new round you do not advance your data structures
+[4239.4400000000005:4245.4400000000005] in any way because this instance has not finished so you're at the same height so what happens is
+[4245.44:4249.5199999999995] you go again through the proposed pivot the pre-commit proposed pre-voting pre-commit and again
+[4249.5199999999995:4259.759999999999] until until one of until a good scenario emerges and in a slightly more detailed fashion where I
+[4259.759999999999:4264.799999999999] also represent here what a node what are the local variables basically at the node
+[4266.719999999999:4272.16] I already mentioned this to we have locked value and we have locked round there's also
+[4272.16:4278.72] these two values which are valid value and valid round these are these are supposed to help a
+[4278.72:4286.88] node remember also across rounds what was the last valid last value that has been sent
+[4287.76:4296.0] which they could try to continue sending and then the steps are proposal pre-vote or pre-commit
+[4296.0:4306.88] and we have let's assume that this is round let's say it's just r here but it could be round
+[4306.88:4313.04] zero or one or whatever but what's important is that proposal one or node one is the one who is
+[4314.48:4322.24] selected to be the the one who is sending the proposed step so only node p1 is allowed
+[4322.24:4330.719999999999] to send this proposal message if if any other node in this round is sending this this message tagged
+[4330.719999999999:4336.24] with the proposal type then that message will be ignored because all nodes have the same notion
+[4336.24:4345.04] of who is supposed to be the proposal for round r here and the value and the value the value that
+[4345.04:4352.64] is being sent here and VR these are as I said this may be taken from previous rounds so if in a
+[4352.64:4359.12] previous round there was something that was that was sent by a proposal by a different proposal
+[4359.12:4366.72] p1 might be recycling that value and then it would be saying that watch out it was in round
+[4366.72:4374.08] r minus 1 or r minus 2 or 10 rounds ago when I have seen this v so I have seen this v in VR
+[4374.08:4382.48] and I'm recycling it since then that's kind of the intuition once this first steps once
+[4382.48:4388.88] node p2p3 and p4 receive that message they they they go into the second step which is the pre-vote
+[4389.68:4396.4] and I also want to just mention here that before we just call it a slow node in an instance so
+[4396.4:4401.2] he will not be sending any messages the other three nodes they will be sending messages
+[4401.2:4408.08] so in the pre-vote step you have all nodes doing the same thing they basically look at the
+[4408.08:4413.28] proposal message and they they try to decide whether this is a valid block whether it arrived
+[4413.28:4419.84] on time and so on and if these conditions are met then what they do is they agree with it they
+[4419.84:4432.4800000000005] send a message that has this specific type so it's tagged with the name pre-vote and then it's
+[4432.4800000000005:4438.8] also tagged with the round in which this is all happening so again the round denotes that p1
+[4438.8:4446.56] was supposed to be the proposal it's tied to the identity of p1 and id is just a hash function
+[4446.56:4451.92] over the value so id is a unique identifier for the value essentially
+[4455.52:4460.080000000001] and these two nodes as well as the initial proposal they they all do the same thing
+[4460.72:4466.96] if this value was valid which is essentially a block then they they go into the pre-vote step
+[4466.96:4470.96] and they all send a pre-vote message and then they just sit here and wait
+[4470.96:4477.68] and see how many pre-vote messages are going to be send around how many pre-vote messages are
+[4477.68:4487.84] they going to gather and if all goes well they might be gathering two thirds a threshold of two
+[4487.84:4492.64] thirds of these messages of pre-vote messages and that means that there are actually sufficient
+[4492.64:4499.52] many nodes in the network who agree with them and at this point they upgrade they update their
+[4499.52:4505.6] lock value and their lock round and they send the pre-commit message which is a similarly tied
+[4505.6:4513.6] to the specific round and each tied to the specific value and this is what it's this is what it
+[4513.6:4521.6] means here that once like like the nodes did after pre-vote after sending the pre-commit they sit
+[4521.6:4528.320000000001] here and they wait and they wait until they they gather enough messages and in this case they gather
+[4528.32:4532.88] three messages that match so all of those three messages are the same it's a pre-vote it's a
+[4532.88:4540.24] pre-commit for R and I D and then this node is basically free to this is basically free to commit
+[4540.24:4547.28] on that value and to move on to the next height so this round was basically the last round of
+[4547.28:4554.639999999999] this consensusness there is no need to go into the next round and this is basically all I have
+[4554.64:4561.360000000001] for consensus I didn't want to go into too many details this is just to emphasize that the
+[4561.360000000001:4568.4800000000005] the locked value and the locked round so these two local parameters on node p3 and similarly
+[4568.4800000000005:4575.92] on node p2 and p1 they get updated and the node updates them so that he knows later on
+[4577.12:4581.92] in case the node doesn't gather sufficient pre-commit here he'll be timing out
+[4581.92:4587.92] and then he will not be able to decide and then he has to know in the next rounds what has happened
+[4587.92:4594.0] before and this is why this local local value of locked value and locked round is kept around so
+[4594.0:4600.0] that so that he doesn't pre-commit on a different message because he has already pre-commited on this v
+[4601.52:4609.68] yeah to finish up a bit this part I want to talk a bit about some some of the novelties that the
+[4609.68:4617.84] the tenderment algorithm or the whole tenderment platform actually has has brought so it was
+[4619.200000000001:4624.320000000001] arguably successful because of these novelties the algorithm is not extremely
+[4626.64:4635.200000000001] extremely sophisticated or breaking new bounds in terms of theoretical or performance
+[4635.2:4642.96] numbers but the algorithm does have some novelties so I already mentioned this gossip assumption and
+[4643.92:4649.2] basically when you when you're running on the internet it makes sense that you're not going to
+[4649.2:4654.4] keep individual connections to absolutely all of the nodes in your network and instead you're going
+[4654.4:4660.88] to randomly pick some of them perhaps the ones that are closer to you and you're going to gossip
+[4660.88:4667.36] with them and this is the way in which Bitcoin is also implemented so the the traditional way in
+[4667.36:4674.8] which algorithms are built this with algorithms is that you have this auto-all assumption and this
+[4674.8:4682.08] is something that that tenderment inherited or breaking this assumption of auto-all links is something
+[4682.08:4688.24] that it is inherited from the idea of Bitcoin I did there are a couple of questions related to the
+[4688.24:4695.44] protocol before you move to light clients one question is what is the difference with PBST
+[4695.44:4701.04] and the other question is the time or process weights is it the delta from the partially synchronous
+[4701.04:4716.5599999999995] model okay so difference to PBST in PBST you have something that is a separate protocol
+[4716.56:4725.68] which you are going to invoke in in the case where you do not get a three messages here so PBST
+[4725.68:4731.04] has you can think of it as two pro two sub protocols one of them is normal case the other the other
+[4731.04:4736.4800000000005] case is things didn't work out let's do that the different protocol the view change protocol
+[4738.160000000001:4742.72] tenderment doesn't have that this is all there is to the protocol is just proposed pivot
+[4742.72:4750.16] pre-commute proposed pivot pre-commute is just is just a chain possibly infinite chain if you
+[4750.16:4756.64] never have synchrony of this same basic pattern that you see here and that is the the high level
+[4756.64:4766.4800000000005] difference to PBST on a more technical note another difference is that you never put inside
+[4766.48:4772.959999999999] these messages more than the value itself so in PBST you have to broadcast what you have seen
+[4772.959999999999:4779.44] from others so one of the messages in the view change protocol is a set of all the messages
+[4779.44:4785.2] that you have seen in the previous view views are called rounds in tenderment by the way so
+[4785.2:4791.679999999999] tenderment has PBST has this the second algorithm that is arguably a bit more complex than what you
+[4791.68:4798.16] see in this slide that the algorithm is trying to pick up the pieces of what happened in the normal
+[4798.16:4802.72] case and is trying to reach a decision whereas in tenderment you do not try to do that in tenderment
+[4802.72:4808.320000000001] you simply you have the timeout you have a timeout here you have a timeout here and a timeout here
+[4808.320000000001:4813.76] if there was no progress that's fine you you don't try to re you don't really try to reconstruct
+[4813.76:4819.200000000001] what has happened but you just remember what are the values that have been sent and you try to
+[4819.2:4824.639999999999] recent those values that are consistent with what you have already sent basically the locked
+[4824.639999999999:4830.24] values the locked round valid value and valid round and I would say that is the most notable
+[4830.24:4836.24] difference to PBST then the other question was can you remind me the question
+[4838.8:4844.5599999999995] is the delta the same as that of eventual synchronic the delta is a function of
+[4844.56:4853.6] that of the the synchronic assumption so here you would not be waiting exactly delta you would
+[4853.6:4859.84] be waiting slightly more than delta and if I'm not mistaken in practice we use
+[4860.4800000000005:4864.96] slightly more than delta here and then slightly more than that here and then slightly even more than
+[4864.96:4869.84] that here because as you progress more and more towards the end of a round you want to maximize
+[4869.84:4875.92] the chances of finishing that round because you have invested more and more into it so they are
+[4875.92:4880.24] just slightly bigger than that also if you're going to a round and then that round has not finished
+[4880.8:4887.04] then in the second round of same height you're not going to reuse the same timeouts you're going
+[4887.04:4893.04] to slightly increase the timeouts because it means because in the previous round you you have not
+[4893.04:4896.72] succeeded so maybe one of the reasons why I didn't succeed it was that you were just too
+[4896.72:4902.88] too much in hurry so you're going to try to increase your chances of finishing in this round
+[4902.88:4908.88] by increasing the bit the timeouts so there is a question related by a static which is how do you
+[4908.88:4915.280000000001] decide delta is delta a given parameter that's a very good question that goes to the
+[4916.08:4922.16] goes to the to the core of how do you deploy the systems it depends where you run them
+[4922.16:4929.2] if you run your algorithm in a cluster you run it you know with your on your laptop among
+[4929.2:4935.68] four processes it's fine to use the delta of probably two three five ten milliseconds
+[4936.32:4941.2] depends on how fast your laptop is and how loaded it is if you're going to run it on
+[4941.2:4947.12] global on a global deployment it makes sense to use the delta of a second or five seconds
+[4947.12:4951.599999999999] in some of the experiments that I was running I think I was using a delta of
+[4953.76:4956.96] five hundred milliseconds and that was kind of the most aggressive that you can use
+[4958.0:4961.36] and still get consistent and good numbers
+[4967.36:4971.599999999999] I hope that answers the question but basically for delta it depends a lot where you run.
+[4971.6:4978.160000000001] The novelties can you explain the locked round variable what the locked round variable does?
+[4980.320000000001:4987.68] Yeah I think I tried already so I didn't succeed let me see if I can give a bit more insight
+[4987.68:4992.08] into what the locked the locked okay specifically for locked round
+[4994.88:5000.96] locked round is this part so it is the same round in which you have decided to send your
+[5000.96:5007.12] pre-commit and it's important to remember that because there are rounds where you will not be
+[5007.12:5014.08] locking anything so imagine you have three rounds you do round one and you get to the pre-commit step
+[5014.08:5020.96] so you get here let's say here at this point you are P2 okay and you get to this point and you
+[5020.96:5025.76] decide okay I'm locking this is round one I'm going to send this value because I like this value
+[5025.76:5031.12] and so on and there are two other nodes that are agreeing with me so you lock on this round it's one
+[5031.12:5035.12] you send your message but then there are no other messages coming through there's no other node
+[5035.12:5042.64] that has reached the same point which you did and then node two times out it has these two values
+[5043.2:5048.8] saved locally the other nodes do not then you're going to round two round two you do not get
+[5048.8:5055.68] absolutely any progress so in round two you will not even see any proposal you will just be sending
+[5055.68:5061.68] a pre-vote for I think you'll be sending a pre-vote for NIL you'll be sending a pre-commit for NIL
+[5062.320000000001:5067.28] and then you get into round three finally in round three there's a value there's now a value coming
+[5067.28:5076.24] through now what happens is that you have already pre-commited on on this V so you remember that
+[5076.24:5081.84] you locked on it and it was in round one now you're in round three which is bigger than one it means
+[5081.84:5089.12] that in your past two rounds ago you have sent a pre-commit value and now you are not going to send
+[5089.12:5096.4] any other pre-commit value unless many nodes convince you sharing this pre-vote step to do that
+[5097.44:5100.8] basically does the intuition so when you receive this proposal
+[5100.8:5108.0] you are going to cross check before sending your pre-vote you're not going to send the pre-vote
+[5108.0:5114.64] unless many other nodes tell you that they didn't lock on anything and it's fine for you to unlock
+[5114.64:5119.360000000001] what you did in round one unlock from the value and now in round three it's fine you can update it
+[5119.360000000001:5125.12] to lock round three and then you can send the pre-commit for three so specifically the locked round
+[5125.12:5133.12] if you keep it around then you can use it to inform other nodes so if this P2 would be sending
+[5133.12:5138.24] a pre-commit with its locked value and locked round so this R would be consistent with
+[5140.5599999999995:5147.28] this R then it means that you're trying to tell other nodes that I have made significant progress
+[5147.28:5154.16] in round one so looking your history and convince yourself you might be missing those that history so
+[5154.16:5160.32] please look at round one and analyze those messages because I'm correct here so it's a way of a
+[5160.32:5166.48] node to leverage its past you can tick off it that way and to make sure that it's not
+[5167.44:5172.72] undoing any of the progress that it has done in its past I hope that intuition helps
+[5174.08:5178.72] maybe another question that is related also something you that if delta is the upper bound
+[5178.72:5184.320000000001] how does it make sense to wait longer than delta I think there is something not clear with
+[5184.320000000001:5193.6] eventual synchronic that's yeah I might have I might have confused them there what I what I
+[5193.6:5202.320000000001] meant by delta okay yeah so there are I when when delta was mentioned I was thinking of the delta
+[5202.320000000001:5208.400000000001] that is used as a parameter in the configuration file and the delta that is used as a parameter in
+[5208.4:5216.32] the configuration file is not the same as the delta that I have mentioned here so the delta that
+[5216.32:5221.44] I have mentioned here which is the theoretical construct is is the upper bound the theoretical
+[5221.44:5227.92] upper bound which you hope which you know it's going to hold after a GST in practice when you
+[5227.92:5237.759999999999] run an algorithm you're not going to think what is the theoretical upper bound and what am I how
+[5237.76:5244.8] do I set that basically in practice what you do is you think of delta as what is the most I can
+[5244.8:5255.52] wait for so that I make progress and you set it by saying what is the normal amount of time that
+[5255.52:5261.2] it takes to communicate if it takes around 500 milliseconds to talk between you know Sydney and a
+[5261.2:5269.04] node in the US East Coast it could be 500 milliseconds it's probably smaller than that that that
+[5269.04:5276.32] is going to inform how you deploy your algorithm so a delta in the theoretical system model it's
+[5276.32:5281.84] I meant something different by that and that's probably why I confused her you so when I say
+[5281.84:5288.96] when I say delta in the context of deploying an algorithm you're going to think of it in the
+[5288.96:5293.76] sense of usually how much time does it take for nodes to communicate and then I'm going to
+[5293.76:5299.36] multiply that to make sure that I really have an envelope over what the worst case is so the
+[5299.36:5305.28] worst case would be say 500 milliseconds and then I'm going to wait twice that so that I don't
+[5305.28:5309.68] break that assumption that I just made well it's not really you have I think it's clear now
+[5309.68:5317.6] okay no laptop maybe just died I don't know
+[5321.200000000001:5324.240000000001] so let's go back to the novel keys and challenges
+[5327.280000000001:5334.96] so lightning I was not going to make too many videos because I also want to cover the IBC part
+[5334.96:5340.32] now lightland is just you can think of it as your phone you connect and you're able to make sure
+[5340.32:5347.76] that whatever your phone read is valid so it's not being tricked well i think it's a pretty
+[5347.76:5354.08] intelligent process because it's not going to connect to a single node and blind that and
+[5354.08:5358.16] blindly trust that node it's actually going to connect to multiple nodes in the network and it's
+[5358.16:5365.2] going to cross check what all those nodes are are basically telling you because they might be
+[5365.2:5369.68] lying to you so this is roughly speaking what a lightland is and it's supposed to be
+[5371.84:5376.72] it's called light because it's not going to consume too many resources so it doesn't have the
+[5376.72:5382.88] whole state of the system it only has a very very small metadata of that state you think of it
+[5382.88:5392.0] but still it respects the system other so it doesn't break the properties robustness so we put
+[5392.0:5398.96] servicemen in the beginning we put quite a bit of emphasis on robustness we have various types of
+[5398.96:5405.28] testing regimens and then the a bci interface was also an novelty of tundermint because it made
+[5405.84:5410.16] very explicit the separation between what the application is in charge of and what the
+[5410.16:5415.92] consensus layer and the underlying networking layer what is what is that layer in charge of
+[5415.92:5421.28] so you made an explicit separation between these two layers and there's some callbacks that they
+[5421.28:5428.24] can the interface comprises and terms of open open challenges these are things that we're basically
+[5428.24:5434.5599999999995] doing these days we are implementing it in Rust we have very interesting stuff doing with
+[5434.56:5440.96] model based testing so we use we use hormone models of our of our algorithm basically we implement
+[5440.96:5448.080000000001] it in tla and then we generate or that's the model and then we generate basically generate
+[5448.080000000001:5453.200000000001] executions that capture different coordinate cases of our implementation and then we feed
+[5453.200000000001:5457.120000000001] those coordinate cases into our implementation and that allows us to uncover box
+[5458.400000000001:5461.68] basically directly in the Rust implementation we have a student
+[5461.68:5468.88] Charlie he's doing a project with us and he's doing the marking so he's basically creating
+[5468.88:5473.4400000000005] an artificial and their mint implementation so that we can test it.
+[5473.4400000000005:5480.16] Profis speaking I already said about tla stainless is a tool created that epf that we also used
+[5480.8:5486.8] with a student last semester to test arts of our code prustis and other students is working with
+[5486.8:5493.6] Isabelle is a gianna loss he was a student of russia and he's also working with us on trying to
+[5493.6:5498.72] prove visited at what we're building this for and the finally the open challenge which is
+[5498.72:5504.16] taking consuming all of our time is the ibc and this will be the next topic we have
+[5505.6:5509.68] 15 minutes left so please feel free to interrupt me I made it very very
+[5511.360000000001:5514.64] I hope I made it simple enough to cover it in the time that we have but if
+[5514.64:5522.0] if you feel that we're out of time I'm I'm okay to stop it at any point and the use case or the
+[5522.0:5528.96] put the problem that inter blockchain communication tries to solve is you have to block it say one of
+[5528.96:5535.4400000000005] them they could be voting Switzerland one of them is in the it belongs to credit trees and they
+[5535.4400000000005:5540.4800000000005] have their own specific set of servers that are spread around Switzerland strategically and then
+[5540.48:5545.759999999999] the other blockchain belongs to ubs and they also have their own separate set of servers and they
+[5545.759999999999:5551.759999999999] are running a very very similar application token transfer and under normal circumstances if
+[5551.759999999999:5555.839999999999] the banks don't want to communicate with each other so if they're using tundra mint or if they
+[5555.839999999999:5562.0] use the ikeerium or if they use bitcoin or they use definitive and so any kind of state machine
+[5562.0:5567.28] implementation they may be using those those replicated state machines are not capable of talking
+[5567.28:5573.2] to each other so presently ubs and credits is they don't use any of these open source they have
+[5573.2:5580.639999999999] their own banking system implementations that are actually capable of talking to each other
+[5580.639999999999:5585.5199999999995] but in our in our use case normally they will not be so you just take out of the box and
+[5585.5199999999995:5594.24] remint the two implementations would be unable to talk and there's several problems or sub
+[5594.24:5599.2] problems of why they are not able to talk to each other they're not able to communicate
+[5600.96:5606.719999999999] and I will try to give you some hints of what the problems are and what the solutions are by
+[5606.719999999999:5611.92] answering these three questions actually the first two maybe are the most important
+[5611.92:5616.719999999999] that the high level so we'll see if we get to the third one so the the questions are what is
+[5616.72:5624.16] being communicated the second question is who exactly communicates and then how to perform the
+[5624.16:5630.96] communication so what is being communicated if you have this the system like I said before you
+[5630.96:5636.240000000001] have an application there is running a no consensus algorithm and something that I have not
+[5636.240000000001:5642.0] mentioned is that there is a discrete part of your system that is called the store and this is
+[5642.0:5647.84] the part of the system that holds all the transactions that have happened so far and they could be
+[5647.84:5659.04] in this ancient format in which they explain basically how they gave money to Rashid blah blah
+[5659.04:5664.08] Rashid did money to blah blah and so on so it's absolutely every transaction that has ever happened
+[5664.08:5675.36] and based on this format of a of a ledger oh ignore this comment the Australian open ledger
+[5675.36:5681.2] yeah based on this ledger you also build a database essentially that says how much money how
+[5681.2:5687.68] many tokens does each user have so at least maybe may have 10 bottom may have 20 so this is what this
+[5687.68:5694.72] is a part that I have not introduced yet in the discussions so far it's it's what is called the
+[5694.72:5705.76] on-chain store yeah so essentially to be able to what the problem statement of IBC in the first
+[5705.76:5711.6] question that I asked is what exactly is being communicated what are the elements that we're
+[5711.6:5717.52] chatting about the element that we are chatting about are basically transactions from inside the store
+[5719.04:5725.76] so when these two applications try to communicate with each other they these are the you know
+[5725.76:5729.92] the nouns and the verbs that they are they are exchanging this have you seen that transaction
+[5729.92:5735.4400000000005] have you seen the other transaction or what is the balance of Alice and they will be exchanging
+[5735.44:5743.599999999999] messages about this this this type of data structures the second question that I post was who
+[5743.599999999999:5751.28] communicates yeah this goes back to the idea that I emphasized very on the desire replicated
+[5751.28:5759.36] state machines and to emphasize that you could you could be I think I put here a picture of
+[5759.36:5768.16] yes some hosting facts where your typical website lives it's going to live in in crazy places
+[5768.16:5774.0] around the world basically you're going to have you could be replicating it and if you replicate
+[5774.0:5778.799999999999] it you want to choose a cheap option and then you're going to go to Amazon or you're going to go
+[5778.799999999999:5787.679999999999] Google and they will just put it around all the world so your application is not going to just
+[5787.68:5794.8] live in three servers in Switzerland but the token transfer application may be living all around
+[5794.8:5802.320000000001] the world so it's a replicate state machine that has wildly inter node latencies and there may be
+[5802.320000000001:5810.400000000001] hundreds of those nodes so when when I ask the question who communicates this is the picture that
+[5810.400000000001:5814.56] I have in mind it's a picture where there's this application living on all of these nodes around
+[5814.56:5819.68] the world there's a separate application it's a separate chain store that is living on all of
+[5819.68:5824.88] these different other nodes around the world so basically when you ask the question of who communicates
+[5826.4800000000005:5831.120000000001] this might be a potential answer you could be saying that absolutely every node from here
+[5831.120000000001:5838.320000000001] communicates it absolutely every node from here and this is obviously not efficient it's not
+[5838.32:5845.44] a good solution it is a solution but it's not a solution that we propose in this ibc protocol
+[5846.48:5850.96] we can go into the details into the details of why this is I think it's obvious why it's not
+[5850.96:5860.5599999999995] efficient it's not very obvious why why it may impose correctness problems it's basically because
+[5860.5599999999995:5867.36] of the ordering of the messages but anyway there's a more much more there's a simpler solution
+[5867.36:5873.599999999999] a solution is to have a separate process you have a node you don't care where that node is but
+[5873.599999999999:5880.24] you know there is one and there may be actually multiple of them but you just get that at least one
+[5880.24:5886.799999999999] exists there may be thousands but as long as one exists and it's correct you make sure that this
+[5886.799999999999:5893.679999999999] node has some interface to be able to read and write which of to at least one full node and this
+[5893.68:5898.64] is how they're called or feature the two applications and this is basically the primitive
+[5899.52:5902.8] interface that you will be using to allow the two applications to communicate
+[5904.72:5912.400000000001] I know I'm I'm glossing over very very many details here but this is it sounds very simple but
+[5912.400000000001:5920.72] this is exactly how we do it we can go past this and we can just go back go to the
+[5920.72:5927.360000000001] um it was very very simple execution of how can this two state machines communicate using
+[5927.360000000001:5934.16] the abcv layer so in a first step the relay connects um to one of the full nodes and it reads so it
+[5934.16:5938.56] has an interface it notes how to communicate with these two nodes and it notes how to read that
+[5938.56:5944.56] state uh then it also notes how to create what we call a packet and this is this is similar to how
+[5944.56:5950.0] you would be relaying packets in the internet except the relay is a proactive process so it's the
+[5950.0:5956.48] one doing all the heavy lifting of going to one of the applications figuring out what are the nodes
+[5956.48:5961.68] there you connect one of the nodes you figure out how to interpret all the data on that node because
+[5961.68:5969.36] it has specific encoding and specific formats of the data anyway you create a packet and then that
+[5969.36:5976.8] node is also capable of doing the similar kind of interactions with another node on the other network
+[5976.8:5982.24] and then you write a packet to another and it's not really done now because now this node has to
+[5982.24:5986.400000000001] disseminate the data to all of these other nodes that's why you put it into the consensus layer
+[5987.28:5993.04] it the data eventually reaches into a block so it gets disseminated a lot of all of this nodes
+[5993.04:6001.92] and then the data is interpreted as a de-execution layer of this application um and then the
+[6001.92:6006.08] relay could be doing stop sequence starts by reading state from this full node and then submitting
+[6006.08:6012.88] things on the other side uh and this is all I had I know I went very very fast I will just leave
+[6012.88:6018.0] you with this slide and it's just some student projects that we did in the past I think it's still
+[6018.0:6024.8] available with this website um and thank you very much for your attention well thank you very
+[6024.8:6030.48] much I did thank you for speeding up to be on time this is uh as sweet as it can as sweet as it can
+[6030.48:6036.0] get and I think this is interesting I hope that uh I was just looking at the comments of the students
+[6036.0:6041.2] some students were mentioning maybe some time ago that the link to actual industry is not always
+[6041.2:6048.24] clear I think you and Ivanan and Marco has made it clear thanks thanks so much let me just tell
+[6048.24:6054.24] the students that next week there will be an interesting talk from the lab uh Mateo and myself
+[6054.24:6060.4] or myself or just Mateo will see will describe to you the the alternative to blockchain that
+[6060.4:6067.5199999999995] was devised in the lab actually and has gotten quite some success and then the Mondays after you
+[6067.5199999999995:6074.4] will have a talk by David Hosea from ABB about how consensus related problems are used today in
+[6074.4:6083.04] smart grids to optimize for electricity but also the week after uh lay the famous video makers
+[6083.04:6089.28] and star in science for all we'll talk to you about a machine learning and the consensus and
+[6089.28:6095.759999999999] agreement problems and how they actually relate so stay safe thanks again a lot Adi and uh
+[6096.8:6102.5599999999995] cute do you hopefully under different circumstances in a physical uh talks and physical meetings
+[6102.56:6119.84] yep stay safe everyone bye bye thanks thank you very much thank you

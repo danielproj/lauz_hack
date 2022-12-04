@@ -1,0 +1,1223 @@
+~Lecture 3 (2021)
+~2021-10-09T18:49:21.257+02:00
+~https://tube.switch.ch/videos/2NBPiER63r
+~EE-556 Mathematics of data: from theory to computation
+[0.0:17.84] All right. So what we're going to do today is mainly cover lower bounds and optimization
+[17.84:24.68] and some algorithms that attain those lower bounds with their worst-easy entities in terms
+[24.68:36.08] of a simple case, for example. Now, before directly down into this, there was some material
+[36.08:42.18] that I could not finish in last lecture. So this is what I would like to cover now initially.
+[42.18:48.2] And then we're going to continue with this lecture. All right.
+[48.2:59.24] So this is where we were in the last lecture. Do you remember we were talking about some structures
+[59.24:64.76] that help us in optimization. We talked about things like smoothness in particular,
+[64.76:70.44] all elipschismists and how, for example, a simple majorization, minimization perspective
+[70.44:76.60000000000001] would lead to the gradient percentage to set size of one over elipschism. And I mentioned,
+[76.6:81.96] what I didn't prove that this one over elipschismist is an optimal set size for gradient descent
+[81.96:87.89999999999999] for el smooth functions. And the proof of that is that the advanced material at the end
+[87.89999999999999:92.8] of lecture two slides. If you look at them, there's some start material at the end that
+[92.8:101.32] you can see. All right. Now, what I did mainly in the last lecture was to talk about complex
+[101.32:105.96] problems. And what I would do is give you a teaser about non-commaixity and smoothness
+[105.96:111.83999999999999] structure now. And now we're going to continue talking about optimization, low bounds,
+[111.83999999999999:116.6] and accelerated methods today. All right. So the mathematical formulation that we're going
+[116.6:126.08] to consider is the optimization of f of x to keep things simple, no constraints so far.
+[126.08:133.24] But in contrast, we'll be distressing. F will be allowed to be non-commaix. And what
+[133.24:140.04000000000002] we are trying to do is to find a say the global minimizer of this in general, but because
+[140.04000000000002:146.36] the objective is non-commaix, this is empty hard. All right. Now, there is a complexity
+[146.36:152.44] supplementary lectures at the beginning of Moodle that ATL talks to you an example how
+[152.44:161.36] we can do the D subset problem formulated in a complex optimization way. All right. If
+[161.36:166.76000000000002] you can solve non-commaix optimization, you can solve one of these empty hard D subset
+[166.76000000000002:174.84] sum problems that are using security. You know, crack some quotes, for example. I highly
+[174.84:178.76000000000002] recommend that you take a look at that supplementary lecture. And if you have any questions, feel
+[178.76000000000002:184.76000000000002] free to ask us to head to a particular rule. We'll point you to the relevant person, including
+[184.76:193.56] myself, to talk about the details. All right. So what are non-commaix problems? All right.
+[193.56:204.72] I'll start with this particular classification problem with neural networks. So think about
+[204.72:211.56] the following. We had this black box in that means supervised learning framework where
+[211.56:218.56] we had these sample points, AIBI, and we defined a function class that is parameterized by,
+[218.56:224.2] let's say, some linear transformations that are followed by some activation functions
+[224.2:230.16] and so on and so forth, which we refer to as neural networks. If you think about a simple
+[230.16:240.08] neural network formulation here, if you use a loss function of, let's say, our prediction,
+[240.08:246.68] which is here and data and we look at the L2 square loss. In this case, you know, we
+[246.68:251.60000000000002] can have a non-commaix problem. In general, if you use something like a value, which is
+[251.60000000000002:261.8] non-smooth, this problem would be non-smooth. But there are certain things called like ALU activation
+[261.8:266.36] functions that are differentiable and smooth. In that case, you can actually end up having
+[266.36:271.08000000000004] non-commaix smooth minimization problems that are relevant.
+[271.08000000000004:281.56] All right. Actually, yes. So here, if you look at, you know, the thousand object classes
+[281.56:287.8] for image and classification and neural networks tend to get superhuman performance. And by
+[287.8:293.0] superhuman performance, I mean just a single human who literally sat down and did the
+[293.0:300.56] classification tests, a person whom other than Andre Karpathy, who's now having tests
+[300.56:306.12] for AI, he literally sat down and did the so by superhuman performance, he mean the
+[306.12:312.4] computers beat Andre, but not all humans. All right. So just to caveat there, he has a
+[312.4:316.76] beautiful blog with me on this topic. I highly recommend that you take a look at it.
+[316.76:321.56] All right. I'll give you another scientific example, which is actually quite important
+[321.56:327.4] for people in engineering to do the same microscopy and imaging kind of applications.
+[327.4:335.72] One is called phase retrieval problem from Fourier typography. It turns out that, you know,
+[335.72:340.48] the general paradigm of imaging, if you do active, you can shine some light to send some
+[340.48:345.72] signals onto a specimen and you look at the scattering waveform or the scattering photons
+[345.72:351.72] and so on and so forth. This is the fundamental problem of imaging. Now, in Fourier
+[351.72:360.28000000000003] typography, what you do is you send some say waveforms, first specimen of interest, and
+[360.28000000000003:368.04] then you try to detect if it's affected or passing waveforms. Now, waveforms is of course
+[368.04:375.64000000000004] to recording them completely. It is easier to record their entities at any given time.
+[375.64:383.47999999999996] In this particular case, by looking at the amplitude of a return waveform, you can try
+[383.47999999999996:390.84] to reconstruct the thing, the specimen that you're trying to image. This is maybe the
+[390.84:398.68] may way of explaining of Fourier typography is, but this is what it is. Now, there, what
+[398.68:403.32] you end up doing is that I don't know if you guys know about lenses, numerical aperture
+[403.32:412.28] and so forth. When the light goes through a lens, that introduces a little bit of a blur.
+[412.28:418.76] And that is in fact a tumbled motion. And because you work with finite dimensions, you can
+[418.76:422.28] write these tumbled motions with matrix operations and matrix multiplication.
+[424.52:430.52] If you want to know more about these supplemental lectures, all linear algebra is extremely useful.
+[430.52:435.32] So, it talks about certain structures like this one, how they can be represented in matrix
+[435.32:444.59999999999997] times. So, what you do though is, so let's say there is this thing you're trying to image,
+[444.59999999999997:452.12] you don't have this thing, which is your x, but you observe the amplitude of that x
+[452.12:464.52] going through some lens aid. So, your observations B are literally something x times a times x
+[465.8:473.4] magnitude squared. And this is what you would like to figure out, what x produced these magnitude
+[473.4:481.88] measurements. In this series, this is an unkempting problem. If you remember the linear
+[481.88:492.2] problem, the least squares, which were a x minus the squared, this is convex. But here we have
+[492.2:501.8] the absolute value inside squared times non-convex. So, this square is in fact like an element
+[501.8:508.68] by square because a times x is a vector. So, taking absolute value and squared, the notation is
+[508.68:513.08] a bit of an abuse, but to take it as, you know, in this separation element by.
+[514.2:519.32] Now, in terms of the binary classification, if you have your neural network, you do this
+[519.32:531.5600000000001] prediction, non-convex problem. All right? Good. Now, we know that in general, we cannot get
+[531.5600000000001:535.96] global tomorrow. Otherwise, the so-and-the-hard problems like the B-soxic problem,
+[535.96:542.44] what we would like to do is at least find the point that is locally better than other points
+[542.44:547.72] that are around it. So, somehow, we're looking for something I think local optimality.
+[548.84:556.6] But how do we get to local optimality? Well, you know, I talked about things like gradient
+[556.6:564.2800000000001] percent. We then talked about an important point for gradient percent, which are these stationary
+[564.28:571.88] points for the gradient to zero. Right? So, the stationary points, or the first order stationary
+[571.88:578.8399999999999] points, if you recall, gradient of a point is equal to zero is an important concept. In
+[578.8399999999999:585.56] convexity, stationary points are global optimal. But this is not the case for non-convex problems,
+[585.56:590.36] and hence, we're heading this discussion. The second order is stationary points. In this
+[590.36:597.24] particular case, we also have the Haitian, all the eigenvalues of the Haitian being greater
+[597.24:605.96] than equal to zero. Right? Now, remember, for convex function, the Haitians always,
+[605.96:611.16] for the definite. Here, we're talking about locally the stationary, the critical points
+[612.04:617.32] evaluating the Haitian at this point, and then talking about the eigenvalues of this particular
+[617.32:626.36] matrix. Does this make sense? All right. Usually speaking, the first order stationary point is where
+[626.36:631.5600000000001] the gradient is zero. If you look at this particular image, this is the first order stationary point.
+[631.5600000000001:637.48] This is the first order stationary point. This is also the first order stationary point mind you,
+[637.48:642.0400000000001] even though it's the maximum. And here's another one.
+[642.04:650.12] A second order stationary point in this particular case needs to have this curvature around. So,
+[650.12:658.5999999999999] this is a second order stationary point. So is this one. One of them is the global minimum. The
+[658.5999999999999:666.12] other one is local. In non-convex optimization, minimization, we hope that algorithms,
+[666.12:671.5600000000001] like gradient descent, or stochastic gradient descent, will get you to one of these points, and we'll
+[671.5600000000001:678.52] avoid points like this ones. These ones. All right? And in fact, if you look at the current
+[678.52:685.96] subunctions for ICTLR, there is a paper that says, SGD and atom type of algorithms can convert to
+[685.96:694.76] these points. With an example, check it out. Right? This is an interesting topic. And we will learn
+[694.76:705.24] quite a bit about this. All right. So, thinking about the gradient descent methods, we have,
+[705.24:711.0] let's see, the smoothness structure, which means that the gradient of F evaluated at two points,
+[711.0:716.2] there are differences in norms up and bound by the differences of the points in space times
+[716.2:721.88] a constant. All right? So, this is the smoothness structure that we talked about. Remember,
+[721.88:727.72] this does not imply we have complex to be. So, non-convex functions are also a lot of
+[727.72:738.76] the have this particular elliptic smoothness assumption. All right? All right. Okay. So,
+[738.76:742.36] let's say you have this ellipticness. If you think about the majorization and
+[742.36:747.8] organization perspective dimension, you can, for example, majorize such functions and do
+[747.8:754.5999999999999] gradient descent with it, which is this algorithm. So, let's say think about having a set size
+[754.5999999999999:763.8] that is less than 1 over L, in this case, you can argue about convergence. All right? Now,
+[765.0:773.0] actually, I have the citation for this. All right. There is a table at the end of the lecture,
+[773.0:778.6] we're going to cover that has all kinds of bounds. So, use the citation from the other one,
+[778.6:783.64] and I'll try to keep the citation here later. All right. So, let's say you have a twice
+[783.64:789.24] differential L elliptic continues gradient function S, the thickest step size that is less than
+[789.24:796.44] equal to 1 over L. In this case, you can argue, we can see that the gradient method will converge
+[796.44:805.0] the first order stationary points. And the rate, how do we measure? We cannot measure how well
+[805.0:812.6800000000001] we do globally. What we can measure is how well we do with respect to the gradient norm,
+[812.6800000000001:818.12] because gradient norm, when it is zero, this is exactly when the gradient method says,
+[818.12:829.72] I'm done. All right. So, what we do give in terms of rates, we give for the norm of the gradient.
+[831.72:840.12] Does this make sense? The gradient norm goes down to zero, and gradient method starts.
+[840.12:849.4] Now, there are all kinds of theories that are not the gradient methods will avoid saddle points.
+[851.88:860.44] These, this is not where you want to end up. It turns out that the gradient methods from almost
+[860.44:865.72] all initializations, you can prove that it avoids these saddle points, on this started
+[865.72:873.88] episode point. The escape from a saddle point would maybe very slow, but it will avoid it eventually.
+[874.52:880.2] And we'll go to first order stationary points with the rate described here.
+[883.48:889.8000000000001] All right. Does this make sense? Yes.
+[889.8:901.16] So, the question also to the audience, how can we compute the richest constant? Oftentimes, we cannot.
+[905.4:911.4799999999999] So, because of this, I'm going to talk about adaptive methods that try to estimate the richest
+[911.48:919.8000000000001] constant while doing optimization. That will be the topic today also. Any other questions?
+[922.2:932.76] All right. What I mean is that the gradient norm will be less than equal to epsilon.
+[932.76:942.76] In this day, you will have a rate of 1 over k squared of k. You can convert that into the amount
+[942.76:950.2] of iterations you need to do as being ordered 1 over x1 squared. All right. You're going to be
+[950.2:956.6] careful about whether or not you square this norm. Some literature gives rates to the square
+[956.6:966.12] norms and they might differ. And it's really tricky. But I have a nice table of lower bounds
+[966.12:974.12] in the next lecture that you can use whenever in doubt. All right. Good. Are we having fun?
+[975.48:986.2] For a Friday, for 30 class. All right. So, one thing we've done with this particular thing is to
+[986.2:991.5600000000001] look at some real data. So, we had some Caltech collaborators that kind of made these devices so
+[991.5600000000001:999.48] that we could look at, for example, the things like your cell phones into blood and I'm trying to
+[999.48:1004.6800000000001] figure out if there is malaria or not. With the application being, in some of the third world
+[1004.6800000000001:1009.08] countries, we want to help, for example, by ignoring certain diseases a bit better.
+[1009.08:1017.32] All right. And with some real data, we can look into things like malaria and detect malaria
+[1017.32:1023.24] in cells. So, here is simple gradient descent. If like the real phase,
+[1023.24:1030.92] cytokrically problem, it works. So, the local minima that we talk about,
+[1031.64:1036.28] sometimes is okay. And in fact, there's like a whole literature on
+[1036.28:1042.76] Fourier cytokrically or phase retrieval that designed sampling mechanisms,
+[1042.76:1050.52] the gigantes as to how successful you will be depending on the samples you take on cell
+[1054.52:1058.36] but it is interesting that the simple style word on here still gives you good results.
+[1058.36:1070.12] All right. So, that was the wrap up for last lecture. Now, we continue with this lecture.
+[1071.56:1072.6] All right, questions?
+[1072.6:1092.6799999999998] All right. Again, recall. So, we talked about gradient descent. So, I guess I can go a bit faster here.
+[1093.3999999999999:1100.28] So, here's our algorithm. We were thinking about choosing a step style so that the iterates
+[1100.28:1107.72] xk would converge to x star and x star is in the set of minimizers. All right.
+[1111.24:1118.44] Good. Now, what I did mention was that you can exploit structure to provide upper bounds
+[1118.44:1124.92] on the convergent characterization of algorithms such as gradient descent. And the structures
+[1124.92:1130.76] that we discussed was this else movements, which I also just especially everybody's memory.
+[1130.76:1135.0] But there was also this flow convexity structure that we mentioned, which is a very important
+[1135.0:1139.4] structure because all of the sudden with this particular structure, the some gradient
+[1139.4:1146.1200000000001] rate of convergence of gradient descent becomes linear convergence. If you remember, there are
+[1146.12:1155.9599999999998] different convergence rates such as sublinear linear superlinear quadratic. And then there's this
+[1155.9599999999998:1162.4399999999998] gain where you know, you want to do less iterations, you end up doing more work. And what we're
+[1162.4399999999998:1167.8] going to do also discuss today is that what matters is the overall computational effort or the time
+[1167.8:1172.04] it takes to get to an excellent accuracy. And first of all, the methods actually give you a very
+[1172.04:1180.68] nice trade off. And I will explicitly characterize this today. All right. So that's a sum in that.
+[1181.6399999999999:1188.44] Okay. Now, this is also in the first homework that will be released next week. So
+[1191.08:1195.08] you will get to do and play with these things and see the next one. Okay.
+[1195.08:1202.36] Okay. So in the case of when f is from makes and l smooth, you had this particular convergence
+[1202.36:1209.48] rate, which is sublinear, one over k. It depends on the ellipsis constant l. The smoother the function is,
+[1211.24:1220.84] is it smaller or bigger l is? Who says the smoother the function is, the bigger the l is?
+[1220.84:1227.32] Who says the smoother the function is, the smaller l is?
+[1228.76:1237.08] Von Tishai. Yeah. Yeah. Smoother the function is smaller, the l is. If you remember the definition,
+[1238.36:1240.52] great. Okay. So let me do that to some.
+[1240.52:1253.72] The smoother the function is, is you change the query points, the gradient shouldn't change much.
+[1253.72:1259.8] Hence l needs to be smaller, the smoother the function is. This means that the less working will
+[1259.8:1266.04] have to do if you initialize it from the same distance. Yeah. This constant goes down the smoother
+[1266.04:1272.6] the function is, does this next sense? And of course the amount of work you need to do depends on
+[1272.6:1280.76] your initial distance. If you initialize far away, so we natural that we do take more iterations
+[1280.76:1302.44] in the bound shows this. All right. In the case of strong comixity, if you were to choose of the step size appropriately, then you get this nice convergence rate. And what I did mention last picture was that the gradient method is special in the sense that if you were to use the split shift constant phase step size, which is one or
+[1302.44:1312.44] out without knowing if there was strong comixity, the gradient method still adapts and gives you a linear rate. I'll take it worse one.
+[1312.44:1321.44] So the distinction between the two rates, notice one is the square root of the other one.
+[1321.44:1333.44] Yeah. So you can literally set the step size to one or two without caring about what the strong comixity constant was.
+[1333.44:1340.44] All right. And it will still give you a rate, linear rate.
+[1340.44:1352.44] Okay. Is this the best you can do is the question. And it turns out that no.
+[1352.44:1360.44] What is the best achievable rate for a first order methods?
+[1360.44:1368.44] You're an extra or if you look at is introductory from exoplanization book in the first chapter, it goes over an example.
+[1368.44:1375.44] And he shows that if you construct versus examples that would resist.
+[1375.44:1382.44] So any algorithm that relies on a first order or a full information.
+[1382.44:1391.44] But even then the first order or a full is giving you enough information to attain what is called as the optimal rate here, which is on or case square.
+[1391.44:1399.44] And not that the gradient method only gets one over case. So there's a large step in here.
+[1399.44:1406.44] And in terms of strongly complex functions where we were talking about, for example, linear rate.
+[1406.44:1409.44] I just mentioned.
+[1409.44:1424.44] That if you were to set the step size to two divided by out plus you, you would get a rate like this one, whereas the lower bound has the square roots.
+[1424.44:1430.44] Which one is faster?
+[1430.44:1441.44] And the graded method doesn't give us the best possible rate that is that can be attained using first order information.
+[1441.44:1452.44] So what is the national question here? Is there an algorithm that attains these rates?
+[1452.44:1462.44] And if there is, why don't you know it?
+[1462.44:1468.44] That's the question I just said.
+[1468.44:1473.44] Accelerated gradient method can attain these rates.
+[1473.44:1481.44] But it turns out that, OK, so I will give you a spoiler, not simultaneously.
+[1481.44:1492.44] All right. So if you know that you have a little continuous gradient objective function, then what you can do is run the following algorithm.
+[1492.44:1500.44] Now for the audience here, because of the projector, which is showing some small.
+[1500.44:1507.44] So what the accelerated method does is keeps two sequences.
+[1507.44:1514.44] And what it does does something like an extrapolation.
+[1514.44:1517.44] And the way it goes is written here.
+[1517.44:1525.44] So here there are some constants floating around to simplify the discussion.
+[1525.44:1529.44] I'm going to put this as K plus one divided by K plus three.
+[1529.44:1539.44] Trust me, the whole theory works the same way. But there's like a whole literature about what you should use there.
+[1539.44:1546.44] But K plus one divided by K plus three, we find for our discussion today.
+[1546.44:1552.44] Meaning you start with some x zero y zero.
+[1552.44:1561.44] Then you do a gradient update and then you do an extrapolation set.
+[1561.44:1569.44] So let's say you take.
+[1569.44:1578.44] X plus one you were at some other XC before you look at the difference.
+[1578.44:1587.44] And then as the iterations goes, you add that.
+[1587.44:1589.44] XK.
+[1589.44:1593.44] You get Y K plus one.
+[1593.44:1597.44] And then you do the gradient update with this line.
+[1597.44:1599.44] And not predict.
+[1599.44:1603.44] A plus one.
+[1603.44:1612.44] If there is if you get some sort of a three gradient information by the differences of the sequence.
+[1612.44:1616.44] You see this extrapolation the way it is written.
+[1616.44:1623.44] So this particular quantity is K grows will convert towards one.
+[1623.44:1624.44] Okay.
+[1624.44:1627.44] So are you with me on this?
+[1627.44:1633.44] So in essence, when you do gradient update, you don't do the gradient update on these X's.
+[1633.44:1643.44] You do the gradient update with this extrapolated points.
+[1643.44:1645.44] Then call this accelerated grade.
+[1645.44:1658.44] And if we for the pain, this one or case squared rate.
+[1658.44:1665.44] I'll give you the precise answer on the next slide or so.
+[1665.44:1667.44] All right.
+[1667.44:1681.44] Good. What happens when you have strong convexity and not here that I'm still using model L as the step size in the gradient update.
+[1681.44:1686.44] All right.
+[1686.44:1698.44] If you do have strong convexity, then that extrapolation or co-think code momentum term.
+[1698.44:1709.44] Because remember, there's some inertia between you can build or you can consider this XC plus one minus XK as inertia.
+[1709.44:1716.44] And what you're doing here is literally you're taking the sequence and kind of pushing it further.
+[1716.44:1722.44] Yeah. Momentum.
+[1722.44:1730.44] There needs to be a precise constant described in front of that momentum if you have strong convexity or if you want to exploit the strong convexity.
+[1730.44:1743.44] And that is given by this square of L minus square of mu divided by square of L plus square of mu.
+[1743.44:1749.44] Yeah.
+[1749.44:1759.44] In that case, you will get the optimal convergence.
+[1759.44:1762.44] All right. Here's the key remark.
+[1762.44:1766.44] Our still is gradient descent is not a monotone method.
+[1766.44:1769.44] What does that mean?
+[1769.44:1779.44] Anybody want to guess?
+[1779.44:1782.44] Okay. I think the audience, some of the members of the audience got it.
+[1782.44:1785.44] If you think about gradient descent, the way we described it,
+[1785.44:1790.44] we showed this majorization and visualization perspective, which kind of meant that at every iteration,
+[1790.44:1794.44] you were not increasing the objective value.
+[1794.44:1798.44] And in fact, depending on the normal of the gradient, you were again,
+[1798.44:1808.44] keep the decrease the objective by how much?
+[1808.44:1821.44] I can't buy this much. Right. When you run the gradient descent, you get what is called as the descent lemma.
+[1821.44:1825.44] You were decreasing the objective value.
+[1825.44:1834.44] So if you think about the sequence of objective values, it was monotonically decreasing.
+[1834.44:1839.44] That's why the last body accelerated gradient descent method.
+[1839.44:1848.44] In fact, if you think about it, if you were to land on,
+[1848.44:1855.44] if X is worth to land on the optimal solution,
+[1855.44:1860.44] this momentum term is going to push it away.
+[1860.44:1873.44] You see this? Like by luck, let's say your XK plus 1 was on top of the optimum zero gradients.
+[1873.44:1878.44] But note where you're taking the gradient in the next iteration.
+[1878.44:1881.44] Not there.
+[1881.44:1889.44] As a result, you will see these kind of behavior in accelerated gradient descent methods.
+[1889.44:1898.44] You will come close. You will go beyond and you're like, oh no.
+[1898.44:1902.44] Turn back. Come close.
+[1902.44:1908.44] I'm going to go, oh no.
+[1908.44:1914.44] I'm supposed to lose around.
+[1914.44:1920.44] But you've been oscillating around while getting to the optimum at a faster rate.
+[1920.44:1923.44] That's an advantage.
+[1923.44:1927.44] Remember, we're interested in approximation anyway.
+[1927.44:1934.44] So if you fix the epsilon, you'll get there much faster even though you're oscillating around.
+[1934.44:1945.44] And I'm going to show you some examples.
+[1945.44:1953.44] And I should rule all some examples to make this point a bit concrete.
+[1953.44:1958.44] All right, global convergence of the accelerated gradient methods.
+[1958.44:1966.44] In this particular case, we have the same perpetrator as except a little square in the denominator.
+[1966.44:1971.44] We have the richest constant in the numerator. The smoother the function is, let's work.
+[1971.44:1974.44] You have to do.
+[1974.44:1977.44] Check.
+[1977.44:1981.44] The closer you initialize, let's work. You have to do.
+[1981.44:1986.44] Check.
+[1986.44:1994.44] How much do you have to do now square root of the amount?
+[1994.44:2000.44] Because each iteration.
+[2000.44:2011.44] Now gives you an increased advantage.
+[2011.44:2020.44] I imagine for a stable reason, the numerator was 100.
+[2020.44:2028.44] So to get an accuracy of one, in the gradient method, you need to do k is equal to 100 iterations.
+[2028.44:2038.44] In the accelerated method, can water difference this base?
+[2038.44:2042.44] Radical.
+[2042.44:2046.44] And in fact,
+[2046.44:2061.44] this is mainly the reason why maybe half of machine learning literature between 2005 and 2010 was literally all the problems that they gave before where we applied the accelerated gradient method.
+[2061.44:2071.44] Even though the accelerated gradient method was invented by your initial in 1983,
+[2071.44:2089.44] imagine that submitted to the nerve conference now, getting reviews like, well, we would never use this method because we have the interior point method that would give us further convergence reject.
+[2089.44:2094.44] That's literally what happened to the method.
+[2094.44:2099.44] All right, literally what happened to the method.
+[2099.44:2105.44] And it's funny because make I'll go on a little bit for here.
+[2105.44:2110.44] This is also what happened to neural networks.
+[2110.44:2116.44] If you look at machine learning books like the classic do the hard book.
+[2116.44:2128.44] I would talk for example, you should say nobody would use this.
+[2128.44:2133.44] And at the time, the literature was interested in the the single interior point method.
+[2133.44:2143.44] Now, at the end of the cost, there's like a bonus lecture that talks about discipline, the comics programming.
+[2143.44:2149.44] And there are some slides on explain what the interior point method is.
+[2149.44:2166.44] All right, it's the quadratively converging method that uses newton methods, a newton iterations, which I've also briefly talked about today, if time permits.
+[2166.44:2176.44] But imagine waiting for one hour to get a result versus I don't know, waiting seven to eight minutes.
+[2176.44:2181.44] Yeah, think they're good.
+[2181.44:2183.44] All right.
+[2183.44:2196.44] And then if you were to change the momentum term and set that momentum from to particular constant, then you get to the linear rate as advertised.
+[2196.44:2206.44] But the point I want to make is unlike the gradient method, you have to change the accelerated method to adapt the strong convexity.
+[2206.44:2222.44] Meaning, if you have a problem where there is some complexity, but you don't know the strong complexity constant, it may be better to run the gradient method.
+[2222.44:2230.44] Because ultimately linear convergence will be sublinear convergence.
+[2230.44:2250.44] The accelerated method needs to literally hard call the change so that it can exploit strong convexity. Is this clear?
+[2250.44:2260.44] And that patient to structure somehow the simple gradient method is better.
+[2260.44:2271.44] All right. Can you think of another situation where the gradient methods might be better?
+[2271.44:2280.44] Well, that's an open and a question will come you might say. So I'll give you another example.
+[2280.44:2288.44] It turns out that if you have errors in your gradient estimates, it may be better to use the gradient method. Why? Because it has no memory.
+[2288.44:2298.44] It's forgiving accelerated method, acutely errors for iteration.
+[2298.44:2305.44] So if you have bias radians, don't use the accelerated method.
+[2305.44:2311.44] You will converge the day bias location very fast.
+[2311.44:2316.44] All right.
+[2316.44:2331.44] Okay. So sometimes the picture is worth thousand words.
+[2331.44:2347.44] This quadratic signal regularized version with some constant. So if you recall, so the objective is something like this.
+[2347.44:2352.44] All right.
+[2352.44:2357.44] I don't know if this is visible to the audience at all. I mean, this is like an eye test.
+[2357.44:2365.44] 10 to 10 division. If you guys are young, so hopefully you can see it.
+[2365.44:2371.44] So when role is zero, this means that for a problem, which is dimensional to reducing.
+[2371.44:2378.44] So if you remember the matrix A is m by p, p is 2000 and is 500.
+[2378.44:2390.44] So the problem is only lip sheets not strongly complex in that case.
+[2390.44:2396.44] We can look at can we compute the liqueous constant?
+[2396.44:2399.44] Yes. Say yes.
+[2399.44:2402.44] Yes. Yes. Thank you.
+[2402.44:2417.44] The liqueous constant will be the spectrum norm squared of the matrix.
+[2417.44:2418.44] All right.
+[2418.44:2422.44] Now here's what the theoretical bomb gives us.
+[2422.44:2425.44] How the algorithm is going to perform.
+[2425.44:2428.44] This is what the gradient defense will do.
+[2428.44:2432.44] This is what the accelerated method was.
+[2432.44:2438.44] Now check this out at 5000 iterations.
+[2438.44:2445.44] You get this accuracy, which you can get maybe around 500 iterations.
+[2445.44:2453.44] You'd be accelerated method.
+[2453.44:2470.44] Yeah. All right. What happens and you have strong convexity.
+[2470.44:2478.44] This is the theoretical bound for L divided by K plus 2 squared times the initial distance squared.
+[2478.44:2483.44] So it's the hypothetical bound. Yes.
+[2483.44:2495.44] Which applies to this method.
+[2495.44:2500.44] All right.
+[2500.44:2504.44] Okay. So what happens when you have strong convexity?
+[2504.44:2508.44] The thing I want to highlight here's the gradient method.
+[2508.44:2510.44] It has linear convergence.
+[2510.44:2513.44] Here's the accelerated gradient method.
+[2513.44:2515.44] It has some linear convergence.
+[2515.44:2518.44] And as you can see, after this point.
+[2518.44:2523.44] The gradient methods will beat the accelerated methods.
+[2523.44:2538.44] Why? Because the accelerated method does not adapt to strong convexity.
+[2538.44:2542.44] And the bestest algorithm is here.
+[2542.44:2546.44] The accelerated method that adapts to strong convexity.
+[2546.44:2550.44] But you need to know the strong convexity constant.
+[2550.44:2555.44] Good.
+[2555.44:2557.44] All right.
+[2557.44:2560.44] I went terribly slowly today.
+[2560.44:2572.44] We're going to take a 15 minute break and then see what we can do in the rest of the time.
+[2572.44:2575.44] We're assuming recording.
+[2575.44:2581.44] All right. So we're going to assign the homework next week.
+[2581.44:2584.44] And you'll see homework is like do the mesh.
+[2584.44:2588.44] It has like bunch of parts and it's like very long.
+[2588.44:2591.44] Don't be afraid.
+[2591.44:2594.44] It's for three weeks.
+[2594.44:2600.44] And the way structure is that, you know, the first part is for week one.
+[2600.44:2603.44] The second part is for suit two and so on.
+[2603.44:2608.44] And if you're a maybe a late grammar.
+[2608.44:2609.44] Okay. You can do it.
+[2609.44:2613.44] But don't wait until the last minute.
+[2613.44:2619.44] Because we will be here discussing things to help you out.
+[2619.44:2621.44] Okay. All right.
+[2621.44:2624.44] Now let's get back to this.
+[2624.44:2630.44] All right. Apparently, even though I'm closer to the slides, I cannot see.
+[2630.44:2635.44] Curves is actually as somebody pointed out the thing that I was mentioning is the bound.
+[2635.44:2638.44] No, this is the bound.
+[2638.44:2641.44] And this is great in the sand.
+[2641.44:2642.44] All right.
+[2642.44:2650.44] So the bound for gradient sorry, accelerate method outperforms the performance of gradient descent in this case.
+[2650.44:2653.44] And kind of neat.
+[2653.44:2656.44] Point to things though.
+[2656.44:2659.44] Say yes.
+[2659.44:2665.44] All right.
+[2665.44:2668.44] All right. Just to summarize.
+[2668.44:2672.44] Depending on the assumption.
+[2672.44:2676.44] We assume the function has the structure out smoothness.
+[2676.44:2681.44] Gradient descent will give you one over K rate.
+[2681.44:2683.44] Accelerate is great in the sample.
+[2683.44:2692.44] And you want to work a square rate.
+[2692.44:2695.44] Now here's the kicker.
+[2695.44:2697.44] This one where all.
+[2697.44:2702.44] Remember is coming from comes from the list of costumes.
+[2702.44:2707.44] Sometimes you don't know what the list of costumes is.
+[2707.44:2713.44] And sometimes the function may be smoother in certain areas than others.
+[2713.44:2720.44] So maybe that thing to the local geometry may need to better set sizes.
+[2720.44:2722.44] So.
+[2722.44:2724.44] What I want to do today.
+[2724.44:2727.44] Well, in the rest of today.
+[2727.44:2732.44] And I'm pretty sure I won't be able to sit it into this 45 minutes.
+[2732.44:2735.44] There comes the dilemma.
+[2735.44:2738.44] So.
+[2738.44:2740.44] What do we do?
+[2740.44:2741.44] Okay.
+[2741.44:2746.44] So I'll cover some adaptive methods now, which we will be visits.
+[2746.44:2750.44] After talking about something called the products operator.
+[2750.44:2755.44] So as that the method is try to converge with these batteries like case squared.
+[2755.44:2759.44] Without knowing the underlying social function.
+[2759.44:2763.44] And this is what's online optimization.
+[2763.44:2768.44] Made a great deal of impact in offline comics optimization.
+[2768.44:2770.44] Right.
+[2770.44:2780.44] And we can do so by looking at the history of gradients and maybe sometimes accumulating their norms.
+[2780.44:2783.44] We can also adapt to local.
+[2783.44:2787.44] Smoothness by something called the nissen methods that.
+[2787.44:2795.44] Requires second order information, AKA action in this particular case.
+[2795.44:2799.44] But know that the new method while offering.
+[2799.44:2805.44] Oftentimes quadratic convergence, but not globally mind you.
+[2805.44:2809.44] Locally quadratic convergence.
+[2809.44:2815.44] It comes with great power comes great cost per iteration.
+[2815.44:2818.44] We'll talk about that.
+[2818.44:2821.44] So how can we better adapt to local geometry?
+[2821.44:2823.44] Here is one particular example.
+[2823.44:2825.44] Here's our function.
+[2825.44:2826.44] Effort.
+[2826.44:2828.44] It is a bit.
+[2828.44:2833.44] Rougher on this side than in this side.
+[2833.44:2835.44] But remember when we talk about.
+[2835.44:2837.44] Lipschitz constant.
+[2837.44:2838.44] We talk about the global.
+[2838.44:2842.44] Lipschitz constant meaning that it needs to be correct for every point.
+[2842.44:2845.44] And it means on the objective.
+[2845.44:2851.44] Hence, you know, if you think about Lipschitz constant giving you these quadratic upper bounds.
+[2851.44:2856.44] These quadratic upper bounds need to be valid also in this region also function.
+[2856.44:2859.44] And if you were to use such a quadratic upper bound here.
+[2859.44:2864.44] It looks like an overkill, doesn't it?
+[2864.44:2867.44] Say yes.
+[2867.44:2871.44] All right.
+[2871.44:2876.44] So this means that you're in this particular region where everything is smooth and then the.
+[2876.44:2881.44] But you're being very careful because somehow somebody told you that function.
+[2881.44:2887.44] Is rapidly changing somewhere else.
+[2887.44:2889.44] So if you look at the level sets of this function.
+[2889.44:2894.44] So here are let's say the level sets of equal objective value.
+[2894.44:2895.44] Right.
+[2895.44:2900.44] As you go out in the rings, the objective value increases.
+[2900.44:2901.44] All right.
+[2901.44:2903.44] What you're doing is you're putting these.
+[2903.44:2904.44] Terrible.
+[2904.44:2905.44] It's on top.
+[2905.44:2911.44] And you're starting from this point and then you're going to this point, which is.
+[2911.44:2913.44] Are we.
+[2913.44:2914.44] Tiny.
+[2914.44:2916.44] Tiny steps.
+[2916.44:2917.44] All right.
+[2917.44:2924.44] And if you remember the way the view the graded method that the Lipschitz constant was this majorization of quadratic bounds where.
+[2924.44:2927.44] The curve reaches determined by that constant owl.
+[2927.44:2932.44] All right.
+[2932.44:2942.44] And that L is the fit for all of the objective and hence you take smaller steps here.
+[2942.44:2946.44] Putting on my more few glasses.
+[2946.44:2951.44] What if it was possible to take bigger steps.
+[2951.44:2955.44] What if I told you.
+[2955.44:2957.44] All right.
+[2957.44:2961.44] So one thing you can try to do is see if you can put it.
+[2961.44:2963.44] Smaller constant here.
+[2963.44:2964.44] Right.
+[2964.44:2971.44] Remember the smoother the function is the smaller Lipschitz.
+[2971.44:2975.44] In that case, well, here's a local.
+[2975.44:2977.44] Quadratic bound.
+[2977.44:2979.44] Will it hold for the whole objective?
+[2979.44:2984.44] No, because somehow as you go farther away, it's not going to be a global upper bound.
+[2984.44:2990.44] But in the region of interest.
+[2990.44:2993.44] It is an upper bound.
+[2993.44:2995.44] Yeah.
+[2995.44:3001.44] So then what's the difference is of course the going like this tiny set we can take a bigger step.
+[3001.44:3005.44] Will that help.
+[3005.44:3007.44] Alias.
+[3007.44:3012.44] Excuse my French.
+[3012.44:3015.44] All right.
+[3015.44:3019.44] Now what if we even try to curve that purple.
+[3019.44:3026.44] That's why I've been showing these level sets because the two dimensional picture doesn't give you the whole intuition.
+[3026.44:3027.44] Right.
+[3027.44:3031.44] In this case, I am somehow isotropic.
+[3031.44:3036.44] I don't care about directions.
+[3036.44:3043.44] But what if I can take my purple or even like cheer it a little bit.
+[3043.44:3047.44] A better fit the curvature a little bit.
+[3047.44:3048.44] Yeah.
+[3048.44:3053.44] In that case, you can even take further steps closer to the optimum.
+[3053.44:3057.44] And in fact, if you were to use the Haitian here.
+[3057.44:3061.44] And if your objective was quadratic to begin with.
+[3061.44:3068.44] Starting from any point, you can directly go to the optimum one set.
+[3068.44:3069.44] All right.
+[3069.44:3073.44] One single.
+[3073.44:3075.44] Like the one punch man.
+[3075.44:3084.44] Some of you may get that reference.
+[3084.44:3086.44] Okay.
+[3086.44:3092.44] So I'm going to use an umbrella name for this for variable metric gradient descent methods.
+[3092.44:3097.44] And what they're going to do is they're going to take the gradient and somehow.
+[3097.44:3101.44] She with her own.
+[3101.44:3106.44] And then we'll get a direction.
+[3106.44:3111.44] And it'll use this direction and apply set size for updates.
+[3111.44:3117.44] All right.
+[3117.44:3121.44] I think the use P here in the previous lecture.
+[3121.44:3126.44] Maybe we should try to fix that one.
+[3126.44:3128.44] All right.
+[3128.44:3134.44] So we can use a different transformation at each iteration, hk.
+[3134.44:3137.44] And a different step size.
+[3137.44:3140.44] So what are the choices?
+[3140.44:3144.44] Well, one choice is.
+[3144.44:3151.44] H is equal to identities scaled by some lambda K.
+[3151.44:3158.44] In which case your step size will be alpha K divided by lambda K.
+[3158.44:3161.44] This is your inverting.
+[3161.44:3163.44] And then scaling.
+[3163.44:3169.44] But then this is none other than the vanilla gradient descent.
+[3169.44:3179.44] Meaning I just showed you some fancy or looking algorithm that kind of captures gradient descent as a special case.
+[3179.44:3183.44] Yeah.
+[3183.44:3191.44] It turns out though that you can do the step size actually per coordinate.
+[3191.44:3196.44] If you were to use not identity for some diagonal matrix.
+[3196.44:3199.44] What does that mean more come you ask?
+[3199.44:3201.44] Thanks for asking.
+[3201.44:3207.44] It means that you can imagine using a different step size for each of these coordinates.
+[3207.44:3211.44] So if the problem was.
+[3211.44:3215.44] Let's say nice there's smoother in some coordinates.
+[3215.44:3219.44] You can take bigger steps in those coordinates.
+[3219.44:3220.44] Yeah.
+[3220.44:3229.44] The slowest coordinate would not slow the whole thing down is what I am saying.
+[3229.44:3232.44] Yeah.
+[3232.44:3238.44] Next.
+[3238.44:3239.44] All right.
+[3239.44:3246.44] If hk is equal to the Hessian that is known as the descent method.
+[3246.44:3251.44] If it's an approximation of the Hessian.
+[3251.44:3254.44] We typically call them quasi newton method.
+[3254.44:3259.44] This flag newton method but not quite.
+[3259.44:3260.44] Yeah.
+[3260.44:3268.44] And if those approximations such as LBFGS which I used to cover in this particular lecture and the students would look at me as if I'm an alien.
+[3268.44:3272.44] They're in advanced material.
+[3272.44:3277.44] LBFGS is amazing.
+[3277.44:3281.44] You should know this.
+[3281.44:3296.44] G corresponds to gold far done gold far professor in Columbia University.
+[3296.44:3302.44] His mother's case was a Supreme court case in the US.
+[3302.44:3306.44] What is this email justice that died the two years ago.
+[3306.44:3309.44] She was the one that argued for it.
+[3309.44:3310.44] Yeah.
+[3310.44:3312.44] There's some historical remarks.
+[3312.44:3321.44] If you have a chance to have a lunch or coffee with Don I highly recommend a great guy.
+[3321.44:3323.44] Again, I'm going on the floor.
+[3323.44:3326.44] I'm going to do the questions.
+[3326.44:3330.44] All right.
+[3330.44:3339.44] What can we do if you don't want to compute the out the FGS updates and so forth.
+[3339.44:3345.44] So online optimization gave us certain ways to do this particular choices.
+[3345.44:3349.44] And I'm going to mention three algorithms now.
+[3349.44:3355.44] This is at the grad John Ducci at all.
+[3355.44:3357.44] Yeah, with your arm rest.
+[3357.44:3359.44] No, you're on singer.
+[3359.44:3360.44] For Eszler is an MRI guy.
+[3360.44:3367.44] It's you see your own singer who's a Princeton and Google.
+[3367.44:3369.44] And a lot for them.
+[3369.44:3376.44] What this algorithm does is literally accumulate the gradient norms.
+[3376.44:3381.44] So maybe there's like an identity each year, but it's a lot of some other cares.
+[3381.44:3385.44] RMS prop.
+[3385.44:3389.44] Is the weighted average of.
+[3389.44:3391.44] The gradient norms in the diagonal.
+[3391.44:3399.44] So you look at the individual square energy in the gradient and you accumulate it.
+[3399.44:3406.44] And then add them the some sort of a bi-expression.
+[3406.44:3416.44] I'm going to talk about Adam and RMS prop and other adaptive algorithms in much more detail in lecture six and seven or eight or whatever.
+[3416.44:3420.44] When we talk about new network training.
+[3420.44:3421.44] All right.
+[3421.44:3425.44] So for the time being one thing I would like to highlight.
+[3425.44:3429.44] Add them to is incorrect.
+[3429.44:3435.44] And there's another algorithm called MS grad that has some monotonicity constrained edit to this.
+[3435.44:3439.44] Which again won some best super war in ICLR.
+[3439.44:3445.44] Neither Adam nor MS grad are accelerated methods.
+[3445.44:3451.44] So if you were to apply them to a common mix problem, the accelerated gradient method will rip it apart.
+[3451.44:3454.44] You should know this.
+[3454.44:3460.44] This is not momentum.
+[3460.44:3464.44] They are not accelerated methods.
+[3464.44:3468.44] They don't get one over K squared rates.
+[3468.44:3472.44] If you apply them to a mix objective.
+[3472.44:3479.44] Hence if you have a comic problem, which you only know it's out smooth.
+[3479.44:3488.44] And better off with the accelerated gradient attempt, it will rip it apart.
+[3488.44:3494.44] And in fact, there is a.
+[3494.44:3497.44] One of our colleagues, Frances or Obama.
+[3497.44:3500.44] He has a nice blog.
+[3500.44:3508.44] He argues that the reason Adam performs spectacularly for new networks is that old initialization and everything in psychic.
+[3508.44:3511.44] Whatever Python learning.
+[3511.44:3514.44] Basically is optimized for it.
+[3514.44:3518.44] If you take other algorithms and I'm going to show you maybe.
+[3518.44:3520.44] They do just as fine.
+[3520.44:3521.44] It's not better.
+[3521.44:3526.44] And there are all of them that will guarantee to give you the case for a rate when you apply it to some objective.
+[3526.44:3529.44] They're also that the.
+[3529.44:3536.44] Yeah, I have one with Frances behind your levy and one of my patient students.
+[3536.44:3541.44] I was really well on new network training.
+[3541.44:3547.44] And if you apply to a comic solve middle, give you the case for a rate.
+[3547.44:3552.44] All right.
+[3552.44:3553.44] Okay.
+[3553.44:3563.44] So what is at the grad, which made a career for John Bucci, who is now a professor in Stanford.
+[3563.44:3568.44] John also works on statistical learning theory and minimax optimization.
+[3568.44:3576.44] This is not just one of the contributions he had, which made a great deal of impact when he was interning.
+[3576.44:3579.44] It's too old.
+[3579.44:3584.44] They needed to work with problems where you can't really confuse the luxury costumes.
+[3584.44:3585.44] What do they do?
+[3585.44:3588.44] They argued with online optimization.
+[3588.44:3597.44] They regret you would have optimization and taking certain steps to make sure you have what is called a subveneal regret.
+[3597.44:3600.44] Paper is beautiful.
+[3600.44:3604.44] If you're interested in this type of research.
+[3604.44:3606.44] Beautiful.
+[3606.44:3607.44] All right.
+[3607.44:3609.44] So what do you do?
+[3609.44:3613.44] You compute the gradient norm.
+[3613.44:3617.44] You accumulate the gradient norm.
+[3617.44:3620.44] Take the square roots.
+[3620.44:3623.44] You've done.
+[3623.44:3626.44] That'll be your set size.
+[3626.44:3631.44] And if you think about this, this is a very nice civilization.
+[3631.44:3634.44] For teacher or mechanism built in.
+[3634.44:3638.44] Suppose you're all yours and diverging because.
+[3638.44:3641.44] Your alpha is something large.
+[3641.44:3646.44] What will happen to the set size.
+[3646.44:3664.44] So what does it mean for an algorithm to diverge?
+[3664.44:3665.44] Exactly.
+[3665.44:3671.44] So I'm supposed to be from the organ.
+[3671.44:3684.44] What happens is that if the algorithm is diverging again, you start accumulating these gradient norms and it will try to decrease what the set size you had before.
+[3684.44:3696.44] And what happens when the gradient norms are going down fast.
+[3696.44:3703.44] Somebody asks me.
+[3703.44:3708.44] Suppose that every iteration the gradient norms kind of held.
+[3708.44:3720.44] Was it zeroes problem.
+[3720.44:3727.44] That's summation will converge their constant.
+[3727.44:3730.44] And the graded norms are going down fast.
+[3730.44:3732.44] What is that?
+[3732.44:3735.44] Like you need convergence.
+[3735.44:3736.44] Yeah.
+[3736.44:3742.44] Except that with other grads, if you want to have linear convergence, you better get rid of that square roots.
+[3742.44:3745.44] So that's the funny business about the grad.
+[3745.44:3752.44] If you want to have a strong convexity and this is all the open problems.
+[3752.44:3758.44] If you want it to have fast rates with strong convexity, you need to change that the graph.
+[3758.44:3761.44] But that is I'd.
+[3761.44:3766.44] If you want to have a one over K rate.
+[3766.44:3769.44] You can simply run this mechanism.
+[3769.44:3773.44] The gradients will normalize the set size.
+[3773.44:3782.44] And in fact, have a nice constant set size or near constant set size that you will get a one over K rate, which is beautiful.
+[3782.44:3788.44] Pretty clever.
+[3788.44:3790.44] Yeah.
+[3790.44:3793.44] So you can do this cordons wise as well.
+[3793.44:3798.44] So as opposed to working with the gradient norm in a scalar fashion, you can work with the.
+[3798.44:3804.44] Okay, so this is what it explains you can listen to do this cordon wise as well.
+[3804.44:3813.44] So if cordon wise gradients are large, that particular cordons will get a smaller set size.
+[3813.44:3824.44] Then the kind of paraboloids that you're fit will be paraboloids whose major axes will be aligned with the canonical cordon taxis.
+[3824.44:3830.44] You take a paraboloid and along the cordons will either stretch or push.
+[3830.44:3845.44] But then you will put something that is more tailored to the objective that you're looking into or you're optimizing.
+[3845.44:3846.44] Yeah.
+[3846.44:3855.44] So this is what it is at the grad with the diagonal set size. So in that case, you take.
+[3855.44:3865.44] Just how the linear algebra works to take the gradient put it into the diagonal matrix, accumulate that diagonal matrix, take the square root and multiply.
+[3865.44:3869.44] Sorry, it means there's an industry.
+[3869.44:3877.44] Yeah, but it is easy. So this is operation is it enough an actual matrix notification.
+[3877.44:3884.44] So that's an element wise notification with the forms.
+[3884.44:3891.44] All right.
+[3891.44:3895.44] Yeah, we have a finer treatment.
+[3895.44:3909.44] So here's the convergence characterization for at the grad.
+[3909.44:3911.44] All right.
+[3911.44:3920.44] Now.
+[3920.44:3926.44] So this is an old paper. You don't need to make this assumption. So some of our latest works, you move this assumption.
+[3926.44:3931.44] Maybe we should actually update this particular slide.
+[3931.44:3936.44] Assume that the sequence has a grad generator is bounded.
+[3936.44:3944.44] And if you stand the paper with this assumption now, it will get rejected.
+[3944.44:3957.44] So what does that mean? I mean that there's an X star and somehow you're all going to generate these X phase and you will assume that these X phase are within a bounded domain.
+[3957.44:3965.44] So assume this, right? Whereas the modern machine learning conferences will ask you to prove this.
+[3965.44:3975.44] This is the distinction. Yeah, again, he's a priority. It's supposed to say that I'm going to know that that's not going to diverge.
+[3975.44:3979.44] If that is the case, I will have a one over take guarantee.
+[3979.44:3987.44] All right. So here the guarantees in fact on the average sequence.
+[3987.44:3996.44] Meaning that you don't take the last iterative, which you would normally take. You average the sequence.
+[3996.44:4001.44] In that case, that's going to have the one over K guarantee.
+[4001.44:4009.44] And notice that the lips just constant the global lips just constant of the function is in the numerator to the smoother the function is.
+[4009.44:4023.44] And then notice that the work you need to do maybe proportional to this D squared, which is the bound on the worst systems.
+[4023.44:4033.44] So if you were to choose the wrong alpha to begin with and you're out or then jump away.
+[4033.44:4040.44] So until you're set size kind of push down because of the accumulation of the gradients.
+[4040.44:4048.44] Yeah, the work you have to do depends on the worst systems of iterates, which kind of makes sense.
+[4048.44:4056.44] You don't expect anything better.
+[4056.44:4063.44] Yes, yes, yes.
+[4063.44:4069.44] Can I have a yes.
+[4069.44:4072.44] All right.
+[4072.44:4079.44] Here's a kicker with that a grad like sub gradient descent.
+[4079.44:4089.44] You can run the algorithm with sub gradients. The algorithm will not care.
+[4089.44:4100.4400000000005] So the objective could have been non-smooth and somebody could be giving you sub gradients as opposed to gradients.
+[4100.44:4110.44] As a grad, will accumulate gradients, right? Gradient norms in this case sub gradient norms.
+[4110.44:4118.44] What happens in the sub gradient case even if you're at an optimum, somebody might be giving you an on zero sub gradient, right?
+[4118.44:4121.44] What does that does?
+[4121.44:4131.44] Oh, rather, we'd use the step size. What did we need in sub gradient descent for to converge?
+[4131.44:4153.44] We needed decreasing step size, which other grad gets automatically.
+[4153.44:4166.44] All right. Here's an algorithm for the undergrad.
+[4166.44:4171.44] It is by yours truly.
+[4171.44:4178.44] My PhD student, I do search.
+[4178.44:4184.44] I'm here to live.
+[4184.44:4192.44] The professor at Technion.
+[4192.44:4196.44] And Francis Bach guy.
+[4196.44:4202.44] I don't know if you guys know I'm one of the leaders in mission line.
+[4202.44:4212.44] So what I still a grad does is it does acceleration.
+[4212.44:4215.44] And it does adaptation.
+[4215.44:4219.44] And what it's cool about this algorithm is that it gets one over case square rate.
+[4219.44:4221.44] If your objective was smooth.
+[4221.44:4224.44] It will get one over square of K rate.
+[4224.44:4227.44] If your objective was non-smooth.
+[4227.44:4234.44] And it does not need to know this.
+[4234.44:4243.44] What I mean by that is that if you try to run the nestro accelerates gradient method with sub gradient information, it'll just diverge.
+[4243.44:4245.44] But not this method.
+[4245.44:4247.44] It will adapt to step sizes.
+[4247.44:4255.44] It will give you the optimal convergence rate without knowing if your objective was smooth.
+[4255.44:4263.44] In a way, it's the universal method.
+[4263.44:4265.44] All right.
+[4265.44:4273.44] So performance of all gore then.
+[4273.44:4277.44] What do we care in optimization?
+[4277.44:4280.44] Is to reach to some accuracy.
+[4280.44:4285.44] All right, I'm just simplifying things.
+[4285.44:4292.44] But I mentioned various methods.
+[4292.44:4296.44] They will have different number of iterations to reach there.
+[4296.44:4298.44] Some methods will be sublinearity converging.
+[4298.44:4300.44] Some other methods will be linearly converging.
+[4300.44:4303.44] Others are collaborative to converging.
+[4303.44:4309.44] What we care about in general is the time to reach epsilon.
+[4309.44:4315.44] And not the number of iterations to reach epsilon because.
+[4315.44:4324.44] Her iteration time makes a great deal of difference.
+[4324.44:4330.44] The rate determines the number of iterations to reach epsilon.
+[4330.44:4338.44] Yes, I talked about accelerated method case squared rate.
+[4338.44:4344.44] That will determine the number of iterations.
+[4344.44:4350.44] Perteration time.
+[4350.44:4356.44] Is computation of the gradient and some additions and subtractions, right?
+[4356.44:4359.44] Yeah.
+[4359.44:4365.44] In general, the combustion rate in perteration time is kind of like inversely proportional.
+[4365.44:4368.44] There's like attention between them.
+[4368.44:4375.44] Typically the faster the rate is the more work perteration you have to do.
+[4375.44:4378.44] So.
+[4378.44:4385.44] In the end, the fastest algorithm does not mean the algorithm that has the fastest rates.
+[4385.44:4387.44] And finding the fastest algorithm is tricky.
+[4387.44:4390.44] That's why people are willing to pay data scientists.
+[4390.44:4393.44] I don't know hundreds of thousands of.
+[4393.44:4403.44] In salaries.
+[4403.44:4407.44] Here is a my exhaustive comparison.
+[4407.44:4411.44] In the case of out smooth.
+[4411.44:4414.44] Here are the rates.
+[4414.44:4417.44] The gradient descent and other grad.
+[4417.44:4420.44] They both have one or K rates.
+[4420.44:4423.44] The most iteration complex.
+[4423.44:4427.44] It was the most costly operation for iteration.
+[4427.44:4430.44] Computational to gradient.
+[4430.44:4433.44] The rest is just two dimensional additions.
+[4433.44:4439.44] Yeah.
+[4439.44:4447.44] And computing the gradient has a direct proportionality to the data size.
+[4447.44:4450.44] All right.
+[4450.44:4455.44] Well, let's compare that to accelerated gradient methods.
+[4455.44:4458.44] What's the perteration costs?
+[4458.44:4462.44] Same thing and maybe one or two more additions.
+[4462.44:4471.44] Which one would you use?
+[4471.44:4475.44] You would use the accelerated method unless you know there's some complexity.
+[4475.44:4479.44] And then again tricky.
+[4479.44:4484.44] And I'm going to inject more poison into the system because when you have not some problems,
+[4484.44:4489.44] there are things like restrict the strong complexity.
+[4489.44:4494.44] So it's again tricky.
+[4494.44:4497.44] All right.
+[4497.44:4500.44] Good.
+[4500.44:4511.44] So in terms of adaptive methods, things like accelerator are awesome because you know.
+[4511.44:4516.44] It's a parameter fee algorithm in the sense that you don't need to know what the lips just constant is.
+[4516.44:4518.44] But it is.
+[4518.44:4523.44] It can still be tuned.
+[4523.44:4528.44] I'm trying to emphasize this because we sent the paper to a conference and one of the reviewers said that.
+[4528.44:4536.44] Oh, your parameter fee algorithm means that I cannot tune my methods.
+[4536.44:4541.44] So we have to explain in rebuttal that a parameter fee means doesn't mean it is real.
+[4541.44:4543.44] Promoters.
+[4543.44:4546.44] The suit tune a little bit.
+[4546.44:4548.44] The paper got in.
+[4548.44:4550.44] That's another story.
+[4550.44:4557.44] So these algorithms are adaptive in the sense that they don't need to know lips just constant stuff like this to set them up.
+[4557.44:4569.44] Okay.
+[4569.44:4575.44] Here what the new method does which I can like skips.
+[4575.44:4579.44] But maybe we'll be visit later on.
+[4579.44:4605.44] Locally mind you locally not globally news and method has one over K rate globally meaning that if you were to consider iterations like this.
+[4605.44:4618.44] Globally it will have one over K rate so when you run the new method initial iterations are painfully slow until it reaches something called.
+[4618.44:4628.44] The quadratic convergence region where the newton decrement non is less than or equal to some magic constant that comes from something called some coordinates that you don't.
+[4628.44:4631.44] I should not have said.
+[4631.44:4634.44] It is in the start material.
+[4634.44:4637.44] And I'll have quadratic convergence.
+[4637.44:4640.44] What work you have to do for iteration.
+[4640.44:4649.44] Well, solve this linear system.
+[4649.44:4657.44] What's the cost of solving a linear system.
+[4657.44:4669.44] So in the last three details look at the linear algebra supplementary where I talk about the cost of inverting matrices solving linear systems with the coin gradient methods.
+[4669.44:4688.44] You can even try to solve this problem with the excellent gradient method.
+[4688.44:4699.44] It's not just the computation of the gradient you have to compute the Haitian or somehow implicitly solve this linear system.
+[4699.44:4702.44] What's the cost of matrix inversion.
+[4702.44:4706.44] Let's say you have a key by P matrix.
+[4706.44:4718.44] If you allow stress and multiplications, what is it?
+[4718.44:4730.44] If you do villains and it goes down to 2.3 whatever and they recently do that one to buy some interaction.
+[4730.44:4737.44] Look at the linear algebra supplementary if you're interested.
+[4737.44:4741.44] All right.
+[4741.44:4746.44] So far so good.
+[4746.44:4751.44] Okay.
+[4751.44:4756.44] The gradient method for non-com makes optimization.
+[4756.44:4766.44] So let's say we have an F which is ellipsis gradient and your objective is non-combex.
+[4766.44:4771.44] Then you come on.
+[4771.44:4778.44] Was a PhD student at John Ducci was not faculty.
+[4778.44:4788.44] He has this beautiful math programming paper that has a bunch of lower bounds.
+[4788.44:4793.44] The lower bound is one over K but on the gradient norm.
+[4793.44:4799.44] So if you recall what this one.
+[4799.44:4804.44] I was saying that the gradient method will give this rate.
+[4804.44:4809.44] And I warned you about squaring things.
+[4809.44:4818.44] So the gradient method actually matches the lower bound here.
+[4818.44:4823.44] So let me hit you with some knowledge.
+[4823.44:4831.44] So if you think about it, gradient descent is optimal for non-combex problems up to some factors.
+[4831.44:4855.44] So the exploration concept is not really meaningful for non-combex problems.
+[4855.44:4868.44] But that does not prevent machine learners to implement stuff like that into algorithms and publish papers arguing about their generalization performance.
+[4868.44:4878.44] I'll review some of them later.
+[4878.44:4888.44] So gradient descent here is the basic summary.
+[4888.44:4894.44] For convex, else smooth, you get one over K.
+[4894.44:4899.44] You get one over K square that accelerated gradient descent.
+[4899.44:4903.44] For ellipsis gradient, but non-combex, you get one over K.
+[4903.44:4908.44] You get four accelerated methods you again get one over K. Why?
+[4908.44:4919.44] Because the lower bound says so.
+[4919.44:4920.44] Yeah.
+[4920.44:4923.44] So if somebody's talking about an accelerated method.
+[4923.44:4927.44] For just ellipsis smooth problems.
+[4927.44:4931.44] You can just simply say, what are you talking about?
+[4931.44:4939.44] What acceleration?
+[4939.44:4943.44] Question. Why should we study anything else at this point?
+[4943.44:4949.44] We have the optimal rate, algorithm.
+[4949.44:4951.44] It's closed.
+[4951.44:4954.44] Thank you for taking this fast.
+[4954.44:4956.44] I think we did well.
+[4956.44:4958.44] We gave 110%.
+[4958.44:4965.44] Yeah, done.
+[4965.44:4967.44] Good knowing you guys.
+[4967.44:4971.44] So I'll see you next time.
+[4971.44:4975.44] Maybe I'll straighten the joke a little bit, but.
+[4975.44:4977.44] I want to give you a motivation.
+[4977.44:4978.44] All right.
+[4978.44:4982.44] And here is the.
+[4982.44:4985.44] Here's the dilemma I have currently.
+[4985.44:4988.44] I want to continue this particular lecture.
+[4988.44:4990.44] Yeah.
+[4990.44:4995.44] So the question is do we continue this week or I go for next week's
+[4995.44:4999.44] recitation is the key question.
+[4999.44:5000.44] Okay.
+[5000.44:5003.44] So know that I don't have 85 slides.
+[5003.44:5006.44] It ends at 43 or so.
+[5006.44:5012.44] The rest is start slides for those of you want to get into the depths.
+[5012.44:5017.44] Yeah. So I have pretty much, I don't know.
+[5017.44:5023.44] 16 more slides.
+[5023.44:5029.44] And those 15 more slides are on SGD.
+[5029.44:5031.44] And that's the dilemma.
+[5031.44:5032.44] What do we do?
+[5032.44:5036.44] Do we stop today and continue next week?
+[5036.44:5053.44] Or do we sold your own and wrapped things up today?
+[5053.44:5063.44] It can't quite here.
+[5063.44:5071.44] But it was because.
+[5071.44:5075.44] Because it's the natural time to stop if we're not going to continue on,
+[5075.44:5078.44] which I will continue with this she need next week.
+[5078.44:5086.44] Or we take a brief break and then sold your own.
+[5086.44:5094.44] 16 slides, I would say maybe help an hour.
+[5094.44:5100.44] Or we don't take a break and literally sold your own from now on.
+[5100.44:5103.44] Because it is better for me, the kids are waiting.
+[5103.44:5114.44] You know, I got a cook and feed them.
+[5114.44:5117.44] I don't know.
+[5117.44:5119.44] I don't know.
+[5119.44:5122.44] Italian just want a noble price.
+[5122.44:5126.44] So maybe they know what they're doing.
+[5126.44:5129.44] No comments.
+[5129.44:5134.44] Now going once.
+[5134.44:5137.44] Going twice.
+[5137.44:5149.44] No comments from the chat.
+[5149.44:5151.44] I think.
+[5151.44:5159.44] All right, let's just do it now.
+[5159.44:5160.44] It's okay.
+[5160.44:5165.44] I think that for next week it is better.
+[5165.44:5167.44] I apologize.
+[5167.44:5172.44] Sometimes I just keep on talking.
+[5172.44:5183.44] But trust me, it's going to put tears into your eyes when you're done.
+[5183.44:5187.44] Let's continue.
+[5187.44:5189.44] So there are some chats.
+[5189.44:5191.44] We're going to finish and no break.
+[5191.44:5193.44] Please tears of happiness.
+[5193.44:5201.44] I'm going to continue.
+[5201.44:5204.44] And I don't mind if you need to leave.
+[5204.44:5208.44] Another problem is there's going to be a video.
+[5208.44:5210.44] Okay, continue.
+[5210.44:5216.44] So let's think about a problem where we don't have all the data like an offline optimization.
+[5216.44:5220.44] We're trying to do optimization where the data is just streaming in.
+[5220.44:5223.44] What do we do?
+[5223.44:5230.44] How can we run gradient methods if we can't compute the full gradient?
+[5230.44:5233.44] Here's an interesting twist.
+[5233.44:5237.44] Now if you remember in the statistical learning supervised learning,
+[5237.44:5240.44] what we were looking at was minimizing this expected risk.
+[5240.44:5242.44] We thought there's a population rest.
+[5242.44:5245.44] Yeah, the true risk.
+[5245.44:5250.44] So what we're doing is we just take the function, some function,
+[5250.44:5252.44] some function class for minimizing risk,
+[5252.44:5259.44] which is this expected value of some loss function where we look at the data and look at our prediction.
+[5259.44:5261.44] We minimize that.
+[5261.44:5263.44] So here's an abstract gradient method.
+[5263.44:5264.44] What would you do?
+[5264.44:5267.44] You will take the gradient of this risk.
+[5267.44:5274.44] What would be the gradient of the risks under some measure conditions that I will not get in.
+[5274.44:5282.44] Because the conditions of all the hairs are going to go haywire.
+[5282.44:5288.44] So you can think of running an abstract gradient method where you take the gradient of the loss to take the expectation.
+[5288.44:5297.44] But we cannot implement this because we do not know what the distribution is.
+[5297.44:5300.44] So.
+[5300.44:5305.44] What's sitting with this next step? So here's the mark of the portfolio optimization,
+[5305.44:5311.44] which form a novel price again, you know, for this mark of the sky.
+[5311.44:5313.44] What do you do?
+[5313.44:5315.44] All right.
+[5315.44:5320.44] So what you want to do is allocate from distribution.
+[5320.44:5327.44] So you have some limited amount of money and I'm going to take the simple case where we cannot sort the stocks.
+[5327.44:5331.44] So what you have is some sort of it's been saved correctly.
+[5331.44:5336.44] You have some allocation that you're trying to distribute over stocks.
+[5336.44:5339.44] And what you want to get is maybe some minimum return.
+[5339.44:5343.44] Subject to minimizing the volatility.
+[5343.44:5344.44] Yeah.
+[5344.44:5347.44] That's what it means to do the market design.
+[5347.44:5357.44] So you can minimize the volatility subject to your expected return greater than some threshold.
+[5357.44:5359.44] And what is the data?
+[5359.44:5363.44] The data is literally the sticker prices for all these stocks.
+[5363.44:5366.44] Arguably a very large problem.
+[5366.44:5367.44] Yeah.
+[5367.44:5370.44] Arguably also problems like that.
+[5370.44:5376.44] I mentioned this challenge by the spang when I talk about gans, for example.
+[5376.44:5386.44] Things like this are interesting to certain institutions like banks and things like renaissance.
+[5386.44:5389.44] Trading companies know.
+[5389.44:5390.44] Okay.
+[5390.44:5394.44] Massive data streaming can't compute the gradient.
+[5394.44:5396.44] What do we do?
+[5396.44:5397.44] All right.
+[5397.44:5400.44] Where the sarcastic programming comes into play.
+[5400.44:5407.44] So if you're taking Daniel Kruhn's class, this is going to be in like the later half of the semester.
+[5407.44:5410.44] Look forward to it.
+[5410.44:5412.44] Here's the.
+[5412.44:5414.44] Comics optimization problem.
+[5414.44:5420.44] We're going to assume that if is implicitly defined as an expectation over some random.
+[5420.44:5422.44] Function.
+[5422.44:5424.44] And again, we have the usual.
+[5424.44:5432.44] You know set up that the problem is proper and low bonder than from us.
+[5432.44:5437.44] Here's the algorithm's forecasted gradient descent is opposed to performing the full gradient.
+[5437.44:5441.44] What we're going to do is we're going to have a gradient estimate.
+[5441.44:5449.44] That in some sense is an unbiased estimate of the full gradient.
+[5449.44:5450.44] All right.
+[5450.44:5458.44] The capital G. This is the term that the expected value so the randomness is in this data.
+[5458.44:5464.44] It'll be clear in a little bit what I mean by that randomness in some parameter data.
+[5464.44:5471.44] Yeah, expected value with respect to this randomness will give us the full gradient.
+[5471.44:5473.44] Okay.
+[5473.44:5477.44] Good.
+[5477.44:5488.44] In this particular case, the cost of computing is for taxed gradient could be the data size cheaper than computing the full gradient.
+[5488.44:5491.44] So I'll again give you an example.
+[5491.44:5497.44] If this is an unbiased estimate is should be able to perform well.
+[5497.44:5504.44] And what I will tell you is that this is she is not a monotonic descent method either kind of like the absolute method.
+[5504.44:5509.44] So here's the key example.
+[5509.44:5514.44] Suppose that you're doing this empirical visualization with.
+[5514.44:5525.44] If I so we have a i the eyes to form the cell H X AI the I is our F I of X.
+[5525.44:5529.44] Yeah.
+[5529.44:5537.44] All right. In this particular case, if you were to randomly sample one data points.
+[5537.44:5541.44] All of these F I take one data.
+[5541.44:5545.44] Look at the loss function take the gradient of the loss function.
+[5545.44:5548.44] That'll be your G.
+[5548.44:5558.44] And in this case, if you think about it, the expected value of this is the full gradients.
+[5558.44:5563.44] Why? Well, you have any disease that you can choose from.
+[5563.44:5569.44] What's the probability of choosing anyone index?
+[5569.44:5572.44] One over N.
+[5572.44:5577.44] Then what would be the expected value of this?
+[5577.44:5582.44] It'll be you pick one J. The probability is one over N.
+[5582.44:5588.44] You take the summation for what that's the actual gradients.
+[5588.44:5591.44] So the randomness here is on the court.
+[5591.44:5595.44] The data point that we select.
+[5595.44:5600.44] Yeah, expected values actually equal to the food radians.
+[5600.44:5604.44] Beautiful. Yeah.
+[5604.44:5608.44] What's the duration cost?
+[5608.44:5612.44] It's independent of the data size now.
+[5612.44:5620.44] Except that it is dependent if you're actually selecting what's the cost of selecting one corner out of N coordinates.
+[5620.44:5622.44] Log in.
+[5622.44:5630.44] So it almost has no dependence and for all practical purposes.
+[5630.44:5632.44] Okay.
+[5632.44:5635.44] And the funny business is that.
+[5635.44:5646.44] So here's a least square problem, which is basically, you know, summation of a i transpose X, the I squared.
+[5646.44:5647.44] Yeah.
+[5647.44:5651.44] You literally pick a role of this matrix.
+[5651.44:5656.44] You compute the sarcastic radians and then you can actually iterate with it.
+[5656.44:5660.44] Yeah. That way you don't use the full matrix for iteration.
+[5660.44:5667.44] Just use a role.
+[5667.44:5672.44] So let's compare gradient descent to stochastic gradient descent.
+[5672.44:5673.44] All right.
+[5673.44:5677.44] Now what I'm doing here is that I'm doing.
+[5677.44:5682.44] Selections with replacement.
+[5682.44:5684.44] So what does it mean both?
+[5684.44:5686.44] Thank you for asking.
+[5686.44:5691.44] You can do the coordinates.
+[5691.44:5696.44] You do the gradient and you took the data back in there.
+[5696.44:5701.44] You can also do it without.
+[5701.44:5709.44] It would be something similar, but that theory is a bit more.
+[5709.44:5717.44] You can even do the stick glitch meaning you have the data point and just start going in the order.
+[5717.44:5723.44] If the data that is a serial, you may have a terrible convergence.
+[5723.44:5727.44] In general nature, sometimes it's not a serial.
+[5727.44:5730.44] It will work the same on the proper assumptions.
+[5730.44:5731.44] Right.
+[5731.44:5733.44] One is a CD with replacement.
+[5733.44:5735.44] The other one is the CD without replacement.
+[5735.44:5740.44] The other one is strictly as she need if you want to see the literature on this.
+[5740.44:5741.44] Anyway.
+[5741.44:5742.44] So.
+[5742.44:5749.44] Here I'm talking about an epoch which means going over the full data sets.
+[5749.44:5752.44] So meaning if you sample n rows.
+[5752.44:5755.44] Our matrix is n by p.
+[5755.44:5759.44] That will convert to one epoch.
+[5759.44:5769.44] If you do a CD by picking each row at a time and you do any terations of sgv that refers to one epoch.
+[5769.44:5777.44] Which will be basically one iteration of the gradient descent because gradient descent will go over the data.
+[5777.44:5781.44] Compute the gradient.
+[5781.44:5795.44] So when you do an epoch of sgv, you do the same amount of work as one iteration of gradient descent.
+[5795.44:5796.44] Okay.
+[5796.44:5799.44] Then how does the performance compare?
+[5799.44:5801.44] Well, take a look at this.
+[5801.44:5804.44] You start initializing it to same point.
+[5804.44:5811.44] And you go the fraction of epoch sgv already has 10 to the minus 4 accuracy.
+[5811.44:5816.44] Whereas the gradient method is computing the gradients.
+[5816.44:5819.44] It's computing the gradients.
+[5819.44:5821.44] It has computers.
+[5821.44:5825.44] The gradient does the gradient iteration.
+[5825.44:5828.44] Look at where sgv is.
+[5828.44:5833.44] Maybe it's a damaging fraction of the time.
+[5833.44:5839.44] If low accuracy is what you need, maybe the sgv is all you need.
+[5839.44:5845.44] Transformers should be.
+[5845.44:5849.44] See the difference?
+[5849.44:5855.44] Now this is magic.
+[5855.44:5862.44] But if you continue running it, gradient descent slowly but suddenly will be sgv.
+[5862.44:5865.44] But here I'm also doing a little trick.
+[5865.44:5869.44] sgv tests themselves will not only converge.
+[5869.44:5871.44] So you need to average them.
+[5871.44:5875.44] And with averaging sgv will give you a rate like that.
+[5875.44:5877.44] Okay?
+[5877.44:5879.44] I'll show you.
+[5879.44:5881.44] If you don't clean it.
+[5881.44:5882.44] Okay.
+[5882.44:5888.44] Again, for sgv characterizations, I will give you the very basic algorithm.
+[5888.44:5892.44] I think this is George Lennon, I think.
+[5892.44:5895.44] And I listened to them when they were first presenting this.
+[5895.44:5902.44] And Arkady was again a god of optimization was very excited about this method.
+[5902.44:5906.44] sgv.
+[5906.44:5909.44] You assume boundless of features.
+[5909.44:5914.44] Now if you want to write papers, you cannot.
+[5914.44:5918.44] At the time it was no.
+[5918.44:5923.44] We're going to assume boundless radians.
+[5923.44:5929.44] If the function is lipshys that will be fine.
+[5929.44:5932.44] Okay?
+[5932.44:5935.44] Let's have a step size that goes down with skirt of k.
+[5935.44:5941.44] You will have a log k divided by skirt of k rate in expectation.
+[5941.44:5950.44] We've got some convexities.
+[5950.44:5953.44] This is optimal.
+[5953.44:5960.44] All right?
+[5960.44:5968.44] If you have some convexity and now smoothness.
+[5968.44:5977.44] If you were to run sgv with constant step, you will converse the noise floor.
+[5977.44:5983.44] And if you're doing this, it's an overparameterized neural network where you know that the gradients,
+[5983.44:5987.44] the cast gradient norms also go down to zero.
+[5987.44:5993.44] With something called an inter-pollation condition or growth condition or strong growth condition.
+[5993.44:5998.44] That also goes away.
+[5998.44:6006.44] In fact, with one of my former postdocs, we have a paper that characterizes the growth condition.
+[6006.44:6015.44] It's an necessary and sufficient condition for sgv to have linear convergence of constant step size.
+[6015.44:6021.44] Anyway, moving along.
+[6021.44:6026.44] In the strong mix case, if you pick a step size that goes down with one over k rate,
+[6026.44:6033.44] you will have a one over k rate for sgv.
+[6033.44:6043.44] Beautiful.
+[6043.44:6051.44] Now, you can run with different, let's say, constants on top.
+[6051.44:6059.44] It turns out that two over mu is the optimal constant if you're running sgv on a strong mix problem.
+[6059.44:6065.44] It's in George Lamsaker with arcading and velocity.
+[6065.44:6071.44] And you can observe the problems of this.
+[6071.44:6079.44] So, the step size is something like access.
+[6079.44:6084.44] So, if you tell me, table count, I don't know if he has strong from me today.
+[6084.44:6085.44] What do I say?
+[6085.44:6092.44] If he's an adaptive, it makes a VV sign.
+[6092.44:6093.44] All right.
+[6093.44:6094.44] I'm sorry.
+[6094.44:6097.44] It's one over mu.
+[6097.44:6103.44] I thought it was one over two.
+[6103.44:6107.44] I got to check this.
+[6107.44:6109.44] So, don't trust me.
+[6109.44:6115.44] Even though I'm a doctor.
+[6115.44:6116.44] All right.
+[6116.44:6122.44] The key comparison here, which is critical is the following.
+[6122.44:6128.44] With gradient distance, you have a strong from mixed problem.
+[6128.44:6132.44] You can get a linear rate.
+[6132.44:6136.44] So, iteration complexity is linear.
+[6136.44:6143.44] To get an epsilon accuracy, you need something like one over epsilon number of iterations.
+[6143.44:6151.44] But remember that slow steps in terms of epochs.
+[6151.44:6157.44] Curriculation, you have to put through the gradient.
+[6157.44:6160.44] So, what's the total cost?
+[6160.44:6164.44] It's n times load of one over epsilon.
+[6164.44:6169.44] So, time to reach epsilon is n times.
+[6169.44:6176.44] If the problem was streaming, good luck.
+[6176.44:6179.44] If the data size is super large, good luck.
+[6179.44:6182.44] What is sgd?
+[6182.44:6185.44] One over k rate?
+[6185.44:6188.44] What's the iteration complexity?
+[6188.44:6193.44] What's the predatory complexity?
+[6193.44:6199.44] One data point.
+[6199.44:6202.44] So, what's the total time?
+[6202.44:6204.44] What's the rest of the time?
+[6204.44:6207.44] Which one is better?
+[6207.44:6211.44] The first one is only data set.
+[6211.44:6215.44] But for large scale problems, which one is better?
+[6215.44:6221.44] Sgd is better.
+[6221.44:6225.44] While your gradient method is trying to compute a gradient,
+[6225.44:6228.44] Sgd already found a good enough solution.
+[6228.44:6230.44] Think about it that way.
+[6230.44:6240.44] If you get traction of the time, you could get a good enough solution.
+[6240.44:6244.44] Now, motivation for sgd with averaging.
+[6244.44:6247.44] So, if you think about it, sgd has noise.
+[6247.44:6254.44] So, if you get close to the solution, sgd will be like random stuff.
+[6254.44:6259.44] It will have like a brownie and motion around the solution.
+[6259.44:6262.44] So, then the average, you can kill that brownie and motion.
+[6262.44:6265.44] There are various ways of averaging.
+[6265.44:6268.44] There's something called a tail averaging that people also like.
+[6268.44:6274.44] That has worse guarantees of performance better in practice.
+[6274.44:6280.44] Now, here's the castic gradient method.
+[6280.44:6285.44] If you have something square, someable, but divergent in absolute sum,
+[6285.44:6293.44] in particular, processing, we call this the Schwartz-Quartz.
+[6293.44:6297.44] The average it's will have this guarantee.
+[6297.44:6302.44] So, what happens when you put one over k here,
+[6302.44:6310.44] versus one over square root of k, think about it.
+[6310.44:6316.44] So, if you choose this, then you hit the bottom like that one.
+[6316.44:6327.44] That's where that look take comes.
+[6327.44:6330.44] Same thing in the strong comixity.
+[6330.44:6331.44] I'm kind of going fast.
+[6331.44:6339.44] So, if you have questions, just ask me next week.
+[6339.44:6343.44] If you're showing the comix, the average one will get the one over k,
+[6343.44:6350.44] really, with the look, k, and then then then.
+[6350.44:6357.44] All right, and you can see the practical performance.
+[6357.44:6364.44] I mean, it's stylized, in particular, example.
+[6364.44:6371.44] All right.
+[6371.44:6378.44] If you have a linear system,
+[6378.44:6383.44] sorry, in the stochastic case, there are some extenuating circumstances
+[6383.44:6386.44] to show some faster rates.
+[6386.44:6392.44] These are interesting, but.
+[6392.44:6396.44] I think it's probably no longer very about linear models.
+[6396.44:6399.44] So, maybe a more point now.
+[6399.44:6403.44] I think that the, when I will recove for SGD,
+[6403.44:6406.44] when I talk about neural network models,
+[6406.44:6409.44] we're going to have like a hands-on practice,
+[6409.44:6412.44] a recitation session on neural networks, by the way.
+[6412.44:6416.44] After that, we're going to again revisit some of these algorithms.
+[6416.44:6418.44] This is just for linear systems,
+[6418.44:6420.44] you can have faster rates.
+[6420.44:6423.44] Okay. Well, we come to the end.
+[6423.44:6427.44] Bear with me for maybe two more minutes.
+[6427.44:6431.44] With SGD, it turns out that the noise,
+[6431.44:6434.44] the variance of your gradient estimates,
+[6434.44:6435.44] matter.
+[6435.44:6438.44] So, if you have noisy gradients,
+[6438.44:6440.44] it will be harder for you to converge.
+[6440.44:6444.44] How can we reduce variance while using what is called as mini-back?
+[6444.44:6447.44] So, you don't just think one sample,
+[6447.44:6451.44] you pick a bunch of samples.
+[6451.44:6454.44] Then, you will again have an unbiased estimator,
+[6454.44:6457.44] but your variance will be smaller.
+[6457.44:6460.44] Next time, right?
+[6460.44:6462.44] That's called mini-back SGD.
+[6462.44:6470.44] There is an accelerated version that does not improve much theoretically.
+[6470.44:6473.44] Adaptive methods, add a grad,
+[6473.44:6476.44] automatically gets to the optimal rate.
+[6476.44:6479.44] In particular, accelerate the grad,
+[6479.44:6481.44] the adaptive method that I mentioned.
+[6481.44:6483.44] If your gradients are noisy,
+[6483.44:6486.44] it will give you again the optimal rate.
+[6486.44:6490.44] If there was no noise in the gradients,
+[6490.44:6493.44] it will give you for a smooth function case squared rate.
+[6493.44:6495.44] If the gradients are sub-gradients,
+[6495.44:6497.44] you will get the square root of k-rate.
+[6497.44:6499.44] If you have a statistic gradients,
+[6499.44:6501.44] it will give you one of those square root of k-rate.
+[6501.44:6503.44] So, using adaptive methods.
+[6503.44:6506.44] For non-comics problems on the gradient norm,
+[6506.44:6510.44] you will get a square root of k-rate with SGD.
+[6510.44:6513.44] And that will match the lower bounds,
+[6513.44:6516.44] which is my last slide today.
+[6516.44:6521.44] So, here's a compendium of lower bounds.
+[6521.44:6524.44] For optimization,
+[6524.44:6528.44] the deterministic and catastrophic oracles,
+[6528.44:6533.44] it turns out that if you have a deterministic oracle
+[6533.44:6535.44] like gradient descent,
+[6535.44:6538.44] on the gradient norm,
+[6538.44:6542.44] you have this epsilon,
+[6542.44:6545.44] monomer epsilon squared.
+[6545.44:6547.44] But for the stochastic gradient,
+[6547.44:6551.44] we have epsilon to the four.
+[6551.44:6555.44] And SGD will get this,
+[6555.44:6558.44] and as I showed,
+[6558.44:6561.44] gradient descent gets this,
+[6561.44:6564.44] on the non-comics problems.
+[6564.44:6566.44] But no, this,
+[6566.44:6570.44] if the problem is this finite sum,
+[6570.44:6576.44] SGD will give you a faster rate,
+[6576.44:6580.44] as if you're using a deterministic oracle.
+[6580.44:6582.44] Beautiful.
+[6582.44:6585.44] Not only you get this faster rate,
+[6585.44:6587.44] but per iteration costs,
+[6587.44:6591.44] does not depend on the full data size,
+[6591.44:6597.44] which is mind-blowing.
+[6597.44:6599.44] All right.
+[6599.44:6602.44] And then, if you have additional smoothness assumptions,
+[6602.44:6605.44] such as lookshift, test yarn, and so on,
+[6605.44:6608.44] so forth, you get these weird rates.
+[6608.44:6611.44] Math programming, your IPRMON paper.
+[6611.44:6614.44] It should be two of them.
+[6614.44:6617.44] So,
+[6617.44:6619.44] I put them, well,
+[6619.44:6622.44] I published one of my PhD students,
+[6622.44:6624.44] after forcing him too much,
+[6624.44:6626.44] he put them so that we don't have to.
+[6626.44:6627.44] They're here.
+[6627.44:6629.44] You can take a look for later.
+[6629.44:6631.44] All right.
+[6631.44:6635.44] So, the rest of the lecture is advanced material.
+[6635.44:6637.44] There's a lecture on Monday.
+[6637.44:6639.44] Thank you for suffering through,
+[6639.44:6642.44] and it turned out to be 20 minutes.
+[6642.44:6643.44] Yeah.
+[6643.44:6647.44] There's some beautiful material here about enhancements,
+[6647.44:6651.44] adapt to restart for accelerated methods for exploiting.
+[6651.44:6655.44] There's some more examples on add a grad, add them,
+[6655.44:6658.44] and all that jazz.
+[6658.44:6662.44] If interested, take a look.
+[6662.44:6667.44] You're not responsible for it in this course,
+[6667.44:6670.44] but it's there for you to see.
+[6670.44:6671.44] Okay.
+[6671.44:6675.44] And my wife is worried that I am late.
+[6675.44:6680.44] So, I'm going to stop.
+[6680.44:6683.44] Oh, no.
+[6683.44:6700.44] I'm not going to stop.
+[6700.44:6701.44] I'm sorry.
+[6701.44:6704.44] I'm sorry.
+[6704.44:6707.44] I'm sorry.

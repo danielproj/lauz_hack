@@ -1,0 +1,33 @@
+﻿@*@page "/counter"*@
+
+<PageTitle>Counter</PageTitle>
+
+<SfPdfViewerServer @ref="pdfViewer" DocumentPath="@DocumentPath" Height="100%" Width="100%"
+                   EnableTextSelection="true" IsExtractText="true">
+    <PdfViewerEvents OnTextSelectionEnd="OnTextSelectionEnd"
+                     DocumentLoaded="OnLoaded"
+                     ExtractTextCompleted="OnExtractCompleted"/>
+</SfPdfViewerServer>
+
+@code{
+    private string DocumentPath { get; } = "wwwroot/data/document.pdf";
+    private SfPdfViewerServer pdfViewer;
+
+    private void OnTextSelectionEnd(TextSelectionEndEventArgs args)
+    {
+        Console.WriteLine(args.TextContent);
+    }
+
+    private void OnLoaded(LoadEventArgs obj)
+    {
+    }
+
+    private void OnExtractCompleted(ExtractTextCompletedEventArgs args)
+    {
+        foreach (var pageTextContents in args.DocumentTextCollection)
+        {
+            pageTextContents.First();
+        }
+    }
+
+}

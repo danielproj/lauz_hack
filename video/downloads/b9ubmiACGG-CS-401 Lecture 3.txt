@@ -1,0 +1,948 @@
+~CS-401 Lecture 3
+~2022-10-05T10:48:09.190+02:00
+~https://tube.switch.ch/videos/b9ubmiACGG
+~CS-401 Applied data analysis - Fall 2022
+[0.0:6.72] Okay, welcome.
+[6.72:10.52] Adjust the microphone volume.
+[10.52:12.72] How is this good?
+[12.72:16.28] Okay, welcome to lecture three of ADA.
+[16.28:21.56] We're talking about data visualization today.
+[21.56:26.64] Before that, I show you the least visual slide of the whole lecture, which is as usual
+[26.64:33.64] some announcements reminder after tomorrow, by this Friday, you should find three teammates
+[33.64:37.16] for your teams of four for homeworks and projects.
+[37.16:40.72] And then once you found your team, please register on this link.
+[40.72:42.96] Every student must register individually.
+[42.96:49.2] If you're still looking for a team or for team members to complete your team, then
+[49.2:54.120000000000005] time time, you can use it for example, to find people.
+[54.12:59.72] If you absolutely can find someone, we can also try to help you, but actually really
+[59.72:62.48] just be a last resort.
+[62.48:66.72] Then just a little look into the crystal ball, what's up in the next weeks.
+[66.72:72.72] So in a week from now, we will project milestone one is due, it's already released.
+[72.72:77.08] So you have another week and a bit to finish that.
+[77.08:83.64] And then that same day, we will release homework one, which we'll do two weeks later.
+[83.64:91.36] Then the lab session on Friday, we will, let me say something about the lab session actually.
+[91.36:95.4] Some people asked to release the materials earlier, so you have more time to prepare.
+[95.4:96.8] We try to do that.
+[96.8:101.76] And from now on, we try hard to release the materials for the Friday lab session just
+[101.76:104.16] after the lecture on Wednesday.
+[104.16:107.96000000000001] So you have two days to look at this.
+[107.96000000000001:111.6] Then as always, we'll have the quiz in the first 15 minutes.
+[111.6:115.24] This one will be the first one that counts.
+[115.24:121.47999999999999] And then we'll do more material on data visualization, the topic of space class, and a bit on working
+[121.47999999999999:122.83999999999999] with data from the web.
+[122.83999999999999:126.6] And then we will also have office hours for project milestone one.
+[126.6:131.07999999999998] So if you want to talk to the team, to bounce your ideas off, or if you have questions about
+[131.07999999999998:132.24] the data sets and so on.
+[132.24:136.92] So this is a good time to ask in person.
+[136.92:139.64] As always, if you have feedback, leave it here.
+[139.64:143.11999999999998] And then let's dive into data visualization.
+[143.11999999999998:144.6] Why do we need data visualization?
+[144.6:148.27999999999997] So I see two broad purposes of visualization.
+[148.27999999999997:152.51999999999998] One is before and during the analysis, that's the upper point.
+[152.51999999999998:154.88] And the other one is after the analysis.
+[154.88:158.83999999999997] So before the analysis, you want to understand what's even in my data.
+[158.83999999999997:163.51999999999998] Are there any, is anything weird with the data, outliers, missing data, and so on.
+[163.51999999999998:166.72] So for that, it's great to look at the data, actually.
+[166.72:170.76] It should actually be always something you have to remind yourself of.
+[170.76:171.76] Look at the data.
+[171.76:175.28] Don't just run some commands, but look at the data.
+[175.28:182.48] Then once you have cleaned the data, visualization is great for finding relationships in the
+[182.48:186.04] data, between different variables, between different data points and so on, to discover
+[186.04:187.88] structure.
+[187.88:192.36] And then also to quantify values.
+[192.36:197.28] Because we are as humans, we are visual animals.
+[197.28:203.68] And so if we show ourselves and show others data visually, then this is a very effective
+[203.68:208.68] way of communicating quantities and qualities also.
+[208.68:215.12] And so for this reason, data visualization should really be an essential part of your data
+[215.12:216.84] analysis pipeline.
+[216.84:223.68] It's a part of several ones of these steps, explore the data, ask it interesting question,
+[223.68:227.24] definitely communicate and visualize the results.
+[227.24:229.32] That brings us to the next point.
+[229.32:232.88] Visualizations also useful once your analysis is already done.
+[232.88:236.4] Because what's the point of an analysis if you don't present it to anyone, right?
+[236.4:238.88] It's a bit like she reading a sketch.
+[238.88:243.16] You never look at it or tell anyone about it, then it's like you haven't done it.
+[243.16:247.64] So you need to inform and persuade others about your results.
+[247.64:253.76] And visualization is a very powerful tool to do that because you as well as your audience
+[253.76:258.36] are such and such visual beings.
+[258.36:265.68] And this is really also what we'll try to encourage you to do in the data story, which should
+[265.68:273.48] really focus on being engaging and telling a story also with visual support.
+[273.48:277.52] Of course it's not about telling some story, you know, like you tell kids the story, you
+[277.52:279.72] need to tell a true story.
+[279.72:282.88] And you shouldn't start from the story that you want to tell and then reverse engineer
+[282.88:283.88] the results.
+[283.88:290.96000000000004] But once you have the results, you want to present them in a convincing way such that things
+[290.96000000000004:294.24] come across as a coherent story.
+[294.24:299.68] So I want to start with something that with an unconventional example that I learned
+[299.68:307.0] about just last week, which is a very cool kind of data visualization called Garden of Eden.
+[307.0:310.28000000000003] So here you have eight of these plexiglass boxes.
+[310.28000000000003:313.96000000000004] They're airtight, so no air can come in.
+[313.96000000000004:316.96000000000004] And there is a little lettuce plant in there.
+[316.96000000000004:324.0] And then there is a tube that regulates the concentration of CO2 and different pollutants
+[324.0:325.84] in this little cube.
+[325.84:332.84] And it's mimicking, it's kind of cloning the composition of the air in one of eight cities.
+[332.84:336.4] So here you have New York, you have Ottawa, and then I think there's Tokyo and so on for
+[336.4:338.0] eight cities.
+[338.0:343.24] And so by looking at the plant, you can get a sense of what the air, how bad the air is
+[343.24:345.92] in that place.
+[345.92:349.24] And so this is the kind of data visualization, right?
+[349.24:353.84] Because it tells you something about the air in those places and in a very visual way.
+[353.84:358.64] It doesn't display numbers and it's maybe not as exact to the millimeter, but it's very
+[358.64:359.64] visceral, right?
+[359.64:364.03999999999996] It really appeals to our visual nature as humans.
+[364.03999999999996:371.32] So I'm showing this just to start with the breadth of visualization.
+[371.32:376.23999999999995] Not just line charts and bar charts and pie charts and so on, but visualization is really
+[376.23999999999995:383.23999999999995] anything that conveys information to humans.
+[383.24:390.6] So the previous example was really highly non-traditional visualization, but it was still a visualization.
+[390.6:396.84000000000003] More traditionally, you will have static visualizations, basically stuff that you can print on
+[396.84000000000003:397.84000000000003] a paper, right?
+[397.84000000000003:400.32] Like these various kinds of charts.
+[400.32:403.92] They always look the same.
+[403.92:408.48] More recently, more and more focus is shifting to interactive visualizations.
+[408.48:413.64000000000004] So this you can think of as visualizations that you need, let's say a web browser for in order
+[413.64000000000004:419.64000000000004] to show where you can hover your mouse and you can give input and you can change the display
+[419.64000000000004:423.32] based on the user feedback.
+[423.32:427.76] So this is becoming more and more popular, but today in this class, we will only look at
+[427.76:431.68] static visualization because this is kind of a bread and butter or meat on potatoes.
+[431.68:435.8] If you can't do static visualization, then you definitely shouldn't attempt yourself
+[435.8:439.04] at interactive visualization.
+[439.04:443.72] So we stick to the basics today.
+[443.72:447.48] We will spend only one lecture on visualization, but if you want to learn more, there's
+[447.48:451.88] actually an entire class on data visualization at EPFL.
+[451.88:455.52] It's, I believe it's part in the spring semester.
+[455.52:461.48] So there's time to sign up for it.
+[461.48:463.92] Today's lecture will be structured in three parts.
+[463.92:468.92] First, we talk about how to navigate this landscape of all the different chart types
+[468.92:471.6] and visualization types that are out there.
+[471.6:478.72] Then in the second part, we look at principles and best practices of visualization.
+[478.72:484.40000000000003] And then in the third part, we look at a small selection of use cases for data visualization.
+[484.40000000000003:490.16] I would say that for me, the takeaway should be after today's lecture, you should have
+[490.16:498.16] a better sense of when should you do what kind of visualization and what are the pitfalls
+[498.16:500.16] that you want to definitely avoid.
+[500.16:503.88000000000005] But I think that's about as much as I can do in 90 minutes.
+[503.88000000000005:508.84000000000003] If you want to go deeper, you need to follow up, for example, by taking that other class.
+[508.84000000000003:513.1600000000001] But I really want to make sure that we're all on the same page regarding the basics.
+[513.1600000000001:517.6800000000001] Because visualization will come up again and again in this class later on, even if the
+[517.68:523.28] lecture is not or the homework is not about visualization per se, you will always have
+[523.28:525.0] to visualize something.
+[525.0:527.4] So this will be a good foundation.
+[527.4:530.8399999999999] Okay, so part one, navigating the chart landscape.
+[530.8399999999999:537.52] What I show you here is one of those diagrams of which I show you several.
+[537.52:543.52] It's kind of a call it a toilet diagram because you can print it and attach it on the
+[543.52:544.68] toilet wall.
+[544.68:547.68] And then you can muse over it every time.
+[547.68:551.12] It's one of those things that you're not going to digest in one single goal, but you need
+[551.12:554.1999999999999] to look at it several times.
+[554.1999999999999:562.52] And the point is that if you want to visualize data, there isn't the best way of doing it,
+[562.52:563.52] right?
+[563.52:564.52] It depends on a lot of circumstances.
+[564.52:568.0] It depends on what's my data like, what kind of data do I have?
+[568.0:569.0] Is it continuous?
+[569.0:571.0] Is it discrete?
+[571.0:575.44] Is it how many dimensions does it have, and so on?
+[575.44:579.4] And then it also depends on what do you want to show about the data?
+[579.4:581.96] Do you want to show how the data is distributed?
+[581.96:584.6] Do you want to compare different data points?
+[584.6:589.2] Do you want to show how the data is composed?
+[589.2:593.52] Or do you want to show relationships between different variables?
+[593.52:597.52] And based on these, you can basically flow through this decision diagram.
+[597.52:599.28] This is not the goal diagram, right?
+[599.28:601.28] There are others out there.
+[601.28:605.8399999999999] It's maybe not even the best one, because it, for example, contains pie charts and pie charts
+[605.8399999999999:610.92] are really not so desirable.
+[610.92:616.48] But it gives you the general idea of what's out there and what are the questions that you
+[616.48:623.0799999999999] should ask yourself in order to identify the right kind of plot for your data.
+[623.0799999999999:624.0799999999999] And now let's dive in.
+[624.08:630.1600000000001] I won't go through this entire thing, but I'll basically highlight a few of these types
+[630.1600000000001:631.1600000000001] of charts.
+[631.1600000000001:634.9200000000001] So first, simplest kind of data, you have only one variable.
+[634.9200000000001:637.8000000000001] So every data point is only one number.
+[637.8000000000001:644.4000000000001] And one thing that you probably want to do if you have such data is to first look at
+[644.4000000000001:645.9200000000001] how is the data distributed?
+[645.9200000000001:650.4000000000001] What's the distribution over the different values?
+[650.4:654.88] And for that, your go-to tool is pretty much the histogram.
+[654.88:656.76] How does the histogram work?
+[656.76:661.72] You have on the x-axis, this is the range of values that your variable can take.
+[661.72:667.84] In case, in this case, it can go from minus something to about 12.
+[667.84:671.3199999999999] That's the largest empirical values that you observe.
+[671.3199999999999:679.1999999999999] And then on the y-axis, we discretize the x-axis to these equal sized bins.
+[679.2:683.6] And now, we simply count how many data points do we have in each of the bin?
+[683.6:685.6] That's what we put on the y-axis.
+[685.6:690.6800000000001] And that's a histogram.
+[690.6800000000001:700.36] It looks very similar to a bar chart, like a chart where for slightly different data,
+[700.36:704.48] though, for a bar chart, you would usually show you have categorical data.
+[704.48:709.8000000000001] You would say you have 20 countries, and you want to show how many people live in each country.
+[709.8000000000001:716.12] Then the countries have no meaningful, one-dimensional relationship here.
+[716.12:718.84] So they're really distinct categories.
+[718.84:721.6800000000001] Whereas in our case, the bins are ordered.
+[721.6800000000001:723.5600000000001] That's why we glue the bins together.
+[723.5600000000001:728.6800000000001] Whereas in a bar chart where you have categorical variables, you would put a little bit of a gap
+[728.6800000000001:734.0] between the bars in order to make it clear that there is no really no continuous relationship
+[734.0:736.56] between those bins.
+[736.56:745.92] OK, so then you can do things like smooth your bar chart with, let's say, by sliding a
+[745.92:751.08] kernel through here, like a smoothing function, and then you would get something that looks
+[751.08:752.08] smoother.
+[752.08:757.28] Sometimes, if you want to show, for example, several histograms overlaid over each other,
+[757.28:761.24] then first smoothing, that might be a good idea because then you just have to show a bunch
+[761.24:767.5600000000001] of lines on top of each other rather than these clunky bars.
+[767.5600000000001:773.64] And why is a histogram so useful because it allows you to get a lot of rapid insights
+[773.64:775.12] about your data?
+[775.12:779.4] For example, you can immediately recognize if your data is skewed.
+[779.4:786.2] That means if the values, if you tend to have values that are further away from the mean
+[786.2:792.0] in one direction, then the other.
+[792.0:795.9200000000001] You see immediately that these cannot be normal distributions, for example, because a
+[795.9200000000001:798.76] normal looks more like this in the histogram.
+[798.76:799.76] It's symmetric.
+[799.76:803.2800000000001] If you have something that's not symmetric, then you know immediately, oh, my data is not
+[803.2800000000001:804.88] normally distributed.
+[804.88:811.0400000000001] So I should be careful because maybe some of the, I'm not in the safe on the dry land
+[811.0400000000001:814.6400000000001] of normal distributions, which is about the nicest kind of distribution that you could
+[814.6400000000001:815.6400000000001] have.
+[815.64:823.24] Okay, so next one, we're still in the setting where we have one variable where each data
+[823.24:827.72] point can basically is represented by one number.
+[827.72:833.4399999999999] And now then the next kind of visualization for such data after histograms is box plots.
+[833.4399999999999:840.76] So you can think of this as a way of compressing a histogram into even less space.
+[840.76:841.76] Okay?
+[841.76:846.3199999999999] So what does the box plot represent? You have to imagine that all your data.
+[846.3199999999999:849.36] So this is the range of your data here.
+[849.36:851.76] This case from zero to 100.
+[851.76:858.48] Imagine that you sort all your data points and you put them, you place them on this axis.
+[858.48:865.16] And then you look where's the middle data point such that the data points are half of the
+[865.16:868.48] remaining data is on top and half of the remaining data on the bottom.
+[868.48:869.56] That's the median.
+[869.56:872.3599999999999] So that is plotted by this line in the middle.
+[872.3599999999999:877.76] Then if you look under which point do I have a quarter of the data, that's the end of
+[877.76:880.2399999999999] that of the box, the lower end of the box.
+[880.2399999999999:885.2399999999999] And then if you look at at what point do I have a quarter of the data above that's the
+[885.2399999999999:888.8399999999999] upper, the upper end of the box.
+[888.8399999999999:893.4] So inside the box, you have half of the data.
+[893.4:906.76] And these whiskers tell you where you have the full range of your data except for outliers.
+[906.76:916.3199999999999] So outliers you would draw separately because you don't want them to to secure your interpretation
+[916.3199999999999:918.88] of where the data truly lies.
+[918.88:923.6] And how do you find outliers, you have to have some rule for that.
+[923.6:929.08] So for example, you could say more than two or more than three standard deviations from
+[929.08:931.92] the mean, that's what I call an outlier.
+[931.92:935.64] And then you would first plot those and the remaining data would all fall between the
+[935.64:936.64] whiskers.
+[936.64:944.84] So you could think of this as a way of taking this and compressing it into one vertical
+[944.84:945.84] box like this.
+[945.84:949.32] And there's a lot of information.
+[949.32:951.4] Why are box plots so great?
+[951.4:958.2800000000001] Well for one, they give you a nice way of showing multiple distributions side by side.
+[958.2800000000001:963.48] For example, here we really see these are six data sets.
+[963.48:966.88] One, two, three, four, five, six.
+[966.88:972.24] Each of them is consists of one variable.
+[972.24:979.16] And we can very nicely compare the distributions of these different data sets by just putting
+[979.16:980.96] these boxes next to each other.
+[980.96:984.2] That would be much harder with histograms, right?
+[984.2:988.44] Good luck putting six histograms next to each other in a way such that you can really
+[988.44:992.24] grasp how the distributions differ with box plots.
+[992.24:994.6] That's very easily possible.
+[994.6:998.88] And then for example, we can easily see that so what is the show?
+[998.88:1010.48] This shows basically air pollution on the y-axis and then you see this for three different
+[1010.48:1015.68] cities and the air pollution is measured in two different ways carbon dioxide and methane.
+[1015.68:1022.48] And what we can see is very immediately that Los Angeles is much more polluted than New
+[1022.48:1023.48] York.
+[1023.48:1033.56] For example, half of Los Angeles, the L.A.'s measurements are above New York's worst measurement.
+[1033.56:1040.76] So this is this upper end of the whisker is New York's worst measurement and that black
+[1040.76:1045.32] bar is L.A.'s median measurement.
+[1045.32:1050.44] So this shows us that L.A.'s really much, much more polluted than New York.
+[1050.44:1058.0] So maybe in this card of Eden visualization, I guess they didn't even bother showing L.A.
+[1058.0:1065.3200000000002] Because the plant isn't even there anymore has rotten already in L.A.
+[1065.3200000000002:1069.3200000000002] When you do box plots, it's very important that your readers understand what the plot
+[1069.3200000000002:1072.0] elements really mean.
+[1072.0:1078.3200000000002] There are standard ways of, there's a standard language of what these mean, but a lay person
+[1078.32:1082.6399999999999] will often not know when a lay person who's not familiar with this kind of plot looks
+[1082.6399999999999:1090.12] at it, they might interpret your box as something like 95% confidence intervals or something,
+[1090.12:1094.6399999999999] but really it shows a much wider range than 95% confidence intervals.
+[1094.6399999999999:1097.1599999999999] Half of the data was inside the box.
+[1097.1599999999999:1102.36] So you need to be careful that your audience really understands what the box plot means.
+[1102.36:1107.96] And for that reason, many journals, many scientific journals require you to explain under every
+[1107.96:1113.6000000000001] box plot what the plot elements mean, even if there are standard interpretations for people
+[1113.6000000000001:1118.88] who are familiar with it, for those that are not, you must explain half of the data is inside
+[1118.88:1124.04] the box, all the data lies between the whiskers except for outliers and so on.
+[1124.04:1128.1200000000001] Okay, so next let's move to two variables.
+[1128.1200000000001:1131.88] So far we had one variable, so every data point was one single number.
+[1131.88:1138.8400000000001] Now we have two variables, so every data point is a pair of two numbers.
+[1138.8400000000001:1145.6000000000001] If your data set is small, then probably the best value to show, to look at the data
+[1145.6000000000001:1150.1200000000001] is to just plot your two dimensional points in a two dimensional plane.
+[1150.1200000000001:1156.3200000000002] So that is called a scatter plot where you have every point is consists of two numbers
+[1156.3200000000002:1161.8000000000002] x and y and you just plot those and it gives you a lot of information.
+[1161.8:1164.28] How your data is distributed.
+[1164.28:1167.12] We already saw this one in the last lecture.
+[1167.12:1171.6] If you have a lot of data, then scatter plots become tricky because if you draw a lot of
+[1171.6:1177.0] dots on top of each other, it just becomes a big black blob.
+[1177.0:1183.36] And so you lose all this information about the distribution of the data in the interior
+[1183.36:1184.36] here.
+[1184.36:1189.24] So then as I already pointed out last time, a good way of doing this of still showing where
+[1189.24:1198.36] the data lies is by doing a 2D histogram where you basically discretize your 2D plane and
+[1198.36:1205.56] then you count within each cell how many data points are there and then you somehow visualize
+[1205.56:1206.96] how many data points there are.
+[1206.96:1215.36] For example, by varying the size of the element that represents the cell or by varying the
+[1215.36:1216.36] color.
+[1216.36:1222.3999999999999] It is a 2D histogram because it is basically the same as a 1D histogram where we discretize
+[1222.3999999999999:1228.9199999999998] the line but in this case we discretize the 2D plane.
+[1228.9199999999998:1236.0] And since the paper is too dimensional in the 1D histogram case, we can use the second
+[1236.0:1240.6799999999998] dimension to show the counts but here we can't do it because we already need the second
+[1240.6799999999998:1244.4799999999998] dimension to show the second dimension of the data.
+[1244.48:1249.88] So we need to resort to something else like size or color instead of the height of the
+[1249.88:1253.64] bar but really it is the same kind of visualization.
+[1253.64:1261.68] There was an interesting question after the last lecture about why hexagons, why are
+[1261.68:1263.84] those best, why not squares?
+[1263.84:1269.04] You could also fill the plane with squares and I answered that question on Ed if you are
+[1269.04:1270.04] interested.
+[1270.04:1277.84] But because hexagons come the closest to circles while still being able to testulate to partition
+[1277.84:1281.2] the 2D plane completely without any gaps in between.
+[1281.2:1288.28] And why is something close to circles useful because in a circle the average data point
+[1288.28:1292.1599999999999] is closest to the center and that is something you want to have in this case.
+[1292.1599999999999:1295.56] You want to have these compact elements that represent your cells.
+[1295.56:1299.0] So that is why hexagons are ideally suited.
+[1299.0:1307.48] Okay, so we stick to two variables but now we look at data that is of a specific kind.
+[1307.48:1313.72] We are if you have data that is in a functional relationship then you can draw it as a line
+[1313.72:1314.72] plot.
+[1314.72:1321.36] What do I mean by data is in a functional relationship that means for every value of x there is exactly
+[1321.36:1326.64] one value of y or let's say at most one value of y.
+[1326.64:1332.6000000000001] Look how this was not the case for this data for the for 80 for x equals 86.
+[1332.6000000000001:1335.6000000000001] We actually had two different data points and that different y.
+[1335.6000000000001:1340.96] So this is not a functional relationship because there is no clear mapping from x to y.
+[1340.96:1345.16] If you have such a map clear function mapping from x to y then you can nicely plot your
+[1345.16:1347.8000000000002] data as a as a line plot.
+[1347.8000000000002:1350.4] So this is often useful for time series.
+[1350.4:1356.3200000000002] You can always make your data have a follow up function relationship by aggregation.
+[1356.32:1361.56] For example by taking all the data points that have the same x and by averaging them or
+[1361.56:1368.96] by taking something aggregate of them for in this case we could take for 86 we could take
+[1368.96:1373.6799999999998] the value here in between and then for every we would end up with a situation where for
+[1373.6799999999998:1377.4399999999998] every x we have exactly one y value.
+[1377.4399999999998:1384.4399999999998] Okay, so one and two is nice because that we can actually imagine we can plot it our
+[1384.44:1386.56] paper and our screens are two dimensional.
+[1386.56:1390.56] What do we do if our data is more than two dimensional?
+[1390.56:1398.76] One smart way is to break the visualization down into a multitude of 2D visualizations.
+[1398.76:1403.0800000000002] That's actually a very powerful way of doing it and what I'm showing you here is a so-called
+[1403.0800000000002:1404.68] scatter plot matrix.
+[1404.68:1409.76] So here we have data where data that is five dimensional.
+[1409.76:1421.16] To each data point consists of five numbers, five dimensions and how many pairs of dimensions
+[1421.16:1422.52] do we have?
+[1422.52:1428.04] We have five choose two that's five times four divided by two that's ten.
+[1428.04:1433.76] So that's why we have ten different combinations of two dimensions one two three four five six
+[1433.76:1436.72] seven eight nine ten.
+[1436.72:1441.16] That we can plot for each of these pairs we can do a scatter plot because now it's
+[1441.16:1446.24] we care for each of those we care only about two dimensions and that tells you a lot about
+[1446.24:1450.4] how these two variables are related to each other.
+[1450.4:1459.1200000000001] Why don't we show it in the why don't we show more scatter plots in the northeast corner
+[1459.1200000000001:1463.1200000000001] of the plot?
+[1463.12:1471.76] Yeah it's the same two variables so you will just get a transpose version right where
+[1471.76:1477.52] the x and the y axis are are changed but you can get that for free by just looking at
+[1477.52:1484.08] the plot like this right so why you don't have to waste any ink in order to visualize the
+[1484.08:1493.32] transpose and that's actually an important fundamental rule of data visualization be be
+[1493.32:1497.6399999999999] economized data ink right so you don't want to waste any ink even if it's on a screen and
+[1497.6399999999999:1505.1599999999999] there's no real ink involved it's still distracting so you should always use as much ink or non-white
+[1505.1599999999999:1506.8] as possible.
+[1506.8:1512.56] So instead we can use that space to show more useful information.
+[1512.56:1518.48] For example we can plot what is the correlation coefficient?
+[1518.48:1523.48] Who knows what a correlation coefficient is Pearson's correlation for example?
+[1523.48:1530.0] Surprisingly few okay so we'll talk about that next lecture but think about it as a measure
+[1530.0:1536.28] of how close that relationship between the variables is to align and we can plot that
+[1536.28:1545.84] number and so the point for one corresponds to this one point two seven one corresponds
+[1545.84:1555.08] to not getting confused myself to that one so it's always about that pair of variables.
+[1555.08:1563.8799999999999] And then on the diagonal why don't we need why don't we have scatter plots on the diagonal?
+[1563.88:1567.7600000000002] So only one variable you could still plot the variable against itself but that would be
+[1567.7600000000002:1571.1200000000001] a pretty boring plot because we know exactly what it would look like what would it look
+[1571.1200000000001:1575.8000000000002] like.
+[1575.8000000000002:1583.96] It's just a diagonal line because x equals x okay so instead we can use that space to show
+[1583.96:1590.8000000000002] more useful information namely we can show the histogram of that one variable.
+[1590.8:1598.96] You can think of this as when you project all those points onto this axis here and now
+[1598.96:1604.24] we look at how do we distribute over that axis that's what you can plot here in the diagonal.
+[1604.24:1613.52] So you have an amazing amount of information in this matrix of plot so I highly recommend
+[1613.52:1617.6399999999999] to use that tool of scatter plot matrices.
+[1617.64:1624.6000000000001] Another way of visualizing data that has more than two variables is stack plots.
+[1624.6000000000001:1628.6000000000001] Well actually it's more than two is a bit maybe sounds a bit more general than it is.
+[1628.6000000000001:1634.0] If you have three dimensions then these stacked plots are a good way of doing it.
+[1634.0:1638.16] Let's look at the left example so here our data has three dimensions.
+[1638.16:1644.5200000000002] Two of those dimensions are categorical and one is continuous.
+[1644.52:1649.96] So we represent the categorical one of the categorical dimensions is represented by
+[1649.96:1654.04] the index of the stack.
+[1654.04:1663.8799999999999] So you could imagine for example that you have nine countries here and then you have another
+[1663.8799999999999:1670.92] categorical dimension that corresponds to the color inside the stack.
+[1670.92:1677.92] So for example you could imagine let's say profession, imagine that there are four professions
+[1677.92:1681.8400000000001] that you care about then you have for every country.
+[1681.8400000000001:1688.64] You have the distribution over the four professions inside the bar.
+[1688.64:1693.2] But the distribution over the profession that is a continuous variable because it's a percentage
+[1693.2:1698.52] or it's a story continuous, it's integer because it's number of people but if you have
+[1698.52:1702.52] a large number of people then it becomes very fine.
+[1702.52:1705.92] It's in order.
+[1705.92:1713.8] It's a scalar variable basically something that you can represent via height, via lengths.
+[1713.8:1719.96] Whereas country, the others country and profession you couldn't represent that via some measure
+[1719.96:1721.76] like height.
+[1721.76:1727.36] So in this specific situation where two of your three variables are categorical and one
+[1727.36:1731.9199999999998] is continuous you can use this kind of stacked bar plot.
+[1731.9199999999998:1740.4399999999998] If you have two categorical and one sorry two continuous and one categorical then you can
+[1740.4399999999998:1748.1999999999998] basically make a continuous version of that by having this layer plot where now we don't
+[1748.1999999999998:1757.0] have discrete bars anymore but we have something that's continuous on the x and x.
+[1757.0:1763.72] Time would usually be the one that you see used as the x axis in this kind of plot.
+[1763.72:1770.2] So these are kind of special cases, three variables for certain kind but there are scenarios
+[1770.2:1774.96] that appear quite frequently that's why you've probably all seen these kind of plots many
+[1774.96:1778.52] times in the newspaper so it's good to be aware of them.
+[1778.52:1784.6] What do you do if you have more many more than three dimensions then one useful thing to
+[1784.6:1791.9599999999998] do is often to reduce the dimensionality of the data before you plot it.
+[1791.9599999999998:1798.9199999999998] The modulation for this is that oftentimes high dimensional data is really intrinsically
+[1798.9199999999998:1800.1599999999999] low dimensional.
+[1800.1599999999999:1805.32] It's embedded often your data lies in a low dimensional space that is somehow embedded
+[1805.32:1812.0] in a higher dimensional space and not all combinations of values are possible but the
+[1812.0:1818.28] different dimensions are often correlated with each other.
+[1818.28:1825.72] So in this case we have three data that is originally three dimensional but you see
+[1825.72:1832.6] that it really lies very close to a two dimensional plane in this that's embedded in this three
+[1832.6:1835.2] dimensional space.
+[1835.2:1841.24] We don't have any data here we're here that's far away from this plane and that's because
+[1841.24:1846.36] the data is correlated.
+[1846.36:1852.8] When you go in, when you move along the plane you always stay along the plane.
+[1852.8:1857.72] You don't have that degree of freedom of moving far away from the plane.
+[1857.72:1864.4] And if that's the case then principle component analysis is who has seen principle component
+[1864.4:1865.4] analysis?
+[1865.4:1866.4] Great.
+[1866.4:1889.8400000000001] So in this case one or two because the original is three you specify that number of dimensions
+[1889.8400000000001:1894.92] that you're interested in and then PCA gives you the subspace of the specified lower dimension
+[1894.92:1899.3200000000002] that captures the original data as space fully as possible.
+[1899.3200000000002:1905.76] And if you use as the lower dimension let's say two then you can actually visualize the
+[1905.76:1906.76] data again, right?
+[1906.76:1912.8400000000001] Like we can take that plane that's embedded in the in the 3D space here and we can just
+[1912.8400000000001:1919.4] use that plot the data in that plane and throw away that third dimension that's orthogonal
+[1919.4:1920.72] to the plane.
+[1920.72:1926.32] And then you can visualize the data again as though it was a two dimensional data set.
+[1926.32:1933.4] There's a caveat of course if your data doesn't really lie on a two dimensional subspace
+[1933.4:1938.84] then you haven't won much because then you threw out a lot of actually useful information
+[1938.84:1941.72] by going to two dimensions only.
+[1941.72:1949.6000000000001] So you should understand whether your data is really into dimensions only or whether two
+[1949.6:1951.76] dimensions capture a lot of the data.
+[1951.76:1959.12] Okay, so for a more complete account of the types of plots that are out there we just
+[1959.12:1960.9199999999998] glimpse at a small subset.
+[1960.9199999999998:1965.76] If you want to have a more complete account I recommend that you later on check out this
+[1965.76:1966.76] link.
+[1966.76:1971.3999999999999] It's one data set visualized in 25 different ways.
+[1971.3999999999999:1974.32] Note that these are not 25 good ways of doing it.
+[1974.32:1979.04] They're 25 ways of visualizing that data set and on purpose that person chose good as
+[1979.04:1983.1599999999999] well as bad types of visualizing that kind of data.
+[1983.1599999999999:1988.68] And the point that's being made here is that a wrong visualization might be even worse than
+[1988.68:1992.24] doing no visualization at all.
+[1992.24:1996.0] And I think it becomes very clear when you look at that.
+[1996.0:1999.36] For example this is quoted from that blog post.
+[1999.36:2003.92] It says you must hit the data focus and get to the point otherwise it just ends up rambling
+[2003.92:2008.44] about what it had for breakfast this morning and how the coffee wasn't hot enough and so
+[2008.44:2009.44] on.
+[2009.44:2016.96] So with that that's actually a nice segue to part two of the class which is about principles
+[2016.96:2023.8400000000001] and best practices of data visualization.
+[2023.8400000000001:2027.68] Something that I can really recommend are these books by Edward Tuft.
+[2027.68:2032.64] He's kind of one of the big people in data visualization.
+[2032.64:2034.64] He wrote these books.
+[2034.64:2038.4] He's actually a political scientist I think but at some point he got annoyed.
+[2038.4:2042.92] I like all the horrible visualizations that he saw and then he decided to dedicate part
+[2042.92:2048.04] of his career to educating people to do better visualizations.
+[2048.04:2049.88] There's a beautiful books.
+[2049.88:2055.84] They're like stuff that you want to have on your coffee table you know when you have people
+[2055.84:2062.8] over they can produce the books or in a dentist's cabinet you might want to have those books.
+[2062.8:2066.96] So they're really nice to look at and to spend some time.
+[2066.96:2072.0] There's a demo here if you want to look at that later showing some of those principles
+[2072.0:2077.48] by Tuft but I'll come back to his advice several times in this lecture.
+[2077.48:2083.2400000000002] So very fast which of these is brighter left or right?
+[2083.2400000000002:2085.2400000000002] Fast right.
+[2085.2400000000002:2086.2400000000002] True.
+[2086.2400000000002:2087.2400000000002] Good.
+[2087.2400000000002:2092.2] I think I should adjust on my screen on my laptop they always look indistinguishable and
+[2092.2:2097.68] then I come to this lecture and I try to do the trick and then always people get it right.
+[2097.68:2101.08] So I think I should make two great tones actually bit more similar.
+[2101.08:2107.7599999999998] But the point is that it's not always so easy to distinguish for humans which of two colors
+[2107.7599999999998:2111.7999999999997] is brighter than the other.
+[2111.7999999999997:2112.9199999999996] Why is that?
+[2112.9199999999996:2121.3199999999997] That is because of a law of nature basically that's called Vibas law and Vibas law quantifies
+[2121.32:2125.6400000000003] a concept called just noticeable differences.
+[2125.6400000000003:2131.36] The idea here is that as humans we don't have arbitrary resolution when it comes to
+[2131.36:2136.4] distinguishing between two stimuli where the stimulus could be visually it could be auditory
+[2136.4:2142.2400000000002] it could be like touch let's say location on your arm where I touch you or how hard
+[2142.2400000000002:2148.52] I press when I touch you all these kinds of stimuli people cannot tell them apart with
+[2148.52:2154.64] arbitrary resolution but there is a certain there needs to be a certain gap between the
+[2154.64:2161.8] intensity of two stimuli before a human can tell the difference and Vibas law quantifies
+[2161.8:2167.7599999999998] gives a relationship between how big that difference has to be in relationship to the
+[2167.7599999999998:2172.2] let's say like this if there is an intensity right now by how much do you have to increase
+[2172.2:2176.64] that intensity until someone can tell the difference that's what the law talks about
+[2176.64:2181.24] I is an intensity so think of it as the brightness of a color.
+[2181.24:2188.08] Delta I is the difference from that intensity I by how much I have to increase it such
+[2188.08:2196.2799999999997] that a human can tell the difference that I plus delta I is different from I and empirically
+[2196.2799999999997:2206.56] it is the case that that difference is a constant fraction of the current value of the intensity.
+[2206.56:2215.12] So what do I mean by that let's say you always if K equals 0.1 then that would mean that
+[2215.12:2220.64] you have to increase the intensity by 10% such that someone can tell the difference by
+[2220.64:2226.72] stop by a fixed amount you don't have to increase it by like 5 lumens or something
+[2226.72:2232.12] the intensity no it's about it's a fraction of the previous value so it's multiplicative
+[2232.12:2237.2] not additive right it's a percentage of the current value which you have to increase
+[2237.2:2246.92] in order to be able to tell the difference and so as a consequence humans really perceive
+[2246.92:2251.16] something that's really on a continuum we cannot if I if I take two points that are close
+[2251.16:2255.96] here you if they're close enough you can't tell the difference but at some point you'll
+[2255.96:2262.56] be able to tell the difference so we really have this kind of discretized version of the of
+[2262.56:2271.68] perception where the discretization happens in my duplicative steps so if the if the baseline
+[2271.68:2276.52] intensity is low then I have to increase it only by a little I have to add a small number
+[2276.52:2281.7200000000003] in order for you to tell the difference but if it's already bright then I have to add
+[2281.72:2287.7599999999998] an even larger difference such that you can tell the difference so there's this kind of saturation
+[2287.7599999999998:2297.2799999999997] as an example you might have to increase the intensity from 10 to 20 for someone to tell
+[2297.2799999999997:2303.4399999999996] the difference but you start from 100 you would have to then increase it to to what for
+[2303.4399999999996:2310.2799999999997] someone to tell the difference if I have to increase it from 10 to 20 to 200 exactly
+[2310.28:2320.0] right because the difference is 10 divided by 10 that's the I is 20 minus 10 divided by 10
+[2320.0:2325.36] that's one so I have to I have to always double the intensity in order to tell the difference
+[2325.36:2332.28] okay fast I'll use you again sorry compare the area of the circles how much bigger is the
+[2332.28:2338.1200000000003] right one it's bigger I think everyone can take that 20 okay that's actually pretty good
+[2338.12:2348.96] yeah it's good 16 because it's four times the radius and the area grows as a square so this
+[2348.96:2355.6] was pretty good I've had in previous classes people say like six or seven and you're destroying
+[2355.6:2365.44] all my my setups kind of the the point I'm trying to make is that humans are much worse at
+[2365.44:2372.68] distinguishing areas then they are at distinguishing lengths so the high and we're even worse at
+[2372.68:2377.2000000000003] distinguishing volumes from each other right like it happens to me all the time when I'm cooking
+[2377.2000000000003:2383.64] the cookbook says you take one large onion I only have these at me grow the only cell you
+[2383.64:2388.56] those small onions so I have to like kind of improvise and make a big onion from several small
+[2388.56:2393.56] onions and then it's always very tricky to like match the volume you know I have to like
+[2393.56:2399.04] all compare the radia and then to the power of three and so it's not like you're looking
+[2399.04:2404.72] at the two onions you can immediately tell by what factor one of them is bigger okay
+[2404.72:2410.96] so I have about five more minutes before the break so I skip this one actually the the
+[2410.96:2417.84] more general version of the statement that I just made about one-dimensional lengths versus
+[2417.84:2422.84] two-dimensional areas and so on is that there's a whole spectrum of kinds of stimuli that
+[2422.84:2427.2000000000003] people can distinguish and we're better for some than for others and what I'm plotting
+[2427.2000000000003:2439.56] here is a various kinds of quantities and I ordered them from least accurate to most
+[2439.56:2445.6000000000004] accurate and what I mean by accurate is that human perception is most accurate versus
+[2445.6000000000004:2452.8] least accurate in order to tell such quantities apart we're best at doing position so
+[2452.8:2457.04] if let's say you have a line and then you have the kerser point and there's a point we
+[2457.04:2463.2400000000002] can very nicely say which one is further to the left right that's that's about as easy
+[2463.2400000000002:2470.04] as it gets with lengths it's already a tad harder if you have two two bars you plot one
+[2470.04:2476.32] here you plot one there and you ask which one is higher then it's it's it's a bit harder
+[2476.32:2480.6800000000003] although not much it's basically the same as position but it already gets much harder
+[2480.68:2486.72] with slope compare the slopes of two things and then compare kind of pairs of slopes so
+[2486.72:2491.3999999999996] you have two angles which is the difference between two slopes and then another difference
+[2491.3999999999996:2501.52] between two slopes that's already harder area volume and we're worst at at distinguishing
+[2501.52:2508.64] colors and this is not only because different people have different abilities to distinguish
+[2508.64:2513.8799999999997] colors I get to that in a bit but also for someone with perfect vision it's just harder
+[2513.8799999999997:2519.6] for them to distinguish colors than to distinguish let's say positions so you should be aware
+[2519.6:2525.4] this is and this is not something that you can derive from like immediately from the
+[2525.4:2531.4] laws of physics this is something that needed to be established by psychology so people
+[2531.4:2537.2] have measured these things very carefully and so you must be aware of these like certain
+[2537.2:2542.64] basics of psychology and human perception in order to optimally cater to your audience
+[2542.64:2548.56] you want to feed them information in a way such that it's the most easily digestible
+[2548.56:2554.8399999999997] so best practice number one is try to find the simplest that is up most in this in this
+[2554.8399999999997:2562.2] diagram the simplest visualization dimension that gets your point across that's the first
+[2562.2:2570.96] question you should always ask yourself when you choose a kind of visualization then next
+[2570.96:2576.52] best practice is choose your axis wisely so what I'm showing you here you actually already
+[2576.52:2583.7599999999998] saw a version of this in the last lecture this is a time series time on the x axis and
+[2583.7599999999998:2592.16] on the y axis we have the popularity of the Wikipedia article about coronavirus of course
+[2592.16:2603.52] as you might expect it spiked a lot in 2020 let's draw here this line in January 16th of
+[2603.52:2611.8799999999997] January 2020 looks like after that it exploded right like in let's say in at the end of January
+[2611.8799999999997:2615.8799999999997] really the interest in coronavirus exploded but now I'm going to show you the plot on a different
+[2615.88:2625.28] y axis here the y axis was linear right every line is 100,000 above the other I'm now
+[2625.28:2632.84] showing you logarithmic axes where I'm showing you on the basically on the y axis captures
+[2632.84:2643.4] the logarithm of the popularity of the article and you still see the labels given in kind
+[2643.4:2648.28] of original so these are not logarithms but they are the original values but they're spaced
+[2648.28:2652.7200000000003] in different ways now right so the positions are logarithmic the values that I show are
+[2652.7200000000003:2657.48] still the original values of these you can still interpret these as page view counts
+[2657.48:2662.96] you see how it tops off at 1 million in both cases but now in order if I go up a fixed
+[2662.96:2669.7200000000003] number of centimeters I don't I don't add to the popularity but I might apply the popularity
+[2669.72:2680.08] okay so when I go up this much I always go times two times two times four and then here
+[2680.08:2689.68] is times eight so this is 800 right and now you see much more you see that oh it's actually
+[2689.68:2695.16] not the case the things just start exploding in late January we see that at the red line
+[2695.16:2701.72] we're already fully in the exponential phase of growth of interest in coronavirus so by
+[2701.72:2707.72] plotting the data this is exactly the same data but I'm plotting it on a different y scale
+[2707.72:2713.72] and all of a sudden you have much better resolution you can drill in visually much better
+[2713.72:2717.6] into what what really happened there for example you also see that there was this kind
+[2717.6:2725.48] of pre spike before the the red line you just don't really see this here it's it's too small
+[2725.48:2734.04] so choose your axis wisely always ask yourself should I choose linear or logarithmic axis
+[2734.04:2740.0] in some cases and we'll see an important case later you might also want to show the x-axis
+[2740.0:2746.04] as logarithmic in this case I'm only showing the y-axis as logarithmic and the x-axis
+[2746.04:2756.0] is the same logarithmic axes are especially in actually let me take a break here and we
+[2756.0:2762.12] come back at 915 here's a book that you might want to read the dreams of Ada the true
+[2762.12:2766.6] story of murder obsession and a small town
+[2766.6:2777.88] okay great
+[2777.88:2785.7999999999997] so choosing an axis wisely we'll continue with that remove this
+[2785.8:2796.6000000000004] I just talked about logarithmic axes those are especially useful if your data is heavy
+[2796.6000000000004:2804.6400000000003] tail if some so let's let me show what I mean with that a heavy tail distribution is one
+[2804.64:2817.48] where the technically where the the tails of the of the histogram fall off much more slowly
+[2817.48:2824.08] than exponentially fast okay so that you could define it technically like that but I prefer
+[2824.08:2832.64] a more practical definition where basically the data is heavy tailed if the mean is much
+[2832.64:2839.12] larger than the median why is that because the data is basically in those in such heavy
+[2839.12:2848.8399999999997] tailed cases there are a lot of very large values and they really screw up your mean basically
+[2848.8399999999997:2855.2799999999997] you add one of those outliers and they pull up your value whereas the median is not affected
+[2855.2799999999997:2861.0] by those right if I take the largest value in my data and I multiply it by one one trillion
+[2861.0:2865.28] then the mean will go through the roof but the median will stay unchanged actually because
+[2865.28:2872.48] the median is just just depends on the ordering of the data and not whether I as long as
+[2872.48:2882.36] I don't change the order of the data it's fine okay so when I say the heavy tail data
+[2882.36:2888.52] has a lot of of large values and this is not because of a single outlier if the data
+[2888.52:2894.04] is truly heavy tail but it's kind of fractal you remove one outlier let's say the largest
+[2894.04:2898.0] value but then the next one will come in and you remove that one and the next one will
+[2898.0:2906.36] come in so this is something that you see in in heavy tail data and in in such data a
+[2906.36:2913.28] lot of the interesting things happen in the tail in these large values but how can you
+[2913.28:2921.28] visualize such data such that you get enough resolution here without squishing all of
+[2921.28:2927.84] this range on the left together such that basically just becomes one spike right so that's
+[2927.84:2934.84] the trade off here and that's precisely when such logarithmic axes are useful for you
+[2934.84:2947.6800000000003] because you basically have different granularity at different regions and one kind so let's
+[2947.6800000000003:2952.56] get a bit more concrete now I talked abstractly about heavy tail data one particularly important
+[2952.56:2957.8] kind of heavy tail data is data that follows a power law who has heard of power laws before
+[2957.8:2966.28] okay some very simple you say that data is power law distributed if the distribution
+[2966.28:2972.1200000000003] follows this functional form so if the probability of a value as well we think here of one dimensional
+[2972.1200000000003:2977.84] data so every data point is represented as one number x and if the probability of number
+[2977.84:2985.84] x is proportional to x so basically one over x to some power okay so think of it as this
+[2985.84:2996.88] as the shape this would be roughly one over x I think and in such cases what we have is
+[2996.88:3002.2400000000002] that very large values are rare they're more rare than the small values right because the
+[3002.2400000000002:3007.76] shape of x to the minus some positive number is decreasing so the larger the values the
+[3007.76:3014.96] more rare the values but very large values are not very rare what do I mean by that very
+[3014.96:3021.48] large values would be very rare in an exponential distribution right where the tails of very fast
+[3021.48:3027.2400000000002] think of a Gaussian for example the tails are exponential and you basically never see
+[3027.2400000000002:3035.8] something that is five standard deviations from the mean but in a power law it's different
+[3035.8:3040.64] there you have although large values are more rare they're not very rare and to give you
+[3040.64:3045.72] an intuition of that compare let's say the distribution of body sizes human body sizes
+[3045.72:3055.64] versus the distribution of city sizes there's no human that is ten times as large as the
+[3055.64:3063.96] average human that just doesn't exist right but there are many cities that are ten times
+[3063.96:3070.56] as large than the typical city so city sizes span many orders of magnitude whereas
+[3070.56:3079.24] body sizes are very concentrated around around the typical value and so these many natural
+[3079.24:3085.08] phenomena are heavy tailed especially in particular follow power laws for example if you think
+[3085.08:3090.64] of the number of friends that someone has on Facebook you plot that distribution so every
+[3090.64:3095.36] person is represented as how many friends do they have now you plot that distribution
+[3095.36:3101.32] over number of friends then most people will have few friends but there are a few of these
+[3101.32:3109.6] social butterflies social stars that have tens of thousands of friends I don't know what's
+[3109.6:3116.2000000000003] the highest friend number on Facebook but the distribution spends many orders of magnitude
+[3116.2000000000003:3123.1200000000003] and so for dealing with this kind of data you need to know some tricks so for example for
+[3123.12:3129.2799999999997] small alpha so looked up in the in that formula up there if alpha is small then the curve is
+[3129.2799999999997:3138.64] flatter right and the higher you make it the faster it drops and for small alpha the mean
+[3138.64:3143.8399999999997] and the variance of the distribution are even are not even well defined so in particular
+[3143.8399999999997:3152.3199999999997] when alpha is less or equal than two then the mean is infinity it's ill-defined you can see
+[3152.32:3159.52] this with a pen and paper back of the envelope you just taken the expected value of that and
+[3159.52:3164.48] then you do the integral it's it's very easy to do like basically you have to increase that
+[3164.48:3171.52] alpha by so instead of minus alpha you have minus alpha plus two then because once you multiply
+[3171.52:3176.56] with x inside the expected value then you integrate over all x for the expected value and so that's
+[3176.56:3183.36] why when it's less than two then the mean is is infinity and if it's less than three then the
+[3183.36:3192.0] variance is infinity and most identified power laws in nature have exponents such that the mean
+[3192.0:3198.16] is well defined but the standard deviation is not well defined so typical power laws have an
+[3198.16:3207.6] exponent alpha between two and three and so that means you cannot for example you should never report the
+[3207.6:3212.3999999999996] variance of of a power law that that you have because it's not you will get some number because
+[3212.3999999999996:3219.2] you have a finite sample so you won't get infinity as a result but if you collected an infinite
+[3219.2:3224.16] amount of data then your variance would become ever ever larger the more data you collect which is
+[3224.16:3231.2] not the case for a Gaussian for example where you have the where you have the law of large numbers
+[3231.2:3237.68] such that you converge to an actual mean here there is no actual or variance here there is no such
+[3237.68:3242.64] thing and also even if theoretically the mean of your power law is well defined because your
+[3242.64:3248.3199999999997] exponent is between two and three then since you have a finite sample you will see very sensitive
+[3248.32:3255.04] to which samples you got and you get a very unstable estimate so if you know that your data is
+[3255.6800000000003:3260.8] heavy tail then it's much better to work with robust statistics like the median instead of the mean
+[3262.7200000000003:3271.04] and what could you do instead of reporting or let's not go there let's just continue
+[3271.04:3278.24] so another very important thing to know about power loss is that if you plot them so here we plot
+[3278.24:3285.68] them on linear axes this is linear and this is linear you always this is always increasing your
+[3286.88:3297.12] your y by 0.5 and this is always increasing your x by 2 if instead you plot this data on log log
+[3297.12:3306.56] axes so you plot log x versus log y then your data if it's really a power law will lie along a
+[3306.56:3311.7599999999998] straight descending line why is that you can see that very easily this is the definition of the
+[3311.7599999999998:3320.72] power law you just take logs on each side and basically you will turn the taking the log pulls your
+[3320.72:3328.08] your alpha down here and it splits the product into a sum and then you just get this and if you
+[3328.08:3334.56] now plot log y versus log x then this is just a linear function so this is a very nice property
+[3334.56:3341.9199999999996] because it also lets you figure out if your data is is not power law distributed if you draw it
+[3341.9199999999996:3347.52] on log log axes and it looks very different from a line then you know it cannot be a power law
+[3347.52:3357.7599999999998] so this is nice for diagnosing what kind of data do I even have one issue with doing that is that
+[3359.68:3366.48] data becomes more rare the larger the value of the of the data right because this is the
+[3366.48:3374.72] distribution the more large the value the more rare this means your estimates of of the frequency
+[3374.72:3380.08] of these large values will become ever worse more noisy because you have you have less data to
+[3381.12:3387.8399999999997] estimate how many what fraction of the data falls exactly on to value 100 you'll have fewer points
+[3387.8399999999997:3395.3599999999997] that have value 100 then you have points that have value let's say one or two so that your point your
+[3396.7999999999997:3402.3199999999997] your log log plots will get ever more fuzzy as you go to the right one way of mitigating that
+[3402.32:3410.4] is to increase so this is basically a histogram right where we now we've been the x axis we already
+[3410.96:3416.0800000000004] same thing here but now we increase the size of the bins okay the more we go to the right the larger
+[3416.0800000000004:3425.44] we make the bins that's and you can do this for example by taking bins where the bin size grows
+[3425.44:3432.88] by a factor by constant factor you make every bin twice as large as the one before and then you
+[3432.88:3438.7200000000003] the idea would be that roughly the same amount of data will fall into each of these bins and you
+[3438.7200000000003:3445.84] then get a smoother histogram that's one way of doing it but there's actually there's actually a
+[3445.84:3457.36] better way of doing it and this is via the ccdf the complementary commutative distribution function
+[3458.0:3467.6000000000004] so if you have your data x then the the ccdf of x measures what fraction of the data is at least
+[3467.6000000000004:3472.8] at large as x that's where the complementary comes in when you have a commutative distribution
+[3472.8:3479.04] function it is at most x you would then have probability of x being lesser equal than x but here we
+[3479.04:3486.4] can what we care about is greater or equal than x okay so now let's look at this other form of
+[3486.4:3492.32] representing the distribution and I would like this is our polling time I would like you to vote
+[3492.32:3504.1600000000003] what do you think the ccdf of a power law looks like when you plot it on log log xc double log xc's
+[3504.1600000000003:3514.7200000000003] so x you plot log y versus log x and the options are is it a concave shape like a logarithm or a
+[3514.7200000000003:3521.44] square root is it a straight line or is it a convex shape like an exponential or a parabola or
+[3521.44:3523.44] something like that
+[3551.44:3554.08] you
+[3581.68:3583.68] you
+[3591.92:3595.28] unfortunately I lost the key to this room so I can't look at the results right now
+[3597.68:3606.7200000000003] but I will do that later maybe we can have someone let me try this quickly see if I can do this on
+[3606.72:3614.16] the fly room key no
+[3614.16:3637.7599999999998] okay so let's stop this here five more seconds and to your answers
+[3637.76:3649.1200000000003] one two three four five okay thank you I will close the poll here and show the results
+[3651.2000000000003:3658.6400000000003] so a most people think that it has a concave shape then the next is straight line and then convex
+[3658.64:3669.12] shape okay thank you for that so the right answer is actually B if the data is a power law then
+[3669.12:3677.8399999999997] not only the pdf but also the ccdf will be a straight line you can see that quite easily by
+[3677.8399999999997:3683.04] just taking this integral in your head you don't have to really do it the point is that if you
+[3683.04:3690.16] have a polynomial and you integrate over it which is which is what you're doing by taking the
+[3690.16:3699.84] entire range and then you lower you increase the exponent by one right that's the that's the rule
+[3699.84:3705.7599999999998] of how you integrate polynomial and so with you with with that minus you pull out the minus it's
+[3705.76:3714.5600000000004] basically you go from alpha to alpha minus one but it will still be it will still be a power law
+[3714.5600000000004:3722.1600000000003] basically so the the ccdf of a power law is also a power law and then you will you can the ccdf
+[3722.1600000000003:3729.28] will be this straight line also but what's nice is that it's guaranteed to be monotonically
+[3729.28:3738.88] decreasing because the further you go to the right the less data you you have that's greater than
+[3739.6000000000004:3745.28] that value like what I have on the y-axis here is what's fraction of the data is greater than one
+[3745.28:3751.2000000000003] all the data is greater than one and as I move on the to the right here I keep losing data there's
+[3751.2000000000003:3757.6800000000003] less data that's greater than 10 then there's data that's greater than the nine and so on so this
+[3757.68:3763.9199999999996] means that it's much nicer to visualize because your curve won't get it's guaranteed not to
+[3763.9199999999996:3768.7999999999997] jitter but it will be monotonically decreasing so it's an even better way of figuring out whether your
+[3768.7999999999997:3777.3599999999997] data is a power law and to visualize it okay so I take someone else now don't worry maybe you
+[3777.3599999999997:3781.9199999999996] as a fast which time series has a higher mean value you have to go very fast okay as soon as you
+[3781.92:3787.76] see it I'll show you two times series left and right and you have to say which one is higher on average
+[3787.76:3802.0] on the y-axis fast left okay damn I really have to change my my slides I would have said right
+[3803.6800000000003:3811.28] if I just so the trick would have been you look at this and more the values are higher up in this
+[3811.28:3820.6400000000003] one but the idea is that you didn't you you then usually wouldn't see very fast that the y-scales
+[3820.6400000000003:3828.88] are very different here the y-scale runs from from five to 20 and here it runs from 0.1 to 0.5
+[3828.88:3837.84] so if I actually plot the data on the same y-scale then it's now very clear that the that you
+[3837.84:3846.1600000000003] were right that the data on the on the right is much smaller than the data on the left and
+[3848.48:3856.1600000000003] the point here is that you really in order to be honest about your results you should wherever
+[3856.1600000000003:3863.1200000000003] possible show data that you want people to compare to give them the same axis such as it's
+[3863.12:3869.12] actually easy to compare don't want people to have to carefully scrutinize from from where the
+[3869.12:3876.08] axis runs from where to where in order to make this impression you want the result to jump out
+[3876.64:3881.7599999999998] at the person immediately here it doesn't jump out I would say that the right that the data on
+[3881.7599999999998:3886.4] the left is much larger than on the right here it just jumps out there's no way to miss it
+[3886.4:3894.0] and I'm I'm hammering on this point because by default when students show me plots where they
+[3894.0:3900.0] have like multiple plots next to each other usually the axes are not the same because they just use
+[3900.0:3906.7200000000003] what what the plotting library does and it will change automatically choose the range of the data
+[3906.7200000000003:3911.76] the minimum and the maximum but you should not do that if you want to be honest about the data
+[3911.76:3918.5600000000004] another thing in order to make it easier to to parse what's in these plots is you need to label
+[3918.5600000000004:3925.44] your axes I didn't do it here I just showed numbers on x and y but you need to actually
+[3926.2400000000002:3935.0400000000004] make it explicit what those numbers represent so here on the x-axis we have days it wasn't clear
+[3935.0400000000004:3939.6800000000003] that this was a time series but now it's clear that this is a time series the same data as before
+[3939.68:3948.96] and on the y-axis we have number of pints of Guinness consumed say by the average person on that time
+[3949.9199999999996:3957.04] of the year and on the right hand side we have number of pints of Paulana consumed I picked that
+[3957.04:3967.12] because October Fest just finished and Paulana is one of the big brands there so it's maybe easy
+[3967.12:3971.3599999999997] it's obvious that you should label your axes but people keep forgetting also like so many people
+[3971.3599999999997:3976.96] come to an office and they show me plots that don't have access labels so consider getting this mug
+[3976.96:3985.2] so you never forget to label your axes now as a side note although the scales are on the same axis
+[3985.2:3992.3199999999997] of course the beer glasses are not the beer glass on the right is about twice as tall as the beer glass
+[3992.32:3999.92] on the left as you might know okay so now I want you to think for a minute if we have data like this
+[3999.92:4005.76] we have one time series that is much larger than the the other how can we still
+[4006.8:4014.0] show the details of both time series without using different y-axis so I don't want a resort
+[4014.0:4018.8] to this scenario here I would see the details of both time series right that's fine but I'm not
+[4018.8:4026.6400000000003] honest about it's not easy to compare the values of the left and the right time series so how can I
+[4026.6400000000003:4034.5600000000004] what can I do in order to show the details of both time series but have only one y-axis so
+[4034.56:4048.96] you know feel free to discuss with your with your neighbors and then we'll see what ideas you come up with
+[4065.04:4081.12] okay so any ideas what could we do
+[4086.64:4086.88] yes
+[4086.88:4096.24] leaders instead of pints but that just multiplies everything with the constant right so you would still
+[4099.52:4103.76] the ratio between the two wouldn't change that way so visually nothing would change
+[4106.16:4113.28] ah yes great I already gave you the answer before you want to do logarithmic y-axis so this is
+[4113.28:4123.44] the same data but I now have a logarithmic y-axis we're going up by this amount always multiplies
+[4124.16:4133.12] the y value by a constant and now here very nicely we can see all the details of each time series
+[4133.12:4140.32] and we're very we're honest about how they relate to each other um who wants to guess actually what
+[4140.32:4148.48] those spikes are in the Guinness time this is real data um who is it's not I should say one it's not
+[4148.48:4154.799999999999] the y-axis is not real it's not pints consumed but this is the number of google search queries for
+[4154.799999999999:4162.32] Guinness and for Paulana that time of day which I think as a proxy for for how much the consumption
+[4162.32:4166.719999999999] was to be completely fair about what I'm showing you who wants to guess what are the spikes in the
+[4166.72:4177.92] black times series when the Guinness book of word records comes out okay it's a nice hypothesis
+[4178.8:4189.2] by start through it's uh 17th of March it's uh St Patrick's Day and um and this what's that
+[4189.2:4198.32] which months is that the peak of you say October no but so October fast but October of course is in
+[4198.32:4206.48] September so this is uh spikes in September okay and we can see this very nicely um how the
+[4206.48:4210.72] the different times series behave all in one plot uh we could leather on more and more plots
+[4210.72:4219.84] to go on okay so then um next um um how which which beer is more popular Guinness or
+[4219.84:4226.56] Paulana I think it's quite clear you know Guinness lies completely above Paulana so um that would be
+[4226.56:4233.4400000000005] the answer but now what if I draw I draw uncertainty let's say I have I'm not certain about
+[4233.4400000000005:4239.52] each of these values there estimates from real data and now I quantify my uncertainty
+[4239.52:4248.88] um via error bars so I show like um how large we'll get to error bars next uh lecture so it's now
+[4248.88:4254.64] just say we want to somehow visualize how certain I am in that estimate and if that comes out
+[4256.160000000001:4262.8] very different from from that right but this is the same data the lines are exactly the the
+[4262.8:4270.08] solid lines are exactly the same but my my estimates of uncertainty are much larger here and if you
+[4270.08:4275.76] can show someone a plot like this it's just and you want to show that A C um throughout the year
+[4275.76:4280.4800000000005] Guinness is more popular than Paulana so in our bar we should sell actually we should get Guinness
+[4280.4800000000005:4286.64] on on the tap then if you show them this plot it's just much more convincing then if you show them
+[4286.64:4293.76] uh that plot and if you show them this plot then it's not so clear whether it's this or that because
+[4294.240000000001:4301.68] this is compatible with each of those so the um best practice here is show your data uncertainty
+[4301.68:4308.96] don't just show a point estimate but show how certain you are in your estimates and the tool for
+[4308.96:4314.4800000000005] doing that is error bars and I refer to next lecture when we talk about how we can actually compute
+[4314.48:4323.28] those error bars. Next best practice consider using small multiples. Small multiples are repetitions
+[4323.28:4330.0] of the same kind of plot but many of them show next to each other this allows you to very easily
+[4330.0:4338.799999999999] compare um compare different data sets what do we have here we have time series time on the x axis
+[4338.8:4347.52] and on the y axis of each of these plots we have media attention in the war that's going on in
+[4347.52:4358.72] that country over time and um note that it's the same y axis everywhere so although that will
+[4358.72:4365.68] that will result in let's say Mozambique being all flat so you don't see much resolution here
+[4365.68:4372.240000000001] but you can easily compare it with the others and you see that oh interest in Mozambique is much
+[4372.240000000001:4377.6] lower than interest in Libya if you care about the details here then you would have to choose another
+[4377.6:4389.52] uh visualization. Another thing that um I want to point out is the the color scheme we have two
+[4389.52:4394.72] versions of this is kind of a multiple of small multiples because this already is small multiples
+[4394.72:4400.4800000000005] but now we have two of them we have one where the y axis refers to English media attention on in
+[4400.4800000000005:4407.84] the other the y axis is French media attention and the position of the plots and the color of the plots
+[4407.84:4414.0] makes it easy to tie together what belongs together so if I want to compare now how is uh central
+[4414.0:4420.96] African Republic covered in English versus French then oh okay it pops out that magenta is the
+[4420.96:4424.88] thing that I should be looking at and then it becomes quite obvious that the French media
+[4424.88:4433.44] cares more about the conflicts in central African also Malib um in that case so use colors
+[4433.44:4441.6] consistently as a side note at the metal level note how I use color consistently in order to tell
+[4441.6:4447.6] you how to use color consistently because I use the green circle here and the green circle there
+[4447.6:4456.08] and then green text and not black text down there to make it obvious that with uh that the green
+[4456.08:4465.360000000001] label refers to the green uh the green circles maybe obvious but I see such small things done wrong
+[4465.360000000001:4472.8] way too often in order to remain silent about them okay so use colors wisely I told you use colors
+[4472.8:4479.4400000000005] consistently use them wisely also um you must choose the colors based on the information that you
+[4479.4400000000005:4487.2] want to convey if your data the values of your data are sequential then you should reflect that
+[4487.2:4492.16] in the choice of color there should be if you if there's continuity in values let's say you have
+[4492.96:4499.6] your your data is in reflect centimeters you can order that and you should reflect that in the
+[4499.6:4506.0] choice of colors such as for example brighter colors respond to more centimeters if your data has a
+[4506.0:4512.56] natural zero point then say temperature then you might want to have a different color in one
+[4512.56:4517.76] direction than the other to mark the uh the center point otherwise if you just do green it wouldn't be
+[4518.56:4523.84] if you have middle green as zero it wouldn't be natural right but if if zero is white and then
+[4523.84:4529.92] when it's above zero it becomes red and below zero becomes blue then it's very obvious that it
+[4529.92:4535.52] goes into different directions and then if your data is categorical that means there is no continuity
+[4535.52:4542.56] between the different values then you should also not imply that by choosing a certain color scheme
+[4542.56:4549.2] let's say you have seven countries then you wouldn't want to choose the first two schemes
+[4549.2:4554.24] because they would somehow imply that the countries are ordered in some way that you could
+[4554.24:4559.84] visualize with the brightness of color but that's not the case maybe it's the case if that's what you
+[4559.84:4565.76] want to convey richness of the country or um or temperature in the country if that's what you
+[4565.76:4571.44] want to convey then it's fine but if you just want to use countries as categorical labels then
+[4571.44:4577.92] you're much better off choosing something uh like the scheme at the bottom here where there is no
+[4577.92:4585.52] relationship between adjacent colors um you shouldn't um you shouldn't uh define the colors
+[4585.52:4590.72] yourself you should always use professional tools to pick colors there are these tools like color
+[4590.72:4595.12] brewer for example and you can be what I always do is I just go to google and I say like color
+[4595.12:4600.4800000000005] picker or something like that and then you get get to some online tool like this and there you can
+[4600.4800000000005:4606.32] basically navigate this color landscape and find the right color palette one thing I want to point
+[4606.32:4614.5599999999995] out is this little checkbox here colorblind safe um which is quite quite useful and she always check it
+[4618.0:4624.719999999999] why is that because 10% of males have some form of colorblindness it's not as prevalent for women
+[4624.719999999999:4630.24] it exists for women as well but it's much more prevalent for men so in this room we probably I would
+[4630.24:4638.719999999999] guess this is maybe 150 people so we probably have about 10 colorblind people in here
+[4640.5599999999995:4648.4] and for colorblind people the rainbow palette which is often used is about the worst thing
+[4648.4:4656.4] that you can do because for those of you that are not colorblind here is kind of a simulation of
+[4656.4:4662.96] what this color palette looks like for someone who has various kinds of colorblindness and you can
+[4662.96:4669.2] tell that for example red and red and green they're very close together for someone who sees the
+[4669.2:4674.32] the colors properly they're very different but for someone who's colorblind they're very similar
+[4674.879999999999:4683.28] and so it's a it's an absolute abomination that for example matlab chooses red and green
+[4683.28:4688.0] as a standard colors when you when you don't specify the colors and you plot two lines on the same
+[4688.0:4693.759999999999] chart then matlab which was red and green which is about the the worst thing that you can do also
+[4693.759999999999:4698.639999999999] the fact that traffic lights are red and green is such a such a horrible idea but I guess it's some
+[4698.639999999999:4706.5599999999995] sort of anachronism so instead you should use colorblind safe palettes here is one if you choose
+[4706.56:4715.52] this set of colors then this kind of maximizes the number of pairs that are mutually distinguishable
+[4715.52:4724.160000000001] for a colorblind person and so it's much safer to use that because the you can be it's more likely
+[4724.160000000001:4731.120000000001] that someone will understand the point that you're trying to make so in an archel best practice
+[4731.120000000001:4736.320000000001] here always use colorblind safe palettes there's basically no disadvantage to doing it but there is
+[4736.32:4745.679999999999] an advantage then the other another rule I alluded to that earlier is use data ink wisely avoid
+[4745.679999999999:4753.36] chart junk don't use colors and plot elements when they're not absolutely necessary here's in a
+[4755.599999999999:4758.88] transition from a plot that's horrible to a plot that's actually decent
+[4758.88:4766.56] this bar chart so this is a time series you have one one bar per month and then you have some
+[4766.56:4773.52] outcome on the y-axis this I think was made by excel an old version of excel and the gray
+[4773.52:4780.8] background you really don't need it I mean what does it add it's it's just a waste of ink and
+[4780.8:4790.88] the lines you also really wouldn't need them sure that as you maybe calibrate a bit better where exactly
+[4790.88:4796.4800000000005] of our faults but that might not be what you really want to get across you might want to get across
+[4796.4800000000005:4803.6] what is the pattern of that time series and so let's remove the gray let's remove those
+[4803.6:4810.400000000001] horizontal lines already it looks much cleaner but now the next observation is that the dynamic range
+[4811.52:4821.04] of the data is actually much smaller than between 0 and 100 actually why does it even go to 120
+[4821.04:4826.88] percent right this is something this is a this is a percentage so cannot be bigger than 100
+[4826.88:4834.400000000001] percent why would you put 120 here and the dynamic range is really somewhere between 60 and 100
+[4835.2:4841.52] if you do a bar chart properly then you must go all the way to 0 that's kind of the rule so let's
+[4841.52:4848.32] not do a bar chart but let's do a line a line chart which is very appropriate for a time series
+[4848.32:4855.4400000000005] and then we can zoom in onto this relevant range of 60 percent to 100 percent and all of a sudden
+[4855.44:4862.0] we see the patterns much more clearly than in this blob up there so this kind of exercise you
+[4862.0:4866.719999999999] always force yourself to go through this like don't just take the plot whatever way it comes out
+[4866.719999999999:4872.32] but as you said does it really convey what I want to convey here are some here's an exercise for
+[4872.32:4879.759999999999] you which principles and best practices to these graphics violate I'm not going to go through them
+[4879.76:4887.76] here this is a seed as a fun homework there's a link also down there where you can find more of those
+[4889.84:4894.88] and I just love that peanut butter chart I think it's supposed to be a pie chart
+[4896.320000000001:4903.76] more of a peanut chart okay so let's instead go on to part three where I'll show you a small
+[4903.76:4909.92] selection of use cases for data visualization basically what what I've gone through so far is
+[4910.56:4916.08] we're all examples of presenting scientific results for us as scientists that's one of the main
+[4916.88:4922.88] purposes of data visualization sometimes it's even hard to distinguish this from art if you look
+[4922.88:4930.96] at the covers of these like pop signs or vanity magazines also the example that I showed in the
+[4930.96:4938.32] very beginning a garden of Eden this plant based visualization that's also is it data visualization
+[4938.32:4945.12] or is it art it's really both then next use case data wrangling I already that was the purpose
+[4945.12:4952.32] that was a part three of last week's lecture I already alluded to this data visualization is one
+[4952.32:4958.32] of your principle tools for detecting anomalies in the data so for example often you see two or
+[4958.32:4964.4] more distinct peaks in a histogram and then this suggests that there might be two or more
+[4964.4:4969.28] distinct populations subpopulations in your sample but you shouldn't just call it quits there and
+[4969.28:4974.08] then it's like okay different peaks different subpopulations but you should actually drill in
+[4974.08:4980.799999999999] further by using further let's say for example further visualizations let's say you have a hunch
+[4980.799999999999:4987.5199999999995] that this might come from different processes underlying the data then you can stratify the data
+[4987.52:4993.280000000001] and cloud it separately for each of these for each of these levels of that factor for each of
+[4993.280000000001:4999.4400000000005] these processes and if you're right about the different subpopulations coming from those factors
+[4999.4400000000005:5006.0] then you would see something like this visualizations make it easy to discover weird data
+[5007.52:5014.0] for example this means you should always maintain a theory of what the data should look like let's
+[5014.0:5021.36] say you think oh my data should be it should be this kind of smooth distribution I wouldn't expect
+[5021.36:5026.72] any holes but then if you do see holes in the data in the histogram then your expectation is
+[5026.72:5032.96] violated and you should drill in why that's happening what you should never do it's just blink it
+[5032.96:5039.04] away and it's like I'll be like some mistake at data collection but it's fine we'll just continue
+[5039.04:5043.28] no you shouldn't do that you should first assume that you have a bug in your either data collection or
+[5043.28:5048.32] processing pipeline then you should try to fix it and if it's not a bug then you might actually
+[5048.32:5054.32] have made an interesting discovery and you turn the bug into a feature then and actually some of
+[5054.32:5060.48] sciences most important findings were made by not ignoring weird data but by really poking in
+[5060.48:5065.28] and figuring out what's going on I have a link here which is about this
+[5066.0:5070.96] a stamina experiment by Hubel and Weasel they want a Nobel Prize for it was about investigating
+[5070.96:5076.08] the visual cortex they took a cat and exercised it put it in this it looks brutal but I think
+[5076.08:5083.04] the cat is not it's not awake and they stuck an electrode into the brain and they wanted to see
+[5083.04:5090.88] how does the cat's brain react to visual stimuli very little was known about it back then in the 50s
+[5091.68:5098.08] and they shown light at the screen and nothing happened the cat never the cat brain never reacted
+[5098.08:5103.76] there was no activity at some point they this was all with a slight project this lit in a slide
+[5103.76:5110.16] that had a black dot on it at all of a sudden you hear in the in the device that all of a sudden
+[5110.16:5116.72] there is now brain activity and when they move the dot though nothing happened so it took them
+[5116.72:5121.68] a while to figure out it's not the dot that causes this but it's actually the end the border of the
+[5121.68:5127.04] slide when when the slide slides in and it's you'll see it on the video you'll see what I mean
+[5127.04:5132.16] basically this line slides through right the border of the slide and that way they realized that
+[5132.16:5137.36] the visual cortex is actually sensitive to edges it didn't react because to the dots because
+[5137.36:5141.76] the dots is rounded didn't have these like clear edges and they had stuck the electrode into the
+[5141.76:5148.8] part that just detects straight edges and that wasn't known before that the brain reacts to edges
+[5148.8:5154.24] that filters for edges they just figured out because they didn't blink away the weird the
+[5154.24:5158.88] weirdness that happened when they slid in the slide you could have said art must be the noise you
+[5158.88:5163.36] know when we slide into the slide it makes a noise and so it's just forget about it but no
+[5163.92:5169.679999999999] they're drilled in and they want to know better price for it okay I skipped this and I want to close
+[5169.679999999999:5175.76] actually with this video another purpose of data visualization very important purpose is to
+[5175.76:5182.48] educate the public to bring your results and insights to people who might otherwise not have
+[5182.48:5189.04] access to this kind of result and I want to show you a great example from this the late hands
+[5189.04:5194.719999999999] Rosling who died recently is a demographer from Sweden the striped we can get the sound to work here
+[5198.879999999999:5204.5599999999995] visualization is right at the heart of my own work too I teach global health
+[5204.56:5212.320000000001] and I know having the data is not enough I have to show it in ways people both enjoy and understand
+[5213.68:5219.52] now I'm going to try something I've never done before animating the data in real space
+[5220.320000000001:5222.8] with a bit of technical assistance from the crew
+[5225.280000000001:5233.280000000001] so here we go first the next is for health life expectancy from 25 years to 75 years
+[5233.28:5240.639999999999] and down here an access for wealth income per person 400 4000 and 40 thousand dollars
+[5241.44:5251.599999999999] so down here it's full and sick and up here is rich and healthy now I'm going to show you the world
+[5251.599999999999:5260.639999999999] 200 years ago in 1810 here come all the countries you the browns Asia reds mid-least green
+[5260.64:5266.64] Africa salt also hara blue and the america yellow and the size of the country bubbles show the
+[5266.64:5273.360000000001] size of the population and in 1810 it was pretty crowded down there wasn't it all countries were sick
+[5273.360000000001:5280.4800000000005] and poor life expectancy were below 40 in all countries and only in UK and the Netherlands was
+[5280.4800000000005:5289.84] likely better off not much and now I start the world the industrial revolution makes countries
+[5289.84:5296.08] in Europe and elsewhere move away from the rest but the colonized countries in Asia and Africa
+[5296.08:5302.0] they are stuck down there and eventually the western countries get healthier and healthier
+[5302.72:5310.0] and now we slow down to show the impact of the first world war and the Spanish fuel epidemic
+[5310.0:5318.400000000001] water catastrophe and now I speed up through the 1921s and the 1930s and in spite of the great
+[5318.4:5323.28] depression western countries forge on towards greater wealth and health Japan and some other
+[5323.28:5330.0] strife to follow but most countries stay down here now after the tragedies of the second world war
+[5330.0:5338.799999999999] we stopped a bit to look at the world in 1948 1948 was a great year the war was over Sweden
+[5338.799999999999:5344.4] took the metal table at the winter Olympics and I was born but the differences between the
+[5344.4:5351.44] countries of the world was wider than ever the United States was in the front Japan was catching up
+[5351.44:5357.5199999999995] Brazil was way behind Iran was getting a little richer from oil but still had short lives
+[5357.5199999999995:5364.719999999999] and the Asian giants China India Pakistan Bangladesh and Indonesia they were still poor and sick
+[5364.719999999999:5371.44] down here but look what is about to happen here we go again in my lifetime former colony is gained
+[5371.44:5377.759999999999] independence and then finally they started to get healthier and healthier and healthier and in the
+[5377.759999999999:5383.599999999999] 1970s then countries in Asia and Latin America started to catch up with the western countries
+[5383.599999999999:5389.36] they became the emerging economies some in Africa follows some Africans were stuck in civil war
+[5389.36:5395.839999999999] and others hit by HIV and now we can see the world today in the most up to date statistics
+[5395.84:5403.360000000001] most people today live in the middle but they are huge difference at the same time between the
+[5403.360000000001:5409.2] best of countries and the worst of countries and they're also huge in the politics within countries
+[5409.2:5415.92] these bubbles show country averages but I can split them big China I can split it into provinces
+[5416.88:5424.08] there goes Shanghai it has the same wealth and health as Italy today and there is the poor
+[5424.08:5431.04] inland problems why show it is like Pakistan and if I split it further the rural parts are like
+[5431.04:5440.5599999999995] Ghana in Africa and yet despite the enormity disparities today we have seen 200 years of remarkable
+[5440.5599999999995:5447.36] progress that huge historical gap between the western the rest is now closing we have become an
+[5447.36:5454.0] entirely new converging world and I see a clear trend into the future with aid to trade green
+[5454.0:5459.759999999999] technology and peace it's fully possible that everyone can make it to the healthy wealthy corner
+[5462.719999999999:5469.839999999999] well what you just seen in the last few minutes is a story of 200 countries shown over 200
+[5469.84:5485.76] years and beyond it involved plotting of 120,000 numbers pretty neat
+[5499.92:5507.76] so
+[5516.4800000000005:5521.84] how about I just turn off the the sound and let it run in the background okay so I um we're about
+[5522.56:5529.52] finished I just want to close with showing you what's been called by some people maybe the
+[5529.52:5536.0] best statistic graphic ever drawn it visualizes it's a look in the crystal ball and we chose the
+[5536.0:5540.8] Ada students through the rest of the semester now I'm kidding this is Napoleon's March
+[5540.8:5549.360000000001] who Moscow starts here in Lithuania or Poland and ends in Moscow and this chart shows a lot of
+[5549.360000000001:5556.64] things it shows the size of the army via the width of the stream starts very large get smaller
+[5556.64:5563.84] over time it shows location because this is actually overlaid on a map it shows dates you see like
+[5563.84:5571.12] here you have these annotations with with dates it shows temperature on the way back so here is a
+[5571.12:5579.04] a temperature chart for each of these dates that are marked and it shows direction in which the
+[5579.04:5587.04] army was moving because this is you can see this as some sort of arrow and what the the reason
+[5587.04:5594.56] this graphic has been so critically acclaimed is one because it shows so much information but also
+[5594.56:5600.08] because and that's where the the slide title comes from it gives a completely new perspective
+[5600.08:5605.2] previously when people looked at this kind of data they looked at the generals perspective you know
+[5605.2:5613.5199999999995] how does how did like certain where we success for a lot how many did we want to win that battle
+[5613.5199999999995:5619.679999999999] whereas this slot really shows things from the soldiers perspective shows how cold was it for them
+[5619.679999999999:5626.8] how where did they die and it has this very dramatic message where you see the by the way
+[5626.8:5635.76] staggering number 420,000 people can imagine that half a million people starting to walk from
+[5635.76:5644.16] from Poland into Russia and then by the time they arrived in Moscow it was already only
+[5644.88:5651.84] a hundred thousand so only a quarter arrived and then black is the way back and it became less
+[5651.84:5658.16] and less and the temperature drops and drops and drops and then at some point at the end only
+[5660.32:5667.92] what is this for what actually they're joined by 6,000 from up there 10,000 come back out of 400,000
+[5667.92:5675.4400000000005] so this is a very powerful graphic it it really shows how grim that that campaign was okay so I
+[5675.4400000000005:5681.2] stopped here there are more slides but I never intended to go through them this is really just for
+[5681.2:5687.5199999999995] your own preusels so you can look at what are some of these tools you can follow up by by following
+[5688.4:5693.679999999999] webpages we're not expecting you to like brush to do all of this but this is pointers for your own
+[5693.68:5712.400000000001] benefit and then if you have feedback please leave it and see you on Friday.
+[5712.4:5723.839999999999] Just one second just a second.

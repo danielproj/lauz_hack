@@ -1,0 +1,600 @@
+~EE-556 / Lecture 1 - 1/2 (2020)
+~2020-09-14T22:42:59.240+02:00
+~https://tube.switch.ch/videos/2e8eb994
+~EE-556 Mathematics of data: from theory to computation
+[0.0:9.200000000000001] First of all, I'm going to wear a mask because there's a fairly good distance and I'm covered
+[9.200000000000001:10.36] with streams.
+[10.36:21.28] So hopefully this will be okay and that my voice goes correctly for the stream.
+[21.28:28.400000000000002] So what I'll do today is I'll give you a brief introduction to the course, tell you some
+[28.4:35.4] of the logistics, what takes fake data during the semester.
+[35.4:43.76] So do we have this stuff?
+[43.76:57.4] Okay, so this is the mathematics of data in the 556 and so the course is a 5 credit
+[57.4:62.4] course that has 4 hours during the week.
+[62.4:70.08] Now for prerequisites, you should have taken linear algebra, probability and a little
+[70.08:73.68] bit of optimization.
+[73.68:79.64] Now the grading for the course is that we'll have three homeworks, each taking three
+[79.64:81.64] weeks.
+[81.64:87.12] The first homework will be worth two points, the other two homeworks will be one point and
+[87.12:93.92] during the exam here there will be an exam and that'll be worth one point.
+[93.92:99.08000000000001] This course would not have happened without all the help that I had from my research group
+[99.08000000000001:110.80000000000001] who also formed the TA's here, Ahmed who's now acting like a tech support before the course
+[110.80000000000001:112.80000000000001] and streaming it out.
+[112.8:119.8] There's a bunch of people near the list that had been streaming out there.
+[119.8:131.48] Alright, now this week we're going to experiment with this particular type of recording.
+[131.48:138.07999999999998] So if you have any other ideas, suggestions, I'm all ears.
+[138.08:145.08] Ideally one third of the students should show up to the lecture right now I have six people
+[145.08:152.08] here.
+[152.08:170.08] So there is a question from the audience, is the handouts in the model, homework it is
+[170.08:177.44] not, let me get back in the model what you've done is you do is the first two weeks.
+[177.44:184.76] So there you will see a lecture, a restitation, a handout.
+[184.76:189.92] In addition, which I will come in a little bit there are supplementary material, supplementary
+[189.92:192.6] slides.
+[192.6:201.16] The handout is basically something for you to take a look at.
+[201.16:204.8] It is about probability which you should know.
+[204.8:211.56] But to give you one dot in the setting of the course, I mean like two weeks or so will
+[211.56:217.92000000000002] relieve the video that goes over the handout providing the solutions.
+[217.92000000000002:222.28] So it's basically a workout sheet for yourself.
+[222.28:228.36] When we give the homework out it will be extremely explicit and then we can come to the lab
+[228.36:234.24] hours, talk to TA's on the homework.
+[234.24:244.54000000000002] You will have three weeks to work on the homeworks and you should have seen in the lectures
+[244.54000000000002:250.68] enough material to be able to do the homework.
+[250.68:259.16] Maybe we can also do like a little doodle in the chat to ask people what programming language
+[259.16:270.72] you prefer, you prefer Python, you prefer on a MATLAB, you prefer TensorFlow.
+[270.72:273.08000000000004] I think it would be good for us to know.
+[273.08000000000004:279.88] Right now the default is Python.
+[279.88:286.0] We do have many of the exercises in MATLAB so we can consider also releasing the MATLAB
+[286.0:289.64] code for the exercises.
+[289.64:296.32] But because Python is free, I think it's now the building platform, it would be good
+[296.32:298.72] if you can catch up on Python.
+[298.72:301.8] I recommend it.
+[301.8:307.8] If you know MATLAB, Python should be really to be straightforward to use.
+[307.8:308.8] Okay.
+[308.8:317.48] Now for the video lectures, this is the Loom channel, it says the password.
+[317.48:322.40000000000003] Now for the exercise hours there is another one where it's a bit more interactive.
+[322.40000000000003:326.0] So this is like the webinar style.
+[326.0:329.0] So the interactions are limited.
+[329.0:334.72] But in the exercise hours, interactions are much more.
+[334.72:341.64000000000004] It will record the videos and just realize that the Loom compresses them quite a bit.
+[341.64000000000004:349.28000000000003] So the slides may not look as sharp, but you have access to the PDFs on the page.
+[349.28000000000003:350.28000000000003] Okay.
+[350.28000000000003:358.20000000000005] So what I want to do today is that I'll give you a little bit of an overview of the things
+[358.20000000000005:360.8] to come during the whole semester.
+[360.8:365.92] And then we'll begin with a bit of statistical learning theory.
+[365.92:370.16] We'll talk about estimation.
+[370.16:378.64] And then we'll talk about the composition of error.
+[378.64:380.64] Okay.
+[380.64:384.36] All right.
+[384.36:388.12] Let's begin.
+[388.12:399.64] So like I said, what I have seen is that you know a little bit about linear algebra, probability
+[399.64:403.8] and a little bit of complexity, notation.
+[403.8:409.68] So for this purpose, we put together little lectures on these, these are slides.
+[409.68:410.68] Right?
+[410.68:415.0] And if there is enough interest, I'll probably spend some time also recording them.
+[415.0:418.6] But I think you can go over them by yourself.
+[418.6:425.68] So what we've done, the intention with these slides is that it reviews some of the materials
+[425.68:429.92] with our notation.
+[429.92:434.8] So when we refer to the templates matrix in the class for certain matrices in the class,
+[434.8:437.2] we can go to the linear algebra supplementary slides.
+[437.2:439.2] You can see what it is.
+[439.2:441.2] It is defined there.
+[441.2:447.88] There's a lot of complexity that reviews the order notation, the go notation, and so
+[447.88:451.2] forth, each should be a error.
+[451.2:452.2] Right?
+[452.2:453.2] Okay.
+[453.2:456.59999999999997] Finally, we get to begin.
+[456.59999999999997:457.84] All right.
+[457.84:466.08] So I think recently the word AI is in the news quite often.
+[466.08:472.91999999999996] We could talk about it because of its statistics, like start driving cars.
+[472.91999999999996:480.12] You know, DeepMind managed to come up with AI agents that need human players and very
+[480.12:484.91999999999996] complicated games like Go for Starcraft.
+[484.91999999999996:488.64] People talk about finding new materials.
+[488.64:490.44] There are many such tests.
+[490.44:494.64] And then there's also a bit of a figure that comes with it.
+[494.64:503.12] People say the AI is going to take over the world.
+[503.12:508.76] And it's going to make us like in the matrix.
+[508.76:519.0] But if you think about it, AI or machine learning, it's like a scientific system.
+[519.0:525.6] It has its own language and a mathematical language.
+[525.6:526.6] It has its own sub disciplines.
+[526.6:530.88] It has things that people have been building over the last, I don't know, after century
+[530.88:532.04] or so.
+[532.04:533.04] Okay.
+[533.04:540.44] So the purpose of this course is basically get familiar with what these things are.
+[540.44:541.44] Learn a little bit.
+[541.44:546.44] Understand what the hype is, what we can do, and what we cannot do.
+[546.44:547.44] All right.
+[547.44:551.2800000000001] Now, mathematics goes theta.
+[551.2800000000001:557.6800000000001] It's more like statistical learning theory to use the optimization.
+[557.6800000000001:561.6800000000001] You have a central algorithm to play a central role.
+[561.6800000000001:565.6] That's what you hear.
+[565.6:568.1600000000001] So we're going to learn quite a bit of theory about algorithms.
+[568.1600000000001:574.32] You learn how they're implemented, what their candies are, what algorithm you should
+[574.32:577.4000000000001] use for what problem.
+[577.4:581.72] And for this, what we do is we take like an M to M approach.
+[581.72:582.72] All right.
+[582.72:588.12] We're going to talk about how data is generated, what data models are.
+[588.12:595.3199999999999] How we set up our learning formulations, you know, what laws functions we use, what
+[595.3199999999999:600.12] cost functions we put, what constraints we use.
+[600.12:601.12] All right.
+[601.12:605.56] And then we're going to learn about optimization algorithms so that we understand the role
+[605.56:606.56] of computation.
+[606.56:612.0] Like how much compute we need to get the information out.
+[612.0:617.9599999999999] May you put together this, how we generate data, how we set up our learning formulations
+[617.9599999999999:622.8] that govern our fundamental goals, and how we optimize those learning formulations.
+[622.8:631.8399999999999] You can get an end-to-end pipeline and extract the information or knowledge from major.
+[631.8399999999999:633.88] And that's what it is all about.
+[633.88:637.28] We're going to use these things to control.
+[637.28:644.32] We're going to generate images and songs like these like this.
+[644.32:648.36] So we're going to talk about time complexity, computational complexity.
+[648.36:656.32] We're going to give you examples as to what happens to our like end goals when the data
+[656.32:660.32] is kind of screwed, screwed, the biases.
+[660.32:665.9200000000001] We're going to talk about the convergence of algorithms, how our learning functions
+[665.9200000000001:671.96] are going to generalize, and on top of this we're going to add some additional twists.
+[671.96:681.24] So hopefully by having the whole pipeline, we can understand the inherent trade-offs.
+[681.24:686.1600000000001] There's always a catch when you use something.
+[686.1600000000001:688.36] So hopefully we'll understand that.
+[688.36:690.88] All right.
+[690.88:698.08] What I'll do is I'm going to basically describe an simplified Bay super-wise learning.
+[698.08:701.6800000000001] People heard about super-wise learning.
+[701.6800000000001:710.08] What I'll do is I'm going to give you a classical, like the most classic way of teaching this.
+[710.08:716.2] So let's think about the following.
+[716.2:719.76] So we will have, we will talk about three elements.
+[719.76:724.76] One will be a generator.
+[724.76:731.6800000000001] A generator is somebody or nature that generates our data.
+[731.6800000000001:735.9200000000001] And for data, we're going to use the notation AI.
+[735.9200000000001:742.4000000000001] The data will be in p dimensions.
+[742.4:747.84] It will follow some unknown probability distribution.
+[747.84:748.84] It may not.
+[748.84:751.56] It could be deterministic.
+[751.56:755.88] But for the time being, what we're going to do is we're going to focus on statistical
+[755.88:757.68] learning.
+[757.68:760.3199999999999] So probably the distributions will play a key role.
+[760.3199999999999:767.88] And it's the very powerful flexible framework that you can use in a lot of problems.
+[767.88:775.56] Now, given a generator, generating the data, what we're going to try to do is learn what
+[775.56:777.76] this supervisor is doing.
+[777.76:784.72] And what the supervisor is doing is taking this data and then it's generating some labels
+[784.72:788.24] or real numbers or it's giving us some probability.
+[788.24:794.64] So which people denote as a sample beyond.
+[794.64:804.08] Now, BI will also have a conditional distribution because the supervisor could be also probabilistic.
+[804.08:808.48] Not necessarily deterministic, but probabilistic.
+[808.48:815.6] So there's a conditional distribution for the random variable B, given the data.
+[815.6:823.92] Now, what the supervisor could be doing is that it's picking like a function.
+[823.92:829.36] It's a h degree, right?
+[829.36:833.16] Taking the data and giving us this label.
+[833.16:837.16] By the way, excuse my child is handwriting.
+[837.16:839.7199999999999] The way I set things up, I can't.
+[839.7199999999999:844.16] The tablet is up, so it's hard.
+[844.16:848.16] Okay.
+[848.16:856.0] Now, here is what this supervised learning is all about.
+[856.0:861.8] We as a learning machine, right?
+[861.8:866.52] What we will do is that we'll have access to this data coming in.
+[866.52:874.4399999999999] We'll have access to the labels or the real numbers or the probabilities what the supervisor
+[874.4399999999999:875.4399999999999] gives us.
+[875.44:883.12] And our objective is to kind of figure out what the supervisor is doing with this particular
+[883.12:884.12] function.
+[884.12:890.5200000000001] Now, what I would like you to understand here is that this notation is going to get a bit
+[890.5200000000001:892.6400000000001] complicated.
+[892.6400000000001:896.5200000000001] So when I talk about the notation, try to pay a little bit of attention because the
+[896.52:906.4399999999999] subtleties will matter at the end of the lectures today.
+[906.4399999999999:916.0799999999999] We're going to assume that the supervisor uses functions in some plots, right?
+[916.0799999999999:925.36] h degree, telegographic h degree.
+[925.36:932.6] And we're going to assume that here, the learner has access to this class, right?
+[932.6:936.48] And what it will try to do is learn a function h.
+[936.48:941.92] Somehow, it approximates what the supervisor is doing, right?
+[941.92:942.92] That's the idea.
+[942.92:946.92] Is this clear?
+[946.92:963.7199999999999] Now, what we're going to do is get in this simplified framework.
+[963.7199999999999:970.04] We're going to talk about classification problems, regression problems, and then city estimation
+[970.04:971.04] problems.
+[971.04:976.16] You can solve more problems, but like these are the fundamental pillars that we want to
+[976.16:979.56] take in this particular class.
+[979.56:982.64] All right?
+[982.64:986.52] So here's an example, right?
+[986.52:994.0] Now, I don't know if you ever done these genetic test things that tell you or answer this
+[994.0:998.88] three, these you like, predictions of all these diseases.
+[998.88:1004.8399999999999] I myself had a present when I was at my study at the Fault take, so I did it without thinking
+[1004.84:1006.6800000000001] about it.
+[1006.6800000000001:1012.44] And then the results came and it says you don't have a risk of Parkinson's and so on,
+[1012.44:1013.44] so forth.
+[1013.44:1017.44] But then it hit me that it could have said you had high risk of Parkinson, which could
+[1017.44:1019.44] really be devastating.
+[1019.44:1029.16] It turns out that genes had quite a bit to do with the kind of experiences you will have.
+[1029.16:1038.8400000000001] So here the example is this breast cancer example.
+[1038.8400000000001:1043.8400000000001] What you can do is because now genomic testing is very cheap.
+[1043.8400000000001:1047.44] It's quite rapid.
+[1047.44:1056.0800000000002] What you can do is you look at cases where somebody has let's say a cancer, right?
+[1056.08:1064.1999999999998] You know, a posterior, for example, because the person goes from surgery and the surgeons
+[1064.1999999999998:1068.6799999999998] identified cancer cells and so forth.
+[1068.6799999999998:1076.6799999999998] So let's say you have some genomic data and you get labels that this genomic data.
+[1076.6799999999998:1078.6799999999998] So I'll lose the generator.
+[1078.6799999999998:1082.84] Is this nature or is it our parents?
+[1082.84:1088.28] I don't know, there is a generator.
+[1088.28:1090.4399999999998] Generator gives us genomic data.
+[1090.4399999999998:1094.52] It's quite a bit around.
+[1094.52:1099.6399999999999] And then somehow doctors give you a prognosis.
+[1099.6399999999999:1103.6399999999999] There's cancer or not.
+[1103.6399999999999:1104.6399999999999] Plus one minus one.
+[1104.6399999999999:1111.9599999999998] One of those rare cases where you want to hit a minus one.
+[1111.96:1116.8] So here, rough is speaking if you're a data scientist, data engineer, right?
+[1116.8:1119.64] Your generator is your data system.
+[1119.64:1122.76] You had it there.
+[1122.76:1128.1200000000001] Your supervisor could be your collaborators or doctors that tell you if the person is
+[1128.1200000000001:1130.1200000000001] healthy or not.
+[1130.1200000000001:1133.1200000000001] In this case, you want to have a plus one.
+[1133.1200000000001:1136.16] So healthy is one that cancer isn't.
+[1136.16:1137.16] All right?
+[1137.16:1140.96] And what you would like to do is learn this mapping.
+[1140.96:1150.32] And the mapping takes in genomic data in form of some digital data.
+[1150.32:1154.6000000000001] You will have your algorithm or your code that takes in this as an input and then produces
+[1154.6000000000001:1157.8] a single number plus one minus one.
+[1157.8:1158.8] All right?
+[1158.8:1169.28] And hopefully, with this course, we'll figure out how to do this in a principal manner.
+[1169.28:1171.28] Okay.
+[1171.28:1178.08] Let's talk about regression.
+[1178.08:1187.96] So if you want to buy a house or a villa here, it's a very extensive.
+[1187.96:1189.6399999999999] How are these things generated?
+[1189.6399999999999:1198.92] You know, means the quality architects, owners, the by-land, the build stuff, right?
+[1198.92:1203.16] And then you have a supervisor, right?
+[1203.16:1209.8000000000002] And the supervisor tells you what the value of the house is.
+[1209.8000000000002:1211.96] When you come to the pit zone, you see the house prices.
+[1211.96:1217.28] You know, your hair goes, oh my God.
+[1217.28:1221.68] And then you can think, you know, maybe in some other country, the same house, the same
+[1221.68:1226.1200000000001] build with it post much less.
+[1226.12:1231.2399999999998] So there is conditional probability there, like factor here, the location that it is in
+[1231.2399999999998:1237.4799999999998] Switzerland, the size, the orientation, whether or not it's facing south.
+[1237.4799999999998:1246.9199999999998] It's distance to the public transport, whether or not it is distinguished view, you know,
+[1246.9199999999998:1250.9199999999998] like you see everyone from the living room, you know, the deletude.
+[1250.92:1257.04] And these are also check-through, if you think about it, you know.
+[1257.04:1262.2] And one year when the interest rates are high, the house prices are different.
+[1262.2:1266.04] In another year when the interest rates are lower, it's a different price.
+[1266.04:1274.6000000000001] I should be a lot of contractors that come in and you have a number.
+[1274.6000000000001:1280.4] So in this case, your supervisor, you know, you go to some of the pages that tell you,
+[1280.4:1286.1200000000001] oh, you know, by looking at the data, we predict the house prices should be this one.
+[1286.1200000000001:1289.8000000000002] The banks themselves have their internal predictors.
+[1289.8000000000002:1297.72] So like one job you can take after this course, you know, work at the bank, look at some
+[1297.72:1302.0] of these features and then tell them that your model is a better predictor of the house
+[1302.0:1303.0] prices.
+[1303.0:1305.8400000000001] I should think about it.
+[1305.8400000000001:1308.8400000000001] House prices are also check-through.
+[1308.84:1315.4399999999998] So what you can do is try to learn functions that predict these house prices.
+[1315.4399999999998:1317.4399999999998] These are real numbers.
+[1317.4399999999998:1318.4399999999998] Right?
+[1318.4399999999998:1320.4399999999998] This is the new regression.
+[1320.4399999999998:1324.4399999999998] This is the price-need sessions.
+[1324.4399999999998:1325.4399999999998] All right.
+[1325.4399999999998:1333.24] Here's another example in the generation.
+[1333.24:1338.6399999999999] Anybody heard of generated at the stadium networks?
+[1338.64:1349.44] So the idea here is that what you want to do is generate, for example, data that mimics
+[1349.44:1352.88] as state-to-be as possible, some real second.
+[1352.88:1360.24] One real thing is to have real images of people and then what you can do is do what people
+[1360.24:1361.8400000000001] call a deep tape.
+[1361.84:1371.28] If somebody else has image on a video, for example, I've still pretty impressed with
+[1371.28:1374.28] them as well.
+[1374.28:1380.6399999999999] But they put actual hairs towards the taste of a homeschool movie.
+[1380.6399999999999:1384.28] It looks pretty realistic.
+[1384.28:1390.28] So this particular setting, I must say, generator images of people.
+[1390.28:1397.68] What those supervisors do, it gives you probabilities of these images.
+[1397.68:1407.48] And if you're collecting these images randomly in nature, maybe they're just uniform probability.
+[1407.48:1409.48] What should the learner do?
+[1409.48:1410.48] Right.
+[1410.48:1415.04] It should learn how to generate images because what it does, it sees images coming in,
+[1415.04:1417.68] it sees probabilities coming out.
+[1417.68:1426.2] You can try to figure out this particular mapping and use it in other way to generate.
+[1426.2:1433.96] This is real applications, for example, EA Sports is interested in learning to design
+[1433.96:1437.28] expensive universes.
+[1437.28:1439.4] So it's pretty design for example.
+[1439.4:1446.0800000000002] Whatever you want to do, your graphics also tend, I don't know what number is currently.
+[1446.08:1448.32] A lot of effort going into designing this picture.
+[1448.32:1455.3999999999999] But let's say you have a bunch of species already generated, you can try to learn the distribution.
+[1455.3999999999999:1462.04] If you have an distribution, you just click your age function and maybe it will generate
+[1462.04:1464.72] automatically a sticky for the game.
+[1464.72:1465.72] Right.
+[1465.72:1469.72] People have done this before, people have done this before, of course.
+[1469.72:1470.72] Right.
+[1470.72:1477.72] If you know the game, the way it was done is that every dungeon was random.
+[1477.72:1481.72] That's the idea.
+[1481.72:1498.08] So in this particular case, so the question is what do I mean by probability?
+[1498.08:1503.8799999999999] So here if you just look at random sampling, you can just say that these are just uniform
+[1503.8799999999999:1507.36] samples and they have equal probabilities.
+[1507.36:1512.12] But in general, you can think of other instances where literally somebody is taking in and
+[1512.12:1516.3999999999999] saying the likelihood of observing something.
+[1516.3999999999999:1517.3999999999999] That's what I mean.
+[1517.3999999999999:1521.3999999999999] And we'll formalize this in a couple of slides actually.
+[1521.3999999999999:1522.3999999999999] All right.
+[1522.3999999999999:1525.6] I hope that answers.
+[1525.6:1528.4399999999998] Okay.
+[1528.4399999999998:1535.4399999999998] Now the first step in what we have to do in this particular loop is to figure out how
+[1535.4399999999998:1538.9199999999998] right or wrong we are.
+[1538.9199999999998:1542.04] Does that make sense?
+[1542.04:1543.04] Right.
+[1543.04:1550.9599999999998] So because as the learning machine, there is a label or there's a number that comes from
+[1550.96:1560.32] the supervisor, which we're trying to mimic, right, to the best of our ability.
+[1560.32:1564.6000000000001] So this is our guest.
+[1564.6000000000001:1568.8] Whatever we guess, at least we match with the data that we have.
+[1568.8:1570.8] Does that make sense?
+[1570.8:1571.8] Right.
+[1571.8:1574.6000000000001] Because you're given a data.
+[1574.6000000000001:1575.6000000000001] Right.
+[1575.6000000000001:1579.56] And what you need to do is at least 16 in that dataset.
+[1579.56:1586.52] If you don't, how are you going to like work for other things that you haven't seen before?
+[1586.52:1590.72] So one way to measure this is with loss functions.
+[1590.72:1593.08] So how do we measure our data fidelity?
+[1593.08:1597.3999999999999] We're going to use loss functions.
+[1597.3999999999999:1598.3999999999999] All right.
+[1598.3999999999999:1605.04] Now notation wise, I understand that we've been using this L for the learning machine.
+[1605.04:1605.8799999999999] Right.
+[1605.88:1609.72] We're running out of letters in this course.
+[1609.72:1613.24] So I'm going to also use this L for the loss function.
+[1613.24:1615.24] So I apologize for the confusion.
+[1615.24:1616.24] Right.
+[1616.24:1622.2800000000002] A loss function that is something that is something that measures the distance.
+[1622.2800000000002:1632.3200000000002] So it needs to satisfy some or all properties of what is called a metric.
+[1632.32:1638.32] So hopefully your linear algebra background is tingling.
+[1638.32:1641.36] I define it here.
+[1641.36:1645.9199999999998] It's also in the linear algebra supplementary lectures.
+[1645.9199999999998:1647.24] So a function is a metric.
+[1647.24:1649.72] If it satisfies these four properties.
+[1649.72:1652.72] Right.
+[1652.72:1656.04] It needs to be non-negative.
+[1656.04:1659.04] Right.
+[1659.04:1663.72] It needs to be zero if and only if the inputs are the same.
+[1663.72:1670.6399999999999] I think because you're measuring the distance between two inputs.
+[1670.6399999999999:1675.0] It should have some symmetric properties and it should satisfy what is called as the triangle
+[1675.0:1679.48] inequality.
+[1679.48:1683.48] Now there are few don't metric.
+[1683.48:1685.32] And these satisfy all the properties.
+[1685.32:1687.3999999999999] They exist maybe the determinants.
+[1687.3999999999999:1688.3999999999999] Right.
+[1688.4:1694.4] So the same inputs may different inputs may give this zero.
+[1694.4:1697.2800000000002] So one example is like the total variation seminole.
+[1697.2800000000002:1702.64] So seminolems to new pseudometrics.
+[1702.64:1708.24] Total variation based on the group says gradient of the difference.
+[1708.24:1712.24] And if it is all zero, then it will give you zero.
+[1712.24:1713.24] Right.
+[1713.24:1720.16] We have two constant numbers to constant take this for example.
+[1720.16:1722.16] They may not be the same.
+[1722.16:1724.72] So you have a vector of all ones.
+[1724.72:1726.76] You have a vector of all two.
+[1726.76:1727.76] You take the difference.
+[1727.76:1731.68] You get a vector of all ones which is not zero for example.
+[1731.68:1736.0] But because you're just looking at the gradient of all of this.
+[1736.0:1737.0] Let's see.
+[1737.0:1738.0] I'll do that.
+[1738.0:1739.0] Actually it can give you a zero.
+[1739.0:1742.0] I'll give you another example in the next slide.
+[1742.0:1750.6] There are also divergences which will be what I call a CHT material.
+[1750.6:1753.92] So you won't get too much into divergences.
+[1753.92:1760.72] But those of you, those CHT students may want to look into this when I show some star
+[1760.72:1763.92] flies in the recitation and so on and so forth.
+[1763.92:1764.92] Okay.
+[1764.92:1765.92] We'll get back.
+[1765.92:1766.92] Okay.
+[1766.92:1775.0] Let's give you some examples here.
+[1775.0:1778.48] So one example is this thing is loss.
+[1778.48:1786.24] And these loss is quite a bit in classification in particular for binary classification.
+[1786.24:1788.24] All right.
+[1788.24:1797.56] Now in this particular case, one of the class labels of giving is binary.
+[1797.56:1802.24] And what you're trying to do is you're trying to see your prediction which could be a continuous
+[1802.24:1804.36] value you want.
+[1804.36:1807.32] How well you're doing.
+[1807.32:1809.56] So normally you would use this.
+[1809.56:1818.28] Now if the sign matches the sign of the label, you have no loss, right.
+[1818.28:1824.3999999999999] And if the sign does not match the label, you can give a one loss is called a zero one
+[1824.3999999999999:1827.24] loss in classification.
+[1827.24:1834.6799999999998] Now this zero one loss turns out to be a particular function to work with an optimization.
+[1834.68:1842.48] What people do is work with an easier function and I will quantify these very precisely as
+[1842.48:1843.48] we continue.
+[1843.48:1847.48] Now I'm counting sources.
+[1847.48:1852.52] Count makes things like this which we will learn.
+[1852.52:1855.52] So here's the loss function.
+[1855.52:1857.52] Okay.
+[1857.52:1864.52] And incidentally, you know, if the label is one and you give any B that is greater than
+[1864.52:1867.84] one, you get a zero loss.
+[1867.84:1874.76] So is this a pseudo metric or a metric?
+[1874.76:1878.36] B one does not need to be equal to B two for example.
+[1878.36:1880.52] Here, to get a zero.
+[1880.52:1889.36] So there are examples of loss functions where things like pseudo metrics are appear to appear.
+[1889.36:1891.12] There are other losses.
+[1891.12:1895.4] How two losses?
+[1895.4:1899.32] These are just the main loss functions.
+[1899.32:1910.72] So one thing you can use is just look at the square loss.
+[1910.72:1912.9199999999998] So one loss function could be here.
+[1912.9199999999998:1919.52] You want two, just give one minus two square.
+[1919.52:1928.3999999999999] It just measures the equilibrium distance.
+[1928.4:1931.48] So this is good for classification.
+[1931.48:1932.48] This is good for regression.
+[1932.48:1933.48] How about densities?
+[1933.48:1940.48] It's something called the busiest time distance.
+[1940.48:1948.0] So suppose I give you two different probability distributions of the measure their distance.
+[1948.0:1953.76] A probability distributions are not negative.
+[1953.76:1960.8799999999999] The only way to measure is to figure out how much effort you should spend in moving
+[1960.8799999999999:1966.48] one distribution to another distribution.
+[1966.48:1970.2] There's something called the Earth's move distance that precisely measures this.
+[1970.2:1975.84] Among all the transports that you can do from one measure to another measure, you look
+[1975.84:1982.08] at the minimum effort that you need to transport.
+[1982.08:1988.52] And that minimum effort becomes a distance for you.
+[1988.52:1996.24] So let's say you have some new and new as two probability measures and you look at all
+[1996.24:1999.84] the couplings.
+[1999.84:2007.96] So you look at across all transports between the two couplings.
+[2007.96:2012.64] But say that gives you some minimum distance.
+[2012.64:2018.2] So like you take one step for one, you put it in front of another one and you look at
+[2018.2:2026.3600000000001] the distance you go and you look at it for all these possible couplings, then the distance
+[2026.3600000000001:2031.28] would be the optimum or all possible distances.
+[2031.28:2038.28] We'll get there when we talk about things like generative at the start of the next verse.
+[2038.28:2040.28] Okay.
+[2040.28:2044.28] All right.
+[2044.28:2048.2799999999997] Now, so let's do a bit of formalism.
+[2048.2799999999997:2052.2799999999997] It's the work we've been talking about so far.
+[2052.2799999999997:2053.2799999999997] Okay.
+[2053.28:2061.6400000000003] So a bit of a fantastic play here.
+[2061.6400000000003:2063.92] What we're going to talk about is this minimization in the end.
+[2063.92:2070.1200000000003] And what we're going to talk about is non-parametric learning problems.
+[2070.1200000000003:2072.92] So what I mean by that.
+[2072.92:2078.48] And so we think about the statistic learning model, all the technique.
+[2078.48:2087.48] We have some samples, some data about how to supervise the gives us labels, real numbers,
+[2087.48:2088.48] probabilities.
+[2088.48:2093.8] Now, the supervisor itself uses some class of functions.
+[2093.8:2101.64] So it literally let's say it has this function.
+[2101.64:2102.64] All right.
+[2102.64:2106.0] Now, we're going to assume that we have access to this.
+[2106.0:2107.0] All right.
+[2107.0:2113.0] Now, let's say we picked a loss function that measures our data fidelity.
+[2113.0:2114.0] All right.
+[2114.0:2124.0] So what we're going to define is the risk, which will be an expected value of our loss function.
+[2124.0:2125.0] All right.
+[2125.0:2128.0] Over the data.
+[2128.0:2132.0] Okay.
+[2132.0:2139.0] And statistical learning, what we try to do with statistical learning is to try to learn
+[2139.0:2140.0] this function.
+[2140.0:2146.0] You know, ideally, this minimizes this expected loss.
+[2146.0:2147.0] All right.
+[2147.0:2150.0] Now, our first look, I understand maybe this is a bit counterintuitive.
+[2150.0:2152.0] Why are we looking at the expected loss?
+[2152.0:2157.0] It turns out that there is a blessing of dimensionality.
+[2157.0:2163.0] In the sense that in high dimensional data, it becomes harder and harder to deviate from
+[2163.0:2166.0] the expectation.
+[2166.0:2171.0] It concentrates quite well.
+[2171.0:2184.0] So this particular quantity, so this is risk of function that we're trying to find.
+[2184.0:2189.0] It could be any function, by the way, from this function class.
+[2189.0:2191.0] What could be a function class?
+[2191.0:2198.0] It could be any function, which is a pretty rich function class if we think about it.
+[2198.0:2203.0] It could be just polynomials of a certain degree.
+[2203.0:2213.0] So this slide is what we know about, you know, like four-year-class functions, any function.
+[2213.0:2214.0] Right?
+[2214.0:2218.0] For the time being, we're not going to hit a problem here for it.
+[2218.0:2221.0] Then it's called non-parametric.
+[2221.0:2234.0] And what we try to do in the statistical learning right here with this is to solve this problem
+[2234.0:2242.0] where we try to minimize this expected loss over the function class that is true
+[2242.0:2245.0] mean all the supervisor uses.
+[2245.0:2249.0] And ideally, we should get this H degree.
+[2249.0:2250.0] Right?
+[2250.0:2257.0] Now, a couple of observations are important here.
+[2257.0:2260.0] One is this.
+[2260.0:2265.0] We assume that we did not know the problem of distribution of the data.
+[2265.0:2268.0] We didn't know the generating distribution.
+[2268.0:2272.0] We didn't know the conditional distribution, so it's a bit of a hard problem.
+[2272.0:2273.0] Right?
+[2273.0:2275.0] So we don't know what distribution here.
+[2275.0:2279.0] So we cannot evaluate this expectation, unfortunately.
+[2279.0:2285.0] But we can't take the intable of this as a way to do it.
+[2285.0:2292.0] And also times, the divisions do not know this H degree, but the supervisor is listening.
+[2292.0:2293.0] It's another challenge.
+[2293.0:2298.0] All right?
+[2298.0:2302.0] But then let's talk about what we can do in this second.
+[2302.0:2304.0] All right?
+[2304.0:2313.0] You know, my philosophy is that, you know, I understand there are problems.
+[2313.0:2314.0] Right?
+[2314.0:2316.0] It's supposed to just talking about problems.
+[2316.0:2320.0] We'll talk about what we can do about the problem and see here.
+[2320.0:2324.0] What we can do about the problem is the following.
+[2324.0:2329.0] So in this particular case, the way I set things up is that we have access.
+[2329.0:2330.0] All right?
+[2330.0:2338.0] So if you go back here, you have access to some n samples, you know, AIBI pairs.
+[2338.0:2343.0] All right?
+[2343.0:2347.0] So what we can do is we can look at the average loss.
+[2347.0:2353.0] All right? So what we can do is take the individual data samples.
+[2353.0:2358.0] Right? Through the function that we do not know, which we're optimizing to find.
+[2358.0:2360.0] Right?
+[2360.0:2364.0] We can compute this loss and average it.
+[2364.0:2370.0] Does this make sense?
+[2370.0:2378.0] And here, you make an assumption of the function class.
+[2378.0:2382.0] H. Right?
+[2382.0:2387.0] So H here is our best guess in it.
+[2387.0:2389.0] It's a guess.
+[2389.0:2390.0] All right?
+[2390.0:2395.0] You hope that the supervised there is actually using this one.
+[2395.0:2400.0] Ideally, we have this.
+[2400.0:2403.0] So all of us are doing the header problem.
+[2403.0:2409.0] The problem is, well defined.
+[2409.0:2410.0] All right?
+[2410.0:2411.0] Because we have data.
+[2411.0:2417.0] We picked the loss function.
+[2417.0:2420.0] We can plug in the data points into this loss function.
+[2420.0:2425.0] Right? So let's say you can complete some function given AI,
+[2425.0:2427.0] but we can measure the loss.
+[2427.0:2432.0] And in the class of these functions, we can try to do optimization.
+[2432.0:2434.0] Right?
+[2434.0:2438.0] And our optimizer will give us H.
+[2438.0:2440.0] Right?
+[2440.0:2442.0] And hopefully this H.
+[2442.0:2450.0] The H star will be closed to H.C.V.
+[2450.0:2452.0] What the supervisor is using.
+[2452.0:2454.0] All right?
+[2454.0:2458.0] Now, this empirical risk optimization, where we take the expected loss,
+[2458.0:2460.0] is actually about found that.
+[2460.0:2461.0] Right?
+[2461.0:2464.0] So if you think about in terms of probability,
+[2464.0:2469.0] a lot of large numbers say that for any age,
+[2469.0:2474.0] this particular expectation will be close to the empirical average.
+[2474.0:2476.0] Right?
+[2476.0:2479.0] So when we talk about things like population risk,
+[2479.0:2483.0] what he means is that expectation.
+[2483.0:2488.0] When we talk about empirical risk,
+[2488.0:2493.0] we talk about literally this particular average that is taken
+[2493.0:2496.0] given the empirical data.
+[2496.0:2497.0] Does this make sense?
+[2497.0:2499.0] Like the word they can see are important,
+[2499.0:2503.0] because people will talk about minimizing population risk.
+[2503.0:2507.0] And people will say, let's minimize the empirical risk.
+[2507.0:2511.0] If you have access to the distribution,
+[2511.0:2514.0] go ahead and minimize the population risk.
+[2514.0:2516.0] You can write down the integrals,
+[2516.0:2519.0] you can do, you can compute the cost function as a function
+[2519.0:2522.0] of those integrals, you can minimize that population risk.
+[2522.0:2525.0] But if it is unknown,
+[2525.0:2528.0] it is okay to use the empirical risk,
+[2528.0:2533.0] because we know that this particular average
+[2533.0:2538.0] will converge to the expectation, right?
+[2538.0:2542.0] Or most surely, which is a pretty strong convergence.
+[2542.0:2543.0] Okay?
+[2543.0:2550.0] So there are few more than half of the confusion.
+[2550.0:2557.0] The confusion, the confusion, the confusion, the confusion.
+[2557.0:2561.0] Here, I think they are waiting.
+[2561.0:2563.0] Oh, yes, yes, yes, yes.
+[2563.0:2565.0] Okay, okay, so one question is,
+[2565.0:2568.0] each you will also see,
+[2568.0:2570.0] we will use this particular thing,
+[2570.0:2573.0] argument, quite a bit.
+[2573.0:2579.0] So this notation means that there is a minimization problem, right?
+[2579.0:2582.0] The minimization problem usually returns the value
+[2582.0:2585.0] of, let's say, the loss, right?
+[2585.0:2588.0] Ideally, zero, for example, right?
+[2588.0:2596.0] Now, arg returns the argument of that minimizer.
+[2596.0:2600.0] Sometimes there is not a unique minimizer, right?
+[2600.0:2603.0] There could be more than one.
+[2603.0:2608.0] In which case, the argument returns as a state of minimizes.
+[2608.0:2610.0] All right?
+[2610.0:2614.0] Then what you need is maybe peak an element from that set.
+[2614.0:2618.0] Hence, we have inclusion, right?
+[2618.0:2621.0] But, you know, during the semester,
+[2621.0:2623.0] we're going to set up a lot of problems,
+[2623.0:2627.0] where we are ensured solutions in the unique one.
+[2627.0:2633.0] In those cases, we will just use equality.
+[2633.0:2634.0] All right?
+[2634.0:2637.0] Great pick up on the notation.
+[2637.0:2640.0] These totalties do not occur.
+[2640.0:2643.0] All right.
+[2643.0:2650.0] You need just a single entry in the system.
+[2650.0:2651.0] All right.
+[2651.0:2655.0] Now, in the last minute that I have,
+[2655.0:2657.0] I just want to say that,
+[2657.0:2662.0] so we thought the problem was solvable now, right?
+[2662.0:2665.0] Except that,
+[2665.0:2669.0] this function class, it's not parametric, you know?
+[2669.0:2673.0] So it's possibly infinite dimensional.
+[2673.0:2676.0] So the function class,
+[2676.0:2677.0] it's any function.
+[2677.0:2681.0] So there's so many of them.
+[2681.0:2686.0] So the picture is still not solvable if you keep it this way.
+[2686.0:2690.0] There are ways to use what is called as journals.
+[2690.0:2693.0] So we have a supplementary lecture for PhD students
+[2693.0:2695.0] on using kernel methods.
+[2695.0:2697.0] In that case,
+[2697.0:2701.0] non-parametric does not mean it's not with parameters.
+[2701.0:2706.0] It just means the number of parameters increases the demand of data.
+[2706.0:2708.0] All right?
+[2708.0:2712.0] But what we will focus most in this course is,
+[2712.0:2715.0] when the problem is parameterized,
+[2715.0:2717.0] meaning that, you know,
+[2717.0:2720.0] this function will be described by some parameters,
+[2720.0:2724.0] and we're going to try to learn those parameters.
+[2724.0:2753.0] All right, let's pick up from here on 15 minutes.

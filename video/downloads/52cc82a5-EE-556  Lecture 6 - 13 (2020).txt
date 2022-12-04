@@ -1,0 +1,264 @@
+~EE-556 / Lecture 6 - 1/3 (2020)
+~2020-10-15T00:22:39.528+02:00
+~https://tube.switch.ch/videos/52cc82a5
+~EE-556 Mathematics of data: from theory to computation
+[0.0:7.0] Hello everybody.
+[7.0:15.0] Alright, it's nearly time to get started for another edition of Math of Data.
+[15.0:21.0] At the P1000 Studios today is its pass time.
+[21.0:24.0] Thank you for using the P1000 Union service.
+[24.0:27.0] We're trying to be competitive with Netflix.
+[27.0:33.0] Hopefully our material is a bit more specialized.
+[33.0:41.0] So what I will do today is a very particular lecture.
+[41.0:55.0] So this is maybe if a very unique lecture in the sense that we're going to be talking about some problems in the first half.
+[55.0:58.0] But we won't care about algorithms.
+[58.0:72.0] And what we will do is we're going to try to exploit the geometry of the problem to understand the fundamental behavior of algorithms.
+[72.0:77.0] So we're going to be talking about a criteria which I will first motivate.
+[77.0:85.0] And then we'll say something about that criteria given some statistics on the data.
+[85.0:91.0] So we'll put some.
+[91.0:93.0] I mean, found the mental character's issue.
+[93.0:96.0] And you will see what I mean when we get that.
+[96.0:100.0] There will be pictures.
+[100.0:104.0] I hope the intuition will say video.
+[104.0:114.0] So first what we will do is we're going to talk about what I quote is time data trade offs.
+[114.0:119.0] So when life gives you lemons, you make it lemonade.
+[119.0:122.0] When life gives you data.
+[122.0:127.0] What do you do?
+[127.0:134.0] So hopefully this could be a very interesting story. And this is where I will talk about fundamental mutations of algorithms.
+[134.0:137.0] And then we're going to talk about another trade off.
+[137.0:143.0] This trade off may not be a continuous trade off, but it's a very interesting and compelling one.
+[143.0:147.0] And the next week we will start with deep learning.
+[147.0:153.0] And we'll give a bit of an mathematical introduction. And then we'll see how it goes.
+[153.0:159.0] All right, what I'll do again is I'm going to remind you of this positive model.
+[159.0:166.0] So so far in our statistical supervised statistical learning framework.
+[166.0:173.0] What we've been doing was that we were trying to.
+[173.0:177.0] We had if you remember this particular.
+[177.0:183.0] We had a generator. We had a supervisor.
+[183.0:186.0] We had the learning machine.
+[186.0:188.0] The generator gave us data.
+[188.0:193.0] The supervisor would assign labels to this data.
+[193.0:201.0] And what the learning machine was trying to do is to try to learn this particular.
+[201.0:207.0] Oh, particular mapping.
+[207.0:210.0] This is a very fundamental problem.
+[210.0:213.0] I mean, we talked about expectations.
+[213.0:218.0] And we also discussed that, you know, if you wanted to learn.
+[218.0:222.0] You know, any functions, the big of a big space.
+[222.0:227.0] So we kind of limited ourselves to functions that we can parameterize.
+[227.0:232.0] You know, like quadratic polynomials, splines, whatever you have.
+[232.0:236.0] So the parameters we noted as x.
+[236.0:241.0] And we were, you know, we were saying, okay, so let's say.
+[241.0:247.0] Let's say supervisor had some two parameters.
+[247.0:248.0] All right.
+[248.0:253.0] And somehow there's some functional mapping.
+[253.0:263.0] Okay. And in reality, we know that supervisor does not necessarily have the same function parameters.
+[263.0:266.0] And.
+[266.0:273.0] And as a result, the way the learning machine models things, you know,
+[273.0:277.0] it may have terms like norms.
+[277.0:283.0] So what is this function? It's it's parametrized function.
+[283.0:290.0] The simplest example is the linear model and it's a very important model that they actually applies to quite a lot of problems.
+[290.0:294.0] There's a bit of a fan.
+[294.0:302.0] You should.
+[302.0:313.0] So here the linear model says that the off with the eye is an inner product of the data AI.
+[313.0:316.0] And.
+[316.0:320.0] For painful to true parameter of the supervisor.
+[320.0:325.0] And because we kind of know that the supervisor is not exactly following this model.
+[325.0:330.0] So we have perturbations model in the learning machine.
+[330.0:335.0] The supervisor is not necessarily taking this in the product and having notice.
+[335.0:336.0] All right.
+[336.0:339.0] So it's got a ton of applications.
+[339.0:348.0] And in fact, I even mentioned in the investigation, I believe one that you can use linear model.
+[348.0:353.0] Things like this first, the estimate parameters of generalized linear models.
+[353.0:359.0] And then you would get solutions that would be just a scaled version of let's say the Poisson model.
+[359.0:362.0] Or the logistic model.
+[362.0:370.0] So linear model robust super general super important.
+[370.0:373.0] It's one of those things.
+[373.0:382.0] Now, given this, you know, so here you know, we have maybe you also want to stream.
+[382.0:387.0] I don't know what's going on with the.
+[387.0:393.0] Good morning.
+[393.0:398.0] So given this particular checkup, we call a is an input.
+[398.0:402.0] The eyes are output response and super petations.
+[402.0:405.0] We have our linear model epiphan checks out.
+[405.0:408.0] We could be interested in a variety of goals.
+[408.0:410.0] One is the estimation.
+[410.0:414.0] So we're interested in estimating this particular super parameter.
+[414.0:417.0] Or we could be interested in prediction.
+[417.0:418.0] Right.
+[418.0:427.0] So we're not necessarily interested in what the true model is, but the question is can be guess actually what the supervisor is trying to do.
+[427.0:432.0] Arguably this is a bit of a simpler goal.
+[432.0:440.0] In the sense that's all the example I like to give in this case is this brain computer interfaces.
+[440.0:446.0] So you know, in the recent advances, you can put sensors around the temporal cortex.
+[446.0:455.0] And then you can try to, for example, move arms robotic arms, wheels, you know, electronic wheelchairs and so on so forth.
+[455.0:466.0] There, if you think about it, you know, it is maybe easier to predict where the person wants to go with the wheelchair left right forward backward.
+[466.0:473.0] Versus literally understanding what the functional model of the brain is.
+[473.0:483.0] So the prediction and estimation of the function are different goals fundamentally different goals.
+[483.0:493.0] There are of course other goals that can be baller on the variations of the same thing.
+[493.0:504.0] For instance, an important one is to choose, for example, if you had the ability to do so, the data samples.
+[504.0:505.0] All right.
+[505.0:512.0] So you kind of twist the game and say that the learning machine kind of talks to the generator to give the data.
+[512.0:518.0] So the learning machine achieved in this case, the figure out what the supervisor is.
+[518.0:527.0] For example, the application of this is mandatory, as in this imaging, if you want to accelerate MRI, you try to choose where to take the samples.
+[527.0:530.0] Let's say research topic in my book.
+[530.0:543.0] Now, in the case of the linear model, when you have less samples than the ambient dimension, the observations, even in the absence of noise, it's just a X.
+[543.0:551.0] And A is 10 by P. So this is assuming that the sounds are independent.
+[551.0:557.0] You can say that this would be the T minus M dimension in hyperplane.
+[557.0:562.0] So let's say the true parameter was here.
+[562.0:565.0] It would cross the true parameter.
+[565.0:575.0] But then it would be a non-trivial hyperplane that it crosses the false space.
+[575.0:584.0] But again, the issue here is that because A in this case had this trivial mouse space, you can pick any vector in this mouse space.
+[584.0:598.0] By the way, the mouse space is typically shown to cross across the origin. So here the mouse space, so this would be, for example, X, 2 plus a vector in the mouse space.
+[598.0:606.0] So like mouse spaces across the origin, because zero is trivially a point in the mouse space.
+[606.0:616.0] Good. So any vector that you can take, it's true. It's natural here plus V, you would need to the same measurements.
+[616.0:624.0] So we need clearly some additional information to be able to pick up what the true parameters are.
+[624.0:638.0] So there I introduced the model of the space. So we said that a p-dimensional vector could be only in space.
+[638.0:643.0] Which is the whole space and this space is big in high dimensions.
+[643.0:653.0] But we will be talking about things like S cross vectors, which is the etmost S non-zero entries in two dimensions.
+[653.0:659.0] So these things live in S-dimensional hyperplanes that are aligned with the tonic of forward and back axis.
+[659.0:668.0] In the case of two sparse and three dimensions, you have this nice sparse.
+[668.0:680.0] You have this nice hyperplanes that align as you can see, this occupies much smaller, potent volume, compared to the whole space.
+[680.0:688.0] Now, you may say, you know, like unless you're looking at the stars in the sky, do you actually have sparse images that is correct?
+[688.0:697.0] While many men made natural images, for example, are not sparse correctly, they can be sparsified using transformations.
+[697.0:709.0] Things like wavelets, these DG, these three percent transform, double representations, cheerleets, you know, there's a whole literature out there on dictionary learning that's fast sparse data.
+[709.0:715.0] On the idea is simple, you have a fluid dense sector parameter.
+[715.0:722.0] You assume you know a dictionary in which the parameter becomes sparse. For example, you use the slower impulse.
+[722.0:735.0] This is the day lecture presentation and you see that most of images glue, meaning that most of it is close to zero or zero.
+[735.0:742.0] Now, the effect of sparse representation is very, very direct immediate.
+[742.0:750.0] But what I will argue is that it's the tip of the iceberg as to what we talked about, so this will be this lecture.
+[750.0:762.0] So let's say you have this linear problem, where you have some dimensionality reduction, you plug in your sparse representation.
+[762.0:773.0] And dictionaries are typically orthonormal. You know, like you have, you just put a few mathematicians on it, like ingrid the beshi's, randevoor.
+[773.0:782.0] And then they will, you know, take a decade or so, they will give you like a nice orthonormal transformation that uses spasels, spaces, properties and so on and so forth.
+[782.0:792.0] That will give you like a sparse five image by just thinking about it, you know, the power.
+[792.0:804.0] So if you can stream it, I'm going to plug this because it's a bit distracting.
+[804.0:813.0] No figure it out. There's a bit of a projector problem.
+[813.0:822.0] All right, maybe you can stream it.
+[822.0:834.0] So let's say you have sparsity, meaning the zero norm of this vector is sparse. We assume, right? We assume the all of these different in lecture.
+[834.0:843.0] I talked about this real signal model that is not necessarily sparse and that that had an effect on the noise model, if you recall.
+[843.0:855.0] All right. So the effect of this is that when you multiply the dictionary, the matrix, you don't, I mean, you don't necessarily need to do this extra thing.
+[855.0:863.0] Because oftentimes these dictionaries have fast multiply, so you can use this fast multiply, while doing optimization for instance, but let's say we did, right?
+[863.0:876.0] So you have sparsity and here is less than and so ideally what you're doing is we're just looking at a few columns of the matrix A.
+[876.0:882.0] And hence the problem is somewhat like an over complete problem, right?
+[882.0:891.0] So you all of a sudden you had these unknowns, but you have more equations than the numbers, which is nice.
+[891.0:900.0] So had we known the locations of the non zero entries, we could easily solve order sparsity.
+[900.0:909.0] Okay. Now what I'll do is I'm going to introduce this from the toilet approach. I hinted at this approach last week.
+[909.0:914.0] But now we're going to gut it. All right. We're going to look to get into the details of it.
+[914.0:924.0] And it's a very important one. Okay. So let's say we have noise.
+[924.0:932.0] And that we kind of know what normal of the noises. Right? Or we have some estimate of it.
+[932.0:943.0] What we want to do is we want to put a constraint set. So if you remember, I've been having this particular notation where this parameter is in this telegraphic set.
+[943.0:957.0] So this is our calorific X set. So we're seeking decision variables X in key dimensions that lived in B minus AX in two norm.
+[957.0:964.0] Let's then equal the kappa and you know for some kappa, it could be twice the noise norm for all, you know.
+[964.0:982.0] But let's say for the sake of this discussion, it is the two norm of the noise. In this case, if you think about it, what we will try to do is find the sparsity solution.
+[982.0:990.0] Subject to this constraint. And if you think about it again, that X through the true parameter is a feasible solution to this.
+[990.0:997.0] Because we know at least that it is sparsed and that it satisfies the constraint.
+[997.0:1006.0] All right. Now this is a combinatorial problem because the objective is not a norm, not a pseudo norm, not a quasi norm.
+[1006.0:1013.0] It's not a norm, but for legacy reasons, we call it the L0 norm.
+[1013.0:1027.0] It just counts a number of non-reentry. So this problem is actually combinatorial in the sense that you literally count the non-reentry's while finding to satisfy this particular function.
+[1027.0:1037.0] But you know, while it's being combinatorial, we can talk about properties of this. So the computation effort is.
+[1037.0:1045.0] There are empty hearts. There is an empty heart problem.
+[1045.0:1052.0] Actually, there is a cover by three sets problem that can be fit into this particular template.
+[1052.0:1060.0] And this is a continuous estimation problem. So it's at least empty heart.
+[1060.0:1070.0] There are some stability issues here that certain perturbations may lead to radically different answers.
+[1070.0:1077.0] And if you, so I've been giving you these sets. So here is the L0 fall in three dimensions.
+[1077.0:1086.0] So at 0, 0, you have a 0. When you're aligned with the coordinate axis, you have one sparsity.
+[1086.0:1100.0] So this is 2, 1, and 0. Right? It's this pointy spiky object.
+[1100.0:1113.0] Now, at this point, I'll ask you to revise this lecture again on your own time about gauge functions, once sparsity, atomic norms.
+[1113.0:1122.0] But what I will do is I'm going to tell you something that you will cover more in primal dual lectures.
+[1122.0:1126.0] This is not the main point of the lecture. So just trust me on the statements here.
+[1126.0:1132.0] And we're going to get to these statements later during this semester.
+[1132.0:1139.0] So there is a nice day of finding what is called as a lower comment or lower comics envelope.
+[1139.0:1144.0] You know, like so you may have a function like this that is not for mix.
+[1144.0:1152.0] So suppose you want to find the tightest comics function that approximates this form below.
+[1152.0:1159.0] So if the function must come next year, it would be doing what it is supposed to do.
+[1159.0:1165.0] Yeah. So suppose you were to find a comics function kind of fungs this.
+[1165.0:1170.0] What I'm talking about now, I'm talking about function. So can you do this? It turns out that you can.
+[1170.0:1174.0] And the mechanism for this is called Tenture conjugation.
+[1174.0:1179.0] What you do is you take a central conjugate, which is this particular mapping.
+[1179.0:1188.0] So you take the function. Right? And you look at it like the dual norm that we used to obtain for itself.
+[1188.0:1191.0] You know, you have one norm, how do you find a dual norm? Right?
+[1191.0:1195.0] You kind of do the similar exercise. You take the function.
+[1195.0:1203.0] You write down a linear term here and you do optimization over this linear coupling.
+[1203.0:1210.0] This is for the financial conduits. Now you can do this twice on top of each other.
+[1210.0:1218.0] And that will give you this nice lower comics envelope of the function.
+[1218.0:1223.0] That's the function. There's a technicality for this.
+[1223.0:1229.0] What we need is a domain restriction on the function. Otherwise, you get a zero function for the L0 norm.
+[1229.0:1237.0] So you put some domain bounds in which case you get what is called as a DL.
+[1237.0:1249.0] So we're not going to minimize this L0 norm, but what we will now do is minimize.
+[1249.0:1255.0] It's lower from mixed approximation.
+[1255.0:1263.0] By the way, this rest of it is very important because you can use the same rest of it to obtain a variety of structured norms.
+[1263.0:1269.0] My case, this pretty model of a lobby had a PhD thesis on this.
+[1269.0:1280.0] It works. You can get homogeneous norms such as our one norm or non-humour genius functions that kind of change shape as it becomes bigger and bigger.
+[1280.0:1285.0] Okay. So here's the problem.
+[1285.0:1294.0] What we're going to do is, given the sliny model, we're going to try to find the minimum one norm solution subject to this constraint that we talked about.
+[1294.0:1300.0] And remember the technicality. We had some sort of a domain bound.
+[1300.0:1306.0] So we kind of extended this for people to the constraint. So we're looking at the box.
+[1306.0:1317.0] So this is not about constraint. You kind of know the dynamic range of your images, signals, etc. That's it.
+[1317.0:1323.0] Now at this point, I need to inject some randomness to be able to talk about properties.
+[1323.0:1327.0] And we're going to get how we can get this formula.
+[1327.0:1332.0] It is very interesting. So we're going to talk about how we can get this formula.
+[1332.0:1341.0] So we assume that the matrix, for example, A has some statistical distribution.
+[1341.0:1346.0] You can use more general distributions here. Subgouls.
+[1346.0:1349.0] Subgouls.
+[1349.0:1352.0] Or the state of this distinction.
+[1352.0:1363.0] So we assume that A was somewhat random. IID random generated with some zero mean and one over n bearings.
+[1363.0:1369.0] In this particular case, with very high probability.
+[1369.0:1374.0] So this is a high probability result in the sense that we've picked a T.
+[1374.0:1383.0] And then your probability will be this exponential one minus. So this statement will fall to.
+[1383.0:1391.0] And because of the explanation, it's going to be a high probability.
+[1391.0:1403.0] So the solution to this, if this goes to the true parameter, will satisfy something like order square root s log.
+[1403.0:1411.0] P over s divided by n.
+[1411.0:1418.0] So if you recall the maximum likelihood, this is something like p divided by n without the regularizer.
+[1418.0:1426.0] But now this is s log p. Kind of like the inherent degrees of freedom in the problem.
+[1426.0:1433.0] If you have s coefficients, you can encode their locations using s log p bits.
+[1433.0:1437.0] And then you have order s bits to write down the numbers.
+[1437.0:1440.0] So the degrees of freedom divided by the number of data points.
+[1440.0:1442.0] This kind of makes sense.
+[1442.0:1446.0] And this is the second order corn program.
+[1446.0:1452.0] And what that is is in a supplemental lecture that we posted today.
+[1452.0:1458.0] So there's a supplemental lecture if you're interested in the discipline comics programs.
+[1458.0:1461.0] What they mean, what the templates are.
+[1461.0:1467.0] There is a supplemental lecture on module that you can take a look to learn more about these things.
+[1467.0:1470.0] But this is again, not our point, main point in the subject.
+[1470.0:1474.0] So this is a tractable program is what I am saying here.
+[1474.0:1476.0] Okay.
+[1476.0:1482.0] Now here are some observations.
+[1482.0:1483.0] Captain Obu is here.
+[1483.0:1487.0] You already see this, but it sometimes helps to explain this.
+[1487.0:1489.0] You can hit perfect recovery.
+[1489.0:1496.0] Yes, the number of samples is about this number.
+[1496.0:1497.0] Right.
+[1497.0:1500.0] Zero error.
+[1500.0:1502.0] How cool is that?
+[1502.0:1506.0] Now you can obtain an epsilon numerical solution.
+[1506.0:1510.0] And by this, I mean you strictly satisfy the constraints.
+[1510.0:1515.0] And in the objective, you literally look at how close you are.
+[1515.0:1519.0] So let's see, you have an epsilon one more.
+[1519.0:1520.0] X true, right?
+[1520.0:1523.0] Because we have the zero error.
+[1523.0:1527.0] The absolute value is less than or equal to epsilon.
+[1527.0:1537.0] So you can come up with an epsilon accurate solution to this with iterations, square of p times log 1 over epsilon.
+[1537.0:1540.0] It relations off the interior point method.
+[1540.0:1544.0] Again, take a look at this supplementary material.
+[1544.0:1548.0] If you want to learn more about the interior point method.
+[1548.0:1554.0] But what the interior point method does at each iteration that it solves a linear system.
+[1554.0:1559.0] So it's a n by 2 TV system, the big linear system.
+[1559.0:1564.0] So periteration is actually quite close to.
+[1564.0:1574.0] And it turns out that the overall total force is something like n squared, k to the 1.5.
+[1574.0:1579.0] And this is actually robust to all kinds of perturbations and noise.
+[1579.0:1586.0] Unlike the L zero problem in the previous one, p zero problem.
+[1586.0:1591.0] So here's the time data conundrum.
+[1591.0:1596.0] If you think about it.
+[1596.0:1605.0] If you were to run the interior point method, the complexity is hand to the 1.5 square.
+[1605.0:1612.0] Log 1 over epsilon is the increase the number of data.
+[1612.0:1614.0] It becomes slower.
+[1614.0:1623.0] So the dogma here is that the running time of the algorithm increases the example of sums.
+[1623.0:1628.0] But for our statistical estimate.
+[1628.0:1633.0] We just argued that oh, you know, s slope p divided by s divided by n.
+[1633.0:1640.0] So as you increase the data, our statistical precision becomes better.
+[1640.0:1648.0] So these two goals seems to be at, you know, against each other, the same.
+[1648.0:1652.0] They're competing with each other.
+[1652.0:1660.0] The issue has been is that when we think about this, you know, we had a k-tteration of an algorithm.
+[1660.0:1667.0] The true parameter is the k-tteration to the estimator plus the estimator to the true parameter.
+[1667.0:1672.0] And we had the state composition of our error.
+[1672.0:1679.0] The issue is that people like to treat these two terms independently.
+[1679.0:1683.0] But what we will see is that if you treat them jointly, you can do that.
+[1683.0:1690.0] And in fact, you can make the running time of an algorithm less.
+[1690.0:1694.0] Or you can make the algorithm faster with more data.
+[1694.0:1700.0] This sounds counterintuitive, but think about a pseudo-proposal.
+[1700.0:1714.0] Which form would be easier as to the proposal that is full of?

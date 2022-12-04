@@ -1,0 +1,726 @@
+~CS-401 Lecture 6
+~2022-10-26T15:24:41.608+02:00
+~https://tube.switch.ch/videos/nIEc81uaut
+~CS-401 Applied data analysis - Fall 2022
+[0.0:4.4] Good, okay, so welcome everyone, lecture six.
+[4.4:8.36] I apologize for not being able to be there in person today,
+[8.36:12.280000000000001] but I hope this doesn't cause much of a disruption to you
+[12.280000000000001:15.08] because I think you didn't have your,
+[15.08:19.080000000000002] to change your routine by streaming it to the room.
+[19.080000000000002:20.16] Okay, so let's jump in.
+[20.16:22.56] We have, this is one of my favorite lectures.
+[22.56:26.84] So let's jump in, go quickly over the announcements.
+[26.84:32.519999999999996] The final exam has been scheduled to Tuesday, 17th of January,
+[32.519999999999996:35.8] three o'clock, 15 in the afternoon.
+[35.8:42.4] That's item one, then homework one is due on Saturday.
+[42.4:44.72] We give it.
+[44.72:50.879999999999995] And then I'll try to, can I mute everyone somehow?
+[50.88:58.0] Are you, can I ask you to mute everyone except me?
+[58.0:59.84] I'll continue in the meantime.
+[59.84:64.64] So homework one, due on Saturday, you can ask questions
+[64.64:66.32000000000001] until Thursday midnight.
+[66.32000000000001:71.52000000000001] So we will not answer questions asked on Friday per policy.
+[71.52000000000001:74.36] But if you post your questions on Thursday,
+[74.36:76.32000000000001] we will still answer them.
+[76.32:81.96] And in particular, please post questions in the ed FAQ
+[81.96:85.91999999999999] so we can answer those to everyone in the Friday lab session.
+[85.91999999999999:90.83999999999999] Then project, milestone P1 has been,
+[90.83999999999999:93.28] the feedback has been released.
+[93.28:96.16] milestone P2 will be released on Friday.
+[96.16:101.63999999999999] So first schedule, slide overlap with the, with the example.
+[101.63999999999999:103.96] But that doesn't mean that you need to,
+[103.96:107.91999999999999] sorry, with the homework, but that's just because we gave you
+[107.91999999999999:109.96] a grace period of one day for the homework.
+[109.96:112.83999999999999] So we'll see if thick to the release date of Friday
+[112.83999999999999:115.0] for milestone P2.
+[115.0:117.6] Speaking about Friday, in that lab session,
+[117.6:123.91999999999999] we will do homework one FAQ for questions
+[123.91999999999999:125.91999999999999] that were posted before Friday.
+[125.91999999999999:128.32] Then we'll do exercises on observation studies,
+[128.32:130.12] the topic of today's lecture.
+[130.12:134.56] And then needless to say, we will do quiz five.
+[134.56:137.68] Next thing, thanks a lot for your feedback
+[137.68:141.08] in the course evaluation, the indicative feedback.
+[141.08:143.76] We definitely use it to move the class further.
+[143.76:147.88] The good news for us is that a 95% agree
+[147.88:150.6] that quote, the running of the course
+[150.6:154.68] enables your learning and an appropriate class climate.
+[154.68:157.24] Quite complicated statement until last year,
+[157.24:159.52] it was just, is the class good?
+[159.52:161.32000000000002] Question mark.
+[161.32000000000002:162.60000000000002] But OK, so there you go.
+[162.60000000000002:165.64000000000001] I take this as meaning roughly the same thing.
+[165.64000000000001:169.28] Most of you like the class and what you learn in it.
+[169.28:171.12] There were still some concerns.
+[171.12:173.24] Some people find the class two hands off.
+[173.24:176.56] They would like to see more code being presented directly
+[176.56:178.76000000000002] in the Wednesday lectures.
+[178.76000000000002:181.04000000000002] For others, the class is two hands on.
+[181.04000000000002:185.72] They are asking for more theory.
+[185.72:191.12] Tough thing, it's with 500 people in class.
+[191.12:193.72] There's always going to be some that find two hands off.
+[193.72:195.92] Some that find two hands on.
+[195.92:199.72] We'll still try to optimize that trade off.
+[199.72:203.36] Some found the exercise sessions to crowd it,
+[203.36:206.12] which I think was the case in the beginning actually.
+[206.12:213.4] But in my latest is that it has normalized a bit.
+[213.4:217.0] Then someone asked that the lecture could please start at 10
+[217.0:217.88] instead of 8.
+[217.88:221.36] Well, sorry, the higher authorities have decided this.
+[221.36:224.32] It's outside of my control when the lecture starts.
+[224.32:226.64000000000001] But I'm sure this was time in cheek anyways.
+[226.64000000000001:231.36] And then if I just sort, if I count words in the feedback
+[231.36:234.0] and I sort by frequency, then the word quiz
+[234.0:237.44] is probably the one that would come up most frequently.
+[237.44:239.04000000000002] People complain about the difficulty,
+[239.04:243.56] about the wording, about the timing, and so on.
+[243.56:246.12] Let me say here that I'm a big fan of the quiz.
+[246.12:248.28] And we keep it.
+[248.28:251.07999999999998] We'll of course, these concerns about wording.
+[251.07999999999998:252.32] We'll take them very seriously.
+[252.32:255.23999999999998] And we'll be extra careful in the future for wording.
+[255.23999999999998:258.59999999999997] So this is something where we can definitely
+[258.59999999999997:260.2] try to improve.
+[260.2:265.88] But just because the quiz is hard, that
+[265.88:268.32] doesn't mean that it's not useful.
+[268.32:273.12] So if it was easy for everyone, then what's the point of doing it?
+[273.12:275.52] So the quiz is really there, as I said,
+[275.52:280.52] to encourage you to stay abreast of the material
+[280.52:284.24] and to keep thinking about the material.
+[284.24:287.96] It's not, on purpose, do not just ask for things
+[287.96:290.15999999999997] that you have to find in the slides.
+[290.15999999999997:292.6] There should be an epsilon of thinking further.
+[292.6:293.8] Sometimes it's easier.
+[293.8:296.15999999999997] Sometimes it's harder.
+[296.16:299.88000000000005] Don't worry too much about the scores
+[299.88000000000005:301.6] that you get for two reasons.
+[301.6:304.96000000000004] One, the grades, the scores will be shifted and scaled
+[304.96000000000004:308.08000000000004] to get a fair distribution before it's incorporated
+[308.08000000000004:310.44000000000005] into the main grade.
+[310.44000000000005:315.20000000000005] And also, you've been doing very well at the quiz so far.
+[315.20000000000005:317.88] This is the histogram of scores.
+[317.88:322.68] So the mode of the distribution is in the highest bucket.
+[322.68:325.40000000000003] So for me, this means that on average,
+[325.4:328.76] there's not too much to worry about on your side.
+[328.76:330.67999999999995] If it's hard, it's hard.
+[330.67999999999995:332.12] That's great.
+[332.12:335.4] But you're doing well, so don't worry too much about it.
+[335.4:338.4] OK.
+[338.4:342.23999999999995] As always, you can give us continuous feedback in this form.
+[342.23999999999995:346.03999999999996] And now, let's get started.
+[346.03999999999996:346.84] Bob, quick one.
+[346.84:347.35999999999996] Yes.
+[347.35999999999996:348.44] Yes, mute all.
+[348.44:349.96] Maybe it also mutes you.
+[349.96:351.12] So we'll talk.
+[351.12:352.4] OK.
+[352.4:360.15999999999997] So I should be back.
+[360.15999999999997:360.96] Yeah.
+[360.96:361.79999999999995] Good.
+[361.79999999999995:362.15999999999997] OK.
+[362.15999999999997:365.71999999999997] So as an introductory example, let me propose you
+[365.71999999999997:367.71999999999997] Dr. Bob's smoking cure.
+[367.71999999999997:370.28] So I came to have developed a medicine that
+[370.28:372.35999999999996] helps you quit smoking.
+[372.35999999999996:376.0] Then I ask all smokers, do you want to try my medicine?
+[376.0:377.88] And so there are two kinds of smokers now.
+[377.88:379.15999999999997] There are the treated smokers.
+[379.15999999999997:381.52] Those that take Dr. Bob's smoking cure
+[381.52:384.15999999999997] and there are the untreated smokers,
+[384.15999999999997:387.96] also called control smokers, that do not take my medicine.
+[387.96:393.35999999999996] And now I can measure the fraction of successful acquitters
+[393.35999999999996:395.15999999999997] in each of those two subgroups.
+[395.15999999999997:397.96] And I find that the fraction of successful acquitters
+[397.96:401.88] is higher in the treated group than in the control group.
+[401.88:405.52] So I conclude that my medicine helps you quit smoking.
+[405.52:406.79999999999995] Please buy it.
+[406.79999999999995:408.15999999999997] Do you believe me?
+[408.16:413.44] This is a question both to zoom and to the room.
+[413.44:414.52000000000004] Do you believe me?
+[414.52000000000004:418.8] Raise your hand either physically in the room or on zoom.
+[424.12:426.64000000000004] Do we have anyone, Akhil?
+[426.64000000000004:427.64000000000004] Yes.
+[427.64000000000004:428.12] OK.
+[428.12:429.16] Well, I trust.
+[429.16:432.32000000000005] So I don't think you'd lie to me.
+[432.32000000000005:432.84000000000003] Thanks.
+[432.84000000000003:435.72] That's, of course, a correct answer.
+[435.72:439.32000000000005] But if it wasn't me, if it was Akhil, what would you say?
+[443.40000000000003:445.20000000000005] Yeah.
+[445.20000000000005:446.48] Sure.
+[446.48:448.44000000000005] You would still buy it.
+[448.44000000000005:451.64000000000004] Anyone who wants to speak against this argument?
+[456.32000000000005:458.6] It seems no.
+[458.6:468.96000000000004] So then Akhil, what do you say?
+[468.96000000000004:471.0] So there is also a question from zoom
+[471.0:472.92] which says depends on numbers.
+[472.92:474.6] Depends on numbers?
+[474.6:475.44] I see it.
+[475.44:477.72] So even if the numbers are different,
+[477.72:479.88] we're computing fractions, right?
+[479.88:481.44] So the numbers really matter.
+[484.44:484.76000000000005] OK.
+[484.76000000000005:486.20000000000005] Well, let's keep it there.
+[486.2:489.88] Let's keep it there and we'll come back to this later.
+[489.88:493.2] So what are the goals of this lecture?
+[493.2:496.36] The goals of this lecture are to give the tools
+[496.36:499.24] to think more systematically about situations,
+[499.24:503.8] like the one that I just created with Dr. Bob Smokingcure.
+[503.8:506.71999999999997] I will clarify the difference between experimental
+[506.71999999999997:508.36] and observational studies.
+[508.36:511.71999999999997] And I never, one of my goals is to never, ever see
+[511.71999999999997:513.76] you speak about an experiment when
+[513.76:516.48] you actually mean an observational study.
+[516.48:518.6] This is a big difference.
+[518.6:522.36] I will highlight pitfalls of observational studies
+[522.36:525.4399999999999] and I'll give you tools for avoiding the pitfalls
+[525.4399999999999:528.92] and for allowing you to draw valid conclusions
+[528.92:531.08] from what I call found data.
+[531.08:534.24] So this is data that was not collected experimentally,
+[534.24:538.84] but just recorded in the world taking its natural course.
+[538.84:541.2] And this, of course, is very useful for your project
+[541.2:545.6800000000001] because in the projects, the data sets are nearly all
+[545.6800000000001:547.44] what I call found data.
+[547.44:551.6800000000001] And finally, if I succeed, I will have motivated you
+[551.6800000000001:555.72] to read some chapters in Rosenbaum's great book
+[555.72:558.0] on the Divasign of Observation Studies
+[558.0:560.8000000000001] from where I've actually sourced a lot of the material
+[560.8000000000001:562.08] in today's lecture.
+[562.08:566.72] And also, Judah Perles' eye opening book, The Book of Why,
+[566.72:568.2] which is really, really good.
+[568.2:570.72] I personally have learned about a lot of these topics
+[570.72:573.32] only midway through my PhD.
+[573.32:575.5600000000001] And in my opinion, this was much too late
+[575.5600000000001:577.12] to learn about these important topics.
+[577.12:580.0] So that's why I created this lecture
+[580.0:582.76] about observational studies for data.
+[582.76:587.28] Okay, so let's come back to Dr. Bob's smoking cure.
+[587.28:590.9200000000001] I put experiment in quotation marks here
+[590.9200000000001:593.28] because as you see, it's not really an experiment.
+[593.28:597.24] But let's look at it as a causal diagram.
+[597.24:601.64] In a causal diagram, you have what do arrows mean?
+[601.64:603.92] You have, so you have, what do nodes in arrows mean?
+[603.92:607.16] You have nodes that represent variables.
+[608.4:613.4] And you have arrows that mark cause and effect.
+[615.96:620.96] So an arrow that goes from one node to the other means
+[622.08:625.92] that if you manipulate the source of the arrow,
+[625.92:629.92] it will change the endpoint of the arrow.
+[629.92:633.7199999999999] So this small cause diagram with this one arrow
+[633.7199999999999:636.76] is basically representing my claim
+[636.76:639.4] when I try to sell you my smoking cure.
+[639.4:643.1999999999999] I claimed that if you take Dr. Bob's medicine,
+[643.1999999999999:647.8] it will increase your chances of successfully quitting smoking.
+[650.64:654.68] So we call the source point here, the treatment
+[654.68:656.8] and the endpoint we call the outcome.
+[658.4799999999999:663.68] But now here is what I would have liked to hear as an answer
+[663.68:666.9599999999999] when I pitched Dr. Bob's smoking cure to you.
+[666.9599999999999:669.16] There are a lot of other things in the world
+[669.16:671.12] that can influence both the treatment,
+[671.12:673.3199999999999] whether you take the medicine and the outcome,
+[673.3199999999999:674.9599999999999] whether you quit smoking.
+[674.9599999999999:679.0] So for example, smokers who are more motivated
+[679.0:683.4399999999999] to quit smoking will be more likely to buy my medicine,
+[683.44:687.0] but at the same time, independent of my medicine,
+[687.0:689.8000000000001] there will be more likely to successfully quit smoking
+[689.8000000000001:691.6800000000001] because they're more motivated.
+[691.6800000000001:693.5600000000001] So this is called a confounder.
+[694.6:698.48] It's a variable that affects both the treatment and the outcome.
+[698.48:702.5200000000001] And this is basically what invalidates this,
+[702.5200000000001:704.96] what I call the experiment before.
+[704.96:706.44] It's not really an experiment
+[706.44:710.1600000000001] because I could not decide myself who takes the treatment,
+[710.16:715.16] but people decided, but the smokers themselves decided,
+[715.28:718.4399999999999] whether they take it, not me as a researcher.
+[718.4399999999999:721.0] Okay, so in the presence of a confounder,
+[721.0:725.0799999999999] you are measuring a mix of the direct effect
+[725.0799999999999:729.1999999999999] of the treatment on the outcome and of the confounder.
+[729.1999999999999:732.4399999999999] And you don't know what part of the effect comes from which,
+[732.4399999999999:734.9599999999999] which part of the effect comes from the confounder
+[734.9599999999999:736.92] and which part comes from the treatment.
+[736.92:741.4] In fact, in this case, the association between treatment
+[741.4:745.8] and outcome could be there even without any causeling.
+[745.8:746.64] Give me a second.
+[746.64:748.64] Let me let you most of my quotes.
+[748.64:749.4799999999999] I'll see.
+[751.8:754.4] Daughter was playing around in the room,
+[755.9599999999999:758.16] acting as a confounder.
+[758.16:761.48] Okay, so in this scenario,
+[761.48:763.92] the association between treatment and outcome
+[763.92:766.68] could be there even without any causeling
+[766.68:768.4] because if someone is more motivated,
+[768.4:772.16] it will increase both the probability of taking the treatment
+[772.16:775.7199999999999] and the probability of a successful outcome
+[775.7199999999999:777.3199999999999] and the tool will be correlated
+[777.3199999999999:780.8] even though there is no direct causeling between the two.
+[780.8:783.0] So this is basically in an nutshell,
+[783.0:785.3599999999999] the danger of observational studies.
+[787.4399999999999:791.3599999999999] Ideally, what would you want to do?
+[791.3599999999999:796.4399999999999] In an ideal setting, you would want for every single person
+[796.44:798.48] to observe their quitting behavior
+[798.48:801.84] in two parallel universes, in two parallel worlds,
+[801.84:805.2] one universe where they take Dr. Bob's medicine
+[805.2:808.8800000000001] and one universe where they do not take Dr. Bob's medicine.
+[808.8800000000001:810.84] Everything else being the same.
+[810.84:815.84] And then you could compare the outcome in one universe
+[815.9200000000001:818.36] to the outcome in the other universe.
+[818.36:820.9200000000001] Unfortunately, there is only one universe,
+[822.0400000000001:823.7600000000001] at least for all intents and purposes,
+[823.7600000000001:825.44] what the physicists think, you know,
+[825.44:828.12] we don't care about now for us for all intents and purposes.
+[828.12:829.6] There is only one universe.
+[829.6:833.48] So we cannot test for every single person
+[833.48:835.84] what would happen with and without the medicine.
+[836.9200000000001:841.1600000000001] So to approximate this ideal parallel worlds situation
+[841.1600000000001:845.6400000000001] as well as possible, the next best thing we can do
+[845.6400000000001:848.9200000000001] is that we as the researchers, our selves,
+[848.9200000000001:852.6800000000001] control who gets the treatment and who gets the control.
+[852.68:856.0799999999999] And in doing so, we want to make sure
+[856.0799999999999:860.4399999999999] that the motivation or any to quit smoking
+[860.4399999999999:863.4399999999999] or any other potential confounder for that matter
+[863.4399999999999:866.68] has no influence on who gets the treatment.
+[866.68:870.2399999999999] So we want to remove this effect of self-selection
+[870.2399999999999:872.52] into treatment and control.
+[872.52:875.4399999999999] Graphically, this means to delete all arrows
+[875.4399999999999:876.88] that lead into the treatment,
+[876.88:878.76] like I've drawn it here on this slide.
+[878.76:883.76] In practice, a good way to achieve this is to randomize.
+[884.68:887.36] For every single person, you flip a coin
+[887.36:889.04] to decide whether they go to treatment
+[889.04:890.4] or whether they go to control.
+[890.4:893.84] So that is whether do or do not take the medicine.
+[893.84:897.0] And then this way, you will have the same distribution
+[897.0:900.16] over motivation levels in treatment and control
+[900.16:903.0] because the coin doesn't care about your motivation
+[903.0:904.08] to quit smoking.
+[904.08:905.4399999999999] It will be completely random.
+[905.44:910.44] So then you would have a randomized controlled experiment
+[911.0400000000001:912.72] or randomized controlled trial.
+[913.72:916.08] In a randomized controlled experiment,
+[916.08:918.5600000000001] you have two conditions, you have treatment
+[918.5600000000001:920.36] and you have control.
+[920.36:923.08] For example, treatment, you take the medicine,
+[923.08:926.6800000000001] control, you do not take the medicine,
+[926.6800000000001:927.84] but you take a placebo.
+[929.0400000000001:931.08] Why not just, you could also have control
+[931.08:933.24] where you just do nothing, no medicine,
+[933.24:934.76] but also no placebo.
+[935.76:938.28] Why don't we want that?
+[938.28:942.04] Well, because we want to keep as much fixed as possible.
+[942.04:944.28] We want to still have people
+[945.24:948.88] put something into the body such that potentially
+[948.88:949.8] it could help them.
+[949.8:951.6800000000001] Otherwise, you might get all these effects
+[951.6800000000001:953.88] like the psychological effects
+[954.96:959.08] where people who just take a medicine,
+[959.08:961.72] even if it's not helpful, think that it's helpful
+[961.72:962.96] and so they get better.
+[962.96:965.08] So you want to have that equalized
+[965.08:966.6800000000001] between the two groups.
+[966.6800000000001:969.6800000000001] Fun fact, you can click on this later.
+[969.6800000000001:973.6] Preciboes are useful even when,
+[973.6:976.6] maybe useful even when you tell the subject
+[976.6:977.8000000000001] that this is a placebo.
+[977.8000000000001:982.8000000000001] You say, take this, it's a homeopathic pill,
+[982.96:986.52] it won't work, but it will,
+[986.52:988.32] it does, it's shown not to work.
+[988.32:993.32] It's a placebo, but it will still have an effect
+[995.36:997.5600000000001] in some kinds of situations.
+[997.5600000000001:999.96] So I think this is really, really interesting,
+[999.96:1002.8000000000001] shows the power of, shows why you should actually
+[1002.8000000000001:1005.8000000000001] have a placebo rather than just do nothing.
+[1005.8000000000001:1007.88] Okay, so two experimental conditions.
+[1007.88:1010.6800000000001] And now the assignment of participants
+[1010.6800000000001:1013.9200000000001] to these two conditions is random.
+[1015.6:1017.5200000000001] For example, you can flip a coin
+[1017.52:1020.52] to decide you go to control, you go to treatment.
+[1020.52:1023.4] And this way the probability of receiving the treatment
+[1023.4:1027.6399999999999] is identical for everyone in the experiment.
+[1027.6399999999999:1030.6] And this is really the crucial thing here.
+[1030.6:1032.32] Everyone has the same probability
+[1032.32:1034.6] of getting treatment versus control.
+[1035.6399999999999:1037.92] So this way the treatment and control groups
+[1037.92:1039.4] are indistinguishable.
+[1039.4:1041.92] For example, the determination to quit smoking
+[1041.92:1045.56] is not systematically higher in the treated group.
+[1045.56:1048.84] Like it would have been if I just asked you,
+[1048.84:1051.84] do you want to try my medicine, decide for yourself?
+[1051.84:1054.24] Then you would have an unequal distribution
+[1054.24:1056.84] of determination to quit smoking in the two groups.
+[1059.84:1062.1599999999999] Okay, so here is a randomized control trial
+[1062.1599999999999:1063.56] as a causal diagram.
+[1063.56:1068.1599999999999] This is what you have here is what's not the trial
+[1068.1599999999999:1073.1599999999999] and now modify the causal diagram by removing this arrow.
+[1073.16:1076.16] And now it's a randomized control trial.
+[1076.16:1078.16] Because now the motivation to quit smoking
+[1078.16:1082.16] does not influence whether you get the treatment or not.
+[1082.16:1085.16] To make it more explicit, we can actually add
+[1085.16:1088.16] this additional variable, which is the coin.
+[1088.16:1091.16] And it determines whether you get the treatment
+[1091.16:1093.16] but the coin has no incoming arrows
+[1093.16:1095.16] because the coin is completely random.
+[1095.16:1098.16] It depends on nothing else in this diagram.
+[1098.16:1100.16] So the coin is not the same.
+[1100.16:1103.16] It's a randomized diagram.
+[1103.16:1107.16] So the coin is now basically the dictator, money rules.
+[1107.16:1112.16] And this is now a situation that you want to have.
+[1112.16:1117.16] Note that motivation to quit smoking can still influence
+[1117.16:1120.16] whether you do quit smoking or not.
+[1120.16:1122.16] And that's fine.
+[1122.16:1125.16] The crucial thing is that motivation to quit smoking
+[1125.16:1129.16] must not change your probability of getting the treatment.
+[1129.16:1131.16] Because this way, some people will be more
+[1131.16:1134.16] and some will be less motivated to quit smoking.
+[1134.16:1136.16] But that distribution over motivation to quit smoking
+[1136.16:1139.16] will be identical in the treatment and in the control group.
+[1139.16:1143.16] And that's the important thing that you want to have.
+[1143.16:1147.16] There are some limits to randomization, of course, in practice.
+[1147.16:1149.16] For example, consider the question,
+[1149.16:1152.16] do Steve Bells save lives?
+[1152.16:1156.16] Today we would probably all agree that the answer is yes.
+[1156.16:1159.16] But this was not always the case.
+[1159.16:1162.16] And it's actually not the case in all places.
+[1162.16:1165.16] I have this anecdote where at some point about 15 years ago
+[1165.16:1167.16] I went traveling in Albania.
+[1167.16:1172.16] And I picked up a hitchhiker who was actually a police officer.
+[1172.16:1175.16] So I gave a ride to a police officer.
+[1175.16:1179.16] And he would not wear a seatbelt and he told me,
+[1179.16:1182.16] you don't have to wear a seatbelt.
+[1182.16:1184.16] So obviously, there, people still don't think
+[1184.16:1187.16] that seatbelts save lives.
+[1187.16:1189.16] So this is an important question.
+[1189.16:1194.16] So what would be an experiment to possibly answer this question?
+[1194.16:1197.16] Well, you could, whenever a person is born,
+[1197.16:1199.16] you could flip a coin.
+[1199.16:1203.16] And then if it heads, then they have to wear a seatbelt
+[1203.16:1206.16] for the rest of their entire life.
+[1206.16:1210.16] And if it comes up tails, then they are never allowed to wear a seatbelt.
+[1210.16:1215.16] So that would be conceptually a valid randomization.
+[1215.16:1218.16] And then you could measure the fraction of traffic deaths
+[1218.16:1221.16] in each of the two groups.
+[1221.16:1225.16] Of course, this is not ethical because we already have a hunch
+[1225.16:1227.16] that seatbelts might save lives.
+[1227.16:1231.16] So it would be really unfair and totally infeasible
+[1231.16:1236.16] to assign someone to one of these groups at birth.
+[1236.16:1240.16] It's also not feasible to monitor compliance.
+[1240.16:1244.16] No, even if someone is assigned to the seatbelt group at birth,
+[1244.16:1246.16] you don't know if they actually wear the seatbelt.
+[1246.16:1250.16] So this is also a practical limitation here.
+[1250.16:1253.16] Randomized control trials, randomized experiments
+[1253.16:1255.16] can be expensive to run.
+[1255.16:1257.16] Think about all the medical trials.
+[1257.16:1259.16] You need to bring people to the room.
+[1259.16:1263.16] You need to buy insurance to pay for people
+[1263.16:1265.16] if they get sick from your medicine, actually.
+[1265.16:1267.16] So this is all expensive.
+[1267.16:1269.16] And they might even be fundamentally impossible.
+[1269.16:1273.16] Imagine that you ask them a question to earthquakes decrease life spans.
+[1273.16:1278.16] You cannot press the button and randomized whether in a certain village
+[1278.16:1280.16] there will be an earthquake or not.
+[1280.16:1282.16] Unless you are Kim Jong-un maybe.
+[1282.16:1285.16] But even for him, it would be hard to build the machinery
+[1285.16:1290.16] to conduct such an experiment.
+[1290.16:1294.16] And additionally, and this is important for ADA
+[1294.16:1298.16] most modern big data is found data.
+[1298.16:1302.16] Often the big data sets that we study in data times
+[1302.16:1306.16] are not experimentally collected where we turn knob
+[1306.16:1309.16] and we set exactly the voltage and so on.
+[1309.16:1311.16] So we collect the data we want.
+[1311.16:1314.16] But no, this is people just tweeting the way they do.
+[1314.16:1317.16] People that act on Facebook, the way they do.
+[1317.16:1319.16] People that search Google, the way they do.
+[1319.16:1322.16] And this data will be full of confounders.
+[1322.16:1328.16] And we still want to make sense of it and reason about cause and effect.
+[1328.16:1332.16] So here randomized control trials are not what we have to do.
+[1332.16:1335.16] But instead we have to do observation studies.
+[1335.16:1341.16] And let me finish this with a final limit of randomized experiments.
+[1341.16:1344.16] They may lead to unrealistic scenarios.
+[1344.16:1350.16] Think for example about a case where you want to know whether eating salt is unhealthy.
+[1350.16:1354.16] So you have a treatment group that eats more salt than the control group.
+[1354.16:1359.16] And you would give them to exactly those the amount of salt that they eat.
+[1359.16:1361.16] You would give them these salt pills.
+[1361.16:1366.16] But this is an unnatural intake form of intake of salt.
+[1366.16:1372.16] So you don't really know if the effects that you measure have to do with the salt
+[1372.16:1377.16] or with a specific way of taking this fixed quantity at a specific time.
+[1377.16:1386.16] So it's not exactly the scenario that you want to speak to because usually people eat salty foods rather than salt pills.
+[1386.16:1389.16] Okay, so these were the limits of randomization.
+[1389.16:1391.16] So what can we do?
+[1391.16:1394.16] The alternative is observation studies.
+[1394.16:1400.16] Such studies are basically you can think of observation studies as all studies that are not experiments.
+[1400.16:1402.16] They're fundamentally different from experiments.
+[1402.16:1408.16] Here the researcher cannot control who goes to which condition.
+[1408.16:1413.16] So that's why the researcher is merely an observer, not a pinkerer.
+[1413.16:1420.16] In an experiment, you as the researcher have control over data collection.
+[1420.16:1422.16] In an observation study, you do not.
+[1422.16:1426.16] You just observe and you take what you get.
+[1426.16:1430.16] Such studies are then of course much less problematic with respect to ethics,
+[1430.16:1442.16] price, feasibility, but they're much more problematic with respect to the validity of conclusions.
+[1442.16:1451.16] So the plastic case regarding validity of conclusions is the question of smoking versus lung cancer.
+[1451.16:1457.16] Where there was a long decade long debate whether the conclusions that come from observation studies are actually valid.
+[1457.16:1461.16] The tobacco industry would say, you know, these are caused by confounders.
+[1461.16:1473.16] We get back to this this later and there was this this long long tug of war where people in the industry push back on the validity of the conclusions drawn from observation studies.
+[1473.16:1480.16] The question could have easily been settled by a randomized controlled trial where you force some people to smoke for decades and others not.
+[1480.16:1491.16] But of course, there are questions of ethics and feasibility so people have to do with observation studies and a lot of the methodology that will cover today.
+[1491.16:1497.16] Um, methodology for observation studies was actually developed as a resolution of the smoking debate.
+[1497.16:1501.16] So the fact that I'm using smoking as a running example is not a coincidence.
+[1501.16:1515.16] Really a lot of the of the methods of causality were developed in order to decide whether smoking causes lung cancer and of course those tools are much more general, but that's why they were developed originally.
+[1515.16:1525.16] Okay, so if we do an observation studies then all advantages of randomized experiments are gone now subjects self select to be treated.
+[1525.16:1532.16] Um, and the treatment assignment and the response may be caused by the same hidden correlates.
+[1532.16:1541.16] So as I said, these are called confounders. For example, the resolve the motivation to quit smoking in the example of Dr. Bob's smoking cure.
+[1541.16:1554.16] So really the initial experiment that I pitched to you as Dr Bob was not an experiment, but it was an observation study and as we see a pretty badly designed one to boot.
+[1554.16:1569.16] Let's look at the example of seat belts again. Recall that doing an experiment to decide to determine whether seat belts, save lives or not is infeasible because it's unethical.
+[1569.16:1575.16] You cannot decide for someone at birth whether they will have to wear a seat belt for the rest of their lives.
+[1575.16:1577.16] So instead we can do an observation study.
+[1577.16:1585.16] We can take a data set of all traffic accidents in a given time span and we can consider two treatment conditions.
+[1585.16:1593.16] We can consider the treated group. Those are the seatbed wearers and the control group. Those are the non seatbed wearers.
+[1593.16:1602.16] So this means at the time of the traffic accident. Okay, did the people, did the person wear a seat belt or not treated or controlled.
+[1602.16:1609.16] And then we compare in these two groups the fraction of people who died in the accident.
+[1609.16:1619.16] Do you see any problems with this? And here I'd like you to think for a minute and if you're in the room feel free to discuss with your neighbor.
+[1619.16:1634.16] Do you see any issues with this observation study?
+[1650.16:1661.16] Okay, so do we have any thoughts yet? Akhil, can you please check in the room. Raise your hands if you have any thoughts about this observation study.
+[1661.16:1665.16] Two questions on Zoom first because let's see.
+[1665.16:1671.16] Okay.
+[1671.16:1680.16] So we have someone who says so Bastien says seatbed wearers could be more careful on the road. Very good.
+[1680.16:1691.16] So if you are a careful person then you drive more carefully so you might be driving more slowly, which means that the accident might be less severe.
+[1691.16:1701.16] And at the same time you are more likely to wear a seat belt. So general sense of caution would be a confound here.
+[1701.16:1708.16] We also have arena who says what if people who don't wear seat belts are more risky at driving.
+[1708.16:1717.16] So that's the same answer basically. Okay, you're spot on. This is exactly what I would also say.
+[1717.16:1724.16] So let's draw this as a cause of diagram. We have seat belt wearing on the left as the treatment.
+[1724.16:1738.16] We have survival as the outcome on the right. Now we have this confounder driver's cautiousness cautiousness increases both the chance of wearing a seat belt and it changes the severity of the crash.
+[1738.16:1754.16] If you're cautious the severity of your crash will be lower which in turn increases your chance of survival. So we have this confounder driver's cautiousness which acts via the mechanism of crash severity.
+[1754.16:1767.16] I can come up with hundreds of other explanations. For example, even if you're generally a cautious driver, it might have been that you drove off in a hurry because you needed to go to you needed to make it to e.p.a. to go to Ada.
+[1767.16:1777.16] So you forgot to wear to put on your seat belt and at the same time you drove fast because you needed to make time or you were drunk.
+[1777.16:1786.16] So you forgot the seat belt and you drove more dangerously which increased the severity of the crash or you might be driving an old car.
+[1786.16:1797.16] Cars might have broken seat belts and they might have no airbags. The absence of an airbag might actually have killed you, not the absence of a seat belt.
+[1797.16:1807.16] So many many things that could screw us over here with respect to the validity of our findings.
+[1807.16:1823.16] And we will not know whether an association or correlation that we measure between seat belt wearing and survival is actually due to the direct effect of seat belt wearing on survival or because of one of those many confounds that could be there.
+[1823.16:1833.16] So now let's look at something smarter to do. We look at another kind of observation study which I call a match observation study.
+[1833.16:1842.16] So here we do not look at all accident cars but we only look at a carefully selected subset of the accident cars.
+[1842.16:1852.16] We look at only those cars where there were exactly two people at the time of the accident, one driver and one passenger in the front passenger seat.
+[1852.16:1867.16] We look only, additionally we require that in the cars that we study exactly one person died and the other survived and exactly one of the two people wore a seat belt at the time of the accident and the other one did not.
+[1867.16:1874.16] So in every car we have exactly one treated and one controlled subject.
+[1874.16:1886.16] As before we measure outcome the same way. We compare the fraction of dead in the treated group versus the control group. So among seat belt wears, wears is non seat belt wears.
+[1886.16:1895.16] But now what's new is that in this setup everything else is controlled for. For example the speed of the car is fixed because both people were in the same car.
+[1895.16:1910.16] The severity of the accident is fixed because both people were in the same accident and so on. So we really rule out a lot of these confounds that we had in mind earlier.
+[1910.16:1934.16] And the fundamental concept that allows us to do this here is matching. So we're moving here from a individual study to a paired study where we carefully construct the the data set such that we have always one treated person matched with one controlled person.
+[1934.16:1948.16] Let's draw this as a causal diagram. The what you see here is that now the arrow from driver's cautiousness to seat belt is gone. Why is that?
+[1948.16:1958.16] Because driver's cautiousness is fixed in every car. And in every car you have one seat belt wear and one non seat belt wear.
+[1958.16:1973.16] So for a fixed level of driver's cautiousness, the probability of wearing a seat belt is always 50%. Whether someone, whether the driver was cautious or not does not give you any information about whether the person was hit by or not.
+[1973.16:1985.16] That's why there is no arrow anymore from the driver's cautiousness to seat belt. And therefore we have no confound because driver's cautiousness does not affect the treatment anymore.
+[1985.16:2010.16] What could still happen? Think for a bit. Are we done? Or could there still be some circumstances that invalidate the conclusions that we get about that we draw from a correlation between seat belt wearing and survival?
+[2010.16:2018.16] You can type in the chat or you can raise your hand and Achille will bring you the microphone box.
+[2018.16:2027.16] Is it possible that driver's cautiousness is just much more important than seat belt wearing and the survival of an accident?
+[2027.16:2035.16] But how would that change the how would that validate our findings?
+[2035.16:2046.16] That's good point. I'm the other thing I was thinking of was the impact location. If you have two people in the same car, one side only, the person on that side may be more likely to get it.
+[2046.16:2062.16] I think that one gets closer to the core and it's very good comments. It's one also that I thought of we have in the chat from you how drivers may turn to do things that may protect themselves like turn the direction.
+[2062.16:2079.16] Yes, that's a good one. So the driver has agency actually whereas the passenger does not. These are these are great. Another reason that I can think of is that the passenger might be more likely to be drunk or let's say the driver is more likely to be sober.
+[2079.16:2092.16] And therefore the drunk passenger might be less likely to be to be belted but they might also be more likely to die maybe because of an alcohol inflicted complication.
+[2092.16:2105.16] And so then we would have a potential then we would have a spurious correlation and incorrect or misleading correlation between wearing the seat belt and the death because it's actually the drunkenness that made the difference.
+[2105.16:2123.16] Or let's go the other direction the driver could the driver could have a higher probability of wearing a seat belt than the passenger because they're more they feel in a position of responsibility.
+[2123.16:2144.16] Maybe because they're less likely to be drunk they don't forget to put their seat belt and this would then increase the sorry so that that's one thing but they could also have an increased probability of dying because they have a steering wheel in front of them.
+[2144.16:2154.16] Even the two things would cancel out yes they're more likely to wear a seat belt but they're also more likely to die with or without a seat belt because they have a steering wheel that can hit their head.
+[2154.16:2164.16] So this could cancel out a true positive effect of the belt and it would mask the true advantages of having a belt and so on and so on.
+[2164.16:2182.16] We could still come up with reasons why this study could not be fully valid but we can dig into the data in a more fine green analysis and address these issues and this is where this contingency table comes in.
+[2182.16:2204.16] The contingency table has only four numbers but they are extremely informative. Remember that we have four situations we have four situations we have one so one factor is who was belted the driver or the passenger times who died the driver or the passenger.
+[2204.16:2214.16] So this gives us four possibilities and in this table you see the counts for each possibility like how often did each of these situations happen.
+[2214.16:2226.16] For example we see that in 189 cases it was the passenger who was belted and it was the passenger who survived and so on for all combinations.
+[2226.16:2237.16] So first observation we have it is indeed the fact the case that drivers are more likely to be belted.
+[2237.16:2251.16] We see this by summing up the numbers in the two columns. So we see that we have 189 plus 111 that equals 300 cases where the passenger was belted but we have 516 cases where the driver was belted.
+[2251.16:2261.16] So 516 greater than 300 drivers were belted more often but in each situation regardless who was the belted one it was always the belted person who had a higher chance of surviving 189 versus 111 when the passenger was belted and 363 where the versus 153 when the driver was belted.
+[2261.16:2281.16] So we know that it's not the disparate situation the different situation of the driver and the passenger because for both drivers and passengers the driver was not the same.
+[2281.16:2298.16] So we know that it's not the disparate situation the different situation of the driver and the passenger because for both drivers and passengers the belt increased the chance of surviving.
+[2298.16:2315.16] So this for me really is the art of science to set up this study in a careful way such that still by just comparing these four numbers we can speak about cause and effect something that was not possible working with the same data without smartly filtering it.
+[2315.16:2335.16] So this is really where the creativity of the research was required in order to come up in order to realize oh wait we shouldn't look at all the data which should look only at those cars were exactly one person was belted at one person died and then all of a sudden you come much closer to measuring an actual cause effect.
+[2335.16:2364.16] So this brings us to the topic of natural experiments this study with the cars I argue could be is nearly like an experiment it's but it's not the researcher who flipped the coin but it's nature who kind of flipped the coin if you look at only those cars where exactly one person wore the seat belt then whether it was person one or person two who wore the seat belt.
+[2364.16:2392.16] It's nearly like random right like you know you fix that one of them wore the belt and now it's there's no there's no strong selection anymore so Rosenbaum puts it like this when investigators are especially proud having found unusual circumstances in which treatment assignment.
+[2392.16:2399.16] Though not random seems unusually have hazard they may speak of a natural experiment.
+[2399.16:2412.16] The classic examples of natural experiments are twin studies in biology for example where you take for example twins identical twins that were separated at first because they were adopted.
+[2412.16:2436.16] One of them let's say went into a high into a rich family one went into a poor family and then this allows you to disentangle nature from nurture because these people by nature are exactly genetically the same but they require they experience different education and then you can study the effect of that another classical example is the Vietnam draft.
+[2436.16:2452.16] So here people wanted to know how does it affect your life if you go to the army you have strong steps selection for the army on the usual circumstances the kind of people who become soldiers are different systematically from the people who decide not to become soldiers.
+[2452.16:2465.16] But with the Vietnam war there was a draft people were actually I think it was by birth date certain birth dates were drawn randomly physically randomly from a big bowl of paper slips.
+[2465.16:2474.16] They decided everyone who born on 9th of June will go to war everyone who is born on 7th of June will not have to go to war.
+[2474.16:2484.16] So here people were randomized into war or not and you could then study what are the socio economic consequences of becoming a soldier.
+[2484.16:2499.16] Or very interesting case call or outbreak in London in the 19th century I'm not going to give you the details here there's a Wikipedia there's a link to a nice blog post that describes this so I encourage you to read this.
+[2499.16:2504.16] So let's ask quickly is the match keep that study a natural experiment.
+[2504.16:2519.16] I would say it's kind of nearly a natural experiment because as we saw there is still some set selection drivers are still more likely to wear a seat belt than then passengers.
+[2519.16:2533.16] So we do not fully have the conditions for for for a natural experiment it's not like in the Vietnam draft where really it was drawn randomly someone randomized it for you even though it wasn't you as the researcher.
+[2533.16:2547.16] But this analysis with the contingency table allowed us to rule out that last concern and and bring us really closer to an actual experiment.
+[2547.16:2562.16] In fact did it you have to keep you have to stay paranoid as a researcher when you do this kind of study so let me let me share some ways in which I think this could.
+[2562.16:2567.16] Still break although it's already a pretty good study.
+[2567.16:2591.16] Some people a certain group of people for example men might be less likely to wear belts but they might be more vulnerable to the impact of of class on their head and making this one up but you get the point right there could still be certain confounds that make you more likely to die and to wear a seat belt.
+[2591.16:2610.16] And so you should always stay critical of your design when you when you design observation studies and next we will actually look at tools to address additional concerns that might still be there.
+[2610.16:2638.16] By the way let me quickly ask you who had heard of natural experiments before this lecture if you're on zoom please raise your hand with the raise hand button and if you're in the room also raise your hand physically and then a kill you can give me a rough idea how many people raise their hands.
+[2638.16:2648.16] So I'm going to go down three to four in the room and we to four in the room and 10 people on zoom.
+[2648.16:2658.16] Okay so actually last year the Nobel Prize economics went to the people who worked on methodology for natural experiments.
+[2658.16:2671.16] So this is really a hot topic and it's because it's one of the best ways to speak about cause in effect if you cannot run an experiment yourself.
+[2671.16:2681.16] So these are angriest in bands and card who got the Nobel Prize for finding a way to identify cause in effect in social science and natural experiments.
+[2681.16:2707.16] Okay so then the question is nature did not flip a coin for me I do not have an etcher experiment so watch out a little so that just go go home and we well you certainly at least won't get a Nobel Prize but what can you do and this will be the topic of the second half of the lecture but we'll now take a quick break actually.
+[2707.16:2734.16] When I gave this lecture last year I was a bit rushed in the end and people ended up not grasping the point of the last thing so let me please make take only a 10 minute break we come back at 9 10 because I want to make sure that I really can cover all the material today without having to cut so see you in 10 minutes at 9 10.
+[2857.16:2881.16] Okay so there was a question about the broken link I'm sure it will come back because yesterday it worked so this must just be some server issue but I look into it and maybe I can find another link that talks about the same story.
+[2881.16:2896.16] Otherwise you can just google natural experiment called a London and you'll find it okay so I am recording again and welcome back.
+[2896.16:2910.16] So where do we leave off we said okay nature did not flip a coin for me I don't have a natural experiment should I go home and weep no you can still get good mileage if you are smart about how you analyze it.
+[2910.16:2919.16] How you analyze your data and this is what we will look at in the rest of this lecture the fundamental concept here is matching.
+[2919.16:2938.16] So ideally you would like to pair up two identical people people that really are all the same their twins and but one of them gets treated the other one gets the gets control.
+[2938.16:2961.16] And then it's this is very similar to what happened in the seat belt study right where we also had one treated paired with one control but there it was done what I call X until it was called was done ahead of time was done before you analyze the data it was physically done these people set in the same car the matching happened physically.
+[2961.16:2983.16] Whereas in the more common case in observation studies you do this expost so that means you do it in hindsight you have your data set and now you can match people from that actually had no relationship with each other they might they would not not necessarily have to be in a physical relationship like being in the same car.
+[2983.16:2995.16] What you care about is that you want to match to people who really are as close as possible but one of them got treatment the other one got control and then you can compare.
+[2995.16:3012.16] The outcome in the treated group versus the outcome in the control group for example by computing the mean in each of these two groups and then taking a difference of the two means which is of course the same as taking a mean of the difference because the mean is linear.
+[3012.16:3017.16] Or you could do it via regression analysis you could take these two.
+[3017.16:3041.16] This this data set you could have a treatment binary variable for treatment versus control and you could do regression analysis as we saw in the last lecture regression is the tool to allow you to estimate the difference of means into groups so you could do this also via regression and then you would get all these nice advantages like getting uncertainty and.
+[3041.16:3066.16] The hypothesis tests and so on for free but this is where I'll leave it off with regression analysis we're not do more regression today this was just to highlight a connection to the to the previous week we will stick more to to the vanilla way of doing it to just compare.
+[3066.16:3071.16] The means in treatment versus control.
+[3071.16:3095.16] Okay so matching as I said ideally want to pair up two identical people exactly one of whom got the treatment and the other one the control unfortunately such an ideal matching is usually not feasible for two main reasons problem one is unobgurved covariates you do not know everything about everyone so you do not even know if two people are identical.
+[3095.16:3117.16] Even if they look the same they might feel one of them might have a genetic disease the other one does not and you do not see it it somewhere hidden away in the genes so then this case the this genetic factor would be an unobgurved covariate so in a nutshell people who look the same might not actually be the same that's problem one.
+[3117.16:3123.16] Problem two is a combinatorial explosion even if.
+[3123.16:3152.16] You could know everything about everyone then these factors would be so many that you wouldn't basically find two people that are identical because they can differ in so many different ways and so in the next minutes we will tackle these two problems actually this will be the agenda for the rest of the lecture today to address these two problems one and two.
+[3152.16:3164.16] Start with problem one unobgurved covariates as I said you usually can't know if two people are identical because you don't know everything about everyone.
+[3164.16:3180.16] For example there could be a hypothetical gene that causes both the desire to smoke and lung cancer and this is not just a toy example this gene is actually what the tobacco industry claimed.
+[3180.16:3209.16] So this is an important this is an important example so we'll deal with problem one for now by simply ignoring it okay we'll come back to it later but for now we will ignore the problem of unobgurved covariates and this means that so if we address problem one by ignoring it that is what I call the naive model.
+[3209.16:3225.16] In this naive model we just assume that people who look the same are the same people who look comparable are comparable or equivalently only observe variables determine treatment assignment.
+[3225.16:3254.16] There is no in this naive model we assume that there is no unobserved confound no unobserved variable that determines both treatment that influences both treatment assignment and the outcome okay so again people who look comparable are comparable only observe variables determine treatment assignment this is the naive model which is generally not true but we'll work with this assumption for now and then we will lift the assumption.
+[3254.16:3283.16] Let's draw the naive model as a causal diagram as before we have treatment and outcome now we also have observed covariates which can act as confounds they can influence both the treatment and the outcome and then we have the unobserved covariates which might interact in various ways.
+[3283.16:3303.16] With the observed covariates I marked this with an undirected edge here this means we remain agnostic to what the direction of causalities between observed and unobserved covariates I just what I care about is only that these are not independent so they are connected by this edge here.
+[3303.16:3332.16] Now you see what happens the observed covariates can be a confound but the observed covariates we can handle because we can observe them right so the problem here is easy to know I'll show you how we can handle this case the important thing is that there is no direct edge between unobserved covariates and treatment because since these are unobserved by definition we couldn't do anything.
+[3332.16:3361.16] We couldn't handle them we can't adjust for them. Also note that the unobserved covariates can have an effect on the outcome you see this gray arrow here but that's fine as long as the unobserved covariates do not have an direct effect on the treatment because this way by taking care of the observed covariates we can basically block off the curve.
+[3361.16:3389.16] So we'll get back to this causal diagram in a minute but for now let's see what could we do if this naive model were true a big if that's usually usually doesn't hold but if the naive model were true then you could simulate a randomized experiment you could simply match subjects with identical observed covariates where so you could match one of the values that we can see.
+[3389.16:3407.16] So you could match one treated subject to one controlled subject such that the two subjects have identical observed covariates if you do this then subjects in a pair in a matched pair have the same probability to treat.
+[3407.16:3436.16] So who gets treated up out of the tool is up to chance as in an experiment so that's the crux here and if the naive model were true this way you could simply compare the outcome in the treated group to the outcome in the control group and then this way determine whether this these two outcomes are significantly different and that would give you the answer to your causal question.
+[3436.16:3457.16] Of course it's not so simple because now problem two kicks in you you typically do not have identical subjects in your data set that really are the same in all regards with respect to all observed covariates you have this combinatorial explosion that you need to handle.
+[3457.16:3475.16] Here's an so to go deeper here nearly no two people are identical you have rare exceptions you know in some case if you care about certain causal effects then you might be able to get away with twin studies where the two people are really genetically identical.
+[3475.16:3504.16] But often you don't have this kind of situation where you can match twins such that as a consequence filing two people to matches often impossible even when only considering observed covariates which is what we're doing in the naive model think for example about if everyone was characterized by 20 binary attributes and this is a small number like as humans we have many more attributes.
+[3504.16:3532.16] So you take one attribute are they blonde question mark are they male question mark are they above 180 question mark so we create these binary indicators 20 of them then you would always have already have two to the 20 that is about one million different constellations it grows exponentially in the number of attributes and of course this gets even worse for attributes with more than two possible values.
+[3532.16:3542.16] So just by this counting argument you see that it becomes overwhelmingly unlikely that you will ever find two identical people that you can match.
+[3542.16:3554.16] So then let's ask ourselves do we really need to match people with identical covariates or is this too strong a requirement.
+[3554.16:3580.16] To answer this question let's go back to the holy grail of of causal analysis randomized control trials randomized controlled experiments I have a quick reminder here of a previous slide that you saw earlier where all that we needed to make sure what does the coin make sure of when we flip a coin to decide whether a person goes to treatment or control.
+[3580.16:3587.16] The coin make sure that everyone has the same probability of going to treatment.
+[3587.16:3605.16] And as long as we can mimic this behavior of the coin we're good enough it doesn't have to be the case necessarily that the two people that we match are exactly identical what we want is that the two people that we match have the same probability of receiving the treatment.
+[3605.16:3620.16] So if the one person has a 66 probability of getting treatment versus control then we want to match them to another person who also has a 66% probability of getting treatment versus control.
+[3620.16:3633.16] So this is now an easier problem because now we can try to compress the potentially many observed covariates into a single number.
+[3633.16:3649.16] Namely the probability to receive the treatment given all the observed covariates this number is called the propensity score is the probability that a subject is treated given everything we know about them.
+[3649.16:3678.16] And the crucial thing is that this probability we can estimate from data you can do this for example, the logistic regression I'm aware that we haven't talked about logistic regression in this class yet we'll do it in one of the next lectures but you also it doesn't matter how exactly you estimate this data the important thing is that you can you have the information to estimate that probability why because for everyone you have the observed covariates by definition right.
+[3678.16:3698.16] The observed covariates are the things that you know about your your data points so that is your input and as output you you use whether the person was treated or not and this also you know you know for everyone whether they receive treatment or control.
+[3698.16:3716.16] So now you can fit the model that maps this input observed covariates to this output treatment indicator and from this model this model then basically tells you everyone's probability of receiving of having received the treatment given the outcomes.
+[3716.16:3744.16] So if we have this one number the propensity score what can we do let's look at it as a causal diagram we again have our treatment and we have our outcome and now we introduce and we have all these observed covariates we might have many of them and they all influence the propensity score all the observed covariates influence the probability of receiving the treatment.
+[3744.16:3773.16] And then the probability of receiving the treatment influences whether you get the treatment or not and the crucial thing is that the observed covariates influence whether you get the treatment only via the propensity score only via the probability of receiving the treatment this is by definition nearly right because this is how how do the observed covariates influence the probability to receive the treatment well.
+[3773.16:3799.16] So we have the other probability to receive the treatment note here that again as before the observed covariates are allowed to influence the outcome that's totally fine but the key thing is that they do not influence the treatment except via the propensity score because this way by fixing the propensity score.
+[3799.16:3824.16] So we basically remove this arrow here that runs from that connects observed covariates to treatment because if we keep this fixed then everyone with a fixed propensity score will have the same probability to treat so there's no more information that can flow from the observed covariates to the treatment.
+[3824.16:3834.16] So then for fixed propensity score the distribution over observed covariates is identical in all treatment groups.
+[3834.16:3842.16] This is called the balancing property of the propensity score and we'll speak to this here on the next slide.
+[3842.16:3859.16] This is a key property of the propensity score all subjects whether treated or controlled with equal propensity score have an equal distribution of the observed covariates.
+[3859.16:3871.16] I wrote this down as a formula here which means that now you can come the treatment group is comparable to the control group within every single match pair.
+[3871.16:3891.16] Too much people might not have the or generally will not have equal X but as a whole when you look at the treatment group as a whole then it has the same distribution over X as the control group has.
+[3891.16:3904.16] So I was thinking about if we're doing matching and we need to do or it seems as though we did one by one so we matched one treated person to one control person.
+[3904.16:3913.16] But if the probability the propensity score is not equal to 50% is there some data that we'd be behind.
+[3913.16:3923.16] So is there like the probability of receiving treatment is 60% that means that there are a set there will be maybe more people who received treatment than didn't receive treatment.
+[3923.16:3926.16] So do we just leave some of the data behind?
+[3926.16:3929.16] If we match one.
+[3929.16:3938.16] So so I think maybe I need to clarify here the propensity score is for a single unit right for one data point.
+[3938.16:3967.16] So we're going to be able to receive the treatment so if if one I guess what you're asking is what if all people have probably have propensity scores that are higher than than 50% yeah okay that none of some extent that I think you still have a point you might in general have way more typically it's you have more control than treatment group you know like let's say let's take the smoker case you have more non smokers and smokers.
+[3967.16:3977.16] That means it's kind of a luxury right because the control group if the control group is much bigger than this gives you a bigger pool of matching candidates.
+[3977.16:3990.16] So it means that you can find more similar people it's true what you say is they're not everyone will be matched there will be some controls that you would be there would be left over there would not be matched to anyone in the study.
+[3990.16:4001.16] But you can do things like also like matching every treated subject to several control subjects and so actually let's get to the next point which speaks to how we actually do the matching that might.
+[4001.16:4013.16] That might clarify the question so remember that the goal of matching is to to pair every to pair all the subjects into these groups of.
+[4013.16:4024.16] To match subjects into pairs where within each pair you have one treated and one control and you want to do this such that the two have exactly identical propensity scores.
+[4024.16:4034.16] Now the propensity score is a is a real number right so it's very unlikely that two subjects will have exactly identical propensity scores.
+[4034.16:4045.16] So that's why instead of doing an exact matching we will usually find an approximate matching and so here matching is really like the kind of matching that you saw in your.
+[4045.16:4057.16] Agrivens class when you talk about graph algorithm sense on if you have not seen matching algorithms before don't worry I quickly explain it imagine you build a bipartite graph so where you have.
+[4057.16:4075.16] Every subject connected to all other subjects so in the bipartite graph you have two groups you have one group is the treated subjects and the other group is the control subjects and now you make a complete bipartite graph where every treated group person is is.
+[4075.16:4089.16] Connected to every control person you see this here with an example red is treated and blue is control and then every treated is connected to every control and now you add edge weights.
+[4089.16:4104.16] The edge weights would be what is the difference of propensity scores between those two people that are connected by the edge and now you find a minimum matching so you want to find a matching where the total difference in propensity scores.
+[4104.16:4118.16] Is minimized so you find a matching that's as good as possible even if it's not exact even if you can't squeeze that difference down to zero then you still find the best matching possible in this example here there as many red.
+[4118.16:4136.16] But this generally does not need to be the case you can potentially have many more let's say blue notes and red notes and you can still find a matching where you try to match all the red ones and then you can leave blue ones over.
+[4136.16:4148.16] But that's the idea you want to find the best possible matching where you match up people that come as close as possible with respect to their propensity scores.
+[4148.16:4162.16] Someone asks does this mean that certain subjects will be matched more often and certain won't be used well both of these can be true independently you can this is up to you how you set the constraints of your matching algorithm.
+[4162.16:4189.16] You can set as a constraint I want to match every red person exactly once or you could allow for every red person to be matched to multiple blue persons but in the simplest case you would find one matching partner for let's say every red person and if you have more blue than red then some of the blue people would be left over and you would not match them to any red person.
+[4189.16:4193.16] But there are many variants of this and all of them make sense.
+[4193.16:4197.16] But this is not the point that I'm trying to make.
+[4197.16:4209.16] The these are details the point that I'm trying to make is that this allows you to create treatment and control groups that are basically now are comparable.
+[4209.16:4236.16] Okay, so are we done? Who wasn't there something wasn't there this mean monkey who just closed his eyes and ignored problem one what was problem one problem one was actually the big one problem one was about unobserved covariates you usually can't even know if two people are identical because you don't know everything about everyone.
+[4236.16:4257.16] So as a quick reminder we've been assuming the naive model which assumed that only observed variables determine treatment assignment but in general of course this may not necessarily be the case there might be unobserved variables that determine treatment assignment and then everything is lost again.
+[4257.16:4270.16] So if the naive model is not true then the propensity scores that we estimate and that we can estimate from our data may differ from the true probabilities to treat which is what we're really interested in.
+[4270.16:4286.16] So I wrote this here again as for us to make the difference more clear the propensity score is the probability of receiving the treatment given the observed covariates whereas what we really want to know is the true probability to treat which is the probability.
+[4286.16:4299.16] To be treated given all the covariates and the naive model that we just work with assumed that these two are actually equal but if the naive model is not true then they are not equal.
+[4299.16:4304.16] So let's look at the violated naive model as a causal diagram.
+[4304.16:4333.16] This is the same diagram that I had before to introduce propensity scores but now we additionally have those this magenta variable which is really can be many covariates the unobserved ones and if the unobserved ones can affect both treatment and outcome then the unobserved covariates are confound and they're unobserved confound so we cannot speak to it via something like propensity scores.
+[4333.16:4353.16] And so in this case the unobserved covariates might make all the difference which is what the tobacco industry claimed when they say it's a gene an unobserved gene that makes you both more likely to enjoy smoking and increases your probability of lung cancer.
+[4353.16:4378.16] So let me give you another example if the naive model isn't true then you might end up matching two people that look identical like this both born in 1948 both grown up in England both married the second time both with two children both successful in business both wealthy both spent the winter holidays in the arts.
+[4378.16:4388.16] The Swiss Alps actually in both like dogs but the two could not be more different because one of them is King Charles and the other one is Aussie Oslo.
+[4388.16:4397.16] So I think this is a nice example that shows you how you can be screwed over if you just blindly assume that the naive model is true.
+[4397.16:4419.16] For example if assassination is the treatment that you're interested in studying then probably person one has the higher probability to receive the treatment then person two and just matching these two people on these of their covariates would not give you two people that are really comparable.
+[4419.16:4445.16] Let me put this let me revisit this idea of how the naive model can be attacked in the words of Rosenbaum this is an excerpt from his book it's a bit lengthy but I quite like it so I'm going to read it out because it really has the essence in a nutshell so Rosenbaum says it is common for a critic to argue that in a particular study then naive model may be false indeed it may be false.
+[4445.16:4469.16] Typically the critic accepts that the investigators matched for the observed covariates X so treated and controlled subjects are seen to be comparable in terms of X but the critic points out that the investigators did not measure a specific covariate you did not match for you and so are in no position to assert that treated and control groups are comparable in terms of you.
+[4469.16:4481.16] This criticism could be dismissed in a randomized experiment randomization does tend to balance unobserved covariates but the criticism cannot be dismissed in an observational study.
+[4481.16:4498.16] This difference in the unobserved covariate you the critic continues is the real reason outcomes differ in the treated and control groups it is not an effect caused by the treatment but rather a failure on the part of the investigators to measure and control in balances in you.
+[4498.16:4508.16] Although not strictly necessary the critic is usually aided by an air of superiority this would never have happened in my laboratory.
+[4508.16:4520.16] So I think this nicely summarizes how the naive model can be attacked and it's often the crux in scientific discourse.
+[4520.16:4549.16] So how can we fix this and this is the this is the last section of this of this lecture how can we possibly fix it how can we fix a problem that comes from something that we do not observe right this is really tricky because we the problem arises from these unobserved covariates so we cannot cannot do what we did with the propensity score where we computed
+[4549.16:4570.16] some number which then allows us to adjust the data set in order to make the problem go away so we need a fundamentally different way of reasoning here to speak to this situation and this is this is how it's done and so this is called the sensitivity analysis model.
+[4570.16:4592.16] The idea is to quantify the degree to which the naive model may be wrong without you having to change your causal conclusions so the spirit here is you admit that indeed the naive model might be wrong and people who look comparable are actually not comparable.
+[4592.16:4617.16] But then you ask how wrong would the model have to be before I change my mind with respect to the causal conclusions and then you can sometimes make an argument that it would have you have to be so unreasonably wrong with respect to the naive model that it's it's really unlikely so let me unpack this a bit.
+[4617.16:4645.16] So more more concretely what we're assuming in the sensitivity analysis model is that the treatment odds think of this as treatment probabilities for now I'll show you I'll show you on the next slide why we think of odds rather than probabilities but for now think of them as the same thing assume that the treatment odds of two identical looking subjects may differ.
+[4645.16:4674.16] So that the naive model might be violated to identical looking people might differ with respect to their probability of receiving the treatment in particular we assume that their treatment odds might differ but up to a factor gamma I make this more formal on the next slide but now I want for now I want to get the logic cross so you basically say the model might be violated up to a factor gamma to identical looking people might actually have different.
+[4674.16:4702.16] odds of receiving the treatment and then your reason in the spirit of approved by contradiction okay the to identical people look looking people might differ but in order for me to change the conclusions of my study which say for example that smoking causes lung cancer for me to change my conclusion to identical looking people where one was treated and one of them is the same as the one of the two of them are different.
+[4702.16:4731.16] Where one was treated and one was controlled would have to have hugely different treatment odds so that is the gamma would have to be huge in order for me to change my mind gamma would have to be huge however common sense or what we know about the domain suggests that gamma cannot be so huge so by contradiction my conclusions stand.
+[4731.16:4760.16] Many people in the so when I went through the feedback from last year this was the part that most people didn't understand so that's why I shortened the break because I wanted to make sure that we have more time to unpack this because it's really a fundamental part of this lecture it's addressing the big white elephant namely the knife model might not be true.
+[4760.16:4789.16] All the best so I will now make this more formal and then we can see if if it's still unclear and we can answer I can answer questions about it so now let's let's let me unpack what I meant with this statement from the previous slide treatment odds of identical looking subjects may differ but up to a factor so I put this into a formula here so what is pi k pi
+[4789.16:4817.16] is the probably is subject case true probability to treat true probability to treat this is not the propensity to score the propensity score is the estimated probability to treat estimated based on everything that you know about these people pi k here is the true probability to treat which of course we don't know.
+[4817.16:4845.16] So this is a latent variable that we do not observe everyone's probability to receive the treatment and we have this for every subject now let's consider two subjects k and L and we assume that these two subjects have the same X so that means they have the same observed so remember X k are the observed covariates of subject K so we have X k equals X L that means these two people look exactly the same.
+[4845.16:4874.16] They might not be the same because there is stuff that we cannot observe so their true probabilities of receiving the treatment might be different although the two people look the same now for every person we can transform their probability of receiving the treatment pi k into their odds of receiving the treatment that is pi k divided by one minus pi k odds are in equivalent way of thinking about uncertainty.
+[4874.16:4903.16] And there's a one to one mapping between odds and probabilities gamblers like odds scientists usually prefer probabilities but they really have exactly the same information so what we do here is we compute the well we don't compute because we can't compute it because we don't have pi k but we think about the odds ratio so we take the odds of pi k in the numerator and we take the odds of pi L in the denominator.
+[4903.16:4929.16] And then we consider the ratio of these two odds I tell you in a second why we look at odds and not at and not at probabilities but for now let's assume we're using odds and then we look at this odds ratio and then we say that this needs to be bounded by the odds ratio is bounded by a factor gamma.
+[4929.16:4943.16] So it lies between one over gamma and gamma because if you flip the ratio then whatever ratio you have is turned into one over.
+[4943.16:4964.16] And so this is the assumption made by the sensitivity analysis money you assume that although for two identical looking people their treatment probability might differ the odds ratio is bounded by this constant factor gamma.
+[4964.16:4975.16] So now let me quickly explain why we look at the odds ratio why we look at odds because you can do this on the back of the end envelope.
+[4975.16:4993.16] Pi k is just the probability for for person k to receive the treatment but now this is what you're interested in is given that you know more about this pair you know that in this pair KL exactly one person received the treatment either k or.
+[4993.16:5019.16] K or L was treated and so this is what you want to bound you want to bound this ratio between the probability that K is treated given that exactly one of K or K or L was treated divided by the probability that L was treated given that either K or L was treated let me put this more concisely given that either K or L was treated.
+[5019.16:5041.16] One of them cannot be arbitrarily more likely to be the treated one but there the probability of one of them to be the treat one is at most a constant factor higher than the other ones probability of being the treated one given that exactly one of them was treated and then you can write this down by.
+[5041.16:5064.16] On the back of an envelope by breaking this down into more basic probabilities and then you can so basically the constraint becomes that that these two probabilities of K and L being treated some to one and if you do that then you see that the quantity of interest is the odds ratio.
+[5064.16:5084.16] I put this proof in late tech in the speaker notes if you want but it's really it's really very easy to see okay so now let's look at what this means let's fiddle with this gamma prime if we assume gamma equals one or if we said gamma equals one here.
+[5084.16:5110.16] Then this means that both one over gamma one over gamma equals gamma so then this odd ratio equals exactly one that means the numerator equals the denominator which brings us back to the naive model because now for two people that look identical they would have exactly the same treatment odds and therefore exactly the same treatment probability.
+[5110.16:5138.16] Okay so gamma equals one is not the interesting case because that's what we were already looking at before the naive model let's look at the other extreme if we let gamma go to infinity then we just get a void statement right we just get one over infinity so that's zero on the left hand side and infinity on the right hand side so this gives us no additional constraint on the odds ratio so.
+[5138.16:5164.16] This is a pathology the interesting case this all when gamma is between one and infinity because then we have let's consider gamma equals two this means that subjects with the same observe covariates one so if you have two subjects with the same of the covariance one of them might be twice as likely to be the one to receive the treatment.
+[5164.16:5190.16] So you take two people that look exactly the same and then now we allow for the possibility that one of them is twice as likely as the other to be a smoker but not more okay so now and let me emphasize here you do not know Pi KL you do not know Pi L and you do not know gamma.
+[5190.16:5215.16] The logic here is that is that following you just want to quantify how large gamma would need to be in order for you to change your conclusions you do not know what gamma actually is but you say even if gamma is in order for me to change my conclusions regarding the cause effect gamma would have to be 10.
+[5215.16:5228.16] And that just would be so high it doesn't make sense so let me make this more concrete with the with the example of smoking and lung cancer which is really the domain for which the sensitivity analysis model was invented.
+[5228.16:5257.16] So here under the naive model remember the naive model says that people who look the same are the same people who look comparable are comparable under the naive model matching on observe covariates so matching smokers to non smokers on observe covariates gives you a very small p value for the null hypothesis that says that smoking does not increase lung cancer risk.
+[5257.16:5286.16] Okay so we say null hypothesis there's no true cause effect and so the p value captures what's the probability that we still observe data as extreme as we do even if there's no true effect so if we get a small p value then that means that the data that we have is hard to explain without a cause effect which means that we should drill in further and and.
+[5286.16:5313.16] And see what might what what the effect might be okay so this was all under the naive model but now the tobacco law becomes and says well it's the naive model the naive model isn't true there may be hidden correlates such as genetic factors that increase both the probability to enjoy smoking and the probability of lung cancer.
+[5313.16:5342.16] It's those hidden correlates that a cause cancer not smoking so that's what the tobacco lobby says and now you apply the sensitivity analysis model and in general when you increase gamma the p value for the null hypothesis increases also why is that because if you increase gamma you allow that
+[5342.16:5371.16] that even if there is no actual effect even if the null hypothesis is true then you're still more likely to falsely observe in effect because identically looking people have different treatment probabilities so the falsely observed effect could stem from unobserved covariates which causes the different treatment probabilities rather than the treatment so as you increase gamma you have a higher probability of observing what you're doing.
+[5371.16:5399.16] And see what you actually observe even if there's no true effect which then by definition increases your p value and now the antitobacolobi retorks to the tobacco lobby making p greater than 5% greater than our significance level would require gamma to be greater than 6.
+[5399.16:5403.16] That is the odds of being a smoker.
+[5403.16:5407.16] Take two people that look exactly the same one of them is a smoker.
+[5407.16:5423.16] I'm the odds of being the smoker in a pair would need to be 6 times higher for one of two people who have the exact same observed feature features such as age, gender, education, income and so on.
+[5423.16:5432.16] Unlikely that any unobserved covariate would have such a large effect on smoking habits so smoking causes cancer.
+[5432.16:5452.16] That's the logic in the case of smoking it was even more extreme because here it could be shown that with gamma greater than 6 a certain probability parameter that was involved in all this calculation would have had to be bigger than 1.
+[5452.16:5458.16] So this is this is theoretically impossible so for smoking the case was even stronger.
+[5458.16:5476.16] So logic again for p to rise above 5% gamma would we don't know gamma but for this to happen gamma would have to be greater than 6 which is very, very unlikely from everything we know about the world.
+[5476.16:5491.16] Therefore therefore the assumption that the effect can be explained the way just by a hidden confound is unlikely.
+[5491.16:5494.16] Okay.
+[5494.16:5498.16] Any questions about the sensitivity analysis model.
+[5498.16:5506.16] I want to make this very clear this time because it was confused some people last year so we have a question here from arena.
+[5506.16:5513.16] How can we understand which values of gamma are reasonable that don't contradict our understanding of the world and which are not.
+[5513.16:5515.16] Aha great question arena.
+[5515.16:5522.16] This is the big white elephant in the room right you cannot know there's no general rule to know this.
+[5522.16:5551.16] This is really where domain expertise comes in for example you might know from previous studies that what is a what is a typical range of variation what can be the strength of of such factors or in the case of this smoking example it was really kind of mathematical right because a probability which by definition is maximum one would have to be greater than 1 in order to.
+[5551.16:5571.16] Explain this gamma equals 6 so there it was kind of easy but general we have the situation where now we need to argue with domain expertise or with results from previous studies whether a certain gamma is reasonable or not so.
+[5571.16:5592.16] Often what you see is that people will not make a binary statement such as this is an unreasonably high gamma but they will rather say this is my gamma my gamma is 2.5 and now it's up to you as the reader of my study to take it and interpret it.
+[5592.16:5612.16] It's the you can think of it as like a p value you know in a p back there's nothing magical about 5% you report the p value and then this quantifies what is the probability of observing data as extreme as what you observe even under the null model and then what what matters is not so much whether it's greater than 5 or not but.
+[5612.16:5641.16] You give the value to the reader and then they can know what's the amount of uncertainty and often this is how gamma is treated as well you you can compute a gamma for you so you fix p you fix your significance level and then you say to rise above that significance level so that is for me to change my conclusions about about whether I can explain the effect with a non model or not gamma would have to be this.
+[5641.16:5646.16] Now take it and interpret it.
+[5646.16:5667.16] So with this let's wrap up of course everything that I said is bogus smoke does not cause cancer rather it is a joyful and healthy pastime after this lecture go buy cigarettes and smoke and if you consider smoking and if you do consider smoking west.
+[5667.16:5686.16] The only 9 euros 90 for a pack of 34 okay so after this small commercial break let me wrap up in observation studies I see that there being two parts there's a mechanical part and a scientific part.
+[5686.16:5715.16] The mechanical part is to create pairs one treated one control with similar observed covariates and this you can do with exact matching if it's possible or if there are too many variants covariates you can use propensity this core matching but all of this is mechanical right you can in principle you can create your two data frames and you press a button and everything happens automatically and then you get a matched data set that's the mechanical part.
+[5715.16:5738.16] This is what allows you to overcome problem to namely the combinatorial explosion but then there's also a fundamental scientific part which you cannot resolve with mechanical means and this is to speak to the problem of lurking variables unobserved covariates that might be confounds.
+[5738.16:5764.16] So here the goal is to mitigate concerns that your findings might actually be caused by unobserved covariates rather than by the treatment and so here you have to be much more creative than with the mechanical part because you have to you can use things like the sensitivity analysis model but also at how arguments domain knowledge you might find natural experiments in your data.
+[5764.16:5771.16] So here for this scientific part the creativity of the researcher is much more required than for the mechanical part.
+[5771.16:5790.16] Let me summarize for speaking about cause and effect the whole grail really is randomized experiments because here it's you as the researcher who has full control about who gets the treatment and who doesn't get it.
+[5790.16:5812.16] Oftentimes experiments are not possible that's when you have to resort to observation studies the crucial problem in observation studies is that treatment assignment is generally not random but there are biases there is self selection people decide for themselves whether they go to the treatment condition or to the control condition.
+[5812.16:5840.16] So then what I would call the semi holy grail is natural experiments where treatment assignment was was done in some haphazard nearly random way but it wasn't done by you as the researcher it could have been the lottery it could have been something that nearly acts as a natural random number generator but it wasn't you who flip the coin so that's a natural experiment and this is kind of the next best thing that you can do.
+[5840.16:5855.16] If you can't find a natural experiment then match studies is a go to method here you pair up treated subjects with control subjects based on observed covariance.
+[5855.16:5869.16] The problem is that still treatment assignment might not be random because the confounds might be you to unobserved factors so the biases might come from unobserved covariance.
+[5869.16:5891.16] And to speak to this you can use for example the sensitivity analysis model which works by in the spirit of a proof guy by contradiction you say yes the naive model might not be true but in order for me to change my conclusions the naive model would have to be so brutally off that it's unlikely to be the case.
+[5891.16:5910.16] And I really want to urge you finally to keep this lecture in mind for your projects because really the data sets that you work with are mostly found data so there will be biases and confounds in it and the techniques that we talked about today give you a good tool set to deal with those situations.
+[5910.16:5924.16] And finally this link on here is a book design of observation studies by Paul Rosenbaum even if you don't read it all read chapters three and four really illuminating and an entertaining read also.
+[5924.16:5934.16] Okay so let me stop here one minute over and glad we only did the 10 minute break.
+[5934.16:5954.16] And actually let me take this all it was direct message was a direct message to you by the direct so I take this offline and I wish you a good week and see you on Friday bye bye.
+[5954.16:5968.16] And I have a question yes you mentioned earlier that when we would increase gamma we would also change the p value but I'm not sure what's the mathematical link between the two.

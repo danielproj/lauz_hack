@@ -1,0 +1,47 @@
+﻿@page "/upload"
+@inject NavigationManager NavigationManger
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="control-wrapper text-wrap align-items-center">
+                <h3>Upload course material to your personal librarian, Nostoi.</h3>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="control-wrapper">
+                <MudFileUpload T="IBrowserFile" Accept=".pdf" FilesChanged="UploadFile">
+                    <ButtonTemplate>
+                        <MudButton HtmlTag="label"
+                                   Variant="Variant.Filled"
+                                   Color="Color.Primary"
+                                   StartIcon="@Icons.Filled.CloudUpload"
+                                   for="@context">
+                            Only .pdf files
+                        </MudButton>
+                    </ButtonTemplate>
+                </MudFileUpload>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private async void UploadFile(IBrowserFile args)
+    {
+        var trustedFileNameForFileStorage = Path.GetRandomFileName();
+        const string dirName = "unsafe_uploads";
+        if (!Directory.Exists(dirName))
+            Directory.CreateDirectory(dirName);
+
+        var path = Path.Combine(dirName, trustedFileNameForFileStorage);
+
+        await using FileStream fs = new(path, FileMode.Create);
+        await args.OpenReadStream(100_000_000).CopyToAsync(fs);
+
+        NavigationManger.NavigateTo($"/{trustedFileNameForFileStorage}");
+    }
+}

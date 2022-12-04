@@ -1,0 +1,667 @@
+~EE-556 / Lecture 2 - 2/2 (2020)
+~2020-09-28T15:33:07.962+02:00
+~https://tube.switch.ch/videos/ed46ad30
+~EE-556 Mathematics of data: from theory to computation
+[0.0:4.5600000000000005] I just would like to clarify something.
+[4.5600000000000005:15.36] So this remark about having a larger step size will get us into the global minimum.
+[15.36:26.560000000000002] So I would like to share this particular advice.
+[26.56:37.6] Sometimes when we teach, we put these pictures to simplify some concepts to show you a message.
+[37.6:44.04] It is easy to read from, I mean it's easy to guess from such images that maybe if you
+[44.04:50.519999999999996] do a tweak that it will make things better.
+[50.52:59.52] It is important to understand that the simplified pictures are good for counter examples.
+[59.52:64.52000000000001] You wouldn't expect an algorithm if it doesn't work even for like a one-dimensional optimization
+[64.52000000000001:71.24000000000001] problem to work in higher dimensions, not necessarily because if you picked a dimension to be
+[71.24000000000001:75.72] one and in the particular case it doesn't work, we don't expect it to work in the general
+[75.72:78.84] case unless we make assumptions.
+[78.84:84.04] So it is important that we don't maybe read too much into constructive examples in the
+[84.04:90.80000000000001] sense that if I give you that w, and you say, oh, if I pick the step size bigger and this
+[90.80000000000001:95.88] is it would jump this hill and then go to this global minimum.
+[95.88:99.08000000000001] I mean I certainly welcome comments.
+[99.08000000000001:105.16] Don't misunderstand, I'm not trying to discourage you from commenting.
+[105.16:114.47999999999999] But it is important that you understand in such cases you can really go in a crazy rabbit
+[114.47999999999999:121.88] hole that you can think about, oh first make bigger than make smaller and then just like
+[121.88:128.4] we don't want to have like a complex bootstrap of our thousandth cases where it doesn't
+[128.4:130.0] happen in reality.
+[130.0:137.0] Anyway, so I just want to clarify that particular point.
+[137.0:140.72] Again, I welcome comments.
+[140.72:149.72] It's just, with first-dead algorithms we will get to non-comics optimization problems in
+[149.72:156.16] greater detail, we'll try to identify some of the structures that make things better.
+[156.16:162.24] But it's too early to read that by playing with the step size you can get, go out of the
+[162.24:164.28] local and then go to a global.
+[164.28:167.56] At this point it's too early to discuss this.
+[167.56:175.07999999999998] Now, let me also take this opportunity to clarify this sub-deferential for sub-credients.
+[175.07999999999998:180.56] Now, the point that I want to make here or the distinction between the restitation and
+[180.56:188.24] this particular slide is that it's non-smooth functions, it doesn't say non-smooth convex
+[188.24:189.24] functions.
+[189.24:192.0] That's the difference.
+[192.0:198.4] In the case of non-smooth convex functions the definition of the sub-deferential is that
+[198.4:200.0] it's just this one.
+[200.0:204.12] It does not have this local property.
+[204.12:206.88] All right?
+[206.88:218.48] So here you only care about the vectors that are locally in the small neighborhood that
+[218.48:222.6] create a supporting hyperplane in the non-smoothness.
+[222.6:230.96] So if you think about it for convex functions, we know that a convex function is always about
+[230.96:232.96] its tangent hyperplanes.
+[232.96:235.04] You take a convex function.
+[235.04:240.12] You pick any point, you put the tangent there.
+[240.12:242.95999999999998] Full expansion has to be above.
+[242.95999999999998:245.95999999999998] And non-com expansion does not have to satisfy this property.
+[245.95999999999998:248.95999999999998] If you think about the ability example, right?
+[248.95999999999998:251.16] It's a particular example.
+[251.16:256.71999999999997] If you put the hyperplane, the tangent hyperplane here, it crosses the function.
+[256.71999999999997:263.71999999999997] So if it does not satisfy this type of inequality because it crosses it, but it only satisfies
+[263.72:266.72] it locally.
+[266.72:271.6] So when you define things like sub-gradients, you also need to have this local notions when
+[271.6:275.20000000000005] you're talking about non-com mixed functions.
+[275.20000000000005:276.20000000000005] All right?
+[276.20000000000005:281.16] So in this particular case, if you just look at this, you can have this, you can have that,
+[281.16:283.68] you can have this.
+[283.68:284.68] They're all okay.
+[284.68:289.28000000000003] They all satisfy this particular inequality, but only locally.
+[289.28000000000003:290.28000000000003] All right?
+[290.28:299.0] And because there's more than one, it's a set.
+[299.0:302.84] So set of these is the sub-defrontial.
+[302.84:304.4] It's a set.
+[304.4:307.76] You pick any element.
+[307.76:312.2] We call it a sub-gradient because we're going to use it with our sub-gradient descent.
+[312.2:313.2] Okay?
+[313.2:314.79999999999995] Is that clear?
+[314.79999999999995:319.4] It shoots the naming.
+[319.4:327.96] Now there was another comment about whether or not, oh, now I can't see the zoom questions
+[327.96:328.96] here.
+[328.96:330.88] I love it.
+[330.88:335.12] What's the comment?
+[335.12:341.4] I think the comment was something like, can we pick a sub-gradient or something like that?
+[341.4:348.15999999999997] So first sub-gradient is given to you.
+[348.16:352.44] You can try to pick from the sub-differential.
+[352.44:358.32000000000005] And oftentimes, the way you pick it, if you know the problem, you can try to choose the
+[358.32000000000005:364.52000000000004] one that has the minimal norm.
+[364.52000000000004:370.88] But sometimes somebody else gives that to you and you have no control over it.
+[370.88:371.88] Okay?
+[371.88:377.96000000000004] Like imagine you're a customer, you don't want to share your data with anybody else.
+[377.96:381.56] And you're a cloud provider, you're just doing optimization, you're doing a federated
+[381.56:384.23999999999995] learning.
+[384.23999999999995:394.47999999999996] You want the gradients, you don't compute the gradients, for example, as the cloud provider.
+[394.47999999999996:398.2] Your client may be giving that to you.
+[398.2:404.12] And your client may be inept at optimization choosing a sub-gradient.
+[404.12:406.12] Not good.
+[406.12:408.12] Who knows?
+[408.12:410.28000000000003] Alright, let's continue.
+[410.28000000000003:416.08] So in this particular example, you can pick sub-gradients.
+[416.08:422.88] Like this, if you're at the optimum point, on this your step style is zero, you will move
+[422.88:424.56] away from the optimum.
+[424.56:426.8] And that's a challenge.
+[426.8:430.56] It's a challenge for the efficiency of optimization, right?
+[430.56:434.28000000000003] At least if you were optimizing and you're at the optimum location, we think that we're
+[434.28:439.84] just saying, now the function tells you otherwise, you're not.
+[439.84:444.64] Without realizing, you may move away, hence you suffering efficiency.
+[444.64:445.64] Okay.
+[445.64:450.11999999999995] For complexity, I mean, we talked about complexity, right?
+[450.11999999999995:454.76] It's complexity enough for an iterative optimization algorithm to find the global optimum.
+[454.76:455.76] No.
+[455.76:462.15999999999997] If you do constraint optimization and the constraints are also not convex, even though the function
+[462.16:470.28000000000003] is, you know, you're doing your descent heavily here, you may just get stuck here, whereas
+[470.28000000000003:471.76000000000005] the global optimum is here.
+[471.76000000000005:472.76000000000005] Alright?
+[472.76000000000005:478.40000000000003] So it's also important to constrain the properties of constraints.
+[478.40000000000003:481.44000000000005] I actually want to make one more point.
+[481.44000000000005:487.16] Actually, convexity does not imply tractability.
+[487.16:492.84000000000003] A convex optimization problem with convex constraints may be intractable.
+[492.84000000000003:493.84000000000003] Okay?
+[493.84000000000003:498.84000000000003] If you look at the complexity of supplementary material that I mentioned in the very first
+[498.84000000000003:506.76000000000005] lecture, there is, in fact, an example for the cup problem, max cup problem over the
+[506.76000000000005:507.76000000000005] cup politic.
+[507.76000000000005:512.96] The problem is convex, the constraints are convex, but it's not tractable.
+[512.96:519.84] I, convexity only implies local minimum is global.
+[519.84:524.1600000000001] It does not imply that you will tractably find a solution.
+[524.1600000000001:525.1600000000001] Okay?
+[525.1600000000001:526.1600000000001] Important.
+[526.1600000000001:527.1600000000001] Okay.
+[527.1600000000001:531.76] So let's talk about smooth unconstrained optimization.
+[531.76:535.8000000000001] There is a question, I think, which I cannot see from here now.
+[535.8:546.3599999999999] Follow me, I'll try to put it in.
+[546.3599999999999:547.3599999999999] Okay.
+[547.3599999999999:553.8399999999999] So we're going to do minimization, minimize f of x, f star will be the optimal solution.
+[553.8399999999999:558.5999999999999] The function is proper in the sense that it does not go to minus infinity.
+[558.5999999999999:562.4399999999999] There exists some values that are finite.
+[562.44:566.0] It's a closed function, so the epigraph is closed.
+[566.0:567.0] It's smooth.
+[567.0:573.24] We're going to talk about the gradient being out of lipsticks, which we discussed in the
+[573.24:574.24] recitation.
+[574.24:575.24] Okay.
+[575.24:580.96] Now, first, remember the performance of the maximum likelihood estimators, right?
+[580.96:583.72] So there's an unknown true parameter.
+[583.72:585.5600000000001] We have some IID samples.
+[585.5600000000001:592.1600000000001] We set up our optimization formulation using the negative load likelihood, right?
+[592.16:599.04] And we discussed how the ML estimator, actually, we should, there's a type of here that
+[599.04:603.0] needs to be ML star and not ML hat.
+[603.0:607.4399999999999] The ML estimator will have this order p divided by n performance.
+[607.4399999999999:608.4399999999999] Right?
+[608.4399999999999:610.4399999999999] This is good.
+[610.4399999999999:613.4] We talked about the gradient descent methods, right?
+[613.4:621.4399999999999] And we said, okay, let's talk about picking the direction to be the negative of the gradient,
+[621.44:622.44] right?
+[622.44:628.1600000000001] If we commit ourselves to this, then the question becomes, how do we choose the step size?
+[628.1600000000001:630.1600000000001] And let's discuss that.
+[630.1600000000001:631.1600000000001] Okay?
+[631.1600000000001:636.2800000000001] To be able to discuss, we need to highlight some structural assumptions, some of which
+[636.2800000000001:638.96] we actually learnt over the recitation.
+[638.96:641.48] Let's recall.
+[641.48:650.72] So we would call a function mu strongly convex if it has this nice lower bound quadratic,
+[650.72:651.72] okay?
+[651.72:657.1600000000001] We would call the function elliptic continues or else smooth if it has a quadratic upper
+[657.1600000000001:659.24] bound, all right?
+[659.24:664.64] For twice the function of the functions being elliptic, radium, and mu strongly convex,
+[664.64:670.36] implied that the Haitian in the timid definite ordering is lower bounded by an identity matrix
+[670.36:678.2] scaled by mu and upper bounded by an identity matrix scaled by L. That means that the eigenvalues
+[678.2:687.4000000000001] are between mu and L, L being greater than equal to mu, okay?
+[687.4000000000001:693.12] Now this mu and L will show up in the convergence trace that we will describe, right?
+[693.12:699.44] But oftentimes they're not known a priori, okay?
+[699.44:704.08] But if you know them, they can help, right?
+[704.08:707.76] Hopefully you will recall these things.
+[707.76:712.2] So let's think about the least squares estimator, all right?
+[712.2:718.64] So here's the model that we covered in lecture one and in recitation one.
+[718.64:723.16] The model is very simple but it applies to the variety of generalized linear problems like
+[723.16:729.8] you can run at least squares estimator even for logistic problems and you will get a
+[729.8:731.36] scaled solution, right?
+[731.36:735.04] So I made that point in the recitation one.
+[735.04:735.88] Okay.
+[735.88:738.96] So here's the objective.
+[738.96:740.96] What's the gradient?
+[740.96:745.16] In recitation two, we talked about two ways of getting this gradient.
+[745.16:750.36] One was via the Taylor way, right?
+[750.36:755.52] The other one was via the Jacobian way.
+[755.52:761.36] So please review them if you do not know how we get this gradient, okay?
+[761.36:767.36] So the gradient here is a transpose AX minus B, not that there's a half scaling here to
+[767.36:771.12] get rid of this two that comes from the quadratic.
+[771.12:774.6800000000001] So there's no two here, okay?
+[774.6800000000001:780.16] The equation is the derivative of the gradient, right?
+[780.16:787.0] Or the Jacobian of the gradient, remember gradient is now a multi output function, right?
+[787.0:791.32] So we no longer talk about its gradient, we talk about its Jacobian, in this particular
+[791.32:794.96] case, it's the Hessian of the function.
+[794.96:800.2] And the Hessian here is literally this X goes away, we have A transpose A, right?
+[800.2:801.2] Good.
+[801.2:808.04] Now let's say that the eigenvalues of A transpose A is lambda one to lambda P.
+[808.04:816.56] Remember X is in P dimensions, so the Hessian needs to be in P by P dimensions.
+[816.56:822.1199999999999] Because this is twice the Frenchable, the Hessian needs to follow this particular
+[822.1199999999999:823.1199999999999] same measurement.
+[823.1199999999999:830.52] Ordering where lambda one, the largest eigenvalue is on the right hand side and lambda
+[830.52:837.4] P, which is the smallest eigenvalue, is on the left hand side.
+[837.4:844.92] So if lambda P is greater than zero, then this function is L smooth or L lipcious continuous
+[844.92:856.28] gradient, and you strongly convex, if L T is zero, right?
+[856.28:864.9599999999999] In this case, A transpose A is a symmetric matrix, so we do not have issues with the negative
+[864.9599999999999:870.1999999999999] eigenvalues, it needs to be there zero or greater than zero.
+[870.2:878.0400000000001] Now the rank here is the minimum of N or P, okay?
+[878.0400000000001:882.2800000000001] Because this is A transpose A, right?
+[882.2800000000001:886.48] A is N by P, okay?
+[886.48:897.6] I mean, assume that it's full column rank, meaning that it's either N or P rank, okay?
+[897.6:902.12] In this case, the rank of this is the minimum of N or P, if N is one, right?
+[902.12:905.88] It's just an outer product of a vector, so it's rank one.
+[905.88:910.4] In this case, lambda P would necessarily be zero, okay?
+[910.4:915.64] If N is in general less than P, then lambda P is zero, in this case, the function is just
+[915.64:918.44] as smooth, but not strong for next.
+[918.44:919.44] Good.
+[919.44:927.4] So, going back to the gradient descent, how do we pick alpha, if in all the function
+[927.4:931.1999999999999] is else smooth?
+[931.1999999999999:936.76] So here, in general, you can pick the fifth size between zero and two over L, you will
+[936.76:940.04] have descent.
+[940.04:945.04] The optimal choice is one over L, in the worst case.
+[945.04:951.72] And the proof of it is in the advanced material slides at the end of the lecture.
+[951.72:954.48] I will not go over this.
+[954.48:959.48] I'm not happy to discuss if you have questions offline.
+[959.48:962.4] There are other things we can do.
+[962.4:969.84] We can try to do line search, meaning we know that we are trying to minimize F.
+[969.84:975.08] As opposed to doing optimization over P dimensional variables, why not make it one-dimensional
+[975.08:981.0] variable where we say, okay, I'm a Xk, I know what the gradient is, let's search over
+[981.0:983.48] alpha.
+[983.48:986.4] That will minimize the objective, right, makes sense.
+[986.4:988.9200000000001] It's called the steepest descent.
+[988.9200000000001:992.08] Okay, you can do that.
+[992.08:996.6] But with the computation, okay, in this case, you would need to evaluate the objective,
+[996.6:999.4] for example, right, just to pick up.
+[999.4:1003.44] Or maybe not, but let's not get into details.
+[1003.44:1008.16] There is backshacking line search, there is a bit more sophisticated, it's the Armyhole
+[1008.16:1014.48] Ghost in condition, so you pick a C between these values and then you literally propose
+[1014.48:1022.1999999999999] a step size if it works, if it doesn't, you decrease the step size by a factor.
+[1022.1999999999999:1023.1999999999999] Good.
+[1023.1999999999999:1030.1599999999999] Now, if the function is ultimate and mu-stroney-comics, then you can pick the step size to divide it
+[1030.1599999999999:1033.0] by outlast mu.
+[1033.0:1043.64] Actually, the optimal choice here is too divided by outlast mu.
+[1043.64:1046.16] In the worst case, okay.
+[1046.16:1047.64] Good.
+[1047.64:1053.6] Now, let's try to understand this dramatically what we've been doing, okay.
+[1053.6:1059.8] So we know that the function is convex, so it needs to be above its hyperplane, right,
+[1059.8:1061.8] at any point.
+[1061.8:1064.8] All right.
+[1064.8:1071.12] Now, for the L-litches continuous gradient, we know that it has a quadratic upper bound.
+[1071.12:1072.12] All right.
+[1072.12:1075.72] We haven't proved this quadratic upper bound, and it's actually very elementary to see
+[1075.72:1077.72] what the suffer bound is.
+[1077.72:1079.32] All right.
+[1079.32:1084.28] Now, if you think about it, the...
+[1084.28:1090.56] So people give confused about the Taylor theorem, each, each, each, each.
+[1090.56:1100.76] So in this particular case, we know that we can compute f of y as f of x plus what?
+[1100.76:1105.76] A line integral, no?
+[1105.76:1134.72] So...
+[1134.72:1141.56] So when tau is 0, you have the gradient of f of x, right?
+[1141.56:1147.2] When tau is 1, you have the gradient of f of y.
+[1147.2:1156.6000000000001] So what we're doing here is that, let's say you have this f of x, you go from x to y,
+[1156.6:1165.1999999999998] the value is f of y is these little integrals.
+[1165.1999999999998:1167.1999999999998] All right.
+[1167.1999999999998:1174.9599999999998] So this is just the Taylor's integral, right?
+[1174.96:1186.2] So all you do here is that you add gradient f of x, y minus x, you contract gradient f of
+[1186.2:1188.8] x, y minus x.
+[1188.8:1189.8] So this is 0.
+[1189.8:1197.4] And keep this outside, which is this term.
+[1197.4:1206.88] You write this as d tau, this integration 1, 0 to 1, and then you put it inside here,
+[1206.88:1207.88] right?
+[1207.88:1213.96] So you have, you have this minus the gradient y minus x.
+[1213.96:1214.96] It's identity.
+[1214.96:1216.96] Does this make sense?
+[1216.96:1218.44] Is this clear?
+[1218.44:1227.64] I think there's a question.
+[1227.64:1236.0800000000002] No, let me flat out say no.
+[1236.0800000000002:1240.24] Remember, there's a master's course that is also offered to PhD, so some of the material
+[1240.24:1243.92] is not exam material.
+[1243.92:1249.28] And if you recall, I declared it the very beginning of the class that the start material was
+[1249.28:1253.76] never for the exam.
+[1253.76:1254.76] Okay.
+[1254.76:1258.48] Thanks for the question.
+[1258.48:1265.24] Now, take a look at this.
+[1265.24:1269.4] In this case, here's an inner product.
+[1269.4:1274.68] What we can do is upper bound that inner product using holder.
+[1274.68:1281.2] You can pick an arm, and you can pick its dual norm, recitation to anyone.
+[1281.2:1286.92] All right, so norm, and it's dual norm, so use the gradient differences.
+[1286.92:1288.72] Here's y minus x.
+[1288.72:1289.72] Good.
+[1289.72:1297.1200000000001] Now, if you recall the definition of the ellipses continuous gradient, in general, if any norm
+[1297.12:1306.12] the way you write it is gradient of f of u minus gradient of f of b in dual norm, is
+[1306.12:1311.6] that 3 equal to l, whatever norm it takes, u minus b?
+[1311.6:1312.6] Okay.
+[1312.6:1314.6] If you pick two here, this is two.
+[1314.6:1316.6] If you pick one here, this is the infinity.
+[1316.6:1319.6] If you're picking infinity here, this is one.
+[1319.6:1320.6] Okay.
+[1320.6:1321.6] All right.
+[1321.6:1330.8] Now, here's the deal.
+[1330.8:1336.3999999999999] If I pick two here and two here, here's the differences of the gradient.
+[1336.3999999999999:1340.36] This does not depend on tau.
+[1340.36:1345.04] The differences of the gradient by the definition of the ellipses gradient is uprobounded by
+[1345.04:1349.28] l times the differences of the arguments.
+[1349.28:1354.92] Here's the differences of the arguments is tau times y minus x.
+[1354.92:1356.6399999999999] Norm is positive to homogenous.
+[1356.6399999999999:1359.12] tau is greater than 0.
+[1359.12:1369.52] So it's tau times y minus x squared.
+[1369.52:1375.96] What's the integral 0 equal to 1 tau d tau, 1 half?
+[1375.96:1384.8400000000001] It means f of y is greater than or equal to f of x plus gradient of f of x by minus
+[1384.8400000000001:1391.48] x plus 1 half l y minus x squared.
+[1391.48:1394.0] Are you with me?
+[1394.0:1395.0] Or against me?
+[1395.0:1400.8] I don't care against you, please.
+[1400.8:1401.8] All right.
+[1401.8:1402.8] Good.
+[1402.8:1404.72] So here's the geometric intuition.
+[1404.72:1407.24] The severe at xk.
+[1407.24:1411.1200000000001] We have an objective function.
+[1411.1200000000001:1412.48] Function is convex.
+[1412.48:1418.24] So it's upper bounded by a lower bounded by this hyperplane.
+[1418.24:1425.08] And it is upper bounded by this quadratic because it's ellipses continuous gradients.
+[1425.08:1429.08] All right.
+[1429.08:1437.72] Move the vectors to infinity.
+[1437.72:1439.72] Okay.
+[1439.72:1464.72] Now here's the deal.
+[1464.72:1482.72] So this is the notation.
+[1482.72:1489.72] This is simply equal to and convinced yourselves that I am right because I'm a doctor.
+[1489.72:1510.72] It is.
+[1510.72:1517.72] This is a value.
+[1517.72:1524.72] This is a value plus L over 2 quadratiction.
+[1524.72:1528.72] This is equal to that.
+[1528.72:1531.72] Okay.
+[1531.72:1536.72] You just need to do the algebra.
+[1536.72:1540.72] This is not inequality.
+[1540.72:1543.72] This is equal to that.
+[1543.72:1547.72] All right.
+[1547.72:1551.72] Now here's the deal.
+[1551.72:1558.72] If we were to be able to minimize the step of x directly, we could have immediately.
+[1558.72:1563.72] But instead what we can try to do is minimize this nice upper bound.
+[1563.72:1565.72] It's quadratic.
+[1565.72:1578.72] So from here if you go there, we already know because it's an upper bound, the improvement on the actual objective must be better.
+[1578.72:1582.72] Do you understand this?
+[1582.72:1586.72] So if we take this quadratic upper bound, what would be the minimize there?
+[1586.72:1588.72] So this is a constant.
+[1588.72:1591.72] We don't care.
+[1591.72:1594.72] We can just minimize this, right?
+[1594.72:1599.72] What's the minimize of this?
+[1599.72:1611.72] If you just set x is equal to here.
+[1611.72:1618.72] If you just set this becomes 0, fantastic.
+[1618.72:1621.72] It's super easy to minimize.
+[1621.72:1625.72] You just literally update the previous point with the gradient.
+[1625.72:1630.72] And you minimize a quadratic upper bound to your function.
+[1630.72:1638.72] And because it's an upper bound, you get an improvement on the actual value,
+[1638.72:1643.72] which is better than what you've gotten on the quadratic itself.
+[1643.72:1647.72] Does that make sense?
+[1647.72:1653.72] So we can majorize with a quadratic surrogate.
+[1653.72:1660.72] It's called the surrogate because it's equal to the objective at the point of the surrogation.
+[1660.72:1664.72] And it is over the function.
+[1664.72:1673.72] A property that is important for surrogate is that you should be able to minimize that easier than minimizing the actual function.
+[1673.72:1679.72] You don't want to create a problem that is worse than the original optimization problem.
+[1679.72:1682.72] But minimizing quadratic upper bound is easy.
+[1682.72:1691.72] In this case, it is explicit.
+[1691.72:1694.72] Here is the point.
+[1694.72:1701.72] You can use any lift is constant greater than your lift is continuous constant.
+[1701.72:1704.72] In this case, you would still find an easy solution.
+[1704.72:1707.72] It's just the step size would be smaller.
+[1707.72:1712.72] So if you put a tighter quadratic upper bound,
+[1712.72:1722.72] not tighter, sorry, a narrower quadratic upper bound than what your lift is continuous gradient constant gives you,
+[1722.72:1723.72] you can still minimize.
+[1723.72:1729.72] It's just as opposed to going here, you go to something closer.
+[1729.72:1732.72] So you go slower.
+[1732.72:1734.72] But you still go.
+[1734.72:1739.72] You still make improvements.
+[1739.72:1744.72] So here I'm going to declare the convergence rates.
+[1744.72:1747.72] The proof.
+[1747.72:1754.72] So the proof, for example, for some of them are in the advanced material.
+[1754.72:1760.72] I think in the second spring semester, you can take optimization for machine learning cars by Martin.
+[1760.72:1763.72] And you can go over the proof.
+[1763.72:1769.72] Also, so that course will go over some of these proofs.
+[1769.72:1776.72] So if the function is L-lippian continuous gradient or in short L-smooth,
+[1776.72:1781.72] you use this step size of 1 over L, just like what you've gotten here.
+[1781.72:1787.72] So 1 over L that minimizes this quadratic upper bound.
+[1787.72:1807.72] It turns out that you can precisely characterize the f of xk minus f star is less than or equal to your initial distance to an optimum solution divided by k plus 4 multiplied by 2 to L.
+[1807.72:1816.72] Now, if the function is smoother, that means L is smaller.
+[1816.72:1824.72] There's an in-mursuationship between what L is and what smoothness is.
+[1824.72:1831.72] So if L is very smooth, so if the function is very smooth, L is very small.
+[1831.72:1837.72] So the smoother the function, the better the upper bound is.
+[1837.72:1846.72] The farther you start away from the optimum solution, the more work you have to do.
+[1846.72:1854.72] Because with each iteration, you need to beat this number down.
+[1854.72:1860.72] This distance squared times L. If the function is smooth, it helps you.
+[1860.72:1865.72] If you start from a nearby point, it helps you.
+[1865.72:1871.72] How exactly is this prescription?
+[1871.72:1878.72] This is what is called as the sub-linear rate.
+[1878.72:1881.72] I mentioned this at the end of the lecture.
+[1881.72:1888.72] Here it's basically something divided by a polynomial of k.
+[1888.72:1893.72] But if the function is actually else smooth and new strongly convex,
+[1893.72:1897.72] then you would get what is called as a linear rate.
+[1897.72:1904.72] Some constant, non-negative constant, less than 1 to the power k.
+[1904.72:1912.72] And in this case, you get the convergence in sequence as opposed to convergence in objective.
+[1912.72:1915.72] This is considered stronger.
+[1915.72:1918.72] Remember this picture?
+[1924.72:1927.72] You get the convergence to this region.
+[1927.72:1931.72] Now to this region.
+[1931.72:1937.72] If the function is strongly convex, you get here.
+[1937.72:1942.72] You can of course take this one, but it is good to have this.
+[1942.72:1947.72] Now here's an interesting part.
+[1947.72:1951.72] If the function is else strongly convex, or new strongly convex,
+[1951.72:1955.72] and ellipses continuous gradient, if you were to use one over L,
+[1955.72:1958.72] so suppose we don't know mu.
+[1958.72:1964.72] You still get a linear rate.
+[1964.72:1966.72] But it's a worse one.
+[1966.72:1978.72] So, notice the difference between k and k divided by 2.
+[1978.72:1984.72] So in general, this ratio of L divided by mu
+[1984.72:1987.72] is called the condition number of the problem.
+[1987.72:1991.72] If this number is small, your optimization is easy.
+[1991.72:1997.72] Because it tells you how regular your function is.
+[1997.72:2002.72] So I just to wrap this up.
+[2002.72:2004.72] Lipses continuous gradient.
+[2004.72:2006.72] You have convergence rate and objective values.
+[2006.72:2009.72] Strong convexity, you have in sequence.
+[2009.72:2016.72] And this test size of 1 over L gives you a linear rate in the strong convex case
+[2016.72:2018.72] without knowing the strong convexity constant.
+[2018.72:2021.72] This is important.
+[2021.72:2022.72] Okay.
+[2022.72:2026.72] So let's see some examples.
+[2026.72:2029.72] So here's our least squares problem.
+[2029.72:2034.72] And it has a regularizer, quadratic regularizer,
+[2034.72:2040.72] called the ridge regularizer, or Tick-N-Ov regularizer.
+[2040.72:2044.72] This is a historical basis, which I will not get into.
+[2044.72:2049.7200000000003] But it imagines somebody just gave you this is an M estimator.
+[2049.7200000000003:2050.7200000000003] Okay.
+[2050.7200000000003:2055.7200000000003] In this case, F is L-lipses continuous gradient and mu strongly convex.
+[2055.7200000000003:2058.7200000000003] This, you remember the eigenvalues?
+[2058.7200000000003:2061.7200000000003] This is the largest eigenvalue of A transpose A.
+[2061.7200000000003:2064.7200000000003] This is the smallest eigenvalue of A transpose A.
+[2064.7200000000003:2067.7200000000003] Because this is quadratic, it's just simply adding roll.
+[2067.7200000000003:2072.7200000000003] Right? Because in the end, what you're doing with the Hessian,
+[2072.72:2075.72] when you put a...
+[2087.72:2089.72] So if you have this,
+[2089.72:2094.72] 1L in my ms.8,
+[2094.72:2096.72] plus roll,
+[2096.72:2099.72] with all 2,
+[2099.72:2102.72] and this is our F of X,
+[2102.72:2104.72] the Hessian of,
+[2104.72:2107.72] so this is our capital F of X,
+[2107.72:2111.72] the Hessian of F of X is the Hessian of F of X,
+[2111.72:2115.72] which is this part, plus the Hessian of this.
+[2115.72:2116.72] Right?
+[2116.72:2119.72] And the Hessian of this is just raw identity.
+[2119.72:2121.72] You know?
+[2121.72:2124.72] So whatever the eigenvalues of this are,
+[2124.72:2127.72] just think about the state of the value of the composition,
+[2127.72:2130.72] you just put mu u transpose here.
+[2130.72:2134.72] So mu c1 u transpose,
+[2134.72:2136.72] mu is usually this identity,
+[2136.72:2138.72] you transpose u's identity.
+[2138.72:2142.72] So you don't just add roll to all the eigenvalues.
+[2142.72:2144.72] Does that make sense?
+[2144.72:2147.72] It's just simple linear algebra.
+[2147.72:2150.72] Okay, good.
+[2150.72:2151.72] So this case,
+[2151.72:2156.72] the L constant is the largest eigenvalue of A transpose A,
+[2156.72:2158.72] plus roll,
+[2158.72:2163.72] the smallest one is the smallest of A transpose A,
+[2163.72:2164.72] plus roll.
+[2164.72:2168.72] Remember, the smallest of A transpose A can be 0,
+[2168.72:2175.72] if N is less than P.
+[2175.72:2177.72] But by adding this roll,
+[2177.72:2182.72] you guarantee that the objective is to throw a new convex,
+[2182.72:2185.72] because roll is situated at 0.
+[2185.72:2187.72] Okay?
+[2187.72:2189.72] So when roll with 0,
+[2189.72:2191.72] and N is less than P,
+[2191.72:2193.72] the function is only L,
+[2193.72:2195.72] the L is less than continuous gradient.
+[2195.72:2197.72] But when roll is greater than 0,
+[2197.72:2199.72] or N is greater than P,
+[2199.72:2202.72] you have strong common mixity as well.
+[2202.72:2204.72] So here's an example.
+[2204.72:2206.72] Roll is 0,
+[2206.72:2208.72] and it's less than P.
+[2208.72:2211.72] So the function is only less continuous gradient.
+[2211.72:2214.72] Here's the theoretical bound.
+[2214.72:2216.72] You write down from the distance,
+[2216.72:2217.72] where we begin,
+[2217.72:2219.72] multiply that by the Liches constant,
+[2219.72:2221.72] divided by K plus 4.
+[2221.72:2224.72] This is what it is.
+[2224.72:2225.72] Okay?
+[2225.72:2228.72] And then here's the gradient descent,
+[2228.72:2230.72] distance how it goes.
+[2230.72:2234.72] It looks okay, right?
+[2234.72:2236.72] I also showed the timing here.
+[2236.72:2239.72] The reason why I showed the timing here is that later on,
+[2239.72:2243.72] we're going to compare algorithms that take longer time per iteration.
+[2243.72:2245.72] So just know this.
+[2245.72:2248.72] Convergence of iterations do not suffice.
+[2248.72:2252.72] You also need to figure out how much time they actually take.
+[2252.72:2256.72] You can have a second order method that takes ten iterations.
+[2256.72:2258.72] But if one iteration is like an hour,
+[2258.72:2260.72] as opposed to a second,
+[2260.72:2262.72] that's not good.
+[2262.72:2265.72] Okay? That's what I mean.
+[2265.72:2268.72] So if you put Tick-O-Nong regularization,
+[2268.72:2269.72] right?
+[2269.72:2272.72] So here roll is just a small,
+[2272.72:2276.72] a hundred, one hundredth of the largest eigenvalue.
+[2276.72:2281.72] Here is the theoretical bound for the standard gradient descent.
+[2281.72:2286.72] Here is the theoretical bound for the strongly convex gradient descent.
+[2286.72:2289.72] Okay? With the proper step size,
+[2289.72:2291.72] here is the performance,
+[2291.72:2294.72] eight-tool performance of gradient descent.
+[2294.72:2300.72] On top of the bound.
+[2300.72:2303.72] Right? They're like literally on top of each other.
+[2303.72:2304.72] Okay?
+[2304.72:2308.72] And here is the performance of gradient descent with the tip size,
+[2308.72:2310.72] one over L.
+[2310.72:2314.72] Suppose you didn't know what roll was.
+[2314.72:2317.72] Like here, we are introducing that roll.
+[2317.72:2319.72] So we know.
+[2319.72:2322.72] So you can have this performance.
+[2322.72:2325.72] But you know, it's one of those days you...
+[2325.72:2326.72] It's a bad day.
+[2326.72:2327.72] You didn't think about this.
+[2327.72:2329.72] And you put one over L as the tip size.
+[2329.72:2332.72] The algorithm was who converge fast.
+[2332.72:2335.72] But not as fast as it can be.
+[2335.72:2336.72] Okay?
+[2336.72:2338.72] Good.
+[2338.72:2339.72] All right.
+[2339.72:2341.72] Now let's talk about non-com-mix-todd.
+[2341.72:2342.72] Perfect.
+[2342.72:2343.72] Finally.
+[2343.72:2346.72] Good.
+[2346.72:2349.72] So in the complexity supplementary,
+[2349.72:2351.72] I talk about finding...
+[2351.72:2355.72] How finding the global minimizer of a non-com-mix function,
+[2355.72:2358.72] smooth non-com-mix is NP-hard.
+[2358.72:2359.72] All right?
+[2359.72:2364.72] So you don't expect to find any global optimum.
+[2364.72:2367.72] All right?
+[2367.72:2368.72] Good.
+[2368.72:2373.72] But what we want to do now is to see how the algorithm is performed.
+[2373.72:2377.72] And what we can do.
+[2377.72:2380.72] So why the non-com-mix-todd you ask?
+[2380.72:2381.72] All right?
+[2381.72:2383.72] So if you think about a neural network,
+[2383.72:2386.72] which you will get into the guts of it,
+[2386.72:2389.72] I think like just six or seven.
+[2389.72:2390.72] Seven.
+[2390.72:2391.72] Like just seven,
+[2391.72:2394.72] we will talk about neural network models,
+[2394.72:2396.72] their details,
+[2396.72:2398.72] their approximations,
+[2398.72:2400.72] generalizations, and so on and so forth.
+[2400.72:2401.72] But for the time being, you know,
+[2401.72:2403.72] like this image classification problem,
+[2403.72:2407.72] and you would like to have a non-linear classifier.
+[2407.72:2411.72] Now let's say that is given by an affine transformation
+[2411.72:2412.72] followed by a non-linearity,
+[2412.72:2415.72] an affine transformation followed by non-linearity,
+[2415.72:2420.72] whatever this regression dolls that you have,
+[2420.72:2425.72] one dollar, same drawing size, same thing.
+[2425.72:2427.72] Okay?
+[2427.72:2429.72] So let's say the lowest function was a quadratic.
+[2429.72:2436.72] So here is your label minus this non-linear mapping of the inputs.
+[2436.72:2438.72] All right?
+[2438.72:2442.72] This is depending on how you choose the non-linearity.
+[2442.72:2445.72] Suppose you choose something called ALU,
+[2445.72:2447.72] and this is activation function,
+[2447.72:2451.72] we have a whole recitation on activation functions.
+[2451.72:2452.72] All right?
+[2452.72:2453.72] After lecture's urban,
+[2453.72:2456.72] there is a recitation on activation functions,
+[2456.72:2459.72] back propagation, so on, so forth.
+[2459.72:2460.72] Okay?
+[2460.72:2463.72] There's a detailed recitation.
+[2463.72:2466.72] This is differentiable,
+[2466.72:2469.72] but it's non-commex,
+[2469.72:2472.72] and we don't expect to find this global minimum
+[2472.72:2477.72] because it's NP-hard, so what can we do?
+[2477.72:2482.72] We can try to find the stationary point, right?
+[2482.72:2484.72] Here's another problem.
+[2484.72:2487.72] It's called phase-tycography.
+[2487.72:2489.72] In this case, you would, I mean,
+[2489.72:2490.72] there are lifetimes,
+[2490.72:2493.72] laboratories here that try to do this.
+[2493.72:2495.72] You shine a lot this specimen,
+[2495.72:2498.72] and as opposed to recording the ambient radiation,
+[2498.72:2499.72] which is difficult to do,
+[2499.72:2504.72] you can record the amplitude of the ambient radiation.
+[2504.72:2505.72] Okay?
+[2505.72:2508.72] There are sensors for it.
+[2508.72:2509.72] All right, so there's a specimen.
+[2509.72:2511.72] You shine some light that goes through the lens,
+[2511.72:2512.72] some aperture,
+[2512.72:2515.72] and then you have some detectors that collect, for example,
+[2515.72:2521.72] intensity engines, you know?
+[2521.72:2525.72] In this case, what you do literally is to collect something like AX
+[2525.72:2531.72] because it goes through some blur and gets collected.
+[2531.72:2533.72] It's a linear transformation,
+[2533.72:2536.72] but you don't see the radiation directly.
+[2536.72:2539.72] You look at its amplitude, so you square it.
+[2539.72:2540.72] All right?
+[2540.72:2544.72] So your cost is something like you have some intensity measurements,
+[2544.72:2546.72] minus the AX squared.
+[2546.72:2550.72] This is non-commex.
+[2550.72:2551.72] All right?
+[2551.72:2554.72] Because it's quadratic inside the quadratic.
+[2554.72:2555.72] Okay?
+[2555.72:2556.72] Good.
+[2556.72:2561.72] So you can have non-commex problems from life sciences,
+[2561.72:2563.72] from machine learning.
+[2563.72:2564.72] All right?
+[2564.72:2568.72] We do not expect to find their global minimum,
+[2568.72:2571.72] right, unless p is equal to mp.
+[2571.72:2574.72] But what can we do?
+[2574.72:2576.72] Remember, stationarity.
+[2576.72:2580.72] First order stationary points meant that the gradient is zero.
+[2580.72:2583.72] Second order stationary points meant that the gradient is zero
+[2583.72:2588.72] and there is an upward curvature.
+[2588.72:2592.72] So maybe we can find a lot of these.
+[2592.72:2593.72] Okay?
+[2593.72:2598.72] So pictorially, the first order stationary point can be a saddle point also.
+[2598.72:2602.72] Remember, second order stationary points are local minimums,
+[2602.72:2605.72] but they're not necessarily global minimums.
+[2605.72:2609.72] This is the caveat.
+[2609.72:2614.72] So we literally went from finding global optimum to something like,
+[2614.72:2615.72] oh, let's find this.
+[2615.72:2617.72] Maybe that'll be good.
+[2617.72:2620.72] Will it be good?
+[2620.72:2624.72] Well, in this case, if you assume that the function is liquefied
+[2624.72:2631.72] into this gradient, you apply gradient descent with the space-on-step size 1 over L,
+[2631.72:2635.72] then you can make the gradient go down with squared of k,
+[2635.72:2637.72] the norm of the gradient.
+[2637.72:2639.72] Okay?
+[2639.72:2642.72] All right?
+[2642.72:2646.72] So we're not talking about finding globally optimum solution.
+[2646.72:2651.72] We're literally talking about making the gradient small.
+[2651.72:2653.72] Okay?
+[2653.72:2655.72] Nothing else.
+[2655.72:2658.72] Small gradient means you may be here.
+[2658.72:2664.72] You may even be here.
+[2664.72:2667.72] You may be here or you may be here, who knows?
+[2667.72:2669.72] Okay?
+[2669.72:2672.72] So here's an experiment from my lab.
+[2672.72:2678.72] We did this with some lifestyles scientists from Caltech.
+[2678.72:2683.72] What you can try to do is literally have cheap sensors that look at the bloods
+[2683.72:2686.72] and see if there's malaria.
+[2686.72:2692.72] And if you were to just run gradient descent on real data like this,
+[2692.72:2694.72] if you actually image these cells really well.
+[2694.72:2699.72] So they somehow succeed even though you know you can't find the global minimum.
+[2699.72:2706.72] An NP-hardness, to be honest, you've never been a barrier for machine learning researchers.
+[2706.72:2707.72] All right?
+[2707.72:2708.72] So you can clear this key.
+[2708.72:2710.72] There's malaria.
+[2710.72:2713.72] Okay?
+[2713.72:2716.72] And this is a very quick talk to mice.
+[2716.72:2717.72] All right.
+[2717.72:2718.72] Good.
+[2718.72:2722.72] So see you guys on Friday, all right?
+[2722.72:2725.72] For a change, I finish on time.
+[2725.72:2729.72] If you have questions, I'm happy to take them now.
+[2729.72:2740.72] Otherwise, see you at the risk of the material are advanced.
+[2740.72:2742.72] This is not going to be in the exam.
+[2742.72:2747.72] It tells you how to select the optimal step size, the proof of it.
+[2747.72:2754.72] It tells you the proof for the faster rates for completeness.
+[2754.72:2756.72] And it tells you a bit more general,
+[2756.72:2761.72] the ratio of gradient descent to other schemes like mirror descent,
+[2761.72:2764.72] regimen divergences,
+[2764.72:2767.72] and tropic mirror descent.
+[2767.72:2772.72] This is not for the faint of heart.
+[2772.72:2775.72] This is not for the first look.
+[2775.72:2778.72] This is if you want to really get into the depth of this material.
+[2778.72:2780.72] All right?
+[2780.72:2784.72] In any case, if you have questions, I'm happy to answer.
+[2784.72:2790.72] But you're not responsible for this for the exams nor the homeworks.
+[2790.72:2791.72] Okay?
+[2791.72:2792.72] Good.
+[2792.72:2807.72] See you on Friday.

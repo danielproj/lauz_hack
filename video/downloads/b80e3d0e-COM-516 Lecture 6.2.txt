@@ -1,0 +1,232 @@
+~COM-516 Lecture 6.2
+~2020-09-23T08:46:00.987+02:00
+~https://tube.switch.ch/videos/b80e3d0e
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:7.5200000000000005] Okay, so now what we need to prove is this part 3, which is two things.
+[7.5200000000000005:13.540000000000001] First that lambda 1 is 3, less than 1, and then that lambda n minus 1 is greater than
+[13.540000000000001:14.540000000000001] minus 1.
+[14.540000000000001:19.6] So, we will first prove that lambda 1 is less than plus 1.
+[19.6:19.6] Okay?
+[19.6:28.44] How do you prove this?
+[28.44:32.52] Okay, that's probably the first difficulty.
+[32.52:42.56] So here what we will actually prove is the following, and I let you think about why it
+[42.56:45.400000000000006] is what we need to prove.
+[45.4:63.12] So, assume that phi in Rn is such that P times phi is equal to 1 times phi.
+[63.12:79.96] Then phi is a multiple of phi 0.
+[79.96:83.96] Okay, so why is it proving what we want?
+[83.96:93.08] It is saying if we have an eigenvector associated to eigenvalue 1, then it can only be
+[93.08:96.6] a multiple of the all 1 vector.
+[96.6:109.36] Therefore, eigenvalue 1 has a single eigen space of dimension 1, and therefore it has all
+[109.36:118.16] the other eigenvalues will correspond to another eigenvectors, and therefore it has the
+[118.16:123.47999999999999] multiplicity of eigenvalue 1 is 1.
+[123.47999999999999:128.4] There cannot be a second eigenvalue which has the same value 1.
+[128.4:134.72] So therefore, the second eigenvalue must be strictly less than 1.
+[134.72:138.88] This goes back a bit to notions of linear algebra.
+[138.88:139.88] I hope it's clear.
+[139.88:149.07999999999998] If not, please check yourself in a book related to the subject to be sure that you understand
+[149.07999999999998:150.79999999999998] what I just said.
+[150.79999999999998:156.76] Okay, so we want to prove that the multiplicity of eigenvalue 1 is 1, and this is how we
+[156.76:157.76] prove it.
+[157.76:160.96] But what's written here is what we need to prove now.
+[160.96:169.28] Okay, so for this, we will heavily use the assumptions made now.
+[169.28:171.72] But before that, let me notice one thing.
+[171.72:188.6] So note, if p phi is equal to phi, then necessarily p squared phi is equal to p times p phi,
+[188.6:201.24] which is equal to p phi, which is equal to phi.
+[201.24:208.95999999999998] And likewise, p to the n phi is equal to p to the n minus 1 phi, and so on is equal to
+[208.95999999999998:209.95999999999998] phi.
+[209.95999999999998:217.56] So if you have an eigenvector with eigenvalue 1, then in this, this is an eigenvector
+[217.56:222.32] of the matrix p, then certainly it's also an eigenvector with eigenvalue 1 of the matrix
+[222.32:224.08] p to the n.
+[224.08:227.84] Okay, and that's true for every n greater than 1.
+[227.84:234.92000000000002] Okay, so here I didn't use again any assumption here.
+[234.92000000000002:237.76] This is just a fact.
+[237.76:242.44] But now we are going to use our assumptions.
+[242.44:253.52] In particular, the chain is irreducible, a periodic and finite.
+[253.52:263.12] Okay, because it is a godic, so it is irreducible, a periodic and finite, which implies, as you
+[263.12:266.52] know, that it is positive recurrent, right?
+[266.52:271.4] If you have an irreducible finite chain, it is positive recurrent.
+[271.4:279.12] But we have already seen in the proof of the agodic theorem that if a chain is finite,
+[279.12:288.56] irreducible, an periodic, then this implies that there exist n 0 greater than or equal to
+[288.56:303.12] n 1, such that p ij of n is greater than 0 for every ij in s and for every n greater than
+[303.12:304.6] or equal to n 0.
+[304.6:310.16] Well, actually, we might not have seen this exactly in the proof of the agodic theorem.
+[310.16:312.04] So let me state it here.
+[312.04:316.36] What we have seen in the proof of the agodic theorem is that for a chain of arbitrary size,
+[316.36:322.96000000000004] possibly infinite, we have this, if you have a new irreducible and a periodic chain, then
+[322.96000000000004:330.92] for any pair of states, p ij of n starts to be always greater than 0 for every n after
+[330.92:333.36] a certain value.
+[333.36:340.52000000000004] If we have a finite number of states, we can take the maximum of all these n 0s and we
+[340.52000000000004:344.68] get a single n 0 for all states simultaneously.
+[344.68:349.6] Is this saying that the matrix p to the n, for a given n in a finite case, if you have
+[349.6:355.36] an agodic chain, the matrix p to the n becomes full of non-zero, right?
+[355.36:361.52] There is not at some n, the matrix is just all non-zero, okay?
+[361.52:364.12] And that's what we are going to use.
+[364.12:370.12] And really, this is, of course, you need absolutely irreducibility for that and abiodicity.
+[370.12:375.2] And if you want a single n 0, you need finite, okay?
+[375.2:378.68] So this is the end of the topic we are going to consider.
+[378.68:389.0] And as before, my phi is an eigenvector of the matrix p, so I'm going to, so since it
+[389.0:392.72] is an eigenvector, it's not the all 0 vector.
+[392.72:406.68] And we define i in s such that phi in absolute value is greater than phi j for every j in
+[406.68:408.20000000000005] s.
+[408.20000000000005:413.16] And so this phi in absolute value is greater than 0.
+[413.16:421.76000000000005] And I am writing down the equation pn phi is equal to phi.
+[421.76:433.32] So in components, this can be written as sum over j in s of pij of n times pj is equal
+[433.32:435.52] to phi.
+[435.52:438.59999999999997] For the i, I have defined above.
+[438.59999999999997:444.21999999999997] Okay, and of course, I'm going to choose here an n, which is greater than or equal to
+[444.21999999999997:445.52] n 0.
+[445.52:451.52] So that way, I make sure that all these pij of n here are positive numbers, strictly
+[451.52:452.52] positive numbers.
+[452.52:453.52] Okay?
+[453.52:458.71999999999997] So if phi is an eigenvector of p, that's what we have.
+[458.71999999999997:463.68] Now, so these are all positive.
+[463.68:471.76] Okay, so now I take absolute value of this equation and I start with the right hand side.
+[471.76:489.96] The value of phi is sum over j in s in absolute value of pij of n times pj.
+[489.96:500.71999999999997] And by the triangle inequality, this is certainly less than or equal to sum over j in s of pij
+[500.72:504.08000000000004] of n, these are positive numbers, right?
+[504.08000000000004:506.04] Times absolute value of pj.
+[506.04:513.5600000000001] So here, I'm maybe repeating what I had before for proving that every lambda should be less
+[513.5600000000001:516.76] than or equal to 1.
+[516.76:527.9200000000001] And of course, all these pijs are all less than phi i by my assumption of what phi is.
+[527.92:531.4399999999999] And so this is true for every j in s.
+[531.4399999999999:544.4399999999999] So certainly this is less than phi i times sum over j in s of pij of n.
+[544.4399999999999:549.76] And okay, here I'm summing, instead of summing transition probabilities, I'm summing n-step
+[549.76:551.5999999999999] transition probabilities.
+[551.5999999999999:556.0799999999999] But after n-steps, if you start from i, after n-steps, you need to be somewhere in the
+[556.0799999999999:557.0799999999999] chain, right?
+[557.08:563.0] So this sum is also equal to 1.
+[563.0:565.2] Okay.
+[565.2:570.48] Now it seems like we haven't really proven anything because we have just, so this whole
+[570.48:577.1600000000001] thing here is equal to phi i.
+[577.1600000000001:582.0400000000001] So we have proven that absolute value of phi i is less than this whole thing, which is
+[582.0400000000001:584.08] less than absolute value of phi i.
+[584.08:588.12] Okay, but let me just rewrite this.
+[588.12:589.6800000000001] What have we proven?
+[589.6800000000001:594.2800000000001] Because we have twice the same term on the left hand side and the right hand side.
+[594.2800000000001:608.76] We have actually proven here that sum over j in s of pij of n of phi j is equal to phi i.
+[608.76:613.6400000000001] Sorry, I'm constantly forgetting to mention absolute value of phi i.
+[613.64:619.6] When I write, I hope you see it's clear what I'm meaning.
+[619.6:632.36] And on the other hand, we know that this holds by what I just said before.
+[632.36:636.4] And these numbers here are positive.
+[636.4:639.4] Okay.
+[639.4:653.64] So here you get that if it was not the case that all the phi j, the phi j, sorry, in absolute
+[653.64:661.76] value would be equal to absolute value of phi i, then we would have a contradiction.
+[661.76:679.56] So here from this you get that pi contradiction, all phi j in absolute value must be equal to
+[679.56:684.72] phi i.
+[684.72:694.72] And well, if you want to prove it carefully, just assume that this is not the case and
+[694.72:700.6] you will see that these two equalities cannot be satisfied simultaneously.
+[700.6:701.6] Okay.
+[701.6:703.5600000000001] So that's already one thing.
+[703.5600000000001:709.28] We are proving here that at least in absolute value, all the components of this eigenvector
+[709.28:710.28] must be equal.
+[710.28:717.72] Now of course, we need to prove that they are all equal not only in absolute value.
+[717.72:724.72] In order to prove this thing, we go back to the equation we have written at the beginning
+[724.72:728.36] that sum over j.
+[728.36:735.12] So before we wrote the absolute values, we had this.
+[735.12:738.0799999999999] Okay.
+[738.08:747.6800000000001] And of course, we also had that same as what I wrote before, this is equal to 1.
+[747.6800000000001:748.6800000000001] Okay.
+[748.6800000000001:751.5200000000001] So these are positive numbers.
+[751.5200000000001:759.1600000000001] Now here the phi are numbers that all have the same absolute value.
+[759.1600000000001:768.0400000000001] But again here, if you want these two equalities to hold simultaneously again by contradiction,
+[768.04:779.0799999999999] yeah, and we have all phi j, they are all equal in absolute value.
+[779.0799999999999:795.12] By contradiction, all phi i, all phi j should have the same sign.
+[795.12:807.2] Otherwise, this term here, this whole term here will be just, you know, if they don't have
+[807.2:813.76] all the same sign, then there is no way this term can make it to be equal to phi.
+[813.76:814.76] Okay.
+[814.76:819.4] Again, because we have all these assumptions above.
+[819.4:820.4] Okay.
+[820.4:847.88] So phi is a multiple of the all one vector of phi zero, which is the all one vector.
+[847.88:853.56] And we have proven what we want.
+[853.56:859.08] That the multiplicity of the eigenvalue one is one.
+[859.08:862.2] Okay.
+[862.2:872.52] Now the last thing we need to prove is this other fact that lambda n minus 1 is greater than
+[872.52:878.4399999999999] minus 1.
+[878.4399999999999:879.4399999999999] Okay.
+[879.4399999999999:883.64] So here, what do we need to prove?
+[883.64:888.96] Again here, one has to think a little.
+[888.96:895.28] One has to prove that minus 1 is not an eigenvalue of the matrix p.
+[895.28:915.0799999999999] So what need to be proven that that that does not exist phi in R n such that p phi is equal
+[915.0799999999999:923.04] to minus phi.
+[923.04:927.16] So since we know that all the eigenvalues of the matrix p are between minus 1 and plus
+[927.16:933.64] 1, this prevents minus 1 to be one of these values.
+[933.64:938.68] And therefore, lambda n minus 1 has to be greater than minus 1.
+[938.68:943.24] Of course, there is always a phi that satisfies this.
+[943.24:947.9599999999999] I should always take phi not completely equal to zero.
+[947.96:955.64] So I'm assuming that I have a vector here, which is non-zero because otherwise, of course,
+[955.64:959.0] this is satisfied, but then it's not anymore an eigenvector.
+[959.0:960.48] So that's fine.
+[960.48:961.48] Okay.
+[961.48:963.8000000000001] So that's what we need to prove.
+[963.8000000000001:970.8000000000001] Let me raise this here.
+[970.8:978.12] So to prove this, same remark as before.
+[978.12:982.1999999999999] So note.
+[982.1999999999999:992.64] So assume we will prove by, we will use contradiction here.
+[992.64:1004.04] Assume phi exists, such a phi exists.
+[1004.04:1006.24] Okay.
+[1006.24:1007.24] Then what do we have?
+[1007.24:1016.48] Then if you compute p squared phi, this is going to be p times p phi and p phi is minus
+[1016.48:1026.6] phi, so this is p times minus phi, which is minus p phi, which is plus phi.
+[1026.6:1041.16] Likewise, p n, p 3 phi will be minus phi, before phi will be phi again.
+[1041.16:1051.5600000000002] Right, now we have an alternating series and for n odd, we see here that we will have
+[1051.5600000000002:1057.8000000000002] that p n phi is equal to minus phi.
+[1057.8000000000002:1058.8000000000002] Okay.
+[1058.8000000000002:1066.96] Now again, we will choose, we will use our assumptions here and we choose n greater than
+[1066.96:1068.96] n zero.
+[1068.96:1077.24] Because we want this matrix p n to be full, only non-zero components.
+[1077.24:1078.24] Okay.
+[1078.24:1079.24] Okay.
+[1079.24:1086.8400000000001] And with this n, we are going to see that we can conclude that such a phi cannot exist.
+[1086.8400000000001:1092.16] So this is the next step.
+[1092.16:1108.96] Again, we define i, search that phi in absolute value is greater than p j, for we gain s since
+[1108.96:1119.64] phi is the, an eigenvector of this phi in absolute value is greater than zero.
+[1119.64:1130.0] Okay. And if I write down this equation, p n phi is equal to minus phi, then what do
+[1130.0:1131.0] I get?
+[1131.0:1142.92] I get minus phi i for the component i, of course, is sum over j in s of p i j of n times
+[1142.92:1149.92] phi j. Okay.
+[1149.92:1152.6000000000001] Remember, these numbers are all strictly positive.
+[1152.6000000000001:1170.0] So phi in absolute value is less by the triangle inequality to this p i j of n times phi j.
+[1170.0:1177.16] Same reasoning as before, this thing here is less than phi by assumption in absolute value.
+[1177.16:1185.0] So this whole thing here is less than phi i.
+[1185.0:1188.36] And exactly the same reasoning as before.
+[1188.36:1200.4799999999998] So we have that phi in absolute value is the sum over j in s of p i j of phi j times
+[1200.4799999999998:1202.4799999999998] absolute value of phi j.
+[1202.4799999999998:1210.36] We have that these numbers are strictly positive and we have that the sum of these numbers
+[1210.36:1213.6799999999998] is equal to one.
+[1213.68:1229.5600000000002] Therefore, by contradiction, all the phi i, all the phi j must be equal in absolute value
+[1229.5600000000002:1230.5600000000002] to phi i.
+[1230.5600000000002:1234.4] Of course, the fact that we have strictly positive number plays an important role here.
+[1234.4:1236.76] I guess I forget to mention that.
+[1236.76:1243.0] No one's, it was also the case here, but I think, okay, no, you didn't forget that.
+[1243.0:1244.0] Okay.
+[1244.0:1255.0] So same story as before, for the absolute values, we need constant expression.
+[1255.0:1273.4] And now, but now we have, so once we have this, we have that minus phi i is equal sum
+[1273.4:1288.24] over j p i j of n phi j.
+[1288.24:1292.8000000000002] So now that we know that all the phi j have the same absolute value, the same magnitude.
+[1292.8000000000002:1296.2] And these things are positive.
+[1296.2:1304.92] Again here, by contradiction, you can see that it's impossible to satisfy this identity
+[1304.92:1306.92] here.
+[1306.92:1312.28] You would need, you would need, and this leads to a contradiction.
+[1312.28:1317.0] So again, by contradiction, such a phi can not exist.
+[1317.0:1331.8] And of course, we also always have this.
+[1331.8:1345.44] And so now, by contradiction, it is impossible to satisfy this inequality.
+[1345.44:1352.44] This equality, sorry.
+[1352.44:1363.64] Okay, so we have a two-step procedure like before, right?
+[1363.64:1370.76] First proving that if you have an eigenvector, it must have, all its components must be
+[1370.76:1374.52] of the same absolute value.
+[1374.52:1381.0] And then here we prove that this leads to contradiction.
+[1381.0:1385.72] You cannot have a plus equal to a minus essentially.
+[1385.72:1392.12] Okay, so therefore, well, actually the only possibility, of course, is to have phi which
+[1392.12:1395.0] is all zero, but that's not an eigenvector, right?
+[1395.0:1404.48] So therefore, the fact that phi cannot be an eigenvector with that you minus one, therefore
+[1404.48:1410.64] all the eigenvalues of the matrix P will be strictly greater than minus one.
+[1410.64:1417.68] And we have, let me go back to the beginning.
+[1417.68:1420.64] So we have proven now these three facts.
+[1420.64:1427.72] And so this lambda star, which is the maximum here, this lambda star, which is the maximum
+[1427.72:1436.52] of all the eigenvalues, which are not lambda zero, the maximum in absolute value of all these
+[1436.52:1443.76] eigenvalues, which can be written as the maximum of lambda one and minus lambda n minus
+[1443.76:1444.76] one.
+[1444.76:1448.24] So this lambda star is strictly less than one.
+[1448.24:1455.6000000000001] And so if we prove the inequality above, then we will have an interesting result proving
+[1455.6:1460.08] exponential decay of the total variation distance.
+[1460.08:1486.84] That's what we will do in the next video.

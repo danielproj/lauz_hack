@@ -1,0 +1,488 @@
+~EE-556 / Lecture 12 - 2/2 (2020)
+~2020-11-23T13:19:30.559+01:00
+~https://tube.switch.ch/videos/8531a40a
+~EE-556 Mathematics of data: from theory to computation
+[0.0:20.36] So, what we've been doing so far was to look at minimax optimization problems.
+[20.36:23.32] The problem in its full generality is very difficult.
+[23.32:32.480000000000004] We've seen this buffet of difficult results and the dessert section.
+[32.480000000000004:40.92] As a result, we kind of lowered our goals to complex concave problems.
+[40.92:48.28] In the first half of this lecture, we've seen how to minimize smooth complex concave problems
+[48.28:52.519999999999996] using things like proxy point method, which is an implicit algorithm.
+[52.52:56.24] It's a approximation.
+[56.24:63.6] Things like extra gradient method, which is related to forward reflected backward method
+[63.6:71.72] or in the special case when the V operator is linear reflected forward backward method.
+[71.72:80.52000000000001] Then we've seen the extra, sorry, the optimistic gradient descent approach that also has some
+[80.52:87.32] rules in online optimization from Siderand and Rockland.
+[87.32:91.24] And they kind of approximate TPM.
+[91.24:99.36] Extra gradient uses one extra gradient for iteration and then the optimistic gradient descent
+[99.36:106.36] descent does not, which just needs its additional memory to keep the gradient from the previous
+[106.36:108.44] iteration you're fine.
+[108.44:117.75999999999999] Then we looked into this particular template where we're interested in doing minimax optimization,
+[117.75999999999999:128.72] where the convex concave objective has this h of x plus f of x plus a x y inner product,
+[128.72:131.36] minus g coin j get y.
+[131.36:137.0] So this convex in x because it's linear in a x.
+[137.0:144.88] They have the convex h, which is the transferable and then approximate the convex f.
+[144.88:152.6] Now in terms of the g function, because it's convex, this coin j get x is also convex,
+[152.6:156.16] but you're taking negative g coin j get y.
+[156.16:161.96] So the function is concave in y.
+[161.96:167.96] Now in the, just before the end of the lecture, we talked about the primal dual hybrid gradient
+[167.96:172.92000000000002] methods, which considers the special case where h term is zero.
+[172.92000000000002:180.0] So you have f of x plus a x y, linear with a couple, minus g coin j get y.
+[180.0:187.24] Now it processes f and g coin j get using the proximal terms.
+[187.24:193.4] It takes the gradient from the transferable linear term, and it does the reflection
+[193.4:198.0] tricks while updating the dual variable.
+[198.0:202.76000000000002] And then given the updated primal variable, updated dual variable, updates primal variable
+[202.76000000000002:206.48000000000002] with the proxy f term.
+[206.48000000000002:210.48000000000002] Now there are cases where you want to use a sarcastic version of this primal dual
+[210.48:217.48] hybrid gradient method.
+[217.48:219.48] So for this, there is a sarcastic primal dual hybrid gradient method.
+[219.48:222.64] The method is quite simple.
+[222.64:226.76] So imagine you have this particular form.
+[226.76:232.2] So you have f of x plus let's say finite sum.
+[232.2:237.6] We can again write this in the minimax form with a bunch of dual variables.
+[237.6:241.44] So for each ji, you can have a dual variable.
+[241.44:250.12] And what is nice about this is that if a i is a row vector, I so like AI transpose,
+[250.12:253.16] then each of these y i's are single variables.
+[253.16:257.64] So you can imagine it's one dual vector.
+[257.64:262.08] So here these are scalar products.
+[262.08:265.08] And you have a very nice quote and quote, the composition.
+[265.08:271.24] And I'll talk more about the composition later in this particular lecture.
+[271.24:285.68] The algorithm is exactly the same as the primal dual hybrid gradient, mutatist, and
+[285.68:290.32] thandist, like with proper changes made in proper places.
+[290.32:302.15999999999997] So the x update here, we use the proximal term.
+[302.15999999999997:303.88] In this case, the reflected version.
+[303.88:306.36] So you do the reflection in y.
+[306.36:313.4] You can consider primal and dual the same way.
+[313.4:315.44] Dual can be primal, primal can be dual.
+[315.44:320.0] It's just nicely.
+[320.0:322.16] So here's the update.
+[322.16:331.24] So the gradient update with respect to x has to have this a transpose y i, the dual variables.
+[331.24:333.84] Now the dual updates are here are special.
+[333.84:338.96] So you kind of pick let's say a dual block with randomization.
+[338.96:344.68] So let's say we have a probability pj for a particular dual vector.
+[344.68:351.28000000000003] And what you do is you do the update on the chosen one and keep the others frozen.
+[351.28000000000003:353.28000000000003] So you do only one update.
+[353.28000000000003:358.96000000000004] So if you're in the special case that this ai is just a row vector, you literally pick
+[358.96000000000004:365.2] one coordinate of the dual vector and update that coordinate and you don't do anything to
+[365.2:366.2] the rest.
+[366.2:367.2] All right.
+[367.2:373.96000000000004] And what is interesting is that here you do this reflection, the respect to the probability.
+[373.96:374.96] All right.
+[374.96:381.12] And what is nice about this is in the deterministic case, you pick everything.
+[381.12:383.68] So this probability vector is just an identity.
+[383.68:386.44] So you have the usual reflection.
+[386.44:391.91999999999996] So you get one here fully if you pick everything.
+[391.91999999999996:393.91999999999996] I think this is a very nice algorithm.
+[393.91999999999996:396.15999999999997] It scales up very nicely.
+[396.15999999999997:401.15999999999997] And this coordinate update seems to work really well.
+[401.16:404.8] And it has all kinds of nice properties.
+[404.8:405.8] Okay.
+[405.8:412.64000000000004] Now for the almost current convergence, we just have a paper on this, which I think the
+[412.64000000000004:416.88000000000005] convergence of this was missing.
+[416.88000000000005:418.88] I think in the original paper there was a problem.
+[418.88:420.88] It was joined for a good money.
+[420.88:426.72] Each student omitted and long term collaborative Olivier Farkroek.
+[426.72:433.28000000000003] So I meant basically figure out a way to get these phones and the new technique to look
+[433.28000000000003:437.36] at the supremum of the gap function.
+[437.36:438.36] And I'm taking expectations.
+[438.36:439.36] It's a very nice trick.
+[439.36:440.36] You should see the paper.
+[440.36:444.0] It's online.
+[444.0:449.8] The point about this is that if you think about it, we have randomization in the way we
+[449.8:450.8] do updates.
+[450.8:457.08] And if you wanted to give a converges guarantee on the cap, there are randomness.
+[457.08:463.84000000000003] But unfortunately we can't take a look at an expected cap function.
+[463.84000000000003:467.28000000000003] Because on the average, what are you taking the expectation for?
+[467.28000000000003:469.48] You can have zero cap.
+[469.48:475.8] Whereas the algorithm may be far away from what I meant is that you can have zero expected
+[475.8:476.8] cap.
+[476.8:483.8] And then you look at the expectation of this largest cell.
+[483.8:489.8] And you want this to go to zero.
+[489.8:490.8] All right.
+[490.8:495.8] In this case, I mean, you can consider heading around the variable.
+[495.8:499.8] Let's say, let's say, a variable.
+[499.8:506.8] Which is zero mean.
+[506.8:515.8] So you can look at the expected value of u, which is zero.
+[515.8:516.8] Means zero.
+[516.8:520.8] This means nothing about the individual you use that you observe.
+[520.8:525.8] You can take all these use, like, in expectation, they have a variable.
+[525.8:532.8] Right.
+[532.8:534.8] But none of them could be zero.
+[534.8:539.8] But we want them to be zero, even if there's randomness in the algorithm.
+[539.8:543.8] So what you can do is you can look at the premium of these use.
+[543.8:547.8] I remember cap is not negative.
+[547.8:554.8] So, but the randomness.
+[554.8:560.8] In this particular case.
+[560.8:566.8] But in this case, if you look at the supreme one, then take the expectation and set that to zero.
+[566.8:569.8] This means that you need to be zero.
+[569.8:572.8] So hence you have the solution.
+[572.8:575.8] So it's a very nice result.
+[575.8:580.8] There's some new technical developments there.
+[580.8:584.8] You can show that the algorithm works well.
+[584.8:587.8] Now, there is a.
+[587.8:594.8] You can, for this particular template, you can also think about random coordinate descent.
+[594.8:598.8] There's some advanced material that I put at the end of the lecture.
+[598.8:602.8] Again, or John worked with Ahmed in Olivier.
+[602.8:604.8] Which also is very nice.
+[604.8:608.8] And there's some comparisons with the primal dual-hub gradient method.
+[608.8:610.8] Take a look at it.
+[610.8:615.8] What you can do is that with the proper modification of this primal dual-hub gradient,
+[615.8:622.8] you can adapt to dense and sparse data structures.
+[622.8:632.8] And in fact, here, for this particular case, you can even show linear convergence under some condition called metric subregularity.
+[632.8:638.8] And this is still interesting.
+[638.8:649.8] Room for growth is a bit limited, but it is still nice to tighten these knobs on this very important primal dual algorithm.
+[649.8:654.8] Now, there's the zoo.
+[654.8:659.8] There's three operators splitting by Tamiq Davis and Botanyin.
+[659.8:662.8] This is very nice.
+[662.8:666.8] You can handle this additional age with its gradient.
+[666.8:669.8] The framework is quite nice, actually.
+[669.8:671.8] It's very classic.
+[671.8:675.8] I think it won some award in the optimization society.
+[675.8:679.8] And of course, there's a stochastic variant.
+[679.8:686.8] One of my students, Al-Piwtserar, along with Ban-Kong-Wu, one of my former postdocs,
+[686.8:689.8] and my next organization, take a look at it.
+[689.8:691.8] It's a Norrips paper.
+[691.8:695.8] It has some advantages.
+[695.8:698.8] Then there's Kondar and Wu.
+[698.8:702.8] Kondar now is in Kaos, in South Arabia.
+[702.8:705.8] Wu is my former postdoc.
+[705.8:709.8] He's still in Switzerland.
+[709.8:716.8] He's not a joint work.
+[716.8:721.8] He's done separately in two separate papers, but I think that Bung's paper was earlier.
+[721.8:724.8] Again, it handles this particular case.
+[724.8:730.8] Using the gradient of age, you have the usual reflection.
+[730.8:734.8] I'm not giving the precise theoretical characterizations,
+[734.8:744.8] but you should know that one may give you an advantage in terms of practical performance.
+[744.8:751.8] Prime will do three operators, including, again, hand will do this with different patterns.
+[751.8:756.8] There's a variety of updates you can use.
+[756.8:762.8] The point about this is that you want to use maybe the gradient or the proximal terms,
+[762.8:765.8] depends on what you want to do.
+[765.8:770.8] One of them may have an advantage over the other one, but you need to carefully look.
+[770.8:776.8] Again, for the convergence characterizations, take a look at the references.
+[776.8:779.8] All right.
+[779.8:782.8] Now let's just recall.
+[782.8:787.8] What we've done so far was to look at the comics from Cave in Max Problems,
+[787.8:792.8] and we also focused on a particular template, you know, H of X,
+[792.8:800.8] plus the linear AX-my-term minus G-to-Y.
+[800.8:806.8] Now, the problem, Minimax Problems in the General, is difficult,
+[806.8:816.8] and there's something in between these two cases, which is non-commex, but concave problems.
+[816.8:828.8] So, for this, you can think of...
+[828.8:832.8] You can think of...
+[832.8:836.8] Let's say a problem like this, right?
+[836.8:845.8] So, we want to minimize some F of X, subject to AX is equal to zero,
+[845.8:851.8] where this is a linear operator, so you can just take X squared is equal to, say, one,
+[851.8:854.8] and this is non-linear non-commex.
+[854.8:864.8] If you write the Lagrangian Min X, Max Y, you have F of X plus Y, let's say AX.
+[864.8:872.8] So, in this case, it is non-commex in X, but concave in Y.
+[872.8:877.8] So, this puts you into this particular framework.
+[877.8:884.8] Now, if in this particular case, you define...
+[884.8:890.8] So, if you were just doing non-commex minimization, then if it is smooth,
+[890.8:899.8] then, you know, we can get to some epsilon stationary point by looking at either the gradient mapping or the gradient norm.
+[899.8:910.8] And that if the inner problem is concave, then you can actually...
+[910.8:913.8] You can actually do...
+[913.8:920.8] You can actually get the sub gradient or gradient for F, and then you can continue...
+[920.8:929.8] So, in this case, this is contextually easier than non-commex non-commex.
+[929.8:934.8] Now, for this, there are some characterizations.
+[934.8:941.8] The best rates...
+[941.8:948.8] So, for non-commex, from the concave case, this is the best rate.
+[948.8:955.8] So, actually, for the non-commex concave, this rate should be epsilon to the minus 2.5,
+[955.8:958.8] which I think we saw...
+[958.8:963.8] We saw this is the mic Jordan paper with Jin and Lin.
+[963.8:972.8] So, maybe a little update to Steven.
+[972.8:979.8] So, there are algorithms that precisely does this in a solid inner problem, or updates in the inner problem,
+[979.8:982.8] use things in the outer problem.
+[982.8:987.8] I think this is the latest George Land paper, or this is my Jordan paper.
+[987.8:1000.8] So, some of these things here, it's a reference, but this needs to be updated if the TA can take a note that we need to correct this tape.
+[1000.8:1003.8] Alright.
+[1003.8:1009.8] At this point, I'm going to get back to the both A or negative results.
+[1009.8:1012.8] How about non-smooth non-commex optimization?
+[1012.8:1019.8] I think that maybe some of you already realized that you've been like avoiding this problem to bet.
+[1019.8:1026.8] But if you think about it, the way we contract neural network problems is that, you know,
+[1026.8:1037.8] you look at empirical risk minimization, the pick a loss function, the pick a neural network,
+[1037.8:1043.8] and then we do minimization with this picked let's say neural network problem address.
+[1043.8:1049.8] Now, in this particular case, the way we define the neural network, right?
+[1049.8:1058.8] So, Hx of A is, has this, let's say, X1, A plus little X1,
+[1058.8:1067.8] sigmoid, X2 plus little X2 sigmoid, that's...
+[1067.8:1074.8] So, this activation function, when it is the radio function, think about this,
+[1074.8:1080.8] this thing is actually a non-smooth function.
+[1080.8:1084.8] So, this means that this cost function is also non-smooth.
+[1084.8:1090.8] So, there are there what is, if you get to this particular kink, you have subgradient,
+[1090.8:1092.8] so it's not smooth.
+[1092.8:1094.8] So, you cannot...
+[1094.8:1096.8] You need to put a subgradient.
+[1096.8:1099.8] Alright, so, this problem now...
+[1099.8:1101.8] So, this is F of X.
+[1101.8:1103.8] We're trying to minimize F of X.
+[1103.8:1107.8] It is non-smooth and non-countless.
+[1107.8:1110.8] Right?
+[1110.8:1114.8] So, what do we want to do?
+[1114.8:1117.8] We want to find a small gradient.
+[1117.8:1118.8] Right?
+[1118.8:1126.8] The issue in this case is that this notion of optimality, it's a bit hard to verify,
+[1126.8:1129.8] because like finding...
+[1129.8:1135.8] So, if you have non-smooth first, you want to find, let's say,
+[1135.8:1140.8] a place where the gradient is small, they find this is hard.
+[1140.8:1150.8] So, I give you a point, then you need to find a subgradient from the subdefential set.
+[1150.8:1152.8] That is zero.
+[1152.8:1156.8] Actually, if you think about this one norm example,
+[1156.8:1160.8] so there are a bunch of subgradients,
+[1160.8:1171.8] what you need to do is, given this, or the problem could be something like this, you know?
+[1171.8:1179.8] Somehow, locally, find all the subgradients and check if the minimum is small.
+[1179.8:1183.8] Minimum known one is small, so this is hard.
+[1183.8:1187.8] Well, people have been doing most relaxed piece,
+[1187.8:1192.8] and even the relaxed notions are hard.
+[1192.8:1199.8] I think so, this is subgraded for us paper, and this is Ohat Shamir.
+[1199.8:1204.8] And Ohat was giving talks at MIT with this title, the elephant in the room,
+[1204.8:1207.8] which is very aptly named.
+[1207.8:1211.8] What is funny is that still, you know, the deep learning approaches,
+[1211.8:1216.8] and then you still work, you run the algorithm, and then things still converge.
+[1216.8:1221.8] Except in the general case of non-smooth problems,
+[1221.8:1225.8] you don't know it's very tough in the solution, which is hard.
+[1225.8:1235.8] And people for this particular case argue that, you know,
+[1235.8:1239.8] like these non-smooth points here, the measure of zero in the function space,
+[1239.8:1245.8] so you never kind of find the place where you exactly hit a zero of that value.
+[1245.8:1249.8] But, you know, it's somewhere.
+[1249.8:1252.8] Come on.
+[1252.8:1254.8] Good.
+[1254.8:1260.8] Now, here's, again, this nice minimax formulation.
+[1260.8:1264.8] I saw this, sorry, this could trade formulation, and that leads to this,
+[1264.8:1273.8] whoa, if you remember, we could write this in our minimax template,
+[1273.8:1283.8] as min x, sorry, min x, max y,
+[1283.8:1289.8] x, y, x, minus b.
+[1289.8:1293.8] Alright, so this is our minimax problem.
+[1293.8:1296.8] But there are other ways to address this particular problem,
+[1296.8:1299.8] which I would like to cover now.
+[1299.8:1302.8] And this will be a nice preview for the next lecture,
+[1302.8:1308.8] and the next lecture is through the first of some of these Lagrangian methods.
+[1308.8:1311.8] Alright.
+[1311.8:1316.8] Now, one idea here is this penultization idea, which is very natural,
+[1316.8:1321.8] and I will cover it in this here.
+[1321.8:1323.8] So, here's a difficult problem.
+[1323.8:1327.8] We know that this is also a difficult problem.
+[1327.8:1329.8] So what we're going to do is we're going to cheat.
+[1329.8:1332.8] We're going to do something in the team.
+[1332.8:1333.8] Alright.
+[1333.8:1336.8] And one idea is to take the problem,
+[1336.8:1339.8] and then penalize your discontrain.
+[1339.8:1346.8] So the idea is that you put penultization in such a way that the more you deviate,
+[1346.8:1349.8] the higher the objective will be,
+[1349.8:1363.8] and that somehow the objective will be small enough when the constraint is zero.
+[1363.8:1367.8] So if you think about it, if you put high penalization,
+[1367.8:1373.8] then you should somehow converse this constraint problem.
+[1373.8:1375.8] So this penalty parameter, mu,
+[1375.8:1381.8] maybe we should actually use something like data here, extremely keep.
+[1381.8:1389.8] So, if the TA can take a note of this,
+[1389.8:1393.8] so then I don't also forget.
+[1393.8:1402.8] So we can be able to enforce this by converting the problem to something that we can solve.
+[1402.8:1406.8] Now, quadratic seems to be one easy way,
+[1406.8:1410.8] because then you're in this proximal problem.
+[1410.8:1412.8] So if this was all one norm,
+[1412.8:1414.8] we have a liptious continuous gradient sum of sum.
+[1414.8:1420.8] So we can run a tolerated proximal gradient method.
+[1420.8:1425.8] Now, you can also do exact non-smooth penalty functions,
+[1425.8:1428.8] so things like one norm.
+[1428.8:1433.8] So they don't require this penalty parameter to go to infinity,
+[1433.8:1438.8] but they're arguably more difficult to solve.
+[1438.8:1444.8] Now, the penalty method has the following intuition.
+[1444.8:1447.8] So imagine you're looking at f of x,
+[1447.8:1452.8] so f of x can maybe go down to even zero,
+[1452.8:1454.8] but you have a constraint.
+[1454.8:1463.8] So under the constraint, let's say this is the minimum f can be.
+[1463.8:1465.8] Now, in this particular case,
+[1465.8:1468.8] let's put this on the x axis.
+[1468.8:1472.8] So here, this is zero.
+[1472.8:1476.8] So in this case, f is as minimum as it can be,
+[1476.8:1480.8] and that the constraint is satisfied.
+[1480.8:1484.8] So what you do when you put some penalty,
+[1484.8:1486.8] is that you say that, you know,
+[1486.8:1489.8] like, so here is where f can be as minimum.
+[1489.8:1493.8] It kind of says maybe,
+[1493.8:1496.8] you can find the straight-off between your objectives,
+[1496.8:1498.8] f, and the constraints,
+[1498.8:1500.8] penalization.
+[1500.8:1502.8] So you can solve this problem, right?
+[1502.8:1506.8] You will not maybe get the minimum,
+[1506.8:1509.8] in terms of the satisfying constraints.
+[1509.8:1512.8] So, a x will not be that equal to b.
+[1512.8:1515.8] So you will have some value like this,
+[1515.8:1521.8] and that it will trade off the minimum,
+[1521.8:1524.8] so f, whatever it can be.
+[1524.8:1526.8] And as you penalize,
+[1526.8:1532.8] you will go towards this particular point.
+[1532.8:1534.8] And there's some implicit relationship
+[1534.8:1536.8] between the penalty value
+[1536.8:1540.8] and this particular term, actually.
+[1540.8:1543.8] And take a look at the comics optimization book
+[1543.8:1545.8] by Boyd and Wunderberg.
+[1545.8:1551.8] It's called Scalarization.
+[1551.8:1555.8] The slope of this is equal to this particular penalty parameter,
+[1555.8:1558.8] which is nice, it's intractable.
+[1558.8:1561.8] But because it's implicit, you don't know.
+[1561.8:1564.8] Anyway.
+[1564.8:1570.8] Okay, so let me give you a conceptual algorithm.
+[1570.8:1573.8] So let's call this quadratic penalty method.
+[1573.8:1575.8] And I use very simple.
+[1575.8:1579.8] You pick an initial penalty parameter.
+[1579.8:1582.8] You solve this problem,
+[1582.8:1585.8] then you update the parameter,
+[1585.8:1587.8] and then, you know, like,
+[1587.8:1588.8] if f is smooth,
+[1588.8:1590.8] then that this goes to infinity,
+[1590.8:1592.8] then the limit sequence
+[1592.8:1594.8] is a solution to this.
+[1594.8:1596.8] And I mean, you know,
+[1596.8:1601.8] I tried to show that visually.
+[1601.8:1602.8] But there are, of course,
+[1602.8:1603.8] some issues with this.
+[1603.8:1607.8] I think you can do the proximal grading version.
+[1607.8:1608.8] Doesn't matter.
+[1608.8:1612.8] So smoothness may be not so crucial.
+[1612.8:1615.8] So the problem is that when you go to infinity,
+[1615.8:1619.8] this can become an ill-conditioned problem.
+[1619.8:1622.8] You need to solve some,
+[1622.8:1623.8] you know, we can't, you know,
+[1623.8:1625.8] exactly solve each problem.
+[1625.8:1628.8] So you need, you need tricks on,
+[1628.8:1632.8] let me tell you this linearization trick.
+[1632.8:1634.8] The idea is very simple.
+[1634.8:1636.8] This is like proximal point.
+[1636.8:1638.8] And there's one of these rare cases
+[1638.8:1642.8] where the proximal point actually gives you an advantage.
+[1642.8:1643.8] Okay.
+[1643.8:1646.8] Now, consider this penalized problem.
+[1646.8:1649.8] Now we're going to put a quadratic penalty here
+[1649.8:1654.8] that penalizes deviations.
+[1654.8:1655.8] I'm sorry.
+[1655.8:1665.8] So these subscripts and superscripts.
+[1665.8:1667.8] So here,
+[1667.8:1671.8] we're going to penalize going away from xk minus 1
+[1671.8:1675.8] with a variable metric.
+[1675.8:1676.8] Okay.
+[1676.8:1679.8] So then q is 0.
+[1679.8:1682.8] It's the standard penalization method.
+[1682.8:1684.8] q is identity.
+[1684.8:1687.8] It's the standard proximal point method.
+[1687.8:1688.8] Right.
+[1688.8:1692.8] But you can choose positive semi-definite q's here.
+[1692.8:1693.8] So in particular,
+[1693.8:1696.8] if you choose q in such a way,
+[1696.8:1699.8] some identity, some diagonal,
+[1699.8:1702.8] some new parameter,
+[1702.8:1704.8] which we already chose here,
+[1704.8:1706.8] a transpose a.
+[1706.8:1712.8] And if you pick alpha k greater than mk times the second norm of a,
+[1712.8:1716.8] then you actually get this nice proximal update.
+[1716.8:1717.8] Right.
+[1717.8:1720.8] And this is easy to see
+[1720.8:1725.8] because what you have here is
+[1725.8:1729.8] qk x minus xk minus 1.
+[1729.8:1732.8] x minus xk minus 1.
+[1732.8:1734.8] qk has two terms.
+[1734.8:1739.8] One is alpha k identity minus the other one is mu k,
+[1739.8:1742.8] a transpose a.
+[1742.8:1744.8] So if you decompose this,
+[1744.8:1747.8] you get alpha k,
+[1747.8:1750.8] x minus xk squared,
+[1750.8:1753.8] minus mu k.
+[1753.8:1755.8] Right.
+[1755.8:1760.8] So there's a one-half, remember.
+[1760.8:1763.8] So here.
+[1763.8:1767.8] Then you get a x minus xk squared.
+[1767.8:1772.8] All right.
+[1772.8:1773.8] Okay.
+[1773.8:1780.8] So what is interesting here is that this term interacts with that particular term.
+[1780.8:1785.8] So what you have is mu k divided by two.
+[1785.8:1800.8] qt and q.
+[1800.8:1804.8] q, q, cos,
+[1804.8:1807.8] q plus q,
+[1807.8:1811.8] q, minus a,
+[1811.8:1820.8] And all of a sudden, the difficult coupling that AX is, they disappear.
+[1820.8:1822.8] Why?
+[1822.8:1828.8] So after you do the algebra here, this is what you actually get.
+[1828.8:1834.8] You get the proximal gradient version.
+[1834.8:1838.8] Here is the step size.
+[1838.8:1845.8] And here is the quotient gradient from the smooth font.
+[1845.8:1850.8] Now here you can pick a particular step size.
+[1850.8:1858.8] In this particular case, the algorithm is very simple.
+[1858.8:1866.8] Now the idea here is that you can do this update and then you update new iteration.
+[1866.8:1875.8] And what is good in this particular update is that oftentimes this particular F is decomposable,
+[1875.8:1880.8] meaning F can be written in this particular position.
+[1880.8:1882.8] So think about the one norm.
+[1882.8:1887.8] It is just literally the I sum over all coordinates.
+[1887.8:1892.8] In this case, things are very nice.
+[1892.8:1898.8] So you can penalize and then you can distribute the computation.
+[1898.8:1900.8] In fact, you can distribute the data.
+[1900.8:1908.8] And this is one of the tenets of the federated learning business that you can do updates separately.
+[1908.8:1911.8] Okay.
+[1911.8:1915.8] All right.
+[1915.8:1922.8] It turns out that you can come up with specific ways of updating this new to have guarantees.
+[1922.8:1930.8] So the linearized quadratic penalty method, the way you do that is that you know that if new was fixed,
+[1930.8:1934.8] you get something like a one over k rate if you were doing this update.
+[1934.8:1942.8] So in the end, what you do is you update this penalty parameter with a square of k rate.
+[1942.8:1952.8] So this is implicit, but new gets updated with a something like square of k.
+[1952.8:1962.8] In this case, you can prove that the objective and the feasibility will go down with one over square of k, which is nice.
+[1962.8:1966.8] Is there a question?
+[1966.8:1967.8] Okay.
+[1967.8:1968.8] So what is the quick?
+[1968.8:1970.8] I can't.
+[1970.8:1972.8] We can't hear you.
+[1972.8:1975.8] So your voice cut at some point, but it's back.
+[1975.8:1976.8] Okay.
+[1976.8:1979.8] Like for 15 seconds, we couldn't hear you speak.
+[1979.8:1984.8] Oh, no.
+[1984.8:1985.8] All right.
+[1985.8:1989.8] Where should I explain that?
+[1989.8:1993.8] Just the last 30 seconds or something like that.
+[1993.8:1995.8] So the previous slide.
+[1995.8:1997.8] No, no, on this side already.
+[1997.8:2000.8] Okay, in this slide.
+[2000.8:2002.8] All right.
+[2002.8:2004.8] So sorry for the technical difficulty.
+[2004.8:2009.8] I don't know what happened, but let me tell you the idea.
+[2009.8:2021.8] So this is my joint work with one of my former postdocs quark.
+[2021.8:2024.8] So the idea here is actually simple.
+[2024.8:2027.8] So the idea is pretty simple.
+[2027.8:2029.8] So imagine the following.
+[2029.8:2030.8] Okay.
+[2030.8:2041.8] So in the penalty approach, you take F of X and you put a penalty, AX minus B squared and BR trying to minimize.
+[2041.8:2052.8] Normally, if you have a fixed penalty and you do proximal gradient, you should get one over k rate on this problem.
+[2052.8:2054.8] Okay.
+[2054.8:2061.8] So what we need is somehow update this a bit slower and then kind of trade off deteriorations.
+[2061.8:2065.8] To solving the original constraint problem.
+[2065.8:2068.8] And what you can show is this, right?
+[2068.8:2077.8] If you pick mu k, this penalty growing the square root of k, then the proximal gradient, which would normally converge at one over k rate,
+[2077.8:2083.8] will converge at one over square root of k rate on the constraint problem.
+[2083.8:2085.8] That's the idea.
+[2085.8:2092.8] And here, because the original problem is now proximal gradient applicable, right?
+[2092.8:2094.8] So it is this composite form.
+[2094.8:2096.8] You can actually accelerate this algorithm.
+[2096.8:2103.8] The accelerated algorithm for fixed penalty will converge with a one over k squared rate.
+[2103.8:2113.8] So in this case, you can make the penalty go up faster and then the accelerated algorithm will have a one over k rate.
+[2113.8:2114.8] All right.
+[2114.8:2118.8] And these rates are optimal in terms of the problem conflicts.
+[2118.8:2121.8] So that's the basic idea.
+[2121.8:2124.8] All right.
+[2124.8:2134.8] Now, you can actually do this.
+[2134.8:2139.8] So you can take this square root of the issue problem, where it is nice to determine this particular penalty parameter.
+[2139.8:2148.8] And when you apply these methods, you will see that they will actually converge with the worst case rate, like one over k,
+[2148.8:2155.8] like the ShumblePock method, right?
+[2155.8:2156.8] We'll converge a bit faster.
+[2156.8:2163.8] And what I'll do is in the next lecture, I'll talk more about these algorithms that converge faster than this first case rate,
+[2163.8:2167.8] because the penalty parameter is not that attractive.
+[2167.8:2169.8] All right.
+[2169.8:2170.8] Good.
+[2170.8:2183.8] So we're going to continue with the homework discussion on Friday, and if you have questions, I mean, some of you do send me emails directly and I respond.
+[2183.8:2189.8] I think the TAs now have a particular office hours that they correspond.
+[2189.8:2192.8] Just let us know.
+[2192.8:2206.8] So the rest of the lecture is a bit advanced material, so we show this Moktai Ion's derivation on how this optimist-yparin descent-assend method approximates the possible point.
+[2206.8:2211.8] There are some tools that these primal dual methods need.
+[2211.8:2214.8] So all these are here for completeness.
+[2214.8:2229.8] And then this coordinate descent version for the primal dual template, where you can improve on this stochastic primal dual hybrid gradient method significantly in terms of performance.
+[2229.8:2230.8] All right.
+[2230.8:2234.8] So I'll see you guys next week for the last lecture.
+[2234.8:2242.8] And then this week I'll make an announcement on how the final exam is going to be.
+[2242.8:2254.8] So given that the EPFL management made some announcements about this, I will try to come up with an arrangement that will make sense for all of us.
+[2254.8:2259.8] So look forward to the announcement this week in terms of the final exam.
+[2259.8:2261.8] And we'll see you guys later.
+[2261.8:2263.8] Have a great week.
+[2263.8:2273.8] Bye.

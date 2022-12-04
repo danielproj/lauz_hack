@@ -1,0 +1,664 @@
+~CS-401 Lecture 1
+~2022-09-21T20:14:33.515+02:00
+~https://tube.switch.ch/videos/zLsFIQTSMA
+~CS-401 Applied data analysis - Fall 2022
+[0.0:2.0] Hello.
+[2.0:7.0] Okay, welcome everybody to apply data analysis.
+[7.0:11.0] It's great to see you all awake and not only here, but also awake.
+[11.0:13.0] So that's really nice.
+[13.0:15.0] Please keep it.
+[15.0:17.0] Please keep it up like that.
+[17.0:21.0] It would be great to see many of you here throughout the semester.
+[21.0:23.0] Okay, so.
+[23.0:24.0] Let's get started.
+[24.0:29.0] This slide is just I have it there so you can always find the important information fast.
+[29.0:31.0] But I won't go through it now.
+[31.0:36.0] Before we start with any material or information about how the class will be run.
+[36.0:39.0] I want to tell you a little bit about myself.
+[39.0:41.0] So my name is Robert West.
+[41.0:49.0] Actually, I'm called Hobart West because I'm from Germany from a town called Ingolstadt in Bavaria.
+[49.0:51.0] You definitely know Germany.
+[51.0:53.0] You probably know Bavaria.
+[53.0:57.0] You might not know Ingolstadt, but you definitely know famous product from the town of Ingolstadt.
+[57.0:62.0] It's where the Audi cars are made.
+[62.0:63.0] I'm a data scientist.
+[63.0:64.0] So I like tables.
+[64.0:73.0] So I tried to summarize my career for you in a small table where you see my progression from institution to institution.
+[73.0:80.0] And you also see in the last column the number of seasons that were there in each of these places.
+[80.0:83.0] And you see I have this geometric progression.
+[83.0:88.0] I started at the technical university of Munich where there are four seasons.
+[88.0:89.0] Then I moved to Canada.
+[89.0:91.0] There are only two seasons in Canada.
+[91.0:95.0] Who knows what those seasons are called.
+[95.0:98.0] Second winter summer.
+[98.0:103.0] So you're 50% correct winter is correct winter and flash.
+[103.0:108.0] Yeah, I call it winter and dog poo because once the snow melts in April.
+[108.0:115.0] Six months off dog feces are unleashed on on the country and you definitely know it.
+[115.0:118.0] And then I moved to California where there is the eternal sunshine.
+[118.0:120.0] So only one season.
+[120.0:122.0] And now back to Switzerland.
+[122.0:126.0] Kind of some sort of overflow back to four seasons.
+[126.0:127.0] It's kind of nice.
+[127.0:131.0] Isn't it amazing also how the weather just changed for the start of the semester.
+[131.0:135.0] All of a sudden it really feels like back to school right when I started going to school.
+[135.0:139.0] It was always in September and it was that kind of air really nice.
+[139.0:145.0] So I've been here at EPFL for about five years since December 2016.
+[145.0:148.0] And I had the old.
+[148.0:153.0] I want to do I want to show you one nice thing while I was in the United States.
+[153.0:156.0] I also worked in some of these companies.
+[156.0:159.0] So I have some industry experience.
+[159.0:161.0] And mostly via internships.
+[161.0:167.0] But I find curious is that since I left those places pretty much right after I left those places.
+[167.0:169.0] Each of them changed their logo.
+[169.0:172.0] So you see those were the logos when I was there.
+[172.0:175.0] Each of these companies has a different logo now.
+[175.0:183.0] And you of course know what happened to.
+[183.0:185.0] EPFL a few years ago.
+[185.0:188.0] They also changed their logo after I came there.
+[188.0:194.0] Now all these institutions have an urge to rejuvenate and change something once I show up.
+[194.0:195.0] I don't know what that means.
+[195.0:199.0] So now here at EPFL I had the data science lab.
+[199.0:201.0] Short D lab.
+[201.0:204.0] You might wonder if the data science lab.
+[204.0:206.0] Why isn't it the DS lab?
+[206.0:210.0] Well, when I showed up there was already a DS lab.
+[210.0:212.0] It's the dependable systems lab.
+[212.0:216.0] And weirdly enough it's on the same corridor as my lab.
+[216.0:219.0] So you can imagine how confusing that is.
+[219.0:221.0] So I had to settle for D lab in hindsight.
+[221.0:228.0] I'm quite happy that I had to choose D lab because after I chose the name.
+[228.0:235.0] And when I made the logo I realized, oh, you can write D lab as a sequence of circles and sticks.
+[235.0:239.0] So as a sequence of zeros and ones.
+[239.0:242.0] So you can write D lab as a binary number.
+[242.0:247.0] And what's even more amazing when you.
+[247.0:251.0] Read when you translate to a human understandable number.
+[251.0:256.0] It's the number 54, which is a great number because Germany won the World Cup for the first time.
+[256.0:260.0] Plus 0 1 1 0 1 1 0 is a binary palindrome.
+[260.0:263.0] So it's the same backwards as forwards.
+[263.0:269.0] Isn't that amazing and all because I was not allowed to choose the abbreviation that I actually wanted to choose.
+[269.0:272.0] When I made those slides, I was a recent daddy.
+[272.0:274.0] I was too lazy to redo the slides.
+[274.0:279.0] So I just added this and now I recently tripled daddy.
+[279.0:285.0] I used to have photos here, but that became to bother some to keep updating the slides with every kid.
+[285.0:287.0] I just put the.
+[287.0:293.0] I just put the information because our first daughter Emilia, she was also full of palindromes.
+[293.0:295.0] She's born on the 6th of October 16.
+[295.0:297.0] That's a 61016.
+[297.0:299.0] She came backwards as forwards.
+[299.0:301.0] She weighed 4,444 grams.
+[301.0:304.0] It was 555 millimeters tall.
+[304.0:306.0] So my life is full of palindromes.
+[306.0:311.0] That's why I should also call me Bob and not Robert because it's a palindrome B.O.B.
+[311.0:313.0] Same backwards as forwards.
+[313.0:318.0] You can also write it as a binary number 10010.
+[318.0:320.0] Circus and fix.
+[320.0:324.0] It always bothered me that it's not a binary palindrome.
+[324.0:329.0] I had a leading zero one one student in previous years pointed it out.
+[329.0:334.0] If you add a leading zero, it actually becomes a binary palindrome.
+[334.0:337.0] So the world is in order again.
+[337.0:342.0] Okay, so a few words about my personal path towards data science.
+[342.0:345.0] I told you that I'm from a town called English start.
+[345.0:350.0] The big thing there is people work in a car factory.
+[350.0:359.0] So when I was young, I was also a lot into cars and I started collecting these small miniature cars.
+[359.0:366.0] And when I grew up, my interest shifted a bit, but my collectors mind still stayed there.
+[366.0:369.0] So and I started collecting other things.
+[369.0:372.0] I don't know what's going on with this clicker.
+[372.0:377.0] I started collecting these beer coasters, you know, the things that you shove under a beer glass.
+[377.0:382.0] And the labels that are on beer bottles. So really, I guess there's this.
+[382.0:384.0] Something in me that wanted to collect stuff.
+[384.0:387.0] Now it's more about collecting data, maybe.
+[387.0:392.0] But the point is that these these coasters, for example, they really.
+[392.0:399.0] Rich structure data, you know, like every one of these is released by a brewery by a company.
+[399.0:403.0] Each of these companies is located in a town.
+[403.0:409.0] So I started making this Excel spreadsheet, you know, where I entered them all.
+[409.0:414.0] And I remember that I was this was in the late 90s.
+[414.0:420.0] I was an early adopter of the internet within that community of collectors of these things.
+[420.0:431.0] And I kind of made I leveraged that advantage that I was young and a bit tech savvy to get to lay my hands on some of these in exotic countries.
+[431.0:437.0] You know, where people usually didn't get so I wrote emails to all these people in random places in Africa and Asia and so on.
+[437.0:442.0] And I asked them, can you pick up a few of those from your bar and send them to me.
+[442.0:445.0] And some people actually did it. It's kind of amazing.
+[445.0:448.0] And I remember how I did this. I browse the internet.
+[448.0:451.0] And I would have a piece of paper in front of me.
+[451.0:456.0] And I would write down email addresses that I encountered by like randomly surfing the web.
+[456.0:461.0] Basically, and then I would open the email client and type those emails back in.
+[461.0:471.0] No, I didn't know about about copy paste. So I somehow did the the stupidest parts of data science in the stupidest way.
+[471.0:477.0] But there you go. And I'm not ashamed of it. Maybe this is a good point to sneak in a little anecdote.
+[477.0:480.0] There is a famous mathematician called Vladimir Vapnik.
+[480.0:483.0] He's the guy who invented support vector machines.
+[483.0:486.0] He's a very important machine learning algorithm.
+[486.0:490.0] And I know someone who was a colleague of his at any sea labs.
+[490.0:497.0] And he told me this interesting anecdote about Vapnik, who's this very old, very smart Russian dude.
+[497.0:502.0] And so this friend of mine goes to Vapnik and he says Vladimir come with me.
+[502.0:506.0] We have this amazing invited talk. Let's go to it.
+[506.0:510.0] And Vapnik says, I mean, give me just five more minutes.
+[510.0:515.0] I mean, the middle of something. And he's also writing something down on a piece of paper.
+[515.0:520.0] And he's the other guy is asking him what what are you doing there? He says I'm editing a paper.
+[520.0:525.0] He took, he wrote down something that he wanted to shift from the introduction to the conclusion of the paper.
+[525.0:529.0] So he wrote it down on a piece of paper. Then he deleted it.
+[529.0:535.0] And then he went to the conclusion and typed it in there. So he basically did the same stupid thing as I did.
+[535.0:542.0] And he said, I don't know about copy paste. So even smart people sometimes don't know about the obvious things.
+[542.0:549.0] So to come back to this, I sold my entire collection thousands of of these things for a fistful of dollars.
+[549.0:562.0] When I moved from Germany to Canada, but to this day, I think my collector's mind really plays a role in my research because I get kind of a warm fuzzy feeling when I have a good juicy data set at my hands.
+[562.0:571.0] That's the story there. Here is basically my version of data science. Right. It's a buzzword.
+[571.0:579.0] It's something that everyone claims they're doing, but no one knows really how to do.
+[579.0:584.0] People have said in that sense, it's like teenage sex data science.
+[584.0:598.0] But here are some principles that guide my own version of data science. What we do in our research in my lab is that we distill raw data into insights into people and the world.
+[598.0:608.0] That's kind of our overarching mission from Ron asked the data to crisp insights into into the world, especially into how people work.
+[608.0:621.0] To do that, we leverage large data sets. The little butterfly here is supposed to signify that warm fuzzy feeling that I mentioned that I get in my tummy when there's a juicy data set.
+[621.0:632.0] Oftentimes the data we have is what I call found data. So found data as opposed to intentionally collected data.
+[632.0:645.0] When you're a physicist, you have a big machine like let's say over at CERN, then you can turn all those knobs and you collect data under exactly the conditions that you want in found data.
+[645.0:656.0] It's different because this is data that's collected by the world taking its natural course. For example, people use Twitter and you want you want to analyze the world by studying Twitter.
+[656.0:674.0] Then this is found data because Twitter is running anyways. It's not running because you want to find something out about the world. That means that there is a certain mismatch between the data and what you want to do with the data, which needs to all sorts of potential biases, confounders and so on.
+[674.0:688.0] And the area of observation studies, which we'll also touch upon in this class, is about how can you be smart about deriving true insights from from nasty dirty data.
+[688.0:694.0] And so this is part, this is a big challenge in our work, but it's also where a lot of the fun is.
+[694.0:714.0] We don't always have the data sets yet that we that we would like to have. So we try to be creative also about how we collect data. So we've, we've built games, for example, for collecting the data that we need human computation systems, crowdsourcing and so on.
+[714.0:729.0] Ultimately, we want to address real world issues with the work that we do. So it's a bit like when you go to a bathroom and it says leave the, leave the place cleaner than you found it. So that's a bit also what we're trying to do in our research.
+[729.0:748.0] We might not solve a huge problem with every project, but we try to find something meaningful where we can make the world a little bit, a little bit of a better place. And this way really give back to the world with useful applications that are based on our research.
+[748.0:760.0] I'm a computer scientist by training. So I also get a kick out of developing need algorithms. Okay, so this was Bob West's version of data science.
+[760.0:772.0] Here are also a few buzzwords. So you can locate my so you can store myself in your hash table, basically, what are the areas that.
+[772.0:787.0] You can, and you see this reflected in the material of the class machine learning more on the applied side data mining, social and information network analysis, computational social science, natural language processing, human computation, crowdsourcing and information retrieval.
+[787.0:791.0] So this is me in buzzword space.
+[791.0:805.0] Now let's wrap up my personal take on data science science and let's take a little bit of a more objective view. So let's check what does Wikipedia say about about data science.
+[805.0:809.0] You notice that I really love Wikipedia. So it'll come up several times in the class.
+[809.0:823.0] Wikipedia says that data analysis is the process of inspecting cleaning, transforming and modeling data with the goal of discovering useful information, suggesting conclusions and supporting decision making.
+[823.0:833.0] Data analysis has multiple facets and approaches in compassing diverse techniques under a variety of names in different business, science and social science domains.
+[833.0:843.0] So a couple of things that I like to point out will actually cover all of these in class inspecting data, cleaning, transforming, modeling data, discovering useful information.
+[843.0:855.0] So we're really doing a whirlwind tour of the full spectrum of data analysis or data science plus the class also reflects the second paragraph.
+[855.0:873.0] And we have we have people from all schools of EPFL in this class, life sciences, we have people from architecture, we have of course a lot of computer and communication science people and engineers.
+[873.0:885.0] So really this is a broad class, which makes it a lot of fun, but also a bit challenging to teach because you're coming with very different backgrounds, but we try to manage this.
+[885.0:892.0] So why is the course called apply data analysis then and not just data analysis.
+[892.0:906.0] This is because we really take this aspect of breadth seriously. We want to give you all the tools that are necessary to get started in doing a proper data analysis project.
+[906.0:921.0] So this course is about breadth, not about depth. It's really about what methods, principles and tools are out there in data science, rather than how can it become an expert in deep learning for computer vision applied to images of cats.
+[921.0:933.0] You know, if you want to go so deep, then apply data analysis might provide a good starting point, but you might want to top it off with a more in depth class.
+[933.0:944.0] This is because data science is a fast paced field with a shifting focus. So if you obsess to one on one tool or technique, then it won't really pay off in a few years.
+[944.0:957.0] You really need to keep learning. It's common place, you know, but it's really like that. The tools keep changing, but there are certain basic principles that state is the same and we're trying to focus on those.
+[957.0:965.0] So be ready to explore and keep learning on your own and see the class as a starting point for this.
+[965.0:975.0] If you want to go deeper, then there is a bunch of other classes at EPFL that you can take. I think some of them are actually taking place in this semester.
+[975.0:985.0] You'll have to check, but these might be good to complement the portfolio that we offered to you in applied data analysis.
+[985.0:1001.0] Okay, so who knows who this is. Ada Loveless, great people know her by now. When I started teaching the class in 2017, people didn't immediately yell her name. So this is good that this is coming out.
+[1001.0:1007.0] She was of course the world's first computer programmer in the early 19th century.
+[1007.0:1014.0] Those were the good old days. We all know what happened since then.
+[1014.0:1028.0] So in the honor of the good old days, let's call the class Ada and not ADA, right as an homage to Ada Loveless due to her important contributions to computer science.
+[1028.0:1039.0] Ada Loveless of course has a place on intended in the heart of EPFL. I don't know if you've seen this, but this.
+[1039.0:1048.0] Oddly little concrete square. I should have picked a nicer one. Maybe is now called plus Ada Loveless.
+[1048.0:1060.0] Or in French would make more sense. Plus Ada Loveless. No, Brian. Okay, so let's quickly look at the syllable. What are we covering in this class?
+[1060.0:1070.0] And here every every top level bullet roughly corresponds to one lecture one week. Okay, so this is really in order in temporal order.
+[1070.0:1080.0] We start with handling data. So this is you have a you have a raw data set. What you have to do to it until you can do something meaningful in order to derive insights from it.
+[1080.0:1095.0] So you can also think of this as slicing and dicing obtaining a data set, for example, by crawling, downloading it from the web, preparing it, cleaning it, juggling the data, incorporating different data sources and so on.
+[1095.0:1101.0] So this will be under the topic of handling data. We then move on to visualizing data.
+[1101.0:1114.0] Flooding data, et cetera. This is really important in several stages of the data analysis pipeline. You want to use visualizing, for example, for understanding what's even in your data.
+[1114.0:1123.0] So for exploring the data, but then also once you have done your analysis, you need to get your findings across right and visualization.
+[1123.0:1132.0] Humans are visual animals. So visualization is one of the best tools for getting your findings across effectively.
+[1132.0:1144.0] Visualization is one way of describing data, but it's maybe not the most formal one. You know, sometimes it's not clear whether a pattern that appears visually is true or could have happened by chance.
+[1144.0:1158.0] We will look at these aspects when we talk about describing data. So here it's about supporting or being suspicious off claims about data by using statistical tests, et cetera.
+[1158.0:1161.0] We then move on to regression analysis.
+[1161.0:1174.0] We might have seen regression in the context rather of machine learning. We'll use it in a bit of a different way. We'll use it as a tool of data analysis rather than as a tool of prediction.
+[1174.0:1181.0] So I really see regression here as a way of disentangling data sets with correlated variables.
+[1181.0:1192.0] And that will be a natural segue to observational studies. I already talked a little bit about observation studies when you had the about me slide.
+[1192.0:1199.0] So this is basically about how to deal with found data data that wasn't collected exactly for the purposes that you had in mind.
+[1199.0:1208.0] So it there might be biases and so on that you have to take care of. So basically in a nutshell, this is about the fact that correlation doesn't equal causation.
+[1208.0:1220.0] We know that that's the case, but so what? And so we're starting from that so what, you know, what can we still do if correlation doesn't equal equal causation.
+[1220.0:1232.0] We then have a sequence of three classes on machine learning, talking about supervised learning unsupervised learning and also more practical applied aspects of machine learning.
+[1232.0:1242.0] That help you to apply things that you need to consider in order to really use an machine learning algorithm in practice.
+[1242.0:1250.0] And then we will have two classes on handling specific types of data.
+[1250.0:1256.0] We'll start actually this is three classes because the handling text topic will span two classes.
+[1256.0:1265.0] We'll look at how to handle text data. And then also how to handle network data or graph data. And then finally.
+[1265.0:1274.0] And it always hurts me to teach this only at the very end, but there are so many constraints in the syllabus that this is really the best point.
+[1274.0:1284.0] We look at how to scale up how to scale these techniques to terabytes, petabytes of data without a pearl of sweat.
+[1284.0:1293.0] So here we need to look at some different programming paradigms like spark and map produce and so on.
+[1293.0:1302.0] Okay, so this is what you will see in class. And this is so this is basically what I will tell you.
+[1302.0:1305.0] And now let's talk about what you will do.
+[1305.0:1311.0] So these are the components that will flow into your grades.
+[1311.0:1320.0] There will be homework assignments, final exam, projects and quizzes.
+[1320.0:1327.0] The great distribution is 30% for homework assignments. There will be two over the course of the semester.
+[1327.0:1334.0] 30% for the final exam, 25% for the project and 15% for the quizzes.
+[1334.0:1337.0] So let me quickly go through those in order.
+[1337.0:1342.0] And the homeworks, I think you'll get the first the first one will come out in two or three weeks.
+[1342.0:1350.0] You will work on the so the homeworks are designed such that they really involve skills required from a data scientist.
+[1350.0:1366.0] We we try to not cook up something completely random, but something that would resemble a task that you would encounter if you work in a company or maybe also in a research institution.
+[1366.0:1370.0] And you're asked to do a data analysis task.
+[1370.0:1374.0] You will do this in groups of four.
+[1374.0:1380.0] This is also because when you are really a data scientist in real life, you will usually work with other people.
+[1380.0:1385.0] So I think it's good that you do this in groups.
+[1385.0:1394.0] And the groups will stay fixed basically for the the ideal is that the same groups stay fixed throughout the semester.
+[1394.0:1399.0] So you will work on the homeworks and on the project with the same three people.
+[1399.0:1404.0] Sometimes things don't work out from the get go.
+[1404.0:1406.0] Sometimes there has to be a breakup.
+[1406.0:1414.0] And so if that is necessary, then you will be allowed to switch groups after homework one.
+[1414.0:1422.0] But we really discourage this because it creates problems for for a lot of people.
+[1422.0:1427.0] But sometimes it's necessary. So if it's necessary, then you can do it.
+[1427.0:1429.0] But only until after homework one. Okay.
+[1429.0:1432.0] And then the groups stay fixed.
+[1432.0:1440.0] If you're interested, you can already get a sense of what homeworks look like by looking at the homeworks from previous years.
+[1440.0:1445.0] We're very transparent about this. So you can see all these things are in GitHub.
+[1445.0:1447.0] I talk about GitHub a bit later.
+[1447.0:1453.0] You can see all of that. All the deliverables from previous years there.
+[1453.0:1457.0] So you can get a set also if you're wondering is this class okay from you?
+[1457.0:1459.0] Is it too much with the background that I have?
+[1459.0:1462.0] Then I really encourage you to look at the materials from last year.
+[1462.0:1467.0] And you can maybe get a better sense of whether whether this is for you or not.
+[1467.0:1471.0] Okay. So this was for the homeworks.
+[1471.0:1473.0] Next thing. Finally exam.
+[1473.0:1483.0] This will be in January 2023. The exact date isn't out yet, but I'll update the slide once we have that date.
+[1483.0:1487.0] In spirit, the final exam will be very similar to the homework.
+[1487.0:1493.0] So it will also be a data that's kind of a mini data analysis project.
+[1493.0:1498.0] The big difference is that you will do it alone, not with your three team members.
+[1498.0:1504.0] And you will do it under more time pressure. So you'll have three hours to do this.
+[1504.0:1510.0] The amount of work will be commensurate of course to the time that you have.
+[1510.0:1516.0] But really it's different from the homework where you have, I think, one or two weeks to do it.
+[1516.0:1520.0] So there you have much more time to figure stuff out to read on stack overflow.
+[1520.0:1527.0] In that sense, the best preparation for the final exam is the homework.
+[1527.0:1531.0] Don't rely too much on your teammates during the homeworks.
+[1531.0:1540.0] Of course, it's important to split work and to work effectively, but really try to to also do as much as possible yourself.
+[1540.0:1544.0] Because in the final exam, this will be what it is.
+[1544.0:1549.0] You can't turn to write or to the left and just ask, so how should I do this?
+[1549.0:1553.0] The final exam will be done on your person laptop.
+[1553.0:1557.0] And it will be fingers crossed on campus.
+[1557.0:1561.0] We managed to do this on campus.
+[1561.0:1566.0] I think every year except for 2020. So last year it was on campus.
+[1566.0:1570.0] Also, let's hope for the best for this exam season.
+[1570.0:1573.0] So that was about the final exam. Next about the project.
+[1573.0:1577.0] I'll give you more details on the on the next slide.
+[1577.0:1581.0] But this is the two too long didn't read.
+[1581.0:1587.0] Here you are doing your own freestyle data analysis homework and final exam.
+[1587.0:1590.0] We tell you what to do in the project.
+[1590.0:1592.0] You tell us what you want to do.
+[1592.0:1596.0] We'll steer you will help you will not you will tell you if this is a good or a bad idea.
+[1596.0:1601.0] But this is this takes more initiative from your own side.
+[1601.0:1605.0] So here I think you can really kind and show your creativity.
+[1605.0:1609.0] This is done in the same groups of four students as for the homework.
+[1609.0:1613.0] And we will have milestones spread throughout the semester.
+[1613.0:1619.0] In fact, in I think already in two or three weeks from now,
+[1619.0:1623.0] I forget the exact schedule, but we'll tell you.
+[1623.0:1626.0] We'll tell you soon. There will already be the first milestone,
+[1626.0:1631.0] which is basically about you telling us your first ideas,
+[1631.0:1633.0] what you want to do.
+[1633.0:1638.0] And we'll help you figure out if it's a good idea.
+[1638.0:1643.0] But we'll start very early on and this will go through the entire semester.
+[1643.0:1648.0] And you'll hand this in basically in the middle of December.
+[1648.0:1655.0] We were careful to set the deliverables such that homework and project work is not overlapping.
+[1655.0:1659.0] But there will be something at any point.
+[1659.0:1662.0] Okay.
+[1662.0:1670.0] And then finally, there will be quizzes that are held weekly and online on Moodle.
+[1670.0:1674.0] I'll say more about this in a couple of slides for now.
+[1674.0:1679.0] But you see, I had a hard time cramming all of this into one slide.
+[1679.0:1684.0] So it will be a lot of work, but the class will get your job.
+[1684.0:1686.0] Right. So that's the trade off basically.
+[1686.0:1690.0] It's one of the my happiest moments in my job when people come to me and they say,
+[1690.0:1693.0] thanks again, they come to me six months later and they say, hey, Bob,
+[1693.0:1701.0] I wanted to thank you again for for Ada because this class was really helpful for me when I looked for jobs.
+[1701.0:1705.0] And now I'm using the things that I learned in this class every day.
+[1705.0:1710.0] So this is really the, this is the.
+[1710.0:1712.0] This is a sign of success for me.
+[1712.0:1715.0] So if people say that, then we're doing the right thing.
+[1715.0:1720.0] We talk about the red button, the red button.
+[1720.0:1725.0] Okay. So since there are, there are teams of four people.
+[1725.0:1727.0] Usually this works very smoothly.
+[1727.0:1737.0] But in some cases, there are situations where one of the four people will do much less than the rest with 500 people in class.
+[1737.0:1739.0] This happens.
+[1739.0:1742.0] And then what could we do?
+[1742.0:1751.0] And sometimes at the end of class, people come to us and they say, well, actually, we're effectively only three people because one of us didn't work.
+[1751.0:1754.0] So can you increase the grade for that?
+[1754.0:1756.0] So it doesn't work like that, right?
+[1756.0:1760.0] Because we can't do these things in hindsight, but we can do them prospectively.
+[1760.0:1768.0] So if something, a situation like this, where you have a free loader on the team who doesn't really take,
+[1768.0:1774.0] take their involvement seriously, then you can tell us by pressing, you know, the virtual red button.
+[1774.0:1776.0] And you tell us that something is not going wrong.
+[1776.0:1779.0] And then we can try, it's not going right.
+[1779.0:1782.0] And then we can try to figure the situation out.
+[1782.0:1788.0] Okay. So we take this very seriously, but it's important that the button be pressed early on.
+[1788.0:1794.0] So we can actually sort out the situation on time and improve the situation for the rest of the semester.
+[1794.0:1805.0] It doesn't work to just basically use the red button as a post-talk grade improvement, because at that point, we cannot change the grade retrospectively.
+[1805.0:1813.0] We can just try to help you become more effective as a team for the time that's left in the semester.
+[1813.0:1814.0] Okay.
+[1814.0:1820.0] So a few more remarks about grading.
+[1820.0:1827.0] In order to obtain a meaningful grade distribution, we don't want everyone to be extremely bad or everyone to be extremely good, right?
+[1827.0:1836.0] We need a meaningful variance in the grade, such that there's actually signal in in the grade that people get from ADA.
+[1836.0:1852.0] What we do is we will scale and shift the score for each of these components project, homework project exam quizzes before taking this weighted average.
+[1852.0:1853.0] Okay.
+[1853.0:1856.0] So each of these will be scaled and shifted.
+[1856.0:1858.0] So it makes.
+[1858.0:1867.0] So it makes sense. It's a nice distribution. And then we take the weighted average. This is standard practice at EPFL.
+[1867.0:1871.0] And it's really important to maintain a meaningful grade.
+[1871.0:1881.0] What this means for you is that yes, the intermediate grades that you get throughout the semester are a good indication of where you stand.
+[1881.0:1901.0] But do not do something like a back of the envelope calculation. Oh, I'm safe. So I really don't need to show up to the exam, for example, or I don't need to prepare for the exam because even if I just get like 20% in the exam, I will still be able to pass the class with this or that grade, right?
+[1901.0:1911.0] This might not work out because there is a little bit of wiggle because of the shifting and scaling. Okay. So this is important to keep in mind.
+[1911.0:1914.0] I don't think there's a need to.
+[1914.0:1924.0] To worry if all your grades are reasonable throughout, but don't play these kinds of games.
+[1924.0:1936.0] Okay. So a little bit about meeting logistics. As you know, because that's why you hear the class is taking place on Wednesdays, 815 to 10.
+[1936.0:1945.0] If you want to see it live, then come to class. There will be no live streaming. This is a slide shift from last year.
+[1945.0:1960.0] We're not streaming the class live, but we are recording it. Right. So if you can't come on a Monday on a certain Wednesday, then don't worry. We're recording it. That makes me realize, are you? Did you hit record?
+[1960.0:1962.0] Thank you.
+[1962.0:1972.0] We're recording the class and it will be made available after class. We'll try to put it online the day off, but at the latest, we'll put it online the day after class.
+[1972.0:1982.0] The second big component. In terms of instruction beyond lectures are the lab sessions. Those are held every Friday from 1 15 to 3.
+[1982.0:1993.0] They're not in this room, but they're in building batoshim to 21. This is way over there. So it's basically at the border between EPFL and Unil.
+[1993.0:2003.0] So to walk there, allow for for some time, maybe from here, it would probably take 5 to 7 minutes.
+[2003.0:2013.0] So what we'll do there in these lab sessions is that we will give you exercises that will make available before the day before.
+[2013.0:2028.0] So you can already take a look and you can kind of wet your teeth and and try things out for yourself a bit. And then you come to the lab session and there, you have a chance to ask questions.
+[2028.0:2034.0] Okay. We can help you. You can get help from the assistance in solving those exercises.
+[2034.0:2052.0] We'll also have a mechanism for collecting frequently asked questions ahead of time. This will allow us to maybe address the most pressing questions by talking to everyone rather than by talking one on one about the same thing to everyone.
+[2052.0:2065.0] So in these lab sessions, you can connect with the assistance in the spirit of office hours also. And sometimes we'll have brief tutorials about technical things introducing certain tools and platform, sense on.
+[2065.0:2075.0] We might also have invited speakers from from the industry or from academia. Sometimes we'll see about that. The idea would be that they give a report from the trenches.
+[2075.0:2083.0] And then your life as a data scientist like so you have more information in order to decide whether you want to become a data scientist yourself.
+[2083.0:2093.0] And then finally, we'll also have our online quizzes on model during the first 15 minutes of the lab sessions.
+[2093.0:2105.0] So more about those quizzes. As I said, they will be held during the first 15 minutes of each lab session that is from one 15 to 130.
+[2105.0:2114.0] The quiz will last 10 minutes. So you can place those 10 minutes that you take for the quiz anywhere within those 15 minutes.
+[2114.0:2128.0] You can start in minute zero or in or in minute four. Otherwise, you lose some time. There will be no quiz this week.
+[2128.0:2137.0] Next week, there will be what I call quiz zero. So this is not really a quiz. There are no real questions. This is just as though it was a quiz.
+[2137.0:2149.0] We're using the same infrastructure just to get you familiar with the setup to make sure that everything runs smoothly. And so you kind of get one under under the belt.
+[2149.0:2156.0] So you don't have to worry about the first real quiz, which will happen in week three.
+[2156.0:2160.0] This would be the first quiz that counts.
+[2160.0:2168.0] The quiz in week I plus one is always about the material from from week I. So that's also why we start in week three.
+[2168.0:2174.0] Because now in week one, there is no real material. I'm just telling you about what the classes like in week two.
+[2174.0:2183.0] Next week, we'll start with the material and the quiz in week three is going to be about that material from week two.
+[2183.0:2195.0] The important thing about the quiz is how you see it, right? It's a way of encouraging you to continuously engage with the course material.
+[2195.0:2210.0] It's not it's only 15% of the entire class, right? And that will be I think 11 11 or 12 quizzes. So each one of these quizzes is only 1.5 less than 1.5% of your total class grade.
+[2210.0:2220.0] So it's really negligible. But the important so you should more instead of seeing it as a burden to have to study in order not to fall back.
+[2220.0:2235.0] That's not what it is because the quiz doesn't contribute much to your great. It's but you should see it as a way as a good reason to really go through the lecture material on a continuous basis rather than lead everything up to the end and then cram for the exam really.
+[2235.0:2248.0] So this is there is this pedagogical goal rather than a goal of bullying you by by having a quiz every week.
+[2248.0:2257.0] In that spirit, we will also not count the two lowest score increases out of those 11 or 12.
+[2257.0:2268.0] This also means that if you cannot make it on a Friday for some reason, then you can skip up to two quizzes for free.
+[2268.0:2278.0] Okay, but then all the others will count. If you take all the quizzes, then we drop the two where you had the lowest score.
+[2278.0:2285.0] Okay, so next thing on not the next item on the menu, let's talk about the project. How will this work?
+[2285.0:2293.0] So here we will provide you with a number of data sets. We will make available, I think about between 12 and 20.
+[2293.0:2298.0] We haven't decided on the data sets yet, but we will host those for you.
+[2298.0:2307.0] And you will then pick one of those data sets and you will perform and pitch a crisp project idea.
+[2307.0:2317.0] What's a meaningful thing to do with that data set? And then you will execute that throughout the rest of the semester.
+[2317.0:2323.0] You should feel free to combine this data set that you choose with other data sets, but then it's at your own risk. Right.
+[2323.0:2334.0] So we will not we cannot support data sets that we haven't vetted ourselves. So while you're free to do that, it's at your own risk.
+[2334.0:2341.0] The goal here is really not to just slice and dice and randomly mix the data.
+[2341.0:2348.0] The goal is to really tell a story with the data. It's really important that you think about why does this matter?
+[2348.0:2353.0] Why should we even ask this question about the data? That's the starting point.
+[2353.0:2362.0] And then have a meaningful progression of of analysis that allow you to answer that question that you set out to answer in the beginning.
+[2362.0:2368.0] To get an idea of the final product that you will make.
+[2368.0:2372.0] You can look here at the projects from previous years.
+[2372.0:2381.0] It's kind of an amazing, amazing, um, orpiss at this point because every year we had about a hundred projects.
+[2381.0:2393.0] So on these via these links, you can you can reach about 500 class projects, which should give you, I think, a good idea of of what this is about.
+[2393.0:2400.0] We also usually award the 10 best projects every year.
+[2400.0:2408.0] So you can look at those at the top and I'm also linking a particularly nice data story here.
+[2408.0:2414.0] I'm realizing that we're already on a hold on we have until nine and then we take a break. So this is good.
+[2414.0:2423.0] So I can actually quickly open this and show you this.
+[2423.0:2427.0] Okay, is this still on the on the zoom? Okay.
+[2427.0:2438.0] So this was one data story from last year where those students analyzed, um, basically what US politicians say about climate change.
+[2438.0:2444.0] And you see already visually it's quite appealing.
+[2444.0:2448.0] I really want to read this right after I see the first page.
+[2448.0:2457.0] What I would really like about this data story is that they start with so why should we care, right? This is really the starting point.
+[2457.0:2462.0] If you cannot answer the question, why should we care? Then it might not be a good question to ask.
+[2462.0:2466.0] And then you see there are these there's like a.
+[2466.0:2474.0] Visualizations that I can actually interact with, you know, when I hover with my mouse, I, um, it gives me a bit more information.
+[2474.0:2479.0] The Americans have made much more elaborate visual.
+[2504.0:2507.0] You
+[2535.0:2537.0] Okay.
+[2537.0:2539.0] Great. Okay.
+[2539.0:2544.0] So great to see the interaction in the in the break.
+[2544.0:2551.0] Isn't this a great reason to come to class instead of watching it just as a video? Okay.
+[2551.0:2557.0] So I was quickly going through this nice data story from last year.
+[2557.0:2560.0] People start with why should we care?
+[2560.0:2565.0] So I think it's a very interactive visualizations.
+[2565.0:2574.0] Some static ones also, then you see people embedded a tweet. You know, that makes it nicely engaging also.
+[2574.0:2580.0] And so it's nicely illustrated. And at the end.
+[2580.0:2586.0] People came back to answering.
+[2586.0:2594.0] And I think that's a good thing to be concluding by answering those questions that they had posed in the beginning.
+[2594.0:2597.0] So it's like a nice circle.
+[2597.0:2606.0] And what's what I like is this is not just some draft PDF, but it's actually a nice document that you could also show to your grandmother.
+[2606.0:2611.0] And she appreciates what you have done in class.
+[2611.0:2616.0] And so it's like a good thing to do in the right thing.
+[2616.0:2617.0] Okay.
+[2617.0:2621.0] A bit more about infrastructure.
+[2621.0:2628.0] So both the homeworks and the project will be submitted posted and submitted via GitHub.
+[2628.0:2630.0] Who knows what GitHub is?
+[2630.0:2633.0] Who has a GitHub account already?
+[2633.0:2635.0] Okay. Good.
+[2635.0:2640.0] The few people that don't you will need to create a GitHub account for this for this class.
+[2640.0:2646.0] This is a useful thing because it's really the defect to standard for managing and sharing code in the industry.
+[2646.0:2654.0] So if you choose to become a data scientist, you will work with GitHub all the time anyways.
+[2654.0:2662.0] And also, as I said, the submissions of projects and homeworks will also be done via GitHub.
+[2662.0:2671.0] So this is also for us and I said convenient way to kind of piggyback on the timestamps that GitHub has.
+[2671.0:2681.0] So in fact, ever some problem with free loading comes up, you know, where one group member does less than the others, then there is a record.
+[2681.0:2685.0] You know, we can we can check in GitHub.
+[2685.0:2696.0] Is it true that that person never made any commits? You know, so it's you're leaving a trace basically on your on your work history by also doing things on GitHub.
+[2696.0:2697.0] Okay.
+[2697.0:2699.0] So how will are we communicating with you?
+[2699.0:2703.0] Our main communication channel is Ed.
+[2703.0:2706.0] Who has used Ed for any of the other classes?
+[2706.0:2709.0] I saw that some other classes are using this as well.
+[2709.0:2715.0] Okay, so it hasn't properly caught up caught on yet who has used piata before.
+[2715.0:2725.0] Okay, so piata is out and Ed is in because if you fell really negotiated, they had to find a new provider.
+[2725.0:2730.0] So that's why there is no more piata on Moodle, but now the new piata is Ed.
+[2730.0:2733.0] So you can reach this platform via Moodle.
+[2733.0:2738.0] It should be there should be a link that you can just click and then it opens inside of Moodle.
+[2738.0:2749.0] If you want to have all the Moodle fluff that's around gone, then you can also just access it via this direct link.
+[2749.0:2752.0] And so this is this is a discussion forum.
+[2752.0:2757.0] Basically where this is where you will ask all class related questions, right?
+[2757.0:2760.0] So don't send us email, but post on Ed.
+[2760.0:2761.0] Why is that?
+[2761.0:2771.0] Then we have a central place where all the teaching staff sees what's happening and when you ask a question, you're not only asking the question for yourself, but you're asking for everyone basically.
+[2771.0:2775.0] If we answer once, then everyone can see the answer.
+[2775.0:2780.0] It's much more transparent and more fair in that sense.
+[2780.0:2786.0] It's mandatory to use it because important class information will only be posted there.
+[2786.0:2793.0] Okay, so it's important that you actually set modifications and so on in Ed.
+[2793.0:2799.0] You can you can go to the settings and make sure that you don't miss anything.
+[2799.0:2802.0] And important help each other, right?
+[2802.0:2805.0] Try to answer each other's questions.
+[2805.0:2809.0] If you already have an answer, then you know, provide it.
+[2809.0:2812.0] Needless to say, do this without cheating, right?
+[2812.0:2824.0] Like if someone asks, what's the solution for homework one question, one a, then it's of course not okay to answer that question there.
+[2824.0:2829.0] A general note on communication because in previous years, we've had.
+[2829.0:2834.0] Sometimes there was confusion because there are several platforms involved.
+[2834.0:2840.0] There is Ed, the discussion forum I just talked about, GitHub, some information is in Google docs.
+[2840.0:2843.0] There is the website.
+[2843.0:2850.0] So we tried to be as clear as possible about this.
+[2850.0:2853.0] By putting together these communication guidelines, right?
+[2853.0:2860.0] So this really explains what is where, but the central point of entry is the class website.
+[2860.0:2863.0] And from there, everything is explained.
+[2863.0:2867.0] You have links to the slides that I'm presenting today.
+[2867.0:2877.0] You will have access to the videos. You will have information about, about project quiz forum and so on.
+[2877.0:2883.0] So really, this is your entry point, a dot, epfel dot ch.
+[2883.0:2887.0] And as I said, all discussions will take place on it.
+[2887.0:2896.0] Group registration. I mentioned that you have, you will work in teams of four for your homework and for your projects.
+[2896.0:2902.0] And you must form those teams within the next two weeks starting now.
+[2902.0:2909.0] Why the next two weeks? This is in time for the release of homework one in two weeks will release homework one.
+[2909.0:2914.0] And that will already be done in teams. So you need to have the teams by then.
+[2914.0:2919.0] This means get started today to find your three teammates.
+[2919.0:2924.0] And be done by Friday, seventh of October.
+[2924.0:2935.0] By that time, you must enter your group information in this form that's linked from here.
+[2935.0:2945.0] Every group member must feel this individually. So you don't do it once per team, but you do it four times per team once per team member.
+[2945.0:2955.0] And as I mentioned, you can, you can change teams after homework one, but we strongly encourage you to try to avoid it. Only do it if absolutely necessary.
+[2955.0:2960.0] A word about class prerequisites. I also have been receiving some emails about this.
+[2960.0:2965.0] So let me try to answer this in general.
+[2965.0:2987.0] You will need. So in order to. In order to be effective in the class and really understand the material, we expect you to have basics of probability and statistics, basics of databases and basic programming skills.
+[2987.0:2999.0] If you cannot program yet, then it's probably not the good idea to take the class. You can try to learn Python along the way.
+[2999.0:3009.0] And it might be a very rewarding experience afterwards because you picked up an important skill, but it will probably also be very painful to do that.
+[3009.0:3019.0] So in order to get a sense of whether your programming skills are enough, I encourage you to look at the homeworks from previous years.
+[3019.0:3028.0] And this will give you a sense, right? Of course, we don't expect you to be able to do the homeworks as of today. I mean, what's the point of teaching you if you could already do them.
+[3028.0:3042.0] So that's not the point. It's more about getting an impression. This kind of level of programming task. Can I do it with the Python skills that I that I have.
+[3042.0:3060.0] If you don't have a very strong Python skills yet, then it might still be good enough if you have some basics, but you might want to brush up by taking an online tutorial in parallel.
+[3060.0:3080.0] For the homeworks and for the exam, Python is required because this is what we ask you to do the coding in for the project. It's up to you. So if you want to do your project in C Java, whatever, it's up to you, but we will only support Python, right?
+[3080.0:3086.0] We cannot help you if you're if you choose another language.
+[3086.0:3099.0] So I think I said it all here. If you maybe one word out of these three programming is the most important, then probably and probabilities and stats and then databases.
+[3099.0:3115.0] If you don't have strong database background, I wouldn't worry too much. We'll do a little bit of SQL in class, but it's not going to be a major component. So I think you can probably pick that up on the way, but this won't be the case with programming.
+[3115.0:3120.0] Okay, so a little bit more than about programming.
+[3120.0:3133.0] As I said, we will use Python. What environment should you use the homeworks and the exams will be done as Jupiter notebooks who has used Jupiter notebooks before?
+[3133.0:3146.0] Okay, this is quite a few. If you have not not to worry, we will tell you how to do this in lab session one this Friday. So come there.
+[3146.0:3150.0] We will we will show you how to do this.
+[3150.0:3160.0] What you will submit for both homeworks and exam is a pre executed, I Python notebook file.
+[3160.0:3166.0] So we don't care how you produced it.
+[3166.0:3179.0] Well, of course, you need to have produced it yourself and so on, but we didn't we don't care whether you produce it in a local Python installation on your laptop or you use a notebook in the cloud.
+[3179.0:3193.0] For example, Google call app, this is IPython notebooks, Jupiter notebooks that are hosted in by Google or you can use notal, which is Jupiter notebooks hosted by EPFL.
+[3193.0:3203.0] This is up to you how you do it. But at the end of the day, you will need to submit this pre executed notebook file.
+[3203.0:3210.0] And then you just submit the final product.
+[3210.0:3229.0] To get started on this, I strongly encourage you to come to Friday's lab session where we will do tutorial zero, which is basically an introduction to Jupiter notebooks and setting up the Python environment and so on.
+[3229.0:3236.0] There is also a homework zero, which you can do yourself after the lab session.
+[3236.0:3240.0] It's called zero because it counts zero.
+[3240.0:3252.0] So it's not going to be graded, but it's I think a great sanity check for you to see whether everything is in place for for homework one.
+[3252.0:3265.0] So as I say here in the last line, doing homework zero is really the best way of making sure that you set up correctly for later homeworks and the project and the exam.
+[3265.0:3283.0] We will also in this class will not only use Python proper kind of the core of Python, but we will also you will also use the entire environment of build around Python for data science.
+[3283.0:3307.0] And as I mentioned, you will use Jupiter notebooks, you will use sky kid learn that's the machine learning toolkit for Python, you will use heavily pandas, which is a very work for doing data analysis in a more convenient way and see born visualization library.
+[3307.0:3318.0] We will also do a bit of spark at the end of class, which is for massive scale class of computing.
+[3318.0:3327.0] Okay, so something that I will try to interspers in the class in every lecture is a little bit of of interaction.
+[3327.0:3340.0] So we'll from time to time do these little polls where you can vote. So let's try this now, you can either go to this web page or you can scan the QR code. I hope that works.
+[3340.0:3357.0] And what you see there is a is a little hole where I basically ask you about your prior experience with Python.
+[3357.0:3380.0] So we're just here.
+[3380.0:3404.0] Okay.
+[3404.0:3413.0] Okay, we'll give it a few more seconds.
+[3413.0:3415.0] Five more seconds.
+[3415.0:3422.0] Five, four, three, two, one.
+[3422.0:3425.0] Okay, I can show the results here.
+[3425.0:3432.0] So, most, a few people still think that this is about a snake.
+[3432.0:3435.0] Okay, this is about a programming language.
+[3435.0:3444.0] Most people have some experience in Python already.
+[3444.0:3447.0] Okay, some people have never programmed in Python.
+[3447.0:3451.0] So, here this is a maybe a bit freaky.
+[3451.0:3457.0] You can, you can talk to the team to see whether, whether you're up for the challenge.
+[3457.0:3463.0] And other people have various degrees of familiarity with Python.
+[3463.0:3465.0] If you're not a pro yet, don't worry.
+[3465.0:3469.0] I mean, part of the class is to improve your skills, right?
+[3469.0:3472.0] So, don't worry too much.
+[3472.0:3476.0] Good.
+[3476.0:3484.0] So, this was our first poll.
+[3484.0:3489.0] And so, as you can see, look, left, look, right.
+[3489.0:3490.0] This is a big operation.
+[3490.0:3496.0] So, we also have a big team to support you.
+[3496.0:3499.0] Nearly everyone on this slide.
+[3499.0:3501.0] So, this is a teaching assistant.
+[3501.0:3505.0] Nearly everyone on this slide has taken the class except for one person.
+[3505.0:3510.0] I have not taken the class before.
+[3510.0:3515.0] But we're here to help you, right?
+[3515.0:3519.0] So, let's work together on making this happen.
+[3519.0:3522.0] But we would also like you to help us.
+[3522.0:3524.0] So, the team also includes you.
+[3524.0:3526.0] So, please help each other on Ed.
+[3526.0:3533.0] For example, someone has a problem getting some library to work or getting there on a condo or whatever.
+[3533.0:3536.0] To set up and help them.
+[3536.0:3541.0] This will make it better for everyone.
+[3541.0:3544.0] And also, please participate actively in the classes.
+[3544.0:3549.0] And in the labs, don't hesitate to raise your hands.
+[3549.0:3556.0] If there is a question while I teach in the labs, even more, it will be very interactive.
+[3556.0:3558.0] And finally, give us your feedback.
+[3558.0:3561.0] Tell us what works, what doesn't work.
+[3561.0:3563.0] We take feedback seriously in the class.
+[3563.0:3567.0] We've already changed multiple things in response to feedback.
+[3567.0:3573.0] Every lecture, I will show you a link like this, which will lead you to a Google form.
+[3573.0:3583.0] And there you can, you can tell me what you liked, what you didn't like, what should we improve potentially in what way.
+[3583.0:3587.0] As I said, we've changed multiple things in response to such feedback.
+[3587.0:3594.0] It's not always implementable in the same year because often the feedback is about something that already happened in the class.
+[3594.0:3598.0] Should really see it as a multi-generational contract.
+[3598.0:3602.0] The class is better for you because previous people have given me feedback.
+[3602.0:3609.0] So please give me feedback so I can make the class better for future people.
+[3609.0:3615.0] Okay, so are there any questions about logistics at this point?
+[3615.0:3617.0] I've answered several during the break.
+[3617.0:3621.0] You can also, if it's a more specific point, you can come to me after the class also.
+[3621.0:3628.0] But if you have a question that might be of general interest, then don't hesitate to ask it now.
+[3628.0:3638.0] Yes.
+[3638.0:3646.0] That's a good point. Okay, so the question is, can we somehow facilitate group formation on Ed in the class forum.
+[3646.0:3651.0] We created a channel group formation where you can post.
+[3651.0:3656.0] I'm someone from this or that program looking for this or that many team members.
+[3656.0:3666.0] So definitely good question. Yeah, please use the class forum also for forming teams.
+[3666.0:3672.0] Okay, I don't see any other questions, but if something else comes up, don't hesitate to ask me later.
+[3672.0:3679.0] So in the remaining 28 minutes, let's dive into it.
+[3679.0:3683.0] Start a bit with the topic of data science, actually.
+[3683.0:3685.0] What is data science?
+[3685.0:3693.0] So 10 years ago, there was this article that claimed that data scientist is the sexiest job of the 21st century.
+[3693.0:3705.0] I don't know how that claim has head up in the last 10 years. You judge, but it raises the question, why should you do data science?
+[3705.0:3712.0] Now, well, because if you wait for too much longer, it might be too late.
+[3712.0:3719.0] So now is the time to become a data scientist. You made the right choice to come to this class.
+[3719.0:3728.0] Data science is a bit of a weird term, isn't it? Because shouldn't all science be based on data by definition?
+[3728.0:3734.0] So is data science just redundant? Shouldn't it just be called science?
+[3734.0:3741.0] So how is data science different from plain old science? And there in my view, there are several aspects to this.
+[3741.0:3747.0] One is that now we have much more data. So data volume has exploded.
+[3747.0:3757.0] This is a quote that feels a bit dusty, to be honest, by now, because it's by Eric Schmidt who was Google CEO at that point from 2010.
+[3757.0:3764.0] He said between the dawn of civilization in 2003, we only created five extra bytes of information.
+[3764.0:3771.0] How he would measure it? I have no clue, but I guess it's still a nice quote. We only created five extra bytes of information now.
+[3771.0:3781.0] And so now was 2010. We're creating that amount every two days. In the last 12 years, this has certainly sped up much, much more.
+[3781.0:3789.0] So the point is there is more and more data all the time and the rate at which data is produced is growing all the time.
+[3789.0:3797.0] So this is calling for plain old science doesn't cut it anymore. We need a new kind of science to deal with this.
+[3797.0:3809.0] Some scientists have always been collecting huge amounts of data. If you think about it astronomy, for example, there have this huge telescope sent there recording the sky all the time.
+[3809.0:3817.0] Or if you think of people over at CERN and Geneva, they collecting huge amounts of data from the colliders all the time.
+[3817.0:3826.0] But what's different now is that everyone in their grandmother has a lot of data, right? It's not only those key players anymore.
+[3826.0:3831.0] Here is the key player, but this is.
+[3831.0:3838.0] It's not restricted to those to those big companies having big data.
+[3838.0:3844.0] Let's think about Google for for example, what kind of data do they have? They have a lot of text.
+[3844.0:3851.0] They have the largest collection of web pages that they keep downloading, keep crawling all the time.
+[3851.0:3860.0] They have all your email basically that needs to be searchable. So tons of text, then they have a lot of network data.
+[3860.0:3869.0] There is the web graph for example, web pages that link to each other, which is very that link structure is important for ranking web pages in web search.
+[3869.0:3873.0] There was Google plus does anyone remember Google plus actually?
+[3873.0:3881.0] A few people. Yeah, this was Google's attempt at anyone remember Facebook.
+[3881.0:3887.0] You know, TikTok, I guess. So this is Google plus was Google's version of TikTok.
+[3887.0:3895.0] And they have knowledge graphs, which is basically structured representations of entities in the world.
+[3895.0:3903.0] They have tons of image data think of Google image search maps, logs such as search logs, server logs, GPS logs.
+[3903.0:3908.0] There's speech data when we talk to our phones all of that is data and much, much more.
+[3908.0:3915.0] So there's a huge variety of data. It's not only images like if you're an astronomer, you have images.
+[3915.0:3920.0] And that's what you work with for for the 30 years of your career.
+[3920.0:3931.0] The day data variety is massive. And even if you're one data scientist in one company, you might touch a dozen different data sources every day.
+[3931.0:3940.0] So with these changes, we need some sort of method to the madness in the scientific what I would call the scientific method 1.0.
+[3940.0:3952.0] And this is kind of science since the Renaissance until the 20th century. This was really focused on modeling the data here. The scientist has a hypothesis prior to analyzing the data.
+[3952.0:3962.0] And then you set up your statistical tests or your experiments and so on in order to ideally try to refute that hypothesis.
+[3962.0:3970.0] This is really kind of the scientific method 1.0 as you learn it in your introductory classes. Now it's a little bit different.
+[3970.0:3979.0] And with all this data around often we don't really know yet what the interesting questions even are before we've looked at the data.
+[3979.0:3986.0] So sometimes it feels a bit reverse a lot of scientists 1.0 would frown about this way of doing it.
+[3986.0:3994.0] How can you look at your data without coming in with a hypothesis. You're just going on a fishing expedition for results. But that's what it is.
+[3994.0:4003.0] If someone dumps a petabyte of data on you, there might be gems in there that you're not even aware of. You might not know what the data can tell you about the real world.
+[4003.0:4011.0] So you might so exploring the data becomes increasingly increasingly important.
+[4011.0:4026.0] So this is then this gives rise to a little bit of a different paradigm where we have a an entire cycle of data analysis where the scientific method 1.0 is more linear.
+[4026.0:4030.0] Right. You start at the beginning asking interesting question. You get the data.
+[4030.0:4039.0] Then you might not even explore the data, but you directly model the day and then you write up your results and you submitted to science or nature.
+[4039.0:4055.0] In in data science as it's done today with massive data sets, this is more like a like a cycle or think of it more like a fully connected graph where you might actually start with asking an interesting question.
+[4055.0:4073.0] Then you explore the data and you realize, oh, hold on. I didn't really ask the right question. There is something something else going on. So you might have to revisit that. Go back to asking the question or get a little bit of a or get a different data set than the one that you had originally connected collected.
+[4073.0:4101.0] So it's a more it's a more how to say ongoing a more impromptu process, if you will. And you can also think of data science as a meta science as science of how to do science with big data, how to optimally design this this cycle in order to be effective.
+[4101.0:4125.0] Here's a nice diagram that I like. Some key ingredients for data science are programming or hacking skills, math and statistical knowledge and also domain expertise about the the area in which your data was collected and in which you're asking the question that you're asking.
+[4125.0:4139.0] So you need all three of these in order to do effective data science. If you only have math and statistics knowledge and domain expertise, but you don't know how to program.
+[4139.0:4150.0] Then you're basically doing traditional science, right? Then you could also be Galileo. He didn't know how to program, but he was good at math and he had domain expertise.
+[4150.0:4160.0] If you are a good programmer and you know math and stats, but you're not a domain expert, then you're doing machine learning.
+[4160.0:4170.0] If you're a good programmer and you have domain expertise, but you don't know stats, then this is what's called the danger zone here, right?
+[4170.0:4182.0] Because yeah, sure, you might get some numbers, but what do they really mean? You don't know. And you really need to be in the in the bulls eye here in order to be a proper data scientist.
+[4182.0:4193.0] Some motivational quotes about data science, a data scientist is someone who can obtain, scrub, explore, model and interpret data, blending, hacking, statistics and machine learning data scientists.
+[4193.0:4202.0] Not only are adapted working with data, but appreciate data itself as a first class product. I think this is quite important data as a first class citizen.
+[4202.0:4212.0] This is a bit different from how data is treated in other disciplines, like let's say pure machine learning where people are more focused on building an algorithm.
+[4212.0:4221.0] And then the data comes in more as an afterthought. Now let's find some data set to validate our algorithm in data science. It's different.
+[4221.0:4236.0] You start from the data. The data is there is the is the primary object of study. And if you design algorithms, it's because you want to analyze that data, which is the first class citizen of your work.
+[4236.0:4246.0] Someone else said that data scientists, the person who is better at statistics than any software engineer and better at software engineering than any statistician.
+[4246.0:4263.0] I think this is a nice way of putting it to science is not only science is changed by data, but the whole world is there are important economical aspects of course about data people have said this is like a common place saying now data is the new oil.
+[4263.0:4291.0] We need to find it extracted refine it distributed and monetize it. There is although this is kind of beaten to death now the saying there is something true about it because both oil and data are hard to obtain and their precious, but you can't you kind of can drink oil right and you that same way you can't just eat data but both need to be refined into in the case of oil.
+[4291.0:4304.0] Plastic fuel medicine, then you can consume it in the case of data you have to turn it into insights and products only then the data is valuable.
+[4304.0:4329.0] Interestingly, more data often beats better algorithms. So in the history of computer science, the focus was often on getting the slickest smartest algorithms and now we've seen time and again that if you just throw more data at even simple algorithms, then this has an uncanny effectiveness.
+[4329.0:4342.0] So this has sometimes been called the unreasonable effectiveness of data. We see this very strongly now with these large language models who has heard of GPT 3 for example.
+[4342.0:4358.0] So these are these language models that basically are trained in a very simple way. They're trained to predict the next word of a piece of text right that's that's all that the model is trained to do predict the next word. How does this sentence continue.
+[4358.0:4379.0] But if you train such a model on hundreds of gigabytes or petabytes of data and you make the models large enough have enough twiddler will parameters, then these models basically basically become generalist AI models where all of a sudden they can do all these different things like ask the questions, solve math problems,
+[4379.0:4389.0] and then add up numbers, even explain jokes. So here it's really an example of the unreasonable effectiveness of data.
+[4389.0:4405.0] Data science is also becoming increasingly important to understand the societies that we live in. For example, the public perception is that politics in recent years has become less respectful, more negative and less fact based.
+[4405.0:4420.0] Certainly this is the impression about the United States, but we don't have to look so far also in Europe. We're getting that impression. I'm not sure where that nice picture from parliament is from, but I think it's a South American parliament.
+[4420.0:4440.0] Things on people have the impression that politics is getting nastier and nastier. For example, in in 2019 in the US, a survey found that 85% of Americans thought that news coverage about politics had become more negative.
+[4440.0:4458.0] And in my work, we asked the simple question and oh yeah, in particular people attribute it this to Donald Trump. So 55% thought that he changed the climate for the worse and only 24% thought he changed it for the better.
+[4458.0:4481.0] So we wanted to know in my lab whether these these are subjective impressions, right? People were asked here, do you think that political discourse has become more negative and we wanted to know whether the numbers speak the same, give the same conclusion.
+[4481.0:4503.0] We wanted to know whether these subjective impressions reflect the true state of US political discourse. If we look at what US politicians actually say, is it true that what they say has become more negative over the recent years and is the true that there was a abrupt change when Donald Trump entered the scene.
+[4503.0:4519.0] Ada will teach you the tools to answer such questions using data and I want to exemplify this by going through the syllabus in the next slides and then basically touching upon aspects of this question.
+[4519.0:4537.0] Okay, I want to show you how the tools that you learn in Ada can allow you to answer such questions with such societal questions with data. So what you have on this slide is again the syllabus. I copied this from from previous slides.
+[4537.0:4549.0] So this is what the topics that you will encounter in class handling data to answer this question about whether the tone of politics has become more negative.
+[4549.0:4565.0] We used a data set called quote bank, which is a data set of quarter billion quotes extracted from raw news text and automatically attribute it to the speakers who said the quotes.
+[4565.0:4583.0] This is a very noisy data set because it was produced by machine learning algorithm. So substantial work had to go into pre-processing that data such that was ready to be analyzed in order to answer that question whether the tone of politics has become more negative.
+[4583.0:4602.0] There was a student in my in my lab who did this project as a master's thesis and I would say that a half of his time that first half of his semester was spent on cleaning the data set, getting it in shape such that you could really be effective.
+[4602.0:4624.0] Visualizing the data is one of the best ways of understanding what's going on in there. This is basically the key result of that or this is basically the answer to that question has the tone of politics become more negative in one image.
+[4624.0:4640.0] What you see here on the x-axis is time running from 2009 to 2020 and on the y-axis you see a notion of negativity. It's the negative emotion score.
+[4640.0:4654.0] So we measure how negative is the language used by politicians in that month. Each data point is one month. So this time series shows, oh, I want to show you the background also.
+[4654.0:4671.0] The background blue versus red shows you the prevalence of Trump versus Obama in the data set. So the more blue the more Obama is being quoted by the news, the more red the more Trump is being quoted by the news.
+[4671.0:4694.0] So the red vertical line that's June 2015. This is when Donald Trump announced that he will become that he will run for president of the United States. So all of a sudden media attention really shifted from Obama to Trump Obama was kind of a lame duck at that point and really you see that how media attention.
+[4694.0:4708.0] Focus on Trump. There's many more Trump quotes now than there are Obama quotes and at the same time at the same time that Trump enters the scene. Also the negativity of language that's the black line.
+[4708.0:4723.0] Seems to go up right there seems to be some disruptive shift. So this image has a lot of information and it conveys it. I think in a very pungent way because you see how the red versus blue shift coincides with the uptick of the.
+[4723.0:4737.0] Of the black line. So in my opinion, quite a powerful picture. But visualization is of course only one very intuitive way of describing data. It doesn't allow you to.
+[4737.0:4762.0] It doesn't allow you to really quantify whether this is a real effect or is it something that's just could be explained by randomness in the data and so on for that we need to go further we need to do statistical tests and this is what we will touch upon when we talk about describing data is the effect real or could it have been produced by chance.
+[4762.0:4769.0] One way to quantify the significance here is via regression analysis.
+[4769.0:4786.0] So this for example in this case we model this is the same data as before just visualized in a.
+[4786.0:4808.0] This is the same data as here. But visualized without the black lines and so we hear set up a regression model in order to measure how big is the jump in June 2015 and if you do the regression model for free you get measures of statistical significance so regression analysis very powerful tool to really put.
+[4808.0:4819.0] Estimates of uncertainty on your findings so your results become more convincing that way observation studies as I said is the.
+[4819.0:4836.0] Here the question is to deal with data that was with found data data that wasn't collected precisely for the purposes that you have in mind this is the case for us right because we have this huge data set of quotes it wasn't collected in order to measure.
+[4836.0:4863.0] The language of politics has become more negative but it was collected anyways so then we want to ask questions such as what cost the observed increase in negativity was it really due to Donald Trump or could it be something else it just happened to be happened to have taken place at the same time as when Donald Trump entered the scene and that could really have explained it so these kinds of questions are covered under observation studies.
+[4863.0:4883.0] Machine learning played a very important role in this project because the quote bank data set was actually produced by machine learning algorithms and otherwise we couldn't have extracted a quarter billion of quotes by hand it would be impossible.
+[4883.0:4903.0] The data set is inherently a textual data set it's about quotes and the research question did political discourse become more negative is inherently a question about language that is about text and so the tools that we will encounter in the class on text data will come in very handy for this kind of question.
+[4903.0:4928.0] Network data didn't play a big role in this project but it could in a follow up for example you could ask who speaks about whom in what way then you're really talking about a network problem right because you have a graph of people talking to each other so to people would be connected if one of them mentions the other and then finally.
+[4928.0:4957.0] This project would not have been possible without processing massive data because those quarter billion quotes were extracted from 127 million news articles that was over a terabyte of raw text that couldn't have been done without being able to scale up to massive data sets and to do computations on a cluster and so what you will learn about spark and map reuse.
+[4957.0:4962.0] These will be the tools that allow you to do such massive data analysis.
+[4962.0:4972.0] Okay so if you want to learn more here is a link to the paper that really has all those results but now let me wrap up.
+[4972.0:4997.0] And just give you a few to do is for Friday for the first lab session so for Friday make sure that you sign up for it for the class forum and familiarize yourself with it a lot of important stuff will happen there if you're not on GitHub yet please sign up for GitHub you will need a GitHub handle by the time that you register your teams of four.
+[4997.0:5026.0] Speaking of that start looking for three teammates you may use the group formation category on that that's what I answered to the question from the gentleman before please check out Google collab and epf no to you're not obliged to use any of those but maybe you want to so check them out to see whether they will come in handy for you and please do check out tutorial zero in preparation for the lab session it might make it more.
+[5026.0:5046.0] So if you have a tech problem for example installing your your Python environment then it's better to catch that early on because then you can become prepared with your questions directed to the lab session and now maybe it's a bit early attending the morning but go enjoy yourselves and have a beer.
+[5056.0:5058.0] you

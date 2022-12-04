@@ -1,0 +1,390 @@
+~CS-401 Lecture 10 
+~2022-11-23T18:15:48.986+01:00
+~https://tube.switch.ch/videos/r3NaqdUnmL
+~CS-401 Applied data analysis - Fall 2022
+[0.0:2.0] you
+[60.0:73.0] of the past 50 years listed in this paper we're actually touching on five in eight hours so this is not so bad and for me this was a good sign that the curriculum is actually well adjusted to today's time.
+[76.0:80.0] Okay, so some announcements do we have any Americans in the room?
+[82.0:84.0] No Americans.
+[84.0:88.0] Canadians we have one coming okay, but you have different things giving I think right?
+[88.0:95.0] Yeah, okay, okay, well related happy Thanksgiving and to all the Americans that might watch this later happy Thanksgiving.
+[95.0:102.0] My I stone tool is being graded and actually today and feedback will be released next week.
+[102.0:119.0] Homework tool as you know is due on Friday not this Friday but Friday in one week and then this is also what we will focus on in the last sessions this Friday we'll have office hours on homework two.
+[119.0:128.0] Please as usual, free register your questions in the FAQ category on this will help us really cater optimally to what you want to know.
+[128.0:145.0] And then additionally we will have alumni of Ada who will give talks they took the class I think two years ago and they have since benched out into the real world and they will come back and give you reports from the
+[145.0:166.0] census basically what is it out what is it what is it like out there working as a data scientist which lessons taught in Ada are specifically important which ones should you forget about and so on so we'll have Roba and to Sina who will give to such short talks I think this is actually always one of my favorite parts of the lab sessions in the
+[166.0:183.0] international so please do come to that. Okay so today we will talk about how to handle text data why a double feature on text data that's because much more data is unstructured text if you think about the web the
+[183.0:204.0] data that Google collects massively that is mostly text data and then it's later transformed into something more structured. You think of social media that's a lot of text data online news and also the data sets that you are dealing with for your projects a lot of those are our
+[204.0:223.0] data or contain an important text component for example the CPU movie summaries that text the beer reviews that text Wikipedia has text and so on and there is one aspect that I'd also like to point out frequently you deal with data sets that actually seem very keen it's clean
+[223.0:234.0] up the text data sets but often those data sets will actually be right from original dirty text data sets as an example let me give you Google trends who has heard of Google trends.
+[234.0:248.0] I highly recommend it's a lot of fun to play around with this go to trends.google.com you can type any Google search query and it will give you a time series like the one that you see on the slide here which shows you over time how popular was this time.
+[248.0:277.0] How popular was this going query which can give you a lot of insights into it what people care about what times this things like a super crisp sharp data set right nothing nothing dirty about it but actually required a lot of text processing to make that data set because search queries are short texts right people type a few words into the search box so that text and to derive at these times years text processing had to happen what Google shows
+[277.0:298.0] you here is the time series for the concept gorilla so this is all the queries that were about gorillas not only the exact query gorillas but also the query gorilla in singular or big black around an eight or question or gorilla humans all those would be bunched together by Google and
+[298.0:312.0] aggregated under the concept gorilla and to see the popularity of that concept here in order to aggregate different search queries which are texts into these different concepts which is something more abstract
+[312.0:321.0] a lot of text passes in the back of the back of the so this is an example how clean data sets can derive from very accurate data.
+[321.0:343.0] Here is an outline of today's action we will look at we will start by looking at four typical tasks on text data document retrieval document task patient sentiment analysis on topic detection there are many more text analysis tasks but these are four that kind of nicely spare the space of what's out there.
+[343.0:355.0] We will then look at how to phrase these tasks as machine learning problems and we think about how to pre process the raw text data so we can fit that data to the machine learning algorithm.
+[355.0:370.0] And next lecture we will then and we will then point it to various materials more at the topics such as such as topic detection and work.
+[370.0:382.0] We will touch on topic detection today actually that I'll go deeper on how to use matrix factorization and an LDA and so on to to perform these tasks.
+[382.0:394.0] As usually in the sphere of data I will focus more on showing you what's out there I can't go into depth into all this into all these various topics because there's just too much out of there.
+[394.0:401.0] So we have a basic view for what's there and can orient you bit in the landscape so you can then later on.
+[401.0:414.0] Go deeper yourself there are classes that you prefer on material and it's not seeing that sort of NLP stands for information retrieval and other topics and those would be a perfect follow up to what I'm going to tell you.
+[414.0:426.0] So we start with those four typical tasks first one document retrieval I always describe these tasks in terms of input output behavior what are you given and what's the task that you're asked to do.
+[426.0:437.0] In document retrieval you're given a document collection also known as a corpus so this is just a set of documents and you're also given a query document.
+[437.0:459.0] The query document can be a short query stream think of of Google where it's just a few words but that's still a very short document and your task is to rank all documents in the document collection by similarity to the query such that the most the most similar documents are on top so this is basically can think of this as a pasted search engine.
+[459.0:477.0] This is an old problem although it's a core problem that solved by my web search engines today it's a much older problem if you think about keep it going to the library they have to fight the book they're looking for the books they're looking for among the millions of books that are passed that are out there.
+[477.0:489.0] So the problem of document retrieval is actually much older than computers but it's become particularly important now that we can support document retrieval with computation.
+[489.0:503.0] As I mentioned document retrieval is the core tasks on my web search engines like Google think of the 10 new links that Google shows you when you type a search query these are found via document retrieval.
+[503.0:515.0] So what I always do for these four tasks is I will ask you which of the methods that we've seen in Ada so far would you use to address this task document retrieval.
+[515.0:519.0] Throw some buzzwords at me.
+[525.0:529.0] Can yours neighbors okay that's great yes.
+[529.0:539.0] More of a practical I would actually I think this is exactly what I have here.
+[539.0:553.0] It's the most great for the greatest shot I think it's nearly the definition of can yours neighbors you have a document collection and you have a query and you try to find the most the 10 most say in the case of Google documents.
+[553.0:567.0] So carrying his neighbors is pretty much exactly what this is describing. So for this you need to define a distance function between documents and then given a query document queue which can be just a short search string.
+[567.0:573.0] Find the key documents with the smallest distance to the query queue.
+[573.0:584.0] So you set K equals 10 and you sort the this sort the documents the 10 documents by distance and make some links. You add ads then you basically have to.
+[584.0:588.0] Of course this is sweeping a lot of the details under the under the rug.
+[588.0:602.0] The which graph here really is to craft or learn the distance function between documents such that the documents are most similar according to your distance functions function are actually the ones that are most related to the search.
+[602.0:613.0] And then you must scale it to many billions of documents as well. So there are a lot of hard challenges, but in principle, this is the problem that's all by the Google search engine.
+[613.0:616.0] So next task document classification.
+[616.0:620.0] What are you given here? You are given a document.
+[620.0:634.0] So document is just a sequence of words and you're given a set of classes predetermined set of classes. These could be for example topics like news for technology, music romance.
+[634.0:643.0] And your task allows to decide to which one of the fixed set of classes the document input document belongs.
+[643.0:652.0] An example scenario would be to find to find all guys to who is in the same movie summary corpus.
+[652.0:661.0] So or you could have several types of movies and you want to for each movie script you want to classify which type of movie is this.
+[661.0:671.0] Again, which of methods that you've seen in the data so far, which you do with this footage.
+[671.0:677.0] Class education, it's nearly in the world.
+[677.0:681.0] What kind of machine learning techniques?
+[681.0:691.0] Random forest. Yes, that's the that's a good one. So more abstractly, this is a task of supervised learning where you are.
+[691.0:705.0] Or you could solve this with supervised learning where you obtain a large collection of documents and you then lay the each document in that collection with the class that it belongs to this manually or you can take it to the account sourcing to do this.
+[705.0:709.0] But done how you want to obtain these labels.
+[709.0:712.0] And then you represent each document as a feature vector.
+[712.0:724.0] We look about into how to do that later on in the class that for now assume that you somehow represent document as a feature vector and then you can make supervised classifier based on the label documents.
+[724.0:731.0] And for that you could use random forest or you could use can use neighbors again.
+[731.0:737.0] You could use logistic question decision choose position fees anything with learning you want to get a bit more state of art.
+[737.0:744.0] And you could use your networks and so on. But really all of these are supervised learning methods.
+[744.0:750.0] Next task sentiment analysis here you are again like in document classification given a document.
+[750.0:766.0] This could be for example a product review on Amazon or beer review on rate here or your advocate and your task is to predict or to extract the sentiment score that caps that expressed in the in the document.
+[766.0:773.0] That captures how positive or negative in terms of express feeling the document is.
+[773.0:781.0] In example, this can be a few you might want to infer what people think about a product from just the texture reviews.
+[781.0:789.0] Think of Amazon or those real a beer rating websites that I mentioned or really eBay and anything that has ratings.
+[789.0:796.0] And of course a lot of these websites have explicit ratings for you have these stars.
+[796.0:805.0] But you also have websites where you don't have explicit ratings and just have comments and you might want to map those text those comments only into a numerical ratings.
+[805.0:807.0] And then you would want to send them to the analysis.
+[807.0:821.0] Another example is historical opinion analysis imagine that you want to capture how people's attitude has changed towards certain politicians over time.
+[821.0:835.0] If you have news articles that's bad in say 20 years and you want to you want to see how has people's attitude towards anger and a vertical change over the last 20 years.
+[835.0:842.0] How would you solve the sentiment analysis task with the tools that you've seen in Ada so far.
+[842.0:851.0] Right.
+[851.0:866.0] Right.
+[866.0:881.0] Imagine you have five classes one star two stars three stars four stars five stars and now you want to determine which document in which of these five classes it is that would be a test.
+[881.0:896.0] The stars are in a meaningful order one two three four five they're not five classes like Germany France at the same and so on which are more categorical the five stars would actually be in a meaningful order order.
+[896.0:904.0] So you could also treat this as a regression task where given the document you're trying to pick the number between one and five that captures the incentive.
+[904.0:916.0] But again the way you would proceed is again the same as a document classification. This is supervised learning you would obtain a document set you would label it with ground truth out of yourself or with crowdsourcing.
+[916.0:928.0] Or maybe the document that you collect already have labels from from the web and you can then train models that allow you to do a rational first.
+[928.0:939.0] So just a question such as came your statement is logistic regression if you treat it as a location task linear regression between as a regression task and so on.
+[939.0:950.0] The last of our four tasks is topic to catch you here you are given an unlabeled document collection so an old word unlabeled here.
+[950.0:958.0] I just give you a collection of documents and you have no notion of what the labels are sheet.
+[958.0:966.0] This is different from document classification going back a few slides here where we were also given a set of classes in topic detection.
+[966.0:979.0] You are not given this set of classes but you're just given the set of documents the raw text and your task now is to fold first determine a set of prevalent topics in documents.
+[979.0:990.0] So your first time to come up with those classes based on the data and second you should determine for each document which of those topics it belongs.
+[990.0:998.0] Here are a few examples scenarios imagine that you're working with Twitter social media and your goal is to detect trending topics.
+[998.0:1012.0] You don't know what this universe of topics is new topics might emerge as the world changes and you're just trying to elicit those trending topics by looking at the text and on.
+[1012.0:1025.0] Another example imagine that you have a data set of news, political news and you want to detect distinct new points on a given on a given issue.
+[1025.0:1032.0] So let's say you have news articles about the relationship and you want to see what are the different distinct new points about immigration.
+[1032.0:1037.0] So that also would be could be cast as a task of topic detection.
+[1037.0:1046.0] And finally topic detection can also be very useful for exploratory analysis for the exploratory analysis of large thoughtful collections.
+[1046.0:1049.0] Imagine a dump on you a collection of 10 million documents.
+[1049.0:1055.0] There's just no way we could read all of those know what to ever read all of those documents.
+[1055.0:1060.0] So you want to somehow stand for documents in order to get a sense of what's in that collection.
+[1060.0:1062.0] What's isn't there?
+[1062.0:1068.0] You could of course just simply randomly but that wouldn't necessarily give you good coverage of everything that's out here.
+[1068.0:1077.0] So a more smarter approach would be to detect topics in the collection and then sample for each of the topics.
+[1077.0:1089.0] If you represent the examples and papers in this way you would have high likelihood of good coverage of all the topics that are needed in the collection.
+[1089.0:1094.0] Again with the tools that you we we have encountered in the data.
+[1094.0:1100.0] How would you solve the topic detection task?
+[1100.0:1107.0] Who very good clustering and unsupervised learning the words that gave it away is unlabeled.
+[1107.0:1113.0] So you would again represent your documents as future actors.
+[1113.0:1116.0] So this is the same as in the supervised case.
+[1116.0:1118.0] Plenty don't have labels now for you.
+[1118.0:1121.0] You don't even know what the set of labels would be.
+[1121.0:1125.0] Even if you wanted to manually relate the documents you wouldn't know what what they were set.
+[1125.0:1136.0] Instead you can use unsupervised learning such as clustering. For example, you could run pyruxically or before the assignment algorithms that we've seen last lecture.
+[1136.0:1140.0] And this would basically then give you the clusters and stanchoid.
+[1140.0:1152.0] So if you then get a certain number of clusters you could take the centroid of those clusters and read those documents that would give you a sense of what the clusters are actually about.
+[1152.0:1166.0] So in principle clustering is a good fit for this but in practice other methods are usually better suited for topic detection methods based on matrix factorization.
+[1166.0:1169.0] And we look at those next lecture.
+[1169.0:1177.0] So this would be things like single value decomposition, latent theory, K analysis and so on topic one.
+[1177.0:1185.0] So I defer this topic to the next lecture, but in principle as I said clustering is a final approach to do this as well.
+[1185.0:1193.0] Okay, so all these methods that we've discussed now in the context of these four typical text analysis tasks.
+[1193.0:1202.0] And for that matter pretty much all machine learning methods work with feature vectors where you represent the data point as a numerical vector.
+[1202.0:1213.0] This was the case for documents, pre-read document classification, sent analysis topic detection and is the case for nearly all other text analysis and machine learning.
+[1213.0:1216.0] It's not tasks in general.
+[1216.0:1222.0] But text is not immediately a feature vector.
+[1222.0:1240.0] So it doesn't really fit immediately kind of the API of machine learning algorithms. Why is that? Because text can can have variable links where as features vectors have to have a fixed length right to have to predetermine the length of the vector.
+[1240.0:1249.0] And then that's what you deal with where it has variable length. So that's point one wise not immediately a good fit.
+[1249.0:1262.0] The second thing is that even if you took a text and you you take only text that have a fixed length, let's say you only take preets that have exactly 280 characters.
+[1262.0:1280.0] And still the positions that you could treat that as a vector basically right where now you have a vector of 280 entries one per character and now you can have 256 possible values for each character you can represent with with the number.
+[1280.0:1292.0] But this is still somehow wouldn't really make sense because that would that would assume that each position in the tweet has like really an intrinsic meaning.
+[1292.0:1302.0] But that's not really the case right because I can take a word and shift it one back by adding like let's say a space before the word and all of a sudden I shifted the positions of everything.
+[1302.0:1319.0] So that doesn't really it doesn't seem seem to it doesn't seem to fit. So how can we overcome this dismiss actually what raw text looks like and what we need in terms of feature vectors.
+[1319.0:1332.0] And so for this we will kind of the protagonist of our lecture to solve this problem will be the back of words which I introduced on the next slide.
+[1332.0:1338.0] But I want to anticipate right here that although you get a lot of mileage out of back words.
+[1338.0:1352.0] The more recent more state of the art approach is to not take a fixed mapping between text and fixed length vectors but actually to learn that method between text and fixed length vectors to hear the buzzword would be text in that.
+[1352.0:1356.0] This is what all these methods like word to back.
+[1356.0:1370.0] GPT3 and everything that's about basically large language law. But in data we will actually focus on the first out of this we will focus on the tradition better back words.
+[1370.0:1385.0] And I leave it up to you to dive in either with further class this over by reading up to set with these more modern methods the point being that if you don't understand the traditional better methods then you shouldn't even touch.
+[1385.0:1390.0] The more advanced this. So bags of words.
+[1390.0:1404.0] As I said these are the protagonists of today's lecture and I'm talking about actually the back not a ton when I speak off the protagonist but anyways this is a palm mixture from C.
+[1404.0:1412.0] In their computer science building to have this nice piece of art where we have an actually back upwards.
+[1412.0:1419.0] What do I mean by back upwards when I say back I really see this as a cinnamon for my type set.
+[1419.0:1427.0] And what do I mean by my type set. My type is like a set in the sense that we don't care about the order of elements.
+[1427.0:1440.0] But we do care about the multiplicity of elements. Okay. In a standard set the set that has when I when I wrap a comma a into a set it would be the same as the set that just contains a.
+[1440.0:1446.0] In a read in a non-standard set we don't care about multiplicity. And we don't care about word order.
+[1446.0:1451.0] And in my type set we still don't care about where order but we do care about multiplicity of elements.
+[1451.0:1468.0] Here's an example. If you have the document what you see is what you get this would map to the bag words where we have get once is once see once what twice and you twice.
+[1468.0:1473.0] Okay. So it's like a set but we originally have these counts.
+[1473.0:1482.0] And see how the word orders destroyed I happen to order the words alphabetically but really you could order them in any way you want and would be the same.
+[1482.0:1484.0] My type set.
+[1484.0:1491.0] And our my type set is not fixed length right but for machine learning algorithms which is pretty neat of fixed length better.
+[1491.0:1500.0] So how do we go from bags of words from my to set to fixed length representations is by creating a very long vector.
+[1500.0:1505.0] We make the vector as long as we have unique words in the vocabulary.
+[1505.0:1514.0] And then we have zeros everywhere except for those entries that correspond to words that are contained in the document.
+[1514.0:1524.0] And there we store so basically every entry we store how often does the respective word appear in the input document.
+[1524.0:1532.0] I give an example here at the bottom where you would have as many entries in this document as you have words in vocabulary.
+[1532.0:1543.0] So this could be tens of thousands or hundreds of thousands so very high dimensional and you would have most zeros and you would have just a you have a one at the position for get.
+[1543.0:1555.0] You would have a one at position for is a one at position for see to at the position for what and another tool at the position for you.
+[1555.0:1565.0] And now we have our fixed length feature vector that represents the document what you see is what you get.
+[1565.0:1573.0] As mentioned that these documents that these vectors are very far that means they contain most zeros.
+[1573.0:1575.0] There are two reasons for this. There's an obvious reason.
+[1575.0:1583.0] We have maybe hundreds of thousands of words in the vocabulary but most documents have many many fewer words than this.
+[1583.0:1587.0] So just by a simple counting argument most entries must be zero.
+[1587.0:1600.0] Okay so that's true but there is a less trivial reason why why document vectors are even more far and that is what's called ZipSlaw.
+[1600.0:1605.0] ZipSlaw quantifies how the frequency of words is distributed.
+[1605.0:1614.0] So basically if you take all unique words you can count for each word how frequently does it appear in let's say in a large text code.
+[1614.0:1619.0] So how often does it appear often does that work here in the English language.
+[1619.0:1635.0] And if you plot this you will see something like this on the next axis you have word rank that is on the left on the far left you have the words that are most frequent in the English language and as you move to the right.
+[1635.0:1646.0] This would actually continue for a long for hundreds of thousands of entries you would have the frequency of of the word at frequency rank X at position X.
+[1646.0:1662.0] Okay so most frequent words second most frequent most frequent word is and then these are time this data set Roman junior and the next one is a second most people were the I third most frequent greatest tool for a and so on.
+[1662.0:1670.0] So what do we have on the why exist here that's how frequently does this work occur in our document collection.
+[1670.0:1681.0] In this case our document collection is really just one document Roman Juliet but you could do the same thing over a larger presented set represent in the English language or any language that you want.
+[1681.0:1695.0] And what you see empirically is that the frequency the probability so if you randomly draw a word from Roman Juliet and that is and you now look at the probability.
+[1695.0:1704.0] So you want to look at the probability of each word which is proportional to the value to the number of conferences which is on the y axis here.
+[1704.0:1715.0] And then you would observe that this is directly proportional to one over the rank of that word so the second most frequent word is half as frequent as the most frequent word.
+[1715.0:1727.0] The third most frequent word is that third as frequent as the most frequent word the fourth most frequent word is quarter as frequent as the most frequent word and so on.
+[1727.0:1743.0] So let me ask you a question on what axis would you need to draw this plot in order to make it look like a straight line.
+[1743.0:1758.0] And options we have is log x, linear one linear x log y log x log y square x linear y also on partial combinations like this.
+[1773.0:1798.0] Okay, let's see 10 more seconds.
+[1798.0:1806.0] Okay, let's see.
+[1806.0:1829.0] One.
+[1829.0:1849.0] So the true answer is actually option C because this is a power you can write this as I to the minus one.
+[1849.0:1859.0] So this is an interview case. So the probability of the world at rank x is x is proportional to x for the minus one.
+[1859.0:1872.0] So that's a that's how long it should take logarithmic on both sides what do you get you get minus the you get the logarithmic probability is minus all right.
+[1872.0:1885.0] So if you do a sorry is minus log i so the two logarithmic log log x and log y are in a linear relationship right.
+[1885.0:1892.0] So that means if you plot this on logarithmic axis then you get a straight line that just goes down like this.
+[1892.0:1902.0] Okay, so it's one of the fundamental things I try to teach you in data when to use log log plots heavy tape distribution.
+[1902.0:1906.0] So if you have internalized it and a lot of you seem to have not internalized it.
+[1906.0:1917.0] I suggest go back to the lectures from the beginning and revise the material about heavy tape distribution.
+[1917.0:1925.0] Okay, so so far what we have is these bad words vectors which is one vector per document.
+[1925.0:1934.0] Now what we do is we combine these vectors into a matrix by treating each vector as a role and just stacking them on top of each other.
+[1934.0:1945.0] So we have in this that words matrix we have one row per document and we have one column per the thing word in the vocabulary.
+[1945.0:1961.0] Generally this matrix is huge thing as an example let's look at Wikipedia there we have six million roughly English Wikipedia has about six million articles and we have about two million unique words in the vocabulary.
+[1961.0:1976.0] So this would give us 12 million entries six million times two million is 12 trillion that would you couldn't represent that matrix if you just store it in a as is just store it in all the numbers are the correct.
+[1976.0:1992.0] So we have three million entries instead what you can do is use a farce matrix form where you don't store the zero specific you just store these triples that give you an x position and y position in the matrix and the value that's there in the matrix.
+[1992.0:1999.0] So that would be the document index word index and then the count how often does that word occur in that document.
+[1999.0:2019.0] And if you do that then you get massive improvements in terms of storage of course you now additionally have to store the indices which you haven't had before when you store the matrix directly because everything you had in the fixed spot you have to store those indices extra but that is way less than the zeros that you now don't have to store.
+[2019.0:2039.0] So let's go back to the Wikipedia example if we assume 2000 words for article on average which is the roughly the empirical average then you end up with 10 billion non zero entries so compare that to 12 trillion entries if you also store the zeros.
+[2039.0:2050.0] So this is a factor of 1000 and 10 billion non zero entries you can actually fit into in a in a pretty standard machine.
+[2050.0:2068.0] So with this bag words matrix representation you're now ready to use any of the standard machine learning algorithms or are you really in theory yes you you kind of already fit the API of those machines are not everything stay required a.
+[2068.0:2094.0] Design matrix the matrix that contains your data points as as well as I'm practice what you get is the classical garbage in garbage out if the way you represent documents in your matrix isn't isn't well suited for the task you try to solve then your algorithm would have a hard time solving that task.
+[2094.0:2122.0] So you need to be very careful when mapping lot text to bag of words to bag words matrices some issues that come up is how to do character encoding how to do language identification how to do tokenization compensation basically how to chalk document into constituent words how to do stop ordering will how to do words normalization and so on if you don't know what these things are don't worry we'll go through the rest of the lecture.
+[2122.0:2140.0] The point is that if you would tweak the matrix a bit so if you process the input and then you tweak the matrix a bit that can be too much better that's important without changing the machine on the line with just.
+[2140.0:2169.0] Processing the input pre processing the input in the right way that gives you a lot of knowledge so what I do now is I open my data tricks for data words and I will basically sacrifice myself to tell you about all the dirty little tricks that many don't even consider worth talking about many people with just jump straight to the machine learning details and not talk about how to actually process the input to make it fit for the machine learning that rules.
+[2169.0:2180.0] So we will look at these dirty little tricks and these tricks will give you a lot of knowledge when you do text processing we start with character encoding.
+[2180.0:2189.0] What is a character encoding character encoding specifies the mapping from abstract characters to actually fight set to explore in a computer.
+[2189.0:2202.0] A character is something abstract right is namely something mathematical or philosophical the character a or b or c it's not immediately something that you would know how to store on the computer.
+[2202.0:2222.0] You need a mapping from this abstract concept of a character to a sequence of zeros and ones that you can store inside the computer and that mapping from abstract characters to binary numbers to numbers that's what the character encoding specifies.
+[2222.0:2240.0] All school character encodings are asked to or let in one so here you have 256 possible characters so every character is represented by one bite so it's a bit to the power of eight that's 256 so you have 256 possible.
+[2240.0:2258.0] So here's one bite is one character and the other one one character is one bite.
+[2258.0:2278.0] This doesn't this is not enough for today because there's more than just asked already if you look in a Latin character context are many more characters like things with um now with accents and so on and then you look at other languages.
+[2278.0:2292.0] I was a Chinese character so those you cannot so with an effort of 256 so the new school is unique code where you have these character encodings like you to F a to F stands for unique code transformation format.
+[2292.0:2306.0] You can add you can add 16 you can add 32 each of those specifies its own mapping from abstract characters to bytes that you can actually store on a computer.
+[2306.0:2331.0] Now when you read text from a file then you need to read it with the same encoding with which was written to file not something was written to to this as you TF8 and you read it as asked you then you will get garbage so you need to know in which format the data was stored such that you can read it correctly.
+[2331.0:2359.0] This doesn't usually matter if your data is asked you only because asked you as a subset of of those unique code encodings but as soon as you have non English text and you have these characters with accents or you even have non Latin letters then you're in for trouble if you don't need with the same encoding with which the data was written.
+[2359.0:2378.0] And conversion means when you write data to file yourself you should be exactly where which encoding you are using when you write the data so you I recommend to always use I will you to 8 or you to you to 16 and you should hard code the output format.
+[2378.0:2394.0] If you don't do this then your program will read some environment and it will use that encoding but if that is said to a weird value on the machine that you're using then that things can happen on a given anecdotes of that.
+[2394.0:2410.0] Here you have an example of how you can do this Python so the file is specifically opened with the UK of 8 territory coding and then it's written also with that same encoding and then everything is fine.
+[2410.0:2417.0] If you don't have a notification you then need to write down this file is stored in the tf8.
+[2417.0:2429.0] If you don't do this the future staff will be very angry at you. I think in order so even worse someone else might be very angry at you in the future when I was a PhD student.
+[2429.0:2442.0] And Stanford I worked with this large data set called spinner which is a document collection of many billions of documents and so this data has been collected by just we had a.
+[2442.0:2450.0] I listened to some sort of fire hose and the data came through from some aggregation service that just collected news online.
+[2450.0:2467.0] We downloaded that data and stored many gigabytes per day on this over years and the person who managed that project before I joined it didn't know or didn't care about character encoding so given specify the character encoding so.
+[2467.0:2491.0] And so that was collected over many years the characters default character encoding on the machine actually changed over those years so the data then became this big mess at some point it was stored on this last hit at some points it was certainly left it one at other points it was stored in UTS 8 and it wasn't documents anywhere which format it was and it was impossible to know what's worth.
+[2491.0:2511.0] And that person case folded on text that means they turned everything into lowercase letters which is an absolute stupid thing you should never do that because it doesn't say you any days right you're just throwing out information without gaining anything but that person did it and that change that maybe even less reproducible that made those.
+[2511.0:2540.0] The starblings even less reproducible because everything was turned to lowercase so more information was thrown out and it took me probably weeks you can see if you click on example later you will see my documentation from back in the day I call this kind of archaeology data archaeology because I have to reverse engineer from reading all these charts what really was going on took me weeks and I was basically it was impossible to fix this completely.
+[2540.0:2553.0] So I got very angry at that person and other people might be angry at you and this other person might be the future self so always choose the right character encoding and hard coding.
+[2553.0:2569.0] Okay so next thing language identification. Typically you're interested in text from only a single language not always sometimes we want to talk about language analysis but often you're interested in text from a single language let's say English.
+[2569.0:2589.0] But if you work with text from the web let's say Twitter or Wikipedia that text is my telling it's not just in English so what you want to do is you want to fill it down as a very first step in the pipeline you want to fill it down that text to only those documents that are in the language that you're interested in.
+[2589.0:2614.0] Ideally there's a language code specified somewhere in the document in an HTML document this could be in the header in if you download it Twitter day and the API this could be a field in the JSON document ideally there would be a language code telling which language was this but has not always the case if you go to the wild web and you download data from the web that often you will not have any.
+[2614.0:2630.0] Any specification of the language and what's worth some documents or many of them actually might contain several languages and then you would have to do this language identification at a finer grain level let's say at the paragraph or at the sentence level.
+[2630.0:2638.0] Luckily it's not such a huge problem because there are good libraries for doing this you just have to put in the computation to do it.
+[2638.0:2667.0] Those libraries that allow you to to identify the language of a text typically are based on letter tri-grams what's a tri-gram a tri-gram is a sequence of three subsequent letters what these methods usually do is they break the text into all these sequences of three letters and they use those in the count those tri-grams and they use that as a feature vector for machine learning algorithm for a classifier
+[2667.0:2676.0] that then classifies which out of a set of a few hundred languages does this text from.
+[2676.0:2696.0] As you can see that this is actually quite straightforward we can clear a little guessing game you can tell me for each of these sequences of three letters which language this is EAU that's the home game this is what language.
+[2696.0:2716.0] I would say French go back go skip eight I go to your French cast it's I would say you're especially since you're Canadian then a GHI what is that I'm sure that a lot of people would know it in the room Italian exactly I'm J S
+[2716.0:2745.0] dot right STH German then we have E I and this sharp S actually the single letter what suffice to identify this as German and then Z Zia A to the O what is that which is any Brazilian in the room sorry no Argentinians that was asking Argentina had the bad things still story poor like 2014 I guess yeah
+[2745.0:2752.0] I'm sure that's not the right one. Okay so I'm obviously all of this is much harder if you messed up the character.
+[2752.0:2764.0] If you didn't do this right then all these characters that have the necessary information or most of the information about language identification would be gone they wouldn't be
+[2764.0:2781.0] much harder task otherwise if the character in calling right then language identification pretty much works perfectly except for some methodological cases like Danish and Norwegian are really hard to pull apart but other than that it's pretty much a solid task.
+[2781.0:2791.0] Okay so we'll take a break here and we come back at 915.
+[2791.0:2794.0] So so far we talked about two.
+[2794.0:2819.0] Seat processing steps one is a character encoding second language identification at next we will talk about tokenization what is tokenization is the process of mapping a character strings sequence of characters into a sequence of words and the tokens you really can think of that's another word for work.
+[2819.0:2846.0] So token is the word it's actually a bit more than word this we'll see in the next example if you have the sentence hello explanation for how are you extra question mark then you would talk what a tokenize this is hello explanation mark how are you question mark so the punctuation signs would also be tokens or those there's strictly not words.
+[2846.0:2871.0] It's tempting to do this yourself by just splitting your string let's say at white spaces and at punctuation marks but this is it's this simply it's actually harder than you think because there are many corner cases so for example if you have the sentence that document hello Mr. President how are you.
+[2871.0:2890.0] Then although there is a full stop period after MR Mr. you would want to keep those together this is not the same full stop that is that would end the sentence which is treated as its own token this one is really part of the abbreviation Mr.
+[2890.0:2901.0] as opposed to the comma and the exclamation point which already their own punctuation marks and should just be their own tokens.
+[2901.0:2930.0] The question mark and exclamation mark at the end part because this is a meaningful unit together so called in terro ban and also the slightly you would not want to rip that apart to separate punctuation marks so if you try to do all of this yourself you will all of a sudden five you said with a lot of complexity and it will get complicated quite fast so instead don't do it yourself but use standard libraries for doing this using Python then there's a spot.
+[2930.0:2938.0] The space and a decay using Java then there's a Stanford core and a P library and so on.
+[2938.0:2950.0] These are rule based algorithms they are deterministic and they're pretty much as fast as if you didn't just start with the regular expression so definitely not a problem you.
+[2950.0:2965.0] Why is tokenization important it's important because it is required in order to construct your bag of words matrix where you are counting words right so first you need to know what the words are that's what tokenization is.
+[2965.0:2992.0] Strict is begin you would need a separate tokenizer for every language because different language have slightly different conventions for example in Swedish St Peter is abbreviated abbreviated not like in English with ST period but with S colon T so if you push this to an English tokenizer you would get for S colon T you would get three tokens.
+[2992.0:3003.0] So theoretically this is not the right thing to do but in practice I find the English tokenizer to often be good enough for other languages that use Latin characters.
+[3003.0:3021.0] It's very different if you look at some languages that would not use Latin characters it's straight forward for let's say Cyrillic alphabet says for aesthetic languages in general but if you have something a pictographic like Chinese then it's actually really hard to do tokenization because there are no spaces in the language.
+[3021.0:3042.0] There are no spaces to speak words sometimes several characters are for together for the same word but there's no there's no space so tokenization is actually proper research problem in Chinese whereas it's a solve problem for languages of English.
+[3042.0:3062.0] It's also not super straight forward for some languages that use Latin characters for example, a negative language German where we kind of do the right thing we wrote we write one word as one word like the word don't out of shipbox captain means Daniel steam ship.
+[3062.0:3082.0] This is really one mouth phrase so I would argue that it should be one word but it creates these beats of words and this makes this increases the sparsity basically of the language right because in English you were count all of you separately don't out of shipbox captain in a bag of words.
+[3082.0:3107.0] In Germany we have one single one long word which might appear on the single time record this so that makes things harder it's not actually so obvious so some methods can tokenize these long words in shorter words in languages like German but it's not even so clear how you should perfectly do it for example ship the word ship thought which means kind of the act of navigating a ship.
+[3107.0:3114.0] I should not be in step together or separately I should that be tokenized or not so obvious.
+[3114.0:3136.0] Okay so next we processing step stop words removing I showed you a small part into motivate to give you more background about this slide remember Zipz law was there can flash it again quickly here.
+[3136.0:3165.0] There you go Zipz law was basically quantified how the frequency of word drops and it drops drops so the point now let me get go back to this slide this means that there are few small words like the un and on that really carry little information for most tasks but they're so frequent.
+[3165.0:3177.0] And then they would dominate all your counts. So they would drown out the information that is contained in the real content words.
+[3177.0:3188.0] And so oftentimes you want to remove stop words as a pre-processing step remove them from the set of features that you consider.
+[3188.0:3197.0] There is no fixed stop word list is not like there's not something like a list that's best for each word whether it's a stop word or not that really depends on the context.
+[3197.0:3207.0] So but you can still find many stop word lists online but you need to be careful right because what the right stop word list is depends on the task that you're trying to solve.
+[3207.0:3231.0] You can also make your own stop word list a good juristic that I like is to consider a stop words those words that appear in at least a certain fraction of all documents let's say you say all words that appear in least one percent of all documents those are considered stop words or five percent of all documents but of course it's then hard how do you determine the right.
+[3231.0:3248.0] The right value of this parameter is cut off from it and the dish should be you should be aware that sometimes stop word removal really hurts sometimes the stop words are the words carry the most important information about about certain tasks.
+[3248.0:3272.0] So if your task is for example author identification so you have a given a document that you want to determine who wrote it then it turns out that the most useful information is in those stop words because this is some sort of linguistic fingerprint that we have a very hard time to change I write in a certain way I use certain.
+[3272.0:3300.0] Certain pronouns and so on with a certain with a signal like maybe the word certain which I just said many times that could be a signature of mine and so it would give me away and certain is not a stop word but for stop words this is particularly hard to turn off imagine that I wanted to impersonate someone else then I could write about so I could write text about origami for example.
+[3300.0:3318.0] And then I could impersonate the gentleman in the dark red shirt was not paying attention right now and so I could topic wise impersonation quite well but I would have a hard time faking his signature of stop words.
+[3318.0:3347.0] And the same thing about exclamation points I have some colleagues if you if you delete all words you replace them by like blank and you just show me the punctuation marks I could tell you who that person was you know some person people would never use a semicolon and some always never never use a single exclamation point but we always in a row or the way they use smiley you know some some use the big D some use the thing with the mind is some without this cares a lot of time.
+[3347.0:3354.0] Now I just cares a lot of information about this secret so if this is your task something like author identification or psychological modeling.
+[3354.0:3375.0] Then you do not want to throw up the stop words so the message here would be to not throw out the baby with the bathwater this is not the baby this is a Jamie Penny Baker hero this great book which I can highly recommend to everyone this secret life of pronouns what are words say about us and this is basically.
+[3375.0:3393.0] I am a journey by analyzing stop words and small words in order to shed open a door into people's psyche of doing these psychologists how can we do psychology by analyzing the text that people want.
+[3393.0:3414.0] So more steps in the pre processing pipeline word normalization I touched on this one before case for me I mentioned this in the context of this guy who processed the spin or corpus messed up the character encoding he also did case for you where he made everything lower kids.
+[3414.0:3436.0] Let me give an example if you have the document I love yams yams are yummy then the word yams appears twice once with capital Y once the small Y question should those really be good for those really be considered different words you could argue that is really just a orthographic convention that at the beginning of a sentence we capitalize words but doesn't really change the semantics of the sentence.
+[3436.0:3446.0] If I wrote more so I can hear or on social media as a text message and I might just have to expect the second yams small as well and then change any of the.
+[3446.0:3465.0] So this makes it tempting to just make everything lower case which is the app of case for me but of course there's no free lunches to do that then you destroy other things for example if you have the sentence I rather have an apple then an apple if I say this then you don't really know what this means but it can't be the
+[3465.0:3478.0] application you know that the first time I'm talking about group in the second time I'm talking about computer so if you do case for you you'll delete this information to destroy.
+[3478.0:3494.0] So one way would be to one way to prevent this would be to hand code exceptions but that is again that you can never win basically in the long run so in practice especially when you have large data sets my recommendation would be to not.
+[3494.0:3504.0] So I'm not talking about the word.
+[3504.0:3523.0] Usually this because in the worst case this doubles your vocabulary which is not so bad you know maybe a bit more because you might have all caps words and so but it's not a huge overhead but it does if you do case for you throw out potentially important information.
+[3523.0:3538.0] So another kind of word normalization method is called stemming which is more sophisticated than just case for me.
+[3538.0:3548.0] Stemming maps different forms of the same word to the same normalized form by usually by stripping this affixes suffixes.
+[3548.0:3565.0] So if you have the words English words walking walks walked then stemming would map all of this to the stem walk or if you had the words business busy stemming would map them both to the word busy.
+[3565.0:3583.0] This is typically done on what I call a hacky heuristic way the most widely used them are the Porter stemmer you can see a link there stemming has both like case folding stemming has both advantages and disadvantages what the big advantages it decreases.
+[3583.0:3605.0] So we have a lot of our city because you of course decrease vocabulary size with this right if you look at the walking example here then whereas we had three forms before we have only one afterwards so this reduces the size of our vocabulary this is good for downstream machine learning.
+[3605.0:3630.0] So on the side it also discards information let's go back to the business busy example business and busy are very different words right technically and logically business comes from busy is the state of being busy but the word the way the word business is used is very different from the state of being busy.
+[3630.0:3643.0] So we need to be busy less than we would pronounce differently and the right to the stomach with a why instead of a mind so it would probably be a bad idea to treat business and busy as forms of the same word.
+[3643.0:3666.0] Another example if you look at the word operating versus operate the word operating has that makes much more like the document is about computer science because of the collocation operating system then if you have the word operate which is which also appears in many other contexts or more diverse than the word operating.
+[3666.0:3693.0] So as a bottom line in English especially when you have a large data set I would again recommend not to spamming but it might be useful in morphological original languages such as German we saw an example before also languages like finished or African languages about to end so for finishes you use the link this page will show you all the.
+[3693.0:3711.0] 2253 forms of the word count which means shop so if you do stemming in finish then you can reduce your vocabulary by a factor of maybe a thousand this is your mind actually still have to do stemming.
+[3711.0:3734.0] So then a more advanced form of stemming is called monetization where you don't just do this kind of morphological thing where you strip away suffixes but you do something that's more semantic here the ideas to map tokens to lexicon entries which goes way beyond the simple morphological operations.
+[3734.0:3763.0] For example you might want to map the words us you dot s dot a dot and us to the lemma so the cement unit United States is a lemma being something that be an entry in a dictionary like a book like a Britannica kind of or here is an example from German grew share greetings if you don't have the non-stic characters at hand you would sell this.
+[3763.0:3774.0] You would replace the warm out with you and the short s to replace it with double s but you would want to map both of these to the single correct entry.
+[3774.0:3788.0] Another example if you have something you have a sentence you lie in the grants versus you lie to me then these are really different words they have the same service form.
+[3788.0:3800.0] But the two words to lie to lie they're really there are two different words it just happened to have the same appears.
+[3800.0:3821.0] So in this case, limitation would actually map those two different words so that would be like lie underscore one at the second one would be mapped to lie underscore two because one is the act of lying and the other one is the act of not speaking.
+[3821.0:3830.0] So in principle, limitation can be a powerful thing to do but frequently it's still omitted because it just is not such a hard task.
+[3830.0:3850.0] It takes a lot of overhead to it and it really is for example it requires a complete lexicon and then all these complex rules from mapping from service forms to lexicon entries and it's especially hard for non-English where you have more morphologically rich languages with different word forms and so on.
+[3850.0:3860.0] So I'm showing this to you as a potential thing to do in some applications it might help but in general I would usually not recommend it.
+[3860.0:3864.0] Then one word about social media.
+[3864.0:3870.0] In the background here I'm showing you a painting by Geronimoz Bosch depicting hell.
+[3870.0:3880.0] This is how people are tortured and hell after they die. Bad people and when you do social media analysis this is often how you feel. This is here is a real treat.
+[3880.0:3898.0] I encourage him to ask for your last name so he can add rule on football fb lolol that's decided for this is really I mean I know right as an h means shake my head fb stands for Facebook.
+[3898.0:3919.0] Yo is a equivalent to your at for we don't really always at a misspelling of four or is it an internal form of four. So barely any correct word in this social media post but still social media is very important so we need to be able to deal with this.
+[3919.0:3932.0] You have things like repeated letters and syllables think of the classic ha ha ha ha probably ha is different from ha ha might be different from ha ha ha but then at some point you have to finish it turns right.
+[3932.0:3944.0] 16 times half or 17 times high is probably pretty much the same so you might want to normalize this somehow good luck if you want to work with this kind of text with traditional NLP tools for that purpose.
+[3944.0:3962.0] People have developed NLP tools that are specifically catering to social social media for example there is this pre-NLP package it's quite old by now but you get the point special methods are required for dealing with the social media text.
+[3962.0:3982.0] OK so so far we've always talked about bag of words bags of tokens basically where we broke up a document into these single word chunks or single token chunks and then we count words and we build our bag of words vectors from that.
+[3982.0:3999.0] So in our bag of words matrix we had one row per document and we had one column per tokens tokens are also called unit grams or one grams because there are one single one single token one word.
+[3999.0:4027.0] Often though longer sequences really belong together if you think of the bi-gram so sequence of two words bi-gram or two gram United States it's really one unit you wouldn't really want to rip those apart because this if you see United States in this order it's very different from seeing United Airlines and K-50 States or something.
+[4027.0:4041.0] This is really talking about the country or the the bi-gram operating system tells you a lot this tells you that the document is about computer science was this you had operating systems in different locations in the document would be very different.
+[4041.0:4049.0] So I'm what I'm doing is I'm making a case for considering longer sequences of words rather than just one single word.
+[4049.0:4060.0] So this gets us done from unit grams to n grams n grams or two grams of bi-grams being sequences of two words five grams the sequence of three words and so on.
+[4060.0:4077.0] This can be very powerful for example it's been shown that five grams so if you represent words as all the sequence was of five consecutive words that can actually be neural networks at certain tasks again on giving you a link here.
+[4077.0:4085.0] But there's no free lunch of course this makes everything much harder because now you have way more you have this common point explosion.
+[4085.0:4105.0] If you're considering do the grams one grams then in your matrix you need to have one one entry per word in the vocabulary if you go to five grams then you have one column for each possible sequence of five words and that is of course exploding exponential.
+[4105.0:4127.0] So if we have if we have k words in the vocabulary and we consider we consider five grams then we have k to the five possible five grams not all of them will appear not all of them are meaningful but a lot of them will and this really makes your features face explode that makes the machine learning downstream harder.
+[4127.0:4138.0] So how can we navigate that space between representing meaningful neural set together while at the same time not exploding our matrix.
+[4138.0:4152.0] The key thing to do here is feature selection right we've seen this in a previous lecture I believe it was lecture eight apply machine learning where we talked about feature selection.
+[4152.0:4166.0] What you want to do is you don't necessarily want to keep all the end grams but only those that appear frequently I believe you want those multi word expressions that really make sense.
+[4166.0:4181.0] Here is a if you want to consider by grams then a very powerful thing to do is to look at mutual information so to look at by grams where the two words carry a lot of mutual information about each other what do I mean by that you can formalize this in terms of.
+[4181.0:4209.0] Information theory but what intuitive the idea is two words should be considered as a as a as a phrase if the two words are much more likely to co occur together then what would happen if you shop to the order of the words some pairs of words are quite likely to occur together simply because the words are quite frequent right.
+[4209.0:4238.0] The and the and man they're quite likely to occur together because they're both frequent words but if you if you now shop to the word order then those are still likely to co occur together because they're frequent words but something like United States they are both more rare words but they're much more likely to occur together United States then if they then they would be to co occur together if you shop.
+[4238.0:4267.0] So that's the idea behind mutual information so this is a this is a nice heuristic for doing for detecting by grams that you want to consider that you want to keep as features but how can we generalize to sequences words bigger than two there is a variety of things you can do you can use various data mining methods like frequent item set mining not going into details here a very nice heuristic that I like is.
+[4267.0:4274.0] Using Wikipedia anchor text so and Wikipedia anchor text are the phases in Wikipedia that are blue.
+[4274.0:4289.0] Have a link on them and a cool rule is to say that you consider all sequences words that ever occur as a link text in Wikipedia.
+[4289.0:4309.0] Because those are meaningful things that belong together most subsequent sequences of two words we were not ever occur as links but those that do occur as links are meaningful for example both of these United States and operating systems will occur as link anchor.
+[4309.0:4337.0] So that's a nice show. So so far we have talked about how to construct the bag of words matrix we've seen various ways of how you can choose the space of columns in this matrix so which words consider we have considered various words of how to normalize text before we count words in order to to fill this matrix.
+[4337.0:4357.0] So so far we've looked at how to construct the back of words matrix and in the remainder of today's lecture we talk about how you can post process the matrix such that you make it better suited for downstream machine learning algorithms.
+[4357.0:4379.0] The first thing that I want to talk about is inverse document frequency. The starting point for for this is that not all words are equally informative which is the very reason for example for removing stop words such as the is and so on those carry much less information.
+[4379.0:4396.0] There are much less characteristic about about what document is about than other words for example if I take the word computer or the word backpack it really tells you much more about what the text is about them for the word.
+[4396.0:4419.0] Stop would remove is the binary thing right either you remove something or you keep it there's no gradation beyond just remove discarding stop words you often want to give less weight to more common words so although you might not want to remove the word per stop list word list for some reason it's a much less informative word than the word perceptron.
+[4419.0:4444.0] The word per occurs in way more diverse context than the word perceptron which is basically exclusively a machine learning word so you would want to give more weight to the word perceptron when constructing your your bag of words matrix and the standard way of doing this is via IDF in verse document frequency.
+[4444.0:4459.0] Let's introduce this first so in order to define the first document frequency we first define the document frequency the document frequency of a word w is simply the number of documents that contain the word.
+[4459.0:4474.0] If a word contains the if a document contains the word a thousand times we still count that as one document that contains the word so here we.
+[4474.0:4503.0] And this is the number of documents and now if we take document frequency divided by n there's this basically this captures the probability of drawing a document is if I close my eyes and I pick one of the documents at random then doc frequency of w divided by n that is simply the probability of picking a word that contains the word w.
+[4503.0:4530.0] And now to get the inverse document frequency we take a logarithm of that and we take a minus the minus because that the inverse mirrors the mimus basically why do we do that because we want to get more weight towards that are less frequent because the frequent words are things like the and so on most gets less weight and the ones that are less frequent so that's where the minus comes from.
+[4530.0:4556.0] And the log you can see that as an instance of logarithmic scaling we've seen that in the lecture on applied and lecture eight if you have a if you have a variable that is heavy pain that has a heavy pain distribution then taking a logarithm of that purpose of useful and we have seen earlier zips law.
+[4556.0:4585.0] The frequency of words that is a heavy pain distribution there are few words that occur all the time and the most words occur rarely so by taking the long of those counts you're basically considering the order of magnitude rather than the raw counts and this is a useful thing because it reduces that long day basically it removes those outliers that you had before the the entries that are much larger than most others.
+[4585.0:4589.0] So that is a very dramatic reason of why you want to do it.
+[4589.0:4592.0] Define it this way with the with the log.
+[4592.0:4611.0] There's a more theoretical justification also the mind the negative log of that probability of drawing a document that contains word w is the information content of the event randomly drawing a document that contains w.
+[4611.0:4621.0] How many bits of information if I take up if I use a binary logarithm here then this captures how many bits of information does the event.
+[4621.0:4624.0] Containing word w contain.
+[4624.0:4633.0] And so you want to give more weight to words that contain more information so that's that's the idea here.
+[4633.0:4646.0] But beyond this theoretical justification idea where stockings frequency has just been shown to a really really well in practice and that's the reason why we visit.
+[4646.0:4662.0] It also applies to end ground so if you have a if instead of in your bag of words matrix you really have a bag of n grams matrix then you can do just the same thing you can also count the inverse talking frequency of n grams instead of words and everything.
+[4662.0:4676.0] Okay so this brings us to the tf IDF matrix which is a super powerful to who has heard of tf IDF before some people have this is one of the core concepts one of the core tools of information.
+[4676.0:4683.0] Tribal kind of old school search engines and also still a big part of new school search engines I'm sure.
+[4683.0:4704.0] So there are two parts in tf IDF there's tf part term frequency and the idea part which we've just seen inverse document frequency so let's unpack this we define the term frequency of a word w in a document D so the term frequency is is the property of a pair of a word.
+[4704.0:4732.0] So it's simply counts how often does where w occur in document D and this is pretty much what the bag of words gives you right and IDF is inverse document frequency as justified on the previous slides and the tf IDF matrix is nothing else then to simply take the product of these two.
+[4732.0:4754.0] So the entry that corresponds to where w in document D which is exactly one entry of the of this document my word matrix there we store the value term frequency of w in D times inverse document frequency of w and so when we do that we get the tf IDF matrix.
+[4754.0:4773.0] So the amount if you start from the bag of words matrix which only has the tf values so tf defines the bag of words matrix to go from there to the tf IDF matrix you basically multiply each column of that matrix with a constant.
+[4773.0:4785.0] So this IDF is a function of the word which is and you have the same word all values of the same column referred to the same word in the vocabulary.
+[4785.0:4814.0] Then more prep post processing steps that you might want to do to your tf IDF matrix to make it better suited as an input for downstream machine learning methods one immediate observation is that longer documents so that is documents that contain more words have more non zero entries right that's exactly how we define those entries.
+[4814.0:4839.0] So if that word occurs in the documents or longer documents have more non zero entries if now you interpret this geometrically it means that so if you interpret documents as vectors in this high dimensions space by the vocabulary then longer documents have longer vectors which means that if you
+[4839.0:4862.0] think about let's think about is not really a space because it's easier to imagine but really this would be a 10,000 or a hundred thousand dimension space if we have the origin here where the microphone is then short documents might be on a sphere that is close to the origin and long documents would be on an outer shell.
+[4862.0:4891.0] So the longer the documents are the further out removes from the from the origin so short documents will be close together merely by the fact that they're due to the fact that they're short but not necessarily because of the words that they contain or another way to see it is imagine you take a random vector which is sampler random points in your Euclidean space and you now do a dot product with a short vector what does the dot product do it basically.
+[4891.0:4920.0] It project it project the vectors onto each other and the dot product will with a random vector will be larger for a long vector for long document for short document so long documents will be more similar to random documents which is kind of a weird artifacts that you might not necessarily want to have.
+[4920.0:4949.0] So the way around this is to normalize your document vectors to a certain predetermined length so you can do that the standard things to do are L2 and L1 normalization what do you do in L2 normalization you divide all vectors by their L2 norm what's the L2 norm that's just the length of that vector in Euclidean space.
+[4949.0:4959.0] So if you do that then all your documents live on a sphere with the latest one around the origin.
+[4959.0:4976.0] So if originally something had a vector had length norm way more than one you put it down onto that sphere and if it's a shorter document you put it up onto that sphere afterwards everything will live on that sphere of the this one.
+[4976.0:4996.0] Another thing that you can do is L1 normalization where you don't divide a vector by its Euclidean norm by its length but you can you can take the sum of all the entries and divide by the sum of the entries of the vector.
+[4996.0:5020.0] So after you do this then all the entries of the vector will sum to one. I'm assuming here that all entries are non negative which they are in a bag of words matrix right because because they're derived from clouds which are which are all non negative.
+[5020.0:5031.0] So if you do this then you can interpret each document vector as a probability distribution because all entries are non negative and the sum to one.
+[5031.0:5035.0] How do you know which one is better if you have an optimal collection.
+[5035.0:5058.0] Should you and your contractor TFRDF matrix should you do any length normalization should you do L2 normalization should you do L1 normalization how can you know which one you should do any ideas.
+[5058.0:5075.0] Cross validation perfect yes that would be my favorite way of doing this how would cross validation work here you would take your data set and so you take your training data set the testing part is locked in a way and it's like you don't touch it.
+[5075.0:5100.0] So you take your training data set you divided in two parts you use let's say the bigger part in order to train the model that you want to train let's say you want to do document testification so you train that that classifier and you try all of this you do one version where you do a two normalization you do one version where you add one normalization you one version where you don't know normalization at all.
+[5100.0:5115.0] And then you can check which one does better in the portion of the training set that you've not used to fit that model and that's the one that you pick and that's the one that you commit to for using later on on the testing set at one time.
+[5115.0:5136.0] If you want to be more efficient with the data then you can also pay for it cross validation but the idea is always the same you try them all on a on a part of the data set that's kind of not contaminated that you're not using for training at the not that you're not using later on for downstream testing so that's the cross validation.
+[5136.0:5162.0] Another thing so this was about role normalization you can or thought maybe you can also do column normalization where you do a certain operation to each column rather than for each role of the matrix the idea scaling that we've already seen is one example of this can be seen as a way of column normalization where you multiply each column with a certain constant.
+[5162.0:5184.0] Additionally you can apply any of the other normalization techniques that we've seen before in lecture eight for example you can do a max scaling so you take a column you take the minimum at the maximum and you scale and shift all the values such that the minimum value is now zero and the maximum value is now one that's something you can do.
+[5184.0:5199.0] You can do standardization where you compute the mean of the standard deviation for each column and then subtract the mean and you divide by the column about the standard deviation so after this operation every column in the matrix would have zero and standard deviation one.
+[5199.0:5214.0] How would you know whether you should do any of these normalization methods and if so which one.
+[5214.0:5240.0] Yes exactly cross validation you do exactly the same thing take your data take your training portions made it into you try them all on the on the first part of the portion and then you can try them out and then run them on the second and then which one is best that's what you commit to.
+[5240.0:5269.0] Yeah exactly so this is the this is the crux of cross validation if you have a single parameter like this you basically have this one choice to make then cross validation words perfectly if you have any so the question to repeat the question for the recording the question was if you have many such high performance so for already you might want to decide do I need to do IDF scaling yes or no.
+[5269.0:5272.0] Do I need to do.
+[5272.0:5286.0] Max scaling yes or no do I need to roll organization yes or no in which way do I need to do and then for your downstream machine learning everything you might have choices like certain how many.
+[5286.0:5299.0] What regularize it you might fast and up with like a dozen of people and then you get this comment or explosion and then it becomes quite quite tricky to try all costs to combinations on a.
+[5299.0:5303.0] Data set that you have you might end up with more.
+[5303.0:5310.0] With more combinations of people from this and you have data points you might so that is a tricky thing and there are.
+[5310.0:5329.0] But there are ways to do it so there is one way to do would be grid search which would be to exhaust the explore all of this works for you have to have a parameter and then the go to way of doing this instead is what's called random search where you just randomly say that some of these combinations and then.
+[5329.0:5356.0] That works surprisingly there's actually some things also behind the very good question and thanks for asking the question because it filled up the lecture a bit more I am stopping here this was the back of tricks for back of bags of words which I'm closing with this stolen image from the Internet and next week we will continue with more topics.
+[5356.0:5366.0] In handling text we have two more minutes other any questions yes.
+[5366.0:5382.0] Good question so the question is should you first do roll normalization or should you first do column normalization because you need to do that in some order right.
+[5382.0:5386.0] You cross validated.
+[5386.0:5396.0] It's hard to know ahead of time it really depends on the data set whether this or that works better is really depend on the data set and it can make a huge difference I've done.
+[5396.0:5409.0] I've done projects myself where basically most of the mileage came from using a simple machine learning algorithm something like linear regression but then very carefully tuning all the hydro parameters making all those choices.
+[5409.0:5427.0] Choosing the normalization of the rows who's the performance by like a factor of two or so it can really make a huge difference but it's very hard to say ahead of time which one really better it takes experience but even with experience you might really not know.
+[5427.0:5442.0] OK if there are no more questions we stop here and I'll see you on Friday reminder definitely come on Friday because we have this interesting report from the trenches from our two alumni for bar and just see them so see you there.

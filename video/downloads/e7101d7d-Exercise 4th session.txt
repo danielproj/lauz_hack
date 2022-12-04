@@ -1,0 +1,180 @@
+~Exercise: 4th session
+~2020-10-20T14:18:51.625+02:00
+~https://tube.switch.ch/videos/e7101d7d
+~CS-451 Distributed algorithms
+[0.0:13.0] Okay, everyone. Welcome to the exercise session. As usual, we're going to be do teaching assistants.
+[13.0:24.0] If you have questions, you can ask them in the chat and you have one real relay those questions to me.
+[24.0:33.0] The first question is always can everybody hear me in on the Zoom? Let me get some things.
+[33.0:39.0] I see some messages in the chat. Yes, that's okay. Can everybody hear me in real life?
+[39.0:45.0] That's, yeah, usually. Okay. Okay, so welcome everyone.
+[45.0:55.0] We are going to correct the exercises on total order broadcast that we gave you last week.
+[55.0:63.0] I assume these have been relatively simple, relatively straightforward. In any case, we're going to go through them.
+[63.0:71.0] And then Yavan is going to present the next batch of exercises that are going to relate to consensus.
+[71.0:78.0] And also its relationship with just a lot of requests, right? So we're going to start with the exercise one.
+[78.0:84.0] Now, exercise one was a little bit more qualitative of them because we were asking.
+[84.0:89.0] So, I mean, arguably, any question that starts with, would it make sense?
+[89.0:96.0] It doesn't necessarily have only one answer, but we propose one to you here.
+[96.0:103.0] So the question was does it make sense to add the total order property to the best effort for broadcast?
+[103.0:116.0] Now, the basic idea behind best effort for broadcast is, you know, every process tries to get his, or her, I mean, its messages through.
+[116.0:128.0] And if a process is correct, then only then we have the guarantee that every correct process will eventually receive its messages, right?
+[128.0:144.0] Now, here we're going with a definition of total order that we took verbatim from Russia's book, which is, so if you have two messages, I'm one and I'm two, right?
+[144.0:156.0] And you have two processes, P and Q, and both P and Q deliver both M1 and M2, then if P delivers first and one and then N2, then Q does the same, right?
+[156.0:160.0] This is one possible definition of total order broadcast.
+[160.0:165.0] We have been producing this talking with Yovan about the possibility of having other definitions.
+[165.0:170.0] And I don't have a life for now, the possible definition, but I'm going to still distress it, you know, verbatim now.
+[170.0:180.0] But let's stick with this definition for now. So in this, and this, given this definition, we, there's the finishing seems to be compatible with the following scenario.
+[180.0:186.0] We have a full-d process P that broadcasts messages 1, 2, and 3, and then at some point it can kind of dice, right?
+[186.0:196.0] So now we don't have any specific guarantee on which process will receive which messages, right?
+[196.0:215.0] So a configuration where a process A receives messages 1, 2, B receives messages 2, 3, and C receives messages 1, 3 is, you know, possible because we are dealing with some form of best effort broadcast like the test.
+[215.0:231.0] But we could have the following ordering, which is A goes 1, 2, B goes 3, 2, and C goes 1, 3, right? Now, there is no two messages that are delivered by two processes and this scenario, right?
+[231.0:238.0] Which means that technically this example is valid. We are fine with this.
+[238.0:251.0] Now, however, this kind of violates the intuitive idea that exists one underlying, you know, sequence of messages that is indeed totally ordered, right?
+[251.0:262.0] In such a way that every single message happens before every other one. Sorry, every two single messages is it's possible to determine which one happened first, right?
+[262.0:284.0] And so here this doesn't happen, right? So intuitively we would like to have something along the lines of there's an underlying sequence 1, 2, 3, the messages are totally order and then, you know, every process may, may every correct process may deliver a subset of them that could maybe be useful.
+[284.0:299.0] But in this case here, you can't have any sequence that actually totally orders the messages. So with this total order property, we don't, we don't really get anything that seems to make any sense because we have this counter example here.
+[299.0:306.0] Now, there's another total order property that we could, I mean, we could have phrased this was a lot of property in a different way in kind of a more stringent way.
+[306.0:321.0] But we say, look, if, if you have M1 and M2, right, and then there's a process P that delivers M1 first and then 2 second, then no process, no, no process, well, no process, because it's not a Byzantine scenario.
+[321.0:337.0] Deliver, delivers M2 before delivering M1, right? Now again, in the situation of this one, we have no guarantees on the fact that everybody, nobody will deliver a message.
+[337.0:351.0] You could find yourself in a scenario where this one process goes like M1 and M2, right, and then no other process receives receives M1 because the standard of M1, you know, craft.
+[351.0:366.0] And as a result, you have this kind of null scenario where, especially, you have one process that delivers M1 and then no process delivers anything anymore because because of the total order property, they could not, you know, deliver anything that follows M1, but then they cannot deliver M1.
+[366.0:382.0] Because it was just the staff of broadcast. So our argument is, no, it's not really, it does not make much sense to add this total order property to something as weak as best effort broadcast.
+[382.0:397.0] My personal intuition is that we could probably rephrase some form of best effort broadcast that provides total order and in a setting where we call it logging.
+[397.0:413.0] So it might be a setting where you have, we have a sequence of messages, these are totally ordered, maybe they are incoming very fast and they need to be processed and we're kind of okay if some of the messages get lost, right?
+[413.0:434.0] So we could have a process delivering 1, 2, 3, 4, 5, another delivering 1, 2, 3, 5, another one delivering 1 and 5 and it's still kind of fine. However, I think that this would require us to really find more things than what applied just the total order property on top of best effort broadcast could provide.
+[434.0:446.0] So let's go, let's go, unless anybody has questions and you can write those in the chat or you can raise your hand in your real life.
+[446.0:461.0] So exercise is a little bit less qualitative, we're asking what happens if so we were dealing with the story of the sets that are proposed at a round in the consensus base total order broadcast.
+[461.0:470.0] And so you have these set that are proposed and then every time for every round a set is decided and everybody applies the elements of that set, right?
+[470.0:483.0] And in the algorithm and we proposed, we have that once the elements of a set are decided upon, we have this, I don't know if you can see my arrow, I don't know, maybe the can, right?
+[483.0:502.0] Okay, so as you can see here, you know, we have this sort function, right? And we actually don't really care how sort is implemented, we just need a way to provide some sort of total ordering between the elements of the decided set of messages to be applied around.
+[502.0:518.0] So we asked you questions, the first one was what happens if instead of proposing sets, we actually sorted the fact of the source, right? And proposed, you know, sequences of messages.
+[518.0:540.0] So this was the first question, the second question was what would happen if we just didn't apply any sorting to the set of messages that are applied at every round. So in the, in the first case, essentially, we would still have like nothing significant would change, right?
+[540.0:566.0] Because we would have, I mean, we would have all the total order properties still satisfied, specifically if a messages correct, eventually, it's, it's message would end up being in the, the same sequences of that are proposed by, you know, every single correct process, which means that eventually it's going to end up in one of the sequences.
+[566.0:581.0] So, you know, validity is still going to be there now, obviously agreement is, I mean, we're still going to have agreement on what is applied because, of course, and at the round, we use consensus to decide what sequence is applied.
+[581.0:592.0] And also since the sequence is sorted of the source and received in the same order of the correct processes upon the decision, then we'll be applied in the same order by everyone.
+[592.0:608.0] So, that's kind of an easy exercise. Now, second, second answer to what happens if nobody sorts anything. So we just have, you know, non sorted, non sorted objects.
+[608.0:620.0] So just sets that are both proposed and decided and then, you know, everybody from decision, apply them in an arbitrary order, then what happens, of course, is that you lose the total order property,
+[620.0:632.0] and then the same round, you know, two different processes could decide, reply the elements of the decided sets in different orders, which would be obviously using the total order of the correct.
+[632.0:658.0] So, the idea of round based of round based total order broadcast, which is based upon consensus is to have these sets, right, and then the idea of the round creates a total order between the sets that are quite, but then we still need to have some form of ordering within the sets.
+[658.0:687.0] Now, some of you might have wondered why is it that we have sets that are proposed and have a round as opposed to just elements, right, because, you know, intuitively, one could have, one could conceive of a possible implementation of the order broadcast that also that is also based on rounds, but then instead of everybody, you know, proposing a set of messages, everybody proposes just, you know, one of the messages that it received, right.
+[687.0:708.0] Now, this might look like something that makes sense, but it might, there might be a line of execution where we compromise the validity property, the idea being that you might have an infinitely unlucky process that sends a message through the message eventually reaches everybody.
+[708.0:729.0] But then, as other processes keep pushing messages, they still, they always manage to end up being a higher priority proposal to whatever, whatever the single prop, proposers in round by round are going to throw into the consensus.
+[729.0:739.0] So we will have to tweak a little bit more the algorithm in order to replace the sets with just elements that are proposed that each round.
+[739.0:756.0] So I think it would be feasible, but still, the idea is that having sets to be proposed makes it very easy to guarantee the validity property, but, and sets comes at the cost, I mean, to, you know, remember to show them either as input or output of the consensus.
+[756.0:772.0] Now, the exercise three was, I think quite, I hope it was quite simple for all of you guys, but it was there to underline something important, you know, I'm going to outline myself after we have discussed the solution.
+[772.0:783.0] So the question was, we have seen just now that we can implement a total of broadcasts out of consensus. Now the question was.
+[783.0:793.0] So we have a question one transfer now. So the question was the flip the solved issue by anything besides an order to one size.
+[793.0:810.0] Well, the site, yes, so I don't know if we, if whoever asked discussion asked while I was discussing this, this would be equivalent to having the.
+[810.0:819.0] So, okay, we did an order. Okay, okay, okay, so essentially what you propose here is to.
+[819.0:824.0] Like everybody receives a message, whatever message they see first, they're going to only propose that.
+[824.0:833.0] Right, and then what happens, are they going to what's your proposal? They're just going to ignore any other message that comes until they have got the need of theirs.
+[833.0:842.0] So I wonder what happens if. I wonder what happens if you have.
+[842.0:853.0] Two messages. Okay, so essentially what you would do is to have a northered that is as big as on one element, right?
+[853.0:865.0] And then you would have at every round of every, but it was only one element. Right, and then you would, you would still need some form of set where you keep track of.
+[865.0:873.0] Of whatever you have already delivered, right? And then you don't put in your single element on order set anything.
+[873.0:887.0] Am I, am I work? Yes, yes, yes. I agree that there's definitely some tweaking that can be done. So to still work having, you know, that at every round we only propose, sorry, we only deliver one message.
+[887.0:896.0] I do think it's possible and I think you're on order to limit the idea might work. So good catch. Yeah, congrats.
+[896.0:905.0] Exercise three. So yeah, the question was so we have just shown you that you can build solar broadcasts out of consensus.
+[905.0:915.0] Now the question was can you build consensus out of solar broadcasts, right? Now did any maybe in class because I will be do it over me to ask in the chat.
+[915.0:922.0] They in class have, you know, an easiest solution to this.
+[922.0:929.0] Okay, well, then just going to discuss it. So it's quite simple.
+[929.0:937.0] What you can do is, you know, you have total order broadcasts. Everybody agrees on what the order of the messages is.
+[937.0:940.0] Specifically, everybody agrees on what the first message is, right?
+[940.0:952.0] So what we could do to implement consensus out of solar broadcast is to, you know, make a shouting match or hike all it.
+[952.0:961.0] Dibs, right? When you call dibs or something, whoever, whoever wants something tries to say as good as possible and whoever gets their first win.
+[961.0:977.0] So if we have multiple proposals, the idea is that everybody is going to, upon proposing something, everybody's just going to broadcast it and then whoever delivers something for the first time, you know, just decides that everybody agrees on what the first slide is going to be.
+[977.0:985.0] So we're going to have agreement, we can have termination because we have at least one process that I mean, at least one process correct.
+[985.0:993.0] That's why it gets its message through. So everybody at least delivers one message. So, you know, all the nine super-series of consensus are implemented.
+[993.0:1007.0] So obviously in a, you know, in an intuitive, you know, in two years kind of real case scenario, this might feel like it's not really democratic because the fastest process is kind of more likely to get it's proposal through.
+[1007.0:1020.0] So whoever, remember guys that consensus is not about demoverseeing right consensus has this validity validity property that says, you know, if we decide something that was proposed, but at least one process it doesn't stay look.
+[1020.0:1034.0] There should be any form of fairness among the processes if you want to implement, you know, democracy on democracy on top of consensus that, you know, you can do it, but you got implemented at the high level of obstruction.
+[1034.0:1051.0] So I think that this exercise was kind of useful to underline one important thing. So that's this kind of order relationship right between between a fraction some other should probably discuss with you are more powerful than others.
+[1051.0:1071.0] They can achieve more right now specifically as we actually have seen in class and then in the previous exercise we have shown that consensus is at least as powerful as total order workers right specifically because we showed that
+[1071.0:1083.0] total order workers can be built out of consensus. So the moment you have consensus intuitively just a few lines of code and you'll achieve total order broadcast.
+[1083.0:1100.0] Now this with this exercise here, we did the opposite right so we built consensus out of total order broadcast right which means that consensus and total order broadcast into actively to have the same power once you get one, you also get the other.
+[1100.0:1109.0] Okay, so I think that wraps it up. We didn't have any more exercises. So yes.
+[1109.0:1137.0] So I'm going to try and ask the way I understood it, but then maybe we want to talk in the chat as soon as we talk with the ovens I can understand better your question.
+[1137.0:1153.0] So remember every single instance of consensus has exactly one input and one output right so you create an instance of consensus and then your output once from that instance of consensus right so
+[1153.0:1168.0] the idea is that you can have as an any parallel instances of consensus as you want and then you can use your you can use the output of which in some order in order how how we prefer.
+[1168.0:1181.0] So in this case you have that every element every every every single instance of consensus was only accepts one proposal right and then does that make sense or I'm not exactly sure if that was a question that you were asking.
+[1181.0:1188.0] But then I guess we'll swap with the oven and then I'll understand that your question and the chat and I'll reply there.
+[1188.0:1208.0] Okay, cheers guys and take care of the chat now.
+[1208.0:1236.0] Yeah, I'm going to be talking to you about consensus now. So you have seen probably today consensus abstraction that you have seen before when you worked on a total of broadcasts not that pointed out so what we did with total of the broadcasts is that we used consensus as a black box
+[1236.0:1246.0] and some magic that is there that gives us enough power to be able to implement a total of the broadcasts.
+[1246.0:1265.0] Okay, so but today we are focusing on consensus that we are now opening this black box. Okay, so I guess you have you have seen today that consensus is defined by four properties first one being validity that as not mentioned means that if a value is decided then it is proposed by a process.
+[1265.0:1272.0] You also have a termination that says is every correct process eventually decides otherwise the abstraction wouldn't be that useful.
+[1272.0:1284.0] And you have also integrity that says that no process besides more than once which simply means that once the process decides that it cannot change its mind or whatever.
+[1284.0:1294.0] So once it decides it's that that's it. And finally we have agreement property that says that no two correct processes decide different things.
+[1294.0:1308.0] As usually we will be also able to define uniform consensus which now simply says that no two processes whether they are for for the correct are going to decide to different sides.
+[1308.0:1316.0] Okay, so this was just a brief summary of everything I guess you heard today in the research lecture.
+[1316.0:1331.0] So the first exercise simply asks you why do we need the perfect failure detectors that are used in implementing the algorithms one and two from today's lecture to indeed be perfect.
+[1331.0:1345.0] So what happens and if and does something even happen if the perfect failure detector is not perfect. So we have either violation of completeness or violation of of accuracy.
+[1345.0:1362.0] This is the first question. The second question now asks you why if we assume partial synchronous model which means that we do not have a perfect failure detector but rather eventually perfectly detector that remember can make mistakes which simply means that it can.
+[1362.0:1370.0] It can it can say that some process has crashed whereas the process is correct and nothing nothing bad happened with him.
+[1370.0:1383.0] Why any algorithm like that that solves consensus that solves consensus actually also solves the uniform consensus.
+[1383.0:1385.0] I mean, obstruction.
+[1385.0:1401.0] So you have a protocol that uses a perfect eventually perfect failure detector that solves consensus and we are claiming that it also solves the uniform consensus and we want you to show us why is this in the case.
+[1401.0:1424.0] Then the third exercise is again something very interesting and the question is that if you have a perfect failure an algorithm that solves consensus with perfect failure detector which again if the result from the previous side holds means that it also solves the uniform consensus problem.
+[1424.0:1432.0] Our question is that so our claim is here that we must assume that there is a majority of processes that will never fail that are correct.
+[1432.0:1437.0] So here we are asking you to show us why is that the case.
+[1437.0:1449.0] So these two I would say these two exercises are very important and very interesting because it kind of shows how in our community when we want to prove something that something is impossible.
+[1449.0:1460.0] So what is the usual method that we use to show that but we are going to discuss this next time but just think about that.
+[1460.0:1472.0] So we have been claiming right for several sessions that consensus is very important and very powerful obstruction.
+[1472.0:1484.0] We have shown you how to build a lot of the broadcast out of it and believe me a lot of problems in distributed computing can be solved by using consensus.
+[1484.0:1496.0] But here we want to give you some real life use cases for consensus and we want to really talk to you why consensus is indeed very important.
+[1496.0:1511.0] Yes everyone here heard about cryptocurrencies and I guess that majority of you know that cryptocurrencies are built on top of some consensus algorithm some agreement algorithm there.
+[1511.0:1526.0] So but that's not the only thing so in general whenever you want to build something some system that can can evolve over time which means that it can get some it can get some inputs reduce some output and change the state.
+[1526.0:1536.0] Then you will probably do something with consensus there you will probably use consensus to do so in order to formally define this system that evolves over time.
+[1536.0:1557.0] Here we are going to present you a formal definition of a sequential object. So what you hear can see is that the sequential object is a tuple where this first parameter of the tuple is set of states which simply means okay these are the states that our system can take.
+[1557.0:1565.0] Then we have of course an initial state which means that okay once you build your system once you want to start your system this is the state the system is.
+[1565.0:1580.0] Then you have a set of operations so you have some processes clients or however you want to call them that go and say okay look this is the input I want to get this is a transaction I would like your this is an operation of a life to execute.
+[1580.0:1592.0] And this is defined by all possible operations that can be invoked are defined using this third parameter naturally we would like this processes to have some kind of an answer.
+[1592.0:1614.0] So I have had a response and this is captured by by the fourth parameter and lastly we have this state transition function that simply says that given a state given a process that asks and given the operation that the process asks this is the response the process must must receive and this is the new state of our system.
+[1614.0:1634.0] So what we are doing here is that we are saying okay we will consider our system to be correct if given this state of the system at the time of the process asking to for for an operation to be performed this is going to be response that our process will indeed receive and this is going to be the new state.
+[1634.0:1660.0] So what we are doing is to find another way to build to build to currencies that does not involve consensus and this is why we are okay.
+[1660.0:1664.0] So the transition are not deterministic.
+[1664.0:1667.0] No, the transitions are deterministic.
+[1667.0:1671.0] So here we are saying that transitions are deterministic.
+[1671.0:1675.0] So I am going to elaborate on my question.
+[1675.0:1690.0] The set of transitions seems to be a relation rather than assumption.
+[1690.0:1708.0] So it is a relation between operation and one specific operation if you have more than one possibly okay values.
+[1708.0:1711.0] Thank that for him, man.
+[1711.0:1719.0] Okay, well, this shouldn't be correct because we need to have one output for every single one.
+[1719.0:1723.0] When I say output, we need to have one and exactly one state to our system.
+[1723.0:1733.0] We'll go after this operation is involved and we need to have exactly one response to the process.
+[1733.0:1739.0] Okay, that doesn't seem to be the way that sequential object is defined in life.
+[1739.0:1741.0] It's a correlation of the function.
+[1741.0:1746.0] Okay, okay, whenever I say function, I mean relation, but that's pretty much.
+[1746.0:1747.0] What we can do about that.
+[1747.0:1759.0] And the important thing is that this relation is total with respect to this parameter Q, to this parameter P, and to this parameter O, which means that for every, for every tuple,
+[1759.0:1770.0] Q, P, O, you will have, you will have, I will say, an output of a function, but you will have this 4th and 5th parameter of this relation.
+[1770.0:1788.0] So, which means that we travel the state of the object is of the system is, whoever asks for a, for a, a big, travel operation, it will get some output in a sense that the system will involve into another system, into another state.
+[1788.0:1793.0] Sorry, and that the process will indeed receive an answer.
+[1793.0:1798.0] Okay, so everything clear any questions?
+[1798.0:1816.0] Okay, so what we, what we did is that, I mean, and this question is motivated by, by the result our lab has been able to show is that indeed for, for, to be able to build cryptocurrencies, you don't need consensus.
+[1816.0:1822.0] So, you can, which simply means that you can, okay, let me not, let me not confuse you.
+[1822.0:1834.0] So, what we want to ask you here in the next exercise is that we want to now define this as a transfer object, as a transfer abstraction as a sequential object.
+[1834.0:1839.0] So, we want to, to ask you, okay, let's assume that we want to build a cryptocurrency.
+[1839.0:1862.0] Let's try to define it as a sequential object, because what does this mean? So, we need to find a list of, we need to find a set of states, we need to find an initial state, we need to find a set, a set of, a set of operations that the process, a user could ask to, to be performed and we need to find a state of, state of responses that the correct, that the process could get.
+[1862.0:1874.0] And finally, we need to define this transition function of relation, however you want to call it, to define here, of course, Motel was right, this is a relation of the function, but you can easily do it as a, as a function.
+[1874.0:1887.0] And then, finally, we ask you to build this, as a transfer sequential object, which means that we ask you to build cryptocurrency using total or the broadcast.
+[1887.0:1895.0] So, here we are not asking you to build it without total or the broadcast, which means that we, not asking to build it without consensus.
+[1895.0:1904.0] No, we here you have consensus, which simply means that you can order every, you can order transactions that are received by this system.
+[1904.0:1910.0] And we ask you to simply build a cryptocurrency, cryptocurrency, cryptocurrency system.
+[1910.0:1918.0] Let me just give a small hint, so what are the operations that naturally should be, should be supported.
+[1918.0:1927.0] Of course, one operation should be transferring money, because if we want to build cryptocurrency, I want to be able to spend five bucks to Motel.
+[1927.0:1936.0] Also, what makes sense is that I want to be able to track my balance, right? I want to know how many, how much money I have in my account.
+[1936.0:1947.0] Okay, and of course, what is the, I mean, what is the, what should be potential, what should be the set of states is, of course, it's any possible.
+[1947.0:1962.0] So, we need to have a balance per, per each process, right? Very choose, so what is a, what would be a set of states potential is simply mapping from a user to, to its parts.
+[1962.0:1967.0] I'll leave this to you to try to figure it out, to try to figure out the responses you can get.
+[1967.0:1983.0] I mean, you should be able to get and most importantly, try to figure out this state transition relation, which simply means, okay, this is how our system will involve given the operations that are involved on it.
+[1983.0:1991.0] And yes, this is pretty much it. If you have any questions, please let me know.
+[1991.0:1994.0] Not there are no questions.
+[1994.0:2005.0] So far no, for one, I am very, which was a total, okay, okay, then I guess I could stop recording.
+[2005.0:2014.0] Yeah, I think that's a fine thing and not the, what do you do it?
+[2014.0:2039.0] So, we showed that, so cryptocurrencies on blockchains, but we cannot, we are not able to build blockchains, but like if we talk exclusively about cryptocurrencies, we showed that it is possible to build cryptocurrencies without using consensus.
+[2039.0:2055.0] This is important because there is a fundamental result in our community that says that consensus cannot be built in asynchronous mode, which means that if there is no, so if you have a system where there is no upper bound on message delays,
+[2055.0:2073.0] simply means that if I stand your message, you will receive eventually a message, but that may happen in one year or in million years or in five seconds or whatever. So what you all only know is that eventually you will receive a message, but you don't know when, then it is not possible to solve consensus.
+[2073.0:2094.0] And what we showed is that if, so since we are able to build cryptocurrencies without consensus that simply means that you are able to build cryptocurrencies in a simple system, and then it is, you know, you get more resilient, more simple algorithm or whatever, because we are able to build cryptocurrencies solely by using blockchains.
+[2094.0:2098.0] That could be implemented as a single.
+[2098.0:2109.0] So, no worries, I don't know how to kill this, I have to stop recording.
+[2109.0:2137.0] Guys, so I'm going to step away. Thank you for your time.

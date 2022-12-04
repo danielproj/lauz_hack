@@ -1,0 +1,211 @@
+~COM-516 Lecture 6.1
+~2020-09-22T23:15:37.489+02:00
+~https://tube.switch.ch/videos/1291e59e
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:11.32] Hello, so today one of our main goals is to prove the theorem you have in front of you,
+[11.32:13.4] which I mentioned last time already.
+[13.4:16.2] So let me repeat what this theorem is saying.
+[16.2:22.56] It's really about this rate of convergence of Markov chains that was equilibrium.
+[22.56:31.72] So we first assume we have an Ergodic Markov chain with finite state space of size capital
+[31.72:37.0] n, transition matrix P, stationary and limiting distribution pi.
+[37.0:43.04] So we know this one exists in his unique because of the Ergodic theorem, which moreover
+[43.04:46.519999999999996] satisfies the detailed balance equation.
+[46.52:59.68000000000001] Then we can show, we will show that the total variation distance between the distribution
+[59.68000000000001:69.72] at the time n of the Markov chain and the stationary distribution is overbounded by some number
+[69.72:76.72] lambda star to the n divided by 2 square root of pi i and this for every i in s for every
+[76.72:78.88] n greater than or equal to 1.
+[78.88:83.96] So of course what we want to prove today is this inequality here.
+[83.96:88.48] This inequality here.
+[88.48:100.92] And in order to prove it, we need first to show some things about these lambdas which are
+[100.92:108.60000000000001] the eigenvalues of the matrix P. So the first step will be in analyzing a little, doing
+[108.60000000000001:114.44] some linear algebra, analyzing a little what are these eigenvalues of the matrix P and
+[114.44:120.72] showing that they satisfy these relations.
+[120.72:126.03999999999999] Which then implies what you have on the next line, which is that this lambda star which
+[126.03999999999999:133.92] is the maximum of eigenvalues in absolute value between 1 and n minus 1 is a number less
+[133.92:142.88] than 1, which in turn, so you get this thing here, which in turn implies, sorry, which in
+[142.88:151.35999999999999] turn implies that we have an exponential decay because of course if lambda star is not
+[151.35999999999999:156.64] less strictly less than 1, then this theorem above is not saying much right.
+[156.64:161.84] This is just saying that the total variation distance is bounded by a constant.
+[161.84:167.72] Here we have an exponential decay because we have a lambda star which is less than 1.
+[167.72:178.76] Okay, so in order to analyze these eigenvalues, I will first recall how we get that they are
+[178.76:186.44] first of all real eigenvalues and this will allow me to recall some notations.
+[186.44:192.88] So here's a small reminder here.
+[192.88:200.84] So we have seen that because we have this detailed balance assumption by defining the matrix
+[200.84:215.16] Q. So define Qij, which is square root of pi i times pij times 1 over square root of
+[215.16:217.16] pij.
+[217.16:231.44] Okay, so from the matrix p, we define a new matrix Q and because we have detailed balance,
+[231.44:241.72] this matrix Q is symmetric.
+[241.72:250.56] So this is very convenient because when we have a symmetric matrix, we know by the spectral
+[250.56:255.24] theorem that there exists.
+[255.24:269.92] So now this is due to the spectral theorem.
+[269.92:275.28000000000003] We know that there exists eigenvectors and eigenvalues of these matrix that the matrix
+[275.28000000000003:281.6] Q is diagonalizable and more than that it's unintarily diagonalizable.
+[281.6:294.52000000000004] So Q times Uk is equal to lambda k times Uk where also this is for k between 0 and n minus
+[294.52:322.32] 1 and Uk are U0 up to Un minus 1 are autonormal vectors, and lambda k is our real number.
+[322.32:330.15999999999997] So lambda zero, sorry, real numbers.
+[330.15999999999997:331.15999999999997] What did I say?
+[331.15999999999997:332.96] I hope I said real numbers.
+[332.96:340.84] Okay, belongs to R. Which of course it's not true in general that if you have any real
+[340.84:348.03999999999996] valued matrix, you might not have real eigenvalues and the matrix might not even be uniatrally
+[348.03999999999996:349.24] diagonalizable.
+[349.24:360.48] So here we have in addition to being diagonalizable, we have that the eigenvectors are autocompanied.
+[360.48:363.44] So let me write again what this means.
+[363.44:372.40000000000003] So this means that Uk transpose Ul is equal to delta k.
+[372.40000000000003:378.04] So we have this autocomunality relation here.
+[378.04:386.64000000000004] And not only autocomunality, but also autonormality in the sense that every we can choose the Uk
+[386.64000000000004:389.52000000000004] to be of norm 1 each of them.
+[389.52000000000004:398.04] Okay, so these are the eigenvectors of the matrix Q. But now if we define, if we want to
+[398.04:409.48] come back to the matrix P, we will define Fjk, which is this vector Uk divided by a square
+[409.48:411.88] root of pi j.
+[411.88:420.84000000000003] And it turns out that these Fk's are actually eigenvectors of the matrix P. P times Fk is
+[420.84:428.32] equal to lambda k times Fk in the mu over, they have the same eigenvalues.
+[428.32:436.79999999999995] So this, you can show that P in Q actually have exactly the same eigenvalues, lambda 0
+[436.79999999999995:438.79999999999995] to lambda n minus 1.
+[438.79999999999995:442.96] And so these are real eigenvalues for Q. They are, they are, they are also real eigenvalues
+[442.96:445.44] for P. Just the eigenvectors change.
+[445.44:449.71999999999997] So the eigenvectors of P are not autonomous.
+[449.72:452.8] And here are the facts I mentioned last time.
+[452.8:458.16] So this is still part of the reminder if you want.
+[458.16:461.04] Which would now we are going to prove.
+[461.04:465.40000000000003] So here is the few facts.
+[465.40000000000003:470.88000000000005] So the first one is that, well, lambda 0 is equal to 1.
+[470.88000000000005:478.40000000000003] The largest eigenvalue of, yeah, because we can order these eigenvalues.
+[478.4:481.0] And the largest is equal to 1.
+[481.0:493.03999999999996] And the corresponding eigenvector is equal to 1 for every j in S. So it's the all 1 vector.
+[493.03999999999996:500.12] Of course it could be another vector, but with the normalization we have to choose.
+[500.12:504.47999999999996] And it's just the all 1 vector.
+[504.48:512.36] The second important fact that we will prove today is that every lambda k is less than or
+[512.36:520.96] equal to 1 in absolute value for every k in 1 and n minus 1.
+[520.96:522.84] So lambda 0 is equal to 1.
+[522.84:528.36] And all the other ones are strictly between minus 1 and plus 1.
+[528.36:534.5600000000001] And the third fact that we will prove is that the second largest eigenvalue is strictly
+[534.5600000000001:536.6800000000001] less than 1.
+[536.6800000000001:544.52] And the smallest eigenvalue is greater than minus 1.
+[544.52:545.52] Okay.
+[545.52:548.6] So this is now what we want to prove.
+[548.6:557.16] And once all this is done, we will reach to the conclusion that we have this number lambda
+[557.16:559.3199999999999] star which is less than 1.
+[559.3199999999999:565.48] And then we will move on to prove the main inequality of the theorem.
+[565.48:567.7199999999999] Okay.
+[567.7199999999999:579.12] So let me number these facts as 1, 2, 3.
+[579.12:583.88] And I'm start with the first one, of course.
+[583.88:590.76] So proof 1.
+[590.76:593.08] So this is the easiest.
+[593.08:599.2] We want to prove that the all 1 vector is an eigenvector of the matrix p.
+[599.2:605.36] Actually, this is directly a consequence of the fact that p is a stochastic matrix as
+[605.36:606.72] you will see.
+[606.72:625.8000000000001] So what needs to be proven is that p times p0 is equal to 1 times p0, where p0 is the
+[625.8000000000001:632.6] vector which has components equal to 1 for every j-ness.
+[632.6:634.36] So here this is a simple computation.
+[634.36:644.52] And if we compute the i's coordinate of pp0 by definition of the matrix product, this
+[644.52:657.76] is the sum of a j-ness of pij times 1 because perhaps I should write p0j to be complete.
+[657.76:664.04] And this is by definition what I have chosen to be 1.
+[664.04:670.76] And since we have a stochastic matrix, the raw sum of p is equal to 1 for every i.
+[670.76:680.9599999999999] So this is equal to 1 for every i in s because you have sum of pij, okay.
+[680.9599999999999:685.28] And yeah, okay, again, let me write it a bit more explicitly.
+[685.28:689.28] So this is sum of j in s of pij.
+[689.28:697.68] And this is equal to 1 for every i in s, which is in turn equal to p0i because p0 is a
+[697.68:699.36] constant vector.
+[699.36:704.4399999999999] So doing this, we have proven the inequality above.
+[704.4399999999999:710.8] And so we have proven that p0 is an eigenvector of the matrix p with eigenvalue 1.
+[710.8:714.16] So every stochastic matrix has eigenvalue 1.
+[714.16:720.3199999999999] It's interesting here to realize that each for each property what we actually need of
+[720.3199999999999:721.76] the assumptions, right.
+[721.76:723.52] So here we don't need much.
+[723.52:731.64] Any matrix, any transition matrix of a Markov chain will have this property.
+[731.64:733.36] Proof of 2 now.
+[733.36:746.48] So 2, remember, is this fact that all the other eigenvalues, not lambda 0, but all the
+[746.48:748.96] other ones.
+[748.96:756.88] So here we remember here we have lambda 0, which is equal to 1.
+[756.88:761.4] The second fact is that all the other eigenvalues are less than or equal to 1.
+[761.4:765.88] Well, you might say why not prove 3 directly.
+[765.88:775.8] This is just, you know, just to ensure that we follow the reasoning a bit pedagogically.
+[775.8:781.6] And also this fact too, actually, as you will see, doesn't need much of assumptions.
+[781.6:784.72] Actually, it doesn't need any assumption on matrix p.
+[784.72:789.84] Except for the fact that we have to be in the setup where we have real eigenvalues,
+[789.84:793.96] but actually even if the eigenvalues were complex.
+[793.96:800.32] So in the general case, without detailed balance, then this would also hold where the absolute
+[800.32:803.6800000000001] value would be interpreted as a modulus.
+[803.6800000000001:808.5600000000001] But okay, let me prove it in this case where we know that the eigenvalues are real and
+[808.5600000000001:809.8000000000001] you will see how this goes.
+[809.8000000000001:815.76] So we won't need much of our assumptions of agodicity, detailed balance and everything.
+[815.76:824.68] We will just need here to use the right that we have a stochastic matrix.
+[824.68:826.64] Okay.
+[826.64:828.04] So what needs to be proven?
+[828.04:832.84] That's perhaps the most difficult part.
+[832.84:837.4399999999999] To prove that we will actually prove the following.
+[837.44:847.6] We will prove that if lambda is an eigenvalue of the matrix p, any eigenvalue corresponding
+[847.6:857.6] to some eigenvector, then it has to be a number between minus 1 and plus 1.
+[857.6:868.08] So say it or vice, let phi be an eigenvector of phi.
+[868.08:877.5600000000001] Okay.
+[877.5600000000001:879.16] Which is saying what does that mean?
+[879.16:890.7199999999999] So it means that there exists a lambda in R such that p times phi is equal to lambda
+[890.7199999999999:892.52] phi.
+[892.52:898.0] Okay.
+[898.0:905.48] Then this number lambda should be less than or equal to 1.
+[905.48:912.52] It cannot be a number outside the minus 1 plus 1 interval.
+[912.52:915.76] Okay.
+[915.76:922.52] So let me prove this.
+[922.52:926.88] So we know that phi is an eigenvector by by assumption.
+[926.88:936.76] P is an eigenvector, so phi cannot be or zero, so phi cannot be the vector which is made
+[936.76:940.56] of only zeroes.
+[940.56:955.88] So we will choose an i in s such that phi in absolute value is greater than or equal
+[955.88:959.84] to phi j for every j in s.
+[959.84:969.96] Of course such an i will exist and because phi is an eigenvector, we know that phi i
+[969.96:972.16] is strictly positive.
+[972.16:973.16] Okay.
+[973.16:979.68] Since this is a non-zero vector, one component must be non-zero and therefore it is absolute
+[979.68:983.36] value with this strictly positive.
+[983.36:985.16] So now I have chosen this phi.
+[985.16:991.8] So the one corresponding to the largest, the place where phi has the largest value in absolute
+[991.8:993.64] value.
+[993.64:1002.04] And I'm going to write down the eigenvector eigenvalue equation here.
+[1002.04:1014.16] So this equation can be written as, you know, well, of course this has to be true, right?
+[1014.16:1025.3999999999999] This has to be true for every i, so it has to be true for this i that we have chosen.
+[1025.3999999999999:1038.84] And so, and lambda phi i is equal to sum of j in s of phi j times phi j.
+[1038.84:1041.76] Okay.
+[1041.76:1048.76] Now let me take this equation and take absolute values and see what we get.
+[1048.76:1049.76] Okay.
+[1049.76:1055.28] So I'll write this on the next page.
+[1055.28:1063.72] Taking absolute values.
+[1063.72:1071.32] We get lambda phi i is equal to the absolute value of sum of j.
+[1071.32:1074.8799999999999] P i j phi j.
+[1074.8799999999999:1078.72] Remember, our goal is to prove that lambda in absolute value is less than or equal to
+[1078.72:1083.2] 1.
+[1083.2:1089.2] What I can do here on the right-hand side with this term, I can use triangle inequality
+[1089.2:1097.52] and show and get that this is less than the sum of j in s of phi j, which are by the way
+[1097.52:1106.6] non-negative numbers because there are probabilities times the absolute value of phi j.
+[1106.6:1109.68] But now I have chosen i.
+[1109.68:1114.36] Remember here I'm looking at my special i.
+[1114.36:1122.92] Search that phi i in absolute values greater than or equal to all the others phi j's.
+[1122.92:1129.6000000000001] So this is certainly less than phi i.
+[1129.6000000000001:1134.88] And so this thing here is, well, phi i is not depending on j, so I can take it out of
+[1134.88:1137.68] the sum.
+[1137.68:1143.92] Okay.
+[1143.92:1152.48] And again, since p is a stochastic matrix, this is equal to 1.
+[1152.48:1159.88] So, at the end, this thing is equal to absolute value of phi i.
+[1159.88:1173.0] So absolute value of lambda times p i is less than absolute value of phi i.
+[1173.0:1179.44] And of course, this I can rewrite as absolute value of lambda times absolute value of phi
+[1179.44:1186.3400000000001] is less than phi i. And now since phi is an eigenvector, this absolute value of phi
+[1186.3400000000001:1189.72] is strictly positive.
+[1189.72:1199.28] So I can simplify this inequality by absolute value of phi i and I get that absolute value
+[1199.28:1204.56] of lambda is less than or equal to 1.
+[1204.56:1212.28] So if there exists an eigenvector for this value lambda, so if lambda is an eigenvalue
+[1212.28:1221.6799999999998] corresponding to some eigenvector phi, then this eigenvalue has to take a value between
+[1221.6799999999998:1223.28] minus 1 and plus 1.
+[1223.28:1226.28] It cannot be outside the interval minus 1 plus 1.
+[1226.28:1235.2] Therefore, lambda 0 is the largest of all these eigenvalues.
+[1235.2:1236.2] Okay.
+[1236.2:1248.52] So here, again, for these two properties, I haven't used something specific about the matrix
+[1248.52:1249.52] p.
+[1249.52:1255.24] The only thing that I have used, but I could have spared this, actually, is the fact that
+[1255.24:1257.96] we have detailed balance and that the eigenvalues are real.
+[1257.96:1263.48] But again, this proof, actually, you can nearly copypaste this in the general case and
+[1263.48:1272.56] you would get that the modulus of any eigenvalue of the matrix p is less than or equal to 1.
+[1272.56:1274.1200000000001] And that's very general.
+[1274.1200000000001:1278.44] So here, we don't need agodicity to prove this.
+[1278.44:1279.44] Okay.
+[1279.44:1287.1200000000001] Now, in order to get the third property, let me go back to the third property, that lambda
+[1287.1200000000001:1293.8] 1 is strictly less than 1 and lambda n minus 1 is greater than minus 1.
+[1293.8:1302.76] This will require definitely the fact that we have an algorithmic marketer.
+[1302.76:1312.76] And I'll do this in the next video.

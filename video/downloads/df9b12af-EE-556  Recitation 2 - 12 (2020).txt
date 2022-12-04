@@ -1,0 +1,306 @@
+~EE-556 / Recitation 2 - 1/2 (2020)
+~2020-09-26T19:05:58.628+02:00
+~https://tube.switch.ch/videos/df9b12af
+~EE-556 Mathematics of data: from theory to computation
+[0.0:2.0] Can you see it now?
+[2.0:3.0] No.
+[3.0:4.0] So this is okay?
+[4.0:5.0] No, all right.
+[5.0:7.0] Sorry for the delay.
+[7.0:13.0] So today is another recitation.
+[13.0:21.0] The point about this recitation is that it's material that we don't necessarily teach in this particular course.
+[21.0:28.0] But it's material that we kind of need to understand the course.
+[28.0:43.0] So what we've done is just build some of the concepts from, let's say, linear algebra, some comics optimization, and put it in our own notation for this particular class.
+[43.0:46.0] And we're going to restructure memory.
+[46.0:50.0] So many of the things that I will be fine, you already know.
+[50.0:56.0] But I need them when I talk about algorithms and I go over some derivations.
+[56.0:64.0] I thought that it is a useful thing to just go over them a more time.
+[64.0:65.0] Good.
+[65.0:68.0] Like I said, I had this issue with the iPad.
+[68.0:75.0] I won't be able to write on the slides themselves, which is a real pity.
+[75.0:76.0] Okay.
+[76.0:81.0] So what we're going to do is give them the amount of time we have.
+[81.0:84.0] We're going to go a little bit on linear algebra.
+[84.0:87.0] Many of the things that I will talk about you again.
+[87.0:88.0] No.
+[88.0:90.0] So hopefully it'll be a review.
+[90.0:94.0] But there are certain things that you are unlikely to know.
+[94.0:98.0] And hopefully what I will tell you will make sense.
+[98.0:99.0] All right.
+[99.0:103.0] So we're going to talk a little bit about analysis, convexity,
+[103.0:106.0] and then convergence trace and convergence plots.
+[106.0:110.0] And this will help us go over the second handout that we posted.
+[110.0:111.0] Okay.
+[111.0:112.0] Good.
+[112.0:114.0] All right.
+[114.0:119.0] Now, we begin by defining metric.
+[119.0:126.0] If you recall in the lecture last week, we defined most functions.
+[126.0:131.0] Most functions gave us an ability to measure, let's say, the discreference,
+[131.0:134.0] and what we would predict.
+[134.0:136.0] And what the data tells you.
+[136.0:142.0] It was giving us the way of figuring out our error.
+[142.0:145.0] So most of these lost functions are metrics.
+[145.0:151.0] And to be a metric, you need to set this far certain rules.
+[151.0:152.0] All right.
+[152.0:154.0] So let's think about a function.
+[154.0:159.0] I can't even use the mouse for the data, which is really a pity.
+[159.0:166.0] A metric is, so we have a function.
+[166.0:172.0] It needs to be a non-negative.
+[172.0:173.0] Right.
+[173.0:174.0] And it needs to be zero.
+[174.0:179.0] It's only the two arguments into the metrics are equal.
+[179.0:180.0] It needs to have a symmetry.
+[180.0:183.0] Meaning if you look at the distance from one point to another point,
+[183.0:185.0] it should be the same thing.
+[185.0:190.0] Right. If you go from the other point to the point that you're looking at.
+[190.0:196.0] And it needs to satisfy the famous or the infamous triangle inequality.
+[196.0:202.0] Now, within the metrics, there is some variations along the theme.
+[202.0:206.0] A pseudo-metric would not satisfy defineteness.
+[206.0:210.0] You've seen an example with the hinge force.
+[210.0:211.0] Right.
+[211.0:214.0] And I'll give you more examples in this particular lecture.
+[214.0:221.0] There are divergence codes that satisfy non-negativity and defineteness,
+[221.0:225.0] but not necessarily symmetry and triangle inequality.
+[225.0:227.0] All right.
+[227.0:229.0] Good here.
+[229.0:232.0] I'm going to refresh the definition of norms.
+[232.0:235.0] You will see that norms induce metrics.
+[235.0:237.0] Sudo-norms induce pseudo-metrics.
+[237.0:243.0] So norms, it's the same, a very similar definition.
+[243.0:251.0] Normal vector is a function that takes an effective input and then produces a scalar.
+[251.0:255.0] And that skill needs to be non-negative.
+[255.0:260.0] It's zero if and only if the input is all zeros.
+[260.0:266.0] It's positively homogeneous, meaning that you take the vector and multiply it by a constant.
+[266.0:272.0] Then the norm will give you the absolute value of that constant times the norm of vector.
+[272.0:275.0] And it satisfies the triangle inequality.
+[275.0:280.0] And the most famous example for norms is the out of two norms,
+[280.0:287.0] out one norm, the cheating norm, out two norm, and a lumpy norm,
+[287.0:293.0] which are defined below.
+[293.0:298.0] Now, again, there are some variations along the team along this team.
+[298.0:305.0] Like I said, I apologize. I am unable to point even on the slide.
+[305.0:310.0] I've been trying to get my eye fat to work.
+[310.0:318.0] So here, it quads in on, satisfies all the properties except for the triangle inequality.
+[318.0:322.0] So it sets the size of triangle inequality up to a select.
+[322.0:327.0] So you multiply the summation of the individual norms with a constant that is greater than or equals.
+[327.0:334.0] And as semi-norm, it satisfies everything except for definetness.
+[334.0:345.0] And then there are quasi-norms, sorry, pseudo-norms, where, for example,
+[345.0:351.0] you give an input that is non-zero and yet the semi-norm can give a zero output.
+[351.0:358.0] The most famous example is the total variation semi-norm, where if you give it a constant input,
+[358.0:362.0] it would produce a zero.
+[362.0:368.0] So you can actually give, you know, you can obtain non-zero values for non-zero,
+[368.0:372.0] a zero values even for non-zero inputs.
+[372.0:376.0] Now, from time to time, when you look at data science problems,
+[376.0:379.0] there is a concept of fast-steady.
+[379.0:385.0] And whenever people talk about fast-steady, they talk about what is called an L-zero,
+[385.0:388.0] called NONS.
+[388.0:394.0] What L-zero, NONS does, it just counts the number of non-zero's in a vector,
+[394.0:397.0] and tells you the fast-steady level of the vector.
+[397.0:401.0] I feel like fast-steady is the number of non-zero entries.
+[401.0:407.0] If you only have a few, as compared to the ambient dimension, you would call it vector-sfast.
+[407.0:410.0] It's like the number of people.
+[410.0:415.0] With respect to the number of chairs there are only four students.
+[415.0:424.0] So we had a very far class, our L-zero norm, with respect to the students, or before.
+[424.0:427.0] All right.
+[427.0:434.0] Now, these non-zero's using these non-zero's, we can define certain sets.
+[434.0:440.0] For example, if you talk about how zero norm is less than or equal to two in three dimensions,
+[440.0:447.0] you can think of the union of hyperplanes that are aligned with the canonical coordinate axes.
+[447.0:450.0] That's an interesting set.
+[450.0:456.0] You can think about the L-Q balls, with the cos-norm balls,
+[456.0:463.0] with five, this pointy objects, they become very pointy in high dimensions.
+[463.0:472.0] L-1 norm is the sign-shaped ball, elliptinity norm, would be just the Q-min-T-gam-trucks.
+[472.0:475.0] All right.
+[475.0:477.0] Now, vector norms continue.
+[477.0:482.0] So you heard probably about these L-1 norm, now two norm, and so on and so forth.
+[482.0:488.0] But what I would like to introduce to you is something called a dual norm.
+[488.0:497.0] As some of you who's taken maybe comics and authors know, it's closely related to what is called a central conjugate.
+[497.0:506.0] We will discuss central conjugate later in this course, but the definition of the dual norm is basically defined as,
+[506.0:512.0] and so the definition is actually shown in that particular box.
+[512.0:530.0] Now, the definition here is that when you have, I don't know if this is visible, is this visible on the screen?
+[530.0:542.0] Okay, I see. Again, maybe I don't use the ball because it's a big issue.
+[542.0:546.0] So the dual norm is defined as follows.
+[546.0:551.0] So you look at a particular inner product of two vectors.
+[551.0:559.0] With one vector being the input to this dual norm, the other one is the argument of the optimization maximization.
+[559.0:573.0] So if you give me a norm, it's dual norm would be denoted by this norm-asterisk superscript, and the definition is given in the slide.
+[573.0:583.0] It is interesting by the way we define this, the dual of the dual norm is the original norm.
+[583.0:591.0] There are very interesting examples. This is a very useful concept.
+[591.0:606.0] Typically, this comes from, I mean, you can determine the dual norm using the holders inequality, which says that if you take it in a product, it's absolute value is up-orbounded by the q times the p norm of the two vectors,
+[606.0:619.0] and the q and p satisfy that particular summation, where the q plus 1 with p is equal to 1, and the q and p norms would be dual norm of each other.
+[619.0:635.0] So given the definition, it is easy to see that the two norm is itself, the, a self-dual norm, meaning the dual of two norm is itself, and the dual of one norm is the infinity norm.
+[635.0:642.0] At this point, this definition seems a bit abstract, but we will see it's utility later on.
+[642.0:648.0] Again, the point about this is, it's going to be like a blitzkrieg of definitions.
+[648.0:658.0] The reason why we're doing this description is someone who do know, but those of you who do not know, hopefully this will be a good introduction.
+[658.0:665.0] Alright, good question.
+[665.0:673.0] This makes even prevents the mass pointer to touch.
+[673.0:680.0] Okay, so what is the question?
+[680.0:690.0] How do we define a norm, which is a decree, is also an interesting question.
+[690.0:698.0] Like I said, that the norms you can visualize down by looking at, for example, the sets defined by the unit poles.
+[698.0:705.0] In which case, you can also visualize a dual norm, physically.
+[705.0:719.0] So you will see that the norms and their tools come from what is called as convex duality, and we will get to that particular point when we talk about primal-do methods in this class.
+[719.0:724.0] So this is, you know, maybe six-legged series from now.
+[724.0:730.0] For the time being, the point about the sophistication is to get you up to speed with some of the basics.
+[730.0:736.0] Alright, hopefully that answers the question.
+[736.0:745.0] Alright, just like we define norms for vectors, we can also define norms for matrices, even for tensors.
+[745.0:760.0] Now, for matrices, there is, I mean, the definition is exactly the same, right? The norm needs to satisfy non-negativity, definativeness for genety and tri-enquality.
+[760.0:768.0] Now, the cool thing about, like, when we talk about vectors, the concept of an inner product is well-defined.
+[768.0:780.0] Right, you take a vector, you take another vector, you multiply elements by entries, and sum it up. That's our inner product.
+[780.0:788.0] Right, actually, the same idea, I mean, a matrix-queente product is exactly the same as true.
+[788.0:799.0] Alright, we denote it, use this bracket notation. So you can have a matrix A inner product with matrix C.
+[799.0:808.0] If you think about this, it's, so the definition is trace times trace of the multiplication of A times the transpose.
+[808.0:820.0] What is interesting here is that if you were to vectorize these matrices in the same order, and take the inner product of those vectors, it will be equal to this.
+[820.0:831.0] Alright, and if you think about it more, this trace A, B transpose, you would actually never do this particular matrix product and then locate it's trace.
+[831.0:840.0] You would literally just do inner element-wise products in sum all the entries up to obtain this particular trace.
+[840.0:854.0] Alright, now, similar to our Q norms, maybe there's a type we're here that we should correct.
+[854.0:866.0] We also have Schatten Q norms for matrices, and what it is is that you look at the singular values of the matrices, and you apply the corresponding vector norm.
+[866.0:876.0] Alright, for example, the Schatten-1 norm for a matrix would be that you look at the singular values, and you just sum up the singular values.
+[876.0:893.0] Schatten-2 norm would be, so actually the L2 norm would be, what is called as the Schatten-2 norm or the Frobenius norm, that would be equal to some of the singular values squared.
+[893.0:907.0] And like in the vector case, L infinity norm would be the maximum singular value. Alright, that would be equal to the Schatten-1 norm of the matrix. Is this clear?
+[907.0:914.0] Alright, good.
+[914.0:932.0] Now, the operator norms for matrices is also an interesting concept. In this case, you can define, so you can think of matrices as linear methods between vectors.
+[932.0:941.0] Alright, remember, in finite dimensions, any linear operator can be written as a matrix.
+[941.0:955.0] So, you don't need to, for example, store matrices. If you think about it, SST, you can actually write down as a matrix, and I'm doing multiplications and obtain a Fourier transform.
+[955.0:964.0] But you would never do that, because there's a fast Fourier transform, which would obtain the Fourier transform much faster than a matrix need to be.
+[964.0:978.0] Alright, so that's why you would call it an operator. Alright, so it's a Fourier operator.
+[978.0:992.0] In this case, what is interesting is how well these operators preserve, for example, norms when the input is measured in some norm versus an output is measured in some different norm. Okay.
+[992.0:1013.0] So, the notation of Q-Aro-R means that you're looking at vectors that live in the unit Q-Norm. You apply the operator to them to obtain vectors, and you look at the maximum of those vectors in the R-Norm.
+[1013.0:1019.0] Alright, so it's given on the top block.
+[1019.0:1031.0] Now, if you think about it, I just go here, again, I apologize, because I cannot write, and this is really particularly frustrating for me.
+[1031.0:1040.0] So, Q-To-To operator norm is actually the section norm. I think there is a question. No? Okay.
+[1040.0:1057.0] So, Q-To-To operator norm is a, is a section norm, because if you write down the definition, right, you will look at, for example, the maximum of two norm of A-X, subject X being less than or equal to two.
+[1057.0:1062.0] So, the two norm of X is less than or equal to one.
+[1062.0:1079.0] So, let's think about this. So, suppose we write down the singular value decomposition of the matrix A with U, unitary, sigma, diagonal, D transpose, D is also unitary.
+[1079.0:1094.0] So, somebody suggested to show the norm of the matrix. How? What is the trick? We put keynotch preferences.
+[1094.0:1109.0] So, here's the deal. If you think about the two norm, two norm is invariant.
+[1109.0:1126.0] Bro, thank you. So, here's the deal. If you think about the two norm, right, two norm is invariant under unitary transformations.
+[1126.0:1141.0] Okay. And, normally, if you see this, it's the following. So, if you think about it, so let's say you had a unitary matrix times a vector X, two norm squared.
+[1141.0:1159.0] So, two norm is actually you can define it as U-X, U-X, right? Now, what this is is X transpose, U-transfors U-X.
+[1159.0:1171.0] Because U is unitary, U-transfors U is identity, and that is equal to X transpose X, which is D equal to square.
+[1171.0:1182.0] So, if you take a vector, you rotate it in the Euclidean space, it length does not change, right? Unitary transformations are just rotations in space.
+[1182.0:1193.0] So, in this particular case, if you think about it, so we can basically drop U here, because it's equal to the norm of sigma times D transpose X, right?
+[1193.0:1200.0] Okay. Now, think about the constraint. We're talking about all X's that live in Duclidean both.
+[1200.0:1212.0] So, just redefine a vector Z, which is D transpose X, and you literally have the same set, because D is again a unitary vector matrix.
+[1212.0:1222.0] So, it just corresponds to the rotation of the sphere. Rotation of its sphere is again the same set. All right.
+[1222.0:1231.0] So, this is equal to the maximum sigma of D, where sigma is diagonal, right? Good.
+[1231.0:1239.0] So, this literally means that you have a diagonal vector times these vector.
+[1239.0:1247.0] So, it's the singular values times the entries in Z squared summation, right?
+[1247.0:1262.0] And that is obviously, if you have a constraint on the two norm of Z, you will basically put all your weight into the maximum single value, and hence you get the spectrum of.
+[1262.0:1265.0] I hope this is clear.
+[1265.0:1271.0] Now, there are other operator norms that are useful.
+[1271.0:1283.0] Now, infinity to infinity is you look at vectors that live in the infinity, unit infinity ball, and you look at the supremum maximum of A X in L and T, no?
+[1283.0:1287.0] And there will be the maximum roll sum.
+[1287.0:1292.0] All right. One to one norm will be the max column sum.
+[1292.0:1312.0] So, some of these things you just need to think about it, right? Like, their definition is definitely easy, and you know, just convince your styles that this is the case.
+[1312.0:1327.0] All right. Now, here is what I would like you to remember. This particular analogy that I hinted at it, if you slice earlier. For vectors, and for matrices, there is this nice analogy, right?
+[1327.0:1338.0] For L2 norms, one to infinity, and shetting norms, shetting one, shetting two, shetting infinity is an exact parallel.
+[1338.0:1348.0] The shetting one norm is also known as the nuclear norm. You normally use this asteristh law.
+[1348.0:1360.0] For the the the shetting two norm, you use for being a norm as a spatial name. And for the shetting infinity norm, you just use the sexual norm.
+[1360.0:1371.0] And the way we define the dual norm for a vector, you define the same thing for matrices. It's just you take the inner product in the matrices.
+[1371.0:1384.0] I so given a primal norm, whatever this norm is, the definition, this is an inner product of A and X. And hence you have the dual norm.
+[1384.0:1403.0] All right. And again, the analogy holds, the infinity is the dual norm of L1, L2 is self-dual, my subversa, nuclear norm is the dual of the spatial norm for being his norm is self-dual.
+[1403.0:1423.0] Good. And again, just a refresher, we talk about symmetric matrices. There is something called semi-definitness or positive semi-definitness, which is denoted by this legally inequality.
+[1423.0:1435.0] All right. You would call a matrix positive semi-definit if for all vectors non-zero, X transpose AX is greater than or equal to zero.
+[1435.0:1452.0] So you would call a matrix again positive semi-definit. If all of its eigenvalues non-negative, you would call it a positive definite, in which case you don't have this particular mark underneath.
+[1452.0:1464.0] If all of its eigenvalues, if and only if all of its eigenvalues are positive, the negative strivid definite is defined the same way, which is take negative and call it positive definite.
+[1464.0:1477.0] And then you also have some semi-definit ordering of matrices, say A is greater than or equal to B in semi-definit ordering if A minus B is positive definite.
+[1477.0:1495.0] And there are so many qualities that are really trivial. I just this semi here for confidence. All right. So this ends this particular part on the norms for vectors and for matrices.
+[1495.0:1514.0] Here is the raised hand. What's the question? I think somebody raised hand in zoom. If they can type in a question that would be useful as opposed to raising hand.
+[1514.0:1529.0] All right. Now, what I want to talk about, okay, there is a question.
+[1529.0:1549.0] Okay. So I think could you perhaps just go back to the slide where you have min and p. Okay. So I understand what the question is about already. So here, remember, you can have a rectangular matrix.
+[1549.0:1564.0] Okay. Meaning A could be 3 by 5, for example. Right. In this case, when you perform the singular value decomposition, sigma is also a rectangular matrix.
+[1564.0:1572.0] And it starts from the top and it's diagonal has the singular values, but then in the rest, it has zeros.
+[1572.0:1585.0] So when you're having this particular summation, it cannot go to the larger dimension. It can only go to the smaller of the two dimensions of the rectangular matrix.
+[1585.0:1606.0] All right. Is that does that answer the question? All right. Other questions feel free to to, you know, post here in the audience are also welcome to ask. All right.
+[1606.0:1621.0] What I will do is I'll talk a little bit about the continuity and functions. All right. So I mean, this is like the recurring nightmare that calculus. You've seen.
+[1621.0:1640.0] All right. Okay. Actually. Normally, you use supremum and maximum when you have constraints that are open and closed.
+[1640.0:1654.0] Actually, in this particular lecture, I will define sets open sets and closed sets maximum reach. For example, let's say at a boundary.
+[1654.0:1664.0] But if the boundary is not included in the set. Then you don't have the maximum value. Right.
+[1664.0:1676.0] What you do is you look at the limiting value in which it's called a supremum. There's some analysis distinction there. Right.
+[1676.0:1681.0] So let me, let me try to explain this when I go over sets in a few slides.
+[1681.0:1692.0] What it means to have a closed set. What it means to have an open set. Actually, in everything and I described so far because I had inequalities for the norms.
+[1692.0:1704.0] I think just as values maximums. But if I put a strict inequality, meaning the ball is less.
+[1704.0:1711.0] But not equal less strictly less than one. In this case, you can keep a supremum.
+[1711.0:1718.0] And the supremum would be the one that achieved achieved at the boundary at the limiting value. All right.
+[1718.0:1726.0] So maybe we can actually just even simplify the slides and put maximums as opposed to humans.
+[1726.0:1736.0] All right. Continuity. So a function continues. If you take cheese, all of its limit values and it's the in the in domain.
+[1736.0:1747.0] And the way to use this notation is that you use this C for continuous functions. And this is important.
+[1747.0:1774.0] So you can see it. Yeah, I understand.
+[1774.0:1786.0] So, you know, if you have a function.
+[1786.0:1791.0] Here's a function. If you look at its limit points as you come near this.
+[1791.0:1795.0] This is this point. If you come to this point from the left.
+[1795.0:1804.0] If you achieve this, if you come to this point from the right, it is a test.
+[1804.0:1818.0] Here you would call this function lower than a continuous because it achieves the limiting point on the lower side.
+[1818.0:1835.0] So this point needs to be here or a function like this. It's just an example to counter example to.
+[1835.0:1840.0] Continuity. This would be a fairly continuous function.
+[1840.0:1844.0] It is continuous from one side, but not on the other side.
+[1844.0:1851.0] In fact, the lower of the continuous function. Anyway, let's talk about the left's continuity.
+[1851.0:1858.0] What is the question?
+[1858.0:1866.0] Is the x can be any vector or matrix as long as it's satisfied the restriction that norm is less than equal to 1.
+[1866.0:1873.0] So, I am assuming this is the regards to the dual norm definition.
+[1873.0:1876.0] That is exactly the way you set up the dual norm.
+[1876.0:1883.0] Is that you keep you pick a primal norm, like a norm to norm.
+[1883.0:1892.0] And then you look at like an optimization problem where you look at the particular inner product.
+[1892.0:1898.0] And you can choose whatever you can within that constraint set to maximize that thought.
+[1898.0:1902.0] It can be anything within that norm.
+[1902.0:1909.0] That norm generates the set defines the set and within that set you can pick any point.
+[1909.0:1912.0] Hopefully this answers the question.
+[1912.0:1924.0] So, what we are doing now is we are thinking about continuous functions.
+[1924.0:1933.0] You would call a function, if you evaluate function at any two points.
+[1933.0:1941.0] And this can be uprooted by a constant times the distance of these two points.
+[1941.0:1946.0] So, you would call it, if you continue in the L2 norm, if you want to specify it.
+[1946.0:1955.0] And the key observation here is that, you know, like the lecture's continuity tells you that small changes in the input result in small changes in Yacht.
+[1955.0:1962.0] It's also somewhat related to the smoothness, but not exactly.
+[1962.0:1977.0] So, if you think about this, what this inequality defines, it's like a cone around every point where it says that the function needs to be within this cone as you move the point.
+[1977.0:1983.0] All right.
+[1983.0:1989.0] Again, I cannot write on the splice, so this is creating a bit of a issue.
+[1989.0:1992.0] The French ability.
+[1992.0:1996.0] Again, the recurring nightmare that calculus is.
+[1996.0:1999.0] Let's talk about the French ability.
+[1999.0:2003.0] Even if you know, let me tell you this.
+[2003.0:2012.0] The students over the last two years really appreciate it, upscrolling over derivatives, actually.
+[2012.0:2019.0] Because what we do in this course is we take derivatives, we just respect the vectors, we just respect the matrices.
+[2019.0:2029.0] And things become a bit convoluted when you start taking the derivative of log determined x, x, x, x, we just respect the x.
+[2029.0:2031.0] All right.
+[2031.0:2047.0] So, what I want to do is remind you some of the basics, and hopefully I'll also remind you that it is okay to stick to the basics to actually obtain some complicated derivatives or seemingly complicated derivatives.
+[2047.0:2049.0] All right.
+[2049.0:2052.0] Now, let's talk about the French ability of the function.
+[2052.0:2060.0] If function is fit to be k times the French, you know, if it's partial derivatives up to the kth order, x, x, and x,
+[2060.0:2063.0] you can use, over it's for me.
+[2063.0:2069.0] Now, the first order derivatives, we call it the gradient.
+[2069.0:2082.0] All right. And what you do is you look at the function, you take its derivative, you just pick to the i-t coordinate, and you put it into the i-t location in a vector.
+[2082.0:2094.0] So, you have a function that takes an vector. So, this is not a vector value function, say function over vectors.
+[2094.0:2097.0] It is a single output.
+[2097.0:2108.0] And it's gradient is that you look at each coordinate of that vector, you take the partial derivative with respect to that coordinate, and you put it inside a vector.
+[2108.0:2119.0] So, the first entry would be the gradient, the partial derivative of s, which is thick to the first entry of the vector.
+[2119.0:2124.0] For the second order derivative, you would call this the Haitian.
+[2124.0:2128.0] And Haitian is actually a matrix.
+[2128.0:2139.0] So, what you do is you take the partial, with respect to the i-t and the j-t coordinate, you put it into the i-t j-t entry in the matrix.
+[2139.0:2142.0] Good.
+[2142.0:2153.0] Now, the definition is nice, but what we will need is a bit more intuition, and we want to take derivatives.
+[2153.0:2160.0] Now, one definition that I really like is the Taylor way of thinking about gradients.
+[2160.0:2174.0] So, if you think about it, like the Taylor expansion, so let's say you look at fx plus u, the first order approximation would be f of x plus the gradient of f at x,
+[2174.0:2191.0] fx plus u. So, here the gradient is actually a mapping of this particular input to a scalar.
+[2191.0:2194.0] It's a linear functional.
+[2194.0:2213.0] It's such that if you look at the particular difference of the function and its linearization, so if you think about it, geometric, what you're doing is, let's say here's the function, you know, f.
+[2213.0:2228.0] You're looking at it at two points, you know. So, here's f, let's say x, here's f of x plus u, and think about it.
+[2228.0:2236.0] So, this would be, let's say, the gradient of f the way it defines a normal vector, actually.
+[2236.0:2253.0] The point about this is that if you look at this difference, as u goes to 0, this vector, meaning this point gets closer and closer to f of x, it will give you this particular gradient.
+[2253.0:2262.0] And gradient is basically the normal vector to that hyperplane that is tangent to the function.
+[2262.0:2267.0] I think that an example is a proper here, so let's just see one.
+[2267.0:2275.0] So, let's think about this function that takes the two norm of a vector squared.
+[2275.0:2282.0] And I argue that the gradient of this function is just simply 2x.
+[2282.0:2299.0] So, how do we get this? If you think about this particular Taylor way of thinking, what we need to do is look at f of x plus u minus f of x, right, which is, so, 2 norm squared of x plus u minus 2 norm squared x.
+[2299.0:2314.0] So, we can actually expand this particular two norm, right, it's the two norm of x plus 2 times the inner product of x and u plus u norm squared, right.
+[2314.0:2320.0] So, we have minus f of x, which is minus x squared, so, this x squared gets canceled.
+[2320.0:2341.0] We have this linear function, right, and then u squared. So, if you think about this, if you divide this particular, so, if you take this to the left hand side, right, 2x u to the left hand side,
+[2341.0:2356.0] look at this particular destination, you look at the norm of u as u goes to 0, which is 0, right. And it means that the gradient of f is basically 2x.
+[2356.0:2375.0] Now, this may look like a trivial thing, but just you can do the same derivation by replacing the function with a times x for the matrix, right. I give this as a self-exercised, and I will show you other ways of doing this also easily.
+[2375.0:2392.0] So, think about f of x is a squared. What would be the gradient? Any ideas? Right.
+[2392.0:2414.0] So, maybe I do this just because it's super elementary, but the same destination and it will continue. We take a break and then continue. So, if you think about this, if you add x plus u, the same thing is a squared plus 2a transpose,
+[2414.0:2431.0] transpose a x for a u transpose a x plus a squared.
+[2431.0:2448.0] Am I going to ask you here? Because here, this is in fact equal to a x plus u squared, right.
+[2448.0:2464.0] So, this is an inner product of a x plus u a x plus u, right. I just use distributed property in the inner product a x squared.
+[2464.0:2484.0] Then you have 2 of a u transpose a x and then a u squared. All right. It's simple. Now, what we need to do is do the following, right.
+[2484.0:2507.0] f of x, which in this case you get to a u transpose a x plus a u squared. All right.
+[2507.0:2527.0] Now, we just looked at that this is an inner product of 2a transpose a x u plus something that is dominated by u squared.
+[2527.0:2544.0] Some constant times u squared, right. Just relook at this, oops, relook at this destination. All right. So, you just subtract this from here. This is the function that you're interested in.
+[2544.0:2566.0] Okay. When you let the u no one go to zero, this disappears. Here is our derivative. All right. Here is our gradient of f of x, which is 2 times a transpose a x, like really elementary. Simple rule.
+[2566.0:2576.0] Okay. We take a 15-minute break.

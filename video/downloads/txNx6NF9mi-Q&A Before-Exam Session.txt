@@ -1,0 +1,533 @@
+~Q&A Before-Exam Session
+~2022-01-24T17:59:38.532+01:00
+~https://tube.switch.ch/videos/txNx6NF9mi
+~CS-451 Distributed algorithms
+[0.0:7.4] Hi everyone.
+[7.4:12.48] This is the final event exercise session.
+[12.48:19.080000000000002] I mean exercise like it's a kind of a rehearsal session before the exam next week.
+[19.080000000000002:27.6] If you have any questions or comments that you would like to make, we are here to listen
+[27.6:28.6] to you.
+[28.6:35.04] Both in terms of like the content of what we have seen for this year, possibly also
+[35.04:39.32] you know how the exam is going to go and it just takes and stuff.
+[39.32:44.52] We hope to be able to answer both.
+[44.52:48.92] Can I start?
+[48.92:49.92] Hello.
+[49.92:50.92] Hey.
+[50.92:54.92] Can I ask a question now?
+[54.92:55.92] Yeah.
+[55.92:56.92] I think so.
+[56.92:60.56] So I have let's say three questions.
+[60.56:65.72] So the first one is when I proved the correctness of my algorithm.
+[65.72:69.72] So basically I actually like explain.
+[69.72:77.24000000000001] Well, there are many methods of proving an algorithm, but the one that I'm comfortable
+[77.24000000000001:82.08] using is like I explained the flow of the program and like if you're stupid to state,
+[82.08:89.03999999999999] I explain each state and then I infer like the inheritance of the property of the underlying
+[89.03999999999999:91.32] primitive something like that.
+[91.32:98.0] Is it like correct or well, this is quite a general question now, isn't it?
+[98.0:101.32] Yes, yes, that's a good approach, I would say.
+[101.32:104.64] I can confirm that something I do too, right?
+[104.64:110.0] It's usually, you know, the algorithms that we see are.
+[110.0:115.6] It means to be relatively easy to, you know, to prove the correctness.
+[115.6:116.6] Yes.
+[116.6:124.4] So in general, you know, patiently following step by step how the algorithm unravels is
+[124.4:125.8] usually good, right?
+[125.8:126.8] Okay.
+[126.8:135.52] Now, if you know, one could say, for example, well, let's say if you want to prove the
+[135.52:140.12] ligeness, I would probably go, you know, forward in time, right?
+[140.12:145.08] You have a good, desirable condition at the input and this produces not a good, desirable
+[145.08:148.48000000000002] condition as a medium step and then another medium step and then eventually you're going
+[148.48000000000002:149.48000000000002] to get your good condition, right?
+[149.48000000000002:154.60000000000002] And if you wanted to have proofs of security then sometimes I mean, this is a very, very
+[154.60000000000002:155.60000000000002] general question.
+[155.60000000000002:160.4] So I am generally, sometimes you probably want to walk backwards, right?
+[160.4:163.64000000000001] If you say, for example, let's have an undesirable condition.
+[163.64:165.64] That's simple.
+[165.64:166.48] We want to prove that it doesn't happen.
+[166.48:170.39999999999998] So if for this to happen, we would need something immediate to before, right?
+[170.39999999999998:174.23999999999998] And for that to happen, we would need something nearly before and so on and so forth.
+[174.23999999999998:180.76] Obviously, yes, it's going to be kind of a kind of a next bag of techniques, but like
+[180.76:189.0] anything that it's more about what steps you use other than how you organize them, right?
+[189.0:194.12] If every step that you use is like, okay, well, this variable is only set in this place
+[194.12:201.56] and therefore must have been set by this line or if I receive a message, we have perfect
+[201.56:202.56] length.
+[202.56:206.96] So that message must have been sent or you use the properties of one of the instructions
+[206.96:207.96] that you have.
+[207.96:209.96] You're going to be good, right?
+[209.96:215.52] And obviously we accept to whatever proof, like you don't need to have the most set against
+[215.52:216.52] proof.
+[216.52:225.88] And second question is, can we ask, for example, if we want to use like a ranking rank
+[225.88:234.4] function that like this function will provide you with like the ID of the next process in
+[234.4:236.24] the system, something like that.
+[236.24:237.84] Can we assume we have a rank function?
+[237.84:247.08] For example, in the midterm exercise that they want the message complexity to be goal
+[247.08:248.08] one.
+[248.08:252.04] So we want to send the message to the next.
+[252.04:255.48000000000002] Next process, something like that.
+[255.48000000000002:259.88] Can we assume that we have a rank function, that this function will give you the next
+[259.88:261.52] process in the system?
+[261.52:267.4] If it's over, if it's basically said, you cannot.
+[267.4:272.03999999999996] It's not correct me if I'm wrong.
+[272.03999999999996:275.15999999999997] We have learned our lessons.
+[275.15999999999997:278.0] It will be explicitly stated.
+[278.0:283.08] Every time you will need one, you will have it.
+[283.08:286.2] And you won't have to guess, right?
+[286.2:290.08] Like, okay, first off, worst case scenario, if you really find yourself in a situation where
+[290.08:295.96] you feel like there's no way out and you really want some assurance from that point of
+[295.96:299.71999999999997] view, worst case scenario, always your hand and say, can I use a rank function?
+[299.71999999999997:303.4] And if you tell you, no, don't use a rank function.
+[303.4:305.96] It means that there's a very easy way out.
+[305.96:311.96] We're not here to give some very complicated or weird obstructions that nobody understands.
+[311.96:319.44] We're going to be making it quite smooth, quite very well understandable.
+[319.44:325.71999999999997] But if there's something that requires a rank function, we will make sure that you do have
+[325.71999999999997:326.71999999999997] it.
+[326.71999999999997:332.96] So we will explicitly say so in the exam, we want to make a mistake again on kind of leaving
+[332.96:333.96] it in person.
+[333.96:341.15999999999997] I would say that most of the times, I would say that all the time, we actually need one,
+[341.15999999999997:342.15999999999997] you will have one.
+[342.15999999999997:347.96] We don't need to be too far to the more with the assumptions in these cases.
+[347.96:354.88] And I just want to make one small comment there, but know that you know the, you know,
+[354.88:357.59999999999997] the ideas of processes that you have in the system.
+[357.59999999999997:366.15999999999997] So midterm said like we need to build a system that allows for all upon communication,
+[366.15999999999997:368.08] as to what ever.
+[368.08:372.88] But given that you know the ideas of all processes in the system, you were able to build rank
+[372.88:373.88] function yourself.
+[373.88:380.88] You just needed to say, I don't know, I take all the processes and so on them and then
+[380.88:382.28] the next guy.
+[382.28:386.36] So in that regard, you were able to build it yourself.
+[386.36:387.36] Okay.
+[387.36:389.36] We didn't need to give it to you.
+[389.36:396.0] So, but yes, if we explicitly say that it's something very exotic, very hard, you will
+[396.0:397.0] have it.
+[397.0:398.0] Yeah.
+[398.0:400.0] Go on.
+[400.0:405.44] We will specify if a system is permissionless, like if we say, oh, processes don't know
+[405.44:406.44] each other.
+[406.44:409.6] That's that's that's that's got some beyond the risk specifiers.
+[409.6:410.6] Of course.
+[410.6:417.32] And like, for example, the the the the the Internet like a hierarchy consensus that they like
+[417.32:420.32] the process with length one.
+[420.32:426.96] A desire and then broadcast the decision something like that then if like because consensus
+[426.96:433.2] can be built by like a flooding like flooding message and like a hierarchy.
+[433.2:438.96] So if you don't specify that we have a right, then we need to build one if we want to
+[438.96:444.79999999999995] implement a hierarchy system, but we use another algorithm something like that.
+[444.79999999999995:445.79999999999995] Yes.
+[445.79999999999995:446.79999999999995] Exactly.
+[446.79999999999995:447.79999999999995] Okay.
+[447.79999999999995:452.32] You are you I mean most of the times if this is not the case, we are going to mention it,
+[452.32:456.52] but most of the times you can imagine that all processes are connected very well.
+[456.52:461.64] So now if you want to build something exotic, we're in the first round, I communicate with
+[461.64:465.79999999999995] two of the processes and I communicate with two other and so on.
+[465.79999999999995:470.44] So for you will need to specify that in the algorithm, but you are able to do that because
+[470.44:471.44] there are links.
+[471.44:472.44] Yeah.
+[472.44:475.71999999999997] If there are some exotic scenarios where, for example, mater and I do not have a link
+[475.71999999999997:480.32] come on between each other and we cannot communicate that will be explicitly said.
+[480.32:481.32] Okay.
+[481.32:491.88] And last question is from the final 2019 or 18, the one that you will give us later.
+[491.88:500.2] The last question is we have a link of the processes and we want to basically find the
+[500.2:501.88] leader, right?
+[501.88:507.68] And the first thing is that you, with people or cats, you are, you are an ID and then process
+[507.68:509.28] the next one something like that.
+[509.28:512.56] I think that your audio is slowly collapsing.
+[512.56:514.36] You will be kind of very robotic.
+[514.36:515.36] Okay.
+[515.36:516.36] Sorry.
+[516.36:518.64] Is it, I speak slowly.
+[518.64:530.4] So the solution for the last question of the final 2019 or something like that is, so
+[530.4:532.6] the solution won't be out return.
+[532.6:540.52] That has the message complexity of the, or end lock end, which and the solution is to
+[540.52:547.32] like, but like, but to the left and right, right?
+[547.32:554.0] And then check who win and then that and then the both sides.
+[554.0:560.4] If I, for example, if I win my left and my right, you know, you no longer broadcast anything
+[560.4:563.52] only relay the message.
+[563.52:572.64] But when I, and I want to compete with another to process that is beyond my left and right
+[572.64:579.4] neighbor, but since I can only communicate to the left and the right, when I brought
+[579.4:584.04] care, when I sent the message to the left to the right and they still need to relay
+[584.04:585.76] the message.
+[585.76:592.52] Just relaying of the message, that's it count as I make a third count.
+[592.52:598.6] Then if that counts, then how the message can be end lock end.
+[598.6:604.3199999999999] Because if we count that, this is one message we sent to our neighbor and that's it.
+[604.3199999999999:609.56] And then on the next time, we want to send to the message to the next guy.
+[609.56:614.24] We said, we just relay them through the neighbor.
+[614.24:620.88] And if we count, we bring as one, then it makes sense that I'm not sure if, yes.
+[620.88:625.12] Now, you know, please do correct away because I might not remember exactly the sex society
+[625.12:627.12] that's been a while.
+[627.12:632.92] But if so, the study was that you, the total communication of activities and again,
+[632.92:635.64] or max, yes, the process, total and total.
+[635.64:636.64] Yes.
+[636.64:637.64] Okay.
+[637.64:641.16] So essentially what's going to happen if I remember correctly is that you're going to,
+[641.16:645.68] you're going to relay an all of one number of messages from somebody within one step
+[645.68:646.68] from you.
+[646.68:650.04] Like, it puts yourself in the shoes of any specific process, right?
+[650.04:651.04] Yeah.
+[651.04:656.76] And you're going to be relaying an all of one number of messages from somebody within one
+[656.76:662.88] of you and all of one number of messages within somebody within two of you and all of
+[662.88:666.52] one number of messages within four and kind of the fourth, right?
+[666.52:672.96] So you're going to end up yourself relay relaying an all of one times all of log n equals
+[672.96:675.36] all of log n number of messages.
+[675.36:678.72] Do you agree you're going with this assessment?
+[678.72:679.72] Yes.
+[679.72:685.0799999999999] So we already, there was a question on this and I put a link on Moodle.
+[685.0799999999999:691.0] So maybe you can take a look at that and then if there are some other confusions, we can,
+[691.0:694.88] we can discuss some Moodle, but this is a well known algorithm and.
+[694.88:696.88] Okay.
+[696.88:697.88] Yeah.
+[697.88:706.96] I mean, I read it in the Wikipedia and so that's mean that even you brought tests to your
+[706.96:710.76] neighbor and your neighbor relay them.
+[710.76:712.28] You also call it a business.
+[712.28:714.8] This step is one and another step is another one.
+[714.8:715.8] That is correct.
+[715.8:716.8] Yes.
+[716.8:717.8] Okay.
+[717.8:718.8] Yeah.
+[718.8:719.8] Yeah.
+[719.8:720.8] That's all my question.
+[720.8:721.8] Thank you.
+[721.8:722.8] Cool.
+[722.8:725.4] Can I connect?
+[725.4:726.4] Yes.
+[726.4:727.4] Yeah.
+[727.4:730.5999999999999] So I have like simple and brief questions.
+[730.5999999999999:732.76] So I'll try to be precise.
+[732.76:737.52] So the first one was more about the questions like give interface and properties.
+[737.52:743.28] Is it enough to just like give like what is the request and the indication event and
+[743.28:749.1999999999999] then just the name of the properties and then of course, like define the properties
+[749.2:755.48] like just request indication that the properties start enough.
+[755.48:761.72] So you're asking if we asked you to say what the events and properties are, is it fine
+[761.72:764.12] if you give us events and properties?
+[764.12:765.12] Yes.
+[765.12:770.12] Not only that, but like for example, like if you had like a question before like for
+[770.12:775.48] example, you give us the interface and properties of B e B and then on the other
+[775.48:781.4] question you have like your B define the interface and properties of uniform reliable
+[781.4:782.4] broadcast.
+[782.4:789.12] Do you need to read again, write B e B 1, B e B 2, B e B 3 or no need, even if it's another
+[789.12:791.12] exercise?
+[791.12:795.5600000000001] So if you are, if you are, please go ahead.
+[795.5600000000001:796.5600000000001] All your stuff.
+[796.5600000000001:797.5600000000001] Okay.
+[797.5600000000001:802.24] So you are asking whether if I give an answer to something in one place with the exam,
+[802.24:805.04] do I need to repeat myself if that's needed?
+[805.04:806.04] Yes.
+[806.04:813.04] No, no, you just make it clear like saying okay, I said this on page 5 and then we go on
+[813.04:815.5999999999999] page 5 and we take a look and if it's correct, it's correct.
+[815.5999999999999:817.8399999999999] You can always reference your homework.
+[817.8399999999999:818.8399999999999] Exactly.
+[818.8399999999999:819.8399999999999] Yes.
+[819.8399999999999:820.8399999999999] Okay.
+[820.8399999999999:821.8399999999999] Okay.
+[821.8399999999999:822.8399999999999] Perfect.
+[822.8399999999999:827.36] My next question was more like when you have to prove like that two abstractions are equivalent.
+[827.36:831.28] For example, let's say T O B and consensus.
+[831.28:839.04] Is there like a schema on how to do it normally because we have different methods of proving
+[839.04:840.04] that?
+[840.04:847.56] The easiest way that you can do is usually then you're very free to choose the approach.
+[847.56:853.88] If you want to prove that A and B are equivalent, you build A out of B and then B out of A.
+[853.88:854.88] Right.
+[854.88:859.72] So for example, when we build, when we show the consensus is as strong as the order of
+[859.72:860.72] broadcast.
+[860.72:866.1600000000001] You know, we show that we can build total of the broadcast out of consensus.
+[866.1600000000001:871.96] For example, you know, you have rounds and every round you decide on a set and blah, blah,
+[871.96:879.08] and then we also proved that you can build by some very short consensus out of total
+[879.08:880.08] of the broadcast.
+[880.08:883.32] Everybody shouts the first one that gets there is the way.
+[883.32:884.32] Right.
+[884.32:885.32] Okay.
+[885.32:889.72] Usually you build A out of B and then B out of A and those are proved now to be equivalent.
+[889.72:890.72] Okay.
+[890.72:891.72] Okay.
+[891.72:892.72] Perfect.
+[892.72:900.2] My other question was like, for example, the midterm question one sub-question D. It was
+[900.2:909.08] about creating just the algorithm with the minimum, with the smallest, sorry, maximum
+[909.08:911.6] per-process message complexity.
+[911.6:915.8000000000001] And we did that just in three lines, like in the solution.
+[915.8:922.12] Like they say, like we organize all the processes in a list with the first and then, like we
+[922.12:925.8] not writing like the algorithm, like the way that we did it.
+[925.8:930.9599999999999] I know that the indexesizes, like sessions, it's all best that sometimes we need to do
+[930.9599999999999:935.56] like a detailed algorithm, sometimes we don't.
+[935.56:939.1999999999999] How can we know like in that case we can...
+[939.1999999999999:942.92] In general, there's some simple rules.
+[942.92:951.0] Um, always be as precise as possible, comparatively with the amount of time that you have.
+[951.0:952.0] Right.
+[952.0:958.4399999999999] So if you find yourself having, like for five hours, everything, you might as well do things
+[958.4399999999999:959.4399999999999] properly.
+[959.4399999999999:960.4399999999999] Right.
+[960.4399999999999:966.24] Obviously do, you know, allocate your budget of time, the best you can.
+[966.24:967.24] Right.
+[967.24:968.24] This is the first rule.
+[968.24:972.1999999999999] The more precise you are, the better the happier we are.
+[972.2:975.08] Second, we're not unreasonable people.
+[975.08:984.9200000000001] Your goal is to show us that you have a specific algorithm in mind.
+[984.9200000000001:987.6800000000001] We will be able to read and understand your English.
+[987.6800000000001:996.36] We're not, you know, blind compilers that only understand C++ or Java, right.
+[996.36:998.1600000000001] We will understand what you mean.
+[998.16:1004.56] However, we have some experience in correcting, um, in correcting exams.
+[1004.56:1010.92] So we will always, not always, but like we will also, I meant, um, thought if you're just
+[1010.92:1017.64] trying to be very generic, hoping to shoot for something that sounds like an algorithm.
+[1017.64:1018.64] Right.
+[1018.64:1026.52] If I, if I was allowed to reply qualitatively to your question, if your intent is to
+[1026.52:1030.0] kind of fool us, you are unlikely to succeed.
+[1030.0:1033.6] If you have a specific algorithm in mind and you want to convey that meaning, you are
+[1033.6:1035.36] quite likely to succeed.
+[1035.36:1036.36] Okay.
+[1036.36:1037.36] Yeah.
+[1037.36:1039.6399999999999] The more specific you are, the better, right.
+[1039.6399999999999:1047.56] Now if you say proof, for example, um, the, the process is stuck to each other.
+[1047.56:1052.0] The four, uh, consistency is insured.
+[1052.0:1053.0] You're trying to fool us, right.
+[1053.0:1058.12] You're hoping they were too tired to correct this properly and we probably will be, we'll
+[1058.12:1064.04] be tired, but you know, we'll still try to stick to, to be, you know, as formal as
+[1064.04:1065.36] precise as possible.
+[1065.36:1067.16] But we, we do understand English.
+[1067.16:1068.16] Okay.
+[1068.16:1069.16] Yeah.
+[1069.16:1070.16] Okay.
+[1070.16:1071.16] Thank you.
+[1071.16:1075.52] And the last question was, was like what you discussed with, uh, no, wait, about the
+[1075.52:1081.92] rank function, uh, I didn't understand like, uh, correctly, what you meant by that,
+[1081.92:1087.64] uh, like when we, you have to say it's, uh, like explicitly, like what do you have an
+[1087.64:1091.8400000000001] example of the current function that we used in the exercises because it, you know,
+[1091.8400000000001:1096.68] maybe I, it's just to me that it is, I think that what you, uh, what you're going to
+[1096.68:1102.6000000000001] say is that the, the identifier of every process is known to every process, right.
+[1102.6000000000001:1107.24] This is kind of encoded already in the fact that you have perfect links between any
+[1107.24:1115.4] super processes, um, so anything works, right.
+[1115.4:1120.2] You take the list of all the identifiers, you sort them, and you're done, right.
+[1120.2:1121.2] Okay.
+[1121.2:1126.64] And in, in the real world, I don't know if it's sort them by their IP or the first five
+[1126.64:1131.8] bytes of their public key or whatever that is, right.
+[1131.8:1137.44] You, you, you can assume that identifiers are sortable, for example, once, once they
+[1137.44:1141.04] are sort of, you can truly assign a rank to each of them, just by swapping them.
+[1141.04:1146.24] And since, you know, everybody agrees on who the identifiers of the system are, this
+[1146.24:1147.24] always works.
+[1147.24:1151.2] Yes, you have completely well-known systems where everybody can talk to everybody and,
+[1151.2:1154.08] uh, be called an permission, right.
+[1154.08:1157.24] Everybody knows the list of processes in the system.
+[1157.24:1164.0] In those cases, yes, rank function, I mean, we will even specify it if, if necessary.
+[1164.0:1165.0] All right.
+[1165.0:1170.52] So, um, like, if, uh, about the rank function at the beginning of the exam, even we just
+[1170.52:1176.88] say that since we have a perfectly to all the system, to all the process, uh, we define
+[1176.88:1183.72] a rank function as we sort all the, uh, the number, the identifier of the process by descending
+[1183.72:1188.2] order and the rank function will give you a number, something like that, is that, uh,
+[1188.2:1189.2] fine.
+[1189.2:1192.56] Okay, I would say so, isn't it, you know, yes, right?
+[1192.56:1196.8] Just, just, yeah, it's, it's kind of, if you only rank from, not more specifically, we
+[1196.8:1197.8] will call you that.
+[1197.8:1204.2] Like, we are, every year we evolve in such a way that even more specific, uh, you, you
+[1204.2:1206.88] shouldn't have problems interpreting what does it that we mean.
+[1206.88:1214.3600000000001] In the worst case scenario, if it's really an issue, do raise your hands and do the answer.
+[1214.3600000000001:1215.3600000000001] Thank you very much.
+[1215.3600000000001:1216.3600000000001] Well, thank you.
+[1216.3600000000001:1217.3600000000001] Thank you.
+[1217.3600000000001:1218.3600000000001] Cool.
+[1218.3600000000001:1219.3600000000001] Hi.
+[1219.3600000000001:1221.0] Uh, can I, can I ask you a question?
+[1221.0:1222.0] Yeah, of course.
+[1222.0:1223.4] Yeah, it's super, super brief.
+[1223.4:1229.16] Uh, when you ask us about, uh, uh, I don't know, cause of the broadcast or uniform
+[1229.16:1232.6000000000001] cause of the broadcast, uh, we have the cause a lot of the property.
+[1232.6000000000001:1236.64] Uh, do we need also to explain you what caused our needs?
+[1236.64:1237.64] Yes.
+[1237.64:1238.64] Okay.
+[1238.64:1239.64] Thank you very much.
+[1239.64:1240.64] That's fine.
+[1240.64:1241.64] Thank you.
+[1241.64:1252.96] And, sorry, could you repeat like the question, uh, if, if you're explaining causal or
+[1252.96:1256.48] liberal tasks to explain what causality means, yes.
+[1256.48:1258.2] Like, the property.
+[1258.2:1259.2] Yeah.
+[1259.2:1263.24] What do you mean for two messages being causal relationship with each other?
+[1263.24:1264.24] Yes.
+[1264.24:1265.24] Okay.
+[1265.24:1275.24] Do you guys have other questions?
+[1275.24:1292.04] Um, I have one question regarding the mid, uh, it is the midterm or, oh, no, the final
+[1292.04:1293.04] of 2019.
+[1293.04:1301.56] The one, the second, the second question that has the property of cause, the causal
+[1301.56:1310.32] property is an equivalent relation of, uh, partial order relation or total order relation
+[1310.32:1311.32] something like that.
+[1311.32:1320.8799999999999] Uh, like, I'm not sure if this is explicitly explaining the class or like, where can we
+[1320.88:1323.64] know that information of something like that?
+[1323.64:1327.5200000000002] So it is, uh, it, it was explained by professor.
+[1327.5200000000002:1335.6000000000001] So the question there is pretty much are any two messages causally related and the answer
+[1335.6000000000001:1336.8000000000002] is no.
+[1336.8000000000002:1341.68] Of course, because it can happen that Mattel broadcast the message and I broadcast the message
+[1341.68:1346.0] at, you know, the same time, which means before receiving Mattel's message and then these
+[1346.0:1347.8400000000001] two messages are not causally related.
+[1347.84:1359.3999999999999] So, uh, is that a question released to the faculty who are, uh, not aware of the meaning
+[1359.3999999999999:1362.3999999999999] of, um, I'm not aware of the meaning of class.
+[1362.3999999999999:1363.3999999999999] Yes.
+[1363.3999999999999:1365.0] Or partial order or total order.
+[1365.0:1366.0] Yeah.
+[1366.0:1370.9199999999998] That's, except so I, I'm not aware of the meaning of equal to the relation, partial order
+[1370.9199999999998:1374.56] relation and total order relation.
+[1374.56:1375.56] This is, is this.
+[1375.56:1382.56] It's, it's zero or like, or anything.
+[1382.56:1389.56] Like maybe I'm probably, we probably are streaming some super basic knowledge of mass,
+[1389.56:1390.56] right?
+[1390.56:1391.56] Yeah.
+[1391.56:1392.56] Okay.
+[1392.56:1393.56] I see.
+[1393.56:1394.56] I don't know.
+[1394.56:1395.56] Yeah.
+[1395.56:1396.56] Yeah.
+[1396.56:1397.56] Okay.
+[1397.56:1400.56] Like we're saying logarithm without explaining where the logarithm is.
+[1400.56:1401.56] Yeah.
+[1401.56:1402.56] Yeah.
+[1402.56:1403.56] Yeah.
+[1403.56:1405.56] Okay.
+[1405.56:1409.56] Equivalence relation is a relation that is symmetric, transitive and refractive, right?
+[1409.56:1410.56] Uh-huh.
+[1410.56:1411.56] Partial order.
+[1411.56:1417.56] And, and the answer for this particular question is, uh, that, that the cause of order relation
+[1417.56:1419.56] is, uh, total order.
+[1419.56:1420.56] Partial order.
+[1420.56:1421.56] Partial order.
+[1421.56:1422.56] Yes.
+[1422.56:1423.56] Okay.
+[1423.56:1424.56] I see.
+[1424.56:1429.56] If A is in relationship with B, Mb is in relationship with C, then A is in relationship
+[1429.56:1432.56] with C. However, A and B are not always going to be, just, uh, B.
+[1432.56:1439.56] So, is it going to be, to satisfy either A relationship with B or B relationship with A?
+[1439.56:1440.56] Okay.
+[1440.56:1445.56] The, the relationship might not exist.
+[1445.56:1446.56] Thank you.
+[1446.56:1447.56] No problem.
+[1447.56:1457.56] Of course.
+[1457.56:1459.56] So I also have one question.
+[1459.56:1468.56] Um, so I was wondering like, if we, if nothing is stated in the question, to what extent do
+[1468.56:1473.56] we need to justify the algorithms to provide?
+[1473.56:1476.56] I'm not certain what your question has.
+[1476.56:1485.56] Like, if nothing is stated in the question, do we, uh, if they ask us to, uh, give the algorithm
+[1485.56:1491.56] for, uh, consensus, for example, or an algorithm?
+[1491.56:1496.56] So you're saying, if we don't ask you to prove something, do you need to prove it?
+[1496.56:1502.56] Or like, do I, do I need to show that it is true or can I just give the algorithm, you
+[1502.56:1503.56] know, a code by landline?
+[1503.56:1507.56] If you don't tell you to prove something, you don't need to prove it.
+[1507.56:1510.56] However, we will always tell you.
+[1510.56:1511.56] Okay.
+[1511.56:1517.56] Like, if you spot say we made a mistake, we want to make you pay for the mistake.
+[1517.56:1518.56] Okay.
+[1518.56:1522.56] But it's going to be a mistake because we will always ask you to prove everything.
+[1522.56:1523.56] Okay.
+[1523.56:1531.56] And when you ask us to prove, then that means, um, giving like, uh, uh, proof for each and every,
+[1531.56:1535.56] uh, property of the, um, okay.
+[1535.56:1536.56] Thank you.
+[1536.56:1540.56] Of course.
+[1540.56:1547.56] Again, as usual, we wouldn't give you algorithms that make no sense that require 20 pages of
+[1547.56:1548.56] proof.
+[1548.56:1552.56] So like most of the time it's going to be like, okay, so these guys talk to each other.
+[1552.56:1558.56] There's a least, I mean, there's a least, I don't know, 12 plus 1 or a plus 1 that don't crash.
+[1558.56:1562.56] Somebody will receive it and say this, right?
+[1562.56:1565.56] Or I'm doing assumption that this process doesn't crash.
+[1565.56:1566.56] Everything is going to be fine.
+[1566.56:1569.56] It's, it's going to be okay.
+[1569.56:1570.56] Yeah.
+[1570.56:1576.56] Obviously, we're going to have slightly more difficult exercises as you go forward.
+[1576.56:1584.56] As usual, remember that the cap for the highest possible score in the exam is going to be
+[1584.56:1586.56] 7, right?
+[1586.56:1595.56] So if you get a 6.2, you get a 6 just as much as if you got a 7, right?
+[1595.56:1602.56] So you can even do a perfect exam while making mistakes.
+[1602.56:1605.56] Okay, thanks.
+[1605.56:1612.56] Of course, no problem.
+[1612.56:1616.56] I have one question that, of course, hello.
+[1616.56:1622.56] How many percent that the student need not have this class?
+[1622.56:1625.56] 18, 9, 25, something like this?
+[1625.56:1629.56] I think that there's only like two or three people that pass up a year, something like this.
+[1629.56:1630.56] Yeah.
+[1630.56:1631.56] Yeah.
+[1631.56:1632.56] Yeah.
+[1632.56:1633.56] Yeah.
+[1633.56:1643.56] Yeah, we don't really know, but listen guys, if you have studied, you're going to be okay.
+[1643.56:1644.56] Like believe us.
+[1644.56:1650.56] We are not here to give you some unreasonably hard questions or to, I mean, it's not our goal
+[1650.56:1657.56] to failure guys or to, so if you have studied, just relax and don't worry, it's going to be fine.
+[1657.56:1660.56] It's a big hassle for us to fail you, right?
+[1660.56:1661.56] Yeah.
+[1661.56:1670.56] Like we would all be happy if you just could, you know, be blessed and go, you know.
+[1670.56:1675.56] Yeah, the ones that don't pass the exam are the ones that don't even try to answer the questions, right?
+[1675.56:1685.56] Stage the interface and properties of best efforts for broadcast and you read one of the three properties of, I don't know, perfect links.
+[1685.56:1690.56] Like yeah, obviously then you get to know, you're going to be on the same page, right?
+[1690.56:1696.56] But you have to really focus on failure, if you want to fail.
+[1696.56:1697.56] All right.
+[1697.56:1700.56] Now getting to a good sex.
+[1700.56:1702.56] Hopefully not a disease, right?
+[1702.56:1705.56] Yeah, of course.
+[1705.56:1706.56] Thank you.
+[1706.56:1708.56] Yeah, no problem, of course.
+[1708.56:1717.56] On that matter, the level of difficulty of the midterm does it reflect the one for the final, like that we had this year?
+[1717.56:1719.56] More isn't more difficult.
+[1719.56:1727.56] Yeah, like the midterm that we had like the last exercise session, you know, like the most important.
+[1727.56:1732.56] I mean, I'll do it.
+[1732.56:1743.56] I mean, our goal was to have something similar to that, but at the same time, I don't know how to exactly precisely compare difficulties with two questions.
+[1743.56:1747.56] But yes, you're going to start with some questions that are not as hard.
+[1747.56:1756.56] And for the grades, you are going to have some questions that, you know, are not as simple as the previous ones.
+[1756.56:1763.56] But as I said, one more time, if you have studied, you should not worry.
+[1763.56:1766.56] And it is a, we give you one extra point.
+[1766.56:1774.56] And I mean, if you, if you understand that the field, it's, I doubt it's going to be hard for anyone to get six.
+[1774.56:1779.56] So just, you know, just relax and it's going to be fine.
+[1779.56:1784.56] But yes, like the questions, the harder questions, the questions for higher grades are going to be hard.
+[1784.56:1785.56] Yes.
+[1785.56:1790.56] And you try to kind of neatly organize them in increasing order of difficulty.
+[1790.56:1796.56] So don't, I mean, advise them everything is personal and you can do whatever you want.
+[1796.56:1803.56] But most of the times, you know, probably you don't want to spend too much time on solving the last question if you have a song.
+[1803.56:1806.56] Because it's probably going to be easy.
+[1806.56:1807.56] Yeah.
+[1807.56:1811.56] If you got that one.
+[1811.56:1830.56] And like when, when, for example, a question asked to made, to introduce an algorithm that solve some problem or some primitive within a given time complexity or message complexity and then prove the correctness of the algorithm.
+[1830.56:1845.56] Do we need a course we need to prove the correctness of the algorithm, but do we need to prove like that the algorithm that I see the, the, the time complexity or message complexity?
+[1845.56:1853.56] So you're like all the constraints that we give you, you need to prove that they are, they are respected.
+[1853.56:1863.56] And if we don't ask, for example, for a complexity, then you can give us an algorithm that runs in, I don't know, all, I don't know what and it's fine.
+[1863.56:1874.56] But if we do ask you to respect the certain complexity, then you'll need to show us, you'll need to give us the algorithm that does that and to show us that indeed it does that.
+[1874.56:1880.56] So yeah, like whatever we say in the question, you'll need to be able to prove it.
+[1880.56:1888.56] Okay, so the algorithm and the, like the proof that it runs in this complexity.
+[1888.56:1896.56] Yes, and if, for example, we give you a question where we ask, give us an algorithm that solves this in the minimum possible complexity.
+[1896.56:1905.56] You'll also need to show to us that the complexity you achieved and you believe is minimal, isn't it minimal?
+[1905.56:1920.56] Okay, so if you give me an algorithm that runs in, I don't know, three steps and you say, okay, this is the minimum number of steps you also need to give me a reasoning, approve that, okay, you cannot have it in two steps.
+[1920.56:1923.56] Okay, okay.
+[1923.56:1941.56] Of course, again, guys, we are here, we are not like, if we give you something like this, this is not going to be some crazy proof that only MIT mathematicians can write. So it's going to be fine and just, you know, just give us some formal reasoning about stuff, try to be as precise as possible.
+[1941.56:1952.56] Don't be ambiguous on purpose because that's might be problematic, but we do not, I mean, we want, we don't want you to come up with the entire formula.
+[1952.56:1962.56] The entire formalism system of any pages and then be able to reason no, but just try to be as precise as possible, we are as metal pointed out reasonable people.
+[1962.56:1967.56] So don't, don't expect any anything crazy there.
+[1967.56:1972.56] There are just going to be proofs and the proofs are usually usually usually going to be extremely.
+[1972.56:1976.56] Okay, don't worry too much about that.
+[1976.56:1980.56] Okay, thank you.
+[1980.56:1990.56] So just, just an unrelated question, I don't know if you know it, but when are we going to receive the grades for the last part of the project?
+[1990.56:1992.56] No, we don't know it.
+[1992.56:2003.56] I would say it to emails about it. So guys, we are not the responsible project. So ask the nurses or at some point, but not us.
+[2003.56:2006.56] Because we don't know it's not the, yeah, no idea.
+[2006.56:2011.56] Yeah, we just don't have a clue about that. Okay, okay, thank you.
+[2011.56:2018.56] Yeah.
+[2018.56:2039.56] Any other questions?
+[2048.56:2063.56] Then I think we're probably done.
+[2063.56:2069.56] Maybe a small last one, if we have time.
+[2069.56:2083.56] So when we discussed about proving the correctness of an algorithm, you said that we can use like our algorithm, it uses like reliable broadcast, for example.
+[2083.56:2095.56] We can say, oh, this property can be proved because of the validity of the word, but we don't need to like define the validity of reliable broadcast, for example.
+[2095.56:2104.56] Okay, no, unless we ask you, it's perfect. If you're a topic, we're using a, like again, put yourselves in our shoes.
+[2104.56:2112.56] If you're using correctly a property by naming it correctly in the context of a proof, where it makes sense for you to use that property, like,
+[2112.56:2118.56] I'm going to be insane and say, no, you didn't write it. Like we're not here to hurt you again.
+[2118.56:2126.56] So it's here to understand if you did understand and you know if you did.
+[2126.56:2130.56] Thank you.
+[2130.56:2139.56] Yes, but at the beginning, we should say that we have to perfect link, then the property and the interface of the perfect link is different.
+[2139.56:2148.56] We have to find the fact that perfect links are there at the first page or your algorithm and the introduction instructions and stuff.
+[2148.56:2151.56] There's going to be unless otherwise specified.
+[2151.56:2154.56] Okay, assume the perfect links are available.
+[2154.56:2157.56] Don't worry about the fact that you have them.
+[2157.56:2175.56] Okay, look.
+[2175.56:2187.56] Guys, you are the exam. We wish you the best. Remember, probably going to be good.
+[2187.56:2193.56] And the question in the sense.
+[2193.56:2198.56] Pencils. This one, I honestly don't know how to answer.
+[2198.56:2205.56] Yeah, I think you won't be one day permitted to use pencils because the exams are going to be scanned.
+[2205.56:2209.56] And I think it might be problematic.
+[2209.56:2212.56] We are not in opposition to answer, I think.
+[2212.56:2217.56] Yes, it's more of a higher level bureaucracy kind of thing.
+[2217.56:2220.56] But I wouldn't honestly, I wouldn't.
+[2220.56:2224.56] Yeah, please bring pens.
+[2224.56:2233.56] Yeah, I just go with.
+[2233.56:2236.56] Just go with a pen.
+[2236.56:2239.56] Use a pencil on all of your exam.
+[2239.56:2243.56] Look, we are not going to add extra rules.
+[2243.56:2245.56] You're going to abide by epiphaltoes.
+[2245.56:2251.56] If you're confident you know what epiphaltoes are, then go for it.
+[2251.56:2257.56] No problem, of course.
+[2257.56:2260.56] Good. Cheers.
+[2260.56:2288.56] Thank you.

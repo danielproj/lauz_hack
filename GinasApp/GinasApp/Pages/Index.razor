@@ -1,0 +1,109 @@
+﻿@page "/{documentpath?}"
+@using GinasApp.Data
+@using Syncfusion.Blazor.Data
+@using System.Text
+@inject NavigationManager NavigationManger
+
+<PageTitle>Explanatory</PageTitle>
+
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            @if (!string.IsNullOrWhiteSpace(DocumentPath))
+            {
+                <SfPdfViewerServer DocumentPath="@Path.Combine("unsafe_uploads", DocumentPath)"
+                               EnableTextSelection="true"
+                               Height="950px"
+                               @ref="_pdfViewer"
+                               Width="100%">
+                    <PdfViewerEvents OnTextSelectionEnd="OnTextSelectionEnd"
+                                 DocumentLoaded="OnLoaded" />
+                </SfPdfViewerServer>
+            }
+        </div>
+        <div class="col-4">
+            <div class="row" style="height: 200px">
+                <ExplanatoryView ExplanatoryRequest="@_explanatoryRequest" UserId="@_userId" SessionId="@_sessionId" />
+            </div>
+            <div class="row">
+                @if (_explanatoryRequest != null)
+                {
+                    <ChatView UserId="@_userId" SessionId="@_sessionId" />
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public string? DocumentPath { get; set; }
+    private SfPdfViewerServer? _pdfViewer;
+    private IDictionary<int, string[]>? _sentences;
+    private ExplanatoryRequest? _explanatoryRequest = null;
+    private string _sessionId;
+    private string _userId = null!;
+
+    private void OnTextSelectionEnd(TextSelectionEndEventArgs args)
+    {
+        Console.WriteLine(args.TextContent);
+        if (_sentences is not { Count: > 0 }) return;
+
+        _sessionId = Guid.NewGuid().ToString("D");
+
+        var pageSentences = _sentences[args.PageNumber - 1].ToArray();
+        var firstSearch = pageSentences.FirstOrDefault(item => item.Contains(args.TextContent));
+
+        if (firstSearch == null)
+        {
+            _explanatoryRequest = new()
+                {
+                    Term = args.TextContent
+                };
+            return;
+        }
+
+        var index = pageSentences
+            .IndexOf(firstSearch);
+        var minIndex = Math.Max(0, index - 2);
+        var maxIndex = Math.Min(pageSentences.Length - 1, index + 2) + 1;
+        var sb = new StringBuilder();
+        foreach (var pageSentence in pageSentences[minIndex..maxIndex])
+        {
+            sb.Append(pageSentence + ".");
+        }
+        _explanatoryRequest = new()
+            {
+                Term = args.TextContent,
+                Context = sb.ToString()
+            };
+    }
+
+    private async void OnLoaded(LoadEventArgs obj)
+    {
+        _sentences = new Dictionary<int, string[]>();
+        if (_pdfViewer == null) return;
+        await _pdfViewer.UpdateViewerContainerAsync();
+        using var pdfDocument = IronPdf.PdfDocument.FromFile(_pdfViewer.DocumentPath);
+        for (var i = 0; i < pdfDocument.PageCount; i++)
+        {
+            var text = pdfDocument.ExtractTextFromPage(i);
+            _sentences.Add(i, text.Replace(Environment.NewLine, " ").Split("."));
+        }
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (string.IsNullOrWhiteSpace(DocumentPath))
+            NavigationManger.NavigateTo("upload");
+        base.OnAfterRender(firstRender);
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        _userId = "3256a4de-7a9b-4627-a9fc-87b3c6fa3cf2";
+    }
+
+}

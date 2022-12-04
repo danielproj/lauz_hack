@@ -1,0 +1,231 @@
+~COM-516 Lecture 6.4
+~2020-09-23T12:06:01.718+02:00
+~https://tube.switch.ch/videos/f4d96302
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:7.6000000000000005] So the last thing I would like to tell you about today is this notion of lazy mark of
+[7.6000000000000005:13.0] chains and here there is something kind of contouring tweetive that I think this is some
+[13.0:14.84] attention.
+[14.84:19.64] So remember we have now seen this theorem we assume that we have a chain that satisfies
+[19.64:27.400000000000002] all the possible assumptions and so we have this theorem about the rate of convergence
+[27.4:39.08] towards equilibrium which is that this total variation distance is less than non-duster
+[39.08:47.8] to the power n divided by 2 square root of pi i for every i in s for every n greater
+[47.8:49.64] than 1.
+[49.64:50.92] Okay.
+[50.92:56.96] Last time if you remember we also defined another quantity which was called the spectral
+[56.96:67.64] gap and actually I'm going to refer a bit more to this quantity now which is 1 minus
+[67.64:69.64] non-duster.
+[69.64:71.84] Okay.
+[71.84:78.32] Which is you can really interpret this as the gap the smallest gap you have to the boundary
+[78.32:82.0] minus 1 plus 1 of the interval.
+[82.0:89.0] So the gap between these boundaries and the spectrum of the chain so the set of eigenvalues
+[89.0:102.52] and and okay typically so why are we interested in this spectral gap because if I move this
+[102.52:114.08] a little to the right we can show that using the inequality that 1 minus x is less than
+[114.08:121.47999999999999] e to the minus x we can show that this is less than e to the minus gamma n divided by 2
+[121.48:132.8] square root of pi i.
+[132.8:135.20000000000002] Okay.
+[135.20000000000002:146.0] So the spectral gap is actually another way to control I mean another measure that tells
+[146.0:152.16] you how fast is your chain converging towards equilibrium and of course one important thing
+[152.16:168.4] to remember is the so the larger the gamma the larger the spectral gap is connected to
+[168.4:170.96] the faster the convergence.
+[170.96:180.92000000000002] So it's better to have a large spectral gap because when gamma is large then e to the
+[180.92000000000002:185.20000000000002] minus gamma n decreases fast.
+[185.20000000000002:186.20000000000002] Okay.
+[186.20000000000002:195.60000000000002] And so just to draw again what we have on the axis here is your axis for the lambda
+[195.6:210.16] 0.5 plus 1 so we know there always exist an eigenvalue lambda 0 which is equal to plus
+[210.16:217.68] 1 and in between we do have eigenvalues I don't know it can go from here lambda n minus
+[217.68:225.32] 1 and then we have another series of you know you have some eigenvalues along the path
+[225.32:232.92] here up to let's say perhaps here some that would be lambda 1.
+[232.92:233.92] Okay.
+[233.92:239.23999999999998] So we have if we look at them from the right we have a decreasing sequence of eigenvalues
+[239.23999999999998:248.95999999999998] and they occupy some area of the of the of the axis some part of the axis so that's
+[248.95999999999998:252.0] the place where all these eigenvalues are.
+[252.0:258.64] And so the spectral gap is again the smallest distance towards the boundary minus 1 or plus
+[258.64:259.64] 1.
+[259.64:267.76] So here gamma is here.
+[267.76:274.72] And this controls the speed of convergence or at least it controls you know it controls
+[274.72:282.32000000000005] the another bound on the speed of convergence of course it's not always accurate up a
+[282.32000000000005:287.28000000000003] bound we will see that sometimes it's loose that's that's for next time but still it's
+[287.28000000000003:297.0] a very good indication so if you know gamma you know you know the you have a good indication
+[297.0:301.28000000000003] of the speed of convergence towards equilibrium.
+[301.28:308.28] And as you see sometimes gamma can be determined by the what we have on the left as an example
+[308.28:316.15999999999997] here so this gap between minus 1 and lambda n minus 1 and sometimes gamma can be determined
+[316.15999999999997:320.44] by the gap between lambda 1 and plus 1.
+[320.44:323.44] Okay.
+[323.44:335.4] So the intuition for when is gamma that you know when when is the spectral gap here or
+[335.4:345.72] here is related to the following fact actually let's assume that yeah this delay is a little
+[345.72:349.72] of what I wanted to tell you about lazy Mark of chains but let me let me spend some time
+[349.72:352.68] on that.
+[352.68:359.40000000000003] What happens when the spectral gap gamma is on the left hand side so here okay so what
+[359.40000000000003:362.92] as we have in the example what does that mean?
+[362.92:369.48] Let's think of the situation where the spectral gap gets very close to the lambda n minus
+[369.48:374.56] 1 gets very close to minus 1 so where the spectral gap goes to 0.
+[374.56:379.24] Let's assume that we have even 1 eigenvalue which is equal to minus 1 so of course this
+[379.24:386.32] doesn't happen in the algorithm setting but when does that happen actually one can show
+[386.32:400.12] that so in mirror there is an eigenvalue which is equal to minus 1 even only if the graph
+[400.12:407.6] of the chain is by perfect so that's a side the comment also.
+[407.6:417.40000000000003] The graph of the chain is by perfect.
+[417.40000000000003:421.84000000000003] That's the situation what does that mean by perfect that you can divide the graph into
+[421.84000000000003:431.88] two set of nodes the one and the nodes of one group can be visited at odd times the
+[431.88:437.52000000000004] nodes of another the other group can be visited at even times and there is no way you can
+[437.52:442.0] change that and so what does that mean for a mark of chain it means actually that the
+[442.0:450.64] chain has value 2.
+[450.64:456.2] So of course we are outside of the algorithm setting right but we have if there is an eigenvalue
+[456.2:464.15999999999997] which is equal to minus 1 then the chain is has value 2 and reciprocally which is saying
+[464.16:472.08000000000004] that when the chain is periodic there is no convergence but when the lambda n minus 1
+[472.08000000000004:479.88000000000005] is very close to minus 1 that's exactly the situation when we are we don't have quite
+[479.88000000000005:483.96000000000004] an periodic chain but we are very close to periodic.
+[483.96000000000004:490.64000000000004] Let's say perhaps in the chain you have a self loop with a weight which is 0.001 and that
+[490.64:499.68] is super close to the to a periodic chain on average the chain is just doing periodic
+[499.68:505.8] movements but there are times where the periodicity is broken and that's exactly when you have
+[505.8:513.12] a lambda n minus 1 which is close to minus 1 and that's when convergence is slow because
+[513.12:518.84] it takes a long time to converge because you know we know that in the periodic case it
+[518.84:523.08] does not converge but here we are very close to periodic so we have a problem.
+[523.08:532.36] So that's what happens for the situation where the spectral gap is here.
+[532.36:538.1600000000001] The situation where the spectral gap is on the other side well in order to think about
+[538.1600000000001:547.88] it you should think of the worst case which is when lambda 1 is equal to 1.
+[547.88:549.7] So when does that happen?
+[549.7:556.48] When does that happen that you have actually two again values which are equal to 1.
+[556.48:563.48] So of course again we are outside of the ecotix setting here and you can think you can see
+[563.48:569.0] that actually this happens if the graph has two disconnected components.
+[569.0:584.76] So this is only if the graph of the chain has two disconnected components.
+[584.76:591.04] This connected components.
+[591.04:592.04] What does that mean?
+[592.04:597.16] It means that the chain is reducible.
+[597.16:608.4] It has two parts and in this case so you can check that there is one eigenvector which
+[608.4:617.6] has all its values equal to 1 on one sub chain and 0 as well and the other eigenvector
+[617.6:624.3199999999999] which we would have all ones on the other sub chain and all 0 all 1 and minus 1 and 1
+[624.32:631.12] on one sub chain or minus 1 on the other chain and all ones on the second sub chain and
+[631.12:635.24] all minus 1 on the first sub chain.
+[635.24:638.32] Yeah sorry this is a mistake.
+[638.32:639.6800000000001] Let me repeat that.
+[639.6800000000001:647.8000000000001] There is one eigenvector which is the all one vector and this one is always there.
+[647.8000000000001:652.6800000000001] So this corresponds to eigenvalue 1 and there is another eigenvector which is all one
+[652.68:658.5999999999999] on one sub chain and all minus 1 on the other sub chain in the symmetric case.
+[658.5999999999999:661.88] And these two eigenvectors have eigenvalue 1.
+[661.88:666.16] You can check that.
+[666.16:670.92] So why does not the chain converge in this case?
+[670.92:676.76] Because the chain is made of two parts and of course we know that in this case we cannot
+[676.76:682.4799999999999] have the algorithm because the chain is not irreducible.
+[682.48:688.28] So what happens now when lambda is slightly below 1?
+[688.28:693.12] That's typically the situation where you have two sub chains and there is a small connection
+[693.12:696.84] between the two sub chains so there is an arrow that goes from one sub chain to the other
+[696.84:699.5600000000001] but this arrow again has a very small weight.
+[699.5600000000001:707.5600000000001] And so on average the chain is just staying in these disconnected parts but from time to
+[707.56:712.76] time there is a bridge between the two parts and of course in this situation you will have
+[712.76:718.7199999999999] convergence but convergence will be extremely slow because it will take a lot of time for
+[718.7199999999999:725.4] the chain on the left hand side to visit the chain on the right hand side and so convergence
+[725.4:733.88] will be slow because the spectral gap here will be very small.
+[733.88:739.68] And so depending on where the spectral gap gamma is on the left hand side or on the right
+[739.68:748.92] hand side of this picture you have these two different situations.
+[748.92:753.72] So now let me come back to lazy Markov chains.
+[753.72:772.36] So let assume you have a Markov chain let p be the transition matrix of a Markov chain
+[772.36:780.4] matrix of Markov chain.
+[780.4:794.16] And now I am going to define a new Markov chain p tilde which is equal to alpha times the
+[794.16:807.72] identity matrix plus 1 minus alpha times p where alpha is some number between 0 and 1.
+[807.72:819.44] So what is this? So this is the so claim so claim p tilde is a transition matrix is also
+[819.44:823.24] a transition matrix.
+[823.24:828.5600000000001] I hope it is clear what the identity matrix means here is just matrix with 1's in the
+[828.56:846.16] diagonal and 0 elsewhere. And so well I guess it is clear that well all the p ij tilde
+[846.16:858.64] will be equal to alpha delta ij plus 1 minus alpha p ij well there are certainly all non-negative
+[858.64:868.36] and if you sum them for a given i if you sum the p ij tilde you will get alpha times 1
+[868.36:877.36] because if you sum the delta ij you get 1 plus 1 minus alpha times some of j in s of p ij.
+[877.36:882.88] And because p ij is a stochastic matrix this is equal to 1 and so 1 plus 1 minus alpha
+[882.88:891.2] is equal to 1. That is true for every i in s that is true for every ij.
+[891.2:900.2800000000001] So we have a stochastic matrix a transition matrix. Okay graphically we can represent
+[900.2800000000001:911.9200000000001] this as follows if you have you know state ij k and you have weight I don't know some
+[911.92:925.88] arrows here from let's say something like this and let's take you know this is p ij pj
+[925.88:939.8] k pkj and p i k because this is my original transition graph. Now with the new chain you
+[939.8:945.9599999999999] would have something like this well the arrows remain but their weight is diminished so
+[945.9599999999999:960.4399999999999] it would be 1 minus alpha times p ij 1 minus alpha times p j i and you would have self loops
+[960.44:970.9200000000001] of weight alpha in each state. This is this alpha times identity term okay and for the rest
+[970.9200000000001:985.8000000000001] every coefficient is multiplied by 1 minus alpha. So you diminish a little the weight of
+[985.8:997.88] the arrows and you add these self loops in each state. So this transformation makes the
+[997.88:1007.28] chain what we call lazy because it has a higher tendency to stay in the same state right
+[1007.28:1014.4399999999999] it doesn't move as much as before and you can check on this graph that the sum will
+[1014.44:1020.8800000000001] also you know if the sum of the p ij were satisfied on the left hand side and on the right
+[1020.8800000000001:1026.72] hand side it's also the case. Let me also notize for example perhaps I can make this let's
+[1026.72:1034.56] say I had originally a p ii here then this p ii would become a p ii plus alpha okay if
+[1034.56:1039.56] I had a self loop in the beginning then this self loop has an increased weight. Of course
+[1039.56:1048.24] you have to choose alpha such that you don't you don't you don't increase the weights above
+[1048.24:1061.1599999999999] 1 okay you cannot have you cannot always increase by as much as you want. Okay so so when we have
+[1061.1599999999999:1067.84] so now we would like to compare the convergence rate of these two chains. Let's say I know the
+[1067.84:1075.52] convergence rate of the chain p what can I say on the convergence rate of the chain p tilde okay
+[1075.52:1086.3999999999999] so compared to p p tilde is a process that has a higher tendency not to move. So really if you
+[1086.3999999999999:1093.9199999999998] think about this intuitively I think the first thing that comes to mind is that okay I have on
+[1093.92:1101.04] the one hand I have a process doing some some random moves and on the other hand I have a
+[1101.04:1108.88] process doing these random moves less time right it stays more fixed where it is and so the
+[1108.88:1116.16] intuition suggests that the second process the one with the self loops will just converge even
+[1116.16:1125.72] slower than the first process. The answer is no sometimes it helps sometimes adding self loops
+[1125.72:1135.1200000000001] to a graph helps improve convergence towards equilibrium and in order to to show this you have
+[1135.1200000000001:1140.3200000000002] to look at the spectral gap of course again the spectral gap doesn't say everything about rate of
+[1140.32:1149.2] convergence but it's already quite something. So what happens to the spectral gap? So let us compute
+[1149.9199999999998:1158.32] the eigenvalues of p tilde and that's a very easy computation because the eigenvalues of p tilde
+[1160.08:1169.6] they are given by lambda k tilde which are p tilde is simply the identity plus the matrix p right
+[1169.6:1176.32] it's a sum of alpha times the identity plus 1 minus alpha times the matrix p. So the eigenvalues
+[1176.32:1186.48] of p tilde are simply the eigenvalues of p tilde are simply given by 1 minus alpha times 1 the
+[1186.48:1199.52] eigenvalues of the identity matrix plus sorry alpha times 1 plus 1 minus alpha times lambda k
+[1200.8:1209.3600000000001] for k between 0 and minus 1. Actually it's not always true of course if you add two matrices
+[1209.3600000000001:1215.44] that the eigenvalues add up so nicely but here we are adding the identity matrix so if you go
+[1215.44:1222.72] back to the very definition of what the eigenvalue is you realize that indeed that's the formula
+[1222.72:1230.16] you we have for the lambda k tilde. How does that translate into how does that translate into the
+[1230.16:1239.52] spectral gap? Well first of all let me look what's the impact of this transformation on lambda k
+[1239.52:1249.12] and especially let me look at lambda 0 tilde remember lambda 0 tilde will be 1 alpha times 1 minus
+[1249.12:1257.76] alpha times lambda 0 and lambda 0 is 1. So what happens to lambda 0 tilde? It's 1 also alpha plus
+[1257.76:1266.6399999999999] 1 minus alpha. Yes well I told you p tilde is a stochastic matrix so it needs to have it's
+[1266.64:1274.0] not just eigenvalue also equal to 1 and what happens to all the other lambda k. So here let me just
+[1274.0:1289.76] draw the the axis again from minus 1 to plus 1 and let me again draw what I have here so this
+[1289.76:1300.96] let's say you know this is my lambda n minus 1 and here I have lambda 1 what happens to this whole
+[1300.96:1311.28] interval. So if you observe what this formula is doing so if you have a eigenvalue which is to the
+[1311.28:1317.2] left right very close to minus 1 then this one gets shifted quite a lot to the right.
+[1317.2:1324.0] On the contrary if you have an eigenvalue which is already quite to the right like lambda 1 then
+[1324.0:1331.52] this one gets shifted a little but not as much as the one on the left. So actually what happens to
+[1331.52:1338.64] this whole spectrum is that all these eigenvalues move to the right and perhaps let me use another
+[1338.64:1344.8] color and you will get you will get something like this you will get a lambda 1 tilde here and
+[1344.8:1353.2] probably a lambda n minus 1 tilde here but the lambda n minus 1 moves a little faster than the
+[1353.2:1360.56] lambda 1 okay and the new interval will be something like this. I let you check this with
+[1360.56:1366.72] with the formula that you have here right so the closer you are to one if you're in plus 1 you
+[1366.72:1379.44] don't move. If you're in minus 1 then suddenly so just to mention if let's say I had in the
+[1379.44:1388.08] non-ergotie case I had this one called to minus 1 then lambda tilde n minus 1 would be alpha
+[1388.08:1399.9199999999998] minus 1 minus alpha which is 2 alpha minus 1 so lambda tilde n minus 1 would move would move by
+[1399.9199999999998:1408.48] a factor of 2 alpha to the right okay. Lambda 0 doesn't move and lambda tilde n minus 1 moves by
+[1408.48:1420.0] 2 alpha to the right so we have this that's how the spectrum gets transformed okay and so now
+[1420.0:1425.1200000000001] what is the influence on the spectral gap so now two situations can happen
+[1425.12:1445.12] if we started from let's say so let's say I have this situation where I'm here minus 1 plus 1 and
+[1445.12:1454.8799999999999] let's say the spectrum of the let's say you know let's say this is lambda n minus 1 and lambda 1
+[1456.8799999999999:1462.8] okay so all the eigenvalues are in this interval and so here in this situation the spectral gap
+[1462.8:1470.08] is obviously here right that's the closest the smallest gap that we have between the two gaps
+[1470.08:1479.9199999999998] here okay so now if we take this chain we add self loops to it we will obtain something like this
+[1483.76:1490.8799999999999] your lambda 1 tilde will be here and your lambda n minus 1 tilde will be around here
+[1492.1599999999999:1498.3999999999999] and here we have a new gamma tilde which is clearly smaller than gamma
+[1498.4:1505.1200000000001] because the size here of this new interval is clearly smaller than gamma so in this case
+[1510.0:1512.64] in this case the spectral gap
+[1520.8000000000002:1521.6000000000001] is reduced
+[1521.6:1527.12] so we get a slower convergence
+[1530.9599999999998:1537.52] so in this case adding self loops so if it turns out that the lambdas are distributed as shown
+[1537.52:1548.24] on the picture we have adding self loops does what intuition suggests that the convergence is
+[1548.24:1554.56] slower so that's and remember when gamma is on the right hand side when does that what does
+[1554.56:1559.6] that mean it means that the chain is kind of resembling a disconnected chain right with a bridge
+[1560.24:1564.8] a small bridge between the two chains so in it if you have let's say you have two clusters with
+[1564.8:1572.64] a small bridge between the two and you're adding your adding self loops of this graph it will take
+[1572.64:1578.8000000000002] even more time for the chain to visit both parts of the graph right because you will have
+[1579.3600000000001:1587.0400000000002] yeah so so this will this will lead to slower convergence on the contrary if we have
+[1588.3200000000002:1595.3600000000001] this situation where now the spectrum is
+[1595.36:1605.6] rather located here let's say this is my lambda n minus 1 and let's say that would be my lambda 1
+[1607.6799999999998:1615.6] okay and now I add self loops and I transform in the spectrum and I perhaps I get to here
+[1615.6:1628.1599999999999] and to here okay so this is my new interval here so beforehand the spectral gap was this distance
+[1629.04:1640.3999999999999] that was gamma let me draw it here okay and if you increase if you increase the
+[1640.4:1647.92] these eigenvalues to lambda tilde and minus 1 to lambda 1 tilde then here perhaps it's even the
+[1647.92:1656.24] situation where the new gamma is here okay and of course if perhaps if you add the more and more
+[1656.24:1662.88] self loops then you get very close to the boundary plus one and suddenly you start having a very
+[1662.88:1673.0400000000002] small spectral gap again but here this gamma tilde is greater than gamma okay so here the spectral gap
+[1675.0400000000002:1676.24] is larger
+[1676.24:1688.64] it's larger so you get a faster convergence
+[1694.24:1701.76] so we have a situation where adding self loops to the graph speed up convergence and
+[1701.76:1709.28] what the reason for that I told you when gamma is on the left hand side that's where the chain
+[1709.28:1715.68] looks something like periodic okay where you have you nearly have something periodic if gamma is
+[1715.68:1719.92] very small that's the case where you nearly have something periodic perhaps you have a small
+[1719.92:1726.56] self loop somewhere in the graph that breaks the periodicity now if you add self loops in each state
+[1726.56:1733.2] then you completely break this periodicity okay and so what was slowing down convergence which
+[1733.2:1742.24] was periodicity now is not there anymore and so you get a faster convergence kind of counter-intuitive
+[1742.24:1753.44] but still true okay so these are the this is what I wanted to add to this prove of the theorem for
+[1753.44:1757.92] today and I think I'll stop here

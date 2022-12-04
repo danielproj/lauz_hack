@@ -1,0 +1,680 @@
+~WEEK 7 Lecture: Oct. 31, 2022
+~2022-10-31T13:54:44.023+01:00
+~https://tube.switch.ch/videos/ytUh4QNS2L
+~CS-438 Decentralized Systems Engineering
+[0.0:13.84] Hey, good morning. Welcome back. Sorry I had to be away for a couple weeks in a row. I hope
+[13.84:23.36] you enjoyed the and learned something from the lectures on cryptography and and replication
+[23.36:32.64] in consensus. So we're we as you can tell we kind of had to shuffle the weeks into a slightly
+[33.36:41.92] awkward order just for logistic reasons. So we before before the last two weeks we were talking
+[41.92:50.72] about unstructured search algorithms and now we're going to continue basically continue that thread
+[50.72:59.2] where we left off weeks ago by getting into more more structured search mechanisms. So
+[59.2:65.52] ideally I would have given this lecture before the cryptography and consensus lectures but hopefully
+[65.52:87.52] it'll be all fine. Okay. So as I as I mentioned so that's whoops. That always happens for some
+[87.52:107.6] reason. There we go. So structured versus unstructured search. Let's just start by reviewing some
+[107.6:123.03999999999999] of the basic properties in contrast. Unstructured basically generally means as stateless as possible.
+[126.47999999999999:133.51999999999998] Nodes generally don't are trying not to keep any you know any state about the network
+[133.52:143.60000000000002] for you know any significant period. Right. So this is this also you know this always has caveats.
+[143.60000000000002:148.96] You know there's no such thing as you can't do any decentralized system without having some state
+[148.96:155.36] at least a femoral state like to handle a particular request and stuff like that but you know kind
+[155.36:162.32000000000002] of the the ideal of a stateless protocol is usually you know kind of you service a request or you
+[162.32:168.16] make a request you you handle it and then you kind of forget about it as much as possible and
+[168.16:174.0] you avoid long live state about the topology of the network or what swear things like that right.
+[174.0:193.2] And so we had systems like Nutella, Fremster and many of the other early peer to peer
+[193.2:203.2] networking systems tend to be more stateless and we talked about flooding search right.
+[208.39999999999998:214.88] And just as a review what are what are some of the attract attractions of this approach. Well one
+[214.88:229.44] of them was that it automatically adapts to the network dynamics right.
+[235.6:241.04] So because we haven't because we've avoided building up you know much interesting
+[241.04:245.6] long live state about the network there isn't the information that can become out of the
+[245.6:252.07999999999998] sale and out of date and can cause us to do the wrong thing as the network you know we changes as
+[252.07999999999998:261.52] this percentage sets of participants and the sets of links change right. And we also saw that
+[261.52:274.71999999999997] it can be very general in the types of search it's right. So you just send out a you can for
+[274.71999999999997:289.35999999999996] example send out an arbitrary query predicate. So this keyword and this keyword and this keyword
+[289.36:299.2] or these other keywords or you know these kinds of systems allowed fairly general searches
+[299.2:305.52000000000004] because in principle in part because you know if you just sound send out a search then each node
+[305.52000000000004:311.6] in the network applies that search locally to its internal database and figures out well
+[311.6:316.8] are there any hits right here basically the search is just local computation on all of the
+[316.8:326.48] machines that have that have a database right to search in. So that's nice right.
+[329.28000000000003:338.88] And then we we very briefly talked about a you know mostly unstructured but let's call it semi-structured
+[338.88:348.48] approach which was which was the bubble storm approach
+[354.71999999999997:364.15999999999997] which which got basically order square root of n efficiency in in in both message processing
+[364.16:374.08000000000004] and state right. So so you know it's not quite stateless anymore because everybody who all the nodes
+[374.08000000000004:380.16] who have a database based out basically send out copies of that database to approximately square
+[380.16:386.48] root of n other randomly chosen nodes just to keep a copy for a while. So you know this
+[387.6:392.72] we're breaking a little bit into the structured world because that is state that you know if it
+[392.72:400.16] becomes obsolete you know too quickly then you know that we're going to have trouble but you know as
+[400.16:406.24] long as the as long as the nodes are extending out these new copies of the database is reasonably
+[406.24:412.64000000000004] often with respect to you know to how quickly the network is changing you know hopefully
+[413.36:418.48] it'll mostly still work and and because of the birthday paradox you you know tweak the
+[418.48:426.40000000000003] constants you get a very high probability that that you know a search that actually has hits out
+[426.40000000000003:437.28000000000003] there will hit in at least one of the the random you know when a search has replicated to
+[437.28000000000003:443.6] approximately square root of n nodes and those nodes just execute the search locally
+[443.6:452.88] there's a high probability that at least one of them will succeed right so so this is still
+[455.04:463.44] mostly stateless with the benefits in terms of dynamite you know dynamics and sure
+[463.44:475.2] and it's still very general it can handle you know bubble storm can handle basically all the same
+[475.2:482.56] queries that that a flooding search mechanism like a new talent and a friendster can do right but
+[482.56:493.12] it's still only order square root of n efficiency right
+[499.76:509.04] and just I should I should have left some space for that these unstructured search mechanism
+[509.04:514.5600000000001] were generally order and effort per node or per search in the worst case right because you
+[514.5600000000001:520.4] might have to flood us through all of the nodes in the network they all have to work do some work
+[520.4:526.24] for each of the searches right and so we'd like we'd like better than
+[528.08:533.28] you know we would really like significantly better asymptotic performance and you know bubble storm
+[533.28:540.8] achieve the significant improvement okay but of course we can we can get much better and that's
+[540.8:555.76] what brings us to structured search so there's in which we'll definitely build more state
+[555.76:567.36] build and maintain more state about the network and you know there's the obvious downside to this
+[567.36:574.56] that it'll be harder to to to handle dynamics
+[574.56:587.52] in particular churn nodes and and links coming and going especially if they come and go too quickly
+[587.52:598.4799999999999] right and as we'll see the queries we can handle will will be less general
+[598.48:607.6] it's it gets harder to handle really general queries with more structured search algorithms
+[608.64:613.76] but we'll be able to get a lot more efficient right
+[617.36:621.12] in particular we'll be looking at achieving order
+[621.12:632.08] log in very similar efficiencies right that's that's our our general goal with with
+[633.04:638.88] structured search engines search mechanisms okay any questions so far
+[638.88:660.0] okay um actually before we get into that maybe maybe just a quick backtrack to one of our earlier
+[660.0:673.36] topics which we didn't didn't really get I had assigned readings a while ago but we didn't
+[673.36:682.96] really get a chance to talk about them in detail which was ad hoc routing mechanisms
+[682.96:688.5600000000001] and I say protocols
+[693.36:697.12] because there are two two very well-known classic
+[698.5600000000001:708.24] routing protocols for routing in in ad hoc networks like in local area Wi-Fi but multi-hop Wi-Fi
+[708.24:715.6800000000001] type networks and these these have been topics of research for for many years for decades
+[716.8:722.72] and so in some cases they've been deployed there are there are sometimes deployed in sensor
+[722.72:733.12] networks or other embedded type systems and we talked about or I mean we you read to about
+[733.12:748.64] hopefully about two to classic protocols DSDV and AODV right so hopefully you read those even though
+[748.64:756.48] we haven't managed to discuss them yet can you you know somebody who who didn't read them can
+[756.48:763.2] you give me an expansion to one of them what what do these mean and or you know pick one of them
+[763.2:768.64] what does it mean and how does it work just a super high-level summary
+[772.64:775.52] and buddy actually read those which is the test
+[775.52:782.88] yeah any idea
+[787.04:794.0799999999999] okay so so you're not reading the assignments I might have to test on test on this a little bit more
+[794.0799999999999:800.3199999999999] more carefully in the future so yeah please do read the assignments so
+[800.32:806.32] yeah let me let me just reorder these quickly
+[812.6400000000001:819.9200000000001] so a routing protocol is basically a distributed or decentralized search protocol only
+[819.9200000000001:826.24] a special purpose one you're what are you searching for in a routing protocol well you're
+[826.24:830.96] searching for unknown you know in the newtel our friends care you're probably searching for a
+[830.96:837.2] piece of content a file or something like that but in a routing protocol well the target of the
+[837.2:843.6800000000001] search is a node that you want to talk to right but otherwise it's a search it's a distributed
+[843.6800000000001:848.72] search how do you how do you find a route to a particular node that you want to talk to
+[848.72:858.08] by whatever way is named right so what does aodv mean ad hoc
+[861.9200000000001:863.12] on demand
+[863.12:885.84] and distance vector and aodv is basically the routing protocol equivalent of a flooding search
+[885.84:902.96] except it's just a flooding search for a node rather than a piece of content right I just want
+[902.96:910.0] to find a path to a particular node right how does it work well more or less
+[910.0:920.32] and the way we already discussed in the context of using it I you know gossip broadcast a message
+[920.32:928.24] everywhere saying hey can anybody help me find bobs node right a particular node by name
+[928.24:940.48] in the process of gossiping this message the the gossip these these search messages are
+[940.48:946.48] basically getting a return path attached to them right so each each time the message takes another
+[946.48:955.36] hop in the gossip protocol you either add to the message itself or the node that's forwarding
+[955.36:960.24] the message remembers for a little bit for a little while you know where did that message came
+[960.24:966.48] from where did I first receive that which peer which immediate peer did I first receive the
+[966.48:988.32] message from right so searches are basically gossiped and produce return paths right
+[988.32:1000.88] and if the if the search eventually hits the node that we're looking for that node goes oh that's
+[1000.88:1007.7600000000001] me somebody is searching for me okay I'm going to respond right and the node basically uses the
+[1007.7600000000001:1013.2] return path the equivalent of the path line in the in the use net messages that we talked about
+[1013.2:1024.56] before and says hey can you please can we please you know help me reply to that that node I have a
+[1024.56:1033.3600000000001] recent path back to that node even if I don't have direct connectivity so the search you know goes
+[1033.36:1049.76] hot by hot flooding in one direction and then the reply goes hot by hot back along the same path
+[1049.76:1068.72] great and you know there's various details of the way this this can work you one way this can
+[1068.72:1075.28] work is the source just remembers the path that it learns along that you know from the message
+[1075.28:1084.48] and cash is that path for for future communication right so future forward hops go can go directly to
+[1084.48:1091.6] the destination because the source knows the you know a complete path to the destination and the other
+[1091.6:1099.44] way is that is that each node along the path can cash temporarily cash information about the next
+[1099.44:1111.2] top okay and so so the node basically keep a you know distributed record but temporary record of
+[1111.2:1116.56] like you know so okay somebody recently was looking for this particular destination and they were
+[1116.56:1123.2] found in that particular direction that you know that's the next top to that destination so you
+[1123.2:1129.28] know within a limited period of time after we use the flight search you know that next message
+[1129.28:1136.72] looking for that destination send them there send them that way right so again there's various
+[1136.72:1148.56] ways we can use in working detail but but basically you know basically that's the idea you do you
+[1148.56:1154.6399999999999] know a big expensive search but then you you know cast the path information for a while and use
+[1154.6399999999999:1159.84] it for a while until the next epoch or until this the path stops working and then you do another
+[1159.84:1165.2] search you know if you if the path stops working you have to do another search to try to find
+[1165.2:1174.8799999999999] another path if the node is still online right okay any any questions a discussion so far
+[1174.88:1189.44] so what is dstb anybody looked it up in the meantime but it's dstb mean and what's how does it work
+[1189.44:1212.0] mm-hmm yeah exactly
+[1212.0:1229.2] yeah so this stands for destination sequence distance vector um and the and the basic idea
+[1229.2:1246.72] exactly as you say is is to build and maintain routing tables in particular each node is going
+[1246.72:1257.76] to maintain a routing table uh in generally that uh for the big enough to hold um uh to hold a path
+[1257.76:1264.32] or at least a next top for every every other single node in the network right so these
+[1264.32:1271.28] routing tables are going to be order and size because there's end nodes in the network each
+[1271.28:1280.96] each node is going to have this you know size and uh route clean table um in which it's going to hold
+[1280.96:1288.0] basically you know okay the uh the next top toward a particular uh toward a particular destination
+[1288.0:1298.48] now this protocol so what what's the destination sequence part well uh the the sequence part
+[1298.48:1313.44] is basically just about versioning so this basically fixes a problem that plagued routing
+[1313.44:1321.04] protocols since dykestra's earlier earliest uh shortest path routing algorithms which is when
+[1321.04:1326.16] things change it's really easy to get confused and to actually create routing loops and things
+[1326.16:1331.8400000000001] like that so we don't need to get into all the details but this was total hell right you know when
+[1331.8400000000001:1337.0400000000002] when things change and you're not really sure what what the what's you know the latest information
+[1337.0400000000002:1343.28] what's good or you know more recent or less recent information and things are all you know
+[1343.28:1349.2] you know the the network is shifting asynchronously as these messages are passing around um you know
+[1349.2:1355.0400000000002] routing loops you know get you into problems where a message goes around and around a network uh
+[1355.04:1360.24] basically accidentally creating denial of service attacks and causing all sorts of problems right
+[1361.04:1369.04] and so dsd would just one attempt at bringing version sanity to routing table maintenance
+[1369.52:1375.76] right and it does a pretty good job it basically just says okay for each destination in the network
+[1375.76:1382.24] each node that anybody might want to route to that node's got a periodically broadcast it
+[1382.24:1389.04] suggests just say hey i'm here i exist as a destination that somebody might sometime want to
+[1389.04:1395.44] send a message to right so if i want to be reachable i got a you know show a heartbeat you know
+[1395.44:1403.44] once in a every epoch or for some definition of epoch send out an i in here and this is my new
+[1403.44:1411.04] this is my latest destination sequence my my latest version number right which increments every epoch
+[1413.28:1418.3200000000002] and so anybody and so each of these announcements these i in here announcements is again just a
+[1418.3200000000002:1424.8] flooding you know it's it's just a gossip flood thing you know that goes to everyone creating
+[1425.6000000000001:1433.04] um a set of next half a set of uh basically a return path basically creating the routing
+[1433.04:1438.32] table entries to get back to get messages back to me among all the the nodes that it hits right
+[1440.3999999999999:1451.2] so so again here we we start with an announcement destination sequence number n say
+[1452.48:1460.48] and the destination broadcasts that through the network and and everywhere it goes it basically
+[1460.48:1474.96] updates updates the routes uh in in the routing tables all all along the way and so as a result of that
+[1474.96:1489.04] update the tables uh you know the nodes have basically back pointers that states are going to stick
+[1489.04:1495.36] around for at least an epoch or so until the next version is announced at least right um
+[1496.8799999999999:1503.92] and most importantly uh for avoiding loops for maintaining version sanity each of those
+[1503.92:1510.32] know each of these intermediate nodes is going to look at the versions look at the sequences and say
+[1510.32:1517.68] okay if if i if i see a higher sequence for this destination than a previous sequence that
+[1517.68:1524.0800000000002] overrides all information i might have i might have heard about that destination in the past right
+[1524.0800000000002:1532.0800000000002] so there's a strict uh priority order of you know increasing destination sequence number increasing
+[1532.0800000000002:1536.8] version number a later version is always better than an earlier version right in terms of
+[1536.8:1542.4] maintaining route but it takes that's really important because that's actually what prevents loops
+[1542.4:1547.04] from forming and stuff like that again we don't need to get into all the details but that's the
+[1547.04:1553.2] that's the critical idea just you know clean versioning of your state information we'll get you
+[1553.2:1564.6399999999999] a long way to maintain sanity and avoid avoid uh consistency issues such as loops and that
+[1565.44:1571.68] that principle you know of clean versioning when you do decide to maintain state to build state
+[1571.68:1578.8] in the network and maintain it keep keep that in mind versioning help often helps a lot if you don't
+[1578.8:1585.8400000000001] version carefully um you often get into all kinds of uh all kinds of trouble right in this case
+[1585.8400000000001:1590.4] routing loops but in in the case of more complex structures you get into even worse
+[1591.04:1598.24] troubles often we get from the emergent um accidental accidentally wrong structures that you get
+[1598.24:1612.08] uh uh in in networks that are shifting and changing okay um okay questions or discussion about
+[1612.08:1623.52] this so far um uh yeah so quick uh so a question on speaker sorry uh for to not get to it until now
+[1623.52:1634.6399999999999] uh lecture five from uh from last week was lecture five last week uh well anyway um we uh we are
+[1634.6399999999999:1641.52] planning to post the uh the lectures uh on switch two if if they have if they aren't up yet they
+[1641.52:1646.8799999999999] have just takes a little while to post them assuming assuming it was recorded i i need to double check
+[1646.88:1654.5600000000002] that it was actually reported uh but uh assuming it was then hopefully uh we should be able to get it
+[1654.5600000000002:1667.2800000000002] posted too okay okay so yeah so so the sdv is uh is an example of a a state full protocol
+[1667.8400000000001:1675.7600000000002] for the purpose of of routing searching for a node now let's go and and and this is basically
+[1675.76:1682.72] a structure search protocol right it's not a very fancy one but it's a cleanly version one
+[1682.72:1688.64] and that's that's why i wanted uh it's it's one that does a good job of dealing with dynamics and
+[1688.64:1694.48] that's why i wanted to highlight it and make sure you you read those and look at those designs if you
+[1694.48:1707.04] have it already okay so now looks let's look at uh more efficient structured search protocols
+[1707.04:1719.68] in particular a classic protocol is called distributed hash tables
+[1726.48:1735.12] or dhd's now how many of you were already familiar with the term dhd or distributed hash
+[1735.12:1743.28] tables so okay are you good can you briefly summer it what what is a dhd and you if you can
+[1743.28:1751.12] briefly summarize what's the basic idea
+[1751.12:1768.56] well you're you're all very shy today so a dhd is just what it's name what it's name is of course
+[1768.56:1773.6799999999998] it's a distributed hash table right it's a look up structure that's like a hash table it's
+[1773.68:1782.5600000000002] trying the idea the ideal would be to have just a hash table and in particular we would like
+[1782.5600000000002:1790.8] as much as possible of the efficiency of the of a hash table and the only problem is well a hash
+[1790.8:1800.48] table usually assumes we have a certain very important resource that we typically don't have
+[1800.48:1807.28] in a distributed decentralized environment right so what what is a standard efficient hash
+[1807.28:1812.56] table and what resource what critical resource does it assume to make it efficient
+[1814.88:1819.92] evolve written hash tables yeah storage yeah good what kind of storage
+[1819.92:1830.48] we'll it to it yeah we'll it touring touring machine take work for a great random access storage yeah
+[1830.48:1837.3600000000001] so a classic hash table if you want it to be efficient it kind of assumes and requires our
+[1837.3600000000001:1843.3600000000001] random access memory fortunately you know most of our machines have some approximation to random
+[1843.3600000000001:1848.4] access memories now if you look into the details and football about cash higher arcades and all
+[1848.4:1854.88] that kind of stuff yeah you know it's not perfectly order one random access memory it's order
+[1854.88:1859.68] a login kind of random access memory but we usually don't worry about it we'd you know for
+[1859.68:1865.68] purposes of building hash tables and we pretend that our practical machines have perfect random
+[1865.68:1870.96] access memories where you know you can have a big array arbitrarily large array and it takes the
+[1870.96:1877.76] same amount of time to access any element wherever you access it right and so that's that's the
+[1877.76:1884.32] power of a hash table you hash some key it points to this random location in this in this array
+[1885.12:1889.04] and if the hash function is working well and the table isn't too full and bloody bloody
+[1889.04:1893.52] blah hopefully you get the result you're looking for in constant time right yeah
+[1901.92:1906.8799999999999] great yes absolutely that's a very important point because it has to be a good hash function
+[1906.88:1915.44] it has to have not too many collisions so yeah and so you know there's various ways that can fail
+[1915.44:1921.7600000000002] right if you pick a bad hash function you know it can you know kind of hash all of the keys you're
+[1921.7600000000002:1927.6000000000001] interested in actually has to one or two keys and the rest of the hash table is full and one entry
+[1927.6000000000001:1934.64] has a whole ton of items hung on it and you know bad performance happens at least even if it
+[1934.64:1946.88] might still work right so there is that risk right on the other hand you know we we have pretty
+[1946.88:1953.92] good hash functions as well of course the hash function the hash table also has to be not too full
+[1953.92:1960.24] right for for this to work if it's you know if it's only 10 entries big and it has a thousand
+[1960.24:1967.36] entries in in it then well you know it's it's again each entry is going to have a big chain on it
+[1967.36:1972.88] and it's going to be pretty slow and basically linear right so classic hash tables
+[1972.88:1989.0400000000002] as we've seen depend on at least three things one is random access memory
+[1989.04:1998.56] whoops another is a good hash function
+[2005.36:2008.96] and a third is a table that's not too full
+[2008.96:2017.04] so we could we could go on but these are kind of three critical elements for a classic
+[2018.08:2024.56] local hash function hash table to work well right now suppose we try to distribute this
+[2024.56:2040.48] right we try to create a distributed analog right can we pick a good hash function well this is
+[2040.48:2046.32] let's consider the the requirements for creating a distributed version of this so let's let's
+[2046.32:2057.84] first consider the hash function part in the you know local memory hash table we usually care a lot
+[2057.84:2063.2] about the computationally efficiency of a half of the hash function we use right we want it to be
+[2063.2:2069.12] really small simple and easy to compute because we're likely to be using it all the time and you
+[2069.12:2076.96] know we don't want the the cost computable cost of computing this hash function to you know outweigh
+[2076.96:2082.72] the benefits of you know not just using a binary tree or one of the other bazillion search
+[2082.72:2090.24] structures we know that we could use right so you know so they're computing the hash function
+[2090.24:2098.0] is going to be constant cost we don't want it to be too big a constant cost how does that how does
+[2098.0:2115.44] that computational efficiency issue change in the distributor decentralized setting yeah good yeah
+[2115.44:2135.44] so so avoiding collisions is basically more important right basically in all sorts of ways the
+[2135.44:2143.92] quality of the hash function becomes more important right because well it costs a lot more if we
+[2143.92:2154.48] if we get collisions well as you'll see on the other hand what about the what about what about the
+[2154.48:2164.7200000000003] cost the importance of the computational cost say in terms of time the length of you know is the
+[2164.7200000000003:2171.36] length of time it takes to compute a hash function is that equally important in the distributed
+[2171.36:2190.4] versus versus local case go in the local yeah you know okay in the local case you're you know if
+[2190.4:2197.6] you're just looking looking up on a key value pair in a local data structure the computing the
+[2197.6:2204.08] hash function might well dominate the cost the you know the time it takes to do the lookup you know
+[2204.08:2209.2799999999997] you compute that there's basically two things to do there's the you know compute the hash function
+[2209.2799999999997:2215.52] and then there's the memory indexing you know the cost it takes to access the relevant you know
+[2215.52:2220.64] item of the array probably bring it in the cash the local cash if it's not if it's not already
+[2220.64:2228.56] hot etc right very often you know and that one you know a few memory accesses is probably not
+[2228.56:2233.6] going to be take very long because it's just a local random access memory access right so that
+[2234.24:2240.4] so that hash function really better be quick and easy to compute right in the in the local case
+[2241.6:2247.92] on the other hand in the distributed case well we don't have well you know we're not going to be
+[2247.92:2253.2000000000003] looking things up in a local memory we want to be looking things up in a distributed memory somehow
+[2253.2000000000003:2259.12] right so this is we haven't yet talked about how this is going to work but it's going to require
+[2259.12:2264.96] communication right that's inevitable it's going to require network communication anytime you bring
+[2264.96:2271.12] network communication into the picture you know which which could be global you know could be
+[2271.12:2276.08] could be local within a data center or you know within a rack but it could also be global around
+[2276.08:2283.84] the world these are enormous latencies in in comparison with say you know internal computational
+[2284.48:2291.2] latencies in you know computing a cash function right so we actually so regardless of what we
+[2291.2:2296.4] choose for the hash function that's probably not going to be the dominant the you know factor
+[2296.4:2303.7599999999998] dominating the time cost in a in a distributed second so we could use a much you know
+[2303.76:2310.88] fancy or more expensive hash function and it's probably still not going to be remotely the you
+[2310.88:2317.44] know the time bottle neck at least in a in a distributed setting right so what does this suggest
+[2319.76:2328.1600000000003] so so it's avoiding collisions is more important but the hash function is much less time sensitive
+[2328.16:2338.16] because well it's again you know we're staying and we're evaluating the bottle neck against the
+[2338.16:2345.92] the time of a distributed in a network communication possibly multiple hops so what does this suggest
+[2345.92:2367.44] in terms of the kind of hash function maybe we should choose yeah yeah yeah great
+[2367.44:2383.04] so yeah exactly so in in classic in memory has hash hash tables you very rarely see cryptographic
+[2383.04:2389.76] hash as used there are some super light light weight semi cryptographic you know hash's that you
+[2389.76:2400.6400000000003] sometimes see use but pretty rare whereas here very you almost always choose a strong a cryptographically
+[2400.6400000000003:2408.7200000000003] strong hash partly because partly just because we we care about avoiding collisions partly because
+[2408.7200000000003:2416.2400000000002] while we can afford to it's not going to be the dominant cost in time anyway they they become
+[2416.24:2423.2799999999997] pretty cheap actually especially on modern hardware to compute and sometimes we actually we're
+[2423.2799999999997:2432.56] going to rely on their security to to some degree and so so we'll we'll get to that right so
+[2437.52:2443.12] and also they they guarantee you know because of their security properties they not not only
+[2443.12:2449.68] guarantee that we avoid collisions with cryptographic certainty like it's it's not only unlikely
+[2449.68:2456.3199999999997] but it's there's a negligible cryptographically negligible probability of anybody even being able to
+[2456.3199999999997:2463.3599999999997] find a collision if they try really hard right so we'll you know we'll want that that property for
+[2463.36:2472.96] for for the security of of these things right but also beyond that property they're also
+[2475.36:2480.2400000000002] well distributed or balanced
+[2483.92:2491.28] if you if you you know take take the hash's of many different keys it's going to be pretty you
+[2491.28:2496.8] know if it's a cryptographically strong hash function is going to be the results are going to be
+[2497.76:2502.88] more or less indistinguishable from just flipping random points in particular you're going to get a
+[2502.88:2510.0800000000004] really good distribution you know really good uniform random looking distribution even though
+[2510.0800000000004:2516.0800000000004] even though it's not actually random but it's going to look random unless you've managed to break
+[2516.08:2523.2799999999997] the cryptographic hash function in which case that's big news if if we're using a you know one of
+[2523.2799999999997:2531.52] this standard well-known heavily analyzed hash has like shot shot 256 or shot by 12 right
+[2533.36:2539.68] okay so so they really you know how some of the strong properties that are that are going to be
+[2539.68:2544.48] convenient especially in the distributed setting right and we can afford their cost now
+[2544.48:2551.2] coming back to you know what hash tables local hash tables depend on well they depend on this
+[2551.2:2555.04] random access memory and that's that's what can speak you as we missing
+[2561.04:2568.16] right so if we're trying to look look up something like in a hash table but in a distributed
+[2568.16:2576.64] setting well there is no you know shared round that all of the nodes you know that all of the
+[2576.64:2581.68] participating nodes are going to have immediate access to that would be nice but we just don't have
+[2581.68:2588.0] that so we're going to have to simulate it in some way and that's the that's the real kind of
+[2588.0:2596.0] difficulty and the technical challenge and what makes these protocols interesting okay so any
+[2596.0:2606.32] questions so far okay so so I wanted to spend a little time sitting providing the context and
+[2606.32:2610.96] and motivating you know how and why these are interesting what what some of the challenges are
+[2610.96:2616.0] I think it's probably it's a good time to take a short break now let's take a 10 minute break and
+[2616.0:2620.4] then all that then we'll get dive into the details of the core DHT
+[2620.4:2629.12] which is one of your reading assignments so please do read it if you haven't already okay so see
+[2629.12:2654.96] you at 11 10 okay let's continue okay so there's actually a number of interesting distributed
+[2654.96:2660.08] has a DHT distributed has table algorithms that you'll find in the literature
+[2661.12:2669.44] cord was one of the was one of the first I think it was 2002 was it I can't remember the exact
+[2669.44:2680.56] year but there's there's a number of other interesting ones like a Demlia pastry and and
+[2680.56:2688.96] others that came that came later but basically there was a brief big explosion of interest in
+[2688.96:2697.2] these these protocols now what's the what's the basic idea of a DHT well
+[2701.12:2705.68] first you know it's going to use a hash as as we already suggested
+[2705.68:2716.24] but it's you know since there is no single ram to hash into it's going to
+[2718.64:2721.2] hash into a distributed collection
+[2725.7599999999998:2735.6] of ramps for all the participating notes now different different DHT's use different
+[2735.6:2743.2] metrics and make they make use of the hash hash functions in different ways what what's
+[2743.2:2750.24] particularly interesting and unique about cord is well as the name cord suggests
+[2751.6:2759.04] it uses a circular namespace or let's say a circular hash id space
+[2759.04:2771.04] all right so it assumes you start start with a strong cryptographic hash function let's say
+[2771.04:2785.2799999999997] shop 256 for example and you treat you you you pretend the the space of hash values that
+[2785.28:2792.96] this hash function produces is like a clock right starts at zero so namely you know the the hash
+[2792.96:2803.6800000000003] id that has 256 zero bits right and then on the other end and then it basically counts
+[2803.6800000000003:2807.44] counts around the phase clockwise right so at the very other end would be
+[2807.44:2814.32] 2 to the 255 right
+[2817.68:2825.04] and then a quarter of the way around would be would be 2 to the 254
+[2825.04:2840.4] right and over here would be 2 to the 255 plus 2 to the 254 right and so on right this eighth
+[2840.4:2852.64] of the way point would be 253 and so on right so all possible you know all possible IDs in this
+[2852.64:2861.2799999999997] very large cryptographically large space of hash identifiers is is in principle on this very
+[2861.2799999999997:2874.7999999999997] lot very large very very precise clock right somewhere on this circle and because we don't have
+[2874.8:2885.44] because we don't have a single RAM we we have a bunch of participating notes right so each node
+[2888.0:2889.52] is going to have a hash id
+[2889.52:2908.4] right so each node is going to hash something in order to pick a basically pseudo random spot on
+[2908.4:2919.84] this on this clock let's say let's say node a happens to hash happens to have node id you know
+[2919.84:2927.28] somewhere here node b happens to have a hash corresponding to a node id that lands around here
+[2927.28:2940.88] on the clock node c happens to land around here d is here he is here and these are basically pseudo
+[2940.88:2949.44] random right now based on what you've learned so far especially from the from the recent cryptography
+[2949.44:2958.7200000000003] lecture how would you how might you envision or suggest nodes might might choose their hash IDs
+[2962.0:2973.92] yes yeah so that's one of the objectives we'd like to fulfill we would like we would like them
+[2973.92:2979.12] to be fairly evenly distributed on the circle statistically we're not we're not expecting them to
+[2979.12:2987.7599999999998] be perfectly distributed but we want them to be statistically well distributed yeah unfortunately
+[2987.7599999999998:2993.44] you know if you just kind of feed an arbitrary thing into a cryptographically strong hash
+[2993.44:3000.4] function you know I do this honestly you get to that copy I do a little bit later you actually do
+[3000.4:3005.2799999999997] get a good distribution again unless the cryptographic hash function is broken it's not working right
+[3005.28:3012.48] yeah yeah okay yeah sorry I I should have stopped earlier and let you set it yeah so
+[3013.76:3021.0400000000004] so if you just regardless you know as long as you're using soft 256 and feeding anything
+[3021.84:3028.2400000000002] into short 256 you know and kind of doing it honestly then then what comes out is going to look like
+[3028.24:3036.08] you know random for each unique you know piece piece of information you put in right so each node
+[3036.08:3044.0] could just like pick a random number or use it how use its own IP address or its pet name or
+[3044.64:3050.56] something else shove it into the top of shot 256 and you know I get something that looks pretty
+[3050.56:3058.64] random and it's you know it should be pretty evenly distributed coming out right on the other
+[3058.64:3065.84] hand there there are nice reasons to pick you know some things rather than others as inputs to
+[3065.84:3072.88] this hash function any any ideas but quite in particular might be an attractive thing to feed into
+[3072.88:3082.08] that hash function when you're picking node identifiers yeah node name yeah you could you could you could
+[3082.08:3089.6800000000003] you could definitely put a node name yeah so so you want it to be something unique that's going to be
+[3089.6800000000003:3096.1600000000003] unique to the node that you know kind of nobody else is going to use right because if you accidentally
+[3096.1600000000003:3100.7200000000003] you put the same thing isn't the hash function then there's definitely going to be collision right
+[3100.72:3107.2799999999997] yeah you in times down so it increases uniqueness yeah you might might want to do that yeah
+[3108.64:3114.8799999999997] maybe an IP address yeah so so that will that might also help the uniqueness
+[3115.68:3122.9599999999996] now it might not unfortunately you know IP addresses are fickle things and especially nodes that
+[3122.9599999999996:3128.24] are on a you know behind network address translators on a private network might think that they
+[3128.24:3133.68] have exactly the same IP address as 50 or 100 or a thousand other nodes sprinkled around the
+[3133.68:3140.24] internet but also have the same IP address on different private networks right and similarly
+[3140.24:3146.3199999999997] with time stamps yeah that can that can also increase the uniqueness but well somebody else might
+[3147.3599999999997:3153.6] might just legitimately start up their you know you know friends to our new teleclient it pretty
+[3153.6:3159.6] much exactly the same clock tick at least by their local clocks as you started yours and your local
+[3159.6:3164.4] clock yeah this is probably you know this is a lot less likely than than it is if you don't have
+[3164.4:3169.6] the times down but it's you know no it's not an absolute guarantee that it's not going to happen
+[3169.6:3179.92] right and anybody think of a way to strengthen it further yeah yeah yeah good good good good yeah so
+[3179.92:3187.6] you could you could actually use a big strong source of randomness like get it like a like a cryptographically
+[3187.6:3196.0] strong random random number right so this what what what is the input to to the to the node ID so
+[3196.64:3206.7200000000003] yeah could be IP address would be time could be random number these are all these are all good
+[3206.72:3211.68] good choices to increase the uniqueness and in particular if you if you'll get enough random bits
+[3211.68:3219.04] you know um you know like say 256 of them and put them in the top of that hash function then
+[3219.04:3228.3999999999996] you know that's that's for sure going to be unique right um but well what if somebody is not
+[3228.3999999999996:3235.68] honest about the way they choose like they see you know so Alice has come on the network and has
+[3235.68:3243.52] picked picked this location and then Bob comes in and doesn't like Alice for some reason yeah
+[3252.3199999999997:3254.3199999999997] your close hash over private key
+[3254.32:3267.6000000000004] so if if I use the hash of my private key well I have to keep my private key private right so
+[3267.6000000000004:3276.0] you're very close but so so so I can't you know publish my private key for people to verify against
+[3276.0:3281.92] you know I would like to publish something that people can verify well you know kind of this is
+[3281.92:3289.84] my or this is Alice is legitimate identity everybody knows that Alice has claimed that identity
+[3290.88:3296.0] and nobody we we would like the property that nobody can dispute you know kind of Alice's
+[3296.0:3303.2000000000003] position Alice is right to that particular location on this on this on this ring right
+[3303.2:3316.72] oh could do that yeah you could you could require require nodes to to get a
+[3317.6:3325.4399999999996] sure a CA certificate that the purpose of that is usually to to a test a name right so so this
+[3325.44:3336.08] that basically a test that a particular name has is the legitimate owner of a particular sorry a
+[3336.08:3344.64] particular key is the legitimate owner of a particular name right and of course that's another
+[3344.64:3350.16] of the things that you know we might want to be in the key I should have mentioned there yeah but
+[3350.16:3363.68] you were someone else what okay yeah so yeah so the problem is well you know names and
+[3363.68:3369.52] the names are hard to deal with you know and and maybe we don't always need and need them to be
+[3369.52:3375.44] human readable maybe we don't need to know Alice's node name per se we just want to make sure
+[3375.44:3383.76] that nobody can to can contest her position right any other ideas very close to the house of the
+[3383.76:3397.84] private key idea yeah house of the public key great great great excellent yeah so this this
+[3397.84:3403.04] last choice is tends to be by far the most popular right there you know all of these choices are
+[3403.04:3409.68] reasonable you know as inputs to the node identity identity in various cases but very often in these
+[3409.68:3416.4] kinds of contexts you use the hat a hash of a public key or at least that and other things sometimes
+[3417.04:3425.04] and that's because anybody can anybody can just take the public key and you know hash it to to
+[3425.04:3432.72] verify for themselves yeah that indeed lands on you know that spot right there but also they can
+[3432.72:3439.2799999999997] prove that they you can you can just sign something to prove that you actually own the corresponding
+[3439.2799999999997:3443.3599999999997] private key you never have to disclose the private key but you can sign with it you can prove that
+[3443.3599999999997:3450.8799999999997] you have it right you can you can satisfy a challenge you know if somebody challenges Alice to say
+[3450.8799999999997:3456.24] okay you know thank you for you know I'd like to get in touch with you but can you prove that
+[3456.24:3460.56] you're Alice or can you prove that you are the legitimate owner of that particular point down
+[3460.56:3467.12] this on this hash ring Alice can say sure send me a random challenge I'll sign it there there's
+[3467.68:3475.68] some some details to be worked out here to to make to make sure this is actually secure so it's
+[3475.68:3482.4] not over-simplifying it but that's that's the gist of it Alice can prove that she has the you know
+[3482.4:3487.84] the rightful use of that position and nobody else does unless they they have compromised Alice's
+[3487.84:3495.6000000000004] private key right okay so that's that's a particularly common and nice and useful way of choosing
+[3495.6000000000004:3505.76] node IDs on a on a core DHC or any most any DHT so so keep that in mind an important useful detail
+[3508.0:3512.2400000000002] but then you know so we've chosen all these ideas what are we actually going to do with them
+[3512.24:3519.52] well we want to simulate back to this this issue of the missing ramp right all of these nodes have
+[3519.52:3525.2] individual ramps and we want to simulate you know one big ramp so what are we going to do we're
+[3525.2:3531.6] going to treat this like a pizza right we're going to divide the pizza up according to those points
+[3531.6:3544.16] and just just by convention you know you know we can pick any convention as to exactly how to
+[3544.16:3553.2799999999997] divide this up but by the core convention each node is going to claim the the the part of the
+[3553.28:3568.0] pizza from its position to the next right so e's successor is a a successor is b here right so
+[3568.0:3574.6400000000003] e is going to is going to claim the entire slice of the pizza around from its position to its
+[3574.6400000000003:3580.4] successor position to a's position in this case a is going to claim the whole slice of the pizza
+[3580.4:3583.6800000000003] from it to its successor b and so on right so
+[3589.12:3592.96] yeah and we're going clockwise just by convention totally doesn't matter
+[3596.2400000000002:3606.1600000000003] um so as you can see that well you know these uh uh these slices might might not be perfectly
+[3606.16:3612.72] balanced and even you know they're all statistical these are these are random right but as as you
+[3612.72:3618.48] get more and more nodes in here because of the strong properties of the cryptographic hash functions
+[3618.48:3624.96] they'll they'll actually get quite well balanced statistically so you can calculate you know if you
+[3624.96:3632.3999999999996] if you work out the you know just the statistical calculations you can work out um the fact that
+[3632.4:3640.32] uh you know if there's n nodes and n is pretty big each node is going to get about a one-inch size
+[3641.12:3649.36] um slice of this pie out of the whole out of the whole pie and you know that one that one
+[3649.36:3654.56] inch well it might get a little bit more a little bit less than the one-inch but if n is large
+[3654.56:3660.08] the the variance from the from that you know ideal from the expected one-inch is going to be pretty
+[3660.08:3665.2799999999997] small and it gets exponentially tighter as you get more and more nodes this is just a nice
+[3665.2799999999997:3673.44] property of statistics right the way it'll allow large numbers of stuff so it gets very statistically
+[3673.44:3678.56] it gets very well balanced as n gets large even though it might be terribly balanced in this in
+[3678.56:3688.3199999999997] this example here right so now why do we care about this balance well we want to store something
+[3688.32:3692.88] so we we now have kind of a distributed memory we've got a bunch of nodes each of each of which
+[3692.88:3700.0800000000004] is willing to claim and take care of a certain part of this space right so and this is our this is our
+[3700.0800000000004:3709.6800000000003] logical distributed ramp the pizza right so we're going to have objects and these objects are
+[3709.68:3721.04] going to be key value pairs just like in most any other hash table and the and the API is
+[3721.04:3729.68] going to be basically two functions right there's going to be put given a key and a value
+[3729.68:3738.7999999999997] store this key value pair in this distributed hash table anybody can do that then anybody can get
+[3741.68:3749.3599999999997] provide a key try to search to see if that see if a value for that key exists and either
+[3749.36:3760.96] return that or if it exists or otherwise return return say bottom or you know says something that
+[3760.96:3768.6400000000003] says sorry it's not there or couldn't couldn't be found anyway right or you could call this error
+[3770.56:3778.2400000000002] right so it's going to operate just like a standard hash table
+[3778.24:3793.2] using key value pairs right but so this means and and each key is going to use the same hash function
+[3793.8399999999997:3801.6] as the node node IDs all right so in this case shot to see shot to see for example
+[3801.6:3808.96] right so what this means is each value like value one you know say
+[3811.8399999999997:3823.36] happens to hash there value two value three value four each each value that each key value let's
+[3823.36:3832.6400000000003] call these key value pairs kv1 kv you know etc each of these key value pairs is you know using
+[3832.6400000000003:3838.2400000000002] the key to hash the some position in this space just like the nodes hash to some position in the space
+[3841.04:3851.04] and and so this is this is where they map to in this logical distributed round right so what does
+[3851.04:3862.4] this mean basically it means that the responsible node or say a key value that hashes you know into
+[3862.4:3867.84] ease segment of the pie well E is going to be primarily responsible to remember that value
+[3869.7599999999998:3876.96] so when somebody doesn't put they're going to they're going to find E and say and tell
+[3876.96:3883.6] he he hey it looks like you know I want to store this value it looks like that value maps into your
+[3883.6:3891.6] space can you remember it please right and E will say sure thanks I promise to remember this
+[3891.6:3897.36] value for for you here if anybody comes comes later to me with a get request right
+[3897.36:3909.92] and saying for for any of right now of course people might insert a lot of values in fact they're
+[3909.92:3914.88] you know if this is a heavily used hash table there might be a lot more value key value pairs than
+[3914.88:3922.8] nodes right but based on the properties of the hash function we use excuse both node identifiers
+[3922.8:3931.52] and and you know and keys right what what's the important property that we can the the
+[3931.52:3938.48] nice useful property we can rely on in terms of in terms of each node's workload say
+[3938.48:3963.36] let's say there are n nodes total and let's say there are m you value pairs total about how many
+[3963.36:3975.36] about how many values does each node have to have to store in the steady state once things yeah
+[3977.6:3986.8] great
+[3986.8:3998.96] oh yeah great yeah so so you're you're getting into the first key problem with this kind of
+[3998.96:4004.32] simplistic design of course you wouldn't want to end with this you wouldn't want to have only one
+[4004.32:4013.92] node responsible for a particular key value pair right so let me get into this
+[4013.92:4025.6800000000003] first major challenge which is reliability any node may fail my go offline at any time and it takes
+[4025.6800000000003:4031.92] all the values in its in its pice like with it right so everybody just forgets all those values
+[4031.92:4039.04] right so you know and that might be bad especially if we're getting a lot of churn right so exactly
+[4039.04:4051.52] as he suggested we generally want to have redundancy and there are various ways to do this
+[4052.88:4060.0] but one easy and very common way is just to have a particular redundancy factor r
+[4060.0:4068.32] going here well so um
+[4074.64:4083.12] we basically say we basically say the for any for any particular key that lands in a particular
+[4083.12:4094.64] pice slice um so that's still the owner the the node that owns that that area but we say that
+[4094.64:4100.0] the owner plus the r minus one immediate successors
+[4105.84:4112.24] store copies of the key value pair of any particular key value pair right
+[4112.24:4120.16] so in this case for example this particular key value pair here that this ultimately
+[4120.16:4126.24] ease responsibility but if the redundancy factor is three if r equals three for example
+[4126.24:4134.48] then it'll be not just e but it's also the a and b that each redundantly store copies of this
+[4134.48:4144.16] right so um so for some reason you know e fails and people are still looking for this key value
+[4144.16:4151.759999999999] here they can just say okay I can't find e can I find one of e's successors so they'll look at
+[4151.759999999999:4158.4] well okay just a habit we have it and hopefully you know if uh if not too many of the redundant
+[4158.4:4164.0] copies have also failed then then hopefully nodes will be able to recover from this right
+[4168.799999999999:4175.839999999999] um yeah so so with redundancy
+[4180.08:4188.0] of course the load increases but it's it's pretty simple to calculate right so this is
+[4188.0:4196.08] going to be about r times m over m per node and just multiply in the redundancy factor and that's
+[4196.8:4204.0] kind of that that's the what you expect each node to each node's load to be approximately
+[4204.0:4210.16] again this is approximate right statistically approximate but with large n and large m just
+[4210.16:4216.08] again because of the law of large numbers it's not gonna it's not normally gonna vary a lot from
+[4216.08:4224.8] from this expected load right so that's nice in terms of balancing the load okay
+[4227.44:4232.16] now yeah so this this is one way to solve one of the important problems but there's uh
+[4232.16:4237.84] one of the important challenges of building dhcs but there's actually many other important challenges
+[4237.84:4252.0] um one of one of the most basic is just maintaining the structure
+[4252.0:4275.28] so remember that one of our goals is order log in and this means in storage
+[4275.28:4295.759999999999] for node and also in computation per operation per get or put right so we want everything you do
+[4295.759999999999:4301.04] with this hash table to to be basically logarithmic costs so very scalable
+[4301.04:4315.36] that means we would like Alice and you know a pc d and e each to have only to require only log in
+[4316.24:4324.24] asymptotically log in space table space of whatever kind if the network size is n right if there
+[4324.24:4333.92] um and even if uh if we say n and m are the same thing we just say n is an upper bound on both
+[4333.92:4339.36] the number of nodes and the number of key value pairs we still want it to be log n cost or you
+[4339.36:4345.28] know we want it to be log n and log n if you wanted to distinguish those right but let's just
+[4345.28:4350.32] from that for now on let's just call them the same thing you know there and it's an upper bound
+[4350.32:4356.799999999999] on both the number of nodes and the number of uh of uh the value pairs we want it to be all log in
+[4356.799999999999:4362.96] right so this this starts to sound a little bit more challenging right we don't want any
+[4363.84:4373.28] in particular we don't want something like dsdv or most other most other routing protocols
+[4373.28:4379.44] would produce we talked about dsdv where every node builds and maintains a routing table entry
+[4379.44:4386.16] pointing to every other node this is order n storage for node we're nowhere near the ballpark of the
+[4386.16:4396.96] of efficiency that dsd's want to went to achieve right so how do uh and all of these nodes are just
+[4396.96:4402.16] going to be at random you know arbitrary it addresses maybe some of them have domain names maybe
+[4402.16:4412.0] some of them don't and some of them just have IP addresses um there's no and if we want log n storage
+[4412.0:4418.24] per node there's not going to be space for each node to have a table of the you know here's all the
+[4418.24:4424.5599999999995] other nodes and here's a list of their IP addresses right we don't we want to avoid having to store all
+[4424.56:4434.240000000001] that right but we would also like to avoid the the computation and the the cost of lookups
+[4434.240000000001:4442.240000000001] to be too big in each case right so let's and that's that's what's hard here so so let's first
+[4443.360000000001:4451.52] look at a straw man example of how we would do um say I get or a put
+[4451.52:4458.160000000001] let's just say it yeah let's let's assume the network is is already built up um
+[4460.8:4468.96] but each node does not know all of the other nodes let's just say each node only knows it's
+[4468.96:4480.88] immediate successor right so now if each node only knows it's successor basically there the
+[4480.88:4488.72] nodes are all storing a virtual ring in the network they don't and they're they're they're
+[4488.72:4494.0] they're quote put on quote routing cables are really nice and compact right each each node has
+[4494.0:4499.28] order one you know constant space right that's really nice from a space perspective
+[4502.72:4509.4400000000005] now suppose you did this how would one going about go about doing again let's say
+[4509.44:4517.12] node c wants to search for value two keep value pair two how would see do that search
+[4518.16:4527.839999999999] in this kind of simple version of the structure yeah you would you would
+[4528.96:4534.48] sorry yeah it would ask e in this case it would get lucky really quickly because e happens to
+[4534.48:4540.24] be responsible for it right but what happened if we get less lucky now let's go back to let's
+[4540.24:4545.839999999999] ignore redundancy again just for simplicity and assume there's no redundancy so and let's
+[4545.839999999999:4551.28] consider what happens at a search is for the same thing right searches for key value two
+[4552.959999999999:4559.04] has to go all the way around to find it right and what's the you know what's the time or
+[4559.04:4566.72] communication cost of that going to be order in yeah exactly did you want to add something else
+[4568.88:4575.76] oh good yeah great so so clearly we don't want the cost of going you know
+[4575.76:4581.2] chugging all the way around the ring each time we we want to find something on the other hand
+[4581.2:4590.4] if nodes don't know the location the IP addresses or identities or anything to find the other nodes
+[4590.4:4597.36] yeah so we could we definitely want to do something like binary search but how do we even know
+[4597.36:4606.8] who to contact that's far around the ring if we only store if it's node only stores it's immediate
+[4606.8:4613.6] success or well there's nothing to binary search in yet obviously we've got to fix that problem right
+[4614.72:4626.96] so how do we how do we fix it yeah exactly great so exactly so each node is not only
+[4626.96:4636.72] been a store its its successor each node is going to have whoops what what happened uh uh
+[4638.72:4643.28] yes I know I'm sharing the screen that's useful information okay
+[4647.04:4653.68] so each node is not only going to store its immediate successor it's actually going to store
+[4653.68:4665.68] what we call a finger table with a collection of successors and it's going to have a number of
+[4665.68:4683.12] buckets right now so in particular each node each node besides just storing its immediate
+[4683.12:4692.64] successor each node is going to um gonna gonna take its position and basically extend its position
+[4692.64:4700.4] in a cord or a diameter slice basically this is a diameter cord goes right across the circle
+[4700.4:4705.92] to the diametrically opposite point there's always a diametrically opposite point even if there's
+[4705.92:4710.32] nothing actually there there's no there doesn't need to be an actual key value pair or node there
+[4710.32:4718.08] but you know you you're gonna say okay you know the diametric opposite point from me of this circle
+[4718.08:4725.28] is right over there and I'm going to store a finger table uh finger pointer to some node
+[4725.84:4732.5599999999995] around like say just after that the diametric opposite point right so what this means is he's
+[4732.56:4742.56] going to say okay I'm going to also keep um so at least so at least halfway around I'm gonna
+[4742.56:4753.4400000000005] have a bucket of other nodes that are at least halfway around uh the uh the ring and so
+[4754.240000000001:4761.84] so he is gonna store a pointer to D maybe maybe also to see for redundancies so you know
+[4761.84:4768.96] there there might be a few uh you know a few know a few uh pointers in each bucket not just one
+[4769.84:4774.88] but one of the buckets is going to be specifically for nodes that are at least you know a little bit
+[4774.88:4780.96] more than half the way around right and then another bucket is going to be what we call the one
+[4780.96:4786.64] quarter bucket this is going to be the bucket for successors that are at least a quarter of the way
+[4786.64:4794.160000000001] around the ring from ease position right and so this is going to be B and then if there were any
+[4794.160000000001:4801.92] other nodes that are an eighth of the way around then um then they would go in here right so this
+[4801.92:4808.8] is the one eighth of the way around bucket right so here is going to be A right and then we could
+[4808.8:4814.4800000000005] keep subdividing all the way down to one over two the two fifty six right but at some point we're
+[4814.48:4818.879999999999] going to run out you know we're going to just find empty buckets when uh you know when we get so
+[4818.879999999999:4823.44] fine grain that there there's just no nodes to put into them anymore right but that's that's the
+[4823.44:4831.44] general track right so we're going to have this finger table that has a whole list of potential
+[4831.44:4838.16] successor nodes for different distances perfectly set up for binary searches right so you can
+[4838.16:4842.48] it's kind of obvious you know what you then want to do with this when you're actually trying to
+[4842.48:4849.5199999999995] find something right so if you use trying to find say this particular key well it just has to be
+[4849.5199999999995:4856.879999999999] the key and see you stop okay so that key lands well somewhat less than halfway around the ring
+[4856.879999999999:4863.599999999999] from myself so I'm not going to bother using the one half bucket at all that's not useful I don't
+[4863.599999999999:4869.839999999999] need to go that far but let's look at the one quarter bucket uh-huh that key is more than a quarter
+[4869.84:4874.96] of the way around the ring so let's look at that one quarter bucket maybe some some node in that
+[4874.96:4881.28] bucket can help me and so so it looks for you know some though that it can talk to you that's
+[4881.28:4891.84] that's less that that's um that's um uh you know that's before that particular point well if in
+[4891.84:4897.12] this case it again gets unlocked because it's fine be well the be just unluckily happened to be
+[4897.12:4903.12] beyond the particular key we're looking for so be is still you know still didn't prove useful in
+[4903.12:4909.12] this case but that's okay we're just going to move down another bucket to say the one eight bucket
+[4909.12:4918.48] and here we'll find node eight right and in this case we did finally get lucky we got a node that's
+[4918.48:4923.68] you know not past the key that we're looking for and so that is useful so we talked to that
+[4923.68:4928.240000000001] node and say hey can you help me find that he in in this case he says oh yeah that's my here's
+[4928.240000000001:4937.52] here's the key of course um he might you know if there's more nodes this uh uh yeah he might have
+[4937.52:4942.4800000000005] to talk with a you know maybe there's another node in here that's you know he doesn't doesn't
+[4942.4800000000005:4952.08] have at all in his finger table but he knows about right and so so it's so um he might have to do
+[4952.08:4960.64] uh you know talk to multiple nodes along the way in order to find that key value pair my might
+[4960.64:4969.2] have to use the contents of other nodes uh he got tables right so so a also have it has a set of
+[4969.2:4978.8] finger pointers and uh so and so it might take you know I'm a set of of indirect lookups to finally
+[4978.8:4984.8] find you know the node is actually responsible for that particular key value pair or somebody that
+[4984.8:4993.52] that actually has it right but if if these nodes have set up their finger table to the property
+[4993.52:5001.52] of me then we can actually get a nice provable guarantee that you know even if it takes some
+[5001.52:5009.84] number of lookups we're going to drop one level in the table each time right each time we have to
+[5009.84:5015.68] contact a new node or do some work we're going to make some progress not only around the ring but
+[5015.68:5023.76] we're going to make progress down the table at each step and well how many how many total entries
+[5023.76:5031.92] in the table can there be well that's that's log two of them right now in principle in theory
+[5031.92:5039.04] that might be you know these tables might be you know 256 um you know buckets right because it's
+[5039.04:5045.68] uh two two to the 256 space right in practice there going to be is going to be a whole lot less
+[5045.68:5052.4800000000005] because well the you know there's there's probably a lot less than two to the 256 actual nodes or
+[5052.48:5059.759999999999] key value pairs in the network right so so in practice it's going to be more log log two of n rather
+[5059.759999999999:5067.44] than log two of two 256 two to the 256 right but uh that's what it could be in principle
+[5067.44:5084.16] okay yeah so any any questions so far are there other concerns yeah
+[5084.16:5100.88] like if you just so much data you're storing then I'm storing all nodes with such a big problems
+[5100.88:5100.72] because if compared to one point you need to think about getting noticed much smaller than just by
+[5100.72:5107.76] keeping built a whole five architecture you want to go into view so yeah so you're saying if the
+[5107.76:5112.08] the amount of data you're storing is much much greater than the number of nodes
+[5112.08:5120.88] than it yeah in fact you're absolutely right so uh and in fact if you look at if you look at
+[5121.44:5130.64] actual uh dhts deployed in practice like i pfs uses a dhts various uh you know various systems
+[5130.64:5138.8] actually use dhts very often if you look at the actual number of nodes uh you know a number of
+[5138.8:5145.4400000000005] unique nodes in these systems and you calculate well how much memory would it take to store just
+[5145.4400000000005:5153.4400000000005] a massive table of all the nodes with with forwarding pointers um often turns out especially in
+[5153.4400000000005:5159.28] modern you know standards of amounts of memory it might might not be so bad after all right so
+[5160.08:5166.64] so yeah you're you're right so so dhts in a way turned out a little bit to be a little bit of an
+[5166.64:5173.12] academic solution very beautiful clever solution in searching for a problem or for for a sufficiently
+[5173.12:5179.360000000001] hard problem um on the other hand you know and as themtotically right you know from a as themtotic
+[5180.0:5186.88] analysis perspective there's no guarantees that that you know the number of uh data items is
+[5186.88:5190.88] going to be much larger than the number of nodes it might even be the opposite there's a lot of
+[5190.88:5195.68] nodes than only a few popular things that they all want to organize but they need to find each
+[5195.68:5203.280000000001] other fine you know you to find something you got to find find the node that's um that's responsible
+[5203.280000000001:5210.56] for it into this enormous cloud of nodes right in principle could also happen and um or you know
+[5211.76:5218.320000000001] and then not the attractive thing about these algorithms is they can get guaranteed that no
+[5218.320000000001:5224.4800000000005] matter how big you know the number of nodes or the number of data items is it's all going to be
+[5224.48:5231.12] login login storage login you know hops to to find what you're looking for or login
+[5232.4:5238.32] work to put something new in the in the network or refresh something that's already there right
+[5239.2:5247.599999999999] so yeah so it's definitely you know is not always necessary but it does definitely has that
+[5247.6:5261.4400000000005] attraction that appeal right makes sense um of course yeah so we talked about how
+[5263.360000000001:5266.400000000001] we use basically login
+[5266.4:5282.0] and finger table buckets per node so that's the essence of how we deal with that next challenge now
+[5282.5599999999995:5287.679999999999] we're uh we're we're almost out of time and we've only kind of really started on to the challenge
+[5287.68:5297.12] it's there's a lot more details to to get into another uh so uh another issue we we haven't
+[5297.12:5304.4800000000005] yet talked about as well how do nodes come and go how do nodes join this network gracefully
+[5305.200000000001:5311.12] find their place especially given that you know they start out not basically not knowing anyone
+[5311.12:5318.32] right so usually usually you you have to assume that node has some kind of small set of boot
+[5318.32:5323.2] strap nodes that they can like you know kind of well a small set of well-known boot strap nodes
+[5323.2:5328.72] that they can start talking with but then you know a new node that has to kind of come in somewhere
+[5328.72:5334.64] find a place based on its hash identifier and and figure out where it belongs and talk to the
+[5334.64:5342.0] other nodes say hey I'm here can you change the current structure to include me right and that
+[5342.0:5348.160000000001] gets complicated and interesting without getting into too many details now um
+[5350.320000000001:5357.200000000001] and what happens when a node leaves what what happens when a node wants to leave gracefully say hey
+[5357.200000000001:5364.160000000001] I'm shutting down hey my predecessor I'm going away can you please take over the items the key
+[5364.16:5368.8] values that I'm no longer going to be able to serve you know so there's there's going to be a
+[5368.8:5376.32] protocol for that and of course nodes can leave ungracefully too just bolted if your power is gone
+[5376.32:5382.16] they're they're out right and other nodes have to kind of just notice hey have you heard from
+[5382.16:5389.84] Alice recently uh is she still there maybe maybe not how long do we wait before we decide maybe
+[5389.84:5396.400000000001] Alice has failed and we need to try to try to re-knit the the structure around around the failure
+[5396.400000000001:5402.56] right so then there's going to be protocols for that kind of repairing you know for around
+[5403.12:5409.04] apparently failed nodes which might might or might not have actually failed right so it's
+[5409.04:5414.0] possible that Alice is actually still there but you can't talk to everybody can only talk to some
+[5414.0:5422.8] people but not others actual networks are quite complicated and unfortunately this can get us into
+[5423.44:5430.72] weird situations similar to you know the kind of situations I alluded to with with classic
+[5430.72:5438.0] just disinfector routing protocols the kind of situations the DSDV was created to to you know
+[5438.0:5447.52] to as a response to right routing loops and and in particular you know if you look at what can
+[5447.52:5454.0] happen in practice you can you can have really actually really weird things that are not actually
+[5454.0:5462.08] that unlikely to appear in practice such as funny funny loops where well because a because a
+[5462.08:5467.12] network has split maybe you know you have a network split like you know but half of the nodes go
+[5467.12:5472.96] one way half the nodes go the other way for some period of time each group of nodes gets kind of
+[5472.96:5480.72] used to operating on its own for a while and then they want to knit back together well one of the
+[5480.72:5487.2] things that can happen is once is you get kind of some kind of weird successor cycle like this so
+[5487.2:5493.04] you know A. thinks that the this is its successor and and then that's its successor and then that's
+[5493.04:5501.76] its successor and then that's its successor and this is a really nice ring isn't it and you just
+[5501.76:5508.56] imagine how well you know D.H.T. routing works on that kind of ring and then this is actually
+[5508.56:5515.44] surprisingly not that you know unlikely to happen you know in the actual evolution of a thing
+[5515.44:5522.56] under the right you know the right or you might say wrong conditions right so so again no you know
+[5522.56:5532.0] no time to get into into that in too much detail but it's it's another of the interesting and
+[5532.0:5541.6] important challenges so things like basically churn right when when churn is too high or
+[5541.6:5556.72] repairing bad structures if they do happen and we haven't even begun to talk about what happens
+[5556.72:5563.52] if nodes are if some nodes are actually militias right if nodes are intentionally trying to
+[5563.52:5570.160000000001] deceive other nodes trying to censor censor another node or censor some content there's actually
+[5570.16:5574.96] really interesting ways of doing that D.H.T.s are really actually really hard to secure so I
+[5576.5599999999995:5583.04] maybe we'll get what we'll have time to get to some of those challenges later but
+[5587.92:5589.68] let's say malicious security
+[5589.68:5601.200000000001] but we might say you know malicious security is pretty much an unsolved problem for D.H.T.s there's
+[5601.200000000001:5609.92] a few very few academic D.H.T. designs that try to achieve some some security against actual kind
+[5609.92:5616.08] of deliberately militias nodes but all of the designs I know of that are actually out there aren't
+[5616.08:5627.6] really don't really have security against against actively malicious nodes okay but but anyway
+[5627.6:5636.0] now there's nevertheless there are there are super you know fun interesting class of protocols
+[5637.04:5642.0] they have their very interesting strengths especially in terms of efficiency they have
+[5642.0:5648.48] some important weaknesses oh also coming back briefly to the generality topic you can see
+[5648.48:5653.6] one of the reasons that they don't support general queries the query just has to be a key right
+[5653.6:5658.8] you have to pick a key that's what you look at you find it or you don't period right it's hard to
+[5658.8:5664.24] do it and or there's you know you know kind of more complex queries it's it's not impossible but
+[5664.24:5672.48] it gets a lot more complicated right but yeah so so that's basically an overview of D.H.T.s in
+[5672.48:5678.0] the netchale do read the code paper please and there's there's other optional readings about
+[5678.0:5685.5199999999995] other interesting D.H.T.s too on this week's Moodle page but yeah we'll leave it at that until
+[5685.52:5695.52] until next time thanks see you next week

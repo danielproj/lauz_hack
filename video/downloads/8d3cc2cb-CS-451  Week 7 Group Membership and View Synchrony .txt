@@ -1,0 +1,1148 @@
+~CS-451 / Week 7: Group Membership and View Synchrony 
+~2020-11-02T17:02:23.526+01:00
+~https://tube.switch.ch/videos/8d3cc2cb
+~CS-451 Distributed algorithms
+[0.0:7.84] Okay, so group members, sheet and use synchronous communication are very important abstractions.
+[7.84:14.0] They are maybe less visible than in the literature or in actual systems.
+[14.0:19.240000000000002] They are less visible than causal broadcasts or consensus or total order broadcasts, but
+[19.240000000000002:23.080000000000002] in fact they are usually hidden and not clearly exposed.
+[23.08:31.32] But they are very, very important and as I would like to, I will try to motivate today.
+[31.32:33.519999999999996] The first of these abstractions is group membership.
+[33.519999999999996:35.56] The second one is using synchronous communication.
+[35.56:38.64] Let's focus on group membership.
+[38.64:43.879999999999995] In distributed systems, the way we have been studying them in this class, we have assumed
+[43.879999999999995:52.08] that we have a bunch of nodes or processes and they know each other.
+[52.08:56.239999999999995] They start the system by assuming that they know each other, they know how many they
+[56.239999999999995:59.12] are, they know their identities.
+[59.12:60.599999999999994] And then the system starts.
+[60.599999999999994:66.56] But typically, the distributed systems, they don't stop.
+[66.56:73.75999999999999] You want them to keep working forever if you think of Amazon or Google or those systems
+[73.75999999999999:74.75999999999999] or Twitter or Facebook.
+[74.75999999999999:77.88] These are not systems that you start and then you stop.
+[77.88:79.72] They work forever.
+[79.72:84.6] And the composition of the network changes over time.
+[84.6:88.8] It's not a small application where you say, okay, I would launch it now and in a couple
+[88.8:89.96] of minutes it's going to stop.
+[89.96:91.8] So I know exactly who is involved.
+[91.8:101.0] But in those long lived applications, the composition of the members typically change.
+[101.0:106.16] And sometimes in the course of the computation, you want to know as a process who is actually
+[106.16:107.16] there.
+[107.16:113.67999999999999] Maybe the original, usually the original set of processes has changed.
+[113.67999999999999:118.72] Sometimes that set has decreased because some nodes have failed or maybe they had some
+[118.72:122.96] bugs and they actually have been excluded from some system administrator.
+[122.96:127.84] The system administrator can actually be implemented by specific nodes.
+[127.84:132.64] This is one situation where the set of processes shrinks.
+[132.64:136.64] There are other situations where the set of processes increases.
+[136.64:144.64] If you think, for example, of Amazon, when a country is confined, more people tend to
+[144.64:147.92] go to Amazon and typically Amazon people know that.
+[147.92:152.32] So they add more nodes, more processes to their system.
+[152.32:154.51999999999998] So the set of processes increases.
+[154.51999999999998:156.72] But this is not only recently.
+[156.72:163.92] If you think of, for example, Black Friday's or Christmas or days like that, Amazon used
+[163.92:168.51999999999998] for example to increase the size of the system and add more nodes.
+[168.51999999999998:176.39999999999998] Thanks, giving was the case where the number of nodes were multiplied by some significant
+[176.39999999999998:177.39999999999998] number.
+[177.39999999999998:182.51999999999998] So these are actually practical cases where the group membership, we call it a group,
+[182.51999999999998:187.23999999999998] the group of nodes involved, the group of processes involved in an application change.
+[187.23999999999998:192.44] And we would like the processes, at least sometimes we would like them to know who is around,
+[192.44:196.52] who is involved in the computation.
+[196.52:201.8] So processes need to know which processes are participating in the computation and which
+[201.8:203.6] are not anymore.
+[203.6:209.52] To some extent, but to some extent only fail of detectors, they provide such information.
+[209.52:215.16] We have seen, if you remember, in many cases we have seen this famous variable correct,
+[215.16:218.52] which is supposed to denote the set of processes.
+[218.52:222.4] And when we detect the crash of a process, we remove that process from the set correct.
+[222.4:229.52] So somehow we had that information about who is around by that set correct.
+[229.52:234.84] But first, we only focused on failures.
+[234.84:238.88] But more importantly, the information was not coordinated.
+[238.88:241.0] And I will explain what that means.
+[241.0:245.36] Even if we have a perfect failure detector, the information about that famous variable
+[245.36:248.92000000000002] correct, who is in the system, was not coordinated.
+[248.92000000000002:250.6] And let me explain.
+[250.6:255.23999999999998] So assume we have four processes in the system and we have a perfect failure detector.
+[255.23999999999998:258.08] And assume we don't even add processes in the system.
+[258.08:263.0] We don't care about Thanksgiving or confinement or Amazon adding process.
+[263.0:265.04] So we simply care about crashes.
+[265.04:270.15999999999997] This is without loss of generality, but just for simplicity of presentation.
+[270.15999999999997:275.48] So we have in the system four processes, P1, P2, P3, and P4, and the execute.
+[275.48:279.71999999999997] And at some point P2 and P3 fail.
+[279.72:282.68] And we would like the other processes to know about that.
+[282.68:286.84000000000003] We have a perfect failure detector and remember the perfect failure detector is implemented,
+[286.84000000000003:293.72] assuming the strong bounce on communication systems and using timeouts so you can implement
+[293.72:294.72] it.
+[294.72:299.48] So P1 eventually knows that P2 has crashed.
+[299.48:304.24] Before initially did not suspect anyone, but then eventually before learns that P3 has
+[304.24:305.56] failed.
+[305.56:312.28000000000003] And later on P1 learns that P2 and P3 have failed and P4 eventually learns that P2 and
+[312.28000000000003:313.28000000000003] P3 have failed.
+[313.28000000000003:321.2] But not is that P1 actually first believes that P2 has failed or believed that P2 failed
+[321.2:322.2] first.
+[322.2:327.08] Whereas before believed that P3 failed first.
+[327.08:334.2] The fact that the failure detector is perfect does not ensure the coordination of these elements.
+[334.2:339.47999999999996] In fact, you have application when you would like the processes to know who failed first.
+[339.47999999999996:344.12] Of course, sometimes they cannot know because maybe P2 and P3 failed exactly at the same
+[344.12:345.12] time.
+[345.12:346.12] Sure.
+[346.12:352.88] But you at least would like P1 and P3 to have the same view on who is in the system.
+[352.88:355.03999999999996] In this case, they don't have the same view.
+[355.03999999999996:361.76] P1 believes at this point when it suspects P2 that the system is composed of P1, P3, and
+[361.76:362.76] P4.
+[362.76:368.0] Whereas before believes at this very point what it suspects P3 that the actual system is
+[368.0:370.48] composed of P1, P2, and P4.
+[370.48:375.59999999999997] Whereas P1 believes that the system is composed of P1, P3, and P4.
+[375.59999999999997:379.0] So they have different views of the system.
+[379.0:380.88] In some applications, this is okay.
+[380.88:386.8] But in other applications, for example, where you involve topology oriented information
+[386.8:391.64] dissemination or you involve certain particular things about the node, this is not okay.
+[391.64:394.88] You would like them to have exactly the same view.
+[394.88:401.84] So a perfect failure detector does not guarantee that the processes have the same view vision
+[401.84:404.4] of the membership.
+[404.4:409.08] So in that from that perspective, the failure detector is weak.
+[409.08:412.56] And we did not talk here about even adding processes.
+[412.56:413.91999999999996] I will come back to that later.
+[413.91999999999996:416.96] This is just about the system shrinking with failures.
+[416.96:421.59999999999997] And even there, you can see that perfect failure detector is not enough.
+[421.6:424.24] So to speak.
+[424.24:425.72] So what is a group membership?
+[425.72:432.24] A group membership is an abstraction just like failure detector, like causal broadcasts.
+[432.24:433.24] It's another abstraction.
+[433.24:440.20000000000005] It's another primitive you would like to have in the distributed system of which goal,
+[440.20000000000005:446.8] the goal of this primitive is to provide processes with information about who is in the system.
+[446.8:452.48] The information is given to the processes in the form of views.
+[452.48:458.12] A view is so far we have assumed that the processes start from the same view.
+[458.12:462.12] The variable correct was initially the set s.
+[462.12:467.8] A group membership starts by giving the processes an original view, v0.
+[467.8:472.6] And then when processes fail and the view, we say that the view changes, the composition
+[472.6:475.72] of the system or the changes.
+[475.72:479.36] And the new view has to be delivered to the processes, v1.
+[479.36:482.84000000000003] And this view has to be the same at all processes.
+[482.84000000000003:489.72] Of course, maybe the view could have been v1 containing p1, p3 and p4 that would have
+[489.72:490.72] been okay.
+[490.72:492.72] By the way, this should be p3, not p2.
+[492.72:496.64000000000004] There is a mistake in this slide.
+[496.64000000000004:503.36] So in order to illustrate the notion of group membership, I will focus on coordinating
+[503.36:505.6] the information about crashes.
+[505.6:511.44] Just to start, I will come back to the case of increasing the set of processes and the
+[511.44:513.28] Amazon thanks, giving or whatever.
+[513.28:518.8000000000001] I will come back to that later, but it's just going to pollute the explanation for now.
+[518.8000000000001:521.48] Let's just assume that processes can crash.
+[521.48:527.48] As I will explain, a group membership abstraction can also typically be used to coordinate
+[527.48:533.04] the processes joining new ad processes in the system and leaving explicitly.
+[533.04:540.4399999999999] And without crashes, some process feeling that it's overloaded or whatever, it can decide
+[540.4399999999999:541.4399999999999] itself not to crash.
+[541.4399999999999:543.4399999999999] That's it, due to say, I'm leaving.
+[543.4399999999999:544.7199999999999] I will come back to that later.
+[544.7199999999999:547.1999999999999] But now, ignore joining and leaving.
+[547.1999999999999:553.36] Just assume process crash and let's focus on how this very mechanism or abstraction of
+[553.36:558.0799999999999] group membership, which gives use to the system.
+[558.08:564.8000000000001] So like a failure detector, the processes are informed about failures, except that here
+[564.8000000000001:571.84] we say that the processes in style views in a sense, these views are somehow global.
+[571.84:576.64] Okay, whereas the information about failures are local information.
+[576.64:579.0] P1 suspects P2, P2 suspects P2.
+[579.0:584.96] Here we say the processes, the install review of the system.
+[584.96:590.52] Like with a perfect failure detector, the processes have accurate knowledge about failures.
+[590.52:596.36] Okay, so the notion of group membership resembles a failure detector and more specifically
+[596.36:597.76] a perfect failure detector.
+[597.76:600.9200000000001] But it's a global variant of it.
+[600.9200000000001:605.4000000000001] It's a global variant because unlike with a perfect failure detector, the information
+[605.4000000000001:607.72] about failures are coordinated.
+[607.72:611.64] The processes install the same sequence of views.
+[611.64:614.9200000000001] Okay, so you have to see the distributed system.
+[614.92:620.92] In long-lived application, as a system where you have a lot of things going on and besides
+[620.92:627.68] the actual computation, you have views delivered to the processes telling them, now we are
+[627.68:629.4] P1, P2, P3.
+[629.4:631.28] Now we are only P1 and P2.
+[631.28:637.24] And if I consider joining, now we are P1, P2 and P5 and so forth.
+[637.24:644.76] Okay, so now let's try to specify to define the properties of group membership.
+[644.76:650.36] Even without considering joining and leaving and explicitly leaving just crashes.
+[650.36:652.92] We can define those properties as follows.
+[652.92:659.4399999999999] And again, throughout the history of distributed computing, it was actually a challenge to
+[659.4399999999999:661.92] define precisely the notion of group membership.
+[661.92:667.4] There have been a huge debates 20 years ago about how to define this abstraction.
+[667.4:672.84] So now people, there is kind of agreement to define this abstraction like this.
+[672.84:676.52] The first property and these are the properties of the group membership.
+[676.52:679.6] Membership 1 is the first property, membership 2, etc.
+[679.6:684.2800000000001] Membership 1 is the property that called monotonicity.
+[684.2800000000001:693.88] It says, if a process installs a view, Jm, after installing KN, then J is bigger than
+[693.88:700.08] K. Okay, what we are saying here is simply that processes do not go back in the past.
+[700.08:704.2800000000001] They have view 0 and then view 1 and then view 2.
+[704.2800000000001:707.2800000000001] They may jump, but let's not even assume that they jump.
+[707.2800000000001:709.44] They just go from 1 to 2 to 3.
+[709.44:710.88] They don't go back.
+[710.88:714.08] After view 3, they don't go back to view 2.
+[714.08:722.12] Furthermore, we are going to assume in this simple version of our abstraction that when
+[722.12:731.28] a process installs a view Jm, in fact, what we mean here is this is the date view installed
+[731.28:733.6] and this is the new composition of the system.
+[733.6:737.84] This is the K view installed and this is the composition of the system.
+[737.84:741.72] And it's strictly included into n.
+[741.72:747.76] Okay, so this sign should be strictly included into n.
+[747.76:752.92] Of course, this is because we only consider the case of the process of systems shrinking.
+[752.92:760.4399999999999] I will come back to the case where we assume that the system does not shrink but can increase
+[760.4399999999999:761.4399999999999] in size.
+[761.4399999999999:764.76] But if we assume that it only shrinks, m can be smaller than n.
+[764.76:767.64] It's always included.
+[767.64:774.3199999999999] The fact that J is always bigger than K is independent of the fact that we are shrinking
+[774.3199999999999:775.92] the system or not.
+[775.92:777.64] The second property is agreement.
+[777.64:780.72] This is the coordination I was talking about.
+[780.72:787.84] This resembles what we have seen with consensus but you have to view it as repeated consensus.
+[787.84:792.56] No two processes install different views more specifically.
+[792.56:799.3199999999999] No two processes install views Jm and Jm prime such that m is different than m prime.
+[799.3199999999999:803.28] So we do want views zero to be the same at all processes.
+[803.28:809.48] So they want to be the same, V2 to be the same and so forth.
+[809.48:813.9599999999999] Local monotonicity and agreement does not really say what should be in the views.
+[813.9599999999999:821.12] They simply say the views should shrink and will be the same across processes.
+[821.12:826.16] The views should shrink over time and should be the same across processes.
+[826.16:831.88] Now we come to two properties that say what should what this view should contain.
+[831.88:836.32] What should this set m prime or m contain?
+[836.32:840.04] The first property resemble completeness property of a fellow detective.
+[840.04:847.4399999999999] It says if a process p crashes, somebody fails then intuitively that process should be excluded
+[847.4399999999999:849.76] from the system.
+[849.76:853.96] How do we explain how do we phrase this?
+[853.96:857.0] Eventually p should be excluded.
+[857.0:862.92] Which means the processes the other processes should eventually deliver a view that does
+[862.92:864.4] not contain p.
+[864.4:870.24] So more specifically we say then there is an integer J such that every correct process
+[870.24:875.76] eventually installs view Jm and p is excluded from m.
+[875.76:881.4] So this is saying every failure is eventually detected.
+[881.4:886.36] Every process that fails is eventually excluded from the views, from the views of all processes
+[886.36:888.36] because we have agreement.
+[888.36:897.2] Accuracy on the other hand because it's easy to guarantee m1 and 2 and m3 you just remove
+[897.2:899.0] everyone from the view.
+[899.0:901.64] You install view V1 you remove everyone.
+[901.64:902.64] So that's easy.
+[902.64:909.0] Accuracy basically prevents you from excluding processes which are actually correct.
+[909.0:916.24] So what we say here is that if some process installs a view i n and p does not belong to
+[916.24:922.6800000000001] m of course we assume here that p was originally in v0, all the processes we are talking about
+[922.6800000000001:927.16] here are originally in v0 then p has crashed.
+[927.16:930.08] So this is like strong accuracy.
+[930.08:933.64] This is like strong completeness.
+[933.64:938.72] I hope this is clear.
+[938.72:944.28] The first two properties talk about the fact that we want to deliver sequence of views
+[944.28:950.88] that are the same completeness and accuracy basically say we should only include accuracy
+[950.88:955.88] shed we should only exclude processes who have really failed and completeness says we
+[955.88:958.8] should exclude processes who fail.
+[958.8:965.68] And this is just about the fact that we assume processes can fail and deaths can leave
+[965.68:967.48] the system by crushing.
+[967.48:973.9599999999999] If we assume now that for example processes can also decide unilaterally to leave the
+[973.96:979.2] system because they are overloaded or they want to do something else or they are busy
+[979.2:983.96] with some other application then we have to change this specification.
+[983.96:989.6800000000001] We have to introduce some events or some function leave.
+[989.6800000000001:997.4000000000001] Now the spec will become slightly more complicated because we still have local monotonicity.
+[997.4:1004.3199999999999] If a process installs view jm after installing kn then we will still have j bigger than k
+[1004.3199999999999:1007.68] and m shrinks because we only allow leaves.
+[1007.68:1015.8] We will also have still have agreements because no two processes installs views j and m and
+[1015.8:1018.8] j and m prime such that m different and m prime.
+[1018.8:1027.32] However, now we are going to say if some process installs a view i m and p is not in m
+[1027.32:1033.8] then either p has crushed or p has invoked leave.
+[1033.8:1037.6399999999999] p has said i want to leave completeness.
+[1037.6399999999999:1045.8] Now we are going to say if a process crashes or p invokes operation leave then there is
+[1045.8:1051.0] an integer j such that every correct process eventually installs view without p.
+[1051.0:1053.48] So that's for the leave.
+[1053.48:1059.2] Now if we also want joins now things are going to be slightly more sophisticated or more
+[1059.2:1060.2] complicated.
+[1060.2:1061.2] Why?
+[1061.2:1069.3600000000001] Because we will need to introduce a join operation and here we cannot anymore say m is strictly
+[1069.3600000000001:1074.68] included into n because you can deliver a view n that is bigger than n because some process
+[1074.68:1077.68] few has joined the system.
+[1077.68:1084.68] When in the system means a process invokes operation join agreement remains the same operation
+[1084.68:1091.16] process queue invokes operation join and then the process as well as the others get informed
+[1091.16:1093.8400000000001] later that he is part of the system.
+[1093.8400000000001:1099.0800000000002] Now completeness for example we say in addition to this property in addition to the leave we
+[1099.0800000000002:1106.4] will also add a property that says if a process queue intuitively the process queue who was
+[1106.4:1112.8400000000001] not in the system invokes operation join then there is an integer j such that every correct
+[1112.8400000000001:1119.8400000000001] process including queue installs view jm such that queue is in m.
+[1119.8400000000001:1127.5600000000002] So that's important and accuracy should also be expanded to say if some process installs
+[1127.56:1136.56] a viewed i m and p is in m or queue if you want is in m then either p was originally in
+[1136.56:1142.36] the system we can have a way or queue has invoked operation join.
+[1142.36:1148.56] I hope these things are clear but in order to discuss the algorithm and the spec it is
+[1148.56:1151.6] easier to focus on the case of crash.
+[1151.6:1155.6799999999998] I try to explain to you here how you could deal with joints and leaves.
+[1155.68:1162.8] So there were few questions I think if you can ask them through the chat that will be
+[1162.8:1163.8] great.
+[1163.8:1165.5600000000002] So I can answer if you can write them.
+[1165.5600000000002:1171.68] I know that a couple of you raised their hands if you can write your question that will
+[1171.68:1173.72] be great.
+[1173.72:1178.24] If you don't then we can come back to them later.
+[1178.24:1196.92] I saw that some students raised their hands but I don't see any questions written in
+[1196.92:1197.92] the chat.
+[1197.92:1204.92] It's easier to write them.
+[1204.92:1211.92] I can come back to the questions later.
+[1211.92:1215.96] I don't know if maybe you have written some questions but I don't see them.
+[1215.96:1218.2] I can come back to them later anyway.
+[1218.2:1223.68] So now let's implement this abstraction of group membership in its simplest form.
+[1223.68:1230.04] I hope you can easily generalize it to the joints and leaves explicit operation.
+[1230.04:1235.72] If we don't have joints and leaves then we have only one indication.
+[1235.72:1237.44] The indication is processes deliver a view.
+[1237.44:1238.44] Membership view.
+[1238.44:1239.44] It's a callback.
+[1239.44:1243.24] If you have a join together with this callback you have a function join and the function
+[1243.24:1244.36] leave.
+[1244.36:1248.92] The function join will be called by processes who are not in the view and process in
+[1248.92:1249.92] the current view.
+[1249.92:1254.28] Processed leave will be called by processes who are in the view.
+[1254.28:1258.28] How do we implement group membership in its simplest form?
+[1258.28:1260.28] We use two things.
+[1260.28:1264.52] We use a perfect vector and we use consensus in its uniform version.
+[1264.52:1266.2] We use a bunch of variables.
+[1266.2:1269.6] The famous correct equals S is the original view.
+[1269.6:1270.6] View zero.
+[1270.6:1273.84] So the original view is zero S.
+[1273.84:1276.28] Okay, so S is the set of the system.
+[1276.28:1278.3999999999999] And we will have a variable weight.
+[1278.3999999999999:1284.52] If you remember whenever we have a long leave application where we have several instances
+[1284.52:1290.0] of the same thing running we typically have this famous variable weight which basically guarantees
+[1290.0:1294.96] that you don't invoke the next instance before finishing the current one.
+[1294.96:1298.2] Okay, remember in total of the broadcast we did the same.
+[1298.2:1307.76] We did not finish consensus and before starting before launching n plus 1.
+[1307.76:1311.16] Upon event crash behind we have a perfect field detector.
+[1311.16:1319.3200000000002] The I removes the process which gets this information removes the I from correct.
+[1319.3200000000002:1325.72] Okay, upon event correct is strictly included in view that membership.
+[1325.72:1327.0400000000002] Okay, what does that mean?
+[1327.0400000000002:1331.5600000000002] That means that view that membership is.
+[1331.5600000000002:1334.3600000000001] View is contains two elements.
+[1334.3600000000001:1336.3200000000002] A number and a membership.
+[1336.3200000000002:1340.16] So view that membership is the second element of the view.
+[1340.16:1345.64] So when the set correct contains less element than view membership, what does that mean?
+[1345.64:1351.88] That means that since I installed this view processes have failed.
+[1351.88:1353.3600000000001] New processes have failed.
+[1353.3600000000001:1360.0] So when correct is strictly included in view that membership and I am not installing another
+[1360.0:1362.0800000000002] view weight equals force.
+[1362.08:1372.24] So initially weight equals two.
+[1372.24:1379.04] There is a mistake here.
+[1379.04:1380.12] Weight should be false here.
+[1380.12:1381.12] I apologize.
+[1381.12:1383.52] Here weight should be false.
+[1383.52:1387.32] Yeah, so please I will correct that later.
+[1387.32:1389.76] Weight here should be false.
+[1389.76:1395.72] So if correct is strictly included in membership and weight equals force, which is what happens
+[1395.72:1398.8799999999999] when we start, then we put weight to true.
+[1398.8799999999999:1401.32] Okay, which means now I should be waiting.
+[1401.32:1402.8] I should not be doing something else.
+[1402.8:1407.72] So initially I was not waiting for anything, but for suspecting detecting processes.
+[1407.72:1409.0] Then I invoke consensus.
+[1409.0:1411.6] Okay, why do we invoke consensus?
+[1411.6:1418.16] Because the failure detectors, the failure detector might give us information that are indeed
+[1418.16:1421.3600000000001] complete and accurate, but not in the same order.
+[1421.3600000000001:1426.0800000000002] The reason why we invoke consensus is because we want to agree on the next view on who
+[1426.0800000000002:1427.88] is in the next view.
+[1427.88:1431.8400000000001] So every process is going to propose to the next view.
+[1431.8400000000001:1437.48] The next view is, view is number view that I be plus one.
+[1437.48:1441.3200000000002] Okay, so initially it was view that I was zero.
+[1441.3200000000002:1446.2] Now I'm talking about view one and I propose the view one correct.
+[1446.2:1450.64] My perception of the system, but my perception of the system, I'm process.
+[1450.64:1455.4] P2 might be different from P3 because the failure detector will have informed us on different
+[1455.4:1459.8] failures as I pointed out in a previous example.
+[1459.8:1462.72] Now the consensus returns, what does it return?
+[1462.72:1466.8] It will turn a pair because what we propose to consensus is the pair.
+[1466.8:1474.72] If you number a set of processes, it returns a pair, a view number, an ID and a membership.
+[1474.72:1482.28] Okay, so what I do is I put view equals ID comma the membership, whatever consensus tells
+[1482.28:1483.28] me.
+[1483.28:1485.76] And now I put back weight two false.
+[1485.76:1490.3600000000001] Okay, so while consensus is executing weight is true.
+[1490.3600000000001:1492.4] So I don't do this again.
+[1492.4:1493.4] This is important.
+[1493.4:1497.92] So that's why it's important that weight is initially false.
+[1497.92:1502.44] Then I put weight two false again and then I instant a view.
+[1502.44:1507.16] So the processes there just sitting there, they're not doing anything.
+[1507.16:1514.8] When somebody crashes, it triggers, okay, a change in the member view, but I don't change.
+[1514.8:1517.96] I don't install the new view before going to consensus.
+[1517.96:1519.2] So I invoke consensus.
+[1519.2:1520.8400000000001] This is this okay.
+[1520.8400000000001:1525.2] And consensus is going to pick one of the proposals.
+[1525.2:1531.72] Of course, if only one process fails, then everybody is going to invoke consensus with
+[1531.72:1532.72] the same set.
+[1532.72:1537.44] Okay, obviously because everybody's going to detect the failure and is going to invoke
+[1537.44:1538.44] with the same set.
+[1538.44:1542.8] So it's obvious that consensus is going to return the same set.
+[1542.8:1550.4] But if two processes fail, I might see the failure of P2 and somebody else may see the
+[1550.4:1551.4] failure of P3.
+[1551.4:1553.76] Therefore, we need to go to consensus.
+[1553.76:1558.88] One important remark, if we assume that in our system, only one process can fail, then
+[1558.88:1565.88] I don't need consensus, okay, because only one process can fail.
+[1565.88:1582.44] Okay, a question that was asked, can we also have a membership group membership with an
+[1582.44:1589.44] eventual failure detector?
+[1589.44:1597.44] Sorry, let me go back to the spec.
+[1597.44:1605.0] Here the accuracy property of the membership tells you if some process installs a view IM
+[1605.0:1607.52] and P is not in M, then P has crisis.
+[1607.52:1612.32] So in the spec of group membership, we do have strong accuracy.
+[1612.32:1614.8799999999999] So we cannot make mistakes.
+[1614.8799999999999:1623.16] Because here we are assuming that the group membership is used to do certain things when we decide
+[1623.16:1624.84] that somebody is not in our view.
+[1624.84:1630.56] This means that there is some system administration protocol that's going to remove that process,
+[1630.56:1631.56] etc.
+[1631.56:1637.44] We are not inside some consensus algorithm where it is okay to make some mistakes because
+[1637.44:1639.8799999999999] we didn't reach the decision yet.
+[1639.8799999999999:1643.8] Here the decision is we are installing a new view.
+[1643.8:1647.84] So we cannot have eventual accuracy.
+[1647.84:1649.04] We need strong accuracy.
+[1649.04:1653.1599999999999] So the group membership needs a perfect failure detector.
+[1653.1599999999999:1658.32] In fact, you can see that a group membership implies directly a perfect failure detector.
+[1658.32:1661.8799999999999] You know what I have shown you here is that if you have a perfect failure detector, given
+[1661.8799999999999:1668.32] that you can implement consensus, you can implement a group membership.
+[1668.32:1684.1599999999999] So one corollary of what I just said is that in a completely asynchronous system, you
+[1684.16:1689.0400000000002] cannot have a group membership, okay?
+[1689.0400000000002:1693.52] You cannot have a group membership in the sense defined below, defined earlier.
+[1693.52:1697.92] I will come back to this because this is very important and I will come back to this idea
+[1697.92:1702.72] because one could ask here, well, but come on, if you have a system where you only need
+[1702.72:1706.68] a reliable broadcast, for example, or causal broadcast.
+[1706.68:1711.3600000000001] But you still want to add processes in the system or remove processes from the system,
+[1711.3600000000001:1712.3600000000001] okay?
+[1712.36:1716.56] What you are telling me here, what I'm telling you here is that, well, but if you want
+[1716.56:1720.32] to add or remove processes from the system, you need a perfect failure detector.
+[1720.32:1727.08] And somehow, this alleviates this nice fact that we have some applications with only
+[1727.08:1729.3999999999999] need reliable broadcast and causal broadcast.
+[1729.3999999999999:1736.0] In fact, the problem of a dynamic system that only needs reliable broadcast and causal
+[1736.0:1738.56] broadcast has been open for a while.
+[1738.56:1744.76] And it until recently that people got interested into this and among various interesting results,
+[1744.76:1751.6799999999998] there is a very recent paper that has just been accepted to a major distributed computing
+[1751.6799999999998:1760.04] conference by Yovan, who is your TA, who describes exactly how you can build a dynamic system
+[1760.04:1765.24] by adding or removing processes to do reliable broadcast without a group membership, okay?
+[1765.24:1771.04] I'm not going to go into those details if you are interested in that stuff, better
+[1771.04:1775.24] do it through a research project or an internship.
+[1775.24:1780.84] Here, I will focus on the classical way of the group membership.
+[1780.84:1782.76] So here I have four processes.
+[1782.76:1785.96] I'm just illustrating the algorithm I just presented.
+[1785.96:1787.32] I have P2 and P3.
+[1787.32:1788.68] They both crash.
+[1788.68:1794.32] If only the failure detector is used, then maybe this one installs a view and then removes
+[1794.32:1801.24] P2 and later on install another view moving P3 and P4 does the other way around.
+[1801.24:1807.6] The fact that we use consensus, this one says, oh, my next view in my opinion should contain
+[1807.6:1809.3999999999999] P1, P2, P4.
+[1809.3999999999999:1815.32] This one says, oh, in my opinion, it should contain P1, P3, P4, but consensus is going to
+[1815.32:1816.96] ensure that they agree.
+[1816.96:1819.24] So here they agree on P1, P2, P4.
+[1819.24:1821.24] This is view 1.
+[1821.24:1824.4] And later on, they are going to deliver another view.
+[1824.4:1826.48] Why are they going to deliver another view?
+[1826.48:1833.24] Because their set correct is still strictly included in the view they have.
+[1833.24:1838.36] They still have another process which is before which was not excluded from the view.
+[1838.36:1842.48] So they are going to call consensus again and now they are going to agree on another view.
+[1842.48:1845.68] So there is view 0, P1, P2, P3, P4.
+[1845.68:1848.52] View 1, P1, P2, P4, the same.
+[1848.52:1849.52] View 2, P1, P4.
+[1849.52:1853.52] So processes like they go from one epoch to the other.
+[1853.52:1860.84] And the epoch is exactly represented by a number, an integer and a set of processes.
+[1860.84:1861.84] Okay.
+[1861.84:1862.84] Okay.
+[1862.84:1871.56] I hope you understand group membership.
+[1871.56:1874.24] Now we are going to something slightly more complicated.
+[1874.24:1879.08] I mentioned it a little bit, but I will come back to it later.
+[1879.08:1889.04] The notion of group membership and something else going on.
+[1889.04:1895.04] And we are going to see the simplest form of something else, which is broadcast.
+[1895.04:1900.6399999999999] And here I'm going to present the classical way of integrating a broadcast with a group
+[1900.6399999999999:1901.6399999999999] membership.
+[1901.6399999999999:1907.96] As I told you, people have been trying to build easier forms of group membership in order
+[1907.96:1909.64] to integrate them with broadcast.
+[1909.64:1911.16] But this is still research.
+[1911.16:1918.3600000000001] As I just pointed out, only very recently we discovered ways to do that without using consensus
+[1918.3600000000001:1920.92] or even fail of the text.
+[1920.92:1925.88] But from now, I'm going to present to you the classical, very general approach, because
+[1925.88:1930.64] this is general, because this can work with total order broadcasts or with the termination
+[1930.64:1934.96] of matter broadcasts or what have you.
+[1934.96:1941.0] What your band has worked on, this notion of dynamic system, does only work when you
+[1941.0:1945.52] don't need consensus, where you have a library broadcast and a lot of broadcasts here.
+[1945.52:1949.64] What I'm going to present, even if I'm going to illustrate it only with a library broadcast,
+[1949.64:1952.96] works with any broadcasts that one could imagine.
+[1952.96:1953.96] Okay.
+[1953.96:1961.28] Let me explain what I say when I mean integrating some broadcast primitive with group membership.
+[1961.28:1968.08] As soon we have processes, P1, P2, P3 and they install views indeed, but they also do
+[1968.08:1972.56] something else, which is in most applications, you don't simply deliver views, you actually
+[1972.56:1973.56] run some computation.
+[1973.56:1978.48] And assume that the computation you're running is some broadcasting of messages.
+[1978.48:1987.48] So P2 broadcast message M. If we have a library broadcast system primitive, it's going to
+[1987.48:1992.92] give us some guarantees, for example, it's going to ensure that maybe if any process delivers,
+[1992.92:1993.92] every process delivers.
+[1993.92:1994.92] Okay.
+[1994.92:1998.08] If you have a library, so this is something you could have.
+[1998.08:2002.8] If in addition, you have a group membership, then you have the guarantees of the group membership.
+[2002.8:2004.32] What are the guarantees of the group membership?
+[2004.32:2010.04] I just presented them, which is processes, the numbers views, they start with views zero
+[2010.04:2012.56] and then they deliver views like V1.
+[2012.56:2019.32] P1, P3 because P2 fails, but wait a minute, look at what's happening here.
+[2019.32:2025.8799999999999] P2 broadcasts a message M. The M was delivered by P1 and delivered by P3.
+[2025.8799999999999:2031.48] This satisfies the properties of even the strongest library broadcasts, uniform broadcasts,
+[2031.48:2032.48] okay.
+[2032.48:2034.76] P1 delivers and P3 delivers.
+[2034.76:2044.12] But P1 delivers before installing view V1, in a sense, P1 delivers in its epoch zero.
+[2044.12:2047.16] It didn't move to epoch one yet.
+[2047.16:2050.96] Whereas P3 delivers the message in the new epoch, okay.
+[2050.96:2057.84] So intuitively, given that we want to organize our distributed system in epochs because
+[2057.84:2064.72] maybe we want to clean or rearrange the processes or whatever, it is weird that the message
+[2064.72:2071.68] is are delivered in different epochs because maybe you want to do something to clean your
+[2071.68:2073.16] system or to do something else.
+[2073.16:2077.8399999999997] So the fact that this message is delivered before the delivery of view here and there,
+[2077.8399999999997:2082.04] it's delivered after, doesn't look good and in fact, it's not good.
+[2082.04:2087.3199999999997] So the fact that you have good membership and broadcasts, even if each of them satisfies
+[2087.32:2097.0] its properties, both of them actually do not nicely add up.
+[2097.0:2098.84] We need something else.
+[2098.84:2105.0800000000004] And the other abstraction that we people have been working on for the last decades is what
+[2105.0800000000004:2107.0] is called a view synchrony.
+[2107.0:2109.0] Sorry.
+[2109.0:2115.04] So view synchrony, or we call it view synchronous broadcast, is an abstraction that results from
+[2115.04:2119.0] the combination of group membership and reliable broadcasts.
+[2119.0:2123.96] We don't leave them separated, we combine them and then you will see what we obtain.
+[2123.96:2130.4] What we obtain is that we ensure that the delivery of messages is coordinated with the installation
+[2130.4:2132.56] of views, okay.
+[2132.56:2135.96] The delivery of messages is coordinated with the installation of views.
+[2135.96:2138.04] Here, they are not coordinated.
+[2138.04:2142.52] You have an algorithm implementing a reliable broadcast, who doesn't see, the algorithm doesn't
+[2142.52:2144.12] care about the views.
+[2144.12:2150.3199999999997] And then you have an algorithm implementing the views, which doesn't care about the messages.
+[2150.3199999999997:2156.6] View synchrony is an abstraction that somehow forces the underlying algorithm to merge the
+[2156.6:2161.2] broadcasts and the group membership.
+[2161.2:2164.16] How do we define this view synchrony?
+[2164.16:2168.48] And view synchrony is really something very useful because otherwise having broadcasts
+[2168.48:2173.12] that is decorrelated from the views doesn't look great.
+[2173.12:2181.8399999999997] View synchrony is an abstraction that on the one hand is a group membership abstraction.
+[2181.8399999999997:2186.3199999999997] It has the properties number one, membership one, membership two, membership three, membership
+[2186.3199999999997:2192.68] four, meaning the processes they deliver views according to the specification I presented.
+[2192.68:2197.48] It is also a reliable broadcast primitive in the sense that you can broadcast and deliver
+[2197.48:2199.3599999999997] messages, okay.
+[2199.36:2206.0] And view the properties that we have seen last weeks, validity, no duplication, integrity,
+[2206.0:2213.4] uniform agreement plus a property which is the blue between these ones, the four ones
+[2213.4:2219.1600000000003] here and the four ones there and the four ones here.
+[2219.1600000000003:2226.1200000000003] And this glue says a message is delivered given that we introduce a new primitive, we
+[2226.12:2233.6] use, we give it a name, VS delivered, a message is VS delivered in the view where it is VS
+[2233.6:2234.6] broadcast.
+[2234.6:2241.2] Okay, so now what we are saying is that we are adding a new requirements that says not
+[2241.2:2246.72] only a message broadcast by a correct process should be eventually delivered.
+[2246.72:2252.6] We don't care when, we say no, no, it has to be delivered in the view where it is VS
+[2252.6:2253.6] broadcast.
+[2253.6:2260.72] So basically saying we, the system, the distributed system runs in epochs and within every epoch
+[2260.72:2264.8399999999997] you have to deliver the messages that have been broadcast in that epoch.
+[2264.8399999999997:2269.56] Or maybe not to deliver them at all if they stand the fence, okay.
+[2269.56:2272.92] We are going to see that more precisely through the algorithm.
+[2272.92:2280.64] So what we are trying to implement here is a group membership and a reliable broadcast.
+[2280.64:2285.44] We are going to talk about VS deliver and VS broadcast and we are going to require, we
+[2285.44:2290.7999999999997] are going to glue the delivery and the broadcast with the view.
+[2290.7999999999997:2296.92] Okay, we are going to say if you are in a view VK and you broadcast a message in that view
+[2296.92:2301.48] VK, then the message has to be delivered eventually in that view.
+[2301.48:2306.7999999999997] Okay, so now it's, it makes sense from an application perspective, but we have to see how
+[2306.7999999999997:2308.7999999999997] we can implement that.
+[2308.8:2311.6400000000003] Okay, so here is one algorithm.
+[2311.6400000000003:2313.92] I start always with the simplest algorithm.
+[2313.92:2316.96] I always recommend that you do the same.
+[2316.96:2318.44] Always start with the simplest algorithm.
+[2318.44:2320.36] I'm going to start with the simple algorithm.
+[2320.36:2327.36] Remember here we have VS broadcast which is the name of this combination of broadcast
+[2327.36:2334.2400000000002] and group membership, indication VS deliver plus we also instant use.
+[2334.2400000000002:2335.5600000000004] Here we call VS view.
+[2335.5600000000004:2338.4] We don't anymore say group membership.
+[2338.4:2340.32] We don't say a live broadcast.
+[2340.32:2346.2400000000002] We say VS broadcast, VS deliver VS view to mean that we are talking about the same abstraction
+[2346.2400000000002:2347.48] view synchrony.
+[2347.48:2354.88] Okay, there is something before I make that remark.
+[2354.88:2357.56] There is something important here.
+[2357.56:2363.2400000000002] What we are basically saying is and this requires really careful thinking because when you specify
+[2363.2400000000002:2365.6] these things it's sometimes a nightmare.
+[2365.6:2369.72] What we are saying is that we would like our distributed system to go to epochs, epoch
+[2369.72:2372.36] 1, epoch 2, epoch 3, etc.
+[2372.36:2378.52] If a process broadcast message in an epoch and the process is correct, we want the processes
+[2378.52:2381.56] to deliver that message in that epoch.
+[2381.56:2387.24] Okay, but that's somehow if you think about it is not completely trivial to implement.
+[2387.24:2388.24] Why?
+[2388.24:2395.52] Because if processes keep always like crazy broadcasts in messages, you will never be
+[2395.52:2398.04] able to finish an epoch.
+[2398.04:2403.6] Okay, so intuitively I broadcast a message in one and then in two and then in three and
+[2403.6:2404.7599999999998] then somebody fails.
+[2404.7599999999998:2406.84] Oh, we need to deliver a new view.
+[2406.84:2409.28] Okay, we need to deliver a new view.
+[2409.28:2414.24] We need to finish the epoch, but we need to deliver all the messages that are broadcast.
+[2414.24:2419.52] So assume what I do is when I see that somebody has failed, I broadcast another message and
+[2419.52:2422.16] another message and another message.
+[2422.16:2428.04] I can prevent my distributed system from delivering a view.
+[2428.04:2429.04] Why?
+[2429.04:2432.8399999999997] Because I keep broadcasting messages and given that the messages have to be delivered
+[2432.8399999999997:2440.24] in the view where they were broadcast by doing that, the application can somehow prevent
+[2440.24:2446.16] the underlying algorithm from finishing an epoch.
+[2446.16:2452.3599999999997] So we need to add another signal, a specific event.
+[2452.3599999999997:2457.08] We introduce a specific event for the abstraction to block the application.
+[2457.08:2460.96] This is the first time we see this, that in distributed computing, there's something
+[2460.96:2463.08] sometimes very important.
+[2463.08:2469.04] So far what we have seen are we have an application running and the algorithm or the abstraction
+[2469.04:2473.64] we have present implementing provides the algorithm with some abstraction.
+[2473.64:2476.64] It tells it, okay, you can broadcast.
+[2476.64:2481.48] I will give you an information about the failed detection or the delivery of a message,
+[2481.48:2482.48] et cetera.
+[2482.48:2487.48] Now what we are saying is, no, the abstraction also can control the application.
+[2487.48:2490.24] What we have not done that yet.
+[2490.24:2494.8399999999997] The abstraction can tell the application, stop broadcasting.
+[2494.8399999999997:2500.0] If you want me, when I say me is I am the abstraction.
+[2500.0:2505.8] If you want me to implement the properties of broadcast membership together with this
+[2505.8:2509.84] nice coordination of use, sometimes you have to stop.
+[2509.84:2511.4] What is that you have to stop?
+[2511.4:2518.88] You have to stop the s broadcasting messages if the abstraction is about to install a new
+[2518.88:2519.88] view.
+[2519.88:2525.24] So this is something we didn't see earlier, but in many distributed systems, this notion
+[2525.24:2529.04] of the abstraction blocking the application is important.
+[2529.04:2531.96] So let me repeat myself.
+[2531.96:2539.4] If the application keeps the s broadcasting messages like crazy, the view synchrony abstraction
+[2539.4:2542.48] might never be able to install a new view.
+[2542.48:2546.48] In other words, we might never be able to implement the abstraction.
+[2546.48:2552.0] Unless we give it the power to block the application, but of course, it cannot block the application
+[2552.0:2553.68] forever.
+[2553.68:2559.0] We have to do that when a process crashes, when we want to deliver a new view.
+[2559.0:2562.28] And I'm going to explain that in a minute.
+[2562.28:2569.24] So in addition to the s broadcast, the s deliver M and the s view, which were the three
+[2569.24:2578.52] properties that come to mind at first glance, we also have the application, the abstraction
+[2578.52:2585.72] indicating asking the application to block, stop broadcasting and the application responding
+[2585.72:2588.72] back to the abstraction telling, okay.
+[2588.72:2590.8799999999997] I understand we want to install a new view.
+[2590.8799999999997:2593.04] I'm not broadcasting messages anymore.
+[2593.04:2599.2] Okay, so this is something very, very important to understand.
+[2599.2:2600.8399999999997] So we want to implement the new synchrony.
+[2600.8399999999997:2602.6] And now we are going in the implementation.
+[2602.6:2610.68] And the first implementation I'm going to present contains three abstractions.
+[2610.68:2615.3199999999997] It uses three abstractions, group membership, terminating reliable broadcast and best effort
+[2615.3199999999997:2616.3199999999997] broadcast.
+[2616.32:2621.28] This is, we are not using directly consensus.
+[2621.28:2623.92] In fact, consensus is here and here.
+[2623.92:2626.04] It's in group membership and terminating reliable broadcast.
+[2626.04:2627.56] So it's already hidden.
+[2627.56:2632.4] And this is what I'm going to present is the simplest implementation of view synchrony.
+[2632.4:2633.4] I know of.
+[2633.4:2635.8] It's not the most efficient, but it's the simplest.
+[2635.8:2636.8] Okay.
+[2636.8:2638.2000000000003] Let's see how things are going.
+[2638.2000000000003:2639.2000000000003] We start.
+[2639.2000000000003:2640.2000000000003] Everybody starts.
+[2640.2000000000003:2642.04] So this is initialization.
+[2642.04:2643.6400000000003] View is zero s.
+[2643.6400000000003:2644.6400000000003] Okay.
+[2644.64:2646.92] View is number zero and it contains everybody.
+[2646.92:2648.72] Next view, forget about it.
+[2648.72:2650.2] It's not important here.
+[2650.2:2656.3199999999997] I have a set of variables that are going to contain sets of messages.
+[2656.3199999999997:2659.3599999999997] Okay, because we are going to handle sets of messages.
+[2659.3599999999997:2661.08] Why intuitively?
+[2661.08:2662.92] Because we are going to broadcast messages.
+[2662.92:2669.24] And when we want to deliver a view, we are going to try to make sure we deliver all
+[2669.24:2672.72] messages that could have been broadcast in that view.
+[2672.72:2674.44] So I need to remember those messages.
+[2674.44:2677.36] So I have this notion of funding delivered done.
+[2677.36:2679.2400000000002] I'm going to see about that.
+[2679.2400000000002:2684.2400000000002] And I need to handle this block, this block notion, which is a little bit like the weight.
+[2684.2400000000002:2688.76] Remember the weight we have seen earlier except that the weight was something internal to
+[2688.76:2689.76] the abstraction.
+[2689.76:2693.0] Now the blocking is something external.
+[2693.0:2695.6] It's something that involves the application.
+[2695.6:2696.6] Okay.
+[2696.6:2702.16] When a process wants to VS broadcast message and blocked equals false.
+[2702.16:2705.44] Now, the block is initially initialized.
+[2705.44:2707.8799999999997] Well, block the equals false.
+[2707.8799999999997:2708.8799999999997] What do I do?
+[2708.8799999999997:2709.8799999999997] I am a process in this system.
+[2709.8799999999997:2711.68] I want to broadcast N. Okay.
+[2711.68:2714.8399999999997] So I remember I deliver N myself.
+[2714.8399999999997:2717.64] I'm implementing some form of broadcast.
+[2717.64:2719.16] Usually I deliver N myself.
+[2719.16:2720.16] Okay.
+[2720.16:2721.68] I'm not doing uniform broadcast here.
+[2721.68:2727.24] By the way, I hope you realize that whenever you have a broadcast primitive and you deliver
+[2727.24:2732.04] it immediately, this doesn't smell uniform because if you remember, I need to remember
+[2732.04:2734.84] to make sure processes have seen the message here.
+[2734.84:2737.6] I deliver it myself.
+[2737.6:2742.52] I'm implementing a non-uniform broadcast.
+[2742.52:2745.88] I put N in variable delivered and I use best effort broadcast.
+[2745.88:2746.88] Okay.
+[2746.88:2749.68] I broadcast what message.
+[2749.68:2754.2799999999997] In fact, I broadcast my message and but I also indicate.
+[2754.2799999999997:2756.44] N has been broadcast in this view.
+[2756.44:2757.44] What is view?
+[2757.44:2758.44] It's the initial view.
+[2758.44:2760.68] Initially it's zero.
+[2760.68:2764.52] It's simply saying this is the type of this information.
+[2764.52:2769.6] In most algorithms we have in this class, this element here is data.
+[2769.6:2774.44] Sometimes it's control and other things, but here we don't care.
+[2774.44:2777.72] Processes are going to, here I use best effort broadcast.
+[2777.72:2778.72] Okay.
+[2778.72:2781.72] Processes I use best effort broadcast.
+[2781.72:2787.8799999999997] Processes are going to deliver according to best effort semantics from some source N
+[2787.8799999999997:2789.9199999999996] in some view.
+[2789.92:2796.56] So a process that delivers that message, first checks is this message, did I get it in
+[2796.56:2798.36] the view where I am?
+[2798.36:2799.36] Okay.
+[2799.36:2803.4] Because intuitively if it's a message in the future, let's say I buffed it.
+[2803.4:2804.4] Okay.
+[2804.4:2805.4] We can come back to that later.
+[2805.4:2811.52] But if it's in this view, if it's in the past, I ignore it.
+[2811.52:2812.52] Let's assume that.
+[2812.52:2818.48] But if it's in this view and this is a message I have not delivered yet.
+[2818.48:2820.48] And I'm not blocked.
+[2820.48:2824.44] I'm not, I am willing to deliver instead of new view.
+[2824.44:2831.52] Then I deliver M. I put M in delivered and I VS deliver M.
+[2831.52:2832.52] Okay.
+[2832.52:2836.28] So in normal scenario, this is what's going to happen.
+[2836.28:2839.92] Processes are broadcast scene messages and delivered messages.
+[2839.92:2842.28] Not is something important.
+[2842.28:2847.04] What I'm doing here is exactly the same as with best effort broadcast.
+[2847.04:2850.88] It was the same except that I'm doing these two additional control.
+[2850.88:2853.04] But I'm not adding any more messages.
+[2853.04:2854.04] Okay.
+[2854.04:2860.88] To VS broadcast, I best effort broadcast before VS whenever I best effort deliver, I best
+[2860.88:2865.12] I VS deliver.
+[2865.12:2871.56] Now things start to become slightly more challenging when some processes fail.
+[2871.56:2874.08] And more generally when I am starting new view.
+[2874.08:2880.12] Now I assume I have a membership system and the membership system tells me, oh, you need
+[2880.12:2881.7999999999997] to install a new view.
+[2881.7999999999997:2882.7999999999997] Okay.
+[2882.7999999999997:2883.7999999999997] So this is important.
+[2883.7999999999997:2885.92] Not is something important here.
+[2885.92:2890.2] I'm not saying how this membership system is implemented.
+[2890.2:2891.2] I don't care.
+[2891.2:2892.2] I have it.
+[2892.2:2895.48] It could be a system more sophisticated than what we have seen.
+[2895.48:2900.68] It could be a system that includes the joint and beliefs.
+[2900.68:2901.68] Okay.
+[2901.68:2902.68] I don't care.
+[2902.68:2904.96] I just presented to you how you do it with the crash.
+[2904.96:2907.08] I hope you can generalize it yourself.
+[2907.08:2909.12] Here I assume I have it.
+[2909.12:2912.08] The membership system tells me you have to install a view V.
+[2912.08:2913.08] Okay.
+[2913.08:2914.3199999999997] Of course, I don't install V.
+[2914.3199999999997:2915.3199999999997] Why?
+[2915.3199999999997:2921.2] Because I need to make sure that I have I deliver the messages that were broadcast in the
+[2921.2:2922.2] view.
+[2922.2:2925.68] So I put V in a variable pending.
+[2925.68:2930.8399999999997] In fact, I put it to the tail of that volume because maybe I will have and this situation
+[2930.84:2933.52] can happen several views to install.
+[2933.52:2934.52] Okay.
+[2934.52:2936.52] The membership system tells me and some view V.
+[2936.52:2937.52] I put it here.
+[2937.52:2938.52] Good.
+[2938.52:2942.08] Uh, regularly I check this variable.
+[2942.08:2946.56] The variable pending is different than empty state.
+[2946.56:2948.0] What is this variable pending?
+[2948.0:2949.0] This variable pending?
+[2949.0:2951.2400000000002] We're going to see in a minute.
+[2951.2400000000002:2952.52] It contains this view.
+[2952.52:2954.7200000000003] So pending contains view.
+[2954.7200000000003:2958.6400000000003] If it's not empty, this means I have a view to install.
+[2958.6400000000003:2959.6400000000003] Okay.
+[2959.64:2968.3199999999997] So I take from pending the first view because again, maybe to failed and then be to be
+[2968.3199999999997:2972.7599999999998] failed and then be fulfilled and my system is telling me or you have to install V1.
+[2972.7599999999998:2973.7599999999998] You have to install V2.
+[2973.7599999999998:2975.52] You have to install V3.
+[2975.52:2978.12] I treat those use in the order.
+[2978.12:2980.68] The membership told me I start with the first one.
+[2980.68:2985.7599999999998] I remove from head from this variable.
+[2985.7599999999998:2986.7599999999998] Then I invoke.
+[2986.7599999999998:2988.2799999999997] I put this flashing is true.
+[2988.28:2990.88] The flashing is like the weight statement that was internal.
+[2990.88:2992.6000000000004] I say, okay, now I need to wait.
+[2992.6000000000004:2993.6000000000004] Okay.
+[2993.6000000000004:2994.92] And you will see what that means.
+[2994.92:2996.52] I trigger VS block.
+[2996.52:2998.0] I tell my application.
+[2998.0:3000.4] So this is executed at some process.
+[3000.4:3002.84] I tell the process on which I'm running.
+[3002.84:3005.88] Stop broadcasting.
+[3005.88:3009.52] When my process on which I'm running tells me, okay.
+[3009.52:3010.52] I stop broadcasting.
+[3010.52:3013.5600000000004] I put block equals to meaning.
+[3013.5600000000004:3015.5600000000004] I am not doing anything.
+[3015.56:3022.08] I'm not broadcasting and I'm not doing anything except making sure I correctly installed the
+[3022.08:3023.6] view.
+[3023.6:3024.6] What's you?
+[3024.6:3026.44] The one I took next view.
+[3026.44:3027.96] I correctly installed it.
+[3027.96:3032.36] But before that, I need to make sure that all messages that have been broadcast in the
+[3032.36:3034.7999999999997] view are delivered in the view.
+[3034.7999999999997:3036.7999999999997] How do I do that?
+[3036.7999999999997:3037.7999999999997] Okay.
+[3037.7999999999997:3041.88] I use termination alive broadcast.
+[3041.88:3042.88] Okay.
+[3042.88:3046.04] We really see the importance of the termination.
+[3046.04:3049.2000000000003] What do I use this termination alive broadcast for?
+[3049.2000000000003:3055.48] I sent to all processes, what all processes, all processes in the view.
+[3055.48:3058.2400000000002] What I mean, okay.
+[3058.2400000000002:3061.56] I tell them this is my contribution.
+[3061.56:3063.6] I give them two pieces of information.
+[3063.6:3066.76] The name of the view and the messages that I have delivered.
+[3066.76:3067.76] Okay.
+[3067.76:3071.2400000000002] So I am a process who has delivered some messages in a view.
+[3071.24:3073.9199999999996] When I tell everybody, here are the messages I have delivered.
+[3073.9199999999996:3076.2] I use termination alive broadcast for that.
+[3076.2:3079.7599999999998] That is very important.
+[3079.7599999999998:3085.7599999999998] Termination alive broadcast is going to terminate as the name indicates at all processes.
+[3085.7599999999998:3092.3199999999997] Whether I fail or not, all processes are going to tear be delivered from all processes
+[3092.3199999999997:3093.3199999999997] in the system.
+[3093.3199999999997:3096.68] They are going to tear be delivered something.
+[3096.68:3103.68] But that thing is a view with a set of messages.
+[3103.68:3106.68] Okay.
+[3106.68:3115.2] Assuming it's a view and the set of messages, this means that some process is informing me
+[3115.2:3118.7599999999998] of the set of messages that it has delivered.
+[3118.7599999999998:3122.9199999999996] So I remember that P has told me that it's TRB is done.
+[3122.9199999999996:3123.9199999999996] Okay.
+[3123.9199999999996:3125.3599999999997] I put P here.
+[3125.36:3132.92] And then for all messages that P is telling me it has delivered, either I have already
+[3132.92:3135.28] delivered them myself or I did not deliver them.
+[3135.28:3141.44] If I did not deliver them, I do deliver them and I use the S deliver source of F. Okay.
+[3141.44:3146.44] So maybe P2 has delivered some messages that P3 did not deliver.
+[3146.44:3147.44] Okay.
+[3147.44:3152.52] This termination alive broadcast from P2 to P3 is informing P3 of the messages that it
+[3152.52:3155.8] has missed.
+[3155.8:3161.36] When TRB done is the entire view and blocked equals true.
+[3161.36:3162.36] Okay.
+[3162.36:3170.44] TRB done is the entire view means I have gotten a message TRB delivered from everybody.
+[3170.44:3175.44] Notice that if the message is fine meaning P has failed, this then is empty.
+[3175.44:3176.88] I don't do anything.
+[3176.88:3180.7599999999998] This is considered to be the case where there is empty.
+[3180.76:3187.0800000000004] So when TRB done is the entire process in my view and blocked equals true.
+[3187.0800000000004:3188.0800000000004] Okay.
+[3188.0800000000004:3193.92] Which means that I was blocked then I deliver and only then I deliver my new view.
+[3193.92:3194.92] Okay.
+[3194.92:3195.92] So what are we doing?
+[3195.92:3201.6000000000004] If nobody fails, if there is no membership changes, we are just broadcasting messages.
+[3201.6000000000004:3206.1200000000003] But we remember them.
+[3206.1200000000003:3208.1200000000003] Okay.
+[3208.12:3212.8399999999997] This is everybody remembers the messages it has delivered.
+[3212.8399999999997:3216.3599999999997] When the membership system tells me, oh, you need to deliver a view.
+[3216.3599999999997:3218.48] I need to do some cleaning.
+[3218.48:3223.7599999999998] What that cleaning means, I need to inform everybody of the messages that I have delivered.
+[3223.7599999999998:3229.96] And everybody has to inform everybody with that set of messages.
+[3229.96:3232.12] This is the goal of terminating reliable broadcast.
+[3232.12:3237.7999999999997] We reached the end of the epoch and we used terminating reliable broadcast to somehow make
+[3237.8:3243.7200000000003] sure that if anybody delivered a message in that epoch, everybody will.
+[3243.7200000000003:3244.7200000000003] Okay.
+[3244.7200000000003:3247.6400000000003] More specifically, all correct processes will.
+[3247.6400000000003:3252.28] There is something there slightly subtle.
+[3252.28:3253.6000000000004] I will come back to it.
+[3253.6000000000004:3257.1200000000003] But we use terminating reliable broadcast and this terminating reliable broadcast, what
+[3257.1200000000003:3260.52] we use it for to exchange the messages that we have delivered.
+[3260.52:3265.1200000000003] And if I see that I have missed some message, I be as delivered.
+[3265.12:3275.12] And when all, when I got TRB done from all processes, only then I deliver my view.
+[3275.12:3279.12] Okay.
+[3279.12:3283.52] I see there are two questions.
+[3283.52:3287.52] Let me see.
+[3287.52:3294.52] From Antoine Mura, why would floating the broadcast block the view change?
+[3294.52:3295.52] Okay.
+[3295.52:3307.68] So it seems that Antoine asked the question and then realized what was going on.
+[3307.68:3308.68] Okay.
+[3308.68:3309.68] Okay.
+[3309.68:3311.68] So I'm not answering Antoine.
+[3311.68:3317.48] Antoine, sorry, if I missed the studio comment, otherwise I can come back to it later.
+[3317.48:3319.32] And then there is Elvric.
+[3319.32:3325.92] How are we getting a message from P if P was seen as crashed by the next view?
+[3325.92:3326.92] Good question.
+[3326.92:3327.92] All questions are good.
+[3327.92:3330.76] Only answers can be stupid.
+[3330.76:3334.04] How can we?
+[3334.04:3338.92] How can we get a message from a process?
+[3338.92:3347.04] If the process is not something important?
+[3347.04:3356.56] When the membership tells a process, see every process will get this membership change,
+[3356.56:3357.56] all of them.
+[3357.56:3358.56] Okay.
+[3358.56:3360.08] All correct processes.
+[3360.08:3367.2799999999997] If I'm a failed process, either I get this membership change before I fail or after
+[3367.2799999999997:3368.2799999999997] I fail.
+[3368.2799999999997:3371.16] If I get it before I fail, I execute the protocol.
+[3371.16:3373.08] I use Terminator and MetalWodcast.
+[3373.08:3377.08] Okay.
+[3377.08:3378.88] The Terminator and MetalWodcast is going to broadcast my messages.
+[3378.88:3383.96] If I get this after I fail, then of course I don't do, I don't broadcast any message.
+[3383.96:3384.96] Okay.
+[3384.96:3386.2] This is an important question.
+[3386.2:3393.12] If I don't broadcast any message, it is important to realize that Terminator and MetalWodcast
+[3393.12:3397.24] is something that all processes are expecting.
+[3397.24:3405.12] P2 to use TRB to tell them about the messages P2 has delivered.
+[3405.12:3411.72] Even if P2 did not invoke TRB broadcast, the other processes will deliver fine.
+[3411.72:3412.72] Okay.
+[3412.72:3414.7599999999998] So this is in the specification of TRB.
+[3414.7599999999998:3420.2] So when we say, in fact, it's almost a language abuse.
+[3420.2:3426.2] A process can TRB deliver fine, meaning, oh, the standard has failed.
+[3426.2:3433.8799999999997] Even if the standard didn't broadcast anything, because it is an algorithm that assumes everybody
+[3433.8799999999997:3435.04] is going to TRB broadcast.
+[3435.04:3440.16] Even if some of them do not actually invoke TRB broadcast, the processes are going to
+[3440.16:3441.16] deliver fine.
+[3441.16:3442.16] Okay.
+[3442.16:3443.16] So please remember this.
+[3443.16:3445.0] It's not like a classical broadcast.
+[3445.0:3446.0] A classical broadcast.
+[3446.0:3450.0] If somebody did not broadcast a message, you're not going to deliver anything.
+[3450.0:3455.96] Here, even if the process does not even invoke TRB broadcast, the very fact that all
+[3455.96:3462.4] processes are expecting from all other processes in their view to TRB deliver something, they're
+[3462.4:3469.36] going to deliver either a set of messages or if the guy didn't invoke the TRB broadcast,
+[3469.36:3471.76] they're going to deliver fine.
+[3471.76:3472.76] Okay.
+[3472.76:3473.76] Good.
+[3473.76:3475.7200000000003] Now, we have an algorithm.
+[3475.7200000000003:3479.52] Of course, the algorithm I presented is fine.
+[3479.52:3480.52] It works well.
+[3480.52:3487.88] But if we think about it carefully, in the normal case, in the regime, the quasi-air,
+[3487.88:3489.44] we are simply broadcasting messages.
+[3489.44:3491.7599999999998] We are not doing more.
+[3491.7599999999998:3495.84] We are remembering the messages, but we are not adding more communication.
+[3495.84:3503.7599999999998] However, when we have a membership change, we have a lot of stuff going on.
+[3503.7599999999998:3506.24] What is this lot of stuff?
+[3506.24:3508.16] Everybody, we have a group membership.
+[3508.16:3511.92] Okay, we have seen that Goldmember Street means consensus.
+[3511.92:3518.72] Plus, every process is going to invoke TRB, which means that we will have a consensus
+[3518.72:3524.3199999999997] for the Goldmember Street plus end consensus.
+[3524.3199999999997:3528.04] Why every process is invoked in terminated on an award class?
+[3528.04:3529.04] Okay.
+[3529.04:3532.44] So we will have a lot of consensus.
+[3532.44:3539.7200000000003] What we are going to see here is this slightly, not slightly, is a more efficient version,
+[3539.7200000000003:3543.2400000000002] where we are going to group the agreement part together.
+[3543.2400000000002:3545.96] And I'm going to explain to you how we are going to do that.
+[3545.96:3554.28] Instead of launching n plus 1 consensus, we are going to launch 1, roughly, roughly speaking.
+[3554.28:3558.96] The processes are going to exchange the messages they have delivered, one that detects a
+[3558.96:3564.16] failure, and they are going to use consensus to agree on the membership and the message
+[3564.16:3572.12] set, whereas initially, in the previous algorithm, which is simple, group membership uses consensus
+[3572.12:3574.6] to agree on a set.
+[3574.6:3580.7200000000003] And then we have n consensuses to agree on the message set.
+[3580.7200000000003:3581.7200000000003] Sorry.
+[3581.7200000000003:3586.44] We have the membership uses consensus to agree on the set of notes.
+[3586.44:3592.16] And then n terminated on a negative broadcast to agree on the set of messages delivered
+[3592.16:3595.8] by every and each process.
+[3595.8:3601.4] So now algorithm 2, which is another implementation of use synchrony, is slightly smarter.
+[3601.4:3606.16] It uses, it doesn't do things differently during the normal run.
+[3606.16:3613.68] But at the end, at the time of delivering a change in view, it's going to use only one
+[3613.68:3614.68] consensus.
+[3614.68:3619.68] So we are using best of all broadcasts, perfect failure detector, and uniform broadcast.
+[3619.68:3624.6] What we did, we opened group membership, we opened open terminated on a level broadcast,
+[3624.6:3628.3599999999997] and we factor out the agreement into one instance.
+[3628.3599999999997:3634.72] Okay, we are going to use the bunch of variables, almost the same as before.
+[3634.72:3638.2799999999997] When you broadcast n, you do a little bit the same like before.
+[3638.2799999999997:3639.96] You remember the message.
+[3639.96:3642.3999999999996] This is not uniform broadcast.
+[3642.4:3647.8] You remember the message you delivered and you best effort broadcast the message.
+[3647.8:3651.56] When you deliver the message, you also check, is it in the same view?
+[3651.56:3653.8] Yes, in the same view.
+[3653.8:3655.32] Then it's not delivered.
+[3655.32:3657.48] Then I need to deliver it and be as delivered.
+[3657.48:3662.4] So far, regime the quality air, nothing special.
+[3662.4:3666.4] Now I don't have a group membership.
+[3666.4:3668.56] I have a fail detector directly.
+[3668.56:3672.56] When somebody crashes, I remove it from the set correct.
+[3672.56:3677.96] If I am not on already and starting a view, this is flashing is false.
+[3677.96:3683.7599999999998] Then I put flashing is true, meaning I should stop whatever I am doing, ask my process
+[3683.7599999999998:3684.7599999999998] to block.
+[3684.7599999999998:3686.36] This is the same as before.
+[3686.36:3689.12] When my process tells me I'm blocked, what do I do?
+[3689.12:3692.12] Now it's interesting.
+[3692.12:3695.04] I use directly best effort broadcast.
+[3695.04:3698.32] I don't use terminated on level broadcast because terminated on level broadcast means
+[3698.32:3699.32] consensus.
+[3699.32:3700.32] I don't use consensus.
+[3700.32:3702.1600000000003] I simply broadcast the message.
+[3702.1600000000003:3704.48] What message do I broadcast?
+[3704.48:3707.6800000000003] I broadcast the message which is I don't call this data.
+[3707.6800000000003:3712.8] I call this control message or data sets.
+[3712.8:3714.6000000000004] Don't worry about that.
+[3714.6000000000004:3718.4] I broadcast the set of messages I delivered.
+[3718.4:3724.92] The same as what I had with terminated on level broadcast except that here, I use best
+[3724.92:3726.32] effort broadcast.
+[3726.32:3731.6400000000003] Processes are going to best effort deliver this special message.
+[3731.6400000000003:3732.6400000000003] Be careful.
+[3732.6400000000003:3735.2000000000003] We have two kinds of best effort broadcast.
+[3735.2000000000003:3739.0800000000004] Best effort broadcast the data message.
+[3739.0800000000004:3742.0800000000004] And best effort broadcast this particular message.
+[3742.0800000000004:3747.4] That's here why it is important sometimes to distinguish two types of messages.
+[3747.4:3751.1200000000003] Previous message was data, single individual messages.
+[3751.1200000000003:3754.1600000000003] Here is best effort broadcast data set.
+[3754.16:3760.04] So when I deliver a data set message in a view view, what do I do?
+[3760.04:3768.68] I put my local variable data sets contains a source plus del.
+[3768.68:3775.12] Which means that I have this variable data set which contains from every process a set
+[3775.12:3778.92] of messages.
+[3778.92:3787.32] If for all processes incorrect, P of M set is in data set meaning I have received messages
+[3787.32:3789.6800000000003] from P for all processes incorrect.
+[3789.6800000000003:3793.64] They have all broadcast messages and I always see them.
+[3793.64:3795.6] Then and only then I use consensus.
+[3795.6:3797.6800000000003] I use consensus on what?
+[3797.6800000000003:3801.16] So here I'm going to use several instances of consensus.
+[3801.16:3806.6800000000003] The first instance is instance one because view ID was zero.
+[3806.6800000000003:3808.2000000000003] What do I propose to consensus?
+[3808.2:3810.64] I propose two things.
+[3810.64:3813.2799999999997] Remember that consensus is obligeous.
+[3813.2799999999997:3815.3199999999997] It doesn't care what you propose to it.
+[3815.3199999999997:3819.56] You can propose a value a set of messages or even two sets.
+[3819.56:3821.08] That's what I'm doing here.
+[3821.08:3826.04] Remember that when I presented to you the consensus algorithms, we didn't really care what the
+[3826.04:3828.96] value proposed were.
+[3828.96:3831.52] Simply guaranteed that the value decided is a value proposed.
+[3831.52:3833.7599999999998] Here the value proposed is a pair.
+[3833.7599999999998:3836.8399999999997] It contains two things.
+[3836.84:3843.76] My, when I say my is the perspective of the process executing this code, the set of correct
+[3843.76:3851.6800000000003] processes plus the set of messages that I believe have been delivered.
+[3851.6800000000003:3858.2400000000002] And then consensus is going to return a membership as well as a set of messages.
+[3858.2400000000002:3861.1600000000003] What do I do with this information?
+[3861.16:3871.56] For all B and sets, okay, so includes in this variable here that the set, I go through
+[3871.56:3877.68] all these processes of all these processes in this set.
+[3877.68:3881.92] I check if I did not deliver the message, I delivered the message.
+[3881.92:3885.8399999999997] If I have already seen the message, I don't care.
+[3885.8399999999997:3886.8399999999997] Then I in block message.
+[3886.8399999999997:3888.12] So what are we doing?
+[3888.12:3889.12] Really?
+[3889.12:3896.4] It is important to notice here that the new view is going to contain only processes.
+[3896.4:3899.2799999999997] If any process, okay, let me reference.
+[3899.2799999999997:3906.2] When I decide on a view here, this view has to be, cannot exclude processes who are correct.
+[3906.2:3907.2] Why?
+[3907.2:3913.0] Because I have a perfect value detector and anything proposed here is the value view.
+[3913.0:3918.6] But it could be that some process exproposes to exclude P2 first and another process,
+[3918.6:3921.2] because it proposed to exclude P3 first.
+[3921.2:3923.12] So that is important.
+[3923.12:3928.16] The second thing that is important is that I make sure that any process that is in this
+[3928.16:3935.2] view here, there is associated with it, there is associated with it, a set of messages
+[3935.2:3937.7599999999998] that this process has delivered.
+[3937.7599999999998:3938.7599999999998] Okay?
+[3938.7599999999998:3943.72] So when I deliver a new view, I make sure all those processes who are starting the new
+[3943.72:3948.16] view have informed me about the set of processes they have delivered.
+[3948.16:3950.08] This is exactly what I am doing here.
+[3950.08:3951.08] Okay?
+[3951.08:3955.72] And of course, in order not to be as delivered a message twice, I make sure I deliver them
+[3955.72:3956.72] before.
+[3956.72:3957.72] Okay?
+[3957.72:3959.72] So this is something very important.
+[3959.72:3960.72] Okay?
+[3960.72:3961.72] Let me see.
+[3961.72:3970.64] They seem to be a question.
+[3970.64:3977.12] What are the del and message set in slide 35?
+[3977.12:3983.04] So, del is delivered.
+[3983.04:3984.04] Okay?
+[3984.04:3985.04] It is not delivered.
+[3985.04:3991.64] And M set is a set of messages.
+[3991.64:3992.64] Okay?
+[3992.64:4004.52] So if for all processes incorrect, so this set here is this, it contains pairs, source,
+[4004.52:4005.7599999999998] set of messages.
+[4005.76:4011.5200000000004] And here what I do is I check all processes I have in my set correct.
+[4011.5200000000004:4018.7200000000003] Do I have the pair, P, the process name and the set of messages if delivered.
+[4018.7200000000003:4023.36] If I have them all and only one I have them all, then I invoke consensus.
+[4023.36:4024.36] Okay?
+[4024.36:4029.7200000000003] So I only invoke consensus where everybody I believe correct has sent me something.
+[4029.7200000000003:4031.32] Otherwise I don't invoke consensus.
+[4031.32:4032.32] I wait.
+[4032.32:4033.32] What do I wait for?
+[4033.32:4036.0800000000004] So what I say on the detector is going to tell me the guy has failed.
+[4036.0800000000004:4037.0800000000004] Okay?
+[4037.0800000000004:4045.28] So what I propose to consensus is a set of processes that I believe are correct plus all messages
+[4045.28:4047.1600000000003] they have delivered.
+[4047.1600000000003:4049.76] Okay.
+[4049.76:4059.2000000000003] That was when we combined group membership and reliable broadcasts into view synchrony.
+[4059.2:4064.68] And I presented to you two implementations of use synchrony, one of them that uses one
+[4064.68:4073.3199999999997] consensus for called membership and end consensus for termination of reliable broadcasts.
+[4073.3199999999997:4080.3599999999997] And I presented you the second algorithm which is maybe slightly more complicated to understand.
+[4080.3599999999997:4084.96] Especially if you have not seen the first algorithm, but more efficient because I have
+[4084.96:4087.52] only one consensus.
+[4087.52:4093.28] But I insisted a couple of times and this is the last intellectual effort I'm asking you
+[4093.28:4094.28] to have.
+[4094.28:4096.96] I insisted that the broadcast was not uniform.
+[4096.96:4098.16] It was only reliable.
+[4098.16:4099.16] Okay?
+[4099.16:4104.12] Remember I told you, oh look, when you broadcast a message you deliver it immediately.
+[4104.12:4108.12] That's obviously not uniform because if you deliver it and fail, nobody is going to see
+[4108.12:4109.12] the message.
+[4109.12:4111.4] Now, assure what we want is really uniform.
+[4111.4:4112.4] Okay?
+[4112.4:4117.96] A message is Vs delivered in the view where it is Vs broadcast, which is already in
+[4117.96:4118.96] terms.
+[4118.96:4122.2] So we want the uniform reliable broadcasts in these properties.
+[4122.2:4127.879999999999] Basically, we want to say if any process delivers them every process delivered, not
+[4127.879999999999:4129.28] it's something.
+[4129.28:4137.799999999999] The view synchronous property, the blue was already a uniform, a uniform blue if you want.
+[4137.8:4143.320000000001] But the reliable broadcast property I assumed so far was only agreement.
+[4143.320000000001:4145.52] It was not uniform agreement.
+[4145.52:4147.92] So now we want uniform reliable broadcasts.
+[4147.92:4156.24] And here, I told you the last intellectual effort, it is not enough to replace the reliable
+[4156.24:4158.96] broadcast primitive I was using.
+[4158.96:4162.28] With uniform, I used to use best effort.
+[4162.28:4167.76] It's not enough to remove best effort and put instead uniform reliable broadcasts together
+[4167.76:4169.76] that's uniform view synchronous.
+[4169.76:4171.08] Let's see.
+[4171.08:4176.2] This example is the most important thing I want you to understand before finishing.
+[4176.2:4181.6] I have three processes, P1, P2, P3, P2 broadcast message M. Okay?
+[4181.6:4185.24] And then P2 eventually crashes.
+[4185.24:4190.52] If I use, even if I use uniform reliable broadcasts, I assume I use uniform reliable broadcasts.
+[4190.52:4195.72] So I use the algorithm I just presented, except that if instead of doing best effort
+[4195.72:4201.320000000001] broadcasts, I do uniform broadcasts and uniform deliver.
+[4201.320000000001:4205.4400000000005] It could be that I Vs deliver M. Okay?
+[4205.4400000000005:4213.84] And then this means I will detect these failures and then the, sorry, I installed the view,
+[4213.84:4216.72] here I installed the view.
+[4216.72:4224.08] But the agreement property of the uniform broadcasts is guaranteed, is ensured.
+[4224.08:4231.12] But this insurance does not, is not coordinated with the delivery of the views.
+[4231.12:4237.08] What is coordinated with the delivery of the views is a message is Vs delivered in the
+[4237.08:4240.28] view where it is Vs broadcast.
+[4240.28:4245.48] But here I could not deliver that message.
+[4245.48:4247.68] So I'm violating this property.
+[4247.68:4248.68] Okay?
+[4248.68:4255.4800000000005] So in fact, the property here, if I use, even if I use uniform broadcasts, I violate it.
+[4255.4800000000005:4256.4800000000005] Okay?
+[4256.4800000000005:4257.4800000000005] I hope you see what I'm saying.
+[4257.4800000000005:4263.56] What I'm saying here is that I could deliver a message M in a view.
+[4263.56:4268.320000000001] But then the other processes deliver the message in another view.
+[4268.320000000001:4271.280000000001] And this can happen in the algorithm I just presented.
+[4271.280000000001:4272.280000000001] Okay?
+[4272.280000000001:4274.280000000001] How can we sort out this issue?
+[4274.280000000001:4277.88] And this is the very last intellectual effort I'm asking you to have.
+[4277.88:4279.8] Which is the third algorithm.
+[4279.8:4282.8] What we are going to, and we need to do that.
+[4282.8:4286.4800000000005] Nobody has, has found a better way to do it.
+[4286.4800000000005:4291.400000000001] Is to re implement, re implement the uniform or live broadcasts.
+[4291.400000000001:4293.16] I cannot use it as a black box.
+[4293.16:4294.4800000000005] I have to re implement it.
+[4294.4800000000005:4296.08] How do we, they will be implemented?
+[4296.08:4298.08] How do we implement it?
+[4298.08:4301.36] Three or four weeks ago is using acts.
+[4301.36:4305.72] So what I'm saying is I have to go back to the previous algorithm using best effort
+[4305.72:4306.72] broadcasts.
+[4306.72:4315.320000000001] Add to it the mechanism to implement uniformity, uniform agreement by using a knowledge.
+[4315.320000000001:4318.52] When I broadcast the message M, I don't deliver it.
+[4318.52:4319.52] I just remember it.
+[4319.52:4320.52] I remember the message.
+[4320.52:4325.52] And this is how we implemented uniform or live broadcasts sometime ago.
+[4325.52:4331.52] When I deliver the message, I simply remember that all the source has seen that message.
+[4331.52:4333.96] Is a can only has a can only that message.
+[4333.96:4334.96] Okay?
+[4334.96:4338.28] It's exactly what we have seen three weeks ago.
+[4338.28:4344.52] And only when I know that everybody in my view has acknowledged the message M, I have
+[4344.52:4347.6] seen message M, then I veered.
+[4347.6:4354.16] So it's the same algorithm as the previous one, except that I add the acknowledgement mechanism
+[4354.16:4355.8] with the best effort broadcast.
+[4355.8:4362.64] I cannot simply remove best effort broadcasts and add a uniform broadcast doesn't care about
+[4362.64:4363.64] you simply.
+[4363.64:4365.8] So here I added it explicitly.
+[4365.8:4366.8] Okay?
+[4366.8:4374.56] So this is something, okay, it's not completely obvious to understand, but what I want
+[4374.56:4379.280000000001] to tell you is the first algorithm guarantees view synchrony.
+[4379.280000000001:4382.72] It doesn't guarantee uniform view synchrony.
+[4382.72:4387.04] Uniform C view synchrony is uniform broadcast with view synchrony.
+[4387.04:4390.320000000001] The second algorithm still doesn't guarantee uniformity.
+[4390.32:4398.5199999999995] In order to guarantee uniformity, you need to make sure in every view, every process has
+[4398.5199999999995:4400.44] seen the message in that view.
+[4400.44:4401.44] Okay?
+[4401.44:4402.44] So this is important.
+[4402.44:4404.84] And then you can deliver that message.
+[4404.84:4410.36] So this is a variation of the third algorithm of the second algorithm where I guarantee uniformity
+[4410.36:4416.599999999999] and I guarantee uniformity not by swapping the broadcast algorithm, but by having acknowledgement
+[4416.599999999999:4417.599999999999] mechanism.
+[4417.6:4421.6] Please spend some time thinking about this algorithm.
+[4421.6:4424.4400000000005] The book is very precise about this subtleties.
+[4424.4400000000005:4430.88] It presents a lot of scenarios where, oh, in this case, you violate uniformity in that
+[4430.88:4433.360000000001] in this case, you have uniformity, etc.
+[4433.360000000001:4439.08] And now that nowadays that people are using these broadcast primitive to implement
+[4439.08:4443.76] future currencies or as we are going to see later some machine learning application or
+[4443.76:4447.56] what have you, it is very important to understand this subtleties.
+[4447.56:4454.56] Slide 43.
+[4454.56:4463.96] It is a question about slide 43.
+[4463.96:4474.320000000001] This is a act of M is the set of processes.
+[4474.32:4478.08] Okay?
+[4478.08:4479.5199999999995] Act is act of M plus the source.
+[4479.5199999999995:4480.5199999999995] I add the source.
+[4480.5199999999995:4482.639999999999] So no, this is the source I add in this.
+[4482.639999999999:4483.639999999999] So what is act?
+[4483.639999999999:4489.5599999999995] In fact, act is everybody who is informing me, informing me that it has seen the message.
+[4489.5599999999995:4490.5599999999995] Okay?
+[4490.5599999999995:4492.4] So processes keep relaying the messages.
+[4492.4:4493.4] Okay?
+[4493.4:4496.88] I broadcast the message M.
+[4496.88:4499.24] Basic for broadcast message M.
+[4499.24:4501.2] And I hold broadcast it again.
+[4501.2:4502.2] Okay?
+[4502.2:4504.0] So this is how we implemented uniform broadcast.
+[4504.0:4506.68] It keeps broadcasts into everybody.
+[4506.68:4510.8] Which if you remember, we could optimize with a majority, but let's not talk about that
+[4510.8:4511.8] for now.
+[4511.8:4513.2] Everybody relates all messages.
+[4513.2:4542.4] So it is an expensive thing to do, but that's the price for uniformity.

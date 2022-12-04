@@ -1,0 +1,160 @@
+~COM-516 Lecture 4.3
+~2020-07-30T22:17:06.393+02:00
+~https://tube.switch.ch/videos/5ae8b059
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:6.0] Okay, so let us finish this proof of the algorithm theorem.
+[6.0:13.0] So far we haven't used the assumptions that is that the chain is a ready-civil, aperty
+[13.0:14.0] and positive recurrent.
+[14.0:18.0] Now we are going to use them of course.
+[18.0:28.0] And for this we will do, we will analyze, or remember we have this chain Z which is the
+[28.0:42.5] neutral chain, the chain coupling Xn and Yn.
+[42.5:56.0] And okay, what I want to analyze now is this chain before correlations.
+[56.0:65.0] If I want it to be complete here or exhaustive I should have yet another notation for this
+[65.0:72.0] chain because this chain is not the same as the coupled chain before.
+[72.0:79.0] So the fully coupled chain is the chain that evolves first independently,
+[79.0:84.0] while the two components evolve independently and then they meet and then they go together.
+[84.0:88.0] Now I am going to consider the same chain but just before correlations.
+[88.0:97.0] So that is if you want that's the chain where there is only statistical coupling.
+[97.0:99.0] Okay.
+[99.0:107.0] And why do I want to analyze this chain alone?
+[107.0:116.0] Because actually if I want to know when coupling happens I should just study this chain
+[116.0:127.0] and determine that with probability 1 this chain will once, fall in a state where Xn is equal to Yn.
+[127.0:130.0] Okay.
+[130.0:134.0] Because then the other chain which is coupled after that you know will,
+[134.0:139.0] well if there is a meeting of Xn and Yn then coupling happens, right?
+[139.0:149.0] So I just need to prove that for this statistically coupled chain the meeting happens.
+[149.0:151.0] Okay.
+[151.0:166.0] And the first step in proving this is proving that this chain is actually positive recurrent.
+[181.0:188.0] Okay. It's not the end of the story because, okay, this doesn't prove completely what we want,
+[188.0:191.0] but this is the first step.
+[191.0:195.0] So let me try to prove this.
+[195.0:204.0] Okay. So of course you might say well that X and Y are positive, both positive recurrent given the assumptions, right?
+[204.0:210.0] Remember X is positive recurrent by assumption but Y also because Y has the same dynamics as X.
+[210.0:214.0] Right? So we have two chains which are positive recurrent,
+[214.0:222.0] where you put them together and form a new chain as Z, then Y isn't this Z naturally positive recurrent.
+[222.0:230.0] That's where you have to be a little careful and I'm going to show you a counter example that justifies that one has to be careful.
+[230.0:243.0] But perhaps the first thing to notice about the process Z is that Z is a Markov chain.
+[243.0:249.0] Okay. This can be for many proven, this is not difficult.
+[249.0:265.0] And of course it's a Markov chain on the state space, as times Z.
+[265.0:277.0] And the transition probabilities of this chain is the following, are the following.
+[277.0:292.0] So the probability that Z and plus one is a given J L given that Z is a given IK.
+[292.0:298.0] Well because of independence of X and Y, so remember here we are studying the chain before call it sense.
+[298.0:307.0] So we have independent moves of X and Y. This will be given by Pij times Pkl.
+[307.0:310.0] Okay.
+[310.0:314.0] For those from independence.
+[314.0:322.0] Okay, we could prove that the conditional probabilities, you know, the, if you condition further on Z and minus one Z and minus two,
+[322.0:329.0] you're the conditioning disappears and proving the Markov property. But really this is something easy.
+[329.0:333.0] I want to, I want to do it here. Okay.
+[333.0:345.0] So now what about this chain? It turns out that this chain is irreducible.
+[345.0:357.0] Again, you might say that's obvious because both X and Y are irreducible. And, and the answer is no, it's not obvious.
+[357.0:362.0] It's not obvious because we have, we have to take care of something.
+[362.0:388.0] So perhaps here I will just straight away do the consure example. So, you know, it is not because X, Y, are irreducible.
+[388.0:400.0] Only. It is not, sorry, it is not only because X, Y, are irreducible.
+[400.0:412.0] If you had only this, you would have a problem. So the counter example is this one.
+[412.0:419.0] You have a chain X. Let's say you have a chain with two states. This is your X.
+[419.0:426.0] Okay. And you have a chain Y with two states also.
+[426.0:433.0] Same states actually. The same transition probabilities.
+[433.0:438.0] And let's say these transition probabilities are one or both chains.
+[438.0:448.0] This is the simple chain we have already seen. Right. So these two chains, X and Y are both, so this is X, this is Y.
+[448.0:456.0] They are both irreducible. Right. Okay. They are periodic, but they are irreducible.
+[456.0:467.0] Now what about Z? Z for Z. You go from the state. If you start in state zero zero, then after one step, you're in state one one.
+[467.0:474.0] And after two steps, you're in state zero zero. And so on.
+[474.0:491.0] So you never visit the state zero one. So for the chain Z, the, not all states of the product chain communicate with each other.
+[491.0:497.0] Here it's only the state zero zero communicating with one one and back to zero zero and back to one one.
+[497.0:506.0] But one zero and zero one. Do not actually one zero and zero one will communicate with each other also, but not all states communicate.
+[506.0:515.0] And so the chain Z is not irreducible, even though both X and Y are irreducible.
+[515.0:525.0] So how to prove that Z is irreducible? That's where we need the, uh, a periodicity of the chain X.
+[525.0:533.0] And here we need, uh, we need the fact that can be proven, but I won't do it.
+[533.0:541.0] The fact is the following, but I will kind of try to provide some intuition.
+[541.0:570.0] And if I chain X is irreducible and a periodic, then for every pair of states IJ in S, there exists a value of capital N of IJ, depending on IJ.
+[570.0:585.0] Greater and I equal to one such that P, IJ of N is greater than zero for every N greater than or equal to N of IJ.
+[585.0:605.0] Okay. So this is saying that there will be a value of capital N after which you will have always a positive probability for the end step transition policies with N bigger than this capital N.
+[605.0:615.0] You will always have a positive probability to, uh, to do a transition in end steps. And, uh, okay.
+[615.0:624.0] This is due to the fact that if you, if you have actually the explanation of that is, uh, is the following.
+[624.0:636.0] We have an irreducible and an periodic chain. So irreducible is clearly needed for this to be true right because otherwise the state that do not communicate so for which P IJ of N is zero always.
+[636.0:639.0] But the a periodic condition here is question.
+[639.0:668.0] The end it realize actually on the following fact, if you have, uh, so this comes from the following. If the GCD of two numbers A and B is one, then the set of N A plus M B.
+[668.0:683.0] With N and M greater than one. So the set of, uh, the sums of multiples of A's and B.
+[683.0:705.0] And then this set contains all the numbers after some capital N for some value of capital N greater than one.
+[705.0:717.0] So this is to say if you have an periodic chain for any two states, there will be always, you know, a probability to come back to have some three steps and come for a day to come back in five steps, for example.
+[717.0:723.0] Okay. So perhaps there is no probability to come back in in the four steps.
+[723.0:743.0] But of course, the GCD of three and five is one. And so actually you can check that perhaps you know, I have to do the computation, but that after ten steps indeed, there is always after ten steps, eleven steps, twelve steps, starting steps and everything.
+[743.0:755.0] So always a positive probability to come back. Okay. So, in this way, we have this nice fact.
+[755.0:762.0] And you will see how we use this fact now for the, for a purpose.
+[762.0:774.0] Because we have this fact for the chain X. Surely we have the same fact for this chain G for this chain Y. Sorry.
+[774.0:798.0] So for this chain Z, we have that for every pair of states, but now states of the chain of the chain Z are states in S times S.
+[798.0:815.0] Okay. They will exist a number capital N of IKJL, which is actually the maximum of N of IJ, N of KL.
+[815.0:844.0] So, such that the probability to transit from state Z0 is equal to IK to ZN, which is JL, will be this product of probabilities.
+[844.0:863.0] Because we have again, you know, two independent chains. And these two numbers are positive, because we choose little N to be greater than this N of IKJL.
+[863.0:885.0] Okay. Therefore, because this is true, you can conclude that the chain Z is certainly irreducible.
+[885.0:895.0] And also a periodic. Actually, I should say here that, of course, if there is a value capital N, let me go back to this fact here.
+[895.0:902.0] If there is a capital N, after which all the PIJs are positive, then necessarily the chain has to be a periodic, right?
+[902.0:908.0] Because the GCD of all the N's greater than this capital N will be just one.
+[908.0:922.0] Okay. So, Z is irreducible and periodic.
+[922.0:937.0] Actually, we won't need any more than the chain Z itself is a periodic. But the fact that the chain X at the beginning is a periodic gives us what we want, that the chain Z is irreducible.
+[937.0:948.0] You will see why it is important. Okay. So, I would like to mention here that I have this capital N's depending on the state IJ.
+[948.0:961.0] Of course, there is one case where this simplifies a little. If you have a finite chain, then this capital N will just be one value for all pairs of states, because you have a finite number of pairs of states.
+[961.0:968.0] The infinite chain, these values capital N might depend on the state that you consider.
+[968.0:975.0] Okay. So, we have proven that Z is irreducible. That's already one thing.
+[975.0:1001.0] What do we have? The next thing we want to prove about Z is that Z admits a stationary distribution.
+[1001.0:1023.0] Okay. And this stationary distribution provided is a capital Pi IK, which is simply the product of little Pi I times little Pi K for every I and K in S.
+[1023.0:1052.0] And the notation, well, okay, well, let's not introduce a complicated notation here. Let me just check that you know some overall IK in S of this capital Pi IK times the transition matrix of the chain Z.
+[1052.0:1062.0] The transition matrix of the chain Z, we have seen that it is given by the product Pi J times PKL. Okay.
+[1062.0:1078.0] So, of course, Pi IK, I propose that this Pi IK is equal to Pi I times Pi K. And so you see what's coming here that this can be everything as the sum over I in S times Pi I times Pi J.
+[1078.0:1104.0] And I can separate the sums because Pi IK is also in a product form. And I get Pi K times PKL. And because Pi, the little Pi is assumed to exist and is a stationary distribution of the chain X, then this is equal to Pi J Pi L, which is exactly this capital Pi JL.
+[1104.0:1119.0] So, indeed, capital Pi is a stationary distribution of the chain Z. Now, what do we have? We have a Z, which is the Markov chain, which is 0, and admits a stationary distribution.
+[1119.0:1136.0] By the first theorem, and here I need to go back to the first theorem. So, let me move back.
+[1136.0:1149.0] We have in this first theorem this very deep statement that the chain, which is irreducible, is positive recurrent, even only if it admits a stationary distribution.
+[1149.0:1165.0] So, while you might think that we apply it most of the time in the forward direction in the sense that we have put in the chain is positive recurrent, then you can you know that it will have a stationary distribution. Here we use it in the other direction.
+[1165.0:1179.0] We have a chain Z that admits a stationary distribution, and we conclude from there that it is positive recurrent.
+[1179.0:1196.0] So, by the first theorem, Z is positive recurrent, and that's what we wanted to prove. And of the first step.
+[1196.0:1225.0] So, here let me go back to the different steps. We first proved that Z was a Markov chain. Then we proved that it was irreducible because both X and Y were irreducible and apiadic.
+[1225.0:1237.0] Then we showed that it admits a stationary distribution because X admits a stationary distribution. And here we have this mine's product structure for the stationary distribution of the chain Z.
+[1237.0:1244.0] And using the first theorem, we were able to prove that Z is positive recurrent.
+[1244.0:1271.0] So, the last step of step 2 now is to show that probability of tau couple is less than plus infinity is equal to 1.
+[1271.0:1281.0] And here perhaps let me be a little more explicit. I will prove this given any initial condition.
+[1281.0:1305.0] So, I'm going to prove this given that Z zero is equal to any value JL. And I want to prove that this is equal to 1 for every JLNS.
+[1305.0:1316.0] You might object here that what we want to prove is a little more. We want to prove that this copying time is less than infinity with probability 1.
+[1316.0:1337.0] Whatever the initial distribution of the chain is. I claim, similar to something I already said, that if you show that starting from any state with deterministic, deterministically your deterministic in position J and L,
+[1337.0:1346.0] if you can prove that this happens with probability 1, then proving that this happens starting from any distribution is given to you.
+[1346.0:1357.0] You have to work a little to prove it formally, but somehow considering that you start from a deterministic position is kind of showing this for extreme cases.
+[1357.0:1367.0] Okay. So, we have proven, what have we proven so far? We have proven that the chain is positive recurrent.
+[1367.0:1394.0] So, Z is positive recurrent means that probability that TIK, which I'm going to define in a minute,
+[1394.0:1405.0] is less than plus infinity given that Z0 is IK is equal to 1. Yeah, I don't know why I want plus 1 here, just in just one.
+[1405.0:1413.0] 1 is equal to 1 for every IKNS.
+[1413.0:1430.0] Okay. And what is TIK? TIK is the first time such that Zn is equal to IK.
+[1430.0:1446.0] Okay. So, that's what we have proven when we say that Z was positive recurrent, that the probability to come back to the state where you start from is equal to 1 for every IK.
+[1446.0:1475.0] So, what now I would like to prove is that this implies that probability that TIK is finite given that Z0 is equal to JL is equal to 1 for every IKJLNS.
+[1475.0:1486.0] Okay. So, that's a bit, that's a small generalization of what I just said above, right?
+[1486.0:1492.0] You above, I just said that the probability to return to the same state where you start from is equal to 1.
+[1492.0:1498.0] The probability to return in finite time to the state where you start from is equal to 1.
+[1498.0:1507.0] Now, I'm saying that if you start from any state, you will visit any of the state in finite time with the probability 1.
+[1507.0:1518.0] Okay. Which is, you know, it's not something surprising, but if you have a recurrent chain, you're going to visit all the states with the probability 1 in finite time.
+[1518.0:1524.0] This is just actually a general thing. Let me just prove it for Malik here.
+[1524.0:1536.0] Indeed, how do you prove this? It has to be a little careful here. Let me hope I am.
+[1536.0:1540.0] So, what we have is this.
+[1540.0:1554.0] The probability that TIK is equal to plus infinity, given that Z0 is equal to IK. So, remember, positive recurrent means the probability that this is less than plus infinity is equal to 1.
+[1554.0:1568.0] Now, therefore, the probability that it is plus infinity should be equal to 0. This means positive recurrent.
+[1568.0:1581.0] So, certainly, this probability here is greater than the probability that TIK is equal to plus infinity.
+[1581.0:1591.0] And Zn is equal to some JL before Z0 is equal to IK.
+[1591.0:1599.0] I'm just, you know, restricting the set here. So, this probability is greater than.
+[1599.0:1611.0] And now, I'm considering here an N. So, this is tool for every N. And in particular, for every N, greater than or equal to 0.
+[1611.0:1633.0] But I'm going here to choose an N such that this PIJ, sorry, PIK JL of N is positive.
+[1633.0:1645.0] Okay, I know that such N exists because my chain is irreducible and apparent.
+[1645.0:1659.0] So, this I can rewrite using the role of conditioning as the probability that TIK is equal to plus infinity, given that Zn is equal to JL.
+[1659.0:1668.0] And Z0 is equal to IK. Time, this probability, PIK JL of N.
+[1668.0:1677.0] And now, I have chosen an N such that this is positive because my chain is irreducible.
+[1677.0:1686.0] Okay, here, this thing, I can erase it because I have a Markov process.
+[1686.0:1706.0] And by time homogeneity, this thing here is equal to this probability because actually the fact that you start in time N or in time 0 doesn't change anything, right?
+[1706.0:1717.0] So, this is really the time homogeneity of the chain that allows you to say this.
+[1717.0:1724.0] And now, look what the sequence of inequalities I have here. I have something positive here.
+[1724.0:1735.0] And something positive times this probability here is equal, so this probability times something positive is less than or equal to 0.
+[1735.0:1755.0] Therefore, so this probability, and we haven't made any restrictions on the value of IJKL is equal to 0 for every IJKL in S.
+[1755.0:1773.0] Okay, and so now comes the final word. Now, consider I is equal to K.
+[1773.0:1796.0] Then we get that probability that TI is equal to plus infinity given Z0 is equal to JL is equal to 0 for every IJL in S.
+[1796.0:1809.0] So, which I could rewrite, by the way, as part of that TI is less than plus infinity is equal to 1.
+[1809.0:1824.0] So, that's true for every I. But TI is the first time the chain meets the chain Y and X meet in position I.
+[1824.0:1845.0] But of course, tell couple the first time the chain meets to cool, sorry, that's French. The first time the chain meets is less than or equal than TII for every I in S.
+[1845.0:1851.0] Perhaps they meet in state I, but perhaps they have met before in another state than state I.
+[1851.0:1878.0] Okay, and so this implies that probability of tau couple being less than plus infinity given that Z0 is equal to JL is equal to 1 for every IJL in S.
+[1878.0:1890.0] And this proves what we want. So, and of course, that's it.

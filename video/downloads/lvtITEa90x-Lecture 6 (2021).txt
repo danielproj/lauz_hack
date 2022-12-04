@@ -1,0 +1,1955 @@
+~Lecture 6 (2021)
+~2021-10-25T13:01:09.369+02:00
+~https://tube.switch.ch/videos/lvtITEa90x
+~EE-556 Mathematics of data: from theory to computation
+[0.0:10.44] All right, let's get started.
+[10.44:11.44] Yeah.
+[11.44:12.44] All right.
+[12.44:19.44] So what we were talking about last time was through.
+[19.44:23.16] So.
+[23.16:30.48] So you were talking about handling non-slute problems with siftier smoothies faster.
+[30.48:35.24] And I said that the key ingredient in all of this is a box operator.
+[35.24:37.24] Sprox operator is magic.
+[37.24:44.72] So it's literally a digger and algorithm out of the grave from 1980.
+[44.72:50.16] The third day in method you merged with the proximal method and it turns out that you
+[50.16:56.36] basically address all sorts of problems and sciences and machine learning.
+[56.36:62.919999999999995] And then what happened is the science and machine learning kind of pushed back and we had to
+[62.919999999999995:68.64] dig in mergers on the which is called the conditional gradient.
+[68.64:73.36] In this case, specifically referring to the cases where the proximal operator is the
+[73.36:82.24] handle and those are the examples that I mentioned was that the group was through.
+[82.24:87.6] And then I was about to tell you guys about this, you know, all the important, you know,
+[87.6:92.64] the organization that kind of appeared when people wanted to talk about the things like
+[92.64:93.64] Netflix challenge.
+[93.64:97.6] You know, you have movies, you have users and you want to be recommendations.
+[97.6:102.92] You have partial ratings from users and you want to be told the rest of this recommend
+[102.92:103.92] their matrix.
+[103.92:110.6] And there what I did was tell you what about conditional gradient method and the method is
+[110.6:111.6] quite easy.
+[111.6:119.08] What you do is you use the senior minimization or a call.
+[119.08:124.8] And then you take a nice and physical combination of what they had before with the result of
+[124.8:133.32] the unionization or the out and all sort.
+[133.32:136.8] I mentioned that this method has a run over a K rate except that the numerator is compared
+[136.8:139.68] to the standard project gradient method.
+[139.68:144.28] It has the full diameter as opposed to the initial distance of the solution set.
+[144.28:146.28] And that's usually the difference.
+[146.28:147.28] Right.
+[147.28:151.64] So in terms of efficiency, proximal or project gradient, the sample is for descriptions
+[151.64:160.64] of objectives given this chain would have the same rate except the form difference, which
+[160.64:165.48] is the numerator will have the whole diameter for fact, what method, whereas the project
+[165.48:169.27999999999997] gradient is sent, make it the initialize the close and the text to less work.
+[169.27999999999997:171.48] Does that make sense?
+[171.48:173.56] All right.
+[173.56:177.92] And then I quickly mentioned that this possible to get a faster rate to the fact that
+[177.92:182.16] the solution that requires certain structures and we object to this goes to constraint, which
+[182.16:184.16] for strong convexity.
+[184.16:188.48] And if your set is strongly convex and if you object to strongly convex the next potential
+[188.48:196.27999999999997] method to get you one of the K square rate, whereas the gradient method would get you a
+[196.28:208.08] bigger linear rate, before getting a buffer diameter in the case of strong convexity clearly,
+[208.08:211.6] gradient method is an advantage, even more advantage.
+[211.6:219.68] But the proximal operator is not tractable or are you going to be, you rather have a linear
+[219.68:226.68] rate and subtracted the property operator or have a sublinear rate for the factable linear
+[226.68:228.68] immunization or filter.
+[228.68:230.68] All right.
+[230.68:237.68] So as so this is where we were and I was about to tell you about the nuclear norm, all
+[237.68:243.68] and then the time range went out as it usually does.
+[243.68:249.68] Okay. So what I want to tell you, being closing of this particular lecture five was the
+[249.68:257.68] linear immunization or a code when you have the nuclear norm, it's extremely quite simple.
+[257.68:263.68] What we end up doing is to solve a problem like this.
+[263.68:264.68] All right.
+[264.68:271.16] So you have a matrix in a product, which is a trace of, so here the constraint set is
+[271.16:280.32000000000005] a neutral normal, you're given an Hxx, you would like to minimize this inner products
+[280.32000000000005:284.16] at the extreme, it turns out that this is very easy to compute.
+[284.16:291.16] All you have to do is get the top singular vectors, the singular value, and then your oracle
+[291.16:299.16] is basically the negative singular value times the other product of the similar vectors.
+[299.16:306.16] Right. In fact, the reason I would like to pause and think of it, this particular thing is
+[306.16:310.16] the things like this tend to be the example.
+[310.16:313.16] How can you get this particular result?
+[313.16:320.16] In fact, think about it from the equivalent non-perfective, a one long, suppose I give you
+[320.16:324.16] inner product, then a one constraint.
+[324.16:331.16] What would you do to get the solution? Right. In fact, the way this is written, if you realize
+[331.16:339.16] it, it's a new form of something, you know, a new norm of some sort.
+[339.16:348.16] And it's good to think along these lines to figure out how we get this.
+[348.16:355.16] Anyway, so we stick to the sidewalls and Fox and the gradient, the relevant comparison just
+[355.16:362.16] and they don't. Again, you know, in the case of the constraints, you have the suddenly one
+[362.16:369.16] over theory, the difference between numerator and the worst-case bond becomes on the diameter
+[369.16:372.16] for time, both and the initial business in Fox and the gradient method.
+[372.16:379.16] In the case of strong, it from X, it's from X objective, which is creating a strong, it's from X constraints.
+[379.16:389.16] You can get one over T square rate in Frank Walls, whereas the Fox and the gradient would get
+[389.16:396.16] the linear rate. And so the question is, how do they compare and practice?
+[396.16:405.16] So, all right, let's take the classical recommended problem.
+[405.16:411.16] We would like to let's say minimize some, which is continuous gradient objective, which is expected
+[411.16:414.16] matrix decision variable, subject to the number of constraints.
+[414.16:422.16] If you were to try to do the projection onto the nuclear norm ball.
+[422.16:429.16] By the way, do people know about how to do these projections? It's a good idea to ask the TAs.
+[429.16:433.16] For example, on Friday, they could ask, yeah.
+[433.16:439.16] I'll tell you how you would do the R1 norm, which I would mention that I talked about Fox and the operator.
+[439.16:443.16] It's about soft-press-roading.
+[443.16:447.16] Nuclear norm ball also has to be soft-press-roading somehow.
+[447.16:454.16] Except it requires a two similar value, the composition first, and then do the soft-press-roading
+[454.16:458.16] business on the singular values.
+[458.16:464.16] And as a result, the projection on the single nuclear norm ball requires you to actually perform a full
+[464.16:471.16] singular value decomposition, which in general, as I said, you had a P by T matrix, the T2.
+[471.16:479.16] The N by T matrix is something like N for T, which is extensive.
+[479.16:485.16] The cubic is not what we want to see when you're going to show on.
+[485.16:491.16] The theoretical computer scientist would claim this for a long time and then forget about it.
+[491.16:504.16] But no, no, not finishing on us.
+[504.16:513.1600000000001] But if you think about the LMO on the nuclear norm ball, it is actually much simpler.
+[513.1600000000001:516.1600000000001] In fact, linear with T. Why?
+[516.1600000000001:520.1600000000001] Because all you need is a profsieule that is, and you can do this with the power iterations.
+[520.16:527.16] And if you want to learn the glory details about this, I have a nice supplementary lecture in linear algebra that explains
+[527.16:533.16] one chose the method power iterations, shifted power iterations, and things like this.
+[533.16:540.16] Some of these things I hope you do know, meaning power iterations is what made Google rich.
+[540.16:553.16] The solution to this, Google's double, the faster power mostly involves hitting the top singular vectors or points of singular vectors, which would give you some sort of a ranking.
+[553.16:564.16] I hope you if any of these aren't clear, just finding the break or asking questions, I can have the time.
+[564.16:582.16] All right, so one question which is very important in science, the imaging is the space of people in general, obtaining the drapes, reflected data fields is expansive, but you can measure, you can shine a light on a specimen, and then measure the recording amplitude.
+[582.16:603.16] That was a first of a report in the whole video, you can look at its magnitude, cheaper, easier. And that particular case, you can actually have your measurements could be, for example, a linear operator applied to this specimen, but then you take an absolute value.
+[603.16:616.16] So in this particular case, if you write the measurement, actually, so here is a linear measurement, which is fine in those some sort of a minute product.
+[616.16:627.16] You take an FFD, which is all fine, all linear. The issue is that we take the negative square, which is not in operation.
+[627.16:651.16] So if you want to, for example, enforce the data fidelity here in general, you look at costs like some D minus, let's say, a X something like this, which is not comments.
+[651.16:658.16] So there's a lot of people who worry about how to design these asks to do these measurements.
+[658.16:668.16] But this non-term expo problem, you can actually call, murdered their comrades problem by what is called as the lifting.
+[668.16:676.16] So imagine, imagine you're trying to minimize something like this.
+[676.16:689.16] Something like this.
+[689.16:713.16] One thing you can do is think about this as a minimization of such an objective. The trace X transpose is basically where the sum of the entry is the ultimate.
+[713.16:741.16] Now, this problem is non-comnet in terms of little X. Why don't we do a magic tricks? Why don't we define this X transpose as a decision variable, big matrix X, and all of a sudden, you go from this non-comnet problem to a.
+[741.16:750.16] Next one.
+[750.16:760.16] Because in terms of the matrix decision variable, this context, but we know that the solution is not rank one. This is what we're going after.
+[760.16:771.16] So we can put in all constraints, we get low rank solutions. If you remember for the circle, crank one, matrices, the atomic norm was in the normal.
+[771.16:779.16] You would back to get rank solutions or low rank solutions. You can regularize this to the.
+[779.16:793.16] From here on, the sum constraints something in fact, I think, could sit down to the top.
+[793.16:802.76] Now, you know, from the start, and that's the idea about the lifting trick for these phase
+[802.76:807.0799999999999] retrieval, which was actually very popular around maybe 2000 times.
+[807.0799999999999:813.68] Again, I'm not sure if you can use this anymore, because you can just take a newer network
+[813.68:816.1999999999999] and forget about anything, you know.
+[816.1999999999999:819.48] Which will start during the next week, you know.
+[819.48:824.9200000000001] It would be a top two strategy.
+[824.9200000000001:834.76] I'm always tuned by the time my Pokemon is the January 9th at all.
+[834.76:835.76] All right.
+[835.76:839.76] Is there any of this clear?
+[839.76:843.76] Is there something clear?
+[843.76:846.5600000000001] Is most of it clear?
+[846.56:850.8] We'll talk more about this.
+[850.8:853.56] So don't be shy.
+[853.56:864.8] All right.
+[864.8:869.3599999999999] And in this case, it's been a long time, next week, we'll go from, if you end up getting
+[869.3599999999999:873.56] a ramp on solution, then we'll just do a power iteration.
+[873.56:880.56] We have the solution of the rotation, right?
+[880.56:884.56] Mine is 1, 1.
+[884.56:888.8] We didn't have from this in the front.
+[888.8:894.8] This problem is not from mixing terms of where we're going to be.
+[894.8:906.8] This lifting trick is an important one, especially for projective problems.
+[906.8:913.3599999999999] Even if you look at combinatorial problems in the computer science, the same is different
+[913.3599999999999:919.04] for ground-intriguing, which people use is exactly this.
+[919.04:923.8] The unique game's injector is correct, and this is the best you can walk between terms
+[923.8:927.8] of getting an approximation for rows of combinatorial power.
+[927.8:934.8] What we can call SDP is within a certain time optimal, and you cannot get any approximation
+[934.8:938.8] there and be better than that one.
+[938.8:944.8] So there's some key things behind this, but we're going to see kind of different things.
+[944.8:946.8] All right.
+[946.8:950.8] The reason why I came here is basically make a visual demonstration of the thing that I
+[950.8:955.8] was repeating in time and again, that the proximal gradient method would require these similar
+[955.8:959.8] value definitions and the bus scale, as well as the linearization of the fact of.
+[959.8:961.8] Here it is.
+[961.8:962.8] All right.
+[962.8:967.8] So if you look at the scaling or the phase of the keyboard problem, and here the operators,
+[967.8:971.8] the use of super efficient, that they, they, they, they evolve ffc.
+[971.8:973.8] So they are not like any bottom mix.
+[973.8:976.8] They don't form any bottom mix.
+[976.8:981.8] So the main button next turn off to be the projections on to be.
+[981.8:982.8] And on board.
+[982.8:988.8] And here is the scaling of this stuff.
+[988.8:990.8] Here's the conditional gradient method.
+[990.8:993.8] So you can go to 15 by 15 inches.
+[993.8:995.8] It seems multiple.
+[995.8:997.8] The same thing.
+[997.8:998.8] I don't know.
+[998.8:1000.8] We can go to 2 to the 10.
+[1000.8:1008.8] So it's 5 times to the 5 scaling in terms of the dimensions.
+[1008.8:1010.8] That's the problem.
+[1010.8:1022.8] See that there's like a radical difference in terms of.
+[1022.8:1023.8] All right.
+[1023.8:1026.8] In terms of non-term bit city.
+[1026.8:1033.8] So things get a little bit more.
+[1033.8:1037.8] Oh my god.
+[1037.8:1040.8] All right.
+[1040.8:1042.8] Third of non-term mixed problem.
+[1042.8:1046.8] Remember now we're looking into a cold as a constrained problem.
+[1046.8:1050.8] So let's say the objective is to put not from.
+[1050.8:1055.8] If you remember when the same problem station F measure was not when the gradient was equal.
+[1055.8:1057.8] It was made in physical to zero.
+[1057.8:1062.8] But when the gradient mapping was it because you remember this.
+[1062.8:1069.8] You were looking at something like X minus rocks outside.
+[1069.8:1077.8] X minus ultra gradient of X.
+[1077.8:1080.8] We could try to find the set size.
+[1080.8:1084.8] We told this to gradient mapping.
+[1084.8:1094.8] The thing about the gradient mapping was that we were looking at the problem like the minimize f of x plus and zero x.
+[1094.8:1102.8] If G was zero, this gradient mapping will be used and just computing the gradient and then setting that to zero.
+[1102.8:1109.8] And this is some human generalization in terms of measuring how you convert with the approximate gradient.
+[1109.8:1121.8] And the gradient mapping will give you the six points, which is the optimal solution.
+[1121.8:1136.8] We call or should be slow down here a little bit.
+[1136.8:1143.8] If you're writing the project to gradient descent, how do you stop the algorithm?
+[1143.8:1146.8] Remember I had this usual example.
+[1146.8:1151.8] So let's say here are the level sets of your problem.
+[1151.8:1155.8] Yeah, without the constraints. So let's say this is your constraint sets.
+[1155.8:1162.8] Without the constraint, the optimum would be here.
+[1162.8:1167.8] In this particular case, the actual optimum is here. So X star is here.
+[1167.8:1174.8] But if you come to X star and look at this gradient, not zero, it's not.
+[1174.8:1180.8] So you can't just look at the gradient of the smooth part.
+[1180.8:1184.8] To declare that you're at a stationary point, you're at the ultimate point.
+[1184.8:1188.8] What do you do with the gradient mapping for the proximal gradients?
+[1188.8:1196.8] Or the other one? We look at what happens when you do the talks operation and then take the difference.
+[1196.8:1201.8] So if you're here, you have the gradient and you do an update, you project back.
+[1201.8:1206.8] If you're in the same location after the proximal update, what are you?
+[1206.8:1209.8] You've merged.
+[1209.8:1215.8] That's the idea.
+[1215.8:1223.8] For smooth, non-term x problem, we still look at the same altitude.
+[1223.8:1226.8] Yeah, when you were in you were doing projection operator.
+[1226.8:1232.8] So what do you do when you have the leading organization or is what this slide.
+[1232.8:1238.8] Talks about in this particular case.
+[1238.8:1242.8] You look at what is called the front of that.
+[1242.8:1252.8] So for a given x, you look at the linear organization or so, you know, not you.
+[1252.8:1258.8] Have a linear organization or go with this.
+[1258.8:1267.8] Giving you a zero.
+[1267.8:1273.8] So this particular object is always there to zero and is zero.
+[1273.8:1277.8] It can only be a position point for.
+[1277.8:1280.8] Or for any.
+[1280.8:1282.8] Or for the gradient.
+[1282.8:1285.8] We're working with the initial order.
+[1285.8:1289.8] So this is some part of the nation.
+[1289.8:1292.8] Does that make sense?
+[1292.8:1296.8] Yes.
+[1296.8:1311.8] I cannot see.
+[1311.8:1313.8] I'm not following.
+[1313.8:1317.8] We're talking about this or you're talking about the thankful.
+[1317.8:1324.8] I mean, we talked about how the LMO works.
+[1324.8:1330.8] We looked at direction of the gradient with the inner products.
+[1330.8:1332.8] So typically would be LMO.
+[1332.8:1336.8] You need to be at boundary of.
+[1336.8:1345.8] I mean, you end up getting either boundary point or the objective is known within the interior of string set.
+[1345.8:1349.8] In either case either the gradient at f of x is zero.
+[1349.8:1357.8] Or the positive owner, the inner product between the solution and the point you have as a zero in a product.
+[1357.8:1359.8] That's what it means.
+[1359.8:1370.8] You're metric to the time.
+[1370.8:1378.8] Am I rushing or sad?
+[1378.8:1384.8] Is it your time for.
+[1384.8:1388.8] It's this particular case.
+[1388.8:1393.8] You want to run Frank both on a smooth but non-comwork subject.
+[1393.8:1396.8] Remember in this particular case, the same set.
+[1396.8:1401.8] X, the student to decommets and LMO friendly.
+[1401.8:1407.8] And that particular case, you can get a Frank both cap.
+[1407.8:1417.8] And.
+[1417.8:1420.8] Just work.
+[1420.8:1426.8] And there's a forecasted version for this as well.
+[1426.8:1434.8] See this.
+[1434.8:1444.8] All right.
+[1444.8:1445.8] All right.
+[1445.8:1450.8] So this is the last part which argued the way longer than I expected.
+[1450.8:1453.8] But done to be out.
+[1453.8:1455.8] So.
+[1455.8:1460.8] In many cases, we're beginning to say this.
+[1460.8:1465.8] This realization problems end up having let's say these fantastic problems.
+[1465.8:1466.8] Yeah, it's the.
+[1466.8:1467.8] Of X data.
+[1467.8:1470.8] So you can see the expectations.
+[1470.8:1473.8] Data here.
+[1473.8:1476.8] And if you want to use the linear organization or also.
+[1476.8:1481.8] You can do the empirical approximation of this particular expected risk.
+[1481.8:1485.8] With the data samples that you have.
+[1485.8:1492.8] From world large numbers anybody.
+[1492.8:1495.8] This is between wrong.
+[1495.8:1498.8] Frank both.
+[1498.8:1502.8] With the stochastic radiance.
+[1502.8:1503.8] All right.
+[1503.8:1513.8] The issue with the stochastic crack at all is that the stochastic gradient estimates needs to get increasingly more accurate or.
+[1513.8:1519.8] Has increasingly decreasing variance.
+[1519.8:1522.8] Is it.
+[1522.8:1526.8] We need something for the variance reduction.
+[1526.8:1532.8] Is it.
+[1532.8:1536.8] So you run the method as if you're running the front.
+[1536.8:1537.8] Or go there.
+[1537.8:1541.8] The only thing that you need to worry about is if you're iterating.
+[1541.8:1545.8] The gradient estimates should have.
+[1545.8:1549.8] It is in diamonds.
+[1549.8:1552.8] We can't just take one sample.
+[1552.8:1557.8] And continue to run with it or get away with murder in this particular case.
+[1557.8:1559.8] We need the mechanism to reduce variance.
+[1559.8:1564.8] In fact, today it just turns out and under a talk about one.
+[1564.8:1568.8] The counter looks.
+[1568.8:1580.8] Okay.
+[1580.8:1582.8] Do you remember.
+[1582.8:1585.8] The gas.
+[1585.8:1591.8] It means that you're many back sides.
+[1591.8:1599.8] So you can't simply do.
+[1599.8:1601.8] Is it the brain.
+[1601.8:1604.8] For some of the.
+[1604.8:1605.8] The basic.
+[1605.8:1607.8] The back side.
+[1607.8:1608.8] And one.
+[1608.8:1609.8] You cannot.
+[1609.8:1610.8] In the case of Frank.
+[1610.8:1611.8] Opportunity.
+[1611.8:1612.8] The two ends.
+[1612.8:1613.8] You're.
+[1613.8:1614.8] First patch.
+[1614.8:1617.8] You need to be increasing with.
+[1617.8:1621.8] And then.
+[1621.8:1624.8] Where.
+[1624.8:1627.8] You can actually have.
+[1627.8:1634.8] Some convergence.
+[1634.8:1635.8] For the gradient.
+[1635.8:1637.8] And there are actually very nice.
+[1637.8:1639.8] A single batch bias.
+[1639.8:1649.8] And then.
+[1649.8:1652.8] There's a.
+[1652.8:1654.8] I am.
+[1654.8:1656.8] Really.
+[1656.8:1673.8] I'm.
+[1673.8:1674.8] Monday.
+[1674.8:1678.8] Okay.
+[1678.8:1680.8] All right.
+[1680.8:1685.8] Look, this was maybe a barrage of.
+[1685.8:1688.8] Okay.
+[1688.8:1691.8] Take a few there.
+[1691.8:1693.8] Take it.
+[1693.8:1695.8] The higher level.
+[1695.8:1697.8] You talk about.
+[1697.8:1698.8] Consider.
+[1698.8:1699.8] For some off there.
+[1699.8:1700.8] Something.
+[1700.8:1702.8] We need a musician or.
+[1702.8:1703.8] Why.
+[1703.8:1705.8] Because, you know, my great.
+[1705.8:1708.8] Frank and both.
+[1708.8:1710.8] One of these linear program solvers.
+[1710.8:1713.8] So general comments programs.
+[1713.8:1716.8] If you use.
+[1716.8:1719.8] If you're.
+[1719.8:1720.8] It's.
+[1720.8:1723.8] I don't know.
+[1723.8:1725.8] Simple.
+[1725.8:1727.8] So.
+[1727.8:1731.8] What I think is that for a lot of the regular.
+[1731.8:1732.8] Or.
+[1732.8:1737.8] More.
+[1737.8:1739.8] Elimo,
+[1739.8:1743.8] Hence, this kind of crank fault method, you know,
+[1743.8:1748.8] found root and given me also in computer science.
+[1748.8:1751.8] If you know something about some musical maximization,
+[1751.8:1754.8] because I've there's low R6 tensions.
+[1754.8:1758.8] The proper algorithms come from the crank fault,
+[1758.8:1762.8] where the slide is starting to think.
+[1762.8:1765.8] You also end up getting problems like single different programs,
+[1765.8:1767.8] things to lift thing and there,
+[1767.8:1770.8] trace and change and things like this do occur.
+[1770.8:1773.8] And I will actually have a separate lecture on that one.
+[1773.8:1776.8] So we do kind of need to work with it today.
+[1776.8:1778.8] A little bit more.
+[1778.8:1780.8] Our media lecture.
+[1780.8:1782.8] Wow, listen to this.
+[1782.8:1788.8] It's a fascinating topic.
+[1788.8:1792.8] And the cool thing about crank fault is that if you have a termistic taste,
+[1792.8:1795.8] the rate is the same as the folks who are reading methods.
+[1795.8:1798.8] If you do better, yeah, we can with the updated methods,
+[1798.8:1801.8] the taste for a great except that the folks moderate is not captable,
+[1801.8:1804.8] or even a good.
+[1804.8:1812.8] Those fantastic crank fault, but your gradient estimates need to have the reason variance.
+[1812.8:1818.8] That's the hard level.
+[1818.8:1824.8] Should we do a coffee where you prepare for this?
+[1824.8:1834.8] Should we get to trade off any questions?
+[1834.8:1839.8] Because I'm not taking a.
+[1839.8:1845.8] All right, what I want to do today.
+[1845.8:1849.8] Again, this beautiful night for what you want to end.
+[1849.8:1854.8] I'm going to say on it.
+[1854.8:1857.8] I'll tell you about from the night.
+[1857.8:1860.8] So this is what separates me.
+[1860.8:1865.8] Two data scientists from somebody who is like an aspiring to be a data scientist.
+[1865.8:1869.8] You need to have firm understanding of trade offs.
+[1869.8:1872.8] When you're looking at problems and arguing me,
+[1872.8:1873.8] I'm going to do today.
+[1873.8:1876.8] We're going to do like a maybe a stylized.
+[1876.8:1880.8] But the idea is there, I think that our basic.
+[1880.8:1886.8] It applies a lot of the problems and they're generalizable.
+[1886.8:1891.8] And it took me a few years.
+[1891.8:1896.8] Okay, so we'll talk about first time data trade offs.
+[1896.8:1903.8] And then we're going to talk about trade offs between rate and iteration complexity.
+[1903.8:1917.8] And then give you a tool that you can use in some problems called various selection.
+[1917.8:1919.8] Okay, so far so good.
+[1919.8:1920.8] Ready?
+[1920.8:1923.8] That's in the seat.
+[1923.8:1926.8] Okay, so.
+[1926.8:1929.8] What I'm going to do is I'm going to do a conflict.
+[1929.8:1934.8] I'm going to do a conflict with the data trade offs.
+[1934.8:1942.8] It turns out that you know, you can treat data as a resource in order to pass make algorithms faster.
+[1942.8:1945.8] Yeah, because if you think about the computational dogma, right?
+[1945.8:1950.8] If you're a computer science, you talk about the algorithm complexity and the data size is an input.
+[1950.8:1954.8] So typically the complexity of the algorithm is the input size, right?
+[1954.8:1958.8] Or some M squared algorithm.
+[1958.8:1964.8] But in machine learning, if you understand the point that I'm going to make.
+[1964.8:1976.8] If you use data as a resource to make the overall complexity lists when you have more data.
+[1976.8:1984.8] And the example I'm going to give you is you know, when like these lemons, what do you do?
+[1984.8:1989.8] Like a lemon, right? So here's a question.
+[1989.8:1999.8] Suppose I give you a glass and I tell you if you squeeze a hell out of five lemon, you can tell this glass.
+[1999.8:2001.8] What would you do?
+[2001.8:2008.8] You take each lemon and make sure every.
+[2008.8:2016.8] Suppose you lemon rich, you know what I mean?
+[2016.8:2020.8] And for you lemons mean nothing.
+[2020.8:2023.8] You know, give you the same task.
+[2023.8:2025.8] Fill this glass.
+[2025.8:2028.8] Who do you think would spill the glass faster?
+[2028.8:2036.8] The guy that has exactly or the gal that has exactly five lemons or the gal that has hundreds lemons.
+[2036.8:2047.8] I'm expecting a dramatic answer.
+[2047.8:2049.8] Second one.
+[2049.8:2050.8] Yeah.
+[2050.8:2061.8] So how come it's funny that in this particular day and age that you have too much data and we talk about maybe essentially overloads and not being able to do anything.
+[2061.8:2068.8] And it's not really clear enough that we have more data and you can get to the solutions and faster.
+[2068.8:2073.8] And that's the point that I want to make rigorously.
+[2073.8:2078.8] All right.
+[2078.8:2079.8] Okay.
+[2079.8:2083.8] So think about the simple regression model.
+[2083.8:2091.8] So you have, and this is in a lot of problems.
+[2091.8:2095.8] So you have these equal to a exponential plus some more.
+[2095.8:2099.8] And we know that then to a is and by T one and is less than two.
+[2099.8:2102.8] This problem is opposed in their influence solutions.
+[2102.8:2111.8] I think they basically take the two unknown parameter and I take any vector that is in the not stage of matrix A.
+[2111.8:2117.8] So that the same system being satisfied.
+[2117.8:2119.8] Yeah.
+[2119.8:2131.8] Or the problems that you're interested in typically, you know, we try to find the same decision variable X star that will be as close to power as possible.
+[2131.8:2133.8] So we call this a system.
+[2133.8:2134.8] But we're machine learners.
+[2134.8:2142.8] What's interested in things like prediction.
+[2142.8:2147.8] You don't necessarily need to find the vector, but maybe you can find a vector that will give you the same obtain the same loss.
+[2147.8:2158.8] The example that I give typically is that so let's say you're working on bringing into the interfaces and you have the say a thinking tap on the patient.
+[2158.8:2165.8] So you're interested in maybe automating vehicle with this.
+[2165.8:2170.8] The estimation problem would type you get an estimate of the inner line of the patient.
+[2170.8:2177.8] Whereas the prediction is just trying to figure out what the patient intense to do.
+[2177.8:2181.8] Because your loss is there or not to match the patient.
+[2181.8:2188.8] Or you're learning left or right.
+[2188.8:2193.8] And arguably the second problem is here.
+[2193.8:2196.8] And figure out the original.
+[2196.8:2200.8] Or think about reinforcement learning.
+[2200.8:2207.8] Yeah, or in this particular case, the invitation learning versus inverse reinforcement learning.
+[2207.8:2217.8] And if you like to, for example, mimic an expert versus understand what the expert thinks the rewards structure is.
+[2217.8:2223.8] Or by the way, second semester, I'm giving every possible running class.
+[2223.8:2230.8] The question level pass.
+[2230.8:2240.8] All right.
+[2240.8:2245.8] And there are also decision problems as to how to create samples and so forth.
+[2245.8:2251.8] These are interesting problems and interested from what we all research.
+[2251.8:2252.8] All right.
+[2252.8:2256.8] So it's the difficult estimation problem that ends this.
+[2256.8:2261.8] And we have a lot of information that we have prior information.
+[2261.8:2262.8] We need to find information one trial.
+[2262.8:2270.8] The information was the far as the off the unknown data in a known basis.
+[2270.8:2273.8] I hope that some of you were in that lecture.
+[2273.8:2275.8] If you were in it's I don't know.
+[2275.8:2278.8] It's a full of something like this.
+[2278.8:2282.8] Just to look at the videos on the 16.
+[2282.8:2294.8] Now, so data representation DCT, which is the foundation of the data profession.
+[2294.8:2301.8] And then we argued that this foster presentation in this under the term of linear problems of fundamental impact.
+[2301.8:2305.8] So you have this under the term linear regression problem.
+[2305.8:2312.8] You put this faster presentation for the unknown vector.
+[2312.8:2317.8] So you know the basis of faster presentation.
+[2317.8:2321.8] You combine these two because you also know this one.
+[2321.8:2327.8] And all of a sudden you have a fast unknown that a dimensional to using matrix.
+[2327.8:2334.8] But the problem is actually well conditioned because you only act on a few of the columns of the dimensional to using matrix a.
+[2334.8:2340.8] Yeah.
+[2340.8:2344.8] I mean, you didn't exercise that's why.
+[2344.8:2350.8] Maybe I'm going to be passing.
+[2350.8:2359.8] That's what the presentation.
+[2359.8:2364.8] So overall you have this open for over determined system.
+[2364.8:2370.8] And a number of samples is something like two S and combine the solution in the form of realization.
+[2370.8:2372.8] But you don't want to.
+[2372.8:2376.8] Because it's like key to the S complexity.
+[2376.8:2379.8] So if you pay a little bit of an overhead.
+[2379.8:2382.8] So let's say S low key.
+[2382.8:2384.8] You can find which reason from that's organization.
+[2384.8:2387.8] The things like this.
+[2387.8:2392.8] Okay.
+[2392.8:2396.8] I mean we can talk about this.
+[2396.8:2401.8] And I also did talk about something for a tonic norms.
+[2401.8:2407.8] We will get a set the atom is the form your signal.
+[2407.8:2413.8] And then you talk about complex to find that.
+[2413.8:2420.8] And then you talk about these like the gauge function.
+[2420.8:2425.8] Let's see those gauge functions in action.
+[2425.8:2426.8] Right.
+[2426.8:2435.8] So what I'm going to do is I'm going to talk about the power development of the gauge function to the gauge function business.
+[2435.8:2443.8] And then sometimes I can use a game of brilliant.
+[2443.8:2445.8] I think he's now a professor at.
+[2445.8:2449.8] The thing that is nice about how things I can talk about this all time.
+[2449.8:2452.8] You go from a system to call.
+[2452.8:2454.8] So they kind of.
+[2454.8:2457.8] That we got this associative.
+[2457.8:2458.8] Yeah.
+[2458.8:2465.8] So that that and it's cooperators.
+[2465.8:2469.8] It could be that.
+[2469.8:2478.8] What they think is to look at this formalism means of atomic norms from like the civil processing parts.
+[2478.8:2481.8] The little bit for presentation.
+[2481.8:2482.8] The little bit.
+[2482.8:2488.8] And then you can see the representation.
+[2488.8:2492.8] What I'm going to present now is literally what happened in machine learning.
+[2492.8:2493.8] I like the transfer.
+[2493.8:2498.8] And you know what was instantly was actually at the science.
+[2498.8:2500.8] Data centers.
+[2500.8:2501.8] It goes.
+[2501.8:2502.8] And forever.
+[2502.8:2504.8] Easy.
+[2504.8:2505.8] Yeah.
+[2505.8:2513.8] And then the machine running around.
+[2513.8:2515.8] Again, a conversation.
+[2515.8:2518.8] Through the pension point perspective.
+[2518.8:2520.8] So pension point deviation.
+[2520.8:2522.8] And then I mentioned it in this particular task.
+[2522.8:2523.8] But I'm going to talk about it.
+[2523.8:2528.8] But I talk about something called final rule of conversation.
+[2528.8:2536.8] Okay.
+[2536.8:2546.8] So.
+[2546.8:2547.8] I'm sorry guys.
+[2547.8:2548.8] Sorry.
+[2548.8:2552.8] I already did a new.
+[2552.8:2558.8] I need to say that.
+[2558.8:2561.8] You know, it's not like I enjoy giving the same time.
+[2561.8:2562.8] What year is the.
+[2562.8:2566.8] Oh, the last three years.
+[2566.8:2567.8] Okay.
+[2567.8:2573.8] So.
+[2573.8:2575.8] I mentioned that you can.
+[2575.8:2576.8] You can recover this.
+[2576.8:2582.8] This.
+[2582.8:2587.8] Under the term system.
+[2587.8:2591.8] By doing combinatorial of.
+[2591.8:2595.8] But here let's say we have a big deal.
+[2595.8:2599.8] So what we can do is try to form a constraint by the solution line.
+[2599.8:2600.8] Something.
+[2600.8:2601.8] You can say that.
+[2601.8:2602.8] Okay.
+[2602.8:2606.8] Complets AX the two non.
+[2606.8:2608.8] Is to be less than or equal to pop up.
+[2608.8:2610.8] secure.
+[2610.8:2620.8] Communication For одно Latino.
+[2620.8:2621.8] S [?ah.
+[2621.8:2622.8] Neat.
+[2622.8:2629.8] One of the Orange.
+[2629.8:2641.4] all of a sudden we have a convex constraint. Does that make sense? Yes?
+[2641.4:2660.6] Okay, so I'm sending some down. Okay, so this is our two model.
+[2660.6:2672.44] Okay, if we didn't have the noise, we can straightness say B is equal to AX should have the two
+[2672.44:2688.04] exact rules inside. B is equal to AX is the FI set is a convex constraint. I can use it.
+[2688.04:2705.24] Now we have a bit of noise as well. Now I can I shouldn't. I should no longer say that the two solutions is B is equal to AX.
+[2705.24:2724.4399999999996] I shouldn't. I could. But I shouldn't. But I could. And in fact it would work well. But that's not the point I'm trying to make here.
+[2724.44:2735.64] What other constraint can we have here? Another constraint we can have here is that we can say that B minus AX needs to be non-zero.
+[2735.64:2747.64] Yeah? Because of the noise. Does that make sense? So why don't I look at the normal list and say that this is less than equal to a threshold. This is a convex constraint.
+[2747.64:2756.8399999999997] All right. So far so good. Any dollars.
+[2756.8399999999997:2768.8399999999997] Now here's the point that I try to make was that if you think about this model, what is B minus AX? If it is W.
+[2768.84:2784.04] So if I were to skip to normal W, the two solutions or two models include in the form exchange. Do I know the normal W? No.
+[2784.04:2802.24] Okay. I'm just saying, had I known to normal W? Yeah. As far as I'm going to say in MRI, there's something called a peace scan. So you literally do a quick scan without a patient.
+[2802.24:2815.4399999999996] It's just a make. It's a large norm. Yeah. So it is somewhat possible. Not impossible. All right. Let's see if I can.
+[2815.4399999999996:2831.4399999999996] Okay. Now, wherever we were talking about Starship Coverage, right? Now here's the point. You know, if you're looking at the problem like this.
+[2831.44:2841.64] And then what we were doing is we were trying to formulate it from extreme where the two model is supposed to be constrained in.
+[2841.64:2857.84] Yeah. But remember, when we write this down and I show you this particular well conditioning of the matrix, the thing that I should have emphasized maybe a bit more is we don't actually know the locations of those your professions. That's why I talked about things that from the torus.
+[2857.84:2871.84] We do not know where those professions are. Had we known the problem is really trivial. No longer the national reviews and oftentimes is the national increasing.
+[2871.84:2884.2400000000002] Yeah. So I said combinatorial translation problem. So what I do here is I write that problem explicitly.
+[2884.24:2895.24] What am I interested in? I'm interested in finding a vector that is in the constraints set and we know the two parameters in the same set.
+[2895.24:2902.8399999999997] And either on the minor assumptions on the matrix A.
+[2902.84:2917.84] Being the problems are in general space. If you look at the fastest vector in this constraint set, I claim that it's number of samples or N is twice the sparsity.
+[2917.84:2930.84] This particular problem of minimizing the zero cotton, no, of the vector subject to that constraint will give you the two vector.
+[2930.84:2942.84] This is from a torus. Why? Because the be subset problem, which is going to be empty hard is including this.
+[2942.84:2957.84] If you look at the complexity supplementary lecture, it shows you that there's a supplementary lecture that tells you what the three subset problem is and complexity and whatever.
+[2957.84:2968.84] Okay. So problem minimize again, as zero is not a known. It's not a signal, not a positive, not a whatever long.
+[2968.84:2977.84] For some reason, it's not a known, but the L zero norm minimizes subject to this from its constraints.
+[2977.84:2991.84] If the number of samples and it's twice the sparsity, we can find the team.
+[2991.84:2996.84] Again, on the minor conditions on the matrix A.
+[2996.84:3011.84] In fact, there are some beautiful research questions because there's like a gray zone between combinatorial and conomial down and the physicist love this gray zone.
+[3011.84:3014.84] I like this. I have the chance.
+[3014.84:3026.84] So what is this? So if you look at the protein code L zero norms, this point is slightly more jigs.
+[3026.84:3028.84] So this is in two dimensions.
+[3028.84:3034.84] Sorry, you can go X, X, X, X.
+[3034.84:3038.84] At the origin, you have duos, fast, right?
+[3038.84:3049.84] Check. Along the cord and back seats, we have one sparsity. So this is your, this is one.
+[3049.84:3058.84] And anywhere where you have both of the coefficients non zero, you have two. Right. So we deviate to this, this speed object.
+[3058.84:3071.84] It tells you it's zero. It's one or two or two because it comes in number of answers.
+[3071.84:3073.84] Does that make sense? This is what the L zero protein code norm does.
+[3073.84:3079.84] Okay, so consider this problem. We call it P naught.
+[3079.84:3091.84] So the problem P naught, as I mentioned, it has an example complexity of order S. So if you have two S or if A is I ID, Gaussian, then maybe S plus one is sufficient.
+[3091.84:3097.84] You can find it to better in the absence of most.
+[3097.84:3101.84] The computational efforts and the hard again, this upset problem.
+[3101.84:3110.84] And it knows stable. No, that's the thing about empty heart problems.
+[3110.84:3114.84] A little bit of perturbation of things that we do.
+[3114.84:3119.84] To do like a different round in the earth, you know.
+[3119.84:3122.84] That's why empty heart problems are hard.
+[3122.84:3131.84] They're not stable, but they mean little tiny things that could do some completely different place.
+[3131.84:3133.84] All right.
+[3133.84:3135.84] Half of us.
+[3135.84:3138.84] A little bit of magic or compensation.
+[3138.84:3145.84] Yeah. So what we've done with the atomic norm, you look at, for example, some of its balls or anything except.
+[3145.84:3152.84] And this is what we're trying to do is we're trying to minimize objective.
+[3152.84:3163.84] And what we can do is we can look at a complex law of our objective.
+[3163.84:3175.84] And it's up to about that objective is a trial.
+[3175.84:3178.84] So how do we get this complex low bond?
+[3178.84:3181.84] Okay, I'm just going to main draw here.
+[3181.84:3183.84] It's called attention conjugation.
+[3183.84:3192.84] Which we will cover in detail when we talk about final two optimization before this for my purposes.
+[3192.84:3201.84] I'm just going to say that the complex low bond is found through what is called as attention double conjugation.
+[3201.84:3203.84] If you have a complex function.
+[3203.84:3209.84] When you do double French, double, French of.
+[3209.84:3211.84] By conjugation.
+[3211.84:3213.84] You get the complex function back.
+[3213.84:3222.84] But if you have a non-term expansion and you apply the procedure, we get the complex low bond.
+[3222.84:3227.84] So if you had a combinatorial object like the L0 for important known.
+[3227.84:3238.84] If you apply the pensioned bi conjugation trick, you get the form of slow bomb and it turns out that it is the one more.
+[3238.84:3248.84] Now, arguably, you do need an additional kind of constraint, which is the ultimate norm of.
+[3248.84:3249.84] The solution.
+[3249.84:3253.84] So you need to restrict the identity norm.
+[3253.84:3258.84] Of the solution so that you get a non-feebial central point of the problem.
+[3258.84:3262.84] Otherwise, otherwise, it's the zero.
+[3262.84:3269.84] So the upper bound will be p the lower bound will be zero. But if you have a boundary.
+[3269.84:3274.84] Then you see that it is the L1.
+[3274.84:3277.84] All right.
+[3277.84:3280.84] Again.
+[3280.84:3283.84] Put this into the back of your mind.
+[3283.84:3290.84] And I'll remind you and I talk about financial conjugation.
+[3290.84:3293.84] All right.
+[3293.84:3303.84] Now, as opposed to solving this non-term expansion problem, we solve a convexified bond now called this q1.
+[3303.84:3310.84] And this q1 is called a thickened order cone program.
+[3310.84:3311.84] That's a lot.
+[3311.84:3319.84] There's involved the simple complex programming hierarchies that I have a supplemental literature on, which is 30 bonus glitches and I'm not quite mature.
+[3319.84:3324.84] So, I put the link on.
+[3324.84:3332.84] And we like to know so maybe one of the recitations to give it or just a review about that.
+[3332.84:3336.84] I think this is what Daniel Dune for Bruce or.
+[3336.84:3345.84] I can step too much into straightforward, but we do have some material that we can, in terms of linear program, project program, project, etc.
+[3345.84:3350.08] the control programs, control programs and so on.
+[3350.08:3356.08] But it's like the whole buffet of commercial optimization
+[3356.08:3357.6400000000003] for notions.
+[3357.6400000000003:3363.96] OK, so here I do have the include low constraint
+[3363.96:3365.52] because of this communication trip.
+[3368.52:3370.32] The central configuration requires
+[3370.32:3373.84] a domain, a boundary domain.
+[3373.84:3377.48] Now I have one more minimized subject constraint
+[3377.48:3382.6400000000003] and this element is going to be insane.
+[3382.6400000000003:3384.6800000000003] OK?
+[3384.6800000000003:3386.28] What can you say about this program?
+[3386.28:3388.2400000000002] It turns out that this program is beautiful.
+[3388.2400000000002:3389.7200000000003] It's the longest contractable.
+[3392.88:3399.96] And the solution, the argument, has the following guarantee
+[3399.96:3403.92] a priori running the program.
+[3403.92:3406.64] You don't need to run the program to know
+[3406.64:3411.12] that the solution will satisfy this.
+[3411.12:3412.96] So one distinction I want next year,
+[3412.96:3416.96] I hope this is clear, a formulation is not an algorithm.
+[3419.2400000000002:3423.8] An estimator formulation is not an algorithm.
+[3423.8:3425.16] You don't need to run it.
+[3425.16:3426.92] You don't need to do anything about it.
+[3426.92:3429.92] You can just write it and you know the properties of the solution.
+[3433.28:3435.6800000000003] Now you get the solution on the other hand
+[3435.6800000000003:3437.32] is a whole different problem.
+[3437.32:3438.16] Right?
+[3438.16:3440.44] Sorry, I didn't let you run whatever funny do.
+[3440.44:3442.6] That's a different.
+[3442.6:3444.8] So in this particular case, what I'm doing
+[3444.8:3447.44] is I'm arguing about the properties of the solution
+[3447.44:3449.2000000000003] to this particular criterion.
+[3452.28:3453.28] Right?
+[3453.28:3454.6800000000003] Is that clear?
+[3454.6800000000003:3456.48] I'm not talking about an algorithm.
+[3456.48:3458.44] If you remember, then there is the algorithm
+[3458.44:3461.44] that translates into the solution.
+[3461.44:3463.6] It should come next.
+[3463.6:3467.16] OK, so the optimal solution to this estimator,
+[3467.16:3472.64] if this was the true one, will behave like this.
+[3472.64:3474.2] In the numerator, you have something
+[3474.2:3477.36] like square of s, log p.
+[3477.36:3481.32] And in the numerator, you have square of n minus this.
+[3481.32:3488.32] Now imagine the square of n or n is greater than s, log p over s,
+[3488.32:3491.32] plus five over four s.
+[3491.32:3494.76] And the numerator is fine, OK?
+[3494.76:3501.96] Now imagine s is maybe 100 times that thing.
+[3501.96:3505.88] So accounts sometimes s log p over s.
+[3505.88:3512.88] This means that this ratio, you can make it small.
+[3516.04:3518.32] Yeah?
+[3518.32:3522.32] OK, what is cool about this is that here, the noise moment is.
+[3528.56:3531.32] And why is that nice?
+[3531.32:3535.0] Well, imagine the following.
+[3535.0:3538.2] Suppose n is greater than this.
+[3538.2:3541.8] And there was no noise.
+[3541.8:3543.28] What does the guarantee tell it?
+[3549.8:3552.08] Again, one point to the different law.
+[3552.08:3556.84] X, R would be exactly X natural.
+[3556.84:3559.16] And what is nice about this is the perturbation
+[3559.16:3560.92] that we get with the bit of noise
+[3560.92:3564.48] is proportional to the circle of noise.
+[3564.48:3567.12] It doesn't go exponentially all of a sudden
+[3567.12:3572.0] that a little bit of noise will be a complete law answer.
+[3572.0:3573.0] That's the point.
+[3577.48:3578.2400000000002] It's stable.
+[3584.84:3590.2] Small and robust, so to say, I'm overloading the word robust here.
+[3590.2:3592.44] So observations, yeah?
+[3592.44:3596.44] So if n is greater than this, then you get perfect recovery.
+[3601.56:3605.84] And by taking a constant factor over s log p,
+[3605.84:3608.32] you can make that error go down.
+[3611.92:3616.7200000000003] Well, it's even the noise is small enough.
+[3616.7200000000003:3619.32] All right, the complexity of thickin order
+[3619.32:3622.56] of the core programs using what is called the interior point
+[3622.56:3629.28] method is n squared, pick the 1.5 log 1 reps long.
+[3629.28:3630.7200000000003] What's the interior point called?
+[3633.8:3636.92] What is the interior point method, Volta?
+[3636.92:3638.36] Thanks for asking.
+[3638.36:3645.1200000000003] It's like the ultimate second order converging methods,
+[3645.1200000000003:3649.0] sorry, for the specific converging method.
+[3649.0:3652.72] That was composed of maybe the ultimate method in 1990s
+[3652.72:3654.56] where people start worrying about things
+[3654.56:3658.84] like the first order methods, because it's just
+[3658.84:3661.08] the sole linear systems perturbation
+[3661.08:3668.2] and then we could simplify accuracy.
+[3668.2:3669.72] It's an important method.
+[3669.72:3671.6] Still, people in control solve this
+[3671.6:3673.88] for control problems in small dimensions.
+[3673.88:3676.36] But in the kind of things that we're interested in,
+[3676.36:3678.68] where the dimensions are competitive and go to millions
+[3678.68:3680.48] and billions, you can't do this.
+[3685.8399999999997:3686.8399999999997] We'll bust a minute.
+[3686.8399999999997:3688.64] This is what I'm going to say about that.
+[3688.64:3689.48] Any questions?
+[3696.2:3699.2] All right, let's talk about the trade-off.
+[3699.2:3702.96] Finally, finally.
+[3702.96:3705.08] All right, so the computation dog
+[3705.08:3707.24] minds that they're running time with an algorithm
+[3707.24:3711.6] is the size of the data.
+[3711.6:3715.56] Now, with the formulations, the good formulations,
+[3715.56:3719.3199999999997] what we try to do is that we want to have these estimators,
+[3719.3199999999997:3721.24] sorry, the good-running formulations,
+[3721.24:3723.9199999999996] we want to have these estimator formulations
+[3723.9199999999996:3728.9199999999996] being closed to the two models.
+[3728.9199999999996:3735.4799999999996] So there, with more data, look at this.
+[3735.48:3739.8] With more data and increasing, what happens to this guarantee?
+[3745.56:3746.64] It goes down, right?
+[3746.64:3750.28] The error that you make with more data goes down.
+[3750.28:3751.08] Fantastic.
+[3755.44:3758.84] But then what happens to the complexity of the algorithm
+[3758.84:3764.52] when n goes, sorry, what am I saying?
+[3764.52:3769.08] When n goes up, the error goes down, right?
+[3769.08:3771.6] What happens to the complexity of the computation
+[3771.6:3775.32] close to the algorithm?
+[3775.32:3779.08] When n goes up, the complexity blows.
+[3782.28:3783.12] What does it?
+[3783.12:3797.48] So in statistics, we are interested in, let's say,
+[3797.48:3803.56] the statistical accurate model, which requires more data.
+[3803.56:3813.44] In computation, we're interested in more numerical accuracy.
+[3813.44:3818.44] So with more data, this becomes harder.
+[3818.44:3823.04] And you see that the research in statistics and optimization
+[3823.04:3826.44] kind of evolved separately.
+[3826.44:3828.12] These things are treated separately.
+[3828.12:3830.2] It's like, I do my work.
+[3830.2:3834.6] I need more data, the statisticians say, I need more data.
+[3834.6:3837.16] They don't care about, they need a computation
+[3837.16:3837.7599999999998] as this.
+[3837.7599999999998:3841.04] What do the optimization scientists do?
+[3841.04:3844.6] They're like, oh, data is bad.
+[3844.6:3846.8799999999997] And if I algorithm, it runs slower.
+[3852.48:3856.48] So you need a joint treatment of these two concepts.
+[3856.48:3859.8799999999997] In fact, that's why machine learning is different.
+[3859.88:3861.56] Machine learning is not statistics.
+[3861.56:3863.7200000000003] No optimizations.
+[3863.7200000000003:3866.0] It's kind of a huge and hydrant monster.
+[3869.2000000000003:3872.0] So these things make you, which is the point that I'm trying
+[3872.0:3875.76] to make clear now, and move on.
+[3875.76:3880.6800000000003] So the ultimate learning quality is what happens
+[3880.6800000000003:3883.2000000000003] to the algorithmic sequels and how well they
+[3883.2000000000003:3885.52] approximate the two models.
+[3885.52:3887.8] By a simple triangle inequality, you can do this error
+[3887.8:3890.2400000000002] in the composition that we talked about even in lecture 1.
+[3893.2000000000003:3895.52] And I did make this point, but I'll
+[3895.52:3900.8] remind you again that this requires more data.
+[3900.8:3904.36] With more data, this requires more time.
+[3904.36:3909.1200000000003] If you do this type of composition,
+[3909.1200000000003:3913.88] if you remember the lemonade example,
+[3913.88:3916.1200000000003] so if you think about it, so OK, so I'll
+[3916.12:3918.4] explicitly say this particular message,
+[3918.4:3925.52] that if you think about it, there is a bit of diminishing
+[3925.52:3927.04] with trying to see a two.
+[3927.04:3929.92] You can have a similar data.
+[3929.92:3932.8399999999997] Then do you actually mean the sparsity?
+[3932.8399999999997:3935.64] You can simply run a missed first one or something,
+[3935.64:3937.92] or you can run a S should mean.
+[3937.92:3938.72] Is there a big better?
+[3938.72:3950.3199999999997] No. The question is, can we do better?
+[3950.3199999999997:3954.56] So I'll give you the following examples.
+[3954.56:3957.8399999999997] Open times, you get data science problems,
+[3957.8399999999997:3959.9599999999996] where people just start collecting data.
+[3959.9599999999996:3961.9199999999996] They say that they don't have enough data,
+[3961.9199999999996:3965.3599999999997] and I'm also certainly going to have more than enough data.
+[3965.3599999999997:3968.3599999999997] Think about S should go through.
+[3968.36:3970.28] I give you a sparsity of course,
+[3970.28:3971.4] if you're clever enough, you do not
+[3971.4:3973.52] have time, you can solve this super-posit.
+[3976.7200000000003:3981.7200000000003] But I give you less data, it takes you longer to solve.
+[3981.7200000000003:3983.76] Say we'll do another example.
+[3983.76:3987.4] Like another two more samples.
+[3987.4:3989.36] Suppose I give you all the numbers except one
+[3989.36:3992.84] in the super-posit.
+[3992.84:3995.8] But I give you more data.
+[3995.8:3998.2400000000002] So you take longer to solve.
+[4003.2400000000002:4010.04] You pray, no, I just find the number that is missing.
+[4010.04:4012.2400000000002] You don't even need to look at the other rows.
+[4012.2400000000002:4015.44] You can just look at the row and find the column,
+[4015.44:4019.04] row, whichever is easiest.
+[4019.04:4020.44] That's what we want to do.
+[4020.44:4027.84] What we would like to do is look at the time and data
+[4027.84:4030.44] trade-offs.
+[4030.44:4036.64] If you want, maybe enough data, what you need to do
+[4036.64:4040.2000000000003] is find maybe the computationally low bound.
+[4040.2000000000003:4042.08] You want to have some algorithm that
+[4042.08:4045.64] needs to be this minimal time.
+[4045.64:4050.8799999999997] If you have more data, it should take less time to solve.
+[4050.8799999999997:4055.08] If you have less data, then maybe it'll take more time
+[4055.08:4059.16] to solve until you hit that statistical low bound
+[4059.16:4061.92] in terms of the samples that no algorithm can solve.
+[4064.8399999999997:4066.72] But can you do this interpolation
+[4066.72:4071.08] between that's a high-level question.
+[4071.08:4072.04] This is all the way.
+[4072.04:4074.2] This should be something that is always in your mind
+[4074.2:4076.12] and you need to hit the columns.
+[4076.12:4079.16] This is what separates an equal bit of scientists
+[4079.16:4081.16] to a minus sign with a scientist.
+[4081.16:4083.64] On the same, these high-level golden messages.
+[4092.64:4093.64] OK.
+[4093.64:4094.16] Now.
+[4094.16:4106.16] So what I would do now is to give you,
+[4106.16:4118.72] usually, maybe half a century of the statistical
+[4118.72:4121.96] research in two three minutes.
+[4121.96:4123.4] Because you're into a thousand reasons.
+[4123.4:4126.04] You can take that.
+[4126.04:4127.719999999999] I think this is what the AI does.
+[4127.719999999999:4130.24] Actually, students use them to examine
+[4130.24:4132.639999999999] the questions and so forth.
+[4132.639999999999:4134.96] And you graduate, you're well done.
+[4137.96:4140.679999999999] I'm basically, I apologize.
+[4140.679999999999:4144.12] So what I want to do is something really interesting.
+[4144.12:4154.44] So how do we get this statistical comparison?
+[4154.44:4159.0] So I wrote down as if by magic, the guarantee is something
+[4159.0:4165.2] like we had something like s, log p over s divided by
+[4165.2:4169.76] squared of n s, log p over s.
+[4169.76:4172.76] I'm not putting whatever 5 over 4 plus whatever.
+[4172.76:4176.320000000001] These are the numbers.
+[4176.320000000001:4178.6] I'll be give this the gitties numbers.
+[4182.08:4186.56] So I write down a problem like this.
+[4186.56:4193.320000000001] I motivated the alone known for L0 known as a nice,
+[4193.320000000001:4199.16] kind of like slow bound.
+[4199.16:4200.92] So how do we get these numbers?
+[4200.92:4201.76] OK.
+[4201.76:4203.76] So this is what I want to do.
+[4203.76:4205.4400000000005] I will tell you how we get those.
+[4208.4400000000005:4210.360000000001] All right.
+[4210.360000000001:4213.360000000001] Now, let's take a look at the following.
+[4213.360000000001:4215.84] So suppose we have s.
+[4219.08:4222.76] And you can write down the level system of s.
+[4222.76:4227.2] So here, I'm going to pretend that s is like the L1 ball.
+[4227.2:4228.56] But it does not need to be.
+[4228.56:4231.68] So we're going to go d from the L1 ball.
+[4231.68:4234.68] All right.
+[4234.68:4236.16] OK.
+[4236.16:4243.04] So here, let's say we have the two solution.
+[4243.04:4247.6] Let's say we are looking at this linear system, b is equal to x.
+[4247.6:4249.84] And a is dimension of reduces.
+[4249.84:4254.280000000001] So it has n of samples in dimensions.
+[4254.280000000001:4260.16] But it has a p minus n dimensional hyperplane of solutions.
+[4260.16:4264.639999999999] But because I'm lazy, I didn't do the three dimensional
+[4264.639999999999:4265.32] case here.
+[4265.32:4267.0] It's a two dimensional case.
+[4267.0:4269.32] So in two dimensions, you only option
+[4269.32:4274.44] you have other than the two no samples is one sample.
+[4274.44:4280.0] So what we have is a one dimensional solution set that
+[4280.0:4284.8] goes through two parameters.
+[4284.8:4290.04] Because what we have is a x natural.
+[4290.04:4292.4800000000005] And what we're trying to do is minimize
+[4292.4800000000005:4298.360000000001] some function f subject to the constraint set, which
+[4298.360000000001:4303.2] is b is equal to x.
+[4303.2:4307.4400000000005] And x natural satisfies that one.
+[4307.4400000000005:4308.04] You see that?
+[4311.0:4313.24] Yeah.
+[4313.24:4315.24] OK.
+[4315.24:4317.08] Please pay attention to it.
+[4317.08:4319.96] And this is where all the magical things are going to go.
+[4319.96:4323.44] And if you have a question, feel free to stop me.
+[4323.44:4325.8] Because if you think you didn't understand,
+[4325.8:4330.24] it is likely that many people understand.
+[4330.24:4331.639999999999] And it's perfectly fine.
+[4331.639999999999:4332.48] You're in a set.
+[4332.48:4334.719999999999] You're close.
+[4334.719999999999:4336.5599999999995] All right.
+[4336.5599999999995:4343.2] Now, suppose we're minimizing the objective f.
+[4343.2:4345.679999999999] All right.
+[4345.679999999999:4346.96] OK.
+[4346.96:4355.2] When would x star be different than x natural?
+[4355.2:4357.5599999999995] x star is the solution to this problem.
+[4361.32:4370.599999999999] x star would be different if f of x star is smaller than a
+[4370.599999999999:4371.84] perfect natural.
+[4371.84:4377.88] If you have a constraint set, x natural satisfies that
+[4377.88:4383.0] constraint set and obtains an objective w.
+[4383.0:4386.68] But now you have your optimization head on.
+[4386.68:4389.0] You're looking for x star, not x natural.
+[4393.84:4397.360000000001] When would x star be different than x natural?
+[4397.360000000001:4401.72] Well, if it is first different than x natural, and
+[4401.72:4404.320000000001] it will obtain a smaller objective.
+[4410.320000000001:4413.4800000000005] It does this make sense.
+[4413.4800000000005:4417.6] Hence, if x star is different than x natural, you have an error.
+[4420.4400000000005:4423.92] So let's write that error.
+[4423.92:4430.240000000001] Delta, which is x star, which is the solution to this optimization
+[4430.24:4437.24] problem, minus x natural, which is the statistical model
+[4437.24:4439.96] solution.
+[4439.96:4441.76] All right.
+[4441.76:4442.28] Good.
+[4446.5599999999995:4447.08] OK.
+[4447.08:4455.08] All right.
+[4455.08:4467.92] So if you think about it, this error, so if you do this x star,
+[4467.92:4473.88] minus x natural, it's a vector that starts from origin and
+[4473.88:4479.64] goes into some direction.
+[4479.64:4483.52] It's just a simple vector that it could be oriented forever.
+[4486.96:4490.56] If you notice, this error is in what it's called as the
+[4490.56:4499.6] distance cone of the objective at x natural.
+[4499.6:4504.68] There is a lot on that there.
+[4504.68:4506.96] So you're here.
+[4506.96:4511.240000000001] You're looking at, I actually talked about the same directions
+[4511.240000000001:4512.96] that I was talking about, gradient descent.
+[4512.96:4515.6] Can you keep to remember this?
+[4515.6:4520.360000000001] So let's say you have an objective function.
+[4520.360000000001:4525.4800000000005] So let's say this is x star, yeah?
+[4525.4800000000005:4529.04] Suppose you're at this point.
+[4529.04:4531.84] The gradient points to this direction and your gradient descent
+[4531.84:4536.6] will take you to that solution like this, yeah?
+[4536.6:4541.32] But if you're at this point, think about the following.
+[4541.32:4544.68] You can actually look at them going here.
+[4544.68:4548.56] It's not the negative gradient.
+[4548.56:4554.28] It infects directly points to the solution.
+[4554.28:4558.88] And that direction is what is called as a descent direction.
+[4558.88:4562.88] It's one of those directions that is in the distance cone
+[4562.88:4564.88] of the objective.
+[4564.88:4565.88] What does that mean?
+[4565.88:4569.04] Well, thanks for asking.
+[4569.04:4571.88] All right.
+[4571.88:4574.92] So what that means is the following.
+[4574.92:4577.96] You're here.
+[4577.96:4588.84] You look at any vector that can give you a smaller objective.
+[4588.84:4589.84] All right.
+[4589.84:4594.2] Assume on many of them.
+[4594.2:4597.360000000001] Because we're doing, you know, even percent of step sizes,
+[4597.360000000001:4598.6] what I'm going to do is I'm going to take
+[4598.6:4600.56] a specifically homogeneous combinations
+[4600.56:4603.6] of all of these vectors.
+[4603.6:4607.12] So if you think about them, all these vectors
+[4607.12:4609.16] then would fall a cone.
+[4612.16:4613.16] Yeah.
+[4613.16:4616.08] I think all that goes in front of you with all these directions.
+[4616.08:4619.88] You can take any direction with the step size
+[4619.88:4621.8] and make the step size as large as possible.
+[4621.8:4623.24] It's going to go to infinity.
+[4623.24:4627.76] And that is what is going to form this cone.
+[4627.76:4628.28] Yes.
+[4631.48:4632.8] Yes, you can be.
+[4632.8:4636.0] And in fact, you know, here it is.
+[4636.0:4638.5199999999995] We're getting that.
+[4638.5199999999995:4640.2] OK.
+[4640.2:4644.5199999999995] So what would be the cone of this particular S?
+[4644.52:4646.4400000000005] It's it's natural.
+[4646.4400000000005:4648.68] The way to find it is literally
+[4648.68:4651.52] from the objective value that
+[4651.52:4653.96] fight arms at both infinity.
+[4653.96:4654.8] So you're here.
+[4654.8:4656.52] You hug it.
+[4656.52:4657.96] On one side, you get this.
+[4657.96:4659.72] The other side, you get that.
+[4659.72:4661.76] You let the arms go to infinity.
+[4661.76:4663.72] You translate that into the origin.
+[4663.72:4664.64] That's your descent cone.
+[4664.64:4672.240000000001] Because you're interested in the directions, is it?
+[4672.240000000001:4672.84] All right.
+[4672.84:4675.72] So.
+[4675.72:4678.92] So the descent cone has two elements,
+[4678.92:4682.0] where one is the function itself.
+[4682.0:4684.280000000001] The second is where you're heading the function.
+[4690.96:4692.64] This makes sense.
+[4692.64:4695.160000000001] It's just as definition.
+[4695.160000000001:4697.64] And unfortunately, it's a discreet of definitions.
+[4700.72:4705.360000000001] Yeah, I hope you're not too overwhelmed.
+[4705.360000000001:4707.4800000000005] I understand that it may be some some
+[4707.4800000000005:4709.96] thing to unpack there, but I hope that the geometrical
+[4709.96:4713.68] illustration is new now.
+[4713.68:4714.68] OK.
+[4718.200000000001:4720.160000000001] Now think about the following.
+[4720.16:4722.92] OK.
+[4722.92:4729.36] So suppose you're on the stage at the point.
+[4729.36:4731.36] So here, what would be the descent cone?
+[4734.36:4736.72] Off the objective.
+[4736.72:4739.4] The descent cone of the objective here,
+[4739.4:4742.08] you go to the objective function.
+[4742.08:4744.8] You hug it with these arms.
+[4744.8:4747.16] You let the arms go to infinity.
+[4747.16:4752.12] In this particular case, if you go like this,
+[4752.12:4753.0] you can go like that.
+[4753.0:4757.44] If you go like this, these are your descent directions.
+[4757.44:4760.92] So your descent cone is in fact a half space.
+[4769.84:4773.8] But we are not interested in all the descent points.
+[4773.8:4779.52] But all the descent directions are, you are fine.
+[4779.52:4782.16] Because we're all interested in those descent directions
+[4782.16:4784.16] that also satisfy the constraints.
+[4784.16:4788.2] Well, because in the end, we're
+[4788.2:4792.68] trying to solve a constraint problem.
+[4792.68:4794.92] We're not just interested in the manifestation,
+[4794.92:4796.96] the interest of the minimization subject
+[4796.96:4803.96] to constraints like adults, you know.
+[4811.44:4813.32] What?
+[4813.32:4818.4] And from this, we actually notice the following.
+[4818.4:4821.4] OK.
+[4821.4:4830.5599999999995] Now, take a look at the error vector.
+[4830.5599999999995:4836.24] This convex program would find the true solution
+[4836.24:4841.799999999999] if and only if the descent cone intersects
+[4841.799999999999:4847.92] with the constraints set only at origin.
+[4847.92:4852.64] So what do you mean, both down?
+[4852.64:4855.4] Again, thanks for asking.
+[4855.4:4858.64] So take a look at this sitting.
+[4858.64:4861.16] So here's my constraint set.
+[4861.16:4863.2] The solution is here, right?
+[4863.2:4867.4] And the solution is not.
+[4867.4:4868.24] It's not.
+[4868.24:4870.88] Why is that?
+[4870.88:4874.92] Because look at the descent cone.
+[4874.92:4878.2] Look at the constraints.
+[4878.2:4881.4] It means that when you look at the intersection
+[4881.4:4886.64] of your constraints with the descent cone,
+[4886.64:4888.84] it has an actual intersection.
+[4888.84:4891.76] That means there exists descent directions
+[4891.76:4894.72] that satisfy the constraints.
+[4894.72:4899.24] Hence, if I were to start any algorithm, anything,
+[4899.24:4906.48] at X-natural, the true model, look at the convex program,
+[4906.48:4909.2] there exists descent directions only
+[4909.2:4912.2] to object that satisfy the constraints.
+[4912.2:4915.2] And hence, you will move away from X-natural.
+[4918.28:4919.679999999999] You won't stay there.
+[4919.679999999999:4922.16] Why would you, you're an optimizer?
+[4922.16:4926.8] You just found directions that we can go, decrease
+[4926.8:4931.4800000000005] the object if you're not violating constraints.
+[4931.4800000000005:4932.84] Those bad things, perhaps?
+[4939.24:4942.4800000000005] Perhaps?
+[4942.4800000000005:4945.24] What's the terror level red?
+[4945.24:4950.400000000001] Yellow, green, like is this hard?
+[4950.400000000001:4952.68] Or am I going too fast?
+[4952.68:4953.68] I'm going to start with this.
+[4953.68:4956.68] This is not feedback here.
+[4959.68:4960.68] Right?
+[4960.68:4961.68] Yeah.
+[4961.68:4963.68] I have some notes.
+[4963.68:4964.68] Yeah.
+[4966.68:4967.68] Okay.
+[4967.68:4970.68] So I'm going to imagine that everybody on this thing.
+[4970.68:4973.68] Those courses, both the shine again.
+[4973.68:4975.68] If you think you didn't understand,
+[4975.68:4978.68] it's likely that somebody could remember saying.
+[4978.68:4979.68] So.
+[4979.68:4982.68] Yes.
+[4982.68:4985.68] Oh, so great question.
+[4985.68:4987.68] Why are we following the last phase?
+[4987.68:4991.68] When you shift, when you talk about the 10 cones,
+[4991.68:4994.68] they are the set of directions.
+[4994.68:4997.68] Now, we translated into the origin,
+[4997.68:4999.68] you have the descent directions.
+[4999.68:5003.68] The point about this is that this non-chival touch phase
+[5003.68:5006.68] is in fact the last phase translated
+[5006.68:5009.68] at x-slash load.
+[5009.68:5011.68] So when you go back to the origin,
+[5011.68:5013.68] you actually look at the non-space of the nature.
+[5013.68:5016.68] That's why you look at the non-space of the nature.
+[5016.68:5020.68] It's intersecting with the descent cone.
+[5020.68:5022.68] Great question.
+[5022.68:5024.68] Great question.
+[5024.68:5028.68] Sorry, this is not true.
+[5028.68:5035.68] Remember, this is x-slash load plus the non-space of the nature.
+[5035.68:5037.68] So when you look at the air vectors,
+[5037.68:5039.68] the descent directions,
+[5039.68:5044.68] you're literally looking at the intersection of the non-space
+[5044.68:5047.68] with the descent cone.
+[5047.68:5050.68] All right.
+[5050.68:5053.68] So in this particular case,
+[5053.68:5055.68] you're here,
+[5055.68:5059.68] non-space is this guy or gal.
+[5059.68:5066.68] It intersects with the descent cone.
+[5066.68:5071.68] So the solution cannot be exiled up.
+[5071.68:5074.68] What happens here?
+[5074.68:5077.68] I'm a text natural.
+[5077.68:5080.68] Here's my descent cone.
+[5080.68:5082.68] Here's my non-space.
+[5082.68:5084.68] Where do the intersects?
+[5084.68:5091.68] Only at the origin.
+[5091.68:5099.68] Which means there is no descent direction that can decrease the objecting
+[5099.68:5108.68] while still satisfying the distance.
+[5108.68:5115.68] If you were to just minimize the L1 norm,
+[5115.68:5118.68] you can simply say the solution is zero.
+[5118.68:5121.68] If you're minimizing the L1 norm,
+[5121.68:5127.68] the subject is equal to x from the active-to-date narrow-picking space.
+[5127.68:5134.68] So what we have reduced the optimality to intersection
+[5134.68:5148.68] condition, so when would a non-space intersect with the descent cone?
+[5148.68:5155.68] Does this make sense?
+[5155.68:5158.68] Okay.
+[5158.68:5160.68] Now, here is the beautiful thing.
+[5160.68:5164.68] It turns out that, so here's a question.
+[5164.68:5169.68] I give you, let's say, two hyperplanes in high denotions.
+[5169.68:5172.68] When would be intersect?
+[5172.68:5177.68] This is called the kinematic problem.
+[5177.68:5183.68] If I give you two randomly oriented hyperplanes,
+[5183.68:5190.68] if their affine dimensions sum up to less than the ambient dimension,
+[5190.68:5196.68] then actually they will not intersect with hyperbobility.
+[5196.68:5201.68] If they sum up, if they're affine dimensions sum up more than the ambient dimension,
+[5201.68:5206.68] they will intersect with all randomly, what do I mean?
+[5206.68:5213.68] If I give you two lines in three dimensions,
+[5213.68:5217.68] would they intersect?
+[5217.68:5224.68] Maybe it's your origin, yeah?
+[5224.68:5227.68] But in this particular case, when I talk about intersection,
+[5227.68:5230.68] I mean intersection, which is other than the origin.
+[5230.68:5237.68] If I were to give you that hyperplane and another hyperplane,
+[5237.68:5241.68] they will most likely intersect.
+[5241.68:5244.68] In fact, they will intersect.
+[5244.68:5247.68] And you've done the million type of thing,
+[5247.68:5251.68] they will intersect on a line.
+[5251.68:5256.68] It turns out that this particular intuition,
+[5256.68:5262.68] you can generalize to complex objects like phones.
+[5262.68:5268.68] You can give a sign an affine dimension for a poem.
+[5268.68:5271.68] And I'll give you two lines.
+[5271.68:5278.68] When would it intersect with an hyperplane?
+[5278.68:5280.68] All right.
+[5280.68:5284.68] The statistical dimension is also related to the Gaussian complexity,
+[5284.68:5289.68] the mean width, this bunch of names for it.
+[5289.68:5293.68] And what it is is it will look at Gaussian random vectors,
+[5293.68:5296.68] project them onto the poem, look at the altumorm,
+[5296.68:5299.68] that gives you something like an affine dimension.
+[5299.68:5305.68] Meaning, okay, so here is a small phone and here's it,
+[5305.68:5307.68] it's either a poem, yeah?
+[5307.68:5310.68] So think about, you know, it is easier to intersect with this poem
+[5310.68:5312.68] than this poem.
+[5312.68:5315.68] You think about it because it's bigger.
+[5315.68:5321.68] So what you do is you look at Gaussian random vectors,
+[5321.68:5325.68] you look at their projection onto this poem, right?
+[5325.68:5328.68] If you're in the polar of the poem,
+[5328.68:5333.68] then you get zero projection.
+[5333.68:5336.68] If you're within this region, you get a non-zero projection,
+[5336.68:5339.68] you accumulate them and you look at the expected value.
+[5339.68:5345.68] Yeah? So the wider the poem is,
+[5345.68:5349.68] you will notice, this number will be bigger.
+[5349.68:5352.68] And in fact, it's mutually, if you like it,
+[5352.68:5358.68] I find it assigns something like an affine dimension
+[5358.68:5361.68] to this complex object that is called a poem.
+[5361.68:5365.68] And then here's the two parts.
+[5365.68:5372.68] So you know that when the North face
+[5372.68:5377.68] intersects with the poem,
+[5377.68:5379.68] you don't have the solution.
+[5379.68:5382.68] When it only intersects at the origin,
+[5382.68:5385.68] you have the correct tomorrow.
+[5385.68:5386.68] Yeah?
+[5386.68:5389.68] So given the poem,
+[5389.68:5392.68] you can look at the statistical dimension.
+[5392.68:5394.68] All right?
+[5394.68:5399.68] So the North face is what?
+[5399.68:5403.68] Key minus n-dimensional, right?
+[5403.68:5404.68] Okay.
+[5404.68:5409.68] So if this plus the statistical dimension of the poem
+[5409.68:5414.68] is greater than the ambient dimension
+[5414.68:5420.68] and tables have been to six.
+[5420.68:5425.68] So what does this mean? If the number of samples
+[5425.68:5430.68] is less than the statistical dimension of this poem,
+[5430.68:5433.68] you won't find the two parameters.
+[5433.68:5437.68] Because they intersect.
+[5437.68:5440.68] And vice versa, if the number of samples is greater
+[5440.68:5442.68] than the statistical dimension of the poem,
+[5442.68:5446.68] they will not intersect.
+[5446.68:5448.68] So the whole sample complexity turns out to be
+[5448.68:5476.68] whether or not you can find the statistical dimension of the poem.
+[5476.68:5478.68] Okay?
+[5478.68:5483.68] Well, turns out it will be to choose these integrals.
+[5483.68:5485.68] Very easy.
+[5485.68:5491.68] The statistical dimension of the album ball,
+[5491.68:5496.68] the descent tone of the album ball at S-part vertices
+[5496.68:5504.68] is a 2S low P over S5 over 4S.
+[5504.68:5506.68] That's right.
+[5506.68:5509.68] That's your sample complexity.
+[5509.68:5510.68] Yeah?
+[5510.68:5515.68] If the number of samples is less than this,
+[5515.68:5518.68] you won't recover.
+[5518.68:5520.68] Because they will intersect.
+[5520.68:5525.68] The North face will intersect with the descent tone.
+[5525.68:5535.68] The solution will not be the same.
+[5535.68:5540.68] If the number of samples is more than this,
+[5540.68:5542.68] they won't intersect.
+[5542.68:5546.68] New rules have the solution.
+[5546.68:5549.68] And what is interesting is that this particular theorem
+[5549.68:5555.68] gives the width and the so-called phase transition
+[5555.68:5558.68] of the Thomas program,
+[5558.68:5562.68] where you hit the criterion,
+[5562.68:5565.68] you hit the number of samples there,
+[5565.68:5568.68] and then you will not recover.
+[5568.68:5570.68] And you will not recover.
+[5570.68:5572.68] And you will not recover.
+[5572.68:5578.68] And going from North recovery to recovery,
+[5578.68:5582.68] this rapid chain is called the phase transition,
+[5582.68:5585.68] which is why the physics like to make these
+[5585.68:5596.68] analogies phase transition sounds good.
+[5596.68:5601.68] What does this one sounds like?
+[5601.68:5607.68] And I hope that the dramatic picture is becoming clear,
+[5607.68:5614.68] the reason why we're looking at the tightest complex
+[5614.68:5618.68] relaxation is becoming clear.
+[5618.68:5620.68] By the way, for the nuclear non-volve,
+[5620.68:5625.68] we can also compute this statistical dimension.
+[5625.68:5629.68] Before we rent our matrices,
+[5629.68:5632.68] the statistical dimension is proportional to our T,
+[5632.68:5634.68] not T squared.
+[5634.68:5639.68] And so, the T by T matrix,
+[5639.68:5644.68] then the number of samples is proportional to rent times
+[5644.68:5652.68] the dimension, one of the dimensions.
+[5652.68:5661.68] There's a phase transition around the system for the dimension.
+[5661.68:5664.68] So that's the cool part.
+[5664.68:5668.68] So if you're here,
+[5668.68:5673.68] you can design a variety of objectives.
+[5673.68:5678.68] Which one would give you
+[5678.68:5683.68] the smallest number of samples?
+[5683.68:5687.68] The one that gives you the smallest number of samples
+[5687.68:5692.68] is the sample.
+[5692.68:5696.68] It has to have the smallest sample.
+[5696.68:5699.68] Because remember,
+[5699.68:5702.68] the wider the sample is,
+[5702.68:5705.68] the bigger the FI dimension is assigned.
+[5705.68:5710.68] And that is a higher likelihood of intersecting
+[5710.68:5714.68] with your linear measurements.
+[5714.68:5720.68] And that's the number of your matrix.
+[5720.68:5721.68] But here's the cool part.
+[5721.68:5728.68] So think about this follows.
+[5728.68:5729.68] So you're here,
+[5729.68:5734.68] you could be using the L1 norm, right?
+[5734.68:5740.68] Or the S is the sample density.
+[5740.68:5745.68] So we make it a bit well rounded,
+[5745.68:5748.68] let's say,
+[5748.68:5750.68] for the elastic,
+[5750.68:5762.68] I don't know why it's elastic.
+[5762.68:5765.68] So there's a set,
+[5765.68:5767.68] you know,
+[5767.68:5770.68] you can put up your main stuff.
+[5770.68:5772.68] The point about this is that you,
+[5772.68:5775.68] as a bit of some complexity,
+[5775.68:5778.68] your descent code is going to increase.
+[5778.68:5780.68] What does this mean?
+[5780.68:5785.68] You need a bit more number of samples.
+[5785.68:5787.68] Does that make sense?
+[5787.68:5790.68] Because this is really important to understand this.
+[5790.68:5792.68] But I'm going to say next,
+[5792.68:5797.68] I'm going to just take this.
+[5797.68:5802.68] So if I'm minimizing this,
+[5802.68:5804.68] let's say it would require
+[5804.68:5805.68] an amount of samples
+[5805.68:5809.68] to find the correct vector, perfect.
+[5809.68:5811.68] Now I add a bit of strong complexity.
+[5811.68:5812.68] Instead,
+[5812.68:5815.68] I'm going to solve this problem,
+[5815.68:5818.68] which is,
+[5818.68:5825.68] sorry.
+[5825.68:5828.68] So arguably by doing that,
+[5828.68:5831.68] I have another descent cone.
+[5831.68:5835.68] And note that this descent cone is strictly included in this descent cone.
+[5835.68:5836.68] So the FI dimension,
+[5836.68:5841.68] as far as we do with the statistical dimension.
+[5841.68:5842.68] This one is larger.
+[5842.68:5845.68] So you need more number of samples
+[5845.68:5851.68] to be able to recover signals with this one.
+[5851.68:5853.68] Does this next answer?
+[5853.68:5854.68] What happens to optimization
+[5854.68:5860.68] than we have strong complexity people?
+[5860.68:5862.68] Or once?
+[5862.68:5867.68] Reversions is much less.
+[5867.68:5870.68] Exactly.
+[5870.68:5873.68] How do you say exactly?
+[5873.68:5880.68] Exactly.
+[5880.68:5889.68] What?
+[5889.68:5897.68] So.
+[5897.68:5900.68] What is interesting is that this means
+[5900.68:5905.68] that if I had more data,
+[5905.68:5909.68] I can add strong complexity.
+[5909.68:5911.68] The more data I have,
+[5911.68:5914.68] the more strong complexity I can add to the problem
+[5914.68:5918.68] while school perfectly recovering the true parameter.
+[5918.68:5922.68] Does this make sense?
+[5922.68:5927.68] And more strong complexity needs more faster.
+[5927.68:5934.68] Yeah, this is what we're going to use.
+[5934.68:5950.68] Okay, so this is a proposition in one of my papers.
+[5950.68:5961.68] I'm going to drop my research item.
+[5961.68:5973.68] It's extremely, extremely prolific, super smart.
+[5973.68:5976.68] So here's the deal.
+[5976.68:5981.68] Now I'm going to talk all briefly.
+[5981.68:5989.68] So suppose we have a fix me.
+[5989.68:5994.68] And you can run a primal dual method to get a solution.
+[5994.68:6000.68] You can interact characterize how the iterates are evolving
+[6000.68:6007.68] and respect the two parameters vector.
+[6007.68:6010.68] As you can see,
+[6010.68:6012.68] it is one of a few.
+[6012.68:6017.68] The portion of one of a few.
+[6017.68:6021.68] Well, okay.
+[6021.68:6023.68] For the more data you have,
+[6023.68:6029.68] the bigger you can put.
+[6029.68:6039.68] So what you need is something like one over new epsilon iterations
+[6039.68:6049.68] to have this.
+[6049.68:6051.68] There's nothing magical.
+[6051.68:6057.68] Yeah, this is very trivial statement after you have any discount.
+[6057.68:6067.68] The point I want to make here is that you can fix this particular
+[6067.68:6074.68] smoothing as a function of the data size as a function of the size.
+[6074.68:6078.68] In that case, so you can do this later.
+[6078.68:6085.68] One thing you can do is actually you can make the overall total complexity go down
+[6085.68:6090.68] and you can use the amount of data.
+[6090.68:6091.68] Okay.
+[6091.68:6095.68] So if you were to fix.
+[6095.68:6098.68] From convexity level.
+[6098.68:6102.68] As data grows, the number of iterations to go down.
+[6102.68:6105.68] But not the total complexity.
+[6105.68:6109.68] Because first Asian new operations.
+[6109.68:6114.68] It is in this possible to adapt the algorithm to the data size.
+[6114.68:6122.68] And reduce the total computation.
+[6122.68:6129.68] Don't ask me what this is.
+[6129.68:6133.68] Right.
+[6133.68:6137.68] All right.
+[6137.68:6138.68] Yeah.
+[6138.68:6146.68] So it's 941 and down for day.
+[6146.68:6147.68] Okay.
+[6147.68:6149.68] I think we've got to cover this.
+[6149.68:6151.68] Maybe.
+[6151.68:6152.68] Yeah.
+[6152.68:6153.68] What do we do guys?
+[6153.68:6155.68] So should we go on?
+[6155.68:6156.68] What do you do?
+[6156.68:6157.68] We all.
+[6157.68:6161.68] We take it to go break and I'm sorted through.
+[6161.68:6163.68] What do you want to do?
+[6163.68:6168.68] I'm going to go back to the last one.
+[6168.68:6171.68] Because what the rest is about the gastric.
+[6171.68:6174.68] Programming, which is really, really important.
+[6174.68:6177.68] What I wanted to do with this particular time data trade office.
+[6177.68:6180.68] Like a very important global message.
+[6180.68:6184.68] And I must admit it took me longer than I expected.
+[6184.68:6189.68] And maybe we take a short break and then do the rest in the remaining time.
+[6189.68:6191.68] Is that okay?
+[6191.68:6198.68] Finally break and then you can see.
+[6198.68:6200.68] This human recording.
+[6200.68:6201.68] Okay.
+[6201.68:6203.68] So.
+[6203.68:6207.68] The point I want to make is that the.
+[6207.68:6212.68] The moment you look at this sample complexity problem from the optimization problem,
+[6212.68:6218.68] if you just compartmentalize these problems and not talk to each other.
+[6218.68:6222.68] You are in a losing point.
+[6222.68:6229.68] In the sense that you know, you would talk about having more data to get better statistical position.
+[6229.68:6237.68] Without having this understanding that with more data, your algorithm would need more time to run.
+[6237.68:6238.68] Yeah.
+[6238.68:6244.68] And if you're optimizer, you want to solve easier problems, you would want smaller dimensional problems.
+[6244.68:6249.68] But then you would be giving wrong solutions.
+[6249.68:6251.68] It's not the point.
+[6251.68:6252.68] Right.
+[6252.68:6261.68] So only by treating these things jointly, we were able to observe a client data trade off in the sense that with more data,
+[6261.68:6267.68] we were able to get a solution faster.
+[6267.68:6274.68] And so we use data as a computational resource people.
+[6274.68:6277.68] Right.
+[6277.68:6280.68] That's important.
+[6280.68:6285.68] Data is a computational.
+[6285.68:6287.68] Very complicated.
+[6287.68:6290.68] And we got.
+[6290.68:6294.68] All right.
+[6294.68:6299.68] So what I want to do is I'm going to tell you about another important thing off,
+[6299.68:6304.68] which is maybe arguably the most important thing of the optimizers.
+[6304.68:6308.68] It's about the preparation process of an algorithm and some emergency.
+[6308.68:6311.68] Maybe you'll fix problem.
+[6311.68:6314.68] Is this important?
+[6314.68:6315.68] All right.
+[6315.68:6318.68] And typically understanding this trade off.
+[6318.68:6324.68] And then we have to have a couple of classes.
+[6324.68:6327.68] We use total complexity.
+[6327.68:6332.68] I mean, meaning that once you understand trade off, you would choose the appropriate setting to have the minimum for the complexity.
+[6332.68:6333.68] All right.
+[6333.68:6338.68] So to be able to do that, but I'm going to do so I'm going to start again.
+[6338.68:6339.68] From graded to sand.
+[6339.68:6340.68] I'm going to talk about.
+[6340.68:6348.68] So that's creating the sand and we're going to find it in between the two.
+[6348.68:6350.68] And there's an interesting trade off.
+[6350.68:6352.68] That's the point.
+[6352.68:6354.68] There with me.
+[6354.68:6355.68] For the next.
+[6355.68:6357.68] A very good minutes.
+[6357.68:6358.68] Okay.
+[6358.68:6359.68] So.
+[6359.68:6361.68] In the term,
+[6361.68:6364.68] Mr. sitting there interested in the organization of an individual.
+[6364.68:6365.68] F of X. Yes.
+[6365.68:6367.68] Subject for this.
+[6367.68:6372.68] And we have some proper clause from its more.
+[6372.68:6375.68] Opposition objective.
+[6375.68:6378.68] We have a not trivial solution set.
+[6378.68:6380.68] And the way it works like this.
+[6380.68:6383.68] And we can choose step size as a constant step size.
+[6383.68:6386.68] The one one over L is the work best works case.
+[6386.68:6387.68] Step size.
+[6387.68:6388.68] Yeah.
+[6388.68:6390.68] In the case of fantastic programming.
+[6390.68:6394.68] This head has throw the structure, meaning that it is written in this expectation form.
+[6394.68:6397.68] The district data.
+[6397.68:6400.68] There is some backers for set.
+[6400.68:6402.68] And how does the certificate.
+[6402.68:6407.68] You get a stochastic gradient estimate that is on bias.
+[6407.68:6410.68] With some final variance.
+[6410.68:6411.68] On the variance.
+[6411.68:6414.68] In this case, remember.
+[6414.68:6416.68] That if.
+[6416.68:6419.68] Remember.
+[6419.68:6427.68] It often the specific radians themselves need not be zero.
+[6427.68:6435.68] And because of this, your step size need to go down towards zero.
+[6435.68:6439.68] Unless you have what is called as interpolation condition.
+[6439.68:6441.68] Meaning that your.
+[6441.68:6442.68] Fantastic variance.
+[6442.68:6445.68] Individually are also zero.
+[6445.68:6451.68] Where would this happen if I give you a linear system that you can satisfy exactly.
+[6451.68:6453.68] In that case.
+[6453.68:6455.68] Etude to all the test.
+[6455.68:6456.68] The radians would also be zero.
+[6456.68:6457.68] Right.
+[6457.68:6458.68] That is different.
+[6458.68:6462.68] In that case, you can use constant step size also for a CD.
+[6462.68:6463.68] And then you did a linear rate.
+[6463.68:6465.68] And in fact, that's the necessary.
+[6465.68:6471.68] So the condition.
+[6471.68:6478.68] The test of gradient known is less than equal to the termistic gradient known.
+[6478.68:6481.68] This would be something like this.
+[6481.68:6484.68] And sufficient condition for linear convergence.
+[6484.68:6487.68] We'll talk about that a bit more later.
+[6487.68:6492.68] But in this time, the statistic gradient setting, we have a decrease in step size.
+[6492.68:6494.68] And this is what we do.
+[6494.68:6498.68] Alright, so we thought about this.
+[6498.68:6508.68] Alright, now, consider the empirical visualization setting that you're given the subject, which is this finite sum.
+[6508.68:6513.68] In this particular case, computing the full gradient, you need to.
+[6513.68:6516.68] You need to radians and some them up.
+[6516.68:6521.68] And suppose for computing the gradient here is order and.
+[6521.68:6523.68] And the data.
+[6523.68:6531.68] Almost the most on the level they were structured tricks and it was there.
+[6531.68:6540.68] In this fantastic gradient, the same getting let's say a fantastic radians like all these terms.
+[6540.68:6543.68] The complexity is load and.
+[6543.68:6547.68] The pick around the number between one end.
+[6547.68:6552.68] And then the complexity load and.
+[6552.68:6557.68] What is load and anyway.
+[6557.68:6561.68] Not being.
+[6561.68:6563.68] Does that make sense?
+[6563.68:6567.68] It's going around important.
+[6567.68:6570.68] Okay.
+[6570.68:6573.68] So take a look at this.
+[6573.68:6583.68] And then we can see the distance rate is going to rotate.
+[6583.68:6585.68] All spritations and.
+[6585.68:6588.68] The patient complexity is going to reach long.
+[6588.68:6595.68] So the total complexity order and divide by excellent.
+[6595.68:6596.68] Right.
+[6596.68:6603.68] The rate is argued.
+[6603.68:6610.68] What are we square.
+[6610.68:6614.68] Post-curitation.
+[6614.68:6626.68] Where did the end of.
+[6626.68:6629.68] It's good.
+[6629.68:6632.68] Yeah.
+[6632.68:6639.68] In sampling around.
+[6639.68:6643.68] Thanks for calling me out.
+[6643.68:6654.68] I'm calling me out, man.
+[6654.68:6658.68] All right.
+[6658.68:6660.68] Okay.
+[6660.68:6664.68] How about the story from X case.
+[6664.68:6669.68] You get a linear rated gradient descent.
+[6669.68:6673.68] I'm saying that you're jikling.
+[6673.68:6676.68] Let's say it's funny.
+[6676.68:6680.68] By the way, there are some of the.
+[6680.68:6685.68] Objective being from the comics versus individual terms being.
+[6685.68:6690.68] There are some circle rounds where the rates may fluctuate.
+[6690.68:6693.68] Let's say the object was from the comics.
+[6693.68:6697.68] In this particular case, the gradient descent.
+[6697.68:6700.68] I'm looking at the rate.
+[6700.68:6705.68] One of the lips is constant.
+[6705.68:6706.68] Okay.
+[6706.68:6708.68] How do you compare the list.
+[6708.68:6715.68] You have to do a lot of work, for example, to get the operator known to get.
+[6715.68:6716.68] Which is constant.
+[6716.68:6717.68] Sure.
+[6717.68:6718.68] And I'm purification.
+[6718.68:6719.68] You will get again.
+[6719.68:6722.68] Confedient radians, which are over and.
+[6722.68:6724.68] And we should see.
+[6724.68:6730.68] Maybe the caveats and a lot of the stuff is set under the road.
+[6730.68:6733.68] This is like a high level picture.
+[6733.68:6738.68] That they will might be in the details, but this is a high level picture.
+[6738.68:6741.68] So don't form on that.
+[6741.68:6747.68] So here the total complexity is low one over epsilon times.
+[6747.68:6752.68] And for gradient descent because it's converges linearly.
+[6752.68:6755.68] So this is a very good.
+[6755.68:6757.68] What happens is she.
+[6757.68:6762.68] In this case, if you use one over you or.
+[6762.68:6765.68] Two over you case step size.
+[6765.68:6768.68] So you can make the six size hold on faster.
+[6768.68:6772.68] And we will have a one over epsilon convergence.
+[6772.68:6774.68] Open complexity again.
+[6774.68:6775.68] One over epsilon.
+[6775.68:6781.68] Which one is better.
+[6781.68:6784.68] It depends on the accuracy.
+[6784.68:6787.68] Yeah.
+[6787.68:6790.68] Okay.
+[6790.68:6791.68] So this is very interesting.
+[6791.68:6793.68] So if she.
+[6793.68:6797.68] Why is this incredible trade off.
+[6797.68:6800.68] That you somehow get a penalty in the convergence rate.
+[6800.68:6806.68] But the prioritization complexity becomes radical.
+[6806.68:6807.68] And then n is large.
+[6807.68:6811.68] So this is large.
+[6811.68:6815.68] I mean, now she is like the God.
+[6815.68:6819.68] Maybe.
+[6819.68:6824.68] Is Adam the God.
+[6824.68:6826.68] We talk about this.
+[6826.68:6827.68] Let's see.
+[6827.68:6830.68] We're going to get into the difficulty details of the learning.
+[6830.68:6833.68] In fact, there will be a recitation.
+[6833.68:6838.68] And then you can see the difference.
+[6838.68:6839.68] We can see the difference.
+[6839.68:6843.68] So we can see the difference.
+[6843.68:6847.68] I will keep going.
+[6847.68:6851.68] Some of the details that I would like to ask some old.
+[6851.68:6853.68] Won't miss that one.
+[6853.68:6855.68] All right.
+[6855.68:6856.68] Good.
+[6856.68:6859.68] Now for S.
+[6859.68:6863.68] And it is a strong complexity.
+[6863.68:6865.68] You can't get the linear rate.
+[6865.68:6869.68] You can get the linear rated SGD on a problem.
+[6869.68:6873.68] If and only if the football girl condition is satisfied.
+[6873.68:6876.68] Which is later refined to a interpolation condition.
+[6876.68:6878.68] I can keep on this.
+[6878.68:6880.68] I see a lot of people that are here.
+[6880.68:6882.68] About that's another score.
+[6882.68:6885.68] It's focusing on the standard.
+[6885.68:6887.68] Okay.
+[6887.68:6890.68] The same versus the SGD.
+[6890.68:6894.68] Here's the deal.
+[6894.68:6898.68] Suppose we have a step size.
+[6898.68:6905.68] If you remember, if you all remember the descent.
+[6905.68:6911.68] If you were to use the rating.
+[6911.68:6917.68] The same descent.
+[6917.68:6920.68] I'm sorry about my handwriting.
+[6920.68:6922.68] I have terrible handwriting.
+[6922.68:6925.68] I hope that's not closing the consipters issues.
+[6925.68:6929.68] If you were to do gradient descent with one or L as your step size,
+[6929.68:6931.68] we have the following descent.
+[6931.68:6932.68] Remember.
+[6932.68:6935.68] Yeah, we had the similar to out.
+[6935.68:6939.68] So what this goes is right to same lemma,
+[6939.68:6941.68] you know what I mean.
+[6941.68:6943.68] So you take this.
+[6943.68:6948.68] Sell up here.
+[6948.68:6956.68] And then the step size appears like that one.
+[6956.68:6961.68] So how do you get this step size rest time to over L?
+[6961.68:6963.68] Through here.
+[6963.68:6972.68] I'm going to get a negative value.
+[6972.68:6974.68] I'll leave it the condition.
+[6974.68:6977.68] Dama case is less than two over L to gradient descent.
+[6977.68:6978.68] Through here.
+[6978.68:6980.68] They do the kid.
+[6980.68:6981.68] What happens?
+[6981.68:6986.68] Then Dama case is greater than two over L.
+[6986.68:6988.68] Sorry, you get a positive value.
+[6988.68:6998.68] So this is the same as.
+[6998.68:6999.68] All right.
+[6999.68:7001.68] So trust me, this condition holds here.
+[7001.68:7004.68] It's just you write down a profound.
+[7004.68:7006.68] We do the appropriate.
+[7006.68:7007.68] J right.
+[7007.68:7008.68] An explanation is.
+[7008.68:7011.68] This is what we get.
+[7011.68:7012.68] All right.
+[7012.68:7014.68] I need an alright.
+[7014.68:7020.68] I need you to sign the end user license agreement.
+[7020.68:7024.68] Continue from this point.
+[7024.68:7025.68] Okay.
+[7025.68:7028.68] The good about the gradient descent users.
+[7028.68:7031.68] And you can pick.
+[7031.68:7033.68] Dama case, one over L.
+[7033.68:7036.68] You will have this.
+[7036.68:7037.68] Appearing.
+[7037.68:7040.68] But know that if you look at the first time you talked about this,
+[7040.68:7044.68] there's some advanced material that shows that one over L is in fact,
+[7044.68:7047.68] the open world world space.
+[7047.68:7048.68] Inver space.
+[7048.68:7054.68] So there is something more to it than just this found.
+[7054.68:7055.68] All right.
+[7055.68:7056.68] Good.
+[7056.68:7059.68] Now, when you do SGD,
+[7059.68:7062.68] the picture becomes a bit muddy.
+[7062.68:7065.68] You still have the same.
+[7065.68:7073.68] It's a constant for you have an expected value here.
+[7073.68:7078.68] So why do we have an expected value, by the way?
+[7078.68:7086.68] If you do the extra cast gradient descent, then these Xs are random now.
+[7086.68:7090.68] So that's so tradition.
+[7090.68:7097.68] Okay.
+[7097.68:7103.68] Then you have another term that looks at the forecasted gradient distance to the termistic gradient norm.
+[7103.68:7104.68] Uh-huh.
+[7104.68:7111.68] If the specific radians are on bias, what am I doing here?
+[7111.68:7116.68] I'm looking at this patterns exactly.
+[7116.68:7131.68] So the variance appears in the quote and quote descent lemma or SGD.
+[7131.68:7134.68] But look at it.
+[7134.68:7139.68] There are extenuating circumstances, your honor.
+[7139.68:7145.68] There's a set size in both of that variance.
+[7145.68:7152.68] You see it.
+[7152.68:7160.68] Gamma case.
+[7160.68:7174.68] So perhaps you can set size to kind of make both terms play nice.
+[7174.68:7180.68] Or that's the idea.
+[7180.68:7182.68] So how do I get this?
+[7182.68:7184.68] It's a good exercise.
+[7184.68:7186.68] We can try to do it all.
+[7186.68:7188.68] You can do the supplementary.
+[7188.68:7194.68] Sorry, advanced material at the end of the lecture.
+[7194.68:7199.68] You're not responsible for it in the exam or in time.
+[7199.68:7206.68] So if you ever needed to come take a picture and find materials or put them at the subject.
+[7206.68:7208.68] Okay.
+[7208.68:7214.68] So what is funny is that as you get closer and closer, right?
+[7214.68:7221.68] What happens to the stadium if you work to start the algorithm XK at the optimum.
+[7221.68:7224.68] This term would be zero.
+[7224.68:7228.68] But this term would not be zero.
+[7228.68:7232.68] So to control the variance, what do we need to do?
+[7232.68:7235.68] We need to make the set size go down to zero.
+[7235.68:7241.68] Well, the set size goes down to zero means you have to have zero.
+[7241.68:7248.68] Except when you have some form history, that case you want to set size to go down to zero as fast as possible.
+[7248.68:7253.68] I know that this is only a complete message.
+[7253.68:7261.68] But right now we're not talking about the story from this.
+[7261.68:7270.68] That's confused.
+[7270.68:7278.68] So here's the point is this is all the way to control the variance.
+[7278.68:7290.68] Meaning to me, the reason variance was to using a process step and it's so what do we need to do?
+[7290.68:7292.68] Many batches.
+[7292.68:7293.68] Good points.
+[7293.68:7299.68] But then, honestly again, doing the perturbation, increasing the perturbation test.
+[7299.68:7306.68] Like in the domestic financials that I talked about today at 941 am.
+[7306.68:7312.68] So we have to increase the media batches, right?
+[7312.68:7321.68] Yeah, so we need to somehow control the quality of this distance to the true gradient.
+[7321.68:7324.68] We could.
+[7324.68:7330.68] And that is to somehow go down to zero.
+[7330.68:7345.68] That's what you're getting.
+[7345.68:7348.68] Play once.
+[7348.68:7350.68] Okay.
+[7350.68:7356.68] So what we need to do is somehow choose a fantastic gradient.
+[7356.68:7361.68] Who's expectation goes down to zero.
+[7361.68:7368.68] And here I am.
+[7368.68:7393.68] So we need to somehow make this go down to zero.
+[7393.68:7400.68] You can extend the terms and you will see that you can still make that go down to zero.
+[7400.68:7403.68] All right.
+[7403.68:7407.68] So simple approach.
+[7407.68:7411.68] One that was suggested a minute ago.
+[7411.68:7416.68] Yeah, one thing we can do is do mini batches.
+[7416.68:7428.68] Because if you think about it, you can make the variance go down to the mini batch size.
+[7428.68:7431.68] That's a mini batch for a thousand.
+[7431.68:7435.68] You pick a batch size and you sample.
+[7435.68:7438.68] Maybe you don't think that's not.
+[7438.68:7443.68] BK element is an ant to this business.
+[7443.68:7454.68] But perhaps you can do something smarter.
+[7454.68:7456.68] Okay.
+[7456.68:7462.68] So for this smartness.
+[7462.68:7465.68] Here's what we're going to be.
+[7465.68:7469.68] I'm going to propose an estimator.
+[7469.68:7482.68] I'm going to start abstracts.
+[7482.68:7488.68] There may be other ways of getting exposed to this, but I think this is the cleanest way.
+[7488.68:7492.68] And my student will help prepare this lecture.
+[7492.68:7496.68] Who loves this.
+[7496.68:7499.68] So we're going to stick to.
+[7499.68:7502.68] All right.
+[7502.68:7509.68] So I'm going to define two random variables.
+[7509.68:7512.68] This is.
+[7512.68:7514.68] This is not a leap.
+[7514.68:7518.68] It's going to be clear in a little bit.
+[7518.68:7522.68] And this will be like.
+[7522.68:7529.68] What was this.
+[7529.68:7533.68] It's not a known movie that goes back to.
+[7533.68:7537.68] So your mental moments.
+[7537.68:7539.68] All right.
+[7539.68:7542.68] So hopefully to be clear.
+[7542.68:7551.68] I'm going to define a random variable, which will be the gradient of the J index at iteration at state.
+[7551.68:7554.68] Okay.
+[7554.68:7559.68] I'm going to define another random variable, which is the same.
+[7559.68:7563.68] FJ gradient, but we've already did it.
+[7563.68:7566.68] And extrader is selected.
+[7566.68:7573.68] In the fact that you do the way.
+[7573.68:7580.68] Not going to tell you why I don't want to spoil the story.
+[7580.68:7582.68] Okay.
+[7582.68:7584.68] So some remarks.
+[7584.68:7589.68] For some reason or another, we want to be correlated.
+[7589.68:7592.68] X and mark a big quality.
+[7592.68:7598.68] Remember, these will be frustrations random variables.
+[7598.68:7601.68] And you can talk about the correlations.
+[7601.68:7606.68] Now, the point that I want to make is the given why.
+[7606.68:7612.68] And this will be able to estimate the expected value of extra more confidence.
+[7612.68:7618.68] What's the expected value of X here?
+[7618.68:7621.68] So I define X to be.
+[7621.68:7639.68] So what's the expected value of X?
+[7639.68:7654.68] The expected value of X.
+[7654.68:7655.68] Okay.
+[7655.68:7657.68] That's right.
+[7657.68:7662.68] So what I'm trying to get at is somehow.
+[7662.68:7668.68] Given why we'll be able to better estimate the gradients.
+[7668.68:7671.68] And what's the biggest for test to create is the X.
+[7671.68:7672.68] Right.
+[7672.68:7676.68] The X random variable to give us the additional information.
+[7676.68:7680.68] You will be able to estimate the actual gradient better.
+[7680.68:7683.68] That's a good objective to have.
+[7683.68:7688.68] No.
+[7688.68:7692.68] Yes.
+[7692.68:7694.68] Now, of course, the truth is.
+[7694.68:7707.68] Extrude effects how correlated these two random variables are.
+[7707.68:7708.68] Okay.
+[7708.68:7714.68] Now, of course, the expected value of Y is the gradient at X to dot.
+[7714.68:7717.68] And the expected value of X is the statement.
+[7717.68:7719.68] So what do we do?
+[7719.68:7721.68] Thanks for asking.
+[7721.68:7724.68] Okay.
+[7724.68:7728.68] So here's an estimator.
+[7728.68:7731.68] We look at the difference.
+[7731.68:7736.68] And add the expected value of one.
+[7736.68:7741.68] All right.
+[7741.68:7745.68] Seems simple.
+[7745.68:7746.68] Okay.
+[7746.68:7749.68] So what are the properties of estimator?
+[7749.68:7755.68] So the expected value of the system is given here.
+[7755.68:7758.68] The variance of the system is given here.
+[7758.68:7759.68] When alpha is one.
+[7759.68:7765.68] So if you're looking at X minus Y plus expected.
+[7765.68:7769.68] What's expected value?
+[7769.68:7771.68] So.
+[7771.68:7775.68] R1.
+[7775.68:7782.68] The expected value of R1 is expected value of X minus expected value of Y plus expected.
+[7782.68:7786.68] Why?
+[7786.68:7787.68] Yeah.
+[7787.68:7790.68] I'll say the expectation is like.
+[7790.68:7791.68] Yes.
+[7791.68:7793.68] This is council.
+[7793.68:7795.68] The exam.
+[7795.68:7801.68] Good.
+[7801.68:7806.68] Now the correlation appears here.
+[7806.68:7809.68] So when alpha is one.
+[7809.68:7812.68] Depending on the correlation.
+[7812.68:7820.68] The variance of R is less than the variance of X.
+[7820.68:7828.68] So somehow we have an estimator is expected value is the gradient at the current iterates.
+[7828.68:7832.68] And depending on how we choose X tilde.
+[7832.68:7846.68] We can make it variance smaller.
+[7846.68:7855.68] So how can we use this information to construct our estimate?
+[7855.68:7861.68] So.
+[7861.68:7864.68] So these are K.
+[7864.68:7867.68] So we will say.
+[7867.68:7869.68] Compute is for trans-egregients.
+[7869.68:7871.68] So this is cheap to compute.
+[7871.68:7872.68] Yeah.
+[7872.68:7874.68] Suppose we had an anchor point.
+[7874.68:7877.68] This is also cheap to compute.
+[7877.68:7880.68] And this is, let's say.
+[7880.68:7884.68] The gradient.
+[7884.68:7890.68] At X tilde.
+[7890.68:7895.68] To imagine we have the gradient at X tilde.
+[7895.68:7899.68] What we are doing is we're sampling in index.
+[7899.68:7902.68] And I'm correcting the gradients.
+[7902.68:7906.68] By taking out the contribution from it's tilde at that index.
+[7906.68:7911.68] And putting the contribution from the new iterates.
+[7911.68:7914.68] So we're like literally there's this.
+[7914.68:7915.68] Gradient.
+[7915.68:7917.68] It's just summed up.
+[7917.68:7919.68] We're picking in index.
+[7919.68:7923.68] Pumping out the forecast to create a bit of the extilge.
+[7923.68:7924.68] Applying.
+[7924.68:7925.68] X.
+[7925.68:7926.68] Stay in there.
+[7926.68:7928.68] So somehow refining.
+[7928.68:7930.68] Yeah.
+[7930.68:7935.68] And as you can see is the extilge goes takes are it's a.
+[7935.68:7938.68] Those takes are this source zero.
+[7938.68:7941.68] It's expected value goes to zero.
+[7941.68:7944.68] Yeah.
+[7944.68:7947.68] So the question is how do we complete.
+[7947.68:7950.68] Expand.
+[7950.68:7951.68] All right.
+[7951.68:7954.68] That literally boils on to that one.
+[7954.68:7958.68] Here is the classical SCRG algorithm.
+[7958.68:7960.68] It's variance reduction model one.
+[7960.68:7962.68] This is not the most sophisticated.
+[7962.68:7965.68] Thanks to that's an algorithm that is the easiest tricks.
+[7965.68:7968.68] I'm not going to use this one.
+[7968.68:7971.68] I don't.
+[7971.68:7974.68] Right.
+[7974.68:7983.68] But it is the sort of importance.
+[7983.68:7987.68] Well, much.
+[7987.68:7994.68] Okay.
+[7994.68:8001.68] So here's the point you end up having what is called as a double new algorithm.
+[8001.68:8002.68] Yeah.
+[8002.68:8010.68] It's some period you end up curing the four gradients.
+[8010.68:8013.68] Literally start the algorithm from typical gradients.
+[8013.68:8015.68] And then run.
+[8015.68:8018.68] SGD with this.
+[8018.68:8022.68] Estimates.
+[8022.68:8025.68] What?
+[8025.68:8031.68] Your update and I'm going back and complete the full gradients.
+[8031.68:8032.68] Yeah.
+[8032.68:8035.68] Does this make sense?
+[8035.68:8041.68] So you're still there is like it's the very beginning you did a full gradients.
+[8041.68:8043.68] And then.
+[8043.68:8044.68] Yeah.
+[8044.68:8047.68] So.
+[8047.68:8056.68] We just swap back to the test of gradients work with a particular estimator gradients.
+[8056.68:8057.68] Yeah.
+[8057.68:8067.68] And if you do this way, you can keep the set size constant people at the point.
+[8067.68:8072.68] The reason why we're doing this is to keep the set size constant.
+[8072.68:8075.68] Literally.
+[8075.68:8080.68] So don't take your eyes off the prize.
+[8080.68:8083.68] That size is all you need.
+[8083.68:8085.68] This right.
+[8085.68:8087.68] Can I select it?
+[8087.68:8090.68] All you need is a constant set sense.
+[8090.68:8097.68] People can forget that all you need is.
+[8097.68:8101.68] I don't think many of you know this song.
+[8101.68:8106.68] Okay.
+[8106.68:8113.68] I'm not a poster.
+[8113.68:8117.68] It makes me.
+[8117.68:8119.68] Okay.
+[8119.68:8122.68] Good.
+[8122.68:8123.68] Yeah.
+[8123.68:8126.68] So the point that this step size.
+[8126.68:8128.68] I don't know why we keep turning it.
+[8128.68:8133.68] I'm not necessarily go to zero.
+[8133.68:8139.68] So what you need is maybe one full gradient at the beginning of stage.
+[8139.68:8141.68] And then some few.
+[8141.68:8148.68] It turns out that you know you can pick.
+[8148.68:8150.68] You can take you.
+[8150.68:8152.68] You can do.
+[8152.68:8156.68] Some actions, but ever and you can do the linear rate.
+[8156.68:8159.68] So I'm not going to get into the details of this.
+[8159.68:8161.68] This is not the best.
+[8161.68:8162.68] So it's a bit.
+[8162.68:8166.68] I'm going to give you a table in a little bit that has the shape of the art information.
+[8166.68:8169.68] Of course, the I do.
+[8169.68:8173.68] It's just when.
+[8173.68:8176.68] I think we can do this.
+[8176.68:8180.68] So by the way, this.
+[8180.68:8188.68] The last is this is a cool trick. So what you do is if you're solving these squares, we would get the.
+[8188.68:8193.68] The role knowns of these a's.
+[8193.68:8197.68] And pick the largest one.
+[8197.68:8203.68] As your lips just.
+[8203.68:8205.68] That's it.
+[8205.68:8213.68] So you can give an overall complexity of n plus.
+[8213.68:8222.68] Elm at all new.
+[8222.68:8225.68] And what is cool about this.
+[8225.68:8228.68] So I think I have.
+[8228.68:8229.68] Okay.
+[8229.68:8233.68] So let's do a simple comparison.
+[8233.68:8236.68] Radiant.
+[8236.68:8238.68] Fantastic.
+[8238.68:8241.68] This is to be.
+[8241.68:8246.68] Unless you have the growth condition or the integration.
+[8246.68:8247.68] S. We are.
+[8247.68:8248.68] You.
+[8248.68:8249.68] This.
+[8249.68:8250.68] Business.
+[8250.68:8254.68] So why.
+[8254.68:8255.68] This.
+[8255.68:8259.68] Minus.
+[8259.68:8266.68] So this is your RS.
+[8266.68:8268.68] So requires great.
+[8268.68:8269.68] Great storage.
+[8269.68:8272.68] No, no, no.
+[8272.68:8274.68] Actually.
+[8274.68:8276.68] It is for based.
+[8276.68:8277.68] So yeah, it's true.
+[8277.68:8281.68] So why do you not store the gradient?
+[8281.68:8282.68] That is.
+[8282.68:8290.68] So.
+[8290.68:8292.68] You do store the gradient.
+[8292.68:8294.68] You need this.
+[8294.68:8296.68] Sorry.
+[8296.68:8299.68] Sorry.
+[8299.68:8301.68] E.
+[8301.68:8303.68] E.
+[8303.68:8305.68] So you.
+[8305.68:8307.68] The parameter where you go.
+[8307.68:8309.68] It's your epoch size.
+[8309.68:8312.68] And here's the comparison.
+[8312.68:8314.68] And it turns out that this L.
+[8314.68:8316.68] Max divided by new.
+[8316.68:8319.68] Is what we need for the size.
+[8319.68:8322.68] L. Max is the maximum.
+[8322.68:8323.68] Which is constantly.
+[8323.68:8324.68] These.
+[8324.68:8326.68] I.
+[8326.68:8327.68] Arguing.
+[8327.68:8329.68] This is much easier to compute than the full.
+[8329.68:8335.68] Which is constant.
+[8335.68:8337.68] Of course, you know me.
+[8337.68:8339.68] How am I going in that issue?
+[8339.68:8341.68] Well, have I made some things good on this?
+[8341.68:8341.68] What do you call that?
+[8341.68:8344.68] How to 할먹89 He wrote that,
+[8344.68:8345.68] I.
+[8345.68:8349.68] You're also some new,
+[8349.68:8353.68] but in general, regular.
+[8353.68:8353.68] I figured that out of court.
+[8353.68:8353.68]ones,
+[8353.68:8363.68] Good gradient descent.
+[8363.68:8366.68] This figure should have started from there.
+[8369.68:8372.68] So I will correct, I will need to correct this figure.
+[8372.68:8376.68] Because you need to get the gradient first.
+[8379.68:8382.68] And so I apologize, this needs to be correct.
+[8382.68:8385.68] Fabian, if you're there, maybe take another test.
+[8385.68:8388.68] So you do some work to get the full gradient.
+[8388.68:8392.68] And then you'll see that this algorithm will go around faster than a studio.
+[8392.68:8398.68] SGD typically gets beaten by the gradient send, which we do enough reforts.
+[8398.68:8403.68] And thanks reduction will have the benefit of both.
+[8403.68:8408.68] All right, so the economy.
+[8408.68:8415.68] Some explanation, but I think that what is important is this one.
+[8415.68:8429.68] Yeah, I would like you to burn this into your recognize.
+[8429.68:8433.68] This is for your reference, I don't know if you can know this.
+[8433.68:8439.68] It tells you how much research that goes into this particular data and selection.
+[8439.68:8442.68] So here is a bunch of algorithms.
+[8442.68:8445.68] So spider is something that I like.
+[8445.68:8448.68] I use also for thankful.
+[8448.68:8454.68] So I will have a couple of new speakers with this one.
+[8454.68:8464.68] SDRG, these are like March, maybe.
+[8464.68:8471.68] In Canada and to work.
+[8471.68:8475.68] Phenomaly important in dance reduction.
+[8475.68:8478.68] So spider, I think, is kind of jam.
+[8478.68:8486.68] If you have ultimate f eyes, then you can show that you have a complex like this.
+[8486.68:8488.68] So this and dependent.
+[8488.68:8489.68] Those.
+[8489.68:8492.68] Where to find.
+[8492.68:8496.68] Yeah.
+[8496.68:8500.68] Which is nice.
+[8500.68:8503.68] Now for strong complexity.
+[8503.68:8511.68] And you need this and work to get the two gradient and then here's the linear convergence.
+[8511.68:8513.68] There's average smoothness structures.
+[8513.68:8515.68] So this is what I was trying to say.
+[8515.68:8519.68] And I said, I know I can do this only complex.
+[8519.68:8524.68] There are subtleties there that, you know, if you have average.
+[8524.68:8526.68] Elf mood.
+[8526.68:8528.68] You have conditions like this.
+[8528.68:8529.68] It's out.
+[8529.68:8533.68] And you can see the difference.
+[8533.68:8537.68] If you have weekly comics problems, which is very important.
+[8537.68:8541.68] I'll refer to this later and I'll extend one a little bit more.
+[8541.68:8543.68] You can have a weekly comics function.
+[8543.68:8548.68] If you added those strong complexity, the function becomes homeless.
+[8548.68:8552.68] So F of X is alpha weekly comics.
+[8552.68:8556.68] If F of X plus out over two X squared is comics.
+[8556.68:8559.68] And what is called weekly comics.
+[8559.68:8562.68] And problems like you and it works.
+[8562.68:8564.68] Can be.
+[8564.68:8567.68] And that is what's important.
+[8567.68:8574.68] So for there, there's like low bounds and all words that match those.
+[8574.68:8577.68] And for you, I took their references.
+[8577.68:8581.68] Or by I, I need my post.
+[8581.68:8587.68] I'm glad it's 941 exactly on time.
+[8587.68:8590.68] We finished this lecture.
+[8590.68:8600.68] I would like to try to finalize the homework.
+[8600.68:8603.68] But I mean, you have a bit more time.
+[8603.68:8605.68] Let's try to finalize it.
+[8605.68:8607.68] And then.
+[8607.68:8613.68] It will be exciting. So there's some advanced material that shows computations.
+[8613.68:8615.68] It shows you a bit better.
+[8615.68:8618.68] Sarah. So this one, for example, does.
+[8618.68:8622.68] Does not to food gradient estimation.
+[8622.68:8630.68] So there's something called zero Sarah that does not do food gradient estimations.
+[8630.68:8633.68] And there is one on distributed optimization.
+[8633.68:8639.68] And then we get another table for you to take a look at your interests and bring you such a long desk.
+[8639.68:8641.68] Look at their answers.
+[8641.68:8644.68] And thank you for choosing a method for your science needs.
+[8644.68:8647.68] I'll see you guys maybe on Friday or next week.
+[8647.68:8657.68] Thank you.

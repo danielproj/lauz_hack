@@ -1,0 +1,647 @@
+~EE-556 / Lecture 1 - 2/2 (2020)
+~2020-09-14T22:54:05.172+02:00
+~https://tube.switch.ch/videos/0e7769d0
+~EE-556 Mathematics of data: from theory to computation
+[0.0:2.32] All right, let's continue.
+[2.32:3.3200000000000003] Okay.
+[4.5200000000000005:7.36] All right, so so far we were talking
+[7.36:10.16] about non-parametric risk minimization.
+[10.16:11.9] Why some mistake would loss?
+[13.88:17.12] We said that we can make the problem tractable
+[17.12:20.8] by plugging the empirical loss.
+[20.8:25.04] I saw not the population loss, but the empirical loss,
+[25.04:28.400000000000002] which is evaluated by taking the average of the data points
+[28.4:31.119999999999997] that we have, right, over the loss.
+[31.119999999999997:35.72] Now we were talking about any function here, right?
+[40.56:41.72] Which is difficult to handle.
+[41.72:43.08] It's internet dimensional.
+[43.08:46.519999999999996] There are ways to handle this using kernels,
+[46.519999999999996:50.12] which is PhD material, so don't worry about it.
+[51.480000000000004:54.44] But what we will be particularly focusing on
+[54.44:59.16] is parametric functions, all right?
+[59.16:62.36] By parametric functions, you can think of like polynomials,
+[62.36:64.56] you know, the state-second degree polynomials.
+[66.75999999999999:69.12] We might have three parameters, right?
+[69.12:71.56] The parameter in front of the quadratic,
+[71.56:74.52] parameter in front of the linear, and the bias.
+[74.52:78.56] And in this case, you need to determine three parameters,
+[78.56:81.47999999999999] right? So the parameters in some set,
+[81.48:85.96000000000001] your function now will be parametrized by some parameters.
+[85.96000000000001:89.08] And it will take in a as an input.
+[89.08:91.60000000000001] This you will call as the parametric learning.
+[92.64:95.44] Okay, so let's talk about some examples.
+[97.44:99.60000000000001] So I'll call this the model, all right?
+[100.72:101.68] Parametric model.
+[101.68:110.68] Hmm? Why is this not, okay, so for some reason,
+[110.68:132.64000000000001] this may be, whoa, I may need to reshare just a second.
+[132.64000000000001:135.64000000000001] Okay.
+[135.64000000000001:139.12] I think this worked.
+[139.12:141.12] All right?
+[141.12:144.12] No.
+[144.12:147.12] Okay. Is this okay?
+[147.12:149.12] Is the video okay?
+[149.12:152.12] Okay, sorry, there was the,
+[152.12:156.12] I thought my iPad was correctly married,
+[156.12:158.12] but it can't be, it was not.
+[158.12:162.12] All right, so let's talk about this model.
+[162.12:169.12] So in a parametric estimation model,
+[169.12:173.12] this is now parametrized by some unknown parameters.
+[173.12:175.12] And our parameters in this course,
+[175.12:178.12] we will denote them as, all right?
+[178.12:180.12] It's a vector.
+[180.12:182.12] I mean, it could be matrices,
+[182.12:184.12] it could be tenseders, whatever.
+[184.12:187.12] It's just like in some vectorized forms, right?
+[187.12:190.12] So, we'll denote the parameters
+[190.12:195.12] to the calligraphic x.
+[195.12:197.12] We'll be in p dimensions.
+[197.12:202.12] Now, there will be a parameter x natural,
+[202.12:205.12] which is an element of the parameter space.
+[205.12:208.12] And this will be our two parameter, right?
+[208.12:210.12] So like our supervisor, now,
+[210.12:213.12] so again, the notation,
+[213.12:219.12] we'll be using this h natural, right?
+[219.12:223.12] Now, the assumption here is that
+[223.12:228.12] the parameters test that the supervisor is using
+[228.12:232.12] is the same as the parameters test that we are using.
+[232.12:233.12] All right?
+[233.12:236.12] So there is again a subtle difference, right?
+[236.12:239.12] Which is important.
+[239.12:245.12] We'll revisit this at the end of the lecture today.
+[245.12:248.12] Now, there is some parametric distribution,
+[248.12:251.12] there are distributions that are parametrized by our parameters
+[251.12:255.12] and our samples that follows
+[255.12:261.12] this distribution did the true parameter inside.
+[261.12:262.12] Okay?
+[262.12:266.12] So here's an example.
+[266.12:269.12] So let's say we have this true parameter,
+[269.12:271.12] x natural, right?
+[271.12:274.12] Now, our model is that the i is generated
+[274.12:279.12] with AI inner product with this particular parameter
+[279.12:283.12] plus iid Gaussian noise,
+[283.12:287.12] independent and identically distributed.
+[287.12:289.12] All right?
+[289.12:292.12] So the notation,
+[292.12:295.12] Gaussian distribution with zero mean
+[295.12:298.12] and variance sigma squared.
+[298.12:303.12] All right, this is standard notation.
+[303.12:305.12] So here, what is our function?
+[305.12:306.12] All right?
+[306.12:307.12] So if you think about it,
+[307.12:315.12] hx of a is literally a inner product with x.
+[315.12:319.12] Again, sorry for the...
+[319.12:321.12] It's not exactly...
+[321.12:325.12] So I think there are some compression artifacts on zoom.
+[325.12:327.12] So here's one model.
+[327.12:330.12] There is some two model.
+[330.12:333.12] You may think that, you know, like the very silly model,
+[333.12:335.12] it's overly stylistic,
+[335.12:338.12] but it's actually a very important model.
+[338.12:339.12] Super-generals.
+[339.12:346.12] I'll give you actual examples in Restitation 1 on Friday.
+[346.12:348.12] And you should know that, you know,
+[348.12:349.12] like we can...
+[349.12:351.12] So this supervisor might be using
+[351.12:356.12] each of the completely different model than a linear model.
+[356.12:360.12] But we can be using the linear model.
+[360.12:362.12] Even though it's not just match,
+[362.12:364.12] it's typically robust, okay?
+[364.12:365.12] So there are some errors,
+[365.12:366.12] there are some outliers,
+[366.12:368.12] but say things like this,
+[368.12:370.12] the function may be a bit more complicated,
+[370.12:373.12] but linear models hit a bit of prevailing,
+[373.12:377.12] and you will see this throughout the course.
+[377.12:379.12] Now, given this particular example,
+[379.12:381.12] what we're trying to do, for example, you know,
+[381.12:383.12] let's say,
+[383.12:388.12] let's say this was what the supervisor intended to do,
+[388.12:393.12] right, with the parameter x-natural, right?
+[393.12:396.12] Given the data, maybe we learned this one,
+[396.12:399.12] this parameter, right?
+[399.12:403.12] So this is what the statistical estimation tries to do, right?
+[403.12:406.12] So if tries to approximate this,
+[406.12:408.12] given the constraint space,
+[408.12:412.12] the distributions, and the data.
+[412.12:417.12] All right.
+[417.12:421.12] So let's see an example.
+[421.12:429.12] So the way we achieve our goal
+[429.12:433.12] will be through what we call as estimators.
+[433.12:434.12] All right?
+[434.12:436.12] So the estimator basically takes in the problems,
+[436.12:438.12] kissing, as an input,
+[438.12:440.12] and then outputs a value
+[440.12:444.12] in the parameters space.
+[444.12:449.12] All right?
+[449.12:453.12] Maybe I erase these, sorry.
+[453.12:455.12] So the output of the estimator
+[455.12:458.12] is in fact random the way we set things up.
+[458.12:466.12] Like, before the data is realized, right?
+[466.12:470.12] If the data is random, it's been generated randomly,
+[470.12:472.12] then you can set up an estimator,
+[472.12:474.12] it will output a value,
+[474.12:476.12] it's also random,
+[476.12:478.12] because nothing is realized yet, right?
+[478.12:481.12] And the key point is that the output of an estimator
+[481.12:484.12] is not necessarily equal to the true parameter
+[484.12:487.12] that you're seeking.
+[487.12:490.12] So here's a classical example.
+[490.12:492.12] The least squares.
+[492.12:495.12] I'm sure you've heard about this, right?
+[495.12:497.12] What you try to do is
+[497.12:502.12] give them your H-drop X,
+[502.12:505.12] which is H in the product A.
+[505.12:507.12] So here's our function,
+[507.12:511.12] H-A-I-N-X, right?
+[511.12:523.12] We try to predict E-I using the square loss.
+[523.12:527.12] You know?
+[527.12:530.12] You will call this the least squares estimator.
+[530.12:533.12] The estimators will have the star notation.
+[533.12:540.12] So star is the result of the optimizations R-N-N.
+[540.12:543.12] Depending on the data size, this may be not unique.
+[543.12:547.12] Hence is an element of.
+[547.12:550.12] All right?
+[550.12:553.12] Now, what you will see is more and more,
+[553.12:557.12] we will try to use the vector matrix notation.
+[557.12:558.12] All right?
+[558.12:564.12] So you can write this in a more compact fashion as follows.
+[564.12:567.12] So you just think about this.
+[567.12:570.12] You take A-I-I-N,
+[570.12:572.12] create the matrix,
+[572.12:574.12] you have the vector X,
+[574.12:579.12] and you can put B-I-N-Vector.
+[579.12:581.12] And you have this nice vector notation,
+[581.12:583.12] B-A-X squared,
+[583.12:586.12] this is what you're minimizing.
+[586.12:587.12] All right?
+[587.12:589.12] You take the empirical average,
+[589.12:591.12] hence I keep one over N,
+[591.12:593.12] but as far as the argument is concerned,
+[593.12:597.12] the scaling factor doesn't matter.
+[597.12:599.12] Good.
+[599.12:604.12] So if you think about it in the least squares example,
+[604.12:606.12] the sample is given by these pairs,
+[606.12:609.12] right? A-I-D-I pairs.
+[609.12:614.12] Our function class is the set of linear functions.
+[614.12:617.12] All right?
+[617.12:623.12] In this case, our loss function is quadratic loss.
+[623.12:625.12] If we solve this problem,
+[625.12:630.12] we obtain a value for the parameter set,
+[630.12:635.12] and our learning machine will output this.
+[635.12:636.12] All right?
+[636.12:638.12] So if you're given some new data point
+[638.12:640.12] that you have a concern,
+[640.12:642.12] and you're asked in a prediction,
+[642.12:645.12] all you do is take an inner product with the data,
+[645.12:648.12] your X-star-L-S,
+[648.12:650.12] you've done it.
+[650.12:653.12] Clear?
+[653.12:657.12] Okay.
+[657.12:660.12] Now I talked about a loss function.
+[660.12:663.12] I said we choose it, right?
+[663.12:667.12] The appropriate here is how do we choose it?
+[667.12:671.12] Now this is where we see why probabilistic models are kind of nice,
+[671.12:675.12] because you can actually set up loss functions that come from the problem,
+[675.12:679.12] and it has some interpretability.
+[679.12:681.12] Now again,
+[681.12:685.12] well, let's recall the elements of the parameter estimation model.
+[685.12:689.12] So we have a parameter space.
+[689.12:696.12] So in the least squares, you put non-negatives parameters.
+[696.12:698.12] In that case,
+[698.12:702.12] your X should be constrained to have non-negative entries.
+[702.12:707.12] So that telegraphic X could be just non-negative entries, for example.
+[707.12:710.12] Now a parameter that we are speaking,
+[710.12:716.12] is an element of this parameter space that generates the data.
+[716.12:719.12] Somehow,
+[719.12:726.12] an example that follows this distribution.
+[726.12:728.12] Good.
+[728.12:733.12] So one way to do a generate loss function is to say that,
+[733.12:739.12] look, so if I know what these distributions are as a function of my parameter,
+[739.12:742.12] why don't I pick a parameter
+[742.12:747.12] that gives me the maximum likelihood, or the maximum probability possible
+[747.12:750.12] for the observations that I have?
+[750.12:753.12] Does this make sense?
+[753.12:755.12] Because you observe some data,
+[755.12:760.12] you have a parametric distribution.
+[760.12:763.12] So why not pick the parameter
+[763.12:769.12] that gives you the maximum probability of observing that data?
+[769.12:774.12] That is precisely the maximum likelihood principle.
+[774.12:781.12] So one way to pick this loss function is precisely you look at the negative load likelihood
+[781.12:787.12] of the data distribution given the parameter.
+[787.12:790.12] I'll make this a bit clearer.
+[790.12:793.12] So let's think about the Tremendium model again.
+[793.12:795.12] So I use the vector notation in this case.
+[795.12:799.12] So the data is a, which we know,
+[799.12:802.12] x-match rule, which we do not know,
+[802.12:806.12] plus Gaussian perturbations.
+[806.12:810.12] In the rest of the station, I will explain why Gaussian perturbations are important,
+[810.12:812.12] for example, in my nitty-grasian's imaging.
+[812.12:816.12] But let's assume for the sake of this particular lecture,
+[816.12:820.12] we know the distribution of W.
+[820.12:825.12] So the distribution of the data given the parameter,
+[825.12:828.12] actually it follows,
+[828.12:838.12] so the mean of B is expectation of A x plus W.
+[838.12:841.12] A x is deterministic.
+[841.12:844.12] The parameter is given, the data A is given.
+[844.12:846.12] So it's A x.
+[846.12:851.12] Expectation of W is just 0.
+[851.12:856.12] Because the noise has 0 mean in the covariance matrix.
+[856.12:863.12] And you know how to write the multidimensional Gaussian distribution.
+[863.12:869.12] So whatever the parameter is minus its mean,
+[869.12:878.12] transpose, sigma inverse, the same thing here.
+[878.12:883.12] I divide by 2, exponentiate it.
+[883.12:887.12] So the mean here is here.
+[887.12:892.12] Sigma, the covariance matrix is sigma squared identity.
+[892.12:895.12] So this goes to the denominator.
+[895.12:902.12] And we have this, does this make sense?
+[902.12:905.12] So here's the distribution.
+[905.12:907.12] So the maximum likelihood estimator,
+[907.12:913.12] what it does is it looks at logarithm of this.
+[913.12:917.12] We negate it because we like minimization problems for reasons
+[917.12:923.12] that will be obvious pretty soon.
+[923.12:929.12] So when you do that, even this distribution becomes the following.
+[929.12:935.12] So the log, you pop out n,
+[935.12:939.12] the square root here gives you this half.
+[939.12:942.12] So you have this log sigma squared.
+[942.12:944.12] Remember there's an negation.
+[944.12:947.12] So this is plus 1 over 2 sigma squared.
+[947.12:950.12] So exponential n log cancels.
+[950.12:953.12] We have this quadratic loss.
+[953.12:958.12] Is this clear?
+[958.12:965.12] So as far as your concerns here,
+[965.12:975.12] the maximum likelihood estimator is the minimizer of this quadratic loss.
+[975.12:979.12] So the way we reach that loss is that we assume that.
+[979.12:983.12] Noise is Gaussian distributed.
+[983.12:988.12] It naturally popped out.
+[988.12:990.12] So here's the summary.
+[990.12:992.12] The less estimator, the least square estimator,
+[992.12:999.12] is the maximum likelihood estimator of the linear model on the Gaussian nodes.
+[999.12:1002.12] And the loss function is quadratic.
+[1002.12:1005.12] If you had a different distribution here,
+[1005.12:1007.12] you can go over the same type of derivation
+[1007.12:1012.12] and you will have a different loss function.
+[1012.12:1018.12] In fact, here is how you can do it.
+[1018.12:1022.12] So let's say you have this a-i-b-i pairs.
+[1022.12:1026.12] We have this distribution that is given to you.
+[1026.12:1032.12] Let's assume that we have i-d samples.
+[1032.12:1035.12] Independent and identically distributed.
+[1035.12:1043.12] So in this case, the probability distribution will be a product over the individual's data pairs.
+[1043.12:1049.12] We try to maximize the distance to x.
+[1049.12:1055.12] So maximizing this probability gives the mls estimator.
+[1055.12:1062.12] So maybe this is a type of which I will try to correct.
+[1062.12:1067.12] This is pxb.
+[1067.12:1071.12] So maximizing this probability gives the mls estimator.
+[1071.12:1079.12] So maximizing px and minimizing the negative load px is also the same solution set.
+[1079.12:1081.12] All right.
+[1081.12:1086.12] I'll give you more examples in restitution.
+[1086.12:1097.12] So in general, you notice that the probability distribution et cetera is nice.
+[1097.12:1099.12] You can go to loss functions.
+[1099.12:1100.12] The source is also nice.
+[1100.12:1104.12] It's a principle payoff writing estimators.
+[1104.12:1110.12] Alternatively, you can just write an estimator as just an optimization problem.
+[1110.12:1117.12] I think the data, the labels, then you must dodge it a little bit.
+[1117.12:1119.12] And you have a loss function.
+[1119.12:1121.12] You don't know what that loss function.
+[1121.12:1127.12] You will see that if you use machine learning to come up with loss functions.
+[1127.12:1129.12] It's a bit more advanced topic.
+[1129.12:1137.12] But in general, we can think about maximum likelihood type estimators where you just have a minimization problem with some constraint.
+[1137.12:1144.12] And we can just call this an m estimator, a minimization type of estimator or maximum likelihood type of estimator.
+[1144.12:1152.12] In the case of least squares, for example, you know, as opposed to squaring it, you can just use the absolute error.
+[1152.12:1159.12] This is called the least absolute deviation with estimator.
+[1159.12:1164.12] And this estimator turns off to be more robust to all pliers.
+[1164.12:1170.12] I think, Aaron, lecture five, I will tell you precisely why.
+[1170.12:1175.12] You just write it down, an optimization problem.
+[1175.12:1177.12] No probabilities involved.
+[1177.12:1179.12] You just write on it.
+[1179.12:1180.12] You like this.
+[1180.12:1183.12] It makes sense.
+[1183.12:1184.12] All right.
+[1184.12:1188.12] So some of the practical issues.
+[1188.12:1191.12] I mean, I can of course write it.
+[1191.12:1195.12] Is the formulation reasonable?
+[1195.12:1196.12] Of course.
+[1196.12:1204.12] In the case of maximum likelihood estimator, a mal estimator, it puts reasonable because you have probability distributions.
+[1204.12:1210.12] You're trying to find the parameter that has the highest likelihood of generating the data.
+[1210.12:1212.12] It kind of makes sense.
+[1212.12:1215.12] Or you just spend instead, you know, I don't like square loss.
+[1215.12:1218.12] I put absolute loss, absolute error.
+[1218.12:1221.12] That is better for me.
+[1221.12:1224.12] And you have to argue for his reasonableness.
+[1224.12:1233.12] And in this case, you will see that the data size play an important role on the performance of this estimator.
+[1233.12:1234.12] Okay.
+[1234.12:1237.12] So let's talk about this.
+[1237.12:1240.12] Now, I mean to pick up paste here.
+[1240.12:1247.12] So the second advantage to check the fidelity is, you know, like, behave our estimator.
+[1247.12:1257.12] What we try to do is characterize how well we're doing with this estimator in approximating the true parameter x natural.
+[1257.12:1260.12] I remember this is what we care.
+[1260.12:1263.12] This is what we play for.
+[1263.12:1268.12] We want to get that parameter.
+[1268.12:1276.12] So the idea is that given some data, amount of data, what we're doing to try to do is show that our metric.
+[1276.12:1285.12] So we're going to pick a metric that makes sense is small when some condition is satisfied.
+[1285.12:1291.12] So what could be the metric we can think about the L2 error.
+[1291.12:1302.12] Ideally, we want our estimator to be as close to the true parameter as possible.
+[1302.12:1307.12] How do we measure that? We can measure it without two error.
+[1307.12:1309.12] It's differentiable.
+[1309.12:1314.12] You can pick the L1 error.
+[1314.12:1320.12] Then you can look at, you know, how well you do an expectation.
+[1320.12:1325.12] Keep in all that data generation randomness involved.
+[1325.12:1332.12] And look at how much we deviate from it in probability.
+[1332.12:1336.12] You can take a look at the distribution of your estimator.
+[1336.12:1342.12] Remember, an estimator is a random variable.
+[1342.12:1346.12] Without realizing all these data points, you can take things up.
+[1346.12:1348.12] It's a random variable.
+[1348.12:1351.12] So you can look at its distribution under the chosen probabilistic follows.
+[1351.12:1357.12] And they don't want to follow those like a nice distribution around the true parameter.
+[1357.12:1361.12] So you can look at a asymptotic normality or local asymptotic normality.
+[1361.12:1366.12] So these are PhD level topics.
+[1366.12:1372.12] I'll have a supplementary-stlyed in-resetation one about this.
+[1372.12:1377.12] But I'll give you some examples on the errors.
+[1377.12:1382.12] So let's think about, we think again, this Gaussian linear model.
+[1382.12:1384.12] So here's our model.
+[1384.12:1390.12] There is Gaussian noise.
+[1390.12:1399.12] So this w is sampled from the Gaussian distribution.
+[1399.12:1403.12] We saw that the ML estimator is this quadratic loss.
+[1403.12:1408.12] So far, are you with me?
+[1408.12:1415.12] You follow in?
+[1415.12:1421.12] Now, if you think about it here, the solution to this is not necessarily unique.
+[1421.12:1425.12] But you need to pick one element.
+[1425.12:1432.12] If your linear algebra says that the tingling, one solution is the pseudo-inverse B.
+[1432.12:1439.12] So you want to minimize this problem, this least squared cost.
+[1439.12:1446.12] One of the solutions is just the pseudo-inverse of A, A, multiplied by B.
+[1446.12:1452.12] Like you could know this actually from your linear algebra lecture.
+[1452.12:1457.12] So if you have a system of equations, things like this.
+[1457.12:1466.12] In MATLAB, it's A slash B.
+[1466.12:1474.12] So you can take the pseudo-inverse of A, multiply B, and it will give you an element.
+[1474.12:1481.12] Now, if this A also had random entries, what you can do is
+[1481.12:1487.12] actually characterize the performance of the following.
+[1487.12:1501.12] So A, student-inverse, A, X natural plus W minus X natural squared in expectation.
+[1501.12:1506.12] So you will see that this particular product follows the ambitial distribution.
+[1506.12:1521.12] And you can prove after some magic that this will go down with N over...
+[1521.12:1524.12] Sorry, P over...
+[1524.12:1525.12] Sorry.
+[1525.12:1529.12] So this error will be P over N.
+[1529.12:1533.12] And it will go to 0 as N goes up.
+[1533.12:1538.12] If N is multiple times P, this has been very, very small.
+[1538.12:1544.12] So the matrix A is a very tall matrix.
+[1544.12:1555.12] You basically deep down the norms with more and more realizations.
+[1555.12:1561.12] But in general...
+[1561.12:1566.12] So in the general spacing, what you have is that this ML estimator.
+[1566.12:1576.12] So remember, in the way these settings up, this PXB was the product over P, B, I,
+[1576.12:1582.12] given A, I, and X.
+[1582.12:1589.12] When you take the negative load likelihood, this product becomes a sum.
+[1589.12:1592.12] And you're averaging, you know.
+[1592.12:1597.12] So this is our cost function for our estimator.
+[1597.12:1606.12] And it turns out that under some technical conditions, this random variable,
+[1606.12:1615.12] X, R, ML, after some widening through what is called as the Fisher Information Matrix.
+[1615.12:1621.12] Now, there's a bit of jargon here, and I apologize.
+[1621.12:1624.12] But the way to get here is...
+[1624.12:1630.12] Literally, you have to read a book, okay?
+[1630.12:1638.12] So what I would like you to do is focus on the N message, which is...
+[1638.12:1647.12] After reading a book, you can show that the performance of the ML estimator
+[1647.12:1654.12] is roughly speaking this P over N.
+[1654.12:1663.12] As you have more data, which is the dimension for the data size N,
+[1663.12:1668.12] P is the ambient dimension, right?
+[1668.12:1676.12] If you have enough data points, you can show that in expectation, actually,
+[1676.12:1681.12] among the high-proporting.
+[1681.12:1690.12] You will show that the maximum like the estimator will behave as if you're beating
+[1690.12:1693.12] down this dimension with the number of data samples.
+[1693.12:1697.12] And I'll give you a complete example now, so that this is much clearer.
+[1697.12:1700.12] So I will not get into the details.
+[1700.12:1708.12] If you're interested in the actual derivation, there's star material at the rest of the station.
+[1708.12:1711.12] The details and directions are there.
+[1711.12:1717.12] Focus on roughly speaking the performance of ML estimator
+[1717.12:1722.12] in predicting the true parameter.
+[1722.12:1725.12] When the dimension is high, it is difficult, right?
+[1725.12:1729.12] So this estimator's performance gets worse as the dimensions grow.
+[1729.12:1735.12] But it gets better than the number of data points also grow.
+[1735.12:1740.12] So if the amount of data is like multiple times the dimension,
+[1740.12:1743.12] this estimator will perform well.
+[1743.12:1748.12] Your error will be small. You can make it small by collecting more data.
+[1748.12:1752.12] So this makes sense?
+[1752.12:1755.12] Okay, so here's one example.
+[1755.12:1760.12] This is former KTG's office, Dingo Mine, and Huang Li, who's a professor in
+[1760.12:1764.12] Tibernay International University.
+[1764.12:1767.12] So one of the problems that you are working on was this quantum tomography problem,
+[1767.12:1773.12] where you're trying to estimate the quantum state.
+[1773.12:1778.12] And in this problem, the state is determined by a post-dessonate's
+[1778.12:1784.12] permission matrix, semi-desson-transmission matrix, density matrix.
+[1784.12:1791.12] So if you have the say Q-Q-Dit, this density matrix is 2 to the q by 2 to the q.
+[1791.12:1794.12] It's a large matrix, right?
+[1794.12:1799.12] And the measurements you can take by using what is called as the PODM measurements,
+[1799.12:1803.12] the positive operator-valid measurements.
+[1803.12:1806.12] So they clever pieces like David Groff.
+[1806.12:1811.12] They set up poly operators. These are some measurement matrices,
+[1811.12:1817.12] or Frank one, that create the basis for this matrix space.
+[1817.12:1823.12] And what you do is you observe accounts when you take it in a product,
+[1823.12:1828.12] the poly measurements. So this is a matrix inner product.
+[1828.12:1833.12] So this is a linear model on the matrices.
+[1833.12:1838.12] I'll talk a little bit more about this in the rest of the station as well.
+[1838.12:1844.12] But in this case, you observe these accounts and you can write down the maximum
+[1844.12:1848.12] like to the estimator for the density matrix as follows.
+[1848.12:1854.12] So these operators, PODM operators, poly operators, they're given to you.
+[1854.12:1857.12] You do not know your density matrix.
+[1857.12:1861.12] You observe accounts for each of these PODMs.
+[1861.12:1866.12] And you take the empirical average, right?
+[1866.12:1870.12] The matrix you're seeking is a Hermitian-Symmetric matrix,
+[1870.12:1874.12] and it's supposed to send a definite, and here's our ML estimator.
+[1874.12:1879.12] If you're interested in this, send me an instinct. I'm happy to talk about this in detail.
+[1879.12:1882.12] It seems complicated, but it is not.
+[1882.12:1887.12] But what is surprising is this flop.
+[1887.12:1893.12] So we actually looked into generating this data.
+[1893.12:1900.12] We set up the optimization problem, which is actually very difficult to solve by the way.
+[1900.12:1904.12] And we solve it numerically.
+[1904.12:1911.12] And what we do here is that we're showing the solution error.
+[1911.12:1913.12] So there's no square here.
+[1913.12:1916.12] So what we expect here is this.
+[1916.12:1928.12] What we expect is this ML estimator minus the true provider for being a small square
+[1928.12:1931.12] at the goal down something like P.
+[1931.12:1938.12] In this case, I think it's P squared, which is a P by P matrix divided by N.
+[1938.12:1940.12] So here there's no square.
+[1940.12:1942.12] So this is not here.
+[1942.12:1943.12] So this is something like this.
+[1943.12:1951.12] So what we expect is error to go down with the square of N.
+[1951.12:1954.12] What the theory says.
+[1954.12:1960.12] Look at this fit. So this is some linear fit into the same curve.
+[1960.12:1965.12] So this is logarithmic scale and this is logarithmic scale.
+[1965.12:1970.12] So this actually is a straight line in the log logs scale.
+[1970.12:1976.12] In restitation through, we have some handout that goes over these reading plots
+[1976.12:1979.12] and how we get these slopes and so on and so forth.
+[1979.12:1981.12] So for the time being, let's not worry about it.
+[1981.12:1990.12] Let's just see how well the theory predicts the performance of the estimator.
+[1990.12:1993.12] It's a pretty good fit if you ask me.
+[1993.12:1996.12] All right.
+[1996.12:2001.12] Now, there are some caveats.
+[2001.12:2004.12] So we've been talking about the ML estimator.
+[2004.12:2010.12] It turns out that there are other estimators that beautifully beep the ML estimator.
+[2010.12:2014.12] And the simplest problem is just mean estimate.
+[2014.12:2019.12] So like, suppose our model disks literally,
+[2019.12:2025.12] bi is some parameter i plus Gaussian noise.
+[2025.12:2029.12] This is the simplest model.
+[2029.12:2037.12] Let me put it here so it's clear.
+[2037.12:2040.12] How do we find this?
+[2040.12:2043.12] If you were to set up the ML estimator,
+[2043.12:2050.12] the ML estimator will just give you B as the solution.
+[2050.12:2055.12] But what the James sign estimator says is that shrink it.
+[2055.12:2058.12] That's what P is the dimension.
+[2058.12:2062.12] B squared is the norm.
+[2062.12:2066.12] So what this James sign estimator does is depending on what the dimension is
+[2066.12:2069.12] and what the norm of the vector is,
+[2069.12:2072.12] it scales it down or even fits it to zero.
+[2072.12:2075.12] Like it says it's up to zero,
+[2075.12:2078.12] as opposed to just outputting what you observe.
+[2078.12:2083.12] And what you can prove is that when P is greater than T,
+[2083.12:2091.12] this James sign estimator that literally shrinks or scales the observation towards the origin,
+[2091.12:2094.12] uniformly off-performs the ML estimator.
+[2094.12:2097.12] So that's the caveat.
+[2097.12:2103.12] We like ML estimations, but there are other estimators that can be better.
+[2103.12:2106.12] So it is important to keep this in mind.
+[2106.12:2109.12] That's why, for example, M estimations.
+[2109.12:2117.12] You can write down other estimators that might perform actually better than ML estimations.
+[2117.12:2120.12] So here's the elephant in the room.
+[2120.12:2126.12] The cost linear model, what happens when the number of samples is smaller than P?
+[2126.12:2128.12] I kind of hinted at this.
+[2128.12:2132.12] So if you think about it, there are infinitely many solutions.
+[2132.12:2137.12] So here the matrix A is N by P.
+[2137.12:2145.12] When N is less than P, then there's a null space of A.
+[2145.12:2152.12] So you can pick any vector in the null space of A and add it to the true parameter.
+[2152.12:2158.12] So you can take A x plus h, h is in the null space.
+[2158.12:2162.12] This is A x natural plus A h.
+[2162.12:2165.12] But because h is in the null space, this is zero.
+[2165.12:2169.12] So you get there are infinitely many solutions to this problem.
+[2169.12:2171.12] N is less than P.
+[2171.12:2179.12] And in fact, it is a P minus N dimensional hyperplane in P dimensions.
+[2179.12:2185.12] But then again, you can again think about the pseudo-none solution.
+[2185.12:2191.12] I have that picked the minimum out to non-soluble solution among all of these solutions.
+[2191.12:2194.12] So let's call this the candidate solution.
+[2194.12:2199.12] And you can show that this candidate solution behaves very well.
+[2199.12:2207.12] So L, the number of data points gets closer to P.
+[2207.12:2218.12] In the noise of the case, you can actually show that this nicely goes down to zero.
+[2218.12:2223.12] Otherwise, you can arbitrarily overfit.
+[2223.12:2230.12] You can arbitrarily far away from the true parameter.
+[2230.12:2232.12] All right.
+[2232.12:2233.12] Good.
+[2233.12:2240.12] So far, we've seen that the estimator's performance depends on the data.
+[2240.12:2248.12] Like things like this, we saw that this is something like P over N.
+[2248.12:2256.12] Like you can use this maximum likelihood estimator, you can try to prove theorems about it.
+[2256.12:2260.12] But you will see that this is not enough.
+[2260.12:2266.12] The reason is, in the end, we have to have algorithms to find this star.
+[2266.12:2271.12] X star is the solution to an optimization formulation.
+[2271.12:2277.12] But the way, you know, computers are organized, you need to provide numerical solutions.
+[2277.12:2284.12] So we need some computational efforts to approximate X star.
+[2284.12:2294.12] Now, let's say we have an algorithm that takes into the data and then somehow tries to approximate this estimator solution.
+[2294.12:2295.12] All right.
+[2295.12:2296.12] So think about it.
+[2296.12:2300.12] We have our X star distance, the estimator solution.
+[2300.12:2302.12] We have the true parameter.
+[2302.12:2307.12] And, you know, there's a typo here.
+[2307.12:2309.12] So this should be the next star.
+[2309.12:2317.12] So this goes down with data.
+[2317.12:2318.12] All right.
+[2318.12:2323.12] So like we've shown that this is something like P over N.
+[2323.12:2331.12] But remember, we will have an algorithm that somehow tries to get close to this.
+[2331.12:2332.12] All right.
+[2332.12:2334.12] We run it on a GPU.
+[2334.12:2341.12] We contribute to the global warming so that we can estimate this parameter.
+[2341.12:2346.12] So again, there's a typo here, this is the difference star.
+[2346.12:2352.12] So what XT is trying to do is approximate this X star numerically.
+[2352.12:2357.12] So this is what I called this error-bit composition.
+[2357.12:2366.12] So if you think about it, in the end what we care is at time T how well our computer estimate also true parameter is.
+[2366.12:2371.12] By using simple triangle inequality, you can show that it has two parts.
+[2371.12:2376.12] One that you can be done with computation.
+[2376.12:2381.12] The other you can be done with data.
+[2381.12:2382.12] All right.
+[2382.12:2385.12] So this is your estimator's performance.
+[2385.12:2390.12] This you can make go down with more and more data.
+[2390.12:2396.12] And this is your algorithm's performance in estimating this X star.
+[2396.12:2406.12] You can go down with time, computational resources, money.
+[2406.12:2414.12] And what is interesting here is that the surprising thing is this composition is the worst thing is the composition.
+[2414.12:2420.12] In the sense that you are trying to approximate this estimator,
+[2420.12:2422.12] but your...
+[2422.12:2428.12] You make the approximation maybe even closer to the true parameter than your estimator solution.
+[2428.12:2435.12] So you'll see a lot of people trying to do early stopping of all your elements to do things like implicit regularization.
+[2435.12:2437.12] And we will talk about this.
+[2437.12:2441.12] All right.
+[2441.12:2442.12] Good.
+[2442.12:2447.12] So this is the slide that will make everybody cry.
+[2447.12:2449.12] We're going to peel the on end.
+[2449.12:2452.12] So going back to the original model.
+[2452.12:2459.12] So let's say our supervisor had a true function in some true function class.
+[2459.12:2462.12] Okay.
+[2462.12:2466.12] Now we, as the learning machine, we none have access to this.
+[2466.12:2470.12] So we assume this function class.
+[2470.12:2473.12] This is called the model mismatch.
+[2473.12:2475.12] All right.
+[2475.12:2480.12] Now on their this model mismatch, let's say we have some true parameter.
+[2480.12:2481.12] Right.
+[2481.12:2486.12] So you write down the empirical risk minimization and so on and so forth.
+[2486.12:2490.12] You have this true parameter.
+[2490.12:2491.12] Sorry.
+[2491.12:2494.12] You have the population risk and you have this true parameter.
+[2494.12:2496.12] But then we have to work with the empirical estimates.
+[2496.12:2500.12] So we have our estimator solution.
+[2500.12:2501.12] It's star.
+[2501.12:2505.12] And then we have our algorithm that's trying to approximate the solution.
+[2505.12:2506.12] HT.
+[2506.12:2508.12] Right.
+[2508.12:2511.12] So what we care about is our algorithm.
+[2511.12:2516.12] How well it is approximating the true supervisor function.
+[2516.12:2517.12] Right.
+[2517.12:2520.12] Trying to be a quality yet.
+[2520.12:2525.12] So there's a nice deco position here because what we care is.
+[2525.12:2527.12] This optimization error, right.
+[2527.12:2533.12] Our algorithm is trying to find the estimator solution.
+[2533.12:2538.12] The estimator is trying to approximate.
+[2538.12:2542.12] The solution under the assumed function in class.
+[2542.12:2543.12] Right.
+[2543.12:2547.12] And by assuming this function class.
+[2547.12:2550.12] We're trying to approximate the true function.
+[2550.12:2551.12] Right.
+[2551.12:2556.12] So there's an optimization error which we can beat with computation.
+[2556.12:2562.12] There's a particular error which we can beat with more data.
+[2562.12:2563.12] Right.
+[2563.12:2570.12] And then there's the model error which we can try to beat with prior information inductive biases.
+[2570.12:2571.12] Right.
+[2571.12:2573.12] Things like this.
+[2573.12:2577.12] And remember, whatever it is.
+[2577.12:2584.12] Your algorithm, because all of these are like the worst case inequalities, right.
+[2584.12:2588.12] Your, even if you have an imprecise solution.
+[2588.12:2592.12] Your algorithm makes you do well when you stop it already for example.
+[2592.12:2593.12] Right.
+[2593.12:2596.12] It's the puzzling thing.
+[2596.12:2598.12] All right.
+[2598.12:2602.12] Now the thing that I would like to mention is that as we will see,
+[2602.12:2607.12] neural networks turn out to be universally approximate.
+[2607.12:2609.12] So we're going to get into the gut soap.
+[2609.12:2615.12] So whatever any function is, you can approximate it with neural networks, which is also interesting.
+[2615.12:2616.12] All right.
+[2616.12:2619.12] So we'll see how we can beat down modeling errors,
+[2619.12:2625.12] and the way you're testing is not how you can even handle optimization error.
+[2625.12:2626.12] Okay.
+[2626.12:2629.12] What's exciting about this course.
+[2629.12:2635.12] Now here I'm going to give you some domain clature, and I'm literally running out of time.
+[2635.12:2638.12] I'm sorry.
+[2638.12:2642.12] So in this case, if you just recite what we talked about in the parametric setting,
+[2642.12:2650.12] there's a two parameter under the assumed parameters set for the supervisor.
+[2650.12:2651.12] Right.
+[2651.12:2658.12] This is what our parameter is under our assumed parameter constraints.
+[2658.12:2662.12] Solution of the estimator are algorithm.
+[2662.12:2666.12] So here, if you look at the risk definitions,
+[2666.12:2670.12] the empirical risk estimate is called the training error.
+[2670.12:2675.12] The population risk is called the test error.
+[2675.12:2678.12] You know, the supreme warrior parameter class,
+[2678.12:2685.12] the difference between the population and the empirical risk is called the generalization error.
+[2685.12:2694.12] You know, the population risk at the estimator's solution to the true parameters for the excess risks,
+[2694.12:2700.12] and you know, some of these things have dependences, which I summarized here.
+[2700.12:2704.12] I think what I will do is I will pick up this at the recitation on Friday,
+[2704.12:2708.12] so that I can explain it a little bit better.
+[2708.12:2712.12] I'm unfortunately running out of time, and I hate to go over time, so we will stop.
+[2712.12:2719.12] So what I'll do is in recitation, I will pick up at slide 34.
+[2719.12:2720.12] All right.
+[2720.12:2723.12] And then I'll explain the rest.
+[2723.12:2729.12] And then I will continue with recitation on Friday.
+[2729.12:2734.12] So what this is again for the risk minimization setting,
+[2734.12:2737.12] there's almost parametric estimation setting,
+[2737.12:2742.12] there's again the composition, and I've been controlled the terms into the composition,
+[2742.12:2746.12] and I will explain more about this in the rest of the session.
+[2746.12:2748.12] So I'll see you guys on Friday.
+[2748.12:2776.12] Thanks for tuning in.

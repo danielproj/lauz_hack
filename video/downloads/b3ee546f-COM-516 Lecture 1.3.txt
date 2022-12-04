@@ -1,0 +1,162 @@
+~COM-516 Lecture 1.3
+~2020-07-27T22:15:22.705+02:00
+~https://tube.switch.ch/videos/b3ee546f
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:9.38] In this last part of today's lecture, I would like to tell you a bit about classification
+[9.38:14.32] of states in the Markov chain where we will start this subject and go on in the coming
+[14.32:16.12] lectures.
+[16.12:21.52] So let me start with some definitions.
+[21.52:43.239999999999995] We will say that two states in the Markov chain communicate in S, communicate and we
+[43.24:55.760000000000005] will write this as a double arrow from i to j. If there exist two numbers n and m rather
+[55.76:77.52] than or equal to zero, search that Pijn is positive and Pjim is positive.
+[77.52:94.32] So what does that mean?
+[94.32:100.67999999999999] That is if you look in the graph, it is saying that there is a path going from i to j and there
+[100.67999999999999:107.52] is also a path going from j to i. This path may not be the same of course but there must
+[107.52:114.72] be a path in both directions so that we say that the two states communicate.
+[114.72:118.88] We will have a small convention here because I said n and m being greater than or equal
+[118.88:124.92] to zero. What does that mean when n is equal to zero, this Pijn, so here we have a small
+[124.92:137.16] convention. We will write that Pij0 is actually delta ij. It is equal to 1 if i is equal to
+[137.16:151.92] j and zero if i is not equal to j. So with this convention state i always communicate
+[151.92:165.28] with itself. So i communicate with i for every i in S. This is just a convention. I mean
+[165.28:175.56] nothing very important. But with this convention we have the following fact about this relation.
+[175.56:198.44] The relation is double r r i to j. It is reflexive that is i communicate with i for every i in S.
+[198.44:211.92] It is symmetric. i communicate with j even only if j communicate with i for every i j in
+[211.92:219.68] S. That is obvious right from the definition. Actually you can just read the definition
+[219.68:229.6] and it says it directly. The third property is that this relation is transitive in the
+[229.6:245.36] sense that if i communicate with j and j communicate with k then i communicate with k and this
+[245.36:261.92] holds for every triple ij k in S. That is kind of intuitive. Let me just prove it formally.
+[261.92:271.12] In words it says the transitive T here. In words what does that say? It says that if
+[271.12:278.12] there is a path from i to j and a path from j to k then there is a path from i to k.
+[278.12:300.12] Formally if there exists an n non-negative search that pij of n is positive, sorry, pij
+[300.12:313.6] is positive and there is an m. Where is n equal to zero? Search that pij k of m is positive.
+[313.6:325.52] Then pij of n plus m. So there is a positive probability to reach j from i in n steps and
+[325.52:339.2] there is a positive probability to reach k from j in m steps. Then pij of n plus m by
+[339.2:352.2] the Chapman-Doron-Golf equations will be written as pn plus m element i k and so this
+[352.2:370.9] can be written as sum of j in S of pn ij times pn j k the matrix product, which is sum
+[370.9:386.84] over j in S of pn j n times pj k m. Yes, okay, I should have written here, sorry, I should
+[386.84:392.84] have written here L because you have assumed that j was a particular point to, okay, let
+[392.84:406.17999999999995] you rewrite this, pil, pk, okay, it should do me index, nothing was wrong before but now,
+[406.17999999999995:412.7] okay, so this is clearer because now among these L's there is of course the j that we have
+[412.7:417.55999999999995] above. So this is certainly because these are all probabilities, this is certainly greater
+[417.56:431.7] than pij n times pj k m and both these numbers are positive, so the product is also positive.
+[431.7:435.92] So this is saying, if there is, this is exactly saying again that there is a path from i
+[435.92:442.34000000000003] to j, there is a path from j to k, so there is a path from i to k or say it otherwise,
+[442.34000000000003:447.34000000000003] there is a positive probability to go in certain number of steps from i to j, there is also
+[447.34:453.82] a positive probability to go from j to k in another number of steps, therefore adding
+[453.82:461.9] this number of steps, there is a positive probability to go from i to k in n plus m steps,
+[461.9:476.05999999999995] okay, so we have a relation, this double arrow that is reflexive, symmetric, transitive,
+[476.06:490.22] and so this is an equivalence relation, so the relation i to double arrow j is an equivalence
+[490.22:505.98] relation, therefore whenever you have an equivalence relation in a set,
+[505.98:511.42] you can separate the set in equivalence classes, so the state space s,
+[511.42:539.4200000000001] therefore be partitioned into equivalence classes, okay, let me on the line a bit,
+[539.42:551.42] here, we have an equivalence relation that leads to equivalence classes, and of course
+[551.42:560.18] what are these equivalence classes, so I will belong to j even only if, we have this
+[560.18:577.3] double arrow even only if i j belong to the same class, okay, so whenever we have a mark
+[577.3:585.3] of chain we can always do this and separate the chain into equivalence classes, now inside,
+[585.3:593.62] inside the class we will see that we will be able to characterize what kind of states we have,
+[593.62:603.06] and we will see that inside the class states share common properties, another definition,
+[603.06:610.02] I just would like to introduce before moving to examples, is well two definitions actually,
+[610.02:622.74] we say that a chain, a mark of chain, I will start talking about chains, but okay, let me
+[622.74:628.66] give it a mark of chain for now, a mark of chain is said to be irreducible,
+[628.66:648.3399999999999] if all states communicate, that is we have only one class, okay,
+[659.4599999999999:667.54] and another definition is that a state i is absorbing,
+[667.54:695.4599999999999] a state i is absorbing, if p i i is equal to 1, so in this case a state, an absorbing state will only be,
+[695.46:705.0600000000001] it's alone in his class, and there will be only one state, it will not communicate with any other
+[705.0600000000001:712.58] state, it just stays, whenever you get there, you stay on the state where you are, so okay,
+[712.58:718.34] so let me let me try to see what kind of equivalence classes we have in the chains that we have
+[718.34:730.4200000000001] already seen, so let me move back to the first example I gave, which is the party example,
+[732.34:739.7] so I YouTube perhaps think about it for a while, you can stop the video here, but here what do we have,
+[739.7:749.86] well we see that the concept, dance and bar states, there are always arrows from one to the other,
+[749.86:754.82] perhaps not from dance to concept, but you can always go from dance to concept by going to the bar,
+[754.82:767.46] for example, so here we have one equivalence class here, and of course another equivalence class
+[767.46:776.1800000000001] here, which is home, because this is an absorbing state, and there is an arrow going from bar to home,
+[776.1800000000001:781.7800000000001] but there is no arrow going in the other direction, so home is a class by itself, okay,
+[785.62:792.58] in the simple symmetric one and more example, we have the graph here, and so here while it's a
+[792.58:799.3000000000001] infinite chain, so of course you might say well it takes, it might take infinitely long to go from
+[799.3000000000001:805.38] one end to the other, sure, but if you take any two states i, j, they will communicate, right,
+[805.38:812.74] they will always be a pass from i to j, just go right until you read, if i is left from j, just go
+[813.38:821.7] right, j minus i steps, and from j to i there is another pass from going left, j minus i steps also,
+[821.7:833.3000000000001] okay, so this is what we call an irreducible chain, only one class, okay,
+[836.1800000000001:845.94] and of course now you can try this with values, other examples, let me just do another one, perhaps,
+[845.94:859.46] and, just the following, so let's say you know i have a chain with certain number of states,
+[861.0600000000001:871.0600000000001] okay, and now let me draw a row, the bit that run down here, and let's say i have an arrow from here
+[871.06:880.7399999999999] to here, from here to here, from here to here, okay, and perhaps a double arrow here, okay,
+[881.3:889.4599999999999] so now what are the classes here, indeed so one and two communicate with each other,
+[890.8199999999999:895.6199999999999] four and three communicate with each other, but okay, so in this example if i don't add arrows,
+[895.6199999999999:899.9399999999999] okay i have to add arrows actually because from three there need to be an arrow, okay, so perhaps
+[899.94:909.3000000000001] let me add another arrow here, okay, and perhaps from five, let me say there is an arrow, which is
+[909.3000000000001:914.1] this one, let me not worry about the weights of the arrow, we don't care at all about the weights here,
+[915.1400000000001:922.82] what do we have here, so we have one and two that do communicate, but there is no arrow going
+[922.82:930.58] from any other state to one and two, so one and two will be one class, okay, now there is an arrow
+[930.58:936.6600000000001] going from four to three and an arrow going from four to five, but once you're in four you can
+[936.6600000000001:946.34] not go back to four, so this is, this state is alone here, there is no, it doesn't communicate with
+[946.34:953.86] any other state and same thing for three here, and same thing for five, five is an absorbing state,
+[953.86:965.5400000000001] there is no arrow going out of it, okay, so one, two, here's an example and how you distinguish
+[966.4200000000001:976.26] which classes do you have, okay, and again identifying these classes, these equivalence classes,
+[976.26:983.3] is important because in every, in a single class we will have common properties for states,
+[983.3:989.7] so that's why we are worried about identifying these classes, okay, and one of the first property
+[989.7:1012.58] I would like to talk about is the periodicity, so here is the definition,
+[1012.58:1038.5] definition, for the state, i in s, define first, di, which is the gcd of the numbers n,
+[1038.5:1058.66] search that pi i of n is greater than zero, so you look at all the possible times where you can
+[1058.66:1064.9] come back to state i, if you start from state i, you look how many steps it takes for you to come
+[1064.9:1074.98] back and with positive probability, okay, you get a list of numbers and all the ends for which
+[1074.98:1082.02] there is a positive probability to come back in n steps and you take the gcd of these numbers,
+[1082.02:1103.1399999999999] all right, so now comes the definition, if di is equal to 1, we say that state i is up ahead,
+[1103.14:1126.98] okay, and on the contrary, if di is greater than 1, we say that state i is periodic
+[1126.98:1151.6200000000001] with period di, okay, so here are some facts that can be proven, but I won't do it here,
+[1151.62:1156.82] so the first fact is that in a given equivalence class,
+[1156.82:1184.6599999999999] I'm going to give an equivalence class, all states have the same period di equals d,
+[1187.78:1192.1799999999998] meaning also that if di is equal to 1, then di is equal to 1 for every i,
+[1194.34:1209.46] and another thing which is easy to observe is that if there is at least one self-loop,
+[1209.46:1222.98] so you know a probability to stay in one step, right, so if there is at least one self-loop in the class,
+[1222.98:1244.18] then all states are periodic, by or just what I said above, you know, so the state which has
+[1244.18:1254.26] the self-loop has a probability to come back to itself in one step, and so the gcd of the list of n,
+[1254.26:1263.0600000000002] so that pi i n is positive is just one, and since all the states in the class have the same period,
+[1263.0600000000002:1271.94] then all the states might be also periodic, okay, so some examples here, again, where you will get
+[1271.94:1288.1000000000001] some intuition, so, let me take this chain first,
+[1288.1:1304.82] okay, I have two states, zero, one, okay, and like this, so here, well it's the simplest mark of chain,
+[1304.82:1309.9399999999998] you can imagine, you have two states and you trans it from zero to one is 41, and then from one to
+[1309.9399999999998:1315.4599999999998] zero is 41, of course here if I draw on these two arrows, this is saying that I have 41 to go in one
+[1315.46:1322.02] direction, one to go in the other direction, but note that this periodicity does not depend on the
+[1322.02:1327.78] weight of the arrows, again, it's like the classes do not depend on the weight of the arrows, it just
+[1327.78:1334.66] depends on whether there is an arrow or not, right, when p ij is zero, there is no arrow, but when
+[1334.66:1341.46] there is an arrow, if p ij is 0.1 or 0.99, this doesn't change anything, okay, in this example, if you
+[1341.46:1348.1000000000001] have only these two states and these two arrows, there is no choice for the p ij, they need to be 1,
+[1348.1000000000001:1357.46] so clearly this is very, very, very, to, now of course if you change this to this example, where
+[1358.3400000000001:1366.58] now you have, let's say, 40 half to stay in one, half to come back to zero, 41 to go to zero,
+[1366.58:1373.46] so for zero is the same story, but in one there is the priority that you come back to one in one step,
+[1373.46:1384.58] so here the periodicity is one, and of course this goes on if you had three states, something like this,
+[1384.58:1392.4199999999998] and you know you have a circle like this, but let's say now there is a self-loop here, right,
+[1392.42:1398.5] so it's all one class because here the states communicate with each other, and here again the
+[1398.5:1408.5] periodicity is one, because there is one self-loop, so you have a periodicity for state two, and you
+[1408.5:1416.66] have therefore a periodicity for state zero and one, you can view it also like for zero, you can
+[1416.66:1423.5400000000002] go from zero to one to two and to zero, so that's three steps to come back to zero, but you can also
+[1423.5400000000002:1429.8600000000001] go from zero to one to two, then you stay one more steps in two, and then you go to zero, so that's
+[1429.8600000000001:1436.98] four steps, and the DCT between three and four is one, okay, that's a direct way to see it, also, okay,
+[1438.74:1445.3000000000002] and now let me consider cases where there are no self-loops, so I can consider here the other case,
+[1445.3:1461.3799999999999] where I have, let's say perhaps six states, zero, one, two, three, four, five, okay, and now I have
+[1461.3799999999999:1468.26] a circle, here that's what we call the cyclic random walk, because it turns in circles and there is
+[1468.26:1476.74] you can go either clockwise or counterclockwise, okay, let me not specify the weights of the arrow,
+[1476.74:1485.06] again the arrow element, okay, so what do I have here? Well, here if I'm starting from zero, I can
+[1485.06:1491.3799999999999] go to one and come back to zero, so that's two steps, but I can also go from zero to one and then
+[1491.38:1498.8200000000002] go to two and then come back to one and then come back to zero, and so this is four steps,
+[1499.6200000000001:1505.46] and I can go up to from zero to one to two to three and come back, that's six steps,
+[1505.46:1512.5800000000002] but whatever I do here, I will need an even number of steps to come back, and so the GCD of
+[1512.5800000000002:1519.46] even numbers is two, it's actually the same story as in the first example above with only zero and one,
+[1519.46:1528.26] right, when you have only two states, then the possibility to come back is only after an even
+[1528.26:1533.22] number of steps, actually you know that every even number of steps you will come back to zero,
+[1533.22:1538.74] here you don't know because you might go from zero to one to two to three, four, and then stay in two
+[1538.74:1548.1000000000001] and four for a long time, between two and four for a long time, but the there is always for every
+[1548.1:1557.3799999999999] even number, there is a positive probability to come back in this number of steps, and so the GCD
+[1557.3799999999999:1568.1] of the intern numbers is two, now yet another example, if I have only five states, looks a bit the same,
+[1568.1:1587.06] same slightly from the MOOC, then go clockwise or counterclockwise, now what is the pay of the
+[1587.06:1599.78] CT here, well of course if you go from zero to one and come back to zero directly then it's two steps,
+[1600.58:1606.1] if you go from zero to one to two, come back to one, come back to zero then it's four steps,
+[1608.02:1613.54] but what you could also do is to go from zero to one to two to three to four and come back to zero,
+[1613.54:1621.86] and that's five steps, and the GCD of four and five is again one, so here the periodicity is one,
+[1621.86:1628.5] even though there is no self-loop, we have an example where the periodicity is one because we can do
+[1628.5:1634.82] an even number of steps and not a number of steps and come back to the initial position,
+[1634.82:1648.4199999999998] okay so we will see that this periodicity plays an important role when we talk about convergence
+[1648.4199999999998:1653.86] of the limiting distribution of a Markov chain, and actually what plays an important role is
+[1653.86:1659.78] at periodicity, per dicchains create problems, per dicchains are the good ones for which we will have
+[1659.78:1672.74] nice convergence results, so this is everything I wanted to say for today.

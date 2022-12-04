@@ -1,0 +1,273 @@
+~COM-516 Lecture 4.2
+~2020-07-30T22:16:04.702+02:00
+~https://tube.switch.ch/videos/17f94eb8
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:8.56] Okay, so now I would like to talk about coupling of Markov chains.
+[8.56:13.88] So before we talked about coupling of distributions, it might perhaps seem a little weird that certainly
+[13.88:16.68] we talk about coupling of Markov chains.
+[16.68:24.240000000000002] Actually the way to see this is that a Markov chain is completely determined by its distribution
+[24.240000000000002:25.72] over time, if you want.
+[25.72:32.24] You remember you have this distribution by 0, by 1, by 2, by 3, that we have a sequence.
+[32.24:36.4] If you tell me the sequence of distributions of time, you tell me everything also about
+[36.4:37.879999999999995] the Markov chain.
+[37.879999999999995:40.44] So well, not everything, sorry.
+[40.44:48.239999999999995] Yeah, if you tell me the joint distribution over all times of a Markov chain, that's one
+[48.239999999999995:50.4] distribution.
+[50.4:56.199999999999996] And now if we have two Markov chains, we have two such distributions that we can couple
+[56.199999999999996:58.92] with the same principle as before.
+[58.92:62.36] So let's see how this goes concretely.
+[62.36:67.08] I mean, we won't be too theoretical here about defining coupling and product spaces and
+[67.08:68.08] all this.
+[68.08:71.16] We'll just try to be very concrete.
+[71.16:81.03999999999999] So let X and Y be two Markov chains and we will not be also super general like we will
+[81.03999999999999:87.4] just focus on what is useful for us.
+[87.4:100.03999999999999] And we will assume that these two Markov chains are defined on the same state space S.
+[100.04:121.4] And with the same transition matrix P.
+[121.4:128.64000000000001] But that these two Markov chains differ in their initial distribution.
+[128.64:149.35999999999999] So but with initial distributions P0 equals mu and P0 equals mu respectively.
+[149.35999999999999:154.83999999999997] Okay, so X starts with distribution mu.
+[154.83999999999997:157.04] Y starts with distribution mu.
+[157.04:159.48] For the rest they have the same behavior over time.
+[159.48:167.16] They have the same transition matrix and they evolve on the same state space.
+[167.16:187.7] So the distribution of these two Markov chains are given by…
+[187.7:191.48] So this is what we have seen already before.
+[191.48:200.6] So the probability that Xn is equal to I for a given I can be computed from P0 which is
+[200.6:211.51999999999998] here mu, the rho vector mu times the matrix P to the power n, and position I.
+[211.51999999999998:219.88] And similarly, the probability that Yn is equal to I will be the vector nu times P to the
+[219.88:224.04] n in position I.
+[224.04:229.24] That's for I in S.
+[229.24:234.48] So now if you want, we will couple these two distributions.
+[234.48:242.6] We will couple them by defining a Markov chain on the state space which is S Cartesian
+[242.6:247.51999999999998] product with S, S times S.
+[247.52:256.40000000000003] So we will define a new process that has a much larger state space than just X and Y.
+[256.40000000000003:258.72] And how do we do that too?
+[258.72:268.6] Copling of X and Y.
+[268.6:272.48] And of course there are many options.
+[272.48:283.72] But we will just focus on one coupling but you could imagine hundreds of different
+[283.72:298.16] couplings.
+[298.16:305.44] So this will be the following.
+[305.44:308.8] Which is whose first component is Xn.
+[308.8:320.24] So this is a B-dimensional process now with two components X and Y.
+[320.24:336.40000000000003] And it will be a process on the state space S times S, as I said before.
+[336.40000000000003:341.56] And this process will be defined as follows.
+[341.56:352.2] So first thing we will assume that it initial distribution to the point that Z0 is equal
+[352.2:359.96] to IK, given I and given K will simply be nu I times nu K.
+[359.96:365.12] Okay, well that's required if you want the process.
+[365.12:366.12] Well we will.
+[366.12:368.0] That's required but here we assume something.
+[368.0:370.0] We assume independence.
+[370.0:372.64] We assume independence between the two components.
+[372.64:376.8] We choose the first component I according to the distribution mu.
+[376.8:383.6] We choose the second component K according to the distribution mu.
+[383.6:385.6] Okay.
+[385.6:392.36] Then so this is for the initial distribution of this process.
+[392.36:417.16] Then we let X, Y evolve independently according to the transition matrix P.
+[417.16:425.52000000000004] As long as Xn is different from Xn.
+[425.52000000000004:431.24] So if you want, we chosen the initial position independently of the process Z.
+[431.24:439.28000000000003] And now this process Z is defined like the two, its two components X and Y are independent.
+[439.28000000000003:444.56] As long as they don't meet each other that is I is not equal to K.
+[444.56:449.48] You don't find a position where Xn is equal to Yn.
+[449.48:452.16] You let the two process evolve independently.
+[452.16:465.36] This is what is called sometimes in the literature statistical coupling.
+[465.36:469.64] The key word here is independence.
+[469.64:486.56] And then when when there is a time where Xn suddenly meets Yn, okay, this can happen.
+[486.56:488.15999999999997] You have transitions in the chain.
+[488.15999999999997:491.96] Okay, perhaps they do not start from the same position but you have transitions in the chain
+[491.96:498.36] and it happens that one transition gives rise to a meeting of X and Y.
+[498.36:508.36] And the two processes, the two processes, qualis.
+[508.36:520.64] In the sense they, this is saying that Xn stays equal to Yn for every n greater than or
+[520.64:542.6] equal to n. And the evoves together according to.
+[542.6:543.68] So the picture is the following.
+[543.68:550.56] So this is what is called in the literature grand coupling, this second coupling.
+[550.56:557.88] If you want this is the same sense of my example before, right, we had the two extreme examples
+[557.88:563.1999999999999] where the case where we had complete independence of the wrong variable X and Y.
+[563.1999999999999:567.4799999999999] And then there was the other case where X is equal to Y, okay.
+[567.4799999999999:571.92] And here so here we have the two mix together.
+[571.92:578.4399999999999] For the first part of the mark of chain, it's as if you have for the first part from
+[578.44:581.48] the beginning of time you have two independent mark of chains.
+[581.48:588.4000000000001] And as soon as these two meet, then they stay together.
+[588.4000000000001:597.8800000000001] So the picture is this.
+[597.8800000000001:603.4000000000001] Here this might be position I, this might be position K.
+[603.4:611.68] And okay, so so Y will do something like this, this is an X will do something like this.
+[611.68:616.1999999999999] And then perhaps at some point it happens.
+[616.1999999999999:622.36] So this is Y over time, this is Xn over time.
+[622.36:627.96] And when they meet, then they go on evolving.
+[627.96:636.5600000000001] But from this point onwards Xn is equal to Y, okay.
+[636.5600000000001:638.0400000000001] This is the picture.
+[638.0400000000001:640.0400000000001] And here we have independence.
+[640.0400000000001:644.6] Before they meet, complete independent process.
+[644.6:649.08] So the process Z that is generated with this coupling is a coupling of the mark of chain.
+[649.08:656.12] If you compute the margin and of this process, what does the first component of this process?
+[656.12:662.36] Well, it's as if you were looking actually at the line below, then you will see the process
+[662.36:665.0] X, okay.
+[665.0:669.0] Starting with distribution nu and then evolving according to P.
+[669.0:675.0] And likewise if you look at the second component of the process Z, then you will see the process
+[675.0:683.84] Y starting from this initial distribution nu.
+[683.84:690.2800000000001] Okay, so this is how we couple two mark of chains.
+[690.2800000000001:698.2] And we will, we choose this coupling for a good reason, okay.
+[698.2:704.76] And you could of course think of many other different couplings of mark of chains.
+[704.76:710.76] But let's focus on this one because this is the one that is of interest to us.
+[710.76:718.76] We will define, there is an important, very important thing to define here that we will
+[718.76:728.8] define as tau couple is the first time the two mark of chains X and Y meet.
+[728.8:734.56] Okay, this is the coupling time, what we call the coupling time.
+[734.56:741.56] Okay, on this realization that I have drawn above, this is tau couple.
+[741.56:747.76] Okay, this is the time where the coupling occurs.
+[747.76:753.2399999999999] And of course this is a very important time and we will have to, we will spend quite some
+[753.2399999999999:760.1199999999999] time in trying to say things about this coupling time.
+[760.12:766.12] So now that we have defined the coupling Z of the two mark of chains, I don't want yet
+[766.12:774.12] to write down what is the transition matrix of the Z process.
+[774.12:775.96] I don't do it yet.
+[775.96:783.36] I'm just now interested in seeing how we are going to, how we are going to apply this
+[783.36:792.2] to get what we want to get to convergence towards equilibrium.
+[792.2:804.96] First thing, from what we have shown before, we have a small lemma here that we can use,
+[804.96:813.6800000000001] which is that the total variation distance between mu Pn minus mu Pn.
+[813.6800000000001:814.6800000000001] So what is that?
+[814.6800000000001:824.8000000000001] mu Pn is the distribution of X at time n, so distribution of Xn and mu Pn is the distribution
+[824.8000000000001:833.24] of Yn.
+[833.24:842.5600000000001] It turns out that this distribution, this total variation, sorry, is less than the probability
+[842.5600000000001:851.44] that the coupling time is greater than n.
+[851.44:862.52] Okay, so this gives me an idea of the proximity of the two chains in terms of distribution,
+[862.52:866.3199999999999] right, at a given time.
+[866.3199999999999:877.28] And the proof of this, use what the proposition that we have stated before, which was, remember,
+[877.28:897.4399999999999] so mu Pn and mu Pn are both distributions on S, there are distributions of Xn and Yn.
+[897.44:911.6800000000001] And Zn, which is the two, even with the two coordinates Xn and Yn, is a coupling of these
+[911.6800000000001:915.24] two distributions by construction, right?
+[915.24:920.4000000000001] So in general, Z is a coupling of the two chains X and Y, but at a particular time, the
+[920.4:935.0799999999999] core Zn is a coupling of these two distributions.
+[935.0799999999999:945.52] So by the above proposition, that we have seen in the first part of the class today,
+[945.52:959.3199999999999] right, the proposition above, the total variation distance between mu Pn and mu Pn is less
+[959.3199999999999:968.68] than the probability that Xn is not equal to Yn.
+[968.68:972.72] This is the small proposition we have proven before.
+[972.72:978.5600000000001] And now, because we have defined a coupling of the two Markov chains, such that if Xn
+[978.5600000000001:985.9200000000001] meets Yn at some point, then they don't quit each other, they live happily ever after,
+[985.9200000000001:988.76] right, they stay together.
+[988.76:993.36] If Xn is not equal to Yn, you know that coupling hasn't happened yet, right?
+[993.36:1003.84] So this is exactly equal to this, of course, for some which proves what we want, right?
+[1003.84:1017.8000000000001] So this is because of our definition, because of our choice of coupling, right?
+[1017.8:1024.8799999999999] We have made a very particular choice for coupling Markov chains, which is such that whenever
+[1024.8799999999999:1029.3999999999999] there is a meeting, then you stay together, okay?
+[1029.3999999999999:1033.6] And so this proves the above lemma.
+[1033.6:1035.6] Yeah.
+[1035.6:1042.6399999999999] Okay, so now, of course, I have to read this to what I want to prove.
+[1042.64:1058.92] And now we can finally start proving the algorithm theorem, because so far what are
+[1058.92:1060.6000000000001] new and new, right?
+[1060.6000000000001:1071.16] These new and new are not related to what, to the statement of the algorithm theorem.
+[1071.16:1075.0800000000002] Okay, so what do we want to prove first?
+[1075.0800000000002:1086.48] Remember, remind there to be proven is the following.
+[1086.48:1093.52] That pi is a limiting distribution.
+[1093.52:1099.48] We know that there exists a stationary distribution for the chain, but we want to prove that this
+[1099.48:1101.64] pi is a limiting distribution.
+[1101.64:1104.8] This stationary distribution is a limiting distribution.
+[1104.8:1110.68] That's the main thing we want to prove here, okay?
+[1110.68:1113.04] And so what does that mean?
+[1113.04:1121.44] It means concretely that for every starting distribution, initial distribution pi zero,
+[1121.44:1130.44] we should have that the limit as n goes to infinity of pi n is equal to pi, which in
+[1130.44:1136.8400000000001] components means, you know, that this should hold for every i in s.
+[1136.8400000000001:1138.96] Okay?
+[1138.96:1147.1200000000001] And remember, so this pi here is the stationary distribution of the chain, which we know
+[1147.12:1155.8799999999999] it exists by the previous theorem and is unique.
+[1155.8799999999999:1159.0] So now we need to prove this what is written here.
+[1159.0:1164.6] So actually we will prove something stronger.
+[1164.6:1184.28] We will prove the slightly stronger statement, which is that for every pi zero, the limit
+[1184.28:1195.24] as n goes to infinity of the total variation distance between pi n and pi goes to zero.
+[1195.24:1205.6] So it is actually completely equivalent to the statement above in the finite case.
+[1205.6:1215.1599999999999] But in the infinite case, when the set s is infinite, the state space is infinite, it is
+[1215.1599999999999:1216.1599999999999] likely stronger.
+[1216.1599999999999:1227.04] So this is perhaps, let me just say here, when s is of size plus infinity.
+[1227.04:1232.9199999999998] Okay.
+[1232.92:1238.3600000000001] Because when s is of size plus infinity, here remember what is this total variation distance,
+[1238.3600000000001:1242.5600000000002] this total variation distance is, well, one definition is this, right?
+[1242.5600000000002:1250.16] This is the sum of i in s of pi i n minus pi i.
+[1250.16:1255.0] And of course, if this goes to zero, then every pi i n has to go to pi i.
+[1255.0:1257.52] So this implies the previous statement.
+[1257.52:1262.04] In the finite case, when the sum is finite, this is, this is completely equivalent.
+[1262.04:1270.04] In the case where the s has infinite size, then you cannot deduce the second statement
+[1270.04:1271.04] from the first one, right?
+[1271.04:1275.8] You cannot deduce the fact that you have individual pi i n going to pi i does not allow
+[1275.8:1279.8] you to show that the infinite sum also goes to zero.
+[1279.8:1280.8] Okay.
+[1280.8:1281.8] Okay.
+[1281.8:1282.8] Okay.
+[1282.8:1286.72] So now in order to prove this, what do we do?
+[1286.72:1312.84] Then choose, so let x be the chain, with transition matrix p,
+[1312.84:1318.76] and initial distribution pi zero.
+[1318.76:1320.3999999999999] And pi zero will be arbitrary.
+[1320.3999999999999:1322.72] We need pi zero to be arbitrary to prove the theorem.
+[1322.72:1329.04] We need to prove that from every possible distribution pi zero, you will get finally that
+[1329.04:1335.8799999999999] pi n approaches pi, the stationary distribution.
+[1335.88:1345.1200000000001] It also y be the chain with the same transition matrix.
+[1345.1200000000001:1349.96] But now we take for y, the one which has initial distribution pi.
+[1349.96:1354.68] So if you want, we take the chain, which is already in equilibrium, which has already reached
+[1354.68:1356.8400000000001] its stationary distribution.
+[1356.8400000000001:1363.8400000000001] And as we saw last time, when you have, when you start a chain and the stationary distribution,
+[1363.84:1368.9199999999998] then the chain remains in the stationary distribution for all times.
+[1368.9199999999998:1370.9199999999998] Okay.
+[1370.9199999999998:1378.1599999999999] So let me just say this, write this explicitly.
+[1378.1599999999999:1387.0] So the protein that x n is equal to i on the one hand, which is pi i n, okay, perhaps
+[1387.0:1393.8] I could write, pi i n is the protein that x n is equal to i n.
+[1393.8:1404.12] This can be computed as pi zero times p to the n position i.
+[1404.12:1422.12] And pi, the probability that y n is equal to i, which is pi times p to the n in position
+[1422.12:1430.36] i will be simply equal to pi i.
+[1430.36:1432.6] Okay.
+[1432.6:1450.3999999999999] So by the lemma that we just saw, by the lemma that we just saw, the total variation distance
+[1450.4:1464.8000000000002] between pi n and pi is pi zero p, I'm sorry, pi zero p to the n, I'm forgetting something
+[1464.8000000000002:1474.0400000000002] here, minus pi p to the n in total variation distance.
+[1474.04:1484.04] This thing will be less than the probability that x n is not equal to y n.
+[1484.04:1494.32] Because pi zero p n is the distribution of the chain x and pi times p n is the distribution
+[1494.32:1504.0] of the chain y, which is the probability that the coupling between pi and pi is equal
+[1504.0:1509.44] to x and y hasn't yet happened.
+[1509.44:1517.6] And so what remains to be proven is whether this goes to zero as n goes to infinity.
+[1517.6:1525.44] So that's the thing that remains to be proven.
+[1525.44:1531.44] Okay.
+[1531.44:1537.2] So if you want what's the idea here, we are proving, so we start with the chain which
+[1537.2:1541.68] is in equilibrium, which is in the station distribution already.
+[1541.68:1545.28] We start with the chain that has any initial distribution.
+[1545.28:1556.28] And our aim is to show that with high probability these two chains will meet, therefore when
+[1556.28:1563.36] they meet, then these are losses to show that the total variation distance of pi and
+[1563.36:1567.56] minus pi goes to zero.
+[1567.56:1577.44] But of course the one thing is not true and this is something I would like to mention
+[1577.44:1578.44] here.
+[1578.44:1586.2] And here we can only hope that this total variation distance goes to zero.
+[1586.2:1592.6000000000001] It's not that when the two chains x and y meet, that suddenly the chain has distribution
+[1592.6000000000001:1593.6000000000001] pi.
+[1593.6000000000001:1594.6000000000001] Okay.
+[1594.6000000000001:1597.44] I never say this, right?
+[1597.44:1607.88] So when the two chains meet, this is the time where, you know, when x and y meet,
+[1607.88:1615.72] you have, sorry, I should replace this.
+[1615.72:1620.64] I just want to say that pi n is not equal to pi after some value of n in general.
+[1620.64:1627.44] It can happen in very specific extreme cases that pi n suddenly becomes equal to pi.
+[1627.44:1632.2] But in general, what I've written here just shows that, I mean, we will see that pi n
+[1632.2:1639.0] minus pi goes to zero as n goes to infinity, but no more than that.
+[1639.0:1641.24] Okay.
+[1641.24:1657.88] One last thing I would like to say is that showing this is equivalent to showing,
+[1657.88:1679.8400000000001] more proving, that probably that tau couple is less than plus infinity is equal to one.
+[1679.8400000000001:1687.64] So actually what we will be after is proving that coupling happens with party one in finite
+[1687.64:1688.64] time.
+[1688.64:1691.1200000000001] And this would be the proof of the algorithm theorem.
+[1691.1200000000001:1698.0800000000002] So I will just, I will just prove this, but let me just now move this a little upwards.
+[1698.0800000000002:1708.6000000000001] So I have space to do it.
+[1708.6000000000001:1714.24] Okay.
+[1714.24:1726.56] Indeed, perhaps that's clear to you, but let me just, you know, write this explicitly.
+[1726.56:1738.0] The probability that tau couple is less than plus infinity is one minus the probability
+[1738.0:1741.04] that tau couple is plus infinity.
+[1741.04:1745.48] So the, the probability that tau couple is plus infinity is simply the probability that
+[1745.48:1746.8] no coupling occurs, right?
+[1746.8:1753.0] The two process evolving definitely until the end of time without crossing each other.
+[1753.0:1754.48] Okay.
+[1754.48:1763.48] But if they don't meet until the end of time, that means so this is the same as writing
+[1763.48:1775.04] one minus the probability that of the intersection of all events that tau couple is greater than
+[1775.04:1779.92] n.
+[1779.92:1784.32] So here I'm just saying that tau couple is plus infinity.
+[1784.32:1789.8] If tau couple is greater than n for any possible value of n.
+[1789.8:1796.8] And okay, this is the same as the limit as n goes to infinity of this probability.
+[1796.8:1806.1599999999999] Well, this requires using continuity action for probabilities, but that's also something
+[1806.1599999999999:1807.56] quite intuitive, right?
+[1807.56:1813.12] So the, the probability of an intersection is the limit of the probabilities.
+[1813.12:1817.72] This, we have a nested sequence of events, right?
+[1817.72:1820.8] And okay, so this holds.
+[1820.8:1834.24] And therefore, the probability that tau couple is less than plus infinity is equal to one.
+[1834.24:1843.52] If and only yes, this term here, which is the remainder here, if this probability, if
+[1843.52:1854.8] this limit as n goes to infinity of tau couple being greater than n is equal to zero.
+[1854.8:1857.24] And that's what I wanted to prove.
+[1857.24:1872.96] So in the, in the rest of this lecture, we will focus on proving this.
+[1872.96:1879.16] And this is, this will be done in the third video.

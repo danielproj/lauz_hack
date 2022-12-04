@@ -1,0 +1,39 @@
+~EE-556 / Mock Exam Solutions / Question 5 - 2/2 (2020)
+~2020-12-14T01:14:13.135+01:00
+~https://tube.switch.ch/videos/ec894090
+~EE-556 Mathematics of data: from theory to computation
+[0.0:4.8] here we are asked to write down the Lagrangian corresponding to this
+[4.8:13.24] constant formulation so this is basically equal to f of x plus lambda in a product
+[13.24:20.64] with x minus b in the second part we are asked to write down an equivalent
+[20.64:31.04] formulation here of for this we first define a modified objective function
+[31.04:43.8] which is equal to f of x plus maximization over lambda x minus b.
+[43.8:52.4] Here we make the following observation on this maximization problem this is a
+[52.4:72.75999999999999] linear function on lambda that is why it will be equal to 0 if x is equal to b
+[72.76:88.44] or plus infinity if x is not equal to b. So if we try to minimize this
+[88.44:96.92] modified function then this maximization part will enforce the constraints so
+[96.92:103.92] the solution of this problem will be equal to the constraint optimization problem
+[103.92:125.08] which is minimize x maximize lambda f of x plus lambda x minus b and the
+[125.08:135.76] solution of this thing is equal to f of x star here not that this is equal to
+[135.76:143.84] Lagrangian the equivalent formulation here is minimize over x and maximize
+[143.84:157.12] over lambda to Lagrangian function in the second part we start with min max
+[157.12:170.44] formulation that we have obtained and use the fact that min max is bounded by
+[170.44:194.56] lower bounded by max min. So here note that this part is the tool function
+[194.56:207.8] is defined here. So the solution of this maximization problem is attained at
+[207.8:214.96] lambda star and this is equal to d lambda star which is equal to the dual optimum
+[214.96:237.36] hence we have obtained the following by just using this inequality. So the
+[237.36:246.24] augmented Lagrangian function is basically the Lagrangian plus mu over 2 x minus
+[246.24:253.12] b square which is the augmented term here which can be also regarded as a penalty.
+[253.12:259.76] So one and two gives us the expressions for the Lagrangian dual optimum and
+[259.76:266.04] the augmented Lagrangian dual optimum under the Slater's condition which states
+[266.04:270.72] that the intersection of the relative interior of domain of f and the
+[270.72:276.76000000000005] feasible set must be nmt. So then we can write the k k t conditions for both
+[276.76000000000005:282.24] problems we first take the subgradient of the Lagrangian with respect to x and
+[282.24:288.88] this is what we get and also the gradient of the Lagrangian with respect to the
+[288.88:299.12] dual variable lambda and then from here we have the x star is equal to b. So for
+[299.12:304.08] the augmented Lagrangian we have this additional term which comes from the
+[304.08:311.4] derivative of the augmented term here. So for gradient of the augmented Lagrangian
+[311.4:319.64] with respect to the lambda we end up with the same expression which gives us again
+[319.64:326.08] x equal to b. So that is why we will get rid of this term here in the
+[326.08:334.12] optimality of the primary variable. Basically the optimality conditions for
+[334.12:341.48] the Lagrangian dual and the augmented Lagrangian dual are equivalent and hence the
+[341.48:371.44] dual optimum points are the same for both problems.

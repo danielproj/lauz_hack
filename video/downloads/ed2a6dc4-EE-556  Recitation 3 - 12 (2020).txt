@@ -1,0 +1,335 @@
+~EE-556 / Recitation 3 - 1/2 (2020)
+~2020-11-02T10:59:32.988+01:00
+~https://tube.switch.ch/videos/ed2a6dc4
+~EE-556 Mathematics of data: from theory to computation
+[0.0:13.84] So again, let's confirm that everyone has a good audio.
+[13.84:16.6] Are you hearing us?
+[16.6:18.64] We need to suppose so it's fine.
+[18.64:21.64] Do you see the slides?
+[21.64:39.44] This is screen share.
+[39.44:45.8] Okay, then I will just start.
+[45.8:52.919999999999995] So maybe we're talking about how it might be nice to have everyone have a camera on
+[52.919999999999995:56.04] so we can get kind of a classroom feeling.
+[56.04:61.4] But I'll leave that to you guys if you have some private environment you don't feel
+[61.4:62.4] positive.
+[62.4:72.4] And otherwise we'll go through the basic setup and practice of training in your networks
+[72.4:76.0] with high torches in particular.
+[76.0:83.16000000000001] I think you already encountered the formal definition in the lectures and this will basically
+[83.16000000000001:91.4] do a quick review of that and then go through the motivation and derivation of a back
+[91.4:98.08000000000001] propagation scheme through the concept of automatic differentiation and implementation
+[98.08:103.75999999999999] and pytorch and then kind of give you a first contact with pytorch with the APIs that
+[103.75999999999999:105.6] are going to be used.
+[105.6:111.4] So you don't get to confuse when we encounter in the homework and tutorial and stuff.
+[111.4:115.72] If there's any questions you can just interrupt.
+[115.72:122.48] We intend this to be like a decked lecture with a couple of stopping points.
+[122.48:129.48000000000002] We'll also ask for questions but if there's anything unclear then a few things to chime
+[129.48000000000002:130.48000000000002] in.
+[130.48000000000002:139.48000000000002] And let's start with just giving a quick intro into tensors.
+[139.48000000000002:150.64000000000001] So tensors is a very loose concept in the deep neural network training in practice.
+[150.64:158.07999999999998] In theory it's a very specific mathematical object that is a generation of matrices,
+[158.07999999999998:162.04] inductors and scalars to more and more dimensions.
+[162.04:165.95999999999998] In practice it's just a multi dimensional error array and can be thought of as a list of
+[165.95999999999998:166.95999999999998] lists.
+[166.95999999999998:174.64] So what deep learners think of when they talk about with tensors is related to but not
+[174.64:179.27999999999997] necessarily the same thing as physicists and mathematicians and people who actually care
+[179.28:182.44] about rigorous definitions I think about.
+[182.44:189.88] For our terms and purposes a tensor is an array that has a number of indices that you
+[189.88:191.72] can slice across.
+[191.72:196.04] So in this image you see that rank zero tensors are the scalars.
+[196.04:200.36] Some are thought like one element vector is a scalar.
+[200.36:203.0] Then rank one is your normal vectors.
+[203.0:204.92000000000002] Rank two is in normal matrices.
+[204.92:210.67999999999998] So for these you use a normal linear algebra and then rank three and upwards.
+[210.67999999999998:219.51999999999998] You just call them like ranked tensors and we'll see later in the if you've ever worked
+[219.51999999999998:227.83999999999997] with numpy these dimensions that you add are just additional things to use slice across.
+[227.83999999999997:234.72] So with cube if you take the zero element of this cube you get a matrix.
+[234.72:240.88] If you look into this group of stacked cubes if you take the zero element you get one
+[240.88:244.6] of these cubes and then so on.
+[244.6:251.2] We use these because they're a very general way to represent data and parameters and this
+[251.2:258.84] is what we have a lot of we go into deep neural networks.
+[258.84:265.76] One to note is that tensors aren't matrices they're just related to them and rank three
+[265.76:271.91999999999996] and below is where your linear algebra comes back into it but don't try to directly
+[271.91999999999996:276.35999999999996] apply concepts you might not from linear algebra to tensors.
+[276.35999999999996:280.84] Then we use these tensors in this setup.
+[280.84:284.88] So this thing you've seen in the lecture as well.
+[284.88:293.88] We have the simple single hidden layer MLP which has your x1 your first layer with a non
+[293.88:303.88] non-linearity and then followed by another layer with the biases and the way that your inputs
+[303.88:305.88] get multiplied too.
+[305.88:319.64] So we want to now optimize the parameters x1, x2, mu1 and mu2 and we want to use first
+[319.64:326.96] all the methods for this mainly because it works and second all methods will also work
+[326.96:334.0] but they might give you not as nice results in practice and they will be very expensive
+[334.0:346.24] to compute in real world models because you will have to take the second order of
+[346.24:350.16] all the parameters in the account and that doesn't scale very well.
+[350.16:352.6] So this is what we want to do.
+[352.6:360.68] We want to minimize a loss function with respect to end of these parameters and we want
+[360.68:365.40000000000003] to do the first all the method to do this but for this we need the gradient with respect
+[365.40000000000003:367.68] to the parameters.
+[367.68:376.88] So we need to figure out how much each parameter contributed to a loss and then move it
+[376.88:388.44] away from its current point in a direction that will decrease the loss and there's one
+[388.44:393.08] small thing that we need to take into account here is that we have a hidden layer so we need
+[393.08:399.44] to recursively apply the chain rule and if you just do this completely in the E-flip
+[399.44:408.2] without any optimization you end up with a lot of wasted compute because again with
+[408.2:414.24] an E-flip compensation example even with a very simple nested function.
+[414.24:424.96000000000004] This term here also shows up here and you end up re-computing this if you just set through
+[424.96000000000004:430.48] each parameter and re-comput everything so we want to do a bit of bookkeeping and reuse
+[430.48:440.08] intermediate results in a nice way so we don't waste computation on things we can also just
+[440.08:446.35999999999996] keep around for a bit longer but we also don't want to keep everything around because
+[446.35999999999996:451.91999999999996] with larger and larger models that would make our memory consumption explode.
+[451.91999999999996:461.28] So to go through this one manually we're going to set through the forward pass and the backward
+[461.28:467.0] pass of a very simple MLP and to really see the computational graph so we start with
+[467.0:475.96] an input at layer 0 in this case and then like each layer we're going to multiply it with
+[475.96:482.32] a matrix we're going to add the bias and we get our intermediate result then we apply
+[482.32:487.04] the only linearity and we get the output from the next layer and then this repeats again
+[487.04:493.6] and as we build up this computational graph we keep around the intermediate values because
+[493.6:502.8] we will need both to calculate the derivative with respect to the mu and the x by using the
+[502.8:512.28] chain rule and then on the backward pass now we have a first like local gradient so at
+[512.28:519.24] the very end we just compute this and afterwards it's given and then we want to flow backwards
+[519.24:526.24] with graph and do what's got back propagation in order to calculate the other partial derivatives
+[526.24:542.12] and the way we just like our U of L is given by this formula and then this means the partial
+[542.12:555.24] derivative to this element is given by a discussion multiplied with this term and for the bias
+[555.24:559.64] it's the same thing and this is the simple application of the chain rule and then we do
+[559.64:572.12] the same thing for the AL and I found out we have the same thing put together in this way
+[572.12:578.88] and in a graphical way this looks like this we start with one partial derivative we
+[578.88:586.64] calculate this intermediate one then we first calculate the derivative for this parameter
+[586.64:595.72] then for this parameter using this saved input and then we flow backwards and I also get
+[595.72:607.08] the derivative for this x and towards this way and then this repeats recursively and if
+[607.08:612.92] you want to do this manually once I recommend doing it on a piece of paper and making sure
+[612.92:619.28] that all of your matrices are aligned but we don't do this anymore because even doing
+[619.28:632.4] this keeping things around you still run to a problem that if you plan it naively your
+[632.4:651.16] complexity will grow with the square of the number of layers and it's also just tedious
+[651.16:661.04] to always re-implement it so there are implementations of this algorithm that's keep track of and
+[661.04:673.76] perform these steps and there's basically three large families of implementations we are
+[673.76:683.1999999999999] going to look specifically at one flavor which is called backward mode and this is basically
+[683.1999999999999:689.24] optimized reverse mode and this is basically optimized for the case that we have in deep
+[689.24:696.12] neural networks where you have a single loss, a single number at the end but you're trying
+[696.12:707.44] to put down and you have many many inputs that you have to go through and then the way
+[707.44:716.64] things are being tracked and evaluated and choose that your four pass and backward pass
+[716.64:727.92] have roughly the same entry and memory consumption and this doesn't scale well in the number of
+[727.92:736.64] outputs but you don't care. There's also forward mode which is coming for inverse it's
+[736.64:746.64] case better in the number of input parameters but worse in the number of input parameters
+[746.64:756.1999999999999] so this would be a more useful if you care about the different grade inflow I think and
+[756.1999999999999:761.76] when there's a last family which I just mentioned briefly it's all in this survey with
+[761.76:766.4399999999999] a link in the references which I recommend checking out which is based on dual numbers
+[766.44:771.1600000000001] and that's just more like mathematically nice way of the writing things automatically
+[771.1600000000001:779.7600000000001] but it's in practice doesn't scale very well. So this reverse mode automatically differentiation
+[779.7600000000001:793.2] has its main implementation in machine learning frameworks so we think of autograd which
+[793.2:801.2] is a part of the original autograd which was folded into a tensorflow there's also an
+[801.2:811.72] autograd implementation by Facebook now but there's also some more exotic implications
+[811.72:816.6800000000001] which are like differentiable graphic rendering and differentiable optimizers and these are
+[816.68:823.76] usually used if you want to apply these first order algorithms to tune parameters directly
+[823.76:828.8399999999999] with a certain visual effect and they're usually embedded in machine learning pipelines but
+[828.8399999999999:833.88] they're separate implementations because they will have to make a lot of local optimizations
+[833.88:841.64] that take into account that you're rendering an image or that you're doing some optimization.
+[841.64:848.64] This first link appear I recommend checking out if you want to learn in detail how this
+[848.64:859.24] is implemented. We will use this implementation by Facebook as part of PyTorch going forward.
+[859.24:867.04] PyTorch like something might have already used it. I don't know if I can see like in the
+[867.04:882.64] check raising hands or probably not. But it's the most popular frame I would say within
+[882.64:888.52] researchers right now although checks is getting popular as well mainly because it pioneered
+[888.52:896.48] what's called a dynamic graph and dynamic graph just means that when we build up this
+[896.48:905.2] forward and backward paths TensorFlow did it originally in an explicit way so you literally
+[905.2:911.9200000000001] had code writing out each of these steps and it wouldn't run anything yet then TensorFlow
+[911.9200000000001:919.04] would use this to construct the backward paths and then you would just run this static graph
+[919.04:925.16] in a loop which ended up being very efficient but it was horrible to debug because you didn't
+[925.16:933.4399999999999] have any actual interactive things you couldn't just print out a value like you do with numpy.
+[933.4399999999999:939.56] So PyTorch showed that it's possible to do this in a dynamic fashion where the graph gets
+[939.56:946.6] come on the fly and you can actually use the normal debugging techniques from Python while
+[946.6:955.9200000000001] also having an efficient backward path and efficient GPU accelerated forward passes. Other
+[955.9200000000001:961.8000000000001] frameworks that we don't look at here but which are worth mentioning is TensorFlow. In industry
+[961.8000000000001:970.76] TensorFlow is still like the top dog because it's the most established one. MXNet is from Microsoft
+[970.76:977.72] and if you want to train very very large models then Microsoft has done some interesting research
+[977.72:984.68] here where you can look for deep speed but natively it works like best with MXNet but it's
+[984.68:994.2] also compatible with PyTorch and then if you want to do something more custom then a new language
+[994.2:1001.1600000000001] called Julia and the flux.jl framework make it very easy to write completely custom operations and
+[1001.1600000000001:1007.4000000000001] kernels on the GPU do your own optimizations but this is very very niche this is only if you want
+[1007.4000000000001:1019.8000000000001] to hack around a bit. If you want to learn in depth how to use PyTorch then you should check out
+[1019.8:1027.32] this link here and we're going to go over just the very very basic API in a crash course session
+[1028.04:1036.6] but the tutorials link here cover a wide range of applications and the operations are
+[1037.1599999999999:1043.3999999999999] explained in great detail also like the math is usually typeset so you can even just look
+[1043.4:1051.5600000000002] up the definition of things through PyTorch documentation quite often. I'm going to go until
+[1052.6000000000001:1057.48] we get the first building block and then I'll stop for questions I'll just quickly show this
+[1057.48:1067.4] code slide so if you recall tensors from earlier this is how it looks like if you use NUMPIs
+[1067.4:1076.92] in the areas before it's almost the same except that transpose NUMPIs is called permeate here
+[1076.92:1084.8400000000001] and there's some other small differences in naming but most of the functions that you have in
+[1084.8400000000001:1092.68] NUMPIs you also have FN PyTorch and like the main thing I want to show with this slide is the most
+[1092.68:1108.04] common shape manipulations you will have to do so by convention when you do training of image models
+[1109.5600000000002:1119.64] you will have this memory layout of your data and NCHW means like NCH batch size sees your
+[1119.64:1130.6000000000001] channels H&W is your spatial dimensions which for MNIST would be like 28-48 pixels then in MNIST it
+[1130.6000000000001:1136.8400000000001] would be one channel but if you have an RGB image it would be free channels and then just the
+[1136.8400000000001:1146.68] batch size in TensorFlow you have the channel at the end and this will cause you many many bugs if
+[1146.68:1151.3200000000002] you ever have to work with something that uses one and that's which to be to the other so there's
+[1151.3200000000002:1160.6000000000001] something to be aware of on the risk of being redundant I will just quickly go over the concept
+[1160.6000000000001:1169.3200000000002] broad casting and the difference between element wise and matrix multiplication but people who
+[1169.32:1179.32] are with NUMPI will already know so here up here we create a simple image tensor with spatial
+[1179.32:1187.32] dimensions 28-28 and then channel and batch size and here we create a second tensor which has
+[1187.32:1196.6] the same spatial dimensions but it has less dimensions broad casting refers to what happens in this
+[1196.6:1205.9599999999998] line this is not an addition but it also works with addition where because this tensor has less
+[1205.9599999999998:1217.8] dimensions than this one Pythorch will copy the elements to fill out this shape with equal copies
+[1217.8:1224.9199999999998] of this 28-28 tensor so if you look at the 0 to 10th element and the 0 to 3rd element of these
+[1224.92:1232.6000000000001] two dimensions they will all look like this tensor and then it will multiply the two variables
+[1233.16:1244.1200000000001] element wise this is contrasted with this application which still broadcasts this to this shape
+[1244.76:1251.96] but then assumes that for each batch element and each channel you have a matrix that you want to
+[1251.96:1258.44] matrix multiply with another matrix and it will perform bad and the output will be a batch wise
+[1258.44:1265.88] result of a matrix multiplication this will be important when you do manual implementations of
+[1265.88:1274.2] like linear layers or if you if you're working directly with matrix like it is quickly
+[1274.2:1280.28] having something up then making sure that you get the dimensions and your element and matrix
+[1280.28:1287.8799999999999] wise multiplication is correct is important yeah this down here is just like the most common thing
+[1287.8799999999999:1292.36] that you might have to do as an example for how to integrate the shapes of tensors and how to go
+[1292.36:1300.44] between different shapes what's important is that this doesn't copy this only changes the
+[1300.44:1311.72] metadata on the tensor but this stop permute call will generally copy so so this thing is almost
+[1311.72:1319.0] free it only changes the way the multiplication will be done in the kernel whereas this thing
+[1319.0:1322.68] generally creates a copy and it will it will consume some memory and it will be a bit slow and
+[1322.68:1329.24] so this permute call actually changes the order of the dimensions around and this is important
+[1329.24:1338.68] if you want to switch like input from tensorflow memory layout to a partition memory layout if
+[1338.68:1345.4] you just called reshape here you would mess up the data because the underlying layout would still
+[1345.4:1353.24] be as an tensorflow so it wouldn't give you the correct result is like you can try it with an
+[1353.24:1367.64] image that you can load yeah then before I don't think this is very complicated so far but I
+[1367.64:1373.64] don't want to lose anyone so if there are any questions can chime in now already I will continue
+[1373.64:1383.3200000000002] I'm just going to look at the chat no questions
+[1388.44:1395.3200000000002] okay then I continue next up we're going to take a look at autocrates so
+[1397.64:1401.4] we're like this is actually working code you should be able to copy and paste this into your
+[1401.4:1408.8400000000001] stupid notebook or your Python if you've installed a PyTorch so this is how you actually you will
+[1408.8400000000001:1417.8000000000002] be sensors to make use of this autograd engine so we create two tensors and then we declare one of
+[1417.8000000000002:1425.0800000000002] them to be a parameter so this is what we want to actually change with the result of our four
+[1425.08:1434.28] and backward paths and then we do some operation so in this case we just multiply it matrix-wise
+[1434.28:1441.3999999999999] and then we sum it up in the real world this would be like your new network or whatever else
+[1441.3999999999999:1447.3999999999999] produces your loss and the important thing is this this needs to be a scalar because you know we're
+[1447.4:1460.2] doing reverse mode and this requires you to use your scalar then after this call
+[1461.8000000000002:1466.1200000000001] what happens is that PyTorch goes through the dynamic graph it has built up onto that point
+[1467.64:1476.44] and it does the gradient calculations in an efficient manner so after this is done the gradient
+[1476.44:1489.48] for the parameters will be set but any intermediate results will be gone so you cannot call this
+[1489.48:1494.68] backwards a second time without doing another forward path because it frees out the buffers it uses
+[1494.68:1503.16] to track things and that's what it needs to do to achieve this kind of linear
+[1503.16:1513.88] and not really like balance forward and backward paths and then once you have this gradient you can
+[1513.88:1522.52] do your favorite first order optimization algorithm and modify your x and then do your next forward
+[1522.52:1529.96] path now if you want to do this with new networks things get complicated quickly so this is fine
+[1529.96:1534.76] for learning about optimization algorithms where you can just make a matrix or whatever is
+[1534.76:1540.92] this setup and you just do it manually but new networks have structure if you just quickly
+[1541.88:1550.52] recall our little example is like you have this thing which we together call a layer
+[1551.8:1557.56] so we have weight in the bias then you have your activation function then you have like the next
+[1557.56:1573.24] layer and if you just directly try to write this down in this x mu and so on form it's super annoying
+[1574.2:1586.44] and Keras was a library that came up with a first good API but people could reason
+[1586.44:1592.28] but there was a layers API which encapsulates this and gives you individual class that you can
+[1592.28:1599.4] like just chain into each other and PyTorch embraces a bit more and build it's not completely around
+[1599.4:1610.44] with API it cannot be a module API so a module is just any PyTorch class that derives from this
+[1610.44:1616.68] module class which has a forward function which can be applied like this so it's a callable
+[1617.56:1626.04] and that keeps track of its parameters and this is all you need to implement for the PyTorch
+[1626.04:1632.68] optimizers and the PyTorch ecosystem to understand that this thing is an element of a more
+[1632.68:1644.1200000000001] complicated architecture which can be nested as well so if you inherit from this class within PyTorch
+[1645.24:1654.2] and register your parameters like this the optimizer which I'm going to go through the top thing
+[1654.2:1666.52] and so on in a second we'll be able to find the parameters with this call so to go through this
+[1666.52:1674.04] slide top to bottom to not convince anyone we import PyTorch we import some possibly very complex
+[1674.76:1681.0800000000002] three defined modules and then we say hey we want to make a new in network architecture using
+[1681.08:1689.8799999999999] these modules so this might be like small in networks and there might be other pre-processing units
+[1689.8799999999999:1695.3999999999999] it doesn't really matter as long as it follows the API PyTorch can understand them and then
+[1696.52:1702.84] we say okay we want to have a certain dimensionality but we wanted to use let's say we have
+[1702.84:1709.32] just a fixed width we go through this stuff we declare everything then we define the
+[1709.32:1717.56] four parts where we just recursively apply everything so we bias things here directly when we
+[1717.56:1724.76] apply that in like as the input into the first module we get then the second module and so on
+[1725.3999999999999:1733.3999999999999] and with this definition we then actually start optimization so we create a model and our dummy data
+[1733.4:1742.44] so this would come from a data set normally when we declare an optimizer and with optimizer
+[1745.4:1750.44] a couple of built-ins in the PyTorch framework itself so SGD, RMS, prop,
+[1751.72:1759.5600000000002] other grats and add-on I think you can find all in the manual it always takes the parameters
+[1759.56:1767.08] that you actually want to optimise on plus the hyper parameters of the optimizer so the stuff
+[1767.08:1774.76] that tells it how large of success you want to start with how quickly you want to update your
+[1776.9199999999998:1786.6] moving averages that you use for adaptivity and so on and then when you go through your language
+[1786.6:1791.48] but you will look like this so you just apply the model and this will go into this forward function
+[1792.36:1797.48] and then go into the forward function of the mod 1 with this changed input and so on
+[1799.32:1806.9199999999998] then you get your loss in this case we just do a mean squared error you call your backwards again
+[1806.9199999999998:1814.28] and now instead of manually applying the gradients to the parameters you just tell you optimizer hey
+[1814.28:1824.12] do a step and this you could inferry call multiple times so if you you have some experiments that
+[1824.12:1829.6399999999999] you want to try this is a freedom at PyTorch gives you it doesn't automatically call the optimizers
+[1829.6399999999999:1837.08] for you and then you have to tell the optimizer okay we're done clear the gradients please so when
+[1837.08:1845.32] you next loop through this you don't just add up to them this is useful if you want to use a very
+[1845.32:1852.84] large batch sizes so if you want to for example train image with a proper batch size on your local
+[1852.84:1861.3999999999999] machine which I don't recommend but maybe you want to try it then one trick to simulate having
+[1861.4:1869.16] more memory because that will be your bottleneck will be to just call this backwards without the step
+[1870.92:1878.2] many many times and then once you have your desired batch size you call the step and zero grad
+[1878.2:1883.48] once and when you repeat so you trade memory against compute time for us
+[1883.48:1895.08] so this is the basic setup the modules the optimizers the way you handle tensors and out of this
+[1895.08:1905.32] we now build new networks and we have more detailed slides in the appendix but we just go through
+[1905.32:1912.92] a very very basic so the stuff that you need to do like your first catch dog or hot dog not hot
+[1912.92:1924.44] dog for voice watch selection value classification so first up linear layers this on its own is literally
+[1924.44:1929.16] this linear regression like it or if you just think the one of these it's linear regression it's
+[1929.16:1940.28] the same thing the buyers you call intercept in statistics and this x is just your
+[1940.28:1952.2] weights that you tune and if you use a mse like you did here then a single layer of these
+[1953.32:1960.2] just does linear regression if you use a sigmoid which will you get to in a second as activation
+[1960.2:1971.72] function then you're basically doing logistic regression and you can recover a bunch of other
+[1971.72:1979.48] regression tasks from this framework the magic happens it used two of these and that's a
+[1979.48:1990.04] single hit in the mp that's that's the first real deep neural network where you get the expressivity
+[1990.04:1996.92] from in fact that they do a non-linear projection and then a linear regression on this non-linear
+[1998.04:2007.64] very project space the activation function is important because it determines a bunch of things about
+[2007.64:2015.96] the implicit biases that your network has and it also changes the optimization behavior so
+[2018.2800000000002:2024.68] if you don't use one like this thing shows you how it's equivalent to just having a single linear
+[2024.68:2033.72] layer where there is a bunch of research going on that uses this for matrix characterization and
+[2033.72:2041.4] other actually useful things but it's not as interesting from our perspective except if you study
+[2042.04:2048.04] neural networks because you will get more of magnitude more
+[2050.2:2061.56] expressivity if you use non-linearities and historically because the original inspiration was
+[2061.56:2070.12] in biology people used the sigmoid function which is defined here and like sigmoid the importance
+[2070.12:2075.7999999999997] that you remember about this is it saturates so it's at infinity it is at zero at one it doesn't
+[2075.7999999999997:2089.4] blow up in any direction it is almost linear in the middle section or on zero and it saturates
+[2089.4:2101.56] on the edges and this is a bit of a problem if you want to use these in very deep networks
+[2105.4:2112.44] we can try some like interactiveness maybe like does anyone want to chime in maybe they've
+[2112.44:2120.36] read about it already or maybe they can think of why this is a problem when you want to optimize
+[2120.36:2129.08] deep neural networks if you use this activation function
+[2129.08:2148.92] okay I assume everyone is frozen in fear and or asleep and doesn't want to answer the question
+[2148.92:2157.48] the basic reason is that because you're
+[2161.0:2173.0] saturating here you and almost linear here close to zero these two things make it very difficult
+[2173.0:2181.8] to make progress once you are in this region or to get a useful gradient in the beginning of
+[2181.8:2192.2] your network because at each path of your of your sigmoid your gradient will diminish and this
+[2192.2:2203.7999999999997] is referred to in the literature as the vanishing gradient problem and the way to fix this is
+[2203.7999999999997:2213.96] basically to not use sigmoids like instead people now tend to use re-lose as a default
+[2213.96:2224.36] because this I think doesn't saturate so it has a hard cut off at zero so it encourages
+[2224.36:2230.76] your network to ignore sections of the input which is what you want you want to reduce
+[2230.76:2237.08] the dimensionality of the stuff that you actually pay attention to and then otherwise it's just
+[2237.08:2243.56] a linear function so it's kind of the least non-linear thing you can do to still be a non-linear
+[2243.56:2251.88] function and this lets you gradient flow much better and enables you to do much deeper network
+[2251.88:2260.04] with a network of other tricks which we'll see in lecture nine I think so with these two
+[2260.92:2267.64] you can make your m.o.p's which is your universal function approximator and you can in theory
+[2267.64:2275.56] do everything in theory in practice if you try to do anything with images using
+[2275.56:2281.0] the linear layers because you have so many input variables if you flatten the image you have
+[2281.0:2289.48] seven hundred for 84 pixels even on like 20 by 20 at image and then for like a thousand 24 by
+[2289.48:2295.48] a thousand 24 you can do the math like this doesn't scale that you you cannot handle this with linear
+[2295.48:2306.92] layers so and and it also doesn't have any useful biases like you don't encode any knowledge that
+[2306.92:2317.88] you have about what might be useful to think about into your network and CNNs fix fix this
+[2317.88:2327.6400000000003] I'm skipping a slightly because I mix up my order but I just quickly go into CNNs CNNs allow you
+[2327.6400000000003:2333.7200000000003] to deal with images in an efficient way because their use tricks will be already used before
+[2333.7200000000003:2342.92] your networks to get useful information out of them and that's basically filtering so if
+[2342.92:2346.84] you've ever done any signal processing class you might have heard about like disobey filter and
+[2346.84:2356.52] the Gaussian filter and actually detection like filters and these are all just matrices which you
+[2357.2400000000002:2366.36] multiply with like a patch of from image and then you sum everything up and then if you organize
+[2366.36:2373.96] in a certain way this will be more sensitive to certain features so if you have a like three
+[2373.96:2382.84] by three matrix which has all the ones all zeros all minus one that's a vertical edge detection
+[2382.84:2391.0] filter because it will highlight transitions between regions and with CNNs we basically just
+[2391.0:2397.08] learn these so the math and the detailed extension is here to the left I'll leave both for reading
+[2397.08:2403.96] and ignore this for now the image to the right is what you want to take a look at because it
+[2403.96:2413.3199999999997] shows you how things work intuitively so this block in the middle is your weights now and what we
+[2413.3199999999997:2419.0] will do is we will move this block across the whole image and always use the same weights so
+[2419.0:2426.92] this already saves you orders of magnitude in parameters because no matter how large the images get
+[2426.92:2436.12] you filter filter way cool is the same and what you will notice is that on the left we have an RGD
+[2436.12:2445.88] image so we have three channels so red green red green and blue and on the output we have one
+[2445.88:2459.6400000000003] output channel and what we learn is the relationship of that single pixel to how all channels look in
+[2459.6400000000003:2467.1600000000003] a freeway free neighborhood so these get element wise multiplied with this block that they're
+[2467.1600000000003:2472.28] connected to and then we sum everything up and this gives us one pixel then we move to the neighbor
+[2472.28:2480.6800000000003] we move this whole thing one to the left as well and we repeat the process through this we get one
+[2480.6800000000003:2486.92] output channel and then what's not shown is that usually you do many many many output channels so
+[2486.92:2496.92] you usually go from like three input channels to 16 to 32 to 64 and so on keeping a couple of
+[2496.92:2504.36] rule of rule of thumb in mind and this allows different feature channels to pay attention to
+[2504.36:2509.96] different things so one of your channels is the first layer might learn an edge detection filter
+[2509.96:2520.6] another one might learn a filter a presentation to a certain frequency pattern another one might
+[2520.6:2530.52] be a corner detector and so on and then we combine these across a spatial dimensions by
+[2533.56:2538.8399999999997] what's called pooling operations which you can look at in the pie search recommendation or through
+[2539.72:2547.4] this stride and a dilation operation which just means either skipping pixels or moving out
+[2547.4:2552.36] the convolution filters so you don't take the direct neighborhood but like every second neighbor
+[2553.56:2559.4] and for this you reduce the image size you build up your feature length and you extract
+[2559.4:2569.2400000000002] user information from images and at the very end you put your single hit on the MLP and do your
+[2569.24:2578.8399999999997] actual task and the task that you want to do is specified by your loss function so
+[2581.64:2591.56] this is how we tell our network do we want to make a discrete decision between a number of
+[2591.56:2594.8399999999997] different classes so this would be on the left and that's called classification
+[2594.84:2602.28] and or do we want to extract some form of estimates and a relationship from it so that would
+[2602.28:2612.1200000000003] be called regression. Newnessbox like really good at classification, like envision they dominate
+[2612.1200000000003:2622.6000000000004] everything in regression, also good but not as good and regression as in general a bit tricky
+[2622.6:2629.96] so like with nice functions and where nice means like you have a right-backed biases it's feasible
+[2629.96:2637.88] but in general it's hard to get a super good performance with regression like the gap between
+[2637.88:2646.36] deep neural networks and other methods will be lower. You got a stable yeah. Should we do
+[2646.36:2655.0] the desired break? If people are yep like tied up I will usually think to do during some
+[2655.0:2680.28] question more the resolution keep you

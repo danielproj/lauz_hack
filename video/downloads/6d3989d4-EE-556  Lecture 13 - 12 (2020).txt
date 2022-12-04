@@ -1,0 +1,315 @@
+~EE-556 / Lecture 13 - 1/2 (2020)
+~2020-11-30T12:01:42.761+01:00
+~https://tube.switch.ch/videos/6d3989d4
+~EE-556 Mathematics of data: from theory to computation
+[0.0:26.84] So finally our last lecture, what we will do today is we're going to continue our final
+[26.84:42.84] dual optimization coverage and should be a fun class. So just to recall this particular
+[42.84:48.8] constrained optimization template that didn't talking about, if you recall, you were talking
+[48.8:62.92] about problems such as min max phi x phi. And we said that for non-comics non-contained
+[62.92:69.84] problems, this problem is very difficult. One of the reasons is that in general for min
+[69.84:75.92] max problems, there are the solution sets like the local national group and so on and so
+[75.92:82.92] forth, but there are also curious factors. We then started talking about complex concave
+[82.92:91.92] problems as we gave them algorithms for it in the last lecture. And there the algorithms,
+[91.92:98.92] we had some convergent algorithms that with grades to saddle points and so on and so forth.
+[98.92:105.92] One of the important templates that would lead to such min max concave complex problems
+[105.92:114.92] was the constrained template that has many applications. Now this template is very interesting
+[114.92:121.92] because it basically covers the discipline, complex optimization hierarchy. So for this
+[121.92:128.92000000000002] layer, there is a supplementary lecture, if you would like to learn more about things like
+[128.92000000000002:134.92000000000002] linear programming, quadratic programming, second order comb programming and so forth. And they
+[134.92000000000002:138.92000000000002] can all be written in this particular template where you're trying to minimize some common
+[138.92000000000002:147.92000000000002] mixed functions, subjects and FI inclusion. So here this k is a common except and the
+[147.92:154.92] example from the sparsely and that we gave was this, you know, for the sparsely model.
+[154.92:171.92] And there F was the one norm. And we even talked about sensual conjugation. In the advanced
+[171.92:177.92] theory, I talk about things like doing double-fential conjugation of norm time mix functions
+[177.92:187.92] such as the L0 called tan-colot norm. So, you know, like a box constrained, for example,
+[187.92:194.92] here and you would run into this particular template, which is very nice.
+[194.92:205.92] So this is the basic linear inverse problem setting. And other cases, actually, you take
+[205.92:211.92] a problem and then you write it in this tassion so that you gain some computation advantages.
+[211.92:218.92] Now I'll maybe talk about this a bit more later this class. All right.
+[218.92:228.92] Now, we also said that there's a nice reformulation of this. And it surprises to consider the
+[228.92:238.92] simplified template. So there, we don't have these blotter looking template. There's in
+[238.92:247.92] fact a slide for it that that shows how you go from here to this particular simple template.
+[247.92:251.92] And this is what we're going to talk about because, you know, like you can describe the algorithms
+[251.92:258.91999999999996] in this tassion. And then you can show how to extend it for this general template.
+[258.91999999999996:266.91999999999996] And it is, it is, it is almost nicer and more elegant to consider the simplified template.
+[266.91999999999996:274.91999999999996] All right. So here, F is a proper complex class function. We're given A and B.
+[274.92:282.92] And we're also given F. And of course, an optimal solution needs to achieve this objective
+[282.92:288.92] and the constraint, right? Optum minimum objective.
+[288.92:294.92] Now, in the course, if you call it 6 or 7, we talked about time data trade-offs.
+[294.92:299.92] So it was important to understand the total computation complexity of an algorithm.
+[299.92:306.92] And for this, actually, we consider the very simple metric, which was this time to reach
+[306.92:314.92] epsilon. And, you know, like this is a very important concept.
+[314.92:318.92] What you need to do is figure out, you know, the number of iterations to each
+[318.92:333.92] and epsilon and per iteration time. Right? And, you know, like the notion of
+[333.92:339.92] accuracy in this particular constraint case is a bit elusive in the sense that
+[339.92:344.92] you can have algorithms that they are strictly satisfying the feasibility.
+[344.92:349.92] These are typically called the interior point method in the sense that they remain
+[349.92:355.92] in the interior of the constraints while trying to minimize the objective.
+[355.92:362.92] And in essence, it's almost like you do unconstrained minimization in the sense that you
+[362.92:367.92] cannot achieve an objective value that is below the optimal objective value.
+[367.92:374.92] But if you have algorithms that are trying to minimize this template, I talked about
+[374.92:381.92] this several times, but I think it is still nicer to refresh our memories for this.
+[381.92:392.92] That, you know, you can have points, approximate solutions, that attain smaller objective value
+[392.92:398.92] than the optimal objective value. Right? And one easy example to see this is that
+[398.92:405.92] consider this simple quadratic. And then let's say we have a constraint.
+[405.92:412.92] Right? So here's our constraint space. Right? So we can only have solutions that are
+[412.92:420.92] on this black line. And here this would be our star.
+[420.92:428.92] And if you have an algorithm, let's say that is approximately obtaining the solution,
+[428.92:433.92] and maybe you're actually coming to the solution from this side.
+[433.92:440.92] And then you can actually get objective values that are smaller than fx star.
+[440.92:447.92] What you need to do is simultaneously figure out how much you're violating the feasibility
+[447.92:453.92] value. While you're being close to the optimal objective value.
+[453.92:461.92] And oftentimes when x star is unique, you can also obtain distance to the optimal solution.
+[461.92:466.92] But what matters is simultaneously satisfying the feasibility.
+[466.92:470.92] This is important in this particular optimization type.
+[470.92:479.92] And, you know, like here, I put the same values for epsilon.
+[479.92:485.92] Of course, they can be different.
+[485.92:496.92] Now, given this notion of inexpectness, this, then you can think of different algorithms
+[496.92:503.92] having different per iteration time. Right? It may be some algorithms are faster in terms of the accuracy.
+[503.92:509.92] But let's say they're using second-order information. Per iteration time would be farther.
+[509.92:517.9200000000001] And it is interesting that for this particular template, there is like a host of algorithms that you can use.
+[517.9200000000001:522.9200000000001] And here is the zoo. Right? I call this the zoo.
+[522.92:531.92] There are a variety of algorithms. There's the exact penalty method.
+[531.92:534.92] Let me mention.
+[534.92:540.92] You take the constraint feasibility. Let's say the f i constraint and put it within.
+[540.92:544.92] Penalty that is non-sumable. Like let's say, album.
+[544.92:548.92] There's the quadratic penalty method and the fundamental agrarian method.
+[548.92:554.92] So the quadratic penalty method we covered in the last chair. And today we're going to talk about the mental engineering.
+[554.92:562.92] There are various algorithms that are variance of the arrow hervids methods.
+[562.92:567.92] It's loop. So primal blue hybrid gradient.
+[567.92:572.92] A random variant. See like your 12. We mentioned these things.
+[572.92:575.92] There's fitting algorithms to operate this thing.
+[575.92:584.92] We also recovered. There are other algorithms. Maybe I can put some advanced material on things like the alternative organization.
+[584.92:587.92] A B M M D kind of algorithms.
+[587.92:594.92] There's standards. I think that the algorithms we covered with this sufficient in this particular case.
+[594.92:599.92] There are also the methods based on second-order information.
+[599.92:608.92] I use some citations and references for you to take a look at.
+[608.92:617.92] Now, just to refresh our memories, we're going to cover this quadratic penalty as well as the lagrangian.
+[617.92:622.92] So here's our problem.
+[622.92:629.92] They're interested in minimizing the effects subject to the strength.
+[629.92:640.92] What you do in the quadratic penalty method is to penalize deviations from the feasibility with some penalty parameter.
+[640.92:643.92] So call this theta.
+[643.92:654.92] I'll see if you have a type here. This shouldn't. Yes, there's a type of. So if you penalize this, then the objective changes.
+[654.92:665.92] So the F here is not necessarily the F we have. We should maybe call this F beta star.
+[665.92:680.92] So here's our penalized objective. As data grows through infinity, the only option the minimizer has is to make sure that AX is equal to B.
+[680.92:690.92] Otherwise, with an overwhelming amount of penalty, whatever you do with the objective doesn't matter.
+[690.92:696.92] And that is captured here. And there is even a slide that shows the proof.
+[696.92:703.92] I think it's either in the advanced material last picture, some advanced material here.
+[703.92:714.92] All right. So this was the idea of the quadratic penalty. What we did is we penalized the feasibility with some cost of out to cost is very natural.
+[714.92:726.92] And then we talked about algorithms that that does things like accelerated gradient descent on this while increasing penalty.
+[726.92:743.92] How about the Lagrangian? Lagrangian was, I mean, the way I motivated it was to think about how you go from this particular constraint tempted to meet a maximum position.
+[743.92:752.92] So you can think of this. F I constraint is min x. F of x.
+[752.92:776.92] Plus max lambda lambda a x minus b. So the point about this is that here is an unconstrained lambda. If you pick any x that does not satisfy this constraint, this maximum blows it up.
+[776.92:794.92] So this is more or less this indicator function of a x. A x needs to be equal to b. Otherwise it's infinity when it is equal to b. It is zero.
+[794.92:816.92] So on this particular case, this one square. So in this particular case, it's at the optimum.
+[816.92:827.92] And it's at the service as far as a x is equal to b. So this is actually zero. And we have a star is equal to f x star.
+[827.92:836.92] All right. So as you can see here is the indicator for the region.
+[836.92:847.92] So in this particular case, the open value for this constraint problem is equal to the open value of this min x.
+[847.92:851.92] Of course, we talked about the issues with this in the next formulation.
+[851.92:874.92] Let's come next one. Cave. F could be not smooth. There are all kinds of subtlety units. Okay. So let's recall the approaches again a bit more formally. I think that things will be clear.
+[874.92:881.92] So if you think about it here.
+[881.92:888.92] Per iteration of the quadratic methods, you can think of it as follows.
+[888.92:907.92] Given a penalty parameter, you try to obtain a niter at x k v. You increase the penalty. Then you obtain another x. And the approach will give you the solution.
+[907.92:924.92] And the drawback here is that is beta grows. Then the problem is a bit of conditions. So somehow the scaling of f goes down to zero and you need to solve problems that are very difficult to solve the math.
+[924.92:932.92] Now, if you look at the.
+[932.92:937.92] If you look at the.
+[937.92:944.92] If you look at the min x formulation, if you remember.
+[944.92:962.92] We call this problem d of lambda, which is. Min x f of x used from you all here. I mean, x.
+[962.92:978.92] So the implicit function. What we can do is we can try to find a dual optimal solution. And from the dual optimal solution, somehow recover the prime of the solution.
+[978.92:981.92] I think about this.
+[981.92:992.92] In particular form, this is in general nonsense. So if you think about it, the gradient is from down skin.
+[992.92:995.92] This would be a x.
+[995.92:1008.92] So call the art. Min of this x. Asterisk not X star X star is the solution of the original problem. So here.
+[1008.92:1036.92] Art min x star is X asterisk. So given lambda. This is what does in tells us. It tells us that the gradient of this is the derivative with the defect lambda evaluated at the optimum solution X asterisk.
+[1036.92:1043.92] Now, you can imagine we're talking about a convex function in this particular case for a concave function.
+[1043.92:1058.92] If this does not have a unique solution, then this means that there are points of gradients in which case there are subgradients meaning that the tool is nonsense.
+[1058.92:1074.92] And I gave some examples as to show that tools in general now. So this means that if you wanted to apply a simple method, you can apply the sub gradient method.
+[1074.92:1088.92] And here the elements are clear. Also this is our X asterisk. So given lambda, you solve this problem. It will give you an X asterisk.
+[1088.92:1104.92] Then you pick one of the subgradients that you find a solution you plug this into here. And then because it's a subradient, you need to make the steps as go down to zero.
+[1104.92:1118.92] Otherwise, even if you start at the solution, you might have a non zero subgradient. Somebody is giving these subgradients to you and you may not have zero subgradient. You may just jump out of the optimum.
+[1118.92:1131.92] And R is related to the maximum norm of the subgradients. And typically you tune this. It's very difficult. It is difficult to characterize.
+[1131.92:1146.92] So in the tool, you would actually have something like a sort of K rate in getting the tool and the way you obtain the primal is that there's a nice friction that you take these X asterisk.
+[1146.92:1169.92] And if you just simply average them. So this one. Then this will give you a primal.
+[1169.92:1180.92] A primal approximately an approximate primal solution that was satisfied with square of K rate in terms of your pictures was the feasibility.
+[1180.92:1198.92] Alright, that's the middle care. Um, cordump. Right. So like, do is not smooth. We know why I'm asking how to get a subgradient.
+[1198.92:1213.92] And what we can do is, for example, my progress in the tool by doing subgradient ascent. And because do is not smooth.
+[1213.92:1229.92] And you're doing subgradient ascent. The rate you can normally have is 40 or sort of K in which case, um, you can obtain the primal by just averaging these particular.
+[1229.92:1245.92] Now, is this the best you can do? So maybe, I would check. Sorry. I need to talk about the best that you can do for primal doing. In fact, there's not the best you can do.
+[1245.92:1261.92] You can get one with K rates. I mentioned some algorithms that does this by means of smoothing. So I'm sorry. All right. Or reflections.
+[1261.92:1275.92] Okay. Now, here is a key idea. I think that it is important that you guys understand this. So the penalty method. It's.
+[1275.92:1286.92] I'm sorry. I keep on taking something here that somehow closes the slide. Um, the penalty method.
+[1286.92:1304.92] It's an easy method to understand. So you take the problem constraints, you penalize them. And what you need to do is somehow adapt this penalty as you iterate.
+[1304.92:1318.92] Now, here, what you can do is that, you know, if for fixed beta, you can run the accelerated gradient methods that would give you one over K squared rate.
+[1318.92:1330.92] And if you let data grow with K rate, then you can more or less show that you will get a one over K rate in the objective and in the physical team.
+[1330.92:1345.92] In the Lagrangian, if you were to do something simple or 90, you would things like to do some gradient ascent. And then averaging, you would get a world square of K rate.
+[1345.92:1363.92] All right. And there are algorithms that will give you one over K rate if you use this, uh, smoothing idea, which we did not cover much in this, um, particularly class, but maybe I can put a supplementary material and it include in maybe some, uh,
+[1363.92:1367.92] bounds for the best that they can hope to.
+[1367.92:1382.92] Now, augmented Lagrangian is a combination of these two. Right. So, in all the Lagrangian and the idea of the augmented Lagrangian is to add this penalty term here.
+[1382.92:1388.92] Right. So it's basically a fusion of these.
+[1388.92:1397.92] And this actually has quite a bit of advantage. The advantage are actually many, there are many advantages. All right.
+[1397.92:1409.92] Now, if you think about it, let's think about this particular dual function. All right. Now here.
+[1409.92:1424.92] If you think about it, there may not be a unique solution X. All right. Except that a X asterisk minus B will always be unique.
+[1424.92:1435.92] And the implication of this is that the gradient with respect to lambda, the data lambda.
+[1435.92:1442.92] This is always unique. And this comes through some implicit function mapping.
+[1442.92:1450.92] Because this particular objective is strongly commixed in terms of a X minus D.
+[1450.92:1463.92] All right. So you would always say the unique a X minus B, no matter what landing you give. So that is given lambda X asterisk may not be unique.
+[1463.92:1471.92] But a X asterisk minus B will always be unique.
+[1471.92:1478.92] This is very good. And in particular, it will be one or two data.
+[1478.92:1484.92] All right. What that means is that it looks just continuous gradient.
+[1484.92:1493.92] So as opposed to thinking about dual sub gradient percent method, you can think about the accelerated gradient method.
+[1493.92:1499.92] Which would actually give you one over case squared rate, not one over k, one over case squared rate.
+[1499.92:1517.92] And what is important here is that whatever dual optimum we had, it will coincide with the dual optimum of data for any given data.
+[1517.92:1531.92] Oh, this is by fantastic because suppose you had a non smooth dual problem by augmenting the.
+[1531.92:1540.92] Lagrangian in this particular fashion, you make you create a dual problem that is smooth.
+[1540.92:1547.92] Which is continuous gradient and the dual optimum coincide.
+[1547.92:1551.92] Nothing changes in terms of the optimum dual value.
+[1551.92:1558.92] And as a result, you can apply accelerated gradient methods.
+[1558.92:1566.92] And you can obtain the primal at a faster rate, one over case squared rate.
+[1566.92:1571.92] There must be some disadvantage to this while the disadvantage is rotation course.
+[1571.92:1582.92] Right. So you need to solve such a problem, which by itself is a composite problem.
+[1582.92:1590.92] There are further insights here that I think would deserve yet another lecture.
+[1590.92:1603.92] Because like you can view some of these quadratic boundary methods as a way of smoothing the constraint and that smoothing required you to have a center point in the dual mental Lagrangian.
+[1603.92:1607.92] You actually have some sort of a center point for smoothness.
+[1607.92:1614.92] This is some advanced material that maybe I'll add later on.
+[1614.92:1626.92] Okay. So let's take a look at this example. In fact, let's take a look at this one.
+[1626.92:1632.92] Okay. So there's something wrong with this plot.
+[1632.92:1636.92] Oh, no.
+[1636.92:1638.92] Okay.
+[1638.92:1647.92] So think about this. Right. You're minimizing x1 squared plus 60 squared subject to a linear constraint.
+[1647.92:1654.92] And here we're writing augmented Lagrangian and take a look at the dual function.
+[1654.92:1660.92] The cool thing about this is that the dual optimum, which is the maximum.
+[1660.92:1665.92] So this is without the augmentation.
+[1665.92:1674.92] And this is the star beta.
+[1674.92:1681.92] This star beta versus this star without the moving is the same.
+[1681.92:1683.92] So beta is equal to zero.
+[1683.92:1690.92] Beta is non zero, non negative, non zero. Right.
+[1690.92:1695.92] We have the same optimum objective down here. Right.
+[1695.92:1703.92] But the location of this optimum may change as you can see.
+[1703.92:1707.92] And look at this. This is non-scute. It has these kinks.
+[1707.92:1709.92] This is fully smooth.
+[1709.92:1713.92] So which one would be easier to optimize?
+[1713.92:1716.92] I really just want. Right.
+[1716.92:1725.92] Getting the gradients to optimize that function is more expensive than maybe getting the gradients.
+[1725.92:1728.92] First things depending on the problem.
+[1728.92:1731.92] All right.
+[1731.92:1734.92] Okay.
+[1734.92:1737.92] Good. So here's the dual problem.
+[1737.92:1740.92] And here's the augmented to problem. Right.
+[1740.92:1742.92] And we know that the objective.
+[1742.92:1747.92] So this point size with this one.
+[1747.92:1748.92] All right.
+[1748.92:1752.92] I mean, so this is basically a summary of what I've been saying.
+[1752.92:1753.92] Right.
+[1753.92:1769.92] If a solution exists in the state of conditions hold, then to do a solution.
+[1769.92:1775.92] So maybe not. I need to think about this again.
+[1775.92:1782.92] I think that the solution set may not necessarily.
+[1782.92:1794.92] What the optimum objective.
+[1794.92:1799.92] Yeah. So maybe there are some additional conditions that I will take a look.
+[1799.92:1800.92] But this is this.
+[1800.92:1804.92] I don't quite see. But yes, this is the optimum objective.
+[1804.92:1810.92] If star will be equal to D star, which will be equal to D as there is theta for any beta.
+[1810.92:1817.92] Right. And yes, we can apply the excellent gradient descent method.
+[1817.92:1822.92] So here's the idea.
+[1822.92:1825.92] So here's an idea log over them.
+[1825.92:1826.92] All right.
+[1826.92:1830.92] So one thing we can do is give them dual.
+[1830.92:1835.92] You can compute the gradient and you can update the dual variable.
+[1835.92:1841.92] Right. Because it is one over beta lipsticks.
+[1841.92:1849.92] Right. So as you let beta go to infinity, the tool problem becomes smoother and smoother.
+[1849.92:1853.92] As beta goes to zero, it becomes less smooth.
+[1853.92:1860.92] I think that beta is equal to zero means we're back to the margin, which we know is constantly in general.
+[1860.92:1864.92] Unless f is strong from x.
+[1864.92:1868.92] So in this case, if you were just doing gradient.
+[1868.92:1870.92] Assent.
+[1870.92:1873.92] You use one over out the lipsticks constant.
+[1873.92:1876.92] We know that this is the lipsticks constant.
+[1876.92:1881.92] So your dual steps eyes would be data.
+[1881.92:1884.92] I hope this is clear.
+[1884.92:1888.92] So this would be just a metal orange and gradient method.
+[1888.92:1891.92] But what you can do is you can accelerate this.
+[1891.92:1896.92] I mentioned and the acceleration is simple.
+[1896.92:1900.92] Right. So the explanation here is that you get the gradient.
+[1900.92:1905.92] We know it is.
+[1905.92:1910.92] Lipstick to the gradient. So you can just use the accelerated.
+[1910.92:1927.92] And in all of these cases, you can obtain the primal by just simple averaging.
+[1927.92:1933.92] You can just use this.
+[1933.92:1936.92] This will be our.
+[1936.92:1938.92] Let's say.
+[1938.92:1940.92] X K.
+[1940.92:1945.92] And X K will satisfy all kinds of properties.
+[1945.92:1947.92] That it will go down.
+[1947.92:1951.92] It will have one over case for a great in terms of the objective and in terms of the feasibility.
+[1951.92:1954.92] It's just getting the gradient here.
+[1954.92:1956.92] This.
+[1956.92:1959.92] It's expensive.
+[1959.92:1968.92] Because in general, you solve a composite minimization problem and you may not even solve it exactly.
+[1968.92:1973.92] Okay.
+[1973.92:1978.92] All right. So here is again, some summary of the ideas.
+[1978.92:1985.92] If you use the Atlantic Ranging method with the gradient of send, you could maybe want to calculate.
+[1985.92:1989.92] But we know that this is not the best we can do.
+[1989.92:1991.92] We'll be acceleration.
+[1991.92:1994.92] We can get the one over case for a great.
+[1994.92:2002.92] And these guarantees are in the do, but you can in fact recover the primal by just averaging.
+[2002.92:2004.92] Also, you have this.
+[2004.92:2008.92] And then you will have something like X K.
+[2008.92:2017.92] And then X star order one over case where an A X K minus B order one over case where.
+[2017.92:2020.92] But remember, this is an ideal algorithm.
+[2020.92:2024.92] You need to solve the thought problems exactly to get the gradients.
+[2024.92:2032.92] And hence not completely practical.
+[2032.92:2033.92] Good.
+[2033.92:2034.92] Yes.
+[2034.92:2036.92] So this is the message.
+[2036.92:2042.92] So, augmented the grangin method has to solve this problem.
+[2042.92:2047.92] If you think about it in terms of our notation.
+[2047.92:2059.92] So maybe actually we solved the notation here and put a g here because this is the exactly that f x plus g of x notation that you use.
+[2059.92:2074.92] In the sense that this is composite minimization problem with a term that is likely to be non smooth and did another term that is.
+[2074.92:2077.92] Differentiable.
+[2077.92:2080.92] There are cases you can actually solve this.
+[2080.92:2085.92] One case is that if you're just simply trying to minimize X to square.
+[2085.92:2102.92] And this particular problem becomes just a simple linear algebra problem that you need to invert and identity plus a transpose a inverse that you can use in Merkel's linear algebra.
+[2102.92:2105.92] So this found very, very efficiently.
+[2105.92:2125.92] But in any other case, if you have things like one norm here, then it becomes difficult because a couples the coordinates of x and you lose all these decomposition structure in terms of the proxy.
+[2125.92:2129.92] So you have to solve it with an algorithm.
+[2129.92:2141.92] Now what you can do is allow an exactness. And then you do allow an exactness. You lose a bit of great. So that is what I would like to talk about now.
+[2141.92:2148.92] So here are here's one approach.
+[2148.92:2154.92] So I won't get into the details of this approach. This will be some advanced material.
+[2154.92:2166.92] I will tell you what the conceptual idea is. Now imagine we would like to solve this problem up to an accuracy.
+[2166.92:2172.92] And then use the accelerated method for the door.
+[2172.92:2189.92] The issue with accelerated method is that it has a memory. You accumulate points based on this memory. So when you have an exactness, it tends to accumulate in exactness and it creates an issue.
+[2189.92:2203.92] But if you think about it, initially you start from far away and you don't have an exact solution. So you can maybe solve the problems in exactly rough accuracy initially.
+[2203.92:2207.92] But as you get near the solution, you may want to increase your accuracy.
+[2207.92:2219.92] So let's think about having a sequence of accuracy. And then we try to solve this problem.
+[2219.92:2237.92] And then you can create for the door with increasing accuracy, which means that you have a decreasing sequence of epsilon k's. And you try to find an approximate solution for each of these.
+[2237.92:2252.92] And then you can solve this. And then you do that. Then you can still apply the same method degrading methods.
+[2252.92:2281.92] This is the consecutive algorithm. You can also accelerate this and the accelerated method is in the advancing team. So there, this is a joint work with my QSPECT student Ahmed and my collaborators, all the AFR folk and former postdoc, and Koch Trondin, that you can determine how many iterations you need to use to solve this problem to get an excellent accuracy solution.
+[2281.92:2295.92] And then do acceleration for the tools. So we're going to call this the azgard method double loop in the sense that you solve this problem in one loop.
+[2295.92:2302.92] And then the outer loop solves the dual problem.
+[2302.92:2318.92] Now here is the linearized version that that that we discussed the same idea flies here. And so this linearized quadratic penalty same idea flies.
+[2318.92:2336.92] And one thing you can do is apply this proximal point like idea. So given the previous iteration, you try to not go too far from your current point while trying to minimize this objective.
+[2336.92:2356.92] Now in this particular case, if you choose this variable metric correctly, then the updates on X are explicit with the props. We went over the derivation last lecture. So I will avoid this derivation in this picture. It's quite nice.
+[2356.92:2369.92] And here's the simplified linearized augmented Lagrangian idea that you literally do one gradient update here. And then you one gradient update in the tool.
+[2369.92:2379.92] We know that gradient descent attempt usually doesn't work in general in the next problems, but somehow with the correct choices, it does here.
+[2379.92:2394.92] Why? And this would have a one over square of K rate.
+[2394.92:2419.92] Without acceleration, this has one over K rate. Okay. Apparently my memory is not what it used to be. So here, this linearized augmented Lagrangian method, apparently there actually this one over K rate.
+[2419.92:2432.92] And I just need to refresh my memory. One thing I would like to highlight is that of course, you need to average. Right. So this.
+[2432.92:2453.92] So let's see the practical performance of this in a problem. So consider this positive, a problem for linear inverse.
+[2453.92:2465.92] So here, you know, we have the simple linear model, B is equal to a X natural plus W. So this is the same that is W is zero.
+[2465.92:2478.92] This is like let's say in the MRI case, we have a Fourier operator that is sub sampled. And you're trying to somehow get an image of your MRI with using fast.
+[2478.92:2487.92] In some basis like favorites. So here's the performance of algorithms.
+[2487.92:2498.92] So if you look at, I mean, so you can create the case where this estimator, you can have some noise, even in the presence of noise, the estimator behaves there as well.
+[2498.92:2502.92] So here's the point that I would like to make.
+[2502.92:2514.92] So in general, if you use the linearized augmented, it will perform with the average sequence. It will perform exact U. It's like one over K rate.
+[2514.92:2528.92] Except that it's interesting that if you look at the last iterative, without averaging, the method performs very well.
+[2528.92:2537.92] And if you look at this exact augmented Lagrangian method that this us guard, double look us guard, it will actually perform quite well.
+[2537.92:2542.92] So here's the feasibility. Here's the objective.
+[2542.92:2548.92] If you add a bit of noise, then the solution is not exactly sparse.
+[2548.92:2562.92] So because we're minimizing one norm and that B is equal to Ax. If so imagine A is N by P, N is less than P, then there exists solutions.
+[2562.92:2568.92] In fact, you can always find an N sparse solution to this particular system.
+[2568.92:2581.92] So if you inject a bit of noise, this means the solution is not exactly let's say a case sparse. Or maybe use sparse here because we were using K for deterioration.
+[2581.92:2589.92] So let's say the solution is not exactly sparse, which means the algorithm needs to do a bit more work.
+[2589.92:2600.92] So if you run these methods, the average sequence which we had again on T4 behaves what we expected to behave.
+[2600.92:2615.92] Now, if you look at the last iterative, it tends to perform it better and the double look us guard where you use your metal Lagrangian, the double look that picking the inexactments correctly, it tends to perform much, much better.
+[2615.92:2623.92] So look at these accuracy, these are interior point flight accuracy, super high accuracy.
+[2623.92:2633.92] So you nailed down these sparse coefficients and the bit of junk that comes because of the other noise.
+[2633.92:2645.92] And I think there's a perfect time to take a break and then we continue, we can stop the recording, we continue after 15 minutes of break.
+[2645.92:2672.96] So Let's make a quick turn ahead as we have the

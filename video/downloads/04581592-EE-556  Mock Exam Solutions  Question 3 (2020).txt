@@ -1,0 +1,126 @@
+~EE-556 / Mock Exam Solutions / Question 3 (2020)
+~2020-12-14T09:19:09.758+01:00
+~https://tube.switch.ch/videos/04581592
+~EE-556 Mathematics of data: from theory to computation
+[0.0:6.62] Hello everyone. Today I will walk you through the solution of problem 3 after
+[6.62:12.48] mock exam and the idea is really to give you a taste of the kind of reasoning we
+[12.48:18.52] expect you to have for the exam but mostly to help you also get your way around
+[18.52:24.2] this problem which can be a bit difficult to tackle at times. So I'll go
+[24.2:29.88] question by question and give you a solution and a step or walk through the
+[29.88:36.64] reasoning that we would like you to have. So the first thing when you have such
+[36.64:41.239999999999995] a problem is that you see that it's an unconstrait optimization problem that we
+[41.239999999999995:44.879999999999995] have a smooth convex function that we have two methods implemented using the
+[44.879999999999995:50.28] fixed step size and when you look at the plot I would suggest you to first be
+[50.28:55.019999999999996] sure about the scale that are given to you. So here we see that we have a log
+[55.02:61.86] lean plot and that in this case it means that linear rates will be displayed as
+[61.86:67.86] lines as we saw in handout 2 which means that in this plot we see that GD has a
+[67.86:74.9] linear rate whereas HID has a double linear rate. So from the course you know
+[74.9:79.46000000000001] that GD actually is linear rate when the underlying problem is strongly convex
+[79.46:86.41999999999999] that GD with fixed step size can adapt to strong convexity and HID with fixed
+[86.41999999999999:94.33999999999999] step size does not adapt to the underlying strong convexity. So here it's
+[94.33999999999999:101.69999999999999] unlikely that there is a bug in the code because actually it is totally
+[101.69999999999999:107.66] possible that the problem is strongly complex without us being aware of it. So we
+[107.66:113.42] deal with the problem as a simply convex problem but it has an underlying
+[113.42:119.7] strong convexity which we are not aware of and which means that HID will
+[119.7:124.9] is able to adapt to it whereas HID does not adapt to this kind of strong
+[124.9:132.46] convexity and so it's in the end the slower rate than gradient descent. It is
+[132.46:137.14] also important for you to be aware that the rates we give you in the course are
+[137.14:144.42] upper bounds on the convergence speed so it means that we have a bug if the
+[144.42:148.38] convergence rate that is displayed is slower than the upper bound that's
+[148.38:155.22] even but we don't have a bug if the convergence rate is faster than what's
+[155.22:158.94] given that's the point of having an upper bound and it's important to
+[158.94:167.1] understand this so the fact that in a convex setting we have 1 over K
+[167.1:174.1] rate for gradient descent doesn't mean it's it's wrong because as we see
+[174.1:178.42] here it's totally possible that's gradient descent adapts to some
+[178.42:183.54] underlying structure of the problem or that some instance of the problem is
+[183.54:188.9] easier for gradient descent than on other we have a worst case upper bound
+[188.9:195.26] in the convergence rate so moving on to the second question here we have a
+[195.26:203.42] very similar problem setting except that F is strongly convex here so we have
+[203.42:208.1] again the iteration plot and the time plot except that this time we have
+[208.1:214.57999999999998] iteration with respect to XK minus XTAR instead of the difference between the
+[214.57999999999998:220.45999999999998] objective values so I would just like to throw your attention that so it's not
+[220.45999999999998:224.85999999999999] part of the exam but it's for your understanding in general that you can
+[224.86:231.5] link in general the objective difference to the norm for smooth function
+[231.5:236.38000000000002] because through the characterization of smoothness you can write this kind of
+[236.38000000000002:243.14000000000001] upper bound between the function value and noting that the optimality
+[243.14000000000001:248.02] conditions implies gradient of F of XTAR equals 0 we can have the following
+[248.02:256.78000000000003] bound between objective value and the difference of the iterates to the
+[256.78000000000003:263.62] optimum which can be useful if you're not sure in which direction you can
+[263.62:270.34000000000003] bound one with the other so back to the problem here we remember again the
+[270.34000000000003:276.02] from the previous problem that's gd can achieve linear rate when the
+[276.02:280.82] underlying problem is strongly convex and that it can adapt to strong convexity
+[280.82:286.46] so here we have a strongly convex problem and we have gd with a linear rate
+[286.46:291.62] which is what's expected in iteration plot but there are several weird things
+[291.62:296.9] that happen in the time plot in particular if we see just the trend the
+[296.9:305.02] convergence of the of gd it tends to go slower as time goes by so it means that
+[305.02:310.78] the cost per iteration increases as time goes on and there's no reason for
+[310.78:317.29999999999995] this to happen with gradient descent because there's a fixed time to compute
+[317.29999999999995:324.9] the gradient at each iteration which should not increase and secondly we see
+[324.9:329.41999999999996] that the time convergence is not monotonic it's inconsistent with the
+[329.42:335.94] iteration plot and in general with the behavior of gradient descent where the
+[335.94:341.02000000000004] iterations monotonically decrease to the distance to the optimum so these are
+[341.02000000000004:345.90000000000003] two kinds of error you see in the the time plot that whereas in general you
+[345.90000000000003:352.66] would expect the the time plot to look much like the iteration one because each
+[352.66:361.22] iteration takes a fixed amount of time so moving on now to question C we have a
+[361.22:367.54] constraint optimization problem with a smooth and strong convex function f as
+[367.54:374.82000000000005] well as some some equality constraint linear equality constraints we have
+[374.82000000000005:380.78000000000003] implementation of a primal dual method and a projected gradient descent with
+[380.78:386.7] fixed peptides and in particular in a projection gradient descent we use
+[386.7:393.41999999999996] explicit matrix inversions this is an important part of the problem so now if
+[393.41999999999996:400.38] we look at the plot so we have two instances of the of the problem with
+[400.38:407.38] different dimensionality p so it means that we have a larger problem and we
+[407.38:416.58] look at the time complexity so first we see that we have a log lean plot in time
+[416.58:425.34] which means that as the as PD and projection gradient descent are displayed
+[425.34:430.82] as line this they both have linear rates we know that projection gradient
+[430.82:438.21999999999997] projected gradient descent which is a specific instance of proximal gradient
+[438.21999999999997:443.18] descent as we see in lecture five can actually achieve linear rate with
+[443.18:449.65999999999997] strongly complex f and that it's also reasonable for a primal dual method
+[449.66:460.82000000000005] that has a PhD to achieve linear rate we note here that while we know from the
+[460.82000000000005:471.3] course that pdhg converges to x star when f is complex the rate is not
+[471.3:480.26] totally clearly given in the course we see that there is convergence 1 over k
+[480.26:486.38] in the duality gap in slide 17 of lecture 12 but it's challenging to
+[486.38:490.42] convert that to a rate that applies to the objective as we see in our
+[490.42:495.3] setting and I would just like to note that while this result is not provided in
+[495.3:501.1] the course a recent paper called dualized split randomized fast non-smooth
+[501.1:507.34000000000003] optimization algorithms actually proves that the primal dual method converges
+[507.34000000000003:513.3] at a linear rate when f is strongly convex and g is an indicator function and
+[513.3:521.22] the challenge here is that g is non-smooth and so that the tools of the
+[521.22:527.9] course are not totally sufficient to prove the convergence rate but it's
+[527.9:534.9] of it's additional material and what you should do in the exam with in the
+[534.9:540.6600000000001] real exam it will not have a tricky question like that without additional
+[540.6600000000001:548.62] hints the you can you you know that the method converges at some at some rate
+[548.62:554.54] and you can reasonably expect it to have a linear rate it's not a mistake if
+[554.54:558.54] it's faster because usually what you're giving the course is worst case
+[558.54:566.62] bounds so what's however these are not the main points about this plus it's
+[566.62:572.62] important comments but the main thing about this exercises about the
+[572.62:577.34] dimensionality or the skating with dimension of the problem what we see here is
+[577.34:584.6600000000001] that it's about how the methods fail scale with space so when the
+[584.6600000000001:588.7800000000001] dimensionality of the problem increases by a factor hundred p from 10 to
+[588.7800000000001:595.1800000000001] thousand the primal dual methods become 10 to the four times slower meaning
+[595.1800000000001:603.9000000000001] that it increases with a cost a p squared so on on the other hand the projected
+[603.9:608.6999999999999] gradient descent which arise on explicit matrix inversions scales in a
+[608.6999999999999:613.9399999999999] much worse fashion when the dimensionality of the problem grows we see that
+[613.9399999999999:623.66] we have a p to the 2.5 or even almost three pq complexity and it's consistent
+[623.66:628.3] with the fact that explicit matrix inversions are much more expensive to
+[628.3:633.1] compute than regular matrix vector multiplication as you would have in
+[633.1:640.62] the pd method so the projected gradient doesn't miss method scales
+[640.62:644.3000000000001] were it's getting with dimension in worse fashion compared to the primary
+[644.3000000000001:651.9] dual one so there's no bug necessarily in the code and vulcan is wrong here
+[651.9:660.78] so now we move to the fourth and last question about stochastic methods so
+[660.78:664.98] here we have an unconstrained optimization problem with a smooth and
+[664.98:670.9] strongly convex function and we have sgd with decaying step size and sbrg
+[670.9:679.6999999999999] with a fixed step size so then some additional criteria are given but what
+[679.6999999999999:686.54] we see here is a log log time plot sorry epoch plot which is the equivalent
+[686.54:695.66] of iterations for the stochastic methods because they are about doing a full
+[695.66:703.06] pass through the the dataset or the functions and what we have here is then a
+[703.06:710.98] sublinear rate we see that sgd has the one over a k rate because it decreases
+[710.98:716.9] one order of magnitude in the objective value in one order of magnitude of
+[716.9:724.14] epochs and we see that sbrg has a rate one over k squared so if you don't
+[724.14:730.38] remember how to get the more precise rates from the plot I would encourage you
+[730.38:737.22] to check again handout two about this so we know from the course that std with
+[737.22:742.0600000000001] decreasing step size converges as a rate one over k when the f i's are
+[742.0600000000001:750.26] strongly convex and we know also that sbrg converges at a linear rate in this
+[750.26:757.26] setting when gamma is more than one over for l which is the case here so here we
+[757.26:761.38] have a bug in the code because sbrg converges at the rate one over k squared
+[761.38:769.3] whereas the conditions are satisfied for it to converge as a linear rate so
+[769.3:797.74] wolfland is correct there is the bug in the code

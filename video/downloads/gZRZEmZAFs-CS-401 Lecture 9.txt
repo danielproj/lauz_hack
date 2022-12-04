@@ -1,0 +1,1200 @@
+~CS-401 Lecture 9
+~2022-11-16T11:40:41.229+01:00
+~https://tube.switch.ch/videos/gZRZEmZAFs
+~CS-401 Applied data analysis - Fall 2022
+[0.0:7.12] We talk about unsupervised learning and we'll start with some announcements.
+[7.12:15.16] So, next week's lecture, we're not taking place in this room because I don't know what
+[15.16:19.68] it is, but there's some other event, some other important event in this room.
+[19.68:25.32] So we were relocated only for next week to the big convention center by the metro stations,
+[25.32:27.92] with the convention center auditorium C.
+[27.92:33.68] I'll also send an email and then an ad message about this, but to already pre-warn you, next
+[33.68:38.28] week on Wednesday, don't come here, but go to the Swiss Tech Convention Center after
+[38.28:41.24] that will be in this room again.
+[41.24:49.040000000000006] Then project milestone two is due after tomorrow on Friday.
+[49.040000000000006:55.160000000000004] Reminder, we won't answer questions that are asked in the final 24 hours before the deadline.
+[55.16:63.16] So we'll answer only questions that are asked before end of day Thursday.
+[63.16:69.64] Then once milestone two has been handed in, we will release homework two for which you
+[69.64:73.75999999999999] learn and have two weeks, same as for homework one.
+[73.75999999999999:80.4] And in Friday's lab session, we will do entirely exercises on unsupervised learning the topic
+[80.4:81.4] of today.
+[81.4:85.48] Okay, so last week we talked about supervised learning.
+[85.48:87.64] Today we'll talk about unsupervised learning.
+[87.64:92.48] Quick refresher, what's the difference between these two in supervised learning?
+[92.48:101.4] We are given input output pairs, x, y, x is the input vector, feature vector, y is the
+[101.4:103.48] label.
+[103.48:112.08] And we are supposed to learn the function f that connected maps x to y.
+[112.08:117.16] In unsupervised learning, which will be the focus of today, we're only given some feature
+[117.16:123.80000000000001] vectors x, but we're not told anything about any labels y.
+[123.8:134.16] We're still trying to learn a function that maps x, these data points x to an output y,
+[134.16:136.52] but we don't see this output during training.
+[136.52:142.44] Okay, so we, what we basically want to do here is we want to map the representation x to
+[142.44:145.8] a simpler representation y.
+[145.8:149.88] If y is discrete, then we call this clustering.
+[149.88:152.28] And this is what we'll focus on today.
+[152.28:161.12] So every data point is mapped to one of a finite, small number of cluster labels.
+[161.12:165.72] And if y is continuous, then we call this dimensionality reduction.
+[165.72:171.68] So in this case, the simpler representation is one that is a vector y that is of smaller
+[171.68:174.16] dimensionality than the original vector x.
+[174.16:178.96] So that's why this is called dimensionality reduction.
+[178.96:183.20000000000002] And we will not talk about this today, although it's also an unsupervised learning technique,
+[183.20000000000002:187.48000000000002] but we'll talk about it specifically in the context of text data.
+[187.48000000000002:191.68] Because that's where we use dimensionality reduction a lot.
+[191.68:197.88] So I'll, I'll use the topic of text data to introduce dimensionality reduction to you.
+[197.88:200.08] Okay, but today clustering.
+[200.08:202.08] So what's the clustering problem?
+[202.08:207.60000000000002] In clustering, we are given a set of points and we also have a notion of distance between
+[207.6:208.88] points.
+[208.88:216.32] And our goal is to group the points into a certain number of clusters, groups, such that
+[216.32:223.24] the members, the points that belong to the same cluster are close to each other.
+[223.24:227.68] And the points that belong to different clusters are far apart from each other.
+[227.68:232.24] It's a very intuitive notion of grouping data points together.
+[232.24:235.24] So similar data points should fall into the same cluster.
+[235.24:239.64000000000001] And this similar data points should fall into different clusters.
+[239.64000000000001:242.64000000000001] Usually the points are in high dimension space.
+[242.64000000000001:246.84] So up to hundreds or thousands, sometimes even millions.
+[246.84:252.96] And the similarity between data points is usually defined via a distance measure.
+[252.96:257.64] So the two are really the same side, two sides of the same coin.
+[257.64:262.24] You could think of similarity as one minus distance or one over distance or something like
+[262.24:263.24] that.
+[263.24:272.96000000000004] So the similarity metrics, examples I gave you basically in lecture seven, two lectures
+[272.96000000000004:275.64] ago when we talked about canyors neighbors.
+[275.64:279.92] I talked about Euclidean distance, coast and distance, Jakarta distance, edit distance
+[279.92:280.92] and so on.
+[280.92:291.0] So all these measures can also be used for clustering.
+[291.0:295.0] But there are some important characteristics about clustering methods that you have to
+[295.0:296.0] be.
+[296.0:297.48] There are many, many clustering methods out there.
+[297.48:301.36] So let's think about how these methods can differ.
+[301.36:303.24] There are quantitative aspects.
+[303.24:305.16] For example, the scalability of methods.
+[305.16:309.92] So how many samples, how many data points can you efficiently can you deal with in reasonable
+[309.92:311.24] time?
+[311.24:313.56] What dimensionality can you mess it deal with?
+[313.56:323.72] So how long can the future, how many features can the data points capture?
+[323.72:328.16] Qualitative aspects, what types of features can your clustering method deal with?
+[328.16:333.4] Can it only be numerical vectors, like let's say vectors in Euclidean space or can your
+[333.4:339.6] clustering method also deal with features that are categorical?
+[339.6:344.0] What types of shapes can your clustering method handle?
+[344.0:350.96000000000004] Can it only handle, maybe this is better to look at with this example.
+[350.96000000000004:353.92] So here we clearly have two clusters, I would say, right?
+[353.92:363.04] We have these two crescents that are entangled in this way and the method on the right correctly
+[363.04:367.08000000000004] clusters the points together in these two crescent shape clusters.
+[367.08:371.4] These two methods cannot, so this cluster has a non convex shape, right?
+[371.4:376.44] I take a point here and a point there and to connect them, I have to leave the cluster.
+[376.44:378.03999999999996] I have to cut through the other clusters.
+[378.03999999999996:382.71999999999997] So this is a non, this is a non convex shape that's captured here.
+[382.71999999999997:387.32] There are clustering methods such as k-means, which we talk about a lot today that cannot
+[387.32:388.88] deal with such clusters.
+[388.88:390.64] They cannot recognize such clusters.
+[390.64:400.03999999999996] If you run such clustering methods like k-means, they would cut their clusters into because
+[400.03999999999996:407.12] they can only recognize these convex shapes, like spherical shapes, if you will.
+[407.12:411.2] So this is an important distinction also between clustering methods.
+[411.2:415.64] We will at the end of today's lecture we'll also see a method that can actually recognize
+[415.64:419.84] such non convex clusters called DB scan.
+[419.84:423.56] Then robust, this is an important aspect.
+[423.56:427.71999999999997] How sensitive is the clustering method to noise and outliers?
+[427.71999999999997:429.67999999999995] How sensitive is it to the processing order?
+[429.67999999999995:430.91999999999996] There are some clustering algorithms.
+[430.91999999999996:437.03999999999996] If you give the data in a different order, it will find you sometimes different clusters.
+[437.03999999999996:440.52] So this would be then a non robust method.
+[440.52:443.52] And finally, what's the level of user interaction?
+[443.52:445.55999999999995] Can you incorporate user constraints?
+[445.55999999999995:449.12] For example, can the user specify how many clusters they want to get?
+[449.12:452.04] This can be a blessing or a curse.
+[452.04:456.36] If you know already how many clusters you would like to get as output, then it's good if
+[456.36:457.56] you're clustering method.
+[457.56:458.56] Let's specify that.
+[458.56:463.32] But if you have no clue how many clusters are naturally in your data, then if you have
+[463.32:468.04] to tell the method, rather than the method tells you how many clusters, then it makes it
+[468.04:471.36] a bit less useful.
+[471.36:476.72] And then finally, how interpretable are the clusters that you get and ultimately how useful
+[476.72:477.72] are there.
+[477.72:483.56] These are important things to think about when you choose your clustering method.
+[483.56:484.56] Okay.
+[484.56:491.04] Then finally, you see I'm just setting the stage more abstractly, but then we will talk
+[491.04:495.92] about concrete clustering methods for the rest of the lecture.
+[495.92:501.0] Just to clarify some terminology, here's this toy picture.
+[501.0:507.0] Here we have two dimensional data, X and Y.
+[507.0:510.88] Your data will be higher dimensional, but two is easier to plot.
+[510.88:515.64] So let me clarify this terminology in two dimensions.
+[515.64:518.88] Points that are tied together for a cluster.
+[518.88:520.48] So we have these clusters here.
+[520.48:528.24] And then there will be some points, usually, that are not close to any other data points
+[528.24:533.16] in those we call outliers.
+[533.16:538.16] Here is a typical clustering example, again, this is in two dimensions.
+[538.16:543.64] Usually, you'll have more than two dimensions, but here in two dimensions, let me ask you
+[543.64:548.48] how many clusters would you say there are in this dataset?
+[548.48:552.7199999999999] Just squint your eyes.
+[552.7199999999999:556.48] It's not ten, I guess.
+[556.48:558.1999999999999] What do I hear?
+[558.1999999999999:560.48] Three people say three and I would agree.
+[560.48:565.16] Yeah, I would agree that there are three.
+[565.16:571.88] It's easy in this two dimensional case, but in more dimensions, you can't even look
+[571.88:572.88] at the data.
+[572.88:577.5600000000001] So then it's much harder to actually assess the quality of the clustering once you get
+[577.5600000000001:579.5600000000001] one.
+[579.5600000000001:587.12] For example, if you have 100 by 100 images, so images that have 100 by 100 pixels, then
+[587.12:592.48] you already have 10,000 dimensional data because you have 10,000 pixels and that you might
+[592.48:598.5600000000001] still want to cluster those images, but you could never look at them this way.
+[598.5600000000001:604.12] So everything becomes much harder in these higher dimensions.
+[604.12:607.24] What can you do with clustering?
+[607.24:610.5600000000001] Clustering is a very useful tool for data exploration.
+[610.5600000000001:616.08] If you have, especially if you have high dimensional data, data that you cannot plot in this way,
+[616.08:620.8000000000001] then you might still want to better understand what's actually in my data set.
+[620.8000000000001:626.8000000000001] So you can just squint your eyes and say, like here, like we did here, there are three clusters.
+[626.8000000000001:631.36] You need to actually run a clustering method to find this out.
+[631.36:637.88] And also for data exploration, you might want to imagine you have 100 million documents
+[637.88:644.9200000000001] and you want to understand what are typical themes that are talked about in these documents.
+[644.92:649.4799999999999] And of course, you cannot read those documents, but something that you could do is to cluster
+[649.4799999999999:651.12] the 10 million documents.
+[651.12:652.7199999999999] Maybe you get 10 clusters.
+[652.7199999999999:655.76] And then from each cluster, you can take a few representative samples and actually read
+[655.76:657.16] those.
+[657.16:661.4399999999999] So then you can explore the data that way because you first asked the clustering method to
+[661.4399999999999:667.4399999999999] basically put data points together that are similar and then you have to screen much less
+[667.4399999999999:669.3199999999999] to get an understanding of what's actually in your data.
+[669.32:679.96] So the question is, does the clustering method tell you why it's clustering documents together?
+[679.96:681.7600000000001] And usually no.
+[681.7600000000001:686.48] So usually you just get the cluster and then you have to deal with it.
+[686.48:692.9200000000001] Some methods are better than others, but in terms of interpretability, but usually the
+[692.9200000000001:696.1600000000001] methods do not tell you why they made these decisions.
+[696.16:701.68] You kind of have to analyze it post-talk in order to understand that.
+[701.68:707.48] Related to the first point, a clustering can be used for partitioning the data for more
+[707.48:709.4] fine-grained subsequent analysis.
+[709.4:714.12] So imagine you cluster your 10 million data points into 10 clusters and then if those 10
+[714.12:718.76] clusters are very different, you might, if you're a data analyst, you might then run separate
+[718.76:722.76] analyses for each of these clusters.
+[722.76:727.68] So clustering can be an important step in the data analysis pipeline in that sense.
+[727.68:732.64] If you think about marketing, in marketing people often use what they call personas.
+[732.64:741.28] So they will, a typical persona could be something like female under 18 heavy social media
+[741.28:750.88] user, high school, university education or someone male above 50 factory worker.
+[750.88:756.96] So they often group customers into these segments such that they can target them with different
+[756.96:759.0] advertising strategies, for example.
+[759.0:764.68] So this they call personas and a data-driven way to arrive at these personas would be clustering.
+[764.68:768.96] You take all your customers and to put similar ones together, for example, those that
+[768.96:770.92] behave similarly.
+[770.92:779.16] Then next point, clustering can also be useful for data labeling when you do supervised learning.
+[779.16:784.1999999999999] So clustering itself is an unsupervised technique, but imagine that you have data that's not
+[784.1999999999999:790.8399999999999] labeled yet and you want to label the data such that you can treat, you can solve a supervised
+[790.8399999999999:794.48] problem, for example, classify what documents are about.
+[794.48:797.36] But you don't have this kind of labels in the beginning.
+[797.36:801.9599999999999] So something that you could then do is first cluster your data that doesn't require any
+[801.9599999999999:802.9599999999999] labels.
+[802.96:808.9200000000001] And then for each of the clusters, you label, let's say, 1,000 examples and then you can
+[808.9200000000001:811.32] train a supervised classifier.
+[811.32:817.8000000000001] So that way you can basically bootstrap from no labels into a label data set that you
+[817.8000000000001:825.6800000000001] can then put into a super into a classifier and you will be, this will be economical with
+[825.6800000000001:831.36] respect to effort that you spend labeling because you make sure that you spend your labeling
+[831.36:835.64] time equally over all the clusters that you have.
+[835.64:842.24] Similarly, clustering can help you in discretizing features for supervised learning.
+[842.24:844.72] This was covered in lecture 8.
+[844.72:847.88] So here you have a link to the slide that I'm referring to.
+[847.88:852.4] And finally, it's 10 useful for data compression or data condensation.
+[852.4:854.0] Here's an example.
+[854.0:859.44] If you have this, imagine you have this two-dimensional data set, there are no clear clusters here,
+[859.44:862.6800000000001] because there's no separation between it.
+[862.6800000000001:868.9200000000001] Everything is kind of connected together, but still running a clustering algorithm can
+[868.9200000000001:873.48] be a useful thing to do because it basically gives you this kind of summary of the data.
+[873.48:879.6] If you look at the black dots, there are kind of a sparsification, a sparsified version
+[879.6:883.2] of the entire data set.
+[883.2:887.7600000000001] So you can think of this then clustering as giving you some sort of summary of the
+[887.76:896.2] or a coarse graining of the data set, which is also a good use case of clustering.
+[896.2:899.96] But you should be aware of clustering bias.
+[899.96:901.6] What do I mean by that?
+[901.6:905.6] Humans are really something like we're clustering machines, right?
+[905.6:914.08] We conceptualize the world as consisting of discrete distinct categories, and we typically
+[914.08:917.64] internally represent those categories via exemplars.
+[917.64:919.1999999999999] That is typically examples.
+[919.1999999999999:924.12] If I ask you to think of the concept of a dog, you don't think about this abstractly,
+[924.12:928.24] but you think of a few prototypical dogs typically.
+[928.24:932.28] And this works, so clustering kind of works well for conceptualizing the world.
+[932.28:940.0] For us, evolutionarily, it's something that seems to be good for humans, but there aren't
+[940.0:941.88] clusters everywhere, right?
+[941.88:948.64] So for dogs, it helps us, but think about the sky.
+[948.64:953.6] When you look into the sky, there are all these people have come up with all these completely
+[953.6:962.56] random names for zodiacs and constellations that are really there is often no real clustering
+[962.56:967.32] there, but people have still people still see them in there.
+[967.32:972.88] And this is not only the case in astronomy, but it's the case everywhere, really.
+[972.88:979.12] We try to find clusters even, and we can't really even help it as humans, even when they're
+[979.12:980.12] not.
+[980.12:983.2] So this is something that you have to be aware of when you run clustering.
+[983.2:991.1600000000001] Don't be fooled by your nature as a human clustering machine.
+[991.1600000000001:997.0] So that's why I want to add this warning that clustering is maybe used more than it actually
+[997.0:1003.96] should be used because people often assume that an underlying domain has discrete classes
+[1003.96:1006.72] in it, even if it doesn't.
+[1006.72:1011.0] A typical example for this is characteristics of people.
+[1011.0:1014.04] There are all these personality types.
+[1014.04:1019.64] For example, there is the Myers-Briggs system of personality types where they basically
+[1019.64:1027.48] have these, they come up with four dimensions of human character traits, extra version versus
+[1027.48:1034.2] introversion, then intuition, thinking, perception, and then you have these abbreviations.
+[1034.2:1039.08] So this would be an extrovert, intuitive, thinking, perceptive person.
+[1039.08:1045.6399999999999] So according to this system, there are two to the power of four that is 16 personality
+[1045.6399999999999:1047.48] types.
+[1047.48:1051.6] But that's just not, it's been shown to not be correct.
+[1051.6:1060.0] There's much more of a continuum of character traits, but we really like to cluster people
+[1060.0:1063.24] into these groups.
+[1063.24:1071.0] And so you need to be careful that you don't fall into such traps and really use clustering
+[1071.0:1074.92] only when it's really warranted.
+[1074.92:1081.28] In reality, often the underlying data is continuous and in those cases, you might be better off
+[1081.28:1090.4] using continuous methods such as matrix factorization, dimensionality reduction, which we'll see
+[1090.4:1096.52] in a couple of lectures for now, or soft versions of clustering, where each data point isn't
+[1096.52:1101.8000000000002] strictly in one cluster, but really can be associated with several clusters at the
+[1101.8:1105.72] same time to several degrees.
+[1105.72:1112.9199999999998] So here is an example of what I mean with cluster bias and how it can maybe be avoided.
+[1112.9199999999998:1117.56] So this data set looks like Lake Geneva.
+[1117.56:1122.52] When I stare at this, I always see Lake Geneva, but it's really a 2D, a two-dimensional
+[1122.52:1125.56] representation of movies.
+[1125.56:1129.76] Don't worry too much about how the 2D representation was derived.
+[1129.76:1133.48] It comes from who watched and who likes the movies.
+[1133.48:1141.0] So just for now, assume that this data set about who watched movies is used in order to represent
+[1141.0:1145.16] each movie as a two-dimensional data point, X and Y.
+[1145.16:1146.72] Okay, so we have these movies.
+[1146.72:1152.8] We plot them in the 2D plane, and this is what we get.
+[1152.8:1158.96] Clearly there are some very clear clusters, especially around the fringe, right?
+[1158.96:1161.52] These points clearly form a tight cluster.
+[1161.52:1162.72] These points form a cluster.
+[1162.72:1164.92] These points form a cluster.
+[1164.92:1169.2] But if you look at the bulk of the data, like everything that's there in the middle, in
+[1169.2:1173.16] Lake Geneva, that's one huge cluster, right?
+[1173.16:1179.44] And it's not really doing the data justice to treat all of these just in the same cluster.
+[1179.44:1182.52] Really there's a continuum on Lake Geneva.
+[1182.52:1186.3600000000001] You know, as you go from Geneva, all the way to what would this be here?
+[1186.36:1191.7199999999998] In Geneva, you would really probably see a lot of systematic variation.
+[1191.7199999999998:1195.6] But if you just treated this as one discrete cluster, you would lose that.
+[1195.6:1204.3999999999999] So for situations like that, you would be better off by using methods that can deal with
+[1204.3999999999999:1206.4399999999998] this continuum.
+[1206.4399999999998:1213.4399999999998] And this is, as I mentioned, these would be methods related to matrix factorization,
+[1213.44:1216.56] some engineering reduction basically.
+[1216.56:1220.8] I take out K&N from this slide because it's a bit confusing K&N is a supervised learning
+[1220.8:1221.8] technique.
+[1221.8:1222.8] So I'll ignore it here.
+[1222.8:1225.8400000000001] I'll take it out from this slide.
+[1225.8400000000001:1234.52] Okay, so some more terminology before we dive into concrete methods for clustering.
+[1234.52:1239.1200000000001] We usually distinguish between hierarchical clustering versus flat clustering.
+[1239.12:1244.1999999999998] In hierarchical clustering, the clusters form a tree-shaped hierarchy, something like
+[1244.1999999999998:1245.52] a taxonomy.
+[1245.52:1256.4799999999998] So think of, for example, the tree of life where all living beings are clustered into ever
+[1256.4799999999998:1257.9599999999998] larger groups.
+[1257.9599999999998:1261.08] For example, we have all living beings.
+[1261.08:1267.1599999999999] They are by biologists have divided all living beings into domains.
+[1267.16:1277.92] So this could be, I believe, this is plant, two kinds of bacteria and fungi and animals
+[1277.92:1279.3200000000002] or something like this.
+[1279.3200000000002:1283.68] And then animals are divided again into different kingdoms.
+[1283.68:1286.3600000000001] Kingdoms into phyla, phyla into classes and so on.
+[1286.3600000000001:1293.4] So we really have this hierarchy of clusters, of clusters here.
+[1293.4:1299.6000000000001] And this is opposed to flat clustering where there is no hierarchy of structure in the
+[1299.6000000000001:1300.6000000000001] clusters.
+[1300.6000000000001:1306.64] We simply divide the data set into a certain set of disjoint clusters.
+[1306.64:1312.96] So this is a prototypical example where you have 2D data points and we have 3 clusters,
+[1312.96:1316.92] but there's no hierarchical relationship between these clusters.
+[1316.92:1321.76] Or at least the clustering method doesn't find any relationship, hierarchical relationships,
+[1321.76:1324.36] even if they were to be any.
+[1324.36:1328.64] And then orthogonally to this distinction between hierarchical and flat clustering, there's
+[1328.64:1332.72] also the distinction between hard clustering and soft clustering.
+[1332.72:1338.92] In hard clustering, every item, every data point is assigned to one and only one unique cluster,
+[1338.92:1344.48] whereas in soft clustering, cluster membership is a probabilistic notion.
+[1344.48:1350.8] So every data point is associated with all clusters to a certain degree.
+[1350.8:1358.52] So a data point has a distribution over all the clusters.
+[1358.52:1365.32] Where in the extreme case, you could have even probability zero for a certain cluster
+[1365.32:1370.76] and then in the limit you can approach the hard clustering case, it's kind of a special
+[1370.76:1375.6399999999999] case of the soft clustering case.
+[1375.6399999999999:1377.8] Clustering is a hard problem.
+[1377.8:1383.28] As I mentioned several times, it looks simple in 2 dimensions, but that's deceiving because
+[1383.28:1387.8] it's much harder for higher dimensions.
+[1387.8:1391.9199999999998] Why is that?
+[1391.9199999999998:1398.08] That's because higher dimensional spaces are different from low dimensional spaces.
+[1398.08:1400.28] Who has heard of the curse of dimensionality?
+[1400.28:1405.52] A few people, I can also summarize this very quickly.
+[1405.52:1411.56] As you imagine, you have a Euclidean space and you add a dimension to it.
+[1411.56:1415.76] So you start from one dimension, that's just a line.
+[1415.76:1418.92] Now you add a second dimension, you have the plane.
+[1418.92:1424.76] You add a third dimension, you have a volume, you have a cube or three dimension space.
+[1424.76:1430.56] Every time you add a dimension, the space grows exponentially basically.
+[1430.56:1441.44] So the volume of the space, imagine you have something that has unit length in each dimension,
+[1441.44:1447.28] so you have a hypercube, then the volume of that hypercube grows exponentially with the
+[1447.28:1449.8] number of dimensions.
+[1449.8:1450.8] What does that mean?
+[1450.8:1459.84] If you now have a fixed number of data points in that space, then the data will become ever
+[1459.84:1465.9599999999998] sparser, because you keep the number of data points the same, but you make the space exponentially
+[1465.9599999999998:1468.08] larger every time you add a dimension.
+[1468.08:1473.6] So all the points will become, if you have any cluster structure, it will be fuzzed out,
+[1473.6:1477.84] it will be ripped apart by this exploding dimension of the space.
+[1477.84:1484.1599999999999] And at some point, often everything will be nearly equally far apart.
+[1484.1599999999999:1487.6799999999998] And you won't see any close clusters anymore.
+[1487.68:1491.96] You'll take ten points and embed them in a 1,000 dimension space.
+[1491.96:1495.64] You will get everything will be kind of far apart.
+[1495.64:1497.16] So that's the idea.
+[1497.16:1504.96] It can also be made more mathematically precise, but that's the intuition behind the curse
+[1504.96:1506.28] of dimensionality.
+[1506.28:1512.3200000000002] And it's not a problem for two and for three dimensions, but starting with five, six,
+[1512.3200000000002:1516.8] seven dimensions already, and certainly for hundreds of dimensions, you will have this
+[1516.8:1523.44] problem of high dimensionality where cluster structure really kind of often disappears.
+[1523.44:1527.36] So that's why clustering is hard in high dimensions.
+[1527.36:1532.48] Now let's look at some concrete examples of the applications of clustering.
+[1532.48:1540.3999999999999] One of the first applications was in astronomy, where you have, for example, a catalog of
+[1540.3999999999999:1542.56] billions of sky objects.
+[1542.56:1547.76] So these are images that were taken via telescopes.
+[1547.76:1552.28] And you now have these represented in a certain way.
+[1552.28:1563.1599999999999] In this case here, the images are seven-dimensional, where it's basically the intensity in seven
+[1563.1599999999999:1566.56] frequency bands that were recorded by the telescope.
+[1566.56:1573.6] Now the goal is to cluster those sky objects into objects that are of a similar kind.
+[1573.6:1578.56] So galaxies versus nearby stars, versus quasars, and so on.
+[1578.56:1583.08] So those would be the different clusters, the clusters in this case.
+[1583.08:1592.9199999999998] And so clustering is one of the prime methods that have been used in astronomy, data-driven
+[1592.92:1599.4] astronomy, and also astronomy was one of the strong driving forces behind clustering in
+[1599.4:1602.0] its early history.
+[1602.0:1605.8400000000001] Another example is movie clustering.
+[1605.8400000000001:1614.4] Imagine you're in Netflix and you want to cluster movies by genre.
+[1614.4:1618.4] The question though is big wide elephant is often what is really a genre?
+[1618.4:1623.48] What is the people can, this is the classical question that people will argue about in the
+[1623.48:1624.48] bar.
+[1624.48:1628.68] Like what are the different music genres or film genres?
+[1628.68:1632.64] Because it's not really, it's often up to interpretation.
+[1632.64:1637.1200000000001] So frequently you want to take a data-driven approach to that and let the data speak what
+[1637.1200000000001:1644.52] are the genres rather than critics who will have, who will argue more top-down rather
+[1644.52:1645.52] than bottom-up.
+[1645.52:1652.36] And something that you could do is represent a movie by the set of customers who watched
+[1652.36:1654.32] the movie.
+[1654.32:1658.84] Different people have different interests and some people like documentaries and they
+[1658.84:1660.6399999999999] will watch a lot of documentaries.
+[1660.6399999999999:1665.0] Others like romances and they will look at a lot of those and that gives you a lot of
+[1665.0:1666.8] information about the movies actually.
+[1666.8:1670.8] Even without ever watching a minute of the movie just by looking at who watches the movie,
+[1670.8:1672.8799999999999] you learn a lot about the movies.
+[1672.88:1676.8400000000001] And so the idea in this technique is called collaborative filtering.
+[1676.8400000000001:1683.48] If you might have heard of that, the idea here is to basically use who interacted with an
+[1683.48:1689.0400000000002] item in order to represent the items.
+[1689.0400000000002:1696.3200000000002] And what you can then do is think of a space that has one dimension for each customer.
+[1696.3200000000002:1701.24] And in each dimension you can either have zero or one.
+[1701.24:1706.96] So zero represents that that customer has watched the movie and has not watched the movie
+[1706.96:1710.36] and the one means that the customer has watched the movie.
+[1710.36:1716.28] So if you have, let's say, one million customers on Netflix, there's actually more, but let's
+[1716.28:1717.28] just say there's one million.
+[1717.28:1721.72] Then you have a one million dimensional vector, one entry per customer.
+[1721.72:1723.4] And the vector is binary.
+[1723.4:1727.84] It's either a zero or a one for each customer.
+[1727.84:1731.8799999999999] And now the goal, so now your data points would be one million dimensional, right?
+[1731.8799999999999:1733.8799999999999] That is very high dimension.
+[1733.8799999999999:1738.8] But you still want to cluster those in order to find similar movies.
+[1738.8:1750.48] So similar movies would be movies that are watched by similar sets of customers.
+[1750.48:1753.1999999999998] And okay, ah, this story the next slide.
+[1753.1999999999998:1756.9599999999998] The same thing you can do for other types of data.
+[1756.96:1765.24] For example, for document clustering where as earlier we had movies, we would now have documents.
+[1765.24:1771.0] But now the dimensions represent whether a word appears in the document or not.
+[1771.0:1774.88] So then we would have as many dimensions as there are words in the vocabulary.
+[1774.88:1778.52] So this might be tens of thousands or hundreds of thousands.
+[1778.52:1780.16] And again, we have this binary entries.
+[1780.16:1784.3600000000001] A zero means that the word does not appear in the document.
+[1784.36:1789.6] And now we want to cluster together documents that consist of similar sets of words, right?
+[1789.6:1793.28] So this is really exactly the same as the movie example.
+[1793.28:1799.6799999999998] We just gave a different interpretation to the dimensions of those vectors that we want to cluster it together.
+[1799.6799999999998:1811.8] In both examples, movies and documents, we have a choice to make when we think about how to represent the data points.
+[1811.8:1814.96] I said there is one entry per each.
+[1814.96:1823.48] There is one feature for each customer in the movie set or for one word in the document case.
+[1823.48:1828.36] And we can actually we can either think of these as vectors, really.
+[1828.36:1833.0] And then think about geometry basically where if we have one million dimensions,
+[1833.0:1835.96] we would have a one-dimensional space.
+[1835.96:1840.28] And we could then consider Euclidean distance or call it a
+[1840.28:1844.8799999999999] Euclidean distance or call sign distance or Manhattan distance and things like that.
+[1844.8799999999999:1849.16] Or we could treat these sets really as sets.
+[1849.16:1852.56] Because you know, it's a set of users that watch the movie.
+[1852.56:1860.36] And if we do that, then we can use similarity or distance measures that really are for sets,
+[1860.36:1864.44] such as the jacquard index that I introduced two lectures ago.
+[1864.44:1872.76] Reminder, jacquard index or jacquard similarity is the size of the intersection of two sets
+[1872.76:1877.0800000000002] divided by the size of the union of the two sets.
+[1877.0800000000002:1882.44] So here we really think of sets, whereas here we think of geometry.
+[1882.44:1886.88] It's kind of very different ways to think about the same kind of data.
+[1886.88:1895.68] Both make sense and what works better depends on the application.
+[1895.68:1905.0400000000002] Okay, so now wrapping up again this overview of clustering methods.
+[1905.0400000000002:1912.0800000000002] Here is a kind of a clustering of clustering methods, if you will.
+[1912.08:1919.1599999999999] So we have hierarchical methods on top and we have the flat methods.
+[1919.1599999999999:1921.84] For the hierarchical methods, we have two kinds.
+[1921.84:1925.0] We have a glommel-tiff clustering methods.
+[1925.0:1929.8799999999999] These are, you can think of these as bottom up, where you start with all your data points
+[1929.8799999999999:1931.4399999999998] just in one big pool.
+[1931.4399999999998:1940.76] And now iteratively you basically cluster points together, smaller sets of points together.
+[1940.76:1943.92] And then you cluster clusters together in cluster.
+[1943.92:1946.12] So you build this hierarchy of clusters.
+[1946.12:1956.28] Okay, so that's bottom up from the data to the hierarchy in the devices cases is top down.
+[1956.28:1961.52] Where first you build one big cluster that has all the data points.
+[1961.52:1965.84] And now you divide that into several clusters.
+[1965.84:1969.92] Okay, so you can you you divide the big cluster into two clusters.
+[1969.92:1972.3200000000002] Then each of those you split it again.
+[1972.3200000000002:1975.28] So divisive methods work by splitting the data.
+[1975.28:1981.64] Where is a glommel-tiff methods work by clustering methods together.
+[1981.64:1986.8000000000002] So if you think about if this is your final clustering, then the agglomel-tiff methods proceed
+[1986.8000000000002:1988.8400000000001] from the bottom up.
+[1988.8400000000001:1995.2] Where is the divisive methods proceed from the top down.
+[1995.2:2002.44] For flat methods on the contrary, we don't have this notion of hierarchies.
+[2002.44:2006.68] So we have to work with completely different algorithms.
+[2006.68:2012.28] So here the typical way of doing this is that you maintain during the algorithm, you maintain
+[2012.28:2014.28] a set of clusters.
+[2014.28:2021.68] And then you in a loop you assign each data point to the nearest cluster.
+[2021.68:2024.16] And then you recompute the clusters.
+[2024.16:2026.3200000000002] And then you rinse and repeat.
+[2026.3200000000002:2032.96] This will then give you after you recompute the clusters, you can again assign each data
+[2032.96:2036.1200000000001] point to its nearest cluster, which might now be different after you've recomputed the
+[2036.1200000000001:2037.1200000000001] clusters.
+[2037.1200000000001:2038.96] And then you do this again until convergent.
+[2038.96:2042.1200000000001] So K means is a typical example for that.
+[2042.1200000000001:2045.92] And we look at this in the second half of the lecture.
+[2045.92:2050.6800000000003] But first we will start with hierarchical clustering methods.
+[2050.68:2059.48] And now we'll actually think about for the first time after 35 minutes we finally see our
+[2059.48:2062.3599999999997] first clustering method for real.
+[2062.3599999999997:2065.96] So here in hierarchical clustering, and we'll only talk about the agglomerative case
+[2065.96:2071.3199999999997] that the device, so the bottom up case, the divisive case, the top down case is really
+[2071.3199999999997:2072.64] very similar.
+[2072.64:2075.3999999999996] So we don't need to spend time on that.
+[2075.3999999999996:2078.68] So let's think about the agglomerative hierarchical clustering case.
+[2078.68:2084.64] So here the key operation is to repeatedly combine the two nearest clusters.
+[2084.64:2089.7599999999998] So we want to grow this tree from the bottom up.
+[2089.7599999999998:2093.24] To do this, we need to answer three important questions.
+[2093.24:2101.16] First, how to represent a cluster of more than one point?
+[2101.16:2106.8399999999997] Because we need to reason then about how similar are to clusters.
+[2106.84:2112.6400000000003] And for that, we then also need to have a notion of how near together are two clusters.
+[2112.6400000000003:2113.96] For two points, it's clear, right?
+[2113.96:2115.2000000000003] You are given a distance metric.
+[2115.2000000000003:2119.2000000000003] So for two points, you can immediately compute their distance.
+[2119.2000000000003:2125.7200000000003] But if you have now these sets of several points, the two clusters, how can we determine
+[2125.7200000000003:2128.08] how close those two clusters are?
+[2128.08:2132.2000000000003] And then finally, we need to have a rule for when to stop combining clusters.
+[2132.2:2136.68] Because we can always combine, combine, combine until we have, until everything is in the
+[2136.68:2139.3999999999996] same cluster in a hierarchical method, right?
+[2139.3999999999996:2146.64] So we will also need to find a meaningful point where to stop.
+[2146.64:2152.7999999999997] As I said, the key operation in these hierarchical clustering methods is to repeatedly combine
+[2152.7999999999997:2156.2] the two nearest clusters.
+[2156.2:2162.96] Now let's look into how we can find solutions for these questions here.
+[2162.96:2168.9199999999996] So first question was how to represent a cluster of many points.
+[2168.9199999999996:2171.64] The answers will always be simple in the Euclidean case.
+[2171.64:2179.3199999999997] If your data set is Euclidean vectors, then you can just represent a set of points as
+[2179.3199999999997:2180.72] their average, right?
+[2180.72:2184.2] That is about the simplest thing you can do.
+[2184.2:2196.52] Very intuitive, and it also has the property that the average data point is the data point
+[2196.52:2205.12] that is the closest, that has the smallest total distance to the, I should actually be
+[2205.12:2207.52] more precise here.
+[2207.52:2214.16] The mean of a set of data points in Euclidean space is the data point that has the
+[2214.16:2218.6] smallest total squared Euclidean distance to other data points.
+[2218.6:2223.8799999999997] This is something that you should know because this was very important in lecture five when
+[2223.8799999999997:2228.72] we talked about regression analysis, whether this was basically the basis of all this.
+[2228.72:2236.8399999999997] The mean basically is the data point that has the closest and that has the smallest total
+[2236.8399999999997:2240.24] squared distance to the other data point.
+[2240.24:2242.16] It's not so clear in the non-Euclidean case.
+[2242.16:2247.16] If your data is, if your distance metric that you consider is not Euclidean distance,
+[2247.16:2256.3199999999997] then it's not so clear what you should choose then as the representative of a set of data
+[2256.3199999999997:2257.3199999999997] points.
+[2257.3199999999997:2263.92] Because, for example, imagine that you have string data, you have your text data.
+[2263.92:2268.92] What's the average of two strings that there's no such notion, right?
+[2268.92:2273.4] So if your data is in Euclidean space, then we need to think harder.
+[2273.4:2276.8] And we do that in a couple of slides for now.
+[2276.8:2279.52] But for now, let's proceed to question two.
+[2279.52:2283.44] How did it, how to determine the nearness of two clusters?
+[2283.44:2286.32] Again, this is quite simple in Euclidean.
+[2286.32:2294.08] In the Euclidean case, because if you have two clusters, then you can, the answer for
+[2294.08:2298.88] question one was we represent them as their centroids, as their averages, cluster averages.
+[2298.88:2304.32] So we can determine the nearness of two clusters simply by taking the distance between the two
+[2304.32:2305.32] centroids.
+[2305.32:2306.32] Okay?
+[2306.32:2308.4] So that would be also very intuitive.
+[2308.4:2311.48] It's, again, harder for the non-Euclidean case.
+[2311.48:2315.0] And we'll talk about that in a couple of slides.
+[2315.0:2320.4] First though, I want to give an example just to form an intuition of how these agglomerative
+[2320.4:2322.8] hierarchical clustering methods work.
+[2322.8:2332.52] Again we have this, again, two-dimensional toy example of the following six data points.
+[2332.52:2335.6400000000003] So the O's here are data points.
+[2335.6400000000003:2337.32] And we now want to cluster those together.
+[2337.32:2339.84] So what would the hierarchical clustering method do?
+[2339.84:2346.8] It would first, it would compute the pairwise distances between all data points.
+[2346.8:2349.5600000000004] And it would then take the closest tool.
+[2349.56:2354.68] In this case, it would be the two blue data points and it would group those together and
+[2354.68:2356.4] compute the average of them.
+[2356.4:2357.92] That's the blue X.
+[2357.92:2362.36] And that's now the representative of the newly formed blue cluster.
+[2362.36:2363.36] Okay.
+[2363.36:2368.64] Now we compare again all the pairwise distances where we now don't consider anymore the
+[2368.64:2371.7999999999997] blue O's, but we only consider the blue X.
+[2371.7999999999997:2377.24] And then we would find that now the two green O's are closest together.
+[2377.24:2381.8399999999997] So again, they go into the same cluster and we represent a cluster by the centroid, by
+[2381.8399999999997:2384.4399999999996] the mean of the two green data points.
+[2384.4399999999996:2392.9599999999996] Then as the next thing, we would find that the red O is closest to the red X.
+[2392.9599999999996:2394.7599999999998] So we cluster those together.
+[2394.7599999999998:2404.6] And then finally, we have this other red O here is then closest to the green X.
+[2404.6:2409.24] And then now we have just two clusters and trivially those are the ones that we will combine
+[2409.24:2410.52] next.
+[2410.52:2417.4] This gives rise to the then so called dendrogram, which captures the cluster structure.
+[2417.4:2422.56] So we see here that first the two blue ones were combined, then the two green ones were
+[2422.56:2426.6] combined, then one red data point was added to the blue cluster, then one red data point
+[2426.6:2430.8399999999997] was added to the green cluster, and then those were the remaining clusters.
+[2430.84:2437.1600000000003] So from this dendrogram, you can basically, this captures the entire, you can rerun the
+[2437.1600000000003:2439.8] cluster algorithm from that basically.
+[2439.8:2448.1600000000003] Because if you go from top down, you will always see what was the, the why position of the
+[2448.1600000000003:2453.08] branching point basically tells you when those two data points, when those two clusters
+[2453.08:2454.52] were merged together.
+[2454.52:2459.48] So this dendrogram contains a lot of information, basically all the information about the
+[2459.48:2462.64] cluster.
+[2462.64:2466.72] So now let's think about the non-uclidean case.
+[2466.72:2473.16] Imagine that you have data where either you don't want to treat it, you don't want to
+[2473.16:2477.52] use the Euclidean distance either because you think it's not appropriate for the, for
+[2477.52:2480.16] the data you have or because it wouldn't even make sense.
+[2480.16:2484.4] As I gave the example earlier, if your data points are strings, then it doesn't really
+[2484.4:2487.28] make sense to think of an average string.
+[2487.28:2489.88] There's no such notion.
+[2489.88:2494.76] So how can we still run the clustering for such data?
+[2494.76:2500.88] The key then is to think of, to redefine this notion of a representative of a cluster
+[2500.88:2506.84] and not use averages, with average we call it centroids, but use something that's called
+[2506.84:2509.36] clastroids.
+[2509.36:2513.8] So clastroids are actual data points.
+[2513.8:2515.44] Centroids aren't actual data points, right?
+[2515.44:2522.32] If you think about this example here again, then the blue X was actually not a data point.
+[2522.32:2524.28] The data are only the O's.
+[2524.28:2529.68] We made up this average data point and then treated it as the representative.
+[2529.68:2534.68] Clastroids on the contrary is actually a data point.
+[2534.68:2540.7200000000003] I give this example here, imagine you have these three data points, then the centroid,
+[2540.72:2547.9199999999996] so the average would be the blue X, whereas the clastroid would be that point in the middle.
+[2547.9199999999996:2552.6] In this case, the clastroid would be defined to be the point out of the data points that
+[2552.6:2560.3199999999997] you have that has the smallest total distance to the other data points, but it needs to be
+[2560.3199999999997:2563.56] an actual data point.
+[2563.56:2565.4399999999996] And there are several variations of this.
+[2565.44:2572.4] You can pick the other data point that has the smallest average distance to the other
+[2572.4:2573.4] data points.
+[2573.4:2576.32] So then this is called a medoid.
+[2576.32:2584.64] This comes from the random fact, useful fact, if you have a set of data points, find me
+[2584.64:2593.2000000000003] the data point that has the smallest total absolute distance to all the other data points.
+[2593.2:2599.2] If I take smallest total squared distance, then the mean is the data point that minimizes
+[2599.2:2601.72] the total squared distance.
+[2601.72:2606.9199999999996] If I want you to find the data point that has smallest total absolute distance, then it's
+[2606.9199999999996:2609.3999999999996] the median, actually.
+[2609.3999999999996:2618.12] And so based on this one-dimensional notion of the median, that's why we speak of medoids.
+[2618.12:2624.12] If we take the data point that has the smallest average absolute distance to the other data
+[2624.12:2628.92] points, and then you can have different notions, like you can instead of the absolute distance,
+[2628.92:2631.0] you can take the squared distance.
+[2631.0:2633.7599999999998] This is still different from the mean, right?
+[2633.7599999999998:2638.08] Because we still require here that we take an actual data point rather than a data point
+[2638.08:2641.3199999999997] that we make up by just averaging.
+[2641.3199999999997:2644.96] Or you can take the data point that has smallest maximum distance to other points.
+[2644.96:2650.32] So all these variations, but always we have that same idea of the cluster being an actual
+[2650.32:2653.88] data point rather than a made-up data point.
+[2653.88:2661.48] Okay, so then second question was, how can we determine the nearness of two clusters?
+[2661.48:2663.7200000000003] We have treated the Euclidean case already.
+[2663.7200000000003:2668.7200000000003] Reminder, we are now in the non-Euclidean case where we cannot just take centroid and then
+[2668.7200000000003:2673.4] measure the distance between centroid in order to determine the nearness of two clusters.
+[2673.4:2676.1600000000003] So there are two broad approaches here.
+[2676.1600000000003:2681.52] One is an approach based on inter-cluster distances and the second approach is based on
+[2681.52:2682.52] cohesion.
+[2682.52:2684.32] So let's go through these in order.
+[2684.32:2694.44] Inter-cluster distance is, if you have two clusters and then you, for example, take,
+[2694.44:2699.12] you always compare one, you take one data point from one cluster and one data point from
+[2699.12:2703.64] the other and you take their distance as the distance between the two clusters.
+[2703.64:2705.96] And now you can, there are different variations of this.
+[2705.96:2711.3199999999997] You can say, you take the two data points, one from each cluster that are closest to each
+[2711.3199999999997:2712.3199999999997] other.
+[2712.3199999999997:2713.3199999999997] So think about this here.
+[2713.3199999999997:2716.12] I put this image here so I can actually reach it.
+[2716.12:2720.8399999999997] If these two are your clusters, then you can say, okay, I want to take one data point
+[2720.8399999999997:2723.7599999999998] from each cluster and I want to take that pair that's closest together.
+[2723.7599999999998:2727.2799999999997] So it would be, let's say, this data point and that point data point and then you could
+[2727.28:2733.7200000000003] take this distance as the distance between the two clusters or you could take the average
+[2733.7200000000003:2735.5600000000004] distance of the data point.
+[2735.5600000000004:2741.8] So of the data points, you can take for all pair of data points where one data point is
+[2741.8:2746.2000000000003] from here and one from there, you can compute the distance and then take the average.
+[2746.2000000000003:2752.76] So that's another notion of inter-cluster distance or you could take the maximum.
+[2752.76:2759.76] So it would then be this versus that data point that could also be used as the inter-cluster
+[2759.76:2760.76] distance.
+[2760.76:2762.4] So this is up to you to define.
+[2762.4:2766.32] The common notion here is always that you take one data point from one cluster and one
+[2766.32:2773.6800000000003] from the other and then you compute your distance of the clusters based on that.
+[2773.6800000000003:2778.36] The second approach is different.
+[2778.36:2783.36] It's based on what's called the cohesion.
+[2783.36:2790.44] So here what you do is you kind of tentatively merge the two clusters.
+[2790.44:2798.96] You pretend that there are one single cluster and then you compute some notion of how tight,
+[2798.96:2802.0] how cohesive that cluster is.
+[2802.0:2809.0] So for example, you could take, you could merge, if these are the two clusters you're interested
+[2809.0:2810.0] in, you put them together.
+[2810.0:2817.0] Now you just have one set of data points and now you can compute for example the average
+[2817.0:2819.0] distance between the data points.
+[2819.0:2823.24] What's the difference from inter-cluster distance that you now don't care about original cluster
+[2823.24:2824.64] membership anymore?
+[2824.64:2829.76] You put the two clusters together and then after that you treat them as one cluster.
+[2829.76:2835.36] So whereas for inter-cluster distance we only care about distances of pairs that basically
+[2835.36:2836.96] cross two clusters.
+[2836.96:2844.44] Now it could also be the case that the largest distance is within what was originally already
+[2844.44:2845.44] one cluster.
+[2845.44:2846.44] Okay?
+[2846.44:2847.44] Yeah.
+[2847.44:2858.6400000000003] So the question is whether this can be effected by the number of data points in each cluster.
+[2858.64:2864.4] Or in the extreme case one versus one million and then yeah, it would be completely dominated
+[2864.4:2866.6] by the, yeah, that's a good point.
+[2866.6:2871.92] And then probably these cohesion based methods would probably not be so well suited because
+[2871.92:2875.24] you would give too much weight to the bigger cluster.
+[2875.24:2877.24] Good point.
+[2877.24:2878.24] Okay.
+[2878.24:2884.72] And yeah, this is basically just different variants of this cohesion.
+[2884.72:2891.16] You can again to apply different notions after you have, after you have merged those two
+[2891.16:2895.7999999999997] clusters together, you could for example, then look at what is the maximum distance between
+[2895.7999999999997:2899.2799999999997] two points or what is the average distance between two points.
+[2899.2799999999997:2903.7999999999997] And then you, that would be the distance of your clusters.
+[2903.7999999999997:2904.7999999999997] Okay.
+[2904.7999999999997:2910.56] But again, the difference with inter-cluster distance methods is that you don't care about
+[2910.56:2915.2799999999997] the original cluster membership anymore after you take the union.
+[2915.2799999999997:2920.72] Whereas for inter-cluster distance methods, you do care about the original cluster membership.
+[2920.72:2921.72] Okay.
+[2921.72:2926.48] So we'll take a quick break here.
+[2926.48:2935.7999999999997] We'll come back at 918.
+[2935.8:2940.92] Again, this knows my favorite because 9 times 2 is 18.
+[2940.92:2943.1200000000003] So this is in 14 minutes.
+[2943.1200000000003:2949.7200000000003] And then we will think about the implementation of these methods.
+[2949.7200000000003:2951.7200000000003] Okay, see you in a bit.
+[2951.7200000000003:2952.7200000000003] Okay.
+[2952.7200000000003:2954.52] Welcome back.
+[2954.52:2958.92] We'll kick off the second half with a little quiz.
+[2958.92:2962.7200000000003] So as usual, please scan the code or go to this URL.
+[2962.72:2969.64] The question is, if you do a hierarchical plus string, like we just discussed, how many
+[2969.64:2974.16] branching points are there in a dendrogram?
+[2974.16:3001.6] For a data set with n data points.
+[3004.16:3029.52] Okay.
+[3029.52:3038.36] Let's do 10 more seconds.
+[3038.36:3043.64] Four, three, two, one.
+[3043.64:3047.88] Please cast your final votes.
+[3047.88:3050.08] Okay.
+[3050.08:3051.08] Thank you.
+[3051.08:3055.84] I'm closing this here.
+[3055.84:3063.1600000000003] I'm taking a little screenshot and then I will share the results with you.
+[3063.1600000000003:3066.44] So we have close raise.
+[3066.44:3070.92] So we have two equal front runners.
+[3070.92:3075.76] Some people say log n and some say n minus 1.
+[3075.76:3077.6000000000004] What is it?
+[3077.6000000000004:3084.48] So log n is the people might have thought of the height of a tree.
+[3084.48:3088.08] So that would grow logarithmically.
+[3088.08:3093.6] But the number of branching points is actually n minus 1.
+[3093.6:3102.32] You can prove this by induction if you want or you can see it more intuitively.
+[3102.32:3108.4] By staring at this dendrogram, it's still like effectively, every data point needs to join
+[3108.4:3111.2] a cluster at some point.
+[3111.2:3116.24] They might do it by first joining some other cluster, but really at some point, you think
+[3116.24:3121.3199999999997] of the degenerate case where you would always join one data point added to a cluster.
+[3121.3199999999997:3122.3199999999997] They have a bigger cluster.
+[3122.3199999999997:3124.96] Then you take one data point to add it to the cluster.
+[3124.96:3129.3999999999996] So in this degenerate linear case, whether the diagram would be like a line, you would
+[3129.3999999999996:3131.0] have n minus 1.
+[3131.0:3137.24] And that number of branching points does not change if you make the dendrogram flatter
+[3137.24:3139.2] rather than this line case.
+[3139.2:3143.64] So you have n minus 1 branching points.
+[3143.64:3146.56] Why did we go through this little thought exercise?
+[3146.56:3152.52] Because we needed to think about the runtime of the agglomerative hierarchical clustering
+[3152.52:3154.72] algorithm.
+[3154.72:3156.3999999999996] At each, what is the runtime?
+[3156.3999999999996:3163.0] At each step, we have to compute the pairwise distances between all pairs of clusters.
+[3163.0:3164.0] Okay?
+[3164.0:3165.8399999999997] That's the basic operation.
+[3165.84:3170.84] And then we need to do this as many times as we have branching points.
+[3170.84:3175.44] Since we have n minus 1 branching points, we have to do this pairwise comparison n minus
+[3175.44:3177.56] 1 times.
+[3177.56:3182.1200000000003] And that's how much does the pairwise comparison take?
+[3182.1200000000003:3190.7200000000003] It takes a square number of, if you have, in the beginning, you have n clusters, right?
+[3190.72:3197.2] Because every data point is in its own cluster, so you have n squared comparisons to do.
+[3197.2:3201.48] And now in the next step, you have n minus 1 squared comparisons to do.
+[3201.48:3203.9599999999996] And the next step n minus 2 squared comparisons.
+[3203.9599999999996:3206.9199999999996] And that holds, so you will have n minus 1 such factors.
+[3206.9199999999996:3212.7599999999998] So that is on the order of n cubed, where n is the number of data points.
+[3212.7599999999998:3215.64] That is a pretty massive runtime for this algorithm.
+[3215.64:3219.9199999999996] So although it's conceptually simple, it is quite heavy.
+[3219.92:3225.84] You can squeeze it down a little bit by using priority cues in the implementation.
+[3225.84:3232.76] You can basically replace an n squared factor with an n log n factor.
+[3232.76:3238.16] And then you would go from n cubed to n squared log n.
+[3238.16:3243.7200000000003] You know, it's a little food for thought to think about how you would do this with a
+[3243.7200000000003:3245.04] priority cue.
+[3245.04:3249.84] And if you want to see the solution, you can check in the, in the presenter notes where I added
+[3249.84:3254.56] a link for a document that explains an implementation with a priority cue.
+[3254.56:3262.0] But even if you do n squared log n, that is pretty massive if your data set is reasonably
+[3262.0:3263.08] large.
+[3263.08:3268.64] So if your data set is large, these are our questions, the clustering methods of this kind, maybe
+[3268.64:3269.64] not the best.
+[3269.64:3274.96] If your data set is small, then it might be, it might be a good method.
+[3274.96:3275.96] Okay.
+[3275.96:3282.12] So we have now, we're now wrapping up our chapter on hierarchical clustering methods.
+[3282.12:3289.08] And we will talk for the rest of the lecture about point assignment based methods of flat
+[3289.08:3293.56] clustering methods.
+[3293.56:3300.08] And the big gorilla among the point assignment based clustering algorithms is K means who
+[3300.08:3303.4] has seen K means before.
+[3303.4:3307.4] Okay, a lot of people have, but not everyone.
+[3307.4:3312.1600000000003] So let's face this gorilla of clustering methods K means here.
+[3312.1600000000003:3319.04] The goal is to put you have your set of data points and you want to assign, you want to
+[3319.04:3327.12] find K clusters where K is a parameter that you actually have to specify as the user.
+[3327.12:3332.1600000000003] And you want to do this such so every data point should go into a cluster.
+[3332.16:3341.04] And you want to do this such that the, and you can represent each cluster via its centroid.
+[3341.04:3342.04] So K means, right?
+[3342.04:3344.44] It has means and centroid or means.
+[3344.44:3346.8799999999997] So you represent each cluster as it's centroid.
+[3346.8799999999997:3353.68] And you want to have an assignment of points to clusters such that the total distance between
+[3353.68:3357.56] from points to their centroid is minimized.
+[3357.56:3363.16] So that's the optimization problem basically that K means is solving.
+[3363.16:3366.88] Turns out that this optimization problem is hard.
+[3366.88:3368.84] It's NP hard.
+[3368.84:3375.04] So people have to, we have to do approximate solutions.
+[3375.04:3382.12] And the usual solution to K means is via a simple greedy algorithm called Lloyd's algorithm,
+[3382.12:3386.32] which works as follows.
+[3386.32:3395.04] It basically greedy, a science point to its closest.
+[3395.04:3399.76] So at, at, at a given point, you will have a set of clusters.
+[3399.76:3403.8] And now as every cluster has a centroid.
+[3403.8:3410.0800000000004] And now what you do is, every point is assigned to the, to the centroid that is actually closest
+[3410.0800000000004:3411.92] to it out of all the centroid.
+[3411.92:3416.84] That gives you then a new clustering and you compute new centroid space to that and then
+[3416.84:3420.52] you rinse and repeat.
+[3420.52:3424.7200000000003] Let me show you this with an example because this will make it very clear, much more clear
+[3424.7200000000003:3427.92] than the pseudo code that I gave here.
+[3427.92:3433.12] So in the beginning, the great points, that's our data points in panel A. We start with
+[3433.12:3438.08] these, we want to find K equals three clusters.
+[3438.08:3443.16] We initialize the cluster centroids, in this case, there are various ways in which you
+[3443.16:3444.52] can initialize the clusters.
+[3444.52:3449.4] What we do here is we sample three random points from our data points and we say these are
+[3449.4:3452.68] now our initial cluster centroids.
+[3452.68:3461.3199999999997] Now what we do next, this is panel B, we compare each data point to each of the three
+[3461.32:3469.6800000000003] centroids and we assign the data point to the cluster of the, of the closest centroid.
+[3469.6800000000003:3476.1200000000003] That will give the, what we have here, where the, the colors mark the cluster memberships
+[3476.1200000000003:3478.8] basically.
+[3478.8:3483.1600000000003] Note that this gives us these convex cluster shapes.
+[3483.1600000000003:3485.32] We get what's called polyhedra.
+[3485.32:3495.2000000000003] So in this, it's things that are basically, there are convex shapes, right, the, the
+[3495.2000000000003:3497.0800000000004] testulation of the plane.
+[3497.0800000000004:3505.88] Now what we do next is we recompute the centroids because initially we picked the centroid randomly,
+[3505.88:3506.88] right?
+[3506.88:3512.1600000000003] So those, it's very unlikely that those were already the, the, the best, the best ones.
+[3512.16:3518.6] So after we have now defined these clusters by assigning every data point to a cluster,
+[3518.6:3524.08] we now recompute the centroid as the averages of the data points in the cluster.
+[3524.08:3532.72] So then for example, the red centroid shifts here, south east to here, the blue centroid shifts
+[3532.72:3537.64] north east to here and similarly for the blue centroid.
+[3537.64:3538.7999999999997] Okay.
+[3538.8:3545.04] So now, since we change the centroids, the nearest centroids might be different now for
+[3545.04:3546.04] data points.
+[3546.04:3551.7200000000003] So we recompute that for every data point, we now compute again its distance from each of
+[3551.7200000000003:3557.0] the three centroids and we reassign the data points to a new cluster.
+[3557.0:3564.32] So for example, what we see here is that this data point used to belong to the green cluster,
+[3564.32:3569.2000000000003] but after we have shifted the centroids, it's now actually closer to the red centroid than
+[3569.2000000000003:3570.48] it is to the green centroid.
+[3570.48:3572.0] So it was reassigned.
+[3572.0:3582.0800000000004] Now we recompute again the centroids and after we did that, we reassign the points to
+[3582.0800000000004:3586.7200000000003] the closed cluster and you see like we always go back and forth between these two steps,
+[3586.7200000000003:3590.52] recomputing the centroids and then reassigning the points.
+[3590.52:3596.44] And we do this until it stabilizes and it doesn't change anymore.
+[3596.44:3602.2] Actually, I just gave away the answer to this question.
+[3602.2:3603.52] How long to iterate?
+[3603.52:3611.7599999999998] How long should we do this for?
+[3611.7599999999998:3614.88] The optimal thing to do would be to just run it until convergence.
+[3614.88:3616.96] It's actually guaranteed to converge.
+[3616.96:3621.56] At some point you will not want to change the point assignment anymore because every
+[3621.56:3627.08] point is now, so at some point the centroids won't change anymore.
+[3627.08:3629.64] So this is guaranteed to happen.
+[3629.64:3631.12] It might take a long time.
+[3631.12:3639.12] So in this case, you might also stop after a fixed number of iterations or you might stop
+[3639.12:3646.7200000000003] after you don't see much change in the clusters anymore.
+[3646.72:3651.7999999999997] So basically for example, if the tightness of the clusters, of the location of the centroids
+[3651.7999999999997:3656.48] doesn't change much from iteration to iteration, you can also stop there.
+[3656.48:3662.64] But ideally, if this doesn't take too much time, you would run this until convergence.
+[3662.64:3665.3199999999997] An important thing is the initialization.
+[3665.3199999999997:3672.12] As I mentioned, K-means clustering, if you want to do it optimally, is an NP-hard problem.
+[3672.12:3679.0] And so we need to do it heuristically, but this heuristic algorithm can depend the solution
+[3679.0:3685.12] that you get, can depend a lot on how you initialize the centroids.
+[3685.12:3691.3599999999997] In this case, we kind of lucked out because we picked nice centroids, but imagine that
+[3691.3599999999997:3698.2] we pick all the centroids very close to each other in the very top right corner of the
+[3698.2:3699.2] data set.
+[3699.2:3704.8799999999997] Weird things might happen, especially if the dimensionality of the data is higher than
+[3704.8799999999997:3705.72] two.
+[3705.72:3714.3199999999997] So you can be much smarter about how you initialize the algorithm.
+[3714.3199999999997:3720.3599999999997] One thing to do actually works surprisingly well is to pick a random point, a random subset
+[3720.3599999999997:3722.52] of K points from the data set.
+[3722.52:3727.24] If you do this already, you'll be quite unlikely to take three data points that are super close
+[3727.24:3728.24] together.
+[3728.24:3733.4399999999996] So if you pick randomly, you will, on average, spread them out over the data set.
+[3733.4399999999996:3737.2799999999997] But you might still be unlucky and get two centroids that are close together.
+[3737.2799999999997:3740.3599999999997] And then that wouldn't be good.
+[3740.3599999999997:3746.8399999999997] So to give the algorithm kind of a push and incentivize it more to find samples that are
+[3746.8399999999997:3755.9199999999996] spread, initial centroids that are spread out, you can use something like K-means plus
+[3755.9199999999996:3756.9199999999996] plus.
+[3756.92:3759.28] So let me show you how this works.
+[3759.28:3761.28] There's a link here if you want to learn more.
+[3761.28:3763.6800000000003] There's a link to the paper.
+[3763.6800000000003:3769.64] The idea here is to really make sure that you cover the entire space as evenly as you
+[3769.64:3771.64] can with your centroids.
+[3771.64:3775.0] So you would do this iteratively.
+[3775.0:3778.76] You would still start with a random data point, but only one.
+[3778.76:3786.0] You pick one data point completely randomly and that used as your first centroid.
+[3786.0:3791.0] But now you don't pick the second one randomly again, but you do it a bit, or not uniformly
+[3791.0:3793.36] at random, but you're a bit smarter about it.
+[3793.36:3798.16] So what you do is now that for every other data point, every data point that you did not
+[3798.16:3808.88] pick as the first centroid, you compute its distance from the closest previously selected
+[3808.88:3810.88] centroid.
+[3810.88:3814.24] And you call that, let's call that DX.
+[3814.24:3823.7999999999997] And now you choose one of these remaining data points with a random, but not with uniform
+[3823.7999999999997:3830.4399999999996] probability, but you give more probability to those points that are further away from
+[3830.4399999999996:3835.3599999999997] the centroids that you have already selected.
+[3835.3599999999997:3836.3599999999997] Because that's what you want, right?
+[3836.3599999999997:3841.4799999999996] You want to spread your centroids far apart from each other.
+[3841.48:3847.76] So you can give probability of distance squared.
+[3847.76:3852.96] This is the distance to the closest previously selected centroid.
+[3852.96:3856.72] And then select randomly with these uneven probabilities.
+[3856.72:3859.52] This will give you two things.
+[3859.52:3866.12] It finds you a sample of points that are widely spread.
+[3866.12:3867.84] But that's not all that you want, right?
+[3867.84:3873.6800000000003] Because imagine that you have a best view, if you have some outlier that is all the way
+[3873.6800000000003:3880.0] far out there, then you don't just want to take that data point because it's far away.
+[3880.0:3883.88] But you also want to take centroids from the regions of space where the data is actually
+[3883.88:3885.96] dense.
+[3885.96:3888.84] And this method will also do that.
+[3888.84:3895.32] Because if you have many data points in a certain region, then you're more likely to
+[3895.32:3897.84] sample something from that region, right?
+[3897.84:3899.84] Because there are more data points to sample there.
+[3899.84:3902.84] So this method basically gives you a combination of both.
+[3902.84:3905.6800000000003] You sample from where the data is dense.
+[3905.6800000000003:3908.2400000000002] That completely random would also give you that.
+[3908.2400000000002:3914.56] But additionally, you make sure that you spread out the centroid evenly about the space
+[3914.56:3915.56] that you have.
+[3915.56:3923.0] So this is a really nice, and it's a very simple initialization that comes with nice theoretical
+[3923.0:3927.08] guarantees as described in this paper that's linked up there.
+[3927.08:3928.08] Okay.
+[3928.08:3931.16] So now some properties of camins.
+[3931.16:3938.32] It's agreed, the Lloyd's algorithm that I described is a greedy algorithm with a random
+[3938.32:3944.0] initialization as just described as a uniformly a random or camins plus plus.
+[3944.0:3953.72] And since it's this is a heuristic approximation to the actual of the NP hard problem, the
+[3953.72:3959.52] solutions may be and often are suboptimal and they may vary significantly with different
+[3959.52:3962.04] initial points.
+[3962.04:3964.08] But they're very simple convergence proofs.
+[3964.08:3965.72] So the algorithm will converge.
+[3965.72:3971.8] It might not converge to the global optimum, but it will converge to a local optimum where
+[3971.8:3972.92] it will not want to change.
+[3972.92:3977.6] So you don't get this kind of oscillation where you go between different clustering, but
+[3977.6:3980.2000000000003] it will converge to one thing.
+[3980.2000000000003:3982.36] This is actually there are simple proofs for that.
+[3982.36:3984.7200000000003] It's not it's not rocket science.
+[3984.7200000000003:3986.6] What's the runtime?
+[3986.6:3989.64] So per iteration of the algorithm, what do you have to do?
+[3989.64:3993.12] You have to compare every data point to each of the K clusters.
+[3993.12:4000.12] You have N data points that's N times K comparisons that you have to do per iteration.
+[4000.12:4004.52] But then you have to do this as many times until you converge or as many times as you
+[4004.52:4006.96] predetermined that you want to run this.
+[4006.96:4009.4] So this is actually pretty good runtime.
+[4009.4:4016.16] Compare this to the nasty N to the power of free runtime that we had for the hierarchical
+[4016.16:4017.08] clustering method.
+[4017.08:4019.56] So this is much better.
+[4019.56:4022.8399999999997] There are many variants of camins.
+[4022.8399999999997:4027.88] For example, you can have you can a variance where you want to have fixed sized clusters.
+[4027.88:4031.6800000000003] You can predetermine what size of the cluster you want.
+[4031.6800000000003:4033.2000000000003] Vanilla camins wouldn't do that.
+[4033.2000000000003:4035.76] It would have unequalized clusters.
+[4035.76:4040.56] You can have soft versions where instead of not every data point doesn't belong to one
+[4040.56:4045.8] and only one cluster, but every data point would be associated with a probability distribution
+[4045.8:4046.96] over clusters.
+[4046.96:4050.32] So that is also pretty straightforward to get as a variant.
+[4050.32:4056.08] And it works well for condensation of like this kind of coarsening of data points.
+[4056.08:4058.3199999999997] This is again the example that I gave you earlier.
+[4058.3199999999997:4068.2799999999997] If you run camins clustering with what might this be like 30 clusters maybe, then you would
+[4068.2799999999997:4073.3199999999997] get might get these black data points and this would be a good summary of the data.
+[4073.3199999999997:4074.3199999999997] Okay.
+[4074.3199999999997:4077.16] So some drawbacks of camins.
+[4077.16:4082.96] As I said, it always converges, but what it converges to might not be a global optimum.
+[4082.96:4089.08] It's always going to be a local optimum, but not necessarily a global optimum, but this
+[4089.08:4094.16] is mitigated by smart initialization strategies such as camins plus plus.
+[4094.16:4099.08] So if you are smart about initialization, then you will be much closer to a non-global
+[4099.08:4103.0] optimum than if you just ran this in a more naive way.
+[4103.0:4109.52] Camins, it's in the name requires the notion of a mean, which you might not always have.
+[4109.52:4115.52] If your data for example is strings, then you cannot run camins because there is no
+[4115.52:4118.040000000001] notion of an average string.
+[4118.040000000001:4124.6] It also requires you to specify K, the number of clusters ahead of time, which is nice if
+[4124.6:4128.400000000001] you know the number of clusters because then you can force the algorithm to give you exactly
+[4128.400000000001:4129.400000000001] that.
+[4129.400000000001:4132.0] But if you don't know the number of clusters, then you need to find it.
+[4132.0:4137.320000000001] You need to do something to actually find what is the best K and I give you a method
+[4137.32:4140.4] for doing that in a few slides.
+[4140.4:4147.2] It also doesn't handle noisy data and outliers so well because your cleaning distance is sensitive
+[4147.2:4148.88] to outliers.
+[4148.88:4154.08] But there are, to mitigate this, there are more robust versions of camins that can deal
+[4154.08:4155.599999999999] with outliers.
+[4155.599999999999:4161.759999999999] And most crucially, maybe the clusters can only have convex shapes.
+[4161.76:4168.12] So you see there's this test-delation, it's called a boronoid test-delation of this
+[4168.12:4170.64] space where you only get these polyhedra.
+[4170.64:4175.76] You could not have something where you get this kind of dent.
+[4175.76:4180.08] And the example that I had earlier, the two crescents that are interleaved, you could not
+[4180.08:4183.68] cluster those with camins.
+[4183.68:4188.6] For that, you need other algorithms and we'll see one at the end of today's class.
+[4188.6:4195.52] But first, let's look at how to choose K. If you don't know ahead of time, how many clusters
+[4195.52:4199.84] are naturally in your data, how can you find the best K.
+[4199.84:4206.400000000001] And this method that I'll show here is called average silhouette width and it's a very
+[4206.400000000001:4208.4800000000005] useful one.
+[4208.4800000000005:4215.6] So first, what I'll do is I'll explain the notion of a silhouette width and then I'll explain
+[4215.6:4218.84] how this can be used to find the optimum K.
+[4218.84:4222.76] So consider one data point.
+[4222.76:4224.200000000001] Consider that you have a clustering.
+[4224.200000000001:4231.08] Your ran camins and for a given K. So you have a clustering which is basically a partitioning
+[4231.08:4234.84] of the data points into these K groups.
+[4234.84:4242.0] And what we compute now is this and now we look at one data point, iron.
+[4242.0:4245.280000000001] And we compute its so-called silhouette width.
+[4245.28:4246.28] What is that?
+[4246.28:4251.92] So for that, we compute two quantities, a of i and b of i.
+[4251.92:4278.88] A of i is the average distance of i.
+[4281.92:4292.08] Okay, great.
+[4292.08:4302.92] Okay, so, A i is the average distance of the data point to the other data points in the
+[4302.92:4305.24] same cluster as i.
+[4305.24:4313.04] B i is the average distance of the data point i to the data points in the next closest
+[4313.04:4314.04] cluster.
+[4314.04:4318.88] Okay, so what is the next closest cluster?
+[4318.88:4323.719999999999] For every cluster, I can compute the average distance of i to the points in that cluster
+[4323.719999999999:4328.8] and then I take the cluster that has the smallest average distance.
+[4328.8:4334.44] Okay, but A i is for the own cluster and B i is for the next closest cluster.
+[4334.44:4337.32] And now we take that difference.
+[4337.32:4341.32] So we take distance to the next closest cluster minus difference to the own cluster and
+[4341.32:4344.48] the good clustering makes that large.
+[4344.48:4349.16] You want to be much closer to the data points in your own cluster than to the data points
+[4349.16:4352.48] in the next closest cluster.
+[4352.48:4356.16] And then we also normalize this.
+[4356.16:4357.96] This is what does it do?
+[4357.96:4359.32] What does this normalization do?
+[4359.32:4369.12] After we divide by the maximum of A and B, what is the range of possible values of S?
+[4369.12:4378.2] We have zero to one, thanks.
+[4378.2:4382.04] One to infinity.
+[4382.04:4387.24] Do we have two k, yes?
+[4387.24:4388.5199999999995] Minus one to one.
+[4388.52:4389.52] We have two cases.
+[4389.52:4395.0] A can be larger than B or B can be larger than A.
+[4395.0:4403.0] And if B is larger than B, then this would actually negative.
+[4403.0:4409.040000000001] And then the maximum would be, so you can get minus one in the extreme case, minus one
+[4409.040000000001:4410.040000000001] and one.
+[4410.040000000001:4414.64] We do this normalization such that for all i, the silhouette width is in the same range.
+[4414.64:4419.92] Otherwise it might be very large values for some data points and very small values for
+[4419.92:4420.92] others.
+[4420.92:4424.8] But after this normalization, everything is in the same range minus one to one for all data
+[4424.8:4425.8] points.
+[4425.8:4431.6] Okay, so we want this value to be large.
+[4431.6:4434.6] And actually let me explain quickly.
+[4434.6:4439.56] Let me find an example of a, this one is good.
+[4439.56:4446.080000000001] Imagine that you have these two clusters.
+[4446.080000000001:4448.360000000001] Okay?
+[4448.360000000001:4449.56] Naturally you want to have two.
+[4449.56:4452.080000000001] This is the natural cluster.
+[4452.080000000001:4454.88] Clearly there are two groups here.
+[4454.88:4460.84] Let's think about the case where we would have three clusters where we split this cluster
+[4460.84:4461.84] in two.
+[4461.84:4462.84] We split it here.
+[4462.84:4463.84] Okay?
+[4463.84:4464.84] Forget about this one.
+[4464.84:4468.88] This data, this cluster doesn't exist for us now.
+[4468.88:4473.0] We pretend that you split this one in two.
+[4473.0:4476.4800000000005] And now think about the silhouette width.
+[4476.4800000000005:4480.76] What would happen now if you take a data point from here, the next closest cluster would
+[4480.76:4482.72] be this one.
+[4482.72:4487.12] But these data points would be from here to there.
+[4487.12:4489.8] It's not so much further away from the own cluster, right?
+[4489.8:4492.8] This is the own cluster and this is the next closest cluster.
+[4492.8:4497.72] So this would be B minus A would be small here, right?
+[4497.72:4502.76] Whereas if we take the natural cluster, which would be just two clusters, this and this,
+[4502.76:4507.4400000000005] then the other clusters actually much further away than my own cluster.
+[4507.4400000000005:4508.4400000000005] Okay?
+[4508.4400000000005:4512.240000000001] So if we have the natural customer, which would be K equals two, the silhouette width would
+[4512.240000000001:4518.4400000000005] be large because the other cluster is further away from me than my own cluster.
+[4518.4400000000005:4519.6] That's the idea.
+[4519.6:4521.52] And based on this idea, what do we do?
+[4521.52:4524.96] We compute this silhouette width for every data point.
+[4524.96:4528.44] I and then we simply average this overall I.
+[4528.44:4531.56] This gives us the average silhouette width.
+[4531.56:4538.68] And now we can plot that average silhouette width as a function of K, the number of clusters.
+[4538.68:4545.4800000000005] So we run this, we repeat this procedure for all possible K that we want to consider.
+[4545.4800000000005:4549.6] Let's say K equals one to 100.
+[4549.6:4552.24] And or in this case, 15.
+[4552.24:4557.76] And for every K, you get an average silhouette width S. And now we plot this.
+[4557.76:4562.24] And which point would we want to take here?
+[4562.24:4569.48] We would want to look for the highest point exactly because this is where we have the
+[4569.48:4574.84] best cluster structure as just explained on this example that I had there in the corner.
+[4574.84:4578.28] So this is a very nice way of finding the number of clusters.
+[4578.28:4580.44] And this is not only specific to K means, right?
+[4580.44:4587.5599999999995] You can do this for any clustering method because what I have here, this I mentioned nowhere
+[4587.5599999999995:4594.759999999999] that there is K means involved any cluster method that requires you to set a number of
+[4594.759999999999:4596.5199999999995] clusters, you can run this.
+[4596.5199999999995:4600.36] So this is a very, very useful method.
+[4600.36:4606.5599999999995] If you don't just want to say like, okay, came from the sky, but actually it, the data
+[4606.5599999999995:4607.5599999999995] told me.
+[4607.5599999999995:4608.5599999999995] Okay.
+[4608.56:4613.0] So we have 15 minutes left and I want to dedicate or are there any questions actually
+[4613.0:4614.0] about K means?
+[4614.0:4618.0] Let me ask that first.
+[4618.0:4619.0] Okay.
+[4619.0:4620.0] Yes.
+[4620.0:4645.72] So the question is about K means plus plus, how do we do it in the later iterations?
+[4645.72:4652.12] So the first one we just pick, as you said, we pick a data point at, we pick a data point
+[4652.12:4654.280000000001] completely at random.
+[4654.280000000001:4663.400000000001] And now for every data point, you compute a distance to the, to the closest previously selected
+[4663.400000000001:4664.400000000001] centroid.
+[4664.400000000001:4669.360000000001] That would be a different centroid for different data points, right?
+[4669.360000000001:4672.4400000000005] Second.
+[4672.4400000000005:4673.4400000000005] Only the closest.
+[4673.44:4676.28] So in the second iteration, there is only one centroid that you previously picked.
+[4676.28:4677.28] So there it's clear.
+[4677.28:4681.639999999999] But now if you've already picked two centroid, then it will be only one of those two is the
+[4681.639999999999:4683.12] closest one.
+[4683.12:4687.2] And based on that, you define these, these distances.
+[4687.2:4691.2] And then from iteration to iteration, you forget all the distances that you have previously
+[4691.2:4698.919999999999] computed and you re compute them based on the, on the next, on the new closest centroid.
+[4698.919999999999:4699.919999999999] Mm-hmm.
+[4699.919999999999:4700.919999999999] Okay.
+[4700.92:4707.2] In the last 15 minutes or now 14 minutes, I guess, we'll talk about a, another question
+[4707.2:4715.72] method that can actually deal with nonconvex cluster shapes.
+[4715.72:4718.08] Here's again my question example.
+[4718.08:4723.76] If you have these two, this data set of two interleave questions, K means would give you
+[4723.76:4724.76] this.
+[4724.76:4732.76] Would cut, would have to cut the, the questions apart because it can only find convex polyhedral
+[4732.76:4734.08] cluster shapes.
+[4734.08:4740.16] And we will now see a method that can actually recover the true shape of these crescent
+[4740.16:4744.12] clusters.
+[4744.12:4750.4800000000005] And another example where you might want to do such clustering is this Lake Geneva example
+[4750.4800000000005:4753.6] because there are two, you have these nonconvex clusters.
+[4753.6:4758.96] If you really want a cluster that data set, right, which as I said, might not be the best
+[4758.96:4759.96] idea anyways.
+[4759.96:4767.08] Okay, so the method that we look at is called DB scan, which obviously means density-based
+[4767.08:4769.4800000000005] spatial clustering of applications with noise.
+[4769.4800000000005:4772.360000000001] You can see how this is clearly a acronym.
+[4772.360000000001:4778.52] Okay, so bear with me as I go through all these definitions.
+[4778.52:4781.8] I'll give you a lot of definitions in the next three slides.
+[4781.8:4786.320000000001] But once we have the definitions, the algorithm will basically be trivial.
+[4786.320000000001:4792.0] So this is really the, this whole method really comes from how we define certain concepts.
+[4792.0:4797.68] So let me go through these definitions and basically the definitions are the method.
+[4797.68:4801.360000000001] So bear with me.
+[4801.360000000001:4809.320000000001] What we, we have our data set and now we define core points.
+[4809.320000000001:4810.64] What's the core point?
+[4810.64:4812.68] For this, we need, so we need to set two parameters.
+[4812.68:4816.04] Like in k means, we need to set k in DB scan.
+[4816.04:4817.64] We need to set two parameters.
+[4817.64:4823.4800000000005] We need to set the parameter min points and we need to set the parameter epsilon.
+[4823.4800000000005:4826.04] And then how do we use these parameters?
+[4826.04:4836.240000000001] We check for every data point in a sphere of radius epsilon around that data point.
+[4836.240000000001:4838.12] How many points are there?
+[4838.12:4847.64] So basically how many other data points have distance at most epsilon to mean those I count.
+[4847.64:4856.599999999999] And if I have at least these min points, min pts points at distance epsilon or less around
+[4856.599999999999:4859.96] me, then I call the point a core point.
+[4859.96:4868.12] So in, in this example, the red points are the core points when we choose min pts equals
+[4868.12:4869.12] three.
+[4869.12:4874.88] Each of the red points has within this sphere of radius epsilon three, at least three other
+[4874.88:4875.88] points.
+[4875.88:4881.64] You see the yellow point is not a core point because it has only one point at epsilon at distance
+[4881.64:4887.72] epsilon or less, the same for this yellow point C and also the point, the same for point
+[4887.72:4893.92] n, which actually does not have any points at this epsilon or less.
+[4893.92:4896.240000000001] Okay, so these are the core points.
+[4896.240000000001:4901.16] You can think of them as points that have many neighbors.
+[4901.16:4905.56] Now more definitions, these are still definitions, right?
+[4905.56:4916.88] We say we define that a core point can directly reach all the neighbors in its epsilon sphere.
+[4916.88:4921.28] And we also define that from non core points.
+[4921.28:4924.64] So reminder, this would be the yellow and blue points.
+[4924.64:4930.08] From non core points, we define that no other points can be reached.
+[4930.08:4931.08] Oops.
+[4931.08:4937.32] Wife calling.
+[4937.32:4940.32] Okay.
+[4940.32:4947.2] So now basically, if you look at this diagram, then the arrows that directed edges give you
+[4947.2:4951.5599999999995] the notion of the notion of direct reachability.
+[4951.5599999999995:4959.2] When there is an arrow from one point to the other, then you can reach that one point from
+[4959.2:4960.2] the other.
+[4960.2:4964.4] So for example, we can reach the yellow point from the red point, but not the other around
+[4964.4:4968.639999999999] because by definition, from a non core point, no other point can be reached.
+[4968.64:4976.280000000001] Whereas the red points have are bidirectional connected because you can reach each from
+[4976.280000000001:4979.04] the other.
+[4979.04:4986.52] And then we define based on this notion of direct reachability, we define the notion of
+[4986.52:4993.04] density reachability, which is basically the transitive hull of direct reachability.
+[4993.04:5007.8] So we say that if there is a chain of points where you can directly reach the neighbors
+[5007.8:5013.16] on the chain, then those end points of the chain are density reachable.
+[5013.16:5018.88] So for example, we can reach, we can density reach every red point from every other red
+[5018.88:5019.88] point.
+[5019.88:5020.88] Okay.
+[5020.88:5023.56] So we can actually reach the neighbors on these arrows.
+[5023.56:5032.8] We can density reach B from A, but we cannot density reach B from C because there is no
+[5032.8:5035.8] direct to chain that goes from B to C.
+[5035.8:5042.68] And we define that points that are not density reachable from any other points, we define
+[5042.68:5044.6] those as noise or outliers.
+[5044.6:5048.64] So N can't be reached from any other point.
+[5048.64:5050.08] So that's why we define it as noise.
+[5050.08:5051.08] Okay.
+[5051.08:5052.08] So these were still definitions.
+[5052.08:5054.76] And this is the final slide of definitions.
+[5054.76:5057.48] And then we're ready to rumble.
+[5057.48:5063.64] So we now say that points P and P are density connected.
+[5063.64:5068.48] So here we have density reachable, but now we say they're density connected.
+[5068.48:5076.92] If there is another point from which you can, you can, you can density reach each of
+[5076.92:5077.92] them.
+[5077.92:5084.24] You cannot density reach B from C, right?
+[5084.24:5090.16] Because they're not core points, but you can, but they are still density connected.
+[5090.16:5095.64] Because from a red point, you can reach both B and C.
+[5095.64:5101.52] So you can think of this really as removing the, the directionality of the edge.
+[5101.52:5108.52] So whereas, whereas density reachability is a directed notion, density connectedness
+[5108.52:5111.76] is an, is an, is a symmetric notion.
+[5111.76:5112.76] Okay.
+[5112.76:5118.68] So if you discard the directions of the, well, actually that's, that's not quite precise.
+[5118.68:5120.72] So it really needs to be defined like this.
+[5120.72:5125.8] If there is a third point from which you can reach both of these two points, then we
+[5125.8:5129.240000000001] say that they are density connected.
+[5129.24:5132.04] Now we define a cluster based on that definition.
+[5132.04:5136.48] We define a cluster is a set of points which are mutually density connected.
+[5136.48:5142.16] So in this picture here, the red and the yellow points would form one cluster because all
+[5142.16:5148.4] those points are density connected.
+[5148.4:5155.679999999999] And now with these definitions, we just want to find the clusters, which means to find
+[5155.68:5161.360000000001] the sets of points where the points are mutually density connected.
+[5161.360000000001:5164.12] We have a question.
+[5164.12:5167.320000000001] It takes a bit of time for process because these are a lot of definitions, but now we're
+[5167.320000000001:5168.88] basically there, right?
+[5168.88:5177.360000000001] Because now we just want to, basically we want to find these clusters as defined here.
+[5177.360000000001:5182.96] And here is the pseudo code, but this is really, this is only for your, let's say, bathroom
+[5182.96:5183.96] musings.
+[5183.96:5185.68] The intuition is much simpler.
+[5185.68:5189.08] Give you the intuition and then you can look at the algorithm at home.
+[5189.08:5191.76] This is really just how you would write it down for a computer.
+[5191.76:5197.92] The intuition is this pick and unseen data point.
+[5197.92:5207.24] And now you want to grow a cluster around it as widely as you can, simply by looking at
+[5207.24:5211.72] these epsilon balls.
+[5211.72:5213.88] And then you want to iterate that.
+[5213.88:5217.8] That's all that this algorithm is doing.
+[5217.8:5222.52] This is basically the complexity just comes in with keeping track of what you've already
+[5222.52:5227.96] seen and which cluster it belongs to and storing this in the data structures and so on.
+[5227.96:5230.52] The idea is really you will start in the beginning.
+[5230.52:5233.76] You have no clusters yet.
+[5233.76:5236.04] So you just pick a random data point.
+[5236.04:5241.88] And now you look at the epsilon sphere around that data point and you say, okay, all of these
+[5241.88:5248.08] are in the same cluster because they are density reachable from that original data point.
+[5248.08:5255.88] And now you just you grow that cluster by looking at like all the at the epsilon ball around
+[5255.88:5259.0] the points that you have added to that cluster.
+[5259.0:5263.56] So you grow the cluster as much as you can by including everything that's in these epsilon
+[5263.56:5266.36] balls around the data points in the cluster.
+[5266.36:5269.0] At some point you won't be able to grow it anymore.
+[5269.0:5275.08] So you pick a new random data point that you haven't touched yet and you will grow a cluster
+[5275.08:5276.64] around that.
+[5276.64:5280.68] At some point you might merge clusters that way, but that's fine.
+[5280.68:5287.6] And you just do this until you have until you've you've iterated through all the data points.
+[5287.6:5290.68] So this is really the intuition here.
+[5290.68:5295.96] The in terms of runtime, the devil is in the details because even finding the neighbors
+[5295.96:5297.6] in the epsilon ball.
+[5297.6:5300.360000000001] That is not so trivial if you have very high dimensional data.
+[5300.360000000001:5303.360000000001] I didn't you need to do a lot of comparisons.
+[5303.360000000001:5308.8] So in terms of runtime.
+[5308.8:5315.88] That the complexity comes from the fact that the algorithm uses these distances between
+[5315.88:5317.76] all pairs of points.
+[5317.76:5322.280000000001] So you would be kind of again in this regime of the hierarchical clustering methods, right?
+[5322.280000000001:5325.240000000001] Where we also have to do all these pairwise comparisons.
+[5325.24:5330.8] But in this case, using efficient indexing structures and I'm not going to go into these
+[5330.8:5332.8] details in the final three minutes.
+[5332.8:5335.8] There also no matter so much.
+[5335.8:5341.639999999999] The idea is that if you index your data smartly, then every single range query, which is for
+[5341.639999999999:5348.08] finding neighbors in the epsilon sphere, can be done in log n time.
+[5348.08:5354.24] And then the overall algorithm can be made to run in n log n time, which is more than
+[5354.24:5356.5199999999995] k-means.
+[5356.5199999999995:5360.36] But it's which was remember it had for iteration k times n.
+[5360.36:5364.24] And then this is done for some usually small number of iterations.
+[5364.24:5367.679999999999] Whereas here is we have this log n factor also.
+[5367.679999999999:5371.04] So we have n log n.
+[5371.04:5375.4] Which is not so bad actually.
+[5375.4:5380.44] So it's quite feasible for large data sets.
+[5380.44:5383.96] But this fast neighbor search becomes progressively harder.
+[5383.96:5386.96] Why is that that's again because of the curse of the mentionality?
+[5386.96:5395.599999999999] If you're if you have a very high dimensional data set, then finding these close data points
+[5395.599999999999:5399.04] becomes harder and that's where the clever indexing comes in.
+[5399.04:5401.04] Okay, so we have two minutes.
+[5401.04:5404.4] So if there are any questions, we can take them.
+[5404.4:5412.08] Otherwise you win two minutes for your life.
+[5412.08:5415.599999999999] Means I could have given you 15 instead of 14 minutes of a break.
+[5415.599999999999:5420.32] So I'm sure you're the one sharing for the against the base thing.
+[5420.32:5426.32] As long as I know, it has like in the lateral, the next you do a base of nodes.
+[5426.32:5428.08] It becomes further.
+[5428.08:5429.08] Yeah.
+[5429.08:5430.08] Yeah.
+[5430.08:5431.08] Yeah.
+[5431.08:5432.08] Okay.
+[5432.08:5434.0] Thank you and see you on Friday.

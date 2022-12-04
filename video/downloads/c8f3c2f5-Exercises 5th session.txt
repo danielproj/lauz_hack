@@ -1,0 +1,176 @@
+~Exercises: 5th session
+~2020-10-27T10:40:54.808+01:00
+~https://tube.switch.ch/videos/c8f3c2f5
+~CS-451 Distributed algorithms
+[0.0:2.0] Okay.
+[2.0:4.0] Yes.
+[4.0:6.0] Perfect.
+[6.0:10.0] Okay.
+[10.0:20.0] Okay.
+[20.0:22.0] Okay.
+[22.0:26.0] Let me just do this.
+[26.0:29.0] Okay. I hope everyone sees the screen.
+[29.0:32.0] You hear me well and yeah, we can start.
+[32.0:33.0] Okay.
+[33.0:39.0] So the first question we had last week was.
+[39.0:46.0] The one with the algorithms one and two or that received presented on.
+[46.0:51.0] In his lecture last week, if you remember, consensus algorithm one solves the.
+[51.0:53.0] Consensus problem.
+[53.0:57.0] We could say that it solves the regular consensus problem because.
+[57.0:60.0] It solves it ensures the agreement.
+[60.0:64.0] The regular agreement property that's in place does that no two correct processes.
+[64.0:68.0] We'll deliver the will decide the same value.
+[68.0:73.0] However, the consensus algorithm number two solves the uniform consensus problem.
+[73.0:79.0] The uniform consensus problem ensures all the same properties as the regular one.
+[79.0:85.0] Except that it ensures the not the uniform agreement property, which simply means that no two processes.
+[85.0:88.0] Whether they are faulty or not decided different things.
+[88.0:93.0] I hope you understand difference by now you should be really comfortable with.
+[93.0:99.0] With all of these, with specifications of both regular and uniform consensus problem.
+[99.0:101.0] Okay. So the question is here.
+[101.0:106.0] Why if we take the sense algorithm one or consensus algorithm two and we just.
+[106.0:110.0] Take the failure detector that is there and make it non perfect.
+[110.0:113.0] What would go wrong?
+[113.0:116.0] So in the first.
+[116.0:120.0] Algorithm in the solution in the algorithm number one.
+[120.0:127.0] We can take the following scenario because if you remember the leader in every round decides its value.
+[127.0:132.0] And only then broadcast pretty much propagates its value to other processing in the system.
+[132.0:136.0] So if we have the following scenario where we have two processes.
+[136.0:144.0] And we have a process P and process flow and process P broadcast is proposal a and immediately decides.
+[144.0:151.0] But now suppose that we have violation of the accuracy of.
+[151.0:153.0] Perfect failure detector.
+[153.0:158.0] What can happen is that row believes the P crashed even though peace alive.
+[158.0:160.0] Peace correct.
+[160.0:170.0] Is that row will say okay P crashed. So I will broadcast and decide my own value that could potentially be equal to some value B.
+[170.0:174.0] And this means that we have the agreement property violated.
+[174.0:176.0] Okay, this should be easy.
+[176.0:182.0] Then the next is slightly trickier algorithm to but nothing special.
+[182.0:186.0] Where again we can consider these two processes and the following scenario.
+[186.0:191.0] So we have the process P broadcast is proposal which is equal to some value a.
+[191.0:197.0] And now what happens is that row believes that P crashed even though peace correct all the time.
+[197.0:204.0] What can happen is that the role will say okay I will not wait for it for for its message because there is no guarantee that I will indeed receive it.
+[204.0:212.0] So what I'm going to do I'm just going to broadcast and tell to everyone in the system hey this is my value and let that value be equal to B.
+[212.0:216.0] So what happens next.
+[216.0:223.0] Row of course delivers its own value B and since we have that M is equal to 2 because we have only 2 processes in the system.
+[223.0:227.0] If you take a look at algorithm to process process process.
+[227.0:231.0] Sorry will decide value B its own value.
+[231.0:239.0] However, what happens now is the throw crashes before the process P gets its proposal.
+[239.0:249.0] P correctly figures crash a raw event which simply means that OK P correctly recognized that process raw has crashed.
+[249.0:255.0] And since again it is the second round it is the end of the second round it decides value a.
+[255.0:262.0] So now this breaks the uniform agreement because even though row row is faulty is its press.
+[262.0:276.0] But we need to never the last ensure that no two processes decide different things but here we have the process P decided value a and process row decided value B.
+[276.0:282.0] OK so if there are any questions I'll come back.
+[282.0:291.0] So the second exercise is a very nice exercise and we here ask you why every single protocol that solves the.
+[291.0:309.0] So the regular consensus problem which implements that we have again regular agreement property so no two correct processes decide differently also decides the uniform consensus problem which implements that no two processes decide different.
+[309.0:319.0] So this is I would say one of the most important exercises because in this exercise we show you how we usually deal with some impossibility results in our field.
+[319.0:342.0] What we are doing is of course if we are talking about deterministic protocols we simply show that it can happen that a correct process can observe the exact same set of events whatever that means in this case it will mean set of received messages and set of set of.
+[342.0:349.0] Set of these hints that the perfect that eventually perfectly that gives.
+[349.0:352.0] OK there is a question.
+[352.0:360.0] So they are asking what is the completeness which is by the way to the exercise one figure the temperature.
+[360.0:368.0] What if there is completeness which simply means that.
+[368.0:377.0] Yes yes that's true yeah that's true because if there is a completeness what can happen is that.
+[377.0:395.0] OK there is a guy who crashed and what can happen is that it might be the leader of that round and since I am a process and I do not really observe that this guy has crashed I will still wait for its message but given the fact that.
+[395.0:422.0] The best effort brought us I mean perfect other links do not ensure that if the sender is faulty you will indeed receive a message it can happen that I will be stuck there forever so I hope you see why this could be could be problem so yes there's a good good and a good observation that if you have completeness that is that that failed what can happen is that you will have potentially.
+[422.0:429.0] Termination property violated which simply means that there will be a correct process that will never decide.
+[429.0:451.0] OK yes so I can go I can continue I guess yeah so in the so the question is if you take any protocol that solves the consensus algorithm the consensus problem the regular consensus problem and that that protocol uses the eventually perfect failure detector.
+[451.0:469.0] So now we have a failure detector that could give let's say false hints so it can say that someone indeed has crashed even though the guy did not crash and it can say that no one crashed at this point whereas there is indeed a guy who crashed.
+[469.0:498.0] So let's say that we have a protocol that also solves the regular consensus problem and that uses the perfect eventually perfect failure detector and we ask you to show us why this protocol also solves the uniform consensus problem so as it says this is important because the techniques we are going to show you now are some of the most important techniques that we use in in in our community to show some possibility or even you know more important in on the.
+[498.0:527.0] In possibility results OK so what is the idea so idea is to just show that a correct process could potentially observe the exact same sequence of events in two different executions of the protocol such that those two different executions should give different outcomes at that correct process so even the fact that we assume that protocol that is.
+[527.0:555.0] By the process by this correct process is the deterministic this will lead to a contradiction to an impossibility because in two different executions that correct process should behave differently however it observes the same exact same sequence of events which will lead to him behaving correct of behaving in exactly the same manner in exactly the same fashion in both of these executions OK so let me.
+[555.0:584.0] Show you the answer to this question so we consider an algorithm which is an eventual perfect failure detector and we assume that this algorithm satisfy the satisfies agreement but not uniform agreement OK and we consider to execution say in B of the algorithm in execution name we have two processes again process P and process are the decide differently and P questions let's say that this is a completely valid execution why because we assume that there is.
+[584.0:604.0] The this protocol solves the agreement property which simply means that no to correct processes decide the same thing but here P is not correct process because it crashed so everything is fine and we say that let some time T some global time T be the time when road decides.
+[604.0:633.0] But now we have a completely different execution that will let's say be experienced in the exact same way by every single process in the system of course except the process P so in this other execution in execution B process speed does not crash so everything is fine but since we use the eventually perfect failure detector that could somehow that that can sometimes lie to us and say different say non correct things.
+[633.0:647.0] We have the every process that is suspected to be in a in execution a also suspect to be in execution B and the exact same moment of the execution so if we have that at some time.
+[647.0:665.0] 5 in execution a some process I don't know process queue suspected process speed now in execution B the exact same thing happens on the perspective of process queue so process queue suspects process P at the exact same time.
+[665.0:684.0] 5. Okay and what happens is that no process that expects P if we restore P before T so okay we will no process will indeed say okay no no no P is alive before this time T when the process throw decided in the execution.
+[684.0:698.0] And last thing that we need to do is that all messages from P are delayed so all messages are are not not message none of its messages are delivered before time T.
+[698.0:716.0] What happens is that. Ro receives exactly the same messages and indications from the failure of the doctor in execution say in B and the same set the same sequence of messages and stuff like that and what happens is that process raw behaves exactly the same in these two executions.
+[716.0:734.0] Which implements the process throw in execution B also decides value what did we say also decides some let's say value value I don't know B in in in execution B that it also decided in execution.
+[734.0:754.0] However it is important that in in execution B B has not failed so if the algorithm violates uniform agreement we can deduce that the regular agreement agreement is also violated in execution B.
+[754.0:770.0] So that means that we reach the contradiction with the fact that our algorithm the algorithm B we assumed we have does not really solve the regular agreement regular consensus problem.
+[770.0:779.0] Is that fine I guess that you will have some questions here but if no I can continue.
+[779.0:807.0] Okay so now the next question is we asked you the similar thing it's just that if you do not have a perfect failure detector so we use the eventually perfect failure detector we say that it is impossible to solve the consensus problem unless you have more than one more than one half of correct process so we say that you need to have a majority of the correct process of processes to be correct.
+[807.0:823.0] If you want to solve the consensus problem in using just eventually perfect failure detector and we ask you to prove that so how do we prove that we will use free runs and you will see it's it should be quite clear why this is the case so.
+[823.0:844.0] As I said we will use free runs free executions of the protocol and what we are going to say is again the same we start by we want to to to to make a proof by contradiction so we will say okay let's suppose that we have a protocol that solves the consensus problem with the perfect failure detector such that you can have half of the process is being being.
+[844.0:873.0] So you do not have a majority of correct process and we say the follow let's divide all the processes let's say that we have an processes and let us divide all the process into two groups group a and group b such that each of the groups has and half of all the process and we say that we consider free runs free executions such that in all of this execution process is a want to processes from the group.
+[873.0:887.0] A one to propose some value a and process from the group b one to propose some value b so in the first execution the following things happens all processes in a crash at the beginning without this in getting us so nothing really happened.
+[887.0:914.0] As soon as we started the system all the process in a crash all the process in b are still operating working and stuff like that and since we are still the this protocol solves the consensus problem even if you have half of processes being faulty this simply means that process is in b will indeed decide the value b because of the validity property that the consensus problem.
+[914.0:941.0] So this happens and let's say that all processes from the group b in this first execution decide at some time tb okay so now we have the let's say opposite execution to so let's say that we have now the second execution all process in b crash at the beginning of time without using any message so all the process in a still a
+[941.0:968.0] process and by a leave a by validity they decide by a at some time t so we have pretty much to to opposing executions in both of this both of this case and now we want to somehow you know somehow play with these two executions in order to show that this is indeed possible in impossible.
+[968.0:997.0] So again all the process in a start with value a all the process in b start with value b but all the processes in a are suspected by each process in b and vice versa so we pretty much have the the the scenario where all processes in a simply mean simply think that yeah all the process in b are faulty and they are crashed and I should not really think about them because I will not potentially receive any messages and they do not play.
+[997.0:1024.0] Any roles in this execution but this is also taught by processes in group b also let's say that no message between two pro the between these two groups of processes are delivered before the time that is equal to maximum of t a times common tb okay and again the same thing happens with the restoration of suspected process so no process
+[1024.0:1046.0] resource any process on the other group before this exact same time so what happens is the follow process in group a cannot really distinguish between executions to and free okay so what happens is the process a decide some value a in time at time t a the
+[1046.0:1075.0] similar thing happens with processes from the group b so they decide value b at time tb so what we have here is that we have this agreement right because all process in a decide today all process in b decided be there not the same value we have this agreement which is a contradiction with the fact that our process that our protocol really solves the consensus problem in a case where half of the processes could be faulty which simply means that you do not have the same thing.
+[1075.0:1103.0] So that means that you do not have a majority of correct processes in any execution and we will still reach consensus so this is the this is the assumption we made and we showed here that this is indeed not possible so this is a contradiction with the fact that this protocol indeed solves consensus without this majority assumption is everything clear here any questions.
+[1103.0:1126.0] Okay let's continue so what we have here is the last time I spoke a bit about this nice of traction formal abstraction of sequential objects and how what what I'll be what is really a sequential object and then we ask you to define as the
+[1126.0:1155.0] sequential object representing a crypto currency pretty much. So how do we do that so in order to really define this object completely we need to define this set of all states the initial state the set of operations that could be you know performed invoked the set of answers responses that should be received once an operation is invoked and the state transition relation with simply means that if you if you have the system at this state and you have a process invoking the state of the state.
+[1155.0:1163.0] So a process invoking this operation this is the new state of the system and this is a response the process will indeed receive.
+[1163.0:1177.0] So this is our solution this solution is actually taken from the from the paper from our lab so if you find this interesting you could encourage you to go and read the paper because it's very very interesting.
+[1177.0:1183.0] Okay so first of all we want to see what is the set of all states.
+[1183.0:1212.0] Well if we think about the crypto currency system what do we really need to do you know take care of so we want to have some users right right that has that have some accounts and all of these accounts pretty much should only have their balance so this means that okay user Yovon account name Yovon will have five bucks at its account account material will have 10 bucks and so on and so forth.
+[1212.0:1223.0] So the set of all states is simply represented by the set of all possible maps that you know map an account to a natural number.
+[1223.0:1232.0] So this simply means that account Yovon has five bucks account model 10 bucks account received 15 bucks.
+[1232.0:1246.0] So what we want to say is this a is set of all accounts and then is of course set of natural numbers which simply means as I said we want to know what is the balance of each account.
+[1246.0:1261.0] Okay so what should be now the initial state so the initial state would simply be just a map again one map that associates balance with each account so this simply means that okay if we want to start our system.
+[1261.0:1290.0] And this is the initial initial state of the of the balances so at time t equals zero Yovon has five bucks but there has 10 bucks where she has 15 bucks bucks okay okay so then what are the operations we really need to you know think about when we talk about the cryptocurrency system so I would say the fundamental operation should be operation of transferring money right so we should allow our users to.
+[1290.0:1300.0] Use your transfer to simply say yeah I want to transfer my five bucks to model for example so this is represented by.
+[1300.0:1311.0] My disoperation transfer that has free parameters parameter Z and B that are simply accounts and parameter X that it's simply the natural number which in a natural number which
+[1311.0:1320.0] means okay this is the amount of money I want to transfer so and if I want to issue five bucks to to.
+[1320.0:1338.0] This will be represented as transfer Yovon material fight okay and another possibility that we give that of course makes sense is that we allow users to be aware of what is their balance so we do that by simply introducing this
+[1338.0:1367.0] read transaction that simply says if I want to see what my balance is I will pretty much read my account and this is represented here so if I want to see what the balance of Yovon account Yovon account is I will just issue a transaction read Yovon okay transaction operation sorry for for this so whenever I say a transaction my really mean operation what are the responses to this involved operations well in the case
+[1367.0:1395.0] of transferring money we should not simply allow that transfer to to to be successful always right so if I want to find transfer five bucks to model this should be this should succeed only if I indeed have those five bucks right so that is why the set of responses is equal to true or false which implements that if you issue a transfer transaction transfer operation and this operation
+[1395.0:1412.0] you indeed have the necessary amount of money then the response will be equal to true otherwise it will be equal to false and the response for every read operation should simply be the natural number which represents the balance of the account
+[1412.0:1439.0] okay and lastly we need to we need to think about how our system really involved over time right so we need to know what happens once agents are an operation is issued what should be the new state of the system and what should be the response that is received so if we take a transfer operation such that
+[1439.0:1456.0] so okay so if we if we okay so since this is a relation right we need to define for a state q process p an operation oh we need to define what are the possible q prime and R which
+[1456.0:1477.0] which implements the new state of the system and the response that process p will receive so we say that this apple q p oh q prime R will be will will be will belong to this state transition relation if and only if the following conditions are satisfied so if
+[1477.0:1495.0] if all is equal to transfer operation with parameter a parameters a b and x and p is we say here owner of of an account a what is this simply mean what do we want to ensure here well I cannot really
+[1495.0:1513.0] invoke an operation where I will transfer some some money from Mattel's account because I am not the owner of Mattel's account only Mattel has rights to do so so we simply check that here so okay p is the is the owner of the account a
+[1513.0:1528.0] and we check that there is enough there there is enough money on on an account a so we do that by tracking what is the in the in the current state of the system what is the balance of process a
+[1528.0:1540.0] and then we say the following the new state of the system and the balance of the process of the account a in the new state should be
+[1540.0:1556.0] reduced right by this amount x and the balance of the process b who is receiving money should be increased by this value x and for all other if you see here for for all other accounts we
+[1556.0:1570.0] don't do anything because nothing there change and in this case the answer the response to a process b should be equal to true because the transfer is successful
+[1570.0:1585.0] okay let's now consider another case well again we are considering transfer function transfer operation but now either p is not really an owner of account a or
+[1585.0:1605.0] if it is it doesn't have enough money on its account then we just say okay this is not this should not be a successful operation which simply means that we will we will we will return false the process p and the new state will be exactly the same as the as the old state
+[1605.0:1622.0] lastly if we consider just a simple operation read I guess you should all see you all see that the new state of the system will be equal to the old state of the system and the return value will just simply be the balance of the of the account a
+[1622.0:1641.0] now that here we do not really we do not really check whether the yeah sorry nothing nothing there okay everything clear here okay I don't see any messages so I'll just
+[1641.0:1657.0] and lastly I was talking about the total broadcast last week and we now ask you to we ask you to pretty much take total of the broadcast and implement and you know design your own
+[1657.0:1678.0] the currency okay so how do we simply do it well we say that every single process will have this array of balances which simply is the the set of accounts associated with with its balance so initially if we all agreed
+[1678.0:1696.0] that all processes will have I don't know a balance is equal to 10 every single process will take will take a will take a balance array with all times there okay so when a process wants to issue
+[1696.0:1716.0] a payment what it will indeed do is nothing more than just broadcasting using total order broadcast the message saying hey guys I want to pay five bucks to Mattel for example so we have this this message that we'll have type pay source will be y'all
+[1716.0:1732.0] in this case so the guy who wants to make a payment recipient is of course the recipient of the payment so in this case now example Mattel and amount will be five bucks what happens now is that upon we
+[1732.0:1748.0] do deliver the message which implements that we deliver the message from the total order broadcast attraction what happens is that we check whether the balance is the balance of the source is has enough money there and if it has it subtracts
+[1748.0:1760.0] amount of money from the balance source and adds it this money to the balance of the recipient so why does this work well this works because we have total order broadcast which implements the
+[1760.0:1776.0] direct processes receive all the messages in the exact same order so this simply means that you they will be able to pretty much build the exact same state at the exact same I don't want to say point in time but in the exact same
+[1776.0:1799.0] stack of the of the of the execution which implements it if we have two messages to payments issued once we put them inside of a total order broadcast every single process will be able to order them so this simply means that okay I delivered the message from total order broadcast attraction I check whether these
+[1799.0:1814.0] tracks are fine if they are fine I do the the magic which means I subtract the amount from the source and I add to balance of the recipient and once every correct process has received the first message from total order broadcast the states the balance
+[1814.0:1832.0] raised in all correct process will be exactly the same and that happens also that holds also for the second message for the third message for the million message so this is how they are pretty much in sync all the time yes so they are asking but does this this might be
+[1832.0:1850.0] implemented the account owner relation room well not really yeah that's that's a good point but you can just this this is I would say that this account map is not extremely like a account owner map is not extremely it's not the
+[1850.0:1874.0] gist of what we want to show you here you can simply you can simply assume that each process has its own account and it is the only only guy allowed to issue a payment from that account so you can do like that for example it's it's it's a good question but it's not what what we want to focus on here okay any other
+[1874.0:1892.0] questions okay so then I'm done for today I'm gonna my tower is going to now present the second the second set of exercises for the consensus broadcast for the
+[1892.0:1912.0] consensus problem and that's it thank you guys I'll be the check. Hello guys you are all doing fine I'm going to switch to the to the next exercises oh no not sure sorry it's present
+[1912.0:1932.0] I just come on I think you can all see it okay so also for this session we're gonna have a I mean the topic is going to be contest this time we want to spice things up and throw you a little bit more into the details of how
+[1932.0:1952.0] consensus algorithms are designed right so we are gonna provide you with a with a algorithm that we claim implements consensus and then we are gonna guide you step by step through the proof that it actually does satisfy the properties of consensus.
+[1952.0:1975.0] So the idea is that we have this algorithm the model is fairly simple we work in the completely synchronous model so that means that you know there's a known amount of time that it takes for messages to get there so the means that this system can evolve in rounds and you know you can be sure that at every round whoever's on the
+[1975.0:1992.0] message gets their message through properly and however doesn't get their messages through their they have failed they have crashed so the crash model said the failure model is indeed you know crash stop right and the idea is that this
+[1992.0:2015.0] algorithm unfolds in F plus one round have been the number of crashes until it achieves it achieves consensus now this algorithm is particularly cool because it's quite simple my it just works as I said it unfolds in round every you know we process maintains variable W I so
+[2015.0:2042.0] W I being a set be being the set of all the possible proposals initially every process sets its own set to include only the to include on its own proposals right then for F plus one rounds everybody broadcasts its its own set and then it just computes a merge on like uses all the
+[2042.0:2058.0] set it computes the union of all the sets it receives by the end of the round and then it protests that set again and so on so far so the end everybody checks if the set that they have locally include only you know one
+[2058.0:2069.0] proposal then it means that it's that own proposal and then you said it otherwise they go for some default value B zero right quick can
+[2069.0:2085.0] see that the default value which is so what we want to do as I said is to prove that the algorithm is correct so we're going to guide you through some steps so the first step is going to be is going to study you
+[2085.0:2105.0] we're going to ask you to write two lemma right so the first lemma is you know we want to we want you to show that if at any point in time for any specific round you know no no process crashes specifically doing that round then at the end of the round everybody has the same set
+[2105.0:2120.0] the second set is going to be to show that once everybody has achieved having the same set then no matter how many rounds you go forward then you know the set is going to stay the same right and then we're going to ask you to use the two
+[2120.0:2134.0] previous theorem to previous lemmas pull them together and prove that after F plus one rounds then necessarily everyone that did not crash has the same the same sets
+[2134.0:2150.0] so you can use these three lemmas to prove and we ask you to that ask for one is possible that that's our rhythm does solve consensus so specifically it satisfies the agreement with the easy determination right
+[2150.0:2176.0] so we underline one specific set which is validity property comes let's say into flavors one is slightly stronger so not immediately evident why they are different so one way to state validity is if everybody proposes the then everybody decides the right a stronger version of this is the decision must be must have been proposed by at least one process
+[2176.0:2193.0] the difference there being that in the first case if you know you have more than one value so different processes proposed different values then the value that everybody decides upon can be you know a value that nobody proposed
+[2193.0:2210.0] any so in this case as you see here so we have this default value of B zero which you know we didn't ask it to be part of any specific set
+[2210.0:2225.0] specifically doesn't need to be a part of B so we you know we obviously ask you to prove that it does algorithm solves the first kind of flavor the first flavor of validity
+[2225.0:2237.0] however is that a way to generalize it to also to satisfy it actually satisfy the second flavor of validity so this is the question that we ask you
+[2237.0:2263.0] so exercise three now this time we ask you once you have proved that that this algorithm does satisfy consensus doesn't permit consensus we ask you to evaluate its complexity so we ask you to count the number of messages right and then the number of bits given the B is number of bits that it's required to represent a proposal right now these two things
+[2263.0:2280.0] are not necessarily the same thing as you might have messages that go around I don't know growing for example exponentially in the number of rounds so the size of each message would be you know we would contain a non constant number of bits right right to
+[2280.0:2309.0] the number of messages and the number of bits no exactly the same thing cool now we propose a bonus exercise this is you know if you want to spend some time figuring out something a little bit more complicated so again we put you in a system where you know everything is synchronous right and processes can
+[2309.0:2328.0] communicate with each other however not every process can communicate with everyone specifically processes are organized into a grid right and this grid is going to allow every process communicate only with a node up down left
+[2328.0:2354.0] so the means everybody can communicate only with four neighbors right and the grid is going to be large specifically the means that it's width plus its height is much smaller than the product between its width and its height right now at this time we're asking you guys to develop a consensus algorithm
+[2354.0:2383.0] and we ask you to also prove that that it makes sense that it works right so we ask you to do the steps so the first step is you just assume that there's no fault of processes right just say that everybody is perfectly functioning we want to to write a protocol that reaches consensus and we would like you to optimize the algorithm in a way that makes it converge as quickly as possible namely I mean we're we're talking number of rounds
+[2383.0:2406.0] so of course we ask you to evaluate how many rounds that's your algorithm take to converge and then finally we say now let's assume that there are width plus height so relatively small fraction of the processes that are actually faulty right so in the worst case scenario how many rounds does your algorithm require now
+[2406.0:2424.0] we underline sorry I skipped that that we do have the assumption that any two correct processes are still always no matter what happens connected through at least one path of correct processes so you should not you know worry too much about the case where two correct processes are unable to communicate
+[2424.0:2445.0] okay that's all if you don't have any specific questions the session will be over ask I'm gonna wait for like five seconds I'll get okay guys have a great evening and see you in the next session

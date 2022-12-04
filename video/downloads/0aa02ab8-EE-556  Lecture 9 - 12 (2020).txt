@@ -1,0 +1,232 @@
+~EE-556 / Lecture 9 - 1/2 (2020)
+~2020-11-02T13:32:34.534+01:00
+~https://tube.switch.ch/videos/0aa02ab8
+~EE-556 Mathematics of data: from theory to computation
+[0.0:7.0] All right.
+[7.0:20.0] Let's get started.
+[20.0:32.0] So today we continue our deep learning exploration in math of data.
+[32.0:36.0] So let's get started.
+[36.0:49.0] What we'll do is we'll talk about some of the subtleties of optimization in non-comics landscapes with particular emphasis on deep learning.
+[49.0:78.0] Now, what I do here is I just try to remind you the general setting that you're looking at the supervised learning paradigm where we have a generator that generates these data, AI, the supervisor uses some real numbers, probabilities or labels, AI, and as the learning machine, you would like to learn the snapping from AI to be I.
+[78.0:96.0] Now, we're going to remain in this parametric setting where we're going to parameterize the function with some parameters X and over the last two weeks, you are talking about using neural networks for this particular parameterization.
+[96.0:103.0] Now here I give you a simple example.
+[103.0:109.0] Okay, single hidden layer neural network. So there's one there.
+[109.0:117.0] So you see the output. Here's the input and this layer is hidden.
+[117.0:131.0] But, mathematically what we do is we take the input, we multiply by the VAT matrix. This would be X1. This would be actually a vector X2 because the output is a singleton.
+[131.0:152.0] You have a bias, you have this activation function that should not have a polynomial expansion to be able to universally represent any function on the hypercube. And then you basically have the same thing outside and that's the recurse nature of the neural networks.
+[152.0:167.0] If you want to make this deep, you simply continue with this construction. You put the sigmoid here again and then multiply at bias and put sigmoid multiply at bias.
+[167.0:186.0] Now here are parameters in this particular case would be a concatenation of the matrices and the biases. And the deep learning training problem is then given by based on the empirical risk minimization.
+[186.0:200.0] So we take a loss function that looks at the how well we're doing with our predictions on the training data. Right. So if you would like to minimize the expected risk or the population risk.
+[200.0:211.0] If you don't have access to this, you know, so a, the expected some unknown problem, probability, XAB.
+[211.0:221.0] We don't have access to this distribution. We use the empirical average and hence we have an optimization problem.
+[221.0:230.0] Right. And we have epoFx and sometimes these parameters, it is good to have some constraints.
+[230.0:249.0] Okay. So this is roughly speaking the deep learning training problem. There are variations along the theme, but this nearly captures a whole chunk or at least it captures a chunk that gets you quite a bit.
+[249.0:261.0] Okay. So in this case, you know, like this optimization objective, it's it can be complicated. It depends on the loss function, et cetera.
+[261.0:272.0] You can have multiple layers. You can have multiple class classification problems. You can have convolution parameters and you can have transform architectures, et cetera.
+[272.0:282.0] Right. And the paradigm is that somehow we use first quarter methods to be able to scale and find the solution.
+[282.0:294.0] Right. But of course, if it was this easy, it would have been probably done in 1980s or 1990s.
+[294.0:313.0] But I think the neural networks reading popularity only early 2010s. Right. And there were reasons for it. And hopefully in this particular class, we'll get into some of the subtle reasons that support the success of these deep learning.
+[313.0:330.0] Now, course of dimensionality in terms of optimization, right. And in the first deep learning lecture, I actually highlighted that one of the issues with deep learning was that we did not have enough training data.
+[330.0:347.0] Now that we do impact abundance of data results in abundance of computation. And hence it is difficult. Right. The focal to scale.
+[347.0:366.0] But in addition to this, the optimization objective that we set up. You know, at least it has product of even without the activation from training between it has the product of these network matrices.
+[366.0:385.0] If you want to determine them individually, wow, it's an on comics problem. Right. If you remember, just to repeat some of the key messages of this class is that, you know, complexity means that any local minimum is global minimum.
+[385.0:405.0] Comixity does not imply tractability. In fact, in this supplementary lecture that I have in the rule, I give this cut polito example, which is a is a comics program, but the cut polito is so complicated that it is not tractable to optimize over it.
+[405.0:424.0] But with non-commensity, it's certifying local optimality is very difficult. Right. And you can be at a local optimum or you can be at a saddle point and you wouldn't know.
+[424.0:441.0] And that is a real challenge optimization. Okay. So if you think about this stylized non-comics function, you can have plateaus, you know, you can have local minimas. In fact,
+[441.0:456.0] or you can have global minimas. Right. And if you're just using gradient information, you cannot tell this point from even this point.
+[456.0:476.0] Now, in addition, that we'll see that there are ill conditioning in the problem that oftentimes is difficult to handle. So regarding these barriers, we've been talking about first order methods.
+[476.0:502.0] So, it's the castic methods. And you'll see that these methods actually still do well in the face of non-commensity. Right. And in terms of ill conditioning, we're going to talk more about adaptive gradient methods that somehow adapted to local geometry and help us in terms of our practical performance.
+[502.0:518.0] Okay. Now, let's recall one key algorithm, which is stochastic gradient descent. And the algorithm is quite simple.
+[518.0:541.0] Let's say we have a stochastic gradient oracle. So in the case of this finite sum.
+[541.0:562.0] And some problem is stochastic gradient could be just, for example, one entry. Right. So, could be just this.
+[562.0:575.0] This one data point, right. Or you could do mini batch. So meaning you can take a bunch of these things. So some batch size. Some.
+[575.0:596.0] If you use a bunch of these things together, then you have the mini batch stochastic gradient. And what we do is we take the stochastic gradient. We have a step size policy.
+[596.0:621.0] And then we iterate in this particular fashion. Nice thing about this algorithm is that the puriteration cost can be independent of the data size. Right. So if you think about it, the cost of just picking a parameter, a random data point has just like log n complexity in and dimensions.
+[621.0:637.0] But this is nothing. You know, there's no p-dimensional data operation here. And you can just do a bunch of these things. And you can continue.
+[637.0:656.0] Now here what I would like to do is also highlight an algorithm that is important in the face of non-combexene. This is called the perturb stochastic gradient. And this one is if the stochasticity in the gradients are not sufficient, you add inject a bit more noise to the gradients.
+[656.0:675.0] So you perturb even the gradients. Why am I mentioning this? Here the stochastic gradient could be the food gradient. And you can still add noise to it. And you see that this has an advantage when it comes down to these.
+[675.0:698.0] So not good stationary points, which I will describe in a little bit. So perturb stochastic gradient descent. It's also important algorithm. And the idea is again, you have this stochastic gradients, which could be the food radians. You add a bit of noise. And you.
+[698.0:718.0] You do this standard motions. Now I'd like to highlight a start or HTML material here. Stochastic, perturb stochastic gradient is a bit different from the stochastic gradient linger from dynamics, where here the gradient.
+[718.0:729.0] You still have it. But as opposed to adding the noise directly on the gradient, you scale the noise with respect to the square root of the steps.
+[729.0:740.0] So if you think about it as gamma k goes to zero, the noise actually has a bigger weight than the gradient.
+[740.0:751.0] And this particular algorithm is used to explore the optimization landscape. In fact, it is used to draw samples from posterior distributions.
+[751.0:760.0] So that is not to be confused with the perturb stochastic gradient descent, but this algorithm has a ton of uses.
+[760.0:777.0] Now here are the questions that we will try to answer today. One is does stochastic gradient descent converge with like overwhelming probability, almost surely.
+[777.0:792.0] Not only that does std avoid non minimum points. So you'll see that in general, you want something locally optimum. Because you know, like thinking about the training cost.
+[792.0:804.0] If it really approximates the population risk well, you want at least some solution that is locally better than the other solutions.
+[804.0:811.0] Then the third question is how fast does std converge to local minimizers if it does converge at all.
+[811.0:822.0] And whether or not is to the converge to global minimizes. So look up with these questions now.
+[822.0:836.0] Now I talk about convergence. So there are certain things that we should highlight that are really important, just to refresh our memories about this critical points. So let's try to classify some of these critical points.
+[836.0:848.0] Now for this purpose, I'm going to assume that f is twice the French rule and let's say, if we're looking at a point, whoa.
+[848.0:860.0] We're looking at a point x bar. And what we do is we can take a look at the hessian at the point x bar.
+[860.0:871.0] If at the point, actually, so in this particular case, we should also say that the gradient is zero.
+[871.0:885.0] If at a particular point, the gradient is zero and its hessian is positive definite, which means that the eigenmel is strictly greater than zero.
+[885.0:910.0] Then this point is a local minimum. And conversely, if the eigenmel is strictly negative, then this is a local maximum. And if some of the eigenmel is positive and some of them are negative, then it is a subtle point.
+[910.0:919.0] When the eigenmel is equal to zero without the presence of a negative eigenvalue, the cases are being conclusive.
+[919.0:930.0] But as long as there is a strict eigenmel, a strict negative, typically inequality, strict, subtle point.
+[930.0:943.0] But you should know that the cases can be very difficult to characterize. So here is the classical minimax saddle.
+[943.0:951.0] So you have positive curvature in one negative, in another direction. Here's the monkey saddle.
+[951.0:966.0] So here, I think that one of the eigenmel is zero. It has a negative one, and it has a positive one.
+[966.0:986.0] Now, so here, the strict saddle property, I'll give you the most general definition, which will be important when we talk about the perturbs to the castigradient sand. But this, the general definition you will need at the advanced slides.
+[986.0:1001.0] So, to keep this in mind, when we talk about a strict saddle, we specifically think about this particular case where the minimum eigenvalue of the points has a negative,
+[1001.0:1013.0] meaning that it is like you can try to escape from this geometrically speaking. There is a direction of negative curvature.
+[1013.0:1037.0] But the strict saddle property, it is a multiple, it's an alpha data, epsilon delta strict saddle. If one of the following is true, if the gradient is approximately greater than zero, there's a negative, there's a negative eigenvalue on the Hessian or locally, it is strong for mix.
+[1037.0:1053.0] So, informally speaking, a strict saddle, this with these properties. But what is important to us is that you need to have a data strict saddle.
+[1053.0:1067.0] Now, the rest is a bit less important for the discussion that is coming next. Now, let's try to give some answers to these questions that people.
+[1067.0:1088.0] So, what you know is that SGD converges to the critical points of the function that you're optimizing. As the number of iterations go to infinity, so this is the typo, should be k.
+[1088.0:1101.0] In particular, gradient descent, which is a special case of secastic gradient descent, so you can actually keep the full gradients.
+[1101.0:1109.0] We know that gradient descent converges from any initialization with constant step size and full gradients.
+[1109.0:1122.0] Now, what else do we know? We know that with probability one, the perturbed to the cast gradient descent does not converge with the constant step size.
+[1122.0:1145.0] I can fact, what it would do is around the optimum, it would just bounce around. So, you need things like averaging. But the iterate itself does not converge. And if you do need averaging, this is actually important for non-commercial commutation, averaging is not necessarily a good thing.
+[1145.0:1164.0] Because, imagine you have a corresponding like this. And imagine the level sets are such that something like this.
+[1164.0:1178.0] So, let's say this is equal value. So, this particular area is equal value. If this is going up, so suppose your algorithm is circling around here.
+[1178.0:1189.0] If you average, then you go here, which is a higher value. For example, you just do standard averaging and the algorithm just circles around by averaging.
+[1189.0:1196.0] So, you would be making your objective worse, for example. So, non-commercial commutation is counterintuitive step-wise.
+[1196.0:1212.0] But if you want the sequence to converge with probability one, SGD converges with their tanning from step size. If the iterates are bounded with probability one.
+[1212.0:1225.0] And it turns out that we removed this particular assumption as well. This was the state of the art until December, where we present our new results.
+[1225.0:1240.0] It nerves that shows that if the sprochastic radiance has bounded moments, and if the step size is summable in some space, then the iterates themselves actually converge.
+[1240.0:1247.0] So, this boundedness is not necessarily your point.
+[1247.0:1259.0] Now, does SGD have always saddle points? So, suppose you're running SGD and here's a saddle point.
+[1259.0:1278.0] In this particular case, if you can see, there is a bit of a negative curvature here. So, this is not a place where you want to land. This is a place where you want to land.
+[1278.0:1285.0] And remember, this may not be the global option. The function of all we know could be this one. Now, this is the global option.
+[1285.0:1297.0] Now, what is known is that gradient descent from almost all initialization avoid strict cells. So, this is nice.
+[1297.0:1308.0] So, if you were doing gradient descent and you don't have a pathological initialization, then gradient descent will avoid these, which is very nice.
+[1308.0:1332.0] And what was known, again, was that the perturbed stochastic gradient descent with some probability, one-mind zeta, and with some constant gamma, escaped strict cells after log 1 over zeta, which depends on the probability with gamma squared iterations.
+[1332.0:1345.0] And as you can see, that if you keep a constant gamma, SGD itself does not converge. So, you would need maybe some averaging so that the average sequence converges.
+[1345.0:1366.0] And it is problematic to do averaging non-convex optimization. So, the statement was not, I mean, it hints at what happens in practice, but state itself is not that strong, let's say.
+[1366.0:1378.0] And if you notice, you cannot take gamma going to zero because this actually blows up, which is...
+[1378.0:1407.0] In this particular case, again, so our new result says that if the noise is uniformly exciting in all directions, and if you pick a step size that has one over k to do some power, so say c, c is going to be t0 and 1, then this GD avoids strict status from any initial condition.
+[1407.0:1414.0] That probably will turn on.
+[1414.0:1425.0] Now, how fast does SGD converge? So, this is our question number 3.
+[1425.0:1442.0] So, this is again very critical and very important. So, SGD remains close to local minimums, where the hash-m is strictly positive and definite.
+[1442.0:1448.0] What did we know?
+[1448.0:1458.0] So, this actually, I think the capturizations of these are in the advanced slides that the backup lecture.
+[1458.0:1466.0] Again, so you can run SGD with a constant step size and obtain an objective value, epsilon close to a local minimum.
+[1466.0:1486.0] So, let's say X star is the global, X-asterisk is the local. What this says is that the sequence can obtain epsilon close objective value.
+[1486.0:1506.0] So, meaning that if you have something like this, so say this is the local minimum, this is the global, X-asterisk.
+[1506.0:1516.0] So, you will get within epsilon of this.
+[1516.0:1528.0] But remember, with constant gamma SGD itself does not converge unless certain conditions are satisfied, like strong growth condition, which I will talk a little bit at the end of the lecture.
+[1528.0:1540.0] But then if you want some converged sequence, you need to do averaging. And again, for non-commit optimization, averaging is not necessarily a good idea.
+[1540.0:1552.0] Now, what we have shown is that actually you don't need averaging. You can actually have a fast, decaying step size, and SGD will locally.
+[1552.0:1566.0] This is not a global convergence result. This is a local convergence result. If locally you have a 1 over k step size, learning rate step size policy,
+[1566.0:1582.0] it's suitable in fact, to converge the local minimum with 1 over k rate, which is a very, very nice statement. And you see that this kind of things actually explain the practical performance that people try to do in real applications.
+[1582.0:1606.0] So, resin at training for example has introduced a lot of tricks into the deep learning literature. Now, if you remember, in the first deep learning lecture, I gave a performance plot where for human,
+[1606.0:1618.0] humans were beaten by a river of architecture in classification tests. So, this is what I'm talking about, resinate, particular architecture.
+[1618.0:1628.0] What you do is you typically start with maybe a constant step size, and you run the algorithm, and then you start to decrease its class.
+[1628.0:1646.0] People tend to do this in a staircase way, but what we realize is that you can actually use our theoretical rate, and you get similar performance, which is really cool, because what you need is an algorithm that will give you the law style you know,
+[1646.0:1664.0] and if you want convergence, you just cut down the learning rate rapidly with 1 over k, and then in fact, in your accuracy or your test loss, you will see a jump, which is very, very cool.
+[1664.0:1688.0] Now, I'll use the key question, can SGD converge to global minimizers? And this is, you know, really important. And SGD is known to converge to points that actually obtain zero loss.
+[1688.0:1717.0] And people made these kind of observations, and it's been fascinating. There was a paper that, you know, understanding deep learning requires rethinking generalization, which I think was so surprising that in their first submission, the paper got projected, and then it got in and it's got a ton of citations now that people now understand what the paper was talking about.
+[1717.0:1737.0] And what people, but what this particular paper showed is that it would look at a classification task, and then it would show that with true labels, for example, you can train a deep neural network, and that you can obtain zero training loss.
+[1737.0:1747.0] And what was interesting is that for the classification task, you could shuffle the input pixels for a given label, you still get a zero training loss.
+[1747.0:1762.0] You can basically try to fit Gaussian noise to the labels. You can do all kinds of weird stuff, right? You can just give random labels and input, and there would be a fit.
+[1762.0:1774.0] And you would get a zero training error. So you can see that you can actually get zero training error.
+[1774.0:1781.0] And in this case, it's been puzzled. Now, there is something called over parameterization.
+[1781.0:1787.0] And here, if you think about it, right? So with the neural network.
+[1787.0:1797.0] So let's see, this is a hidden. So let's say here is M, the width of the neural network.
+[1797.0:1809.0] If turns out that if this width is relatively large, then you have a number of parameters here that can be more than the amount of data.
+[1809.0:1817.0] So you would have the degrees of freedom to fit the data.
+[1817.0:1826.0] So in this particular case, you have the capacity to fit, but the question is, can you actually fit all the data?
+[1826.0:1830.0] Well, these examples show that you can.
+[1830.0:1841.0] And the phenomenon of over parameterization is that you set up a neural network that has more parameters than the number of training data.
+[1841.0:1849.0] In particular, much more.
+[1849.0:1856.0] Now, I'll give you a simple result with gradient descent. And I'll summarize some of the results in the next slide with the stochastic gradient descent.
+[1856.0:1866.0] So think about a single hidden layer neural network model. So we have an inner hidden layer and the odd layer.
+[1866.0:1875.0] So let's say we have this.
+[1875.0:1886.0] It turns out that if the width scales like n to the sixth, which is a lot, don't get me wrong.
+[1886.0:1892.0] Then you can show that the gradient descent will give you, for example, the global.
+[1892.0:1902.0] It will give you a point that will obtain a zero training loss.
+[1902.0:1911.0] Now, I must say that you cannot separate this particular issue with the initialization.
+[1911.0:1916.0] Because again, you're doing non-commit optimization. Your initial point also is important.
+[1916.0:1928.0] So what these authors showed, I think this is Artie's paper from Carnegie Mellon, that you can initialize a neural network randomly with a certain way.
+[1928.0:1937.0] Then only then gradient descent, if the neural network has is overparameterized, will give you the zero training loss.
+[1937.0:1948.0] And in fact, it will give you this result with linear convergence, meaning you will just have to do a few iterations to get zero training loss.
+[1948.0:1954.0] Although the iterations will be extremely costly.
+[1954.0:1969.0] But theoretically, this is possible. So just to summarize, overparameterization refers to the case where number of parameters of the neural network is significantly higher than the amount of data, right?
+[1969.0:1972.0] And now notation.
+[1972.0:1981.0] Now, gradient descent can find global minimum or stochastic gradient descent, which will come in the next slide.
+[1981.0:1996.0] If there's a particular initialization on the network weights, if the width satisfy a particular property, then you can even use the constant step size.
+[1996.0:2003.0] And the algorithm will converge to a zero training loss linearly.
+[2003.0:2014.0] Now, this says nothing about generalization. It only says something about finding zero training loss.
+[2014.0:2023.0] If there's nothing about generalization, which was the key discussion in the last lecture.
+[2023.0:2033.0] Now, in particular, you know, neural network landscapes can look very complicated with a ton of local minima.
+[2033.0:2043.0] But when you do overparameterization, the with proper initialization, like Zavier,
+[2043.0:2053.0] you can, more or less, remain in a convex space than where you have zero training loss.
+[2053.0:2062.0] So the algorithm will start here, and it will be in a strongly convex, nice space, and it will go to the minimum really rapidly.
+[2062.0:2066.0] That's what happens with overparameterization.
+[2066.0:2074.0] Now, this is actually a very active research topic.
+[2074.0:2079.0] And there's so many results, because it's very important.
+[2079.0:2092.0] So people talk about the width, how much width you should have for the neural network, so that you can obtain zero training error.
+[2092.0:2109.0] This reading this particular literature is quite subtle. You need to be very careful, because there are, there are constructions where people, for example, I think this is not these paper with summit.
+[2109.0:2122.0] What you do, for example, is you know, you fix, for example, one layer with random dates and only train the second layer, which is not what happens in practice.
+[2122.0:2128.0] I just does not lead to good results, for example, necessarily.
+[2128.0:2143.0] There are things called extreme learning machines from 1990s that, that generates a deep neural network, fixes everything as random until the last layer and only trains the last layer.
+[2143.0:2153.0] In that case, you can get, you know, the scaling of the width, which is, or the number of parameters, which is proportional to the amount of data.
+[2153.0:2159.0] But you should know that in that particular case, the optimization problem is just over some simple layer.
+[2159.0:2166.0] So you're doing something like linear regression, but with some non-linearity around.
+[2166.0:2180.0] But extreme learning machines is surprisingly, I mean, it is forgotten, although the paper itself has like 6000 or 7000 citations.
+[2180.0:2185.0] And there are other values.
+[2185.0:2191.0] I think, yeah, so this is probably the king j couple, which is a result of this one.
+[2191.0:2193.0] And there are a bunch of other ones.
+[2193.0:2196.0] So this is an active research area.
+[2196.0:2201.0] And lately, people are trying to characterize the generalization performance.
+[2201.0:2212.0] Remember, what I've been talking about is finding zero training error. But what you care is getting good generalization, not necessarily finding zero training error.
+[2212.0:2217.0] Because if you think about it, right? So this example was rampant in the last lecture.
+[2217.0:2230.0] So you have this by fitting a polynomial of a higher degree, you know, you can get.
+[2230.0:2234.0] You can fit all the data. You can get a zero training loss.
+[2234.0:2238.0] But obviously, this will not generalize well.
+[2238.0:2240.0] You know, this is what I mean.
+[2240.0:2247.0] So with over parameterization.
+[2247.0:2257.0] Given proper initialization, we can talk about forecasted creating sense or gradient descent finding zero training error.
+[2257.0:2266.0] But this does not imply that you will generalize with the said parameters that are learned through this or parametrization.
+[2266.0:2275.0] But again, people are now coming up with assumptions and understanding how the width should change and that you can general.
+[2275.0:2282.0] So there's a bunch of references and that you list here.
+[2282.0:2291.0] Now, one of the challenges that I mentioned was the the ill-conditioningness of the problem.
+[2291.0:2297.0] So you set up a training loss.
+[2297.0:2301.0] So you set up a deep learning.
+[2301.0:2310.0] Deep learning star was something like arg min f of x x maybe is in some constraint space.
+[2310.0:2317.0] Where whoop.
+[2317.0:2319.0] Sorry.
+[2319.0:2320.0] Sorry.
+[2320.0:2333.0] It's starting deep learning.
+[2333.0:2340.0] So we have some optimization problem like this.
+[2340.0:2348.0] And if you think about it, if you were to try to run the gradient methods, we either need some sort of a line search or we need to know the lifers constant of this.
+[2348.0:2352.0] Which you typically don't want to compute.
+[2352.0:2360.0] Now, what I'll do is I'm going to tell you a little bit about stochastic adaptive methods that converge without needing to know these things.
+[2360.0:2368.0] They've also locally adapted the geometry, you know, like I gave these examples in the lecture.
+[2368.0:2376.0] So if you think about descending here, the global versus the lifers constant may be large.
+[2376.0:2383.0] But if you use the same lifers step size around the optimum, it's not good.
+[2383.0:2387.0] You want something wider.
+[2387.0:2391.0] So I'll talk about that.
+[2391.0:2404.0] It's kind of adapted local geometry that's document ill, ill, ill poseness or bad condition numbers and which is for.
+[2404.0:2407.0] Now for this list, set up a bit of a formalism.
+[2407.0:2411.0] So we're going to talk about valuable metric stochastic gradient descent.
+[2411.0:2420.0] And for this, what we're going to do is we're going to take this stochastic gradient and then we weigh it.
+[2420.0:2428.0] In certain ways and then we're going to edit.
+[2428.0:2431.0] To make progress.
+[2431.0:2444.0] And for this, you can have some going to cover only two cases, the more complicated cases were in either lecture three or lecture four.
+[2444.0:2448.0] But it suffices to consider these two in this particular lecture.
+[2448.0:2453.0] So you can have a stochastic error step size.
+[2453.0:2465.0] In this case, you can have a stochastic gradient descent and you can have, for example, diagonal step size, meaning you adapt each of the coordinates separately.
+[2465.0:2468.0] That's some.
+[2468.0:2471.0] But this does not mean that this is not adaptive.
+[2471.0:2474.0] So you can still have an adaptive scalar step size.
+[2474.0:2479.0] So maybe I agree with this.
+[2479.0:2491.0] It would be clear what I mean here by here, I mean this particular line is that is like stochastic gradient descent with the adaptive scalar step size.
+[2491.0:2498.0] And this is stochastic gradient descent with some adaptive step size that is for each coordinate.
+[2498.0:2502.0] That's what I mean.
+[2502.0:2513.0] Now what we're going to do is we're going to adapt to the local geometry by using past stochastic gradient information.
+[2513.0:2522.0] Now, we're off with feeding this particular function, this particular matrix is a function of these gradients.
+[2522.0:2532.0] And in add a grad, so the original add a grad looks at the outer product of the gradient summed up and then this is the matrix square root.
+[2532.0:2537.0] I saw like hk sorry.
+[2537.0:2541.0] So let's say this is a matrix.
+[2541.0:2554.0] You take the square root of the matrix by using some matrix factorization.
+[2554.0:2567.0] So here in add a grad actually what we do normally is take the diagonal of us.
+[2567.0:2572.0] And then we have diagonal elements and then we take the square root of the average.
+[2572.0:2576.0] Now there is an algorithm called RMS prop.
+[2576.0:2586.0] Now RMS prop says that maybe we don't want to just give a way to whole history.
+[2586.0:2591.0] We may want to emphasize the recent history a bit more.
+[2591.0:2598.0] So we're going to do this by weighing these.
+[2598.0:2609.0] Then there's Adam that has some correction in it and has some second order moment estimation.
+[2609.0:2612.0] So we will see these things.
+[2612.0:2622.0] So let's take a 15 break and then we'll continue at 10 15.

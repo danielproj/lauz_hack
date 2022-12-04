@@ -1,0 +1,787 @@
+~EE-556 / Recitation 2 - 2/2 (2020)
+~2020-09-26T19:09:33.646+02:00
+~https://tube.switch.ch/videos/2953b28a
+~EE-556 Mathematics of data: from theory to computation
+[0.0:3.24] All right.
+[3.24:6.88] Now, the Taylor way of thinking is kind of nice,
+[6.88:9.72] because if you look at this function, this view
+[9.72:13.0] is function that has lots of oscillations,
+[13.0:14.08] it's differentiable.
+[14.08:16.44] It has this view, it's form, but it is differentiable.
+[16.44:20.400000000000002] And if you look at this absolute value function,
+[20.400000000000002:22.04] it is not differentiable.
+[22.04:23.04] Why?
+[23.04:25.560000000000002] Because if you look at this, if you work,
+[25.56:30.759999999999998] if you apply this Taylor way of thinking to the origin here,
+[30.759999999999998:34.64] if you were looking at it, if this view was coming from the right,
+[34.64:36.76] you would get a positive slope.
+[36.76:39.12] If you were looking at it from the left,
+[39.12:41.8] you would get a negative slope, and these are not equal.
+[48.56:49.0] OK.
+[49.0:58.28] So this, I think, is the thing that everybody should recall,
+[58.28:61.76] because this key in getting the chain rule work and so on and so forth,
+[61.76:63.72] and it's key to get some of these other areas
+[63.72:66.12] that are computed easily.
+[66.12:68.32] OK.
+[68.32:72.32] Actually, not that I think about it, some of these things
+[72.32:77.8] are going to be OK.
+[77.8:79.6] They're going to be like a thing of the past,
+[79.6:83.16] because now we have automatic differentiation and so on and so forth.
+[83.16:86.6] And nobody worries about taking derivatives anymore.
+[86.6:90.52] So maybe for all timers like myself,
+[90.52:92.92] it's important, maybe not anymore.
+[92.92:96.2] But it is really good to just go over this.
+[96.2:97.24] OK.
+[97.24:99.88] Now, as opposed to thinking about functionals
+[99.88:104.32] that give you a single output, let's think about
+[104.32:107.8] vector values functions, vector value functions, right?
+[107.8:110.96] So these are functions that may take in a vector,
+[110.96:117.55999999999999] or a matrix, or a tensor, but they produce a vector output.
+[117.55999999999999:121.44] So not a single output, but multiple outputs in D dimensions.
+[121.44:124.44] OK.
+[124.44:129.04] Now, the Jacobian matrix is defined as a concatenation
+[129.04:134.0] of the gray news of each of these outputs transpose,
+[134.0:137.84] meaning you would call the Jacobian.
+[137.84:142.24] So Jacobian would be here a matrix.
+[142.24:148.08] So we do not just as a capital J, both phase function f,
+[148.08:150.84] with respect to its input x.
+[150.84:156.0] And what you do is you look at the i jth entry, the ith entry,
+[156.0:162.44] the ith row would look at the ith output of the function.
+[162.44:165.8] And for each entry j, you would take the derivative,
+[165.8:168.64] we would respect to the jth input.
+[173.04:176.28] So if you have a single function, the Jacobian,
+[176.28:178.52] meaning if you have a single output function,
+[178.52:184.64] the Jacobian is literally the transpose of the gradient.
+[184.64:186.16] All right.
+[186.16:187.4] There's a quantification here.
+[187.4:189.12] It says view value.
+[189.12:193.92000000000002] It's conjugal or permission of the gradient if f is complex
+[193.92000000000002:199.04] value, which is not very about it for this time.
+[199.04:201.96] And Jacobian is really helpful when you
+[201.96:205.4] try to apply things like the chain width.
+[205.4:207.68] So just to refresh our memories, again,
+[207.68:211.8] that recurring nightmare, that calculus was.
+[211.8:214.8] So here, what we're going to define
+[214.8:217.72] is the composition, the functional composition.
+[217.72:223.72] So g composed with f will imply that f takes an input x,
+[223.72:227.52] produces an output, and then g takes that output,
+[227.52:231.44] and then produces yet another output.
+[231.44:233.32] Why is functional composition important?
+[233.32:235.64] Because you can write down complicated functions
+[235.64:239.28] by combining different functions and give you
+[239.28:240.28] this nice structure.
+[240.28:243.84] Good.
+[243.84:248.72] So here, if the composition is defrainschable,
+[248.72:253.48] then the Jacobian of the composition
+[253.48:255.84] is the nice matrix multiplication, which
+[255.84:261.04] is you take the Jacobian of the outer function, g.
+[261.04:264.48] You plug in f of x inside, and then you multiply that
+[264.48:271.52000000000004] Jacobian with the Jacobian of f evaluated at x.
+[271.52000000000004:273.72] This is literally the chain rule,
+[273.72:276.6] but explain from more like a linear algebra perspective.
+[280.88:284.8] So if you take a look at this, the gradient,
+[284.8:287.16] so here's a function, h.
+[287.16:289.36] It is a x minus d squared.
+[289.36:293.12] This occurs when the, so this particular function
+[293.12:296.72] is the least squared function.
+[296.72:299.32] We've seen the least squared estimator.
+[299.32:300.76] So what would be the gradient?
+[300.76:305.84000000000003] Now, you can do the gradient using this trick.
+[305.84000000000003:310.56] I literally the tailor way of finding the gradient,
+[310.56:312.0] you could actually take the gradient,
+[312.0:314.96] and you will notice that in this case, it is.
+[314.96:319.4] So this will just add a minus d here.
+[319.4:320.12] All right.
+[320.12:324.32] The gradient is actually two times a transpose a x minus d.
+[324.32:324.52] All right.
+[324.52:327.4] So you can go over the tailor way of making it,
+[327.4:331.64] taking it, and you will obtain this result.
+[331.64:333.64] Now, a bit more elegant way of doing it
+[333.64:335.72] is the between rule.
+[335.72:335.88] All right.
+[335.88:338.24] So how do we do this?
+[338.24:338.84000000000003] Good.
+[338.84000000000003:341.36] So let's define our function f.
+[341.36:344.32] Now, it says vector valued function,
+[344.32:346.48] meaning it takes an input x.
+[346.48:350.08] And it produces another vector, which is a x minus d.
+[350.08:352.88] All right.
+[352.88:355.56] Good.
+[355.56:361.08] So the Jacobian of x, we just take two x.
+[361.08:362.76] If you just look at the definition,
+[362.76:365.4] so b is a constant, it does not depend on x,
+[365.4:367.24] so it does not affect.
+[367.24:370.15999999999997] It is literally a.
+[370.15999999999997:374.76] You go over each output, meaning you go over all
+[374.76:380.03999999999996] of these rows of a, you will get literally the matrix a.
+[380.04:383.8] So while the gradient of another function,
+[383.8:387.0] which is the quadratic, we saw that, you know,
+[387.0:390.36] the derivative of this is just two x, which we also saw.
+[390.36:391.32] All right.
+[391.32:392.28000000000003] So it's Jacobian.
+[392.28000000000003:397.16] Remember, Jacobian for a functional is the gradient
+[397.16:398.16] transpose.
+[401.6:405.36] So the Jacobian of g here, because the gradient is two x,
+[405.36:409.84000000000003] it's literally two x transpose.
+[409.84:411.64] All right.
+[411.64:415.84] So as you can see, we can obtain this quadratic
+[415.84:419.79999999999995] by taking a x minus b and plugging it into the two nodes.
+[423.2:424.91999999999996] That's our composition.
+[424.91999999999996:427.91999999999996] So it is g composed with f.
+[427.91999999999996:434.32] So it is the Jacobian of g evaluated at fx times the Jacobian
+[434.32:437.64] of f evaluated at x.
+[437.64:442.84] Well, f of x is basically a x minus b.
+[442.84:444.12] Right.
+[444.12:444.88] Good.
+[444.88:448.2] So what's the Jacobian of g evaluated at a x minus b?
+[448.2:451.88] It is two times a x minus b transpose.
+[451.88:454.59999999999997] Jacobian of f is a.
+[454.59999999999997:456.03999999999996] Good.
+[456.03999999999996:460.8] Now, remember, the gradient is the transpose of the Jacobian.
+[460.8:463.88] So if you just take the transpose, you get two times a
+[463.88:467.2] transpose times a x minus b.
+[467.2:467.7] Right.
+[467.7:469.68] Super simple.
+[469.68:470.47999999999996] So you can do it.
+[470.47999999999996:473.68] There are idea of ways.
+[473.68:477.96] You can do it the Taylor way or the Jacobian way.
+[477.96:482.2] You can all lead to the same answer.
+[482.2:483.36] The Chibber is your preference.
+[483.36:485.96] Go forth.
+[485.96:486.76] Is this clear?
+[491.03999999999996:493.64] Not clear?
+[493.64:496.15999999999997] Any up stains?
+[496.16:497.40000000000003] No.
+[497.40000000000003:500.40000000000003] OK.
+[500.40000000000003:501.40000000000003] OK.
+[501.40000000000003:503.76000000000005] Thank you.
+[503.76000000000005:505.92] Now, the reason why I like the Jacobian
+[505.92:508.24] is when you start getting these more complicated looking
+[508.24:511.52000000000004] functions, there is a question.
+[515.96:521.76] May I ask that the first a are not being transpose?
+[521.76:526.28] Why is if you literally go over the definition, right?
+[526.28:531.3199999999999] The I throw and the j coordinates, you literally get the matrix A
+[531.3199999999999:533.56] and not its transpose when you look into Jacobian.
+[536.68:539.56] You just need to take a look at it carefully
+[539.56:542.72] and see that the i j n t is defined,
+[542.72:546.76] the district, taking the I's output and looking at the derivative
+[546.76:552.3199999999999] district, the j input, that's why it is not.
+[552.3199999999999:554.4399999999999] OK.
+[554.4399999999999:556.2] Now, here is the logistic function.
+[556.2:559.96] Hopefully that answers the question, because I can't say
+[559.96:560.56] anything else.
+[563.72:565.72] When in the I'll look at the definition by the way,
+[565.72:567.3199999999999] that's my principle.
+[567.3199999999999:569.84] Whenever you're in the I'll take a look at the definition.
+[572.92:575.4] Hopefully it will be out.
+[575.4:577.4399999999999] So let's think about this logistic log,
+[577.4399999999999:583.36] which is log of 1 plus exponential minus dA transpose x.
+[583.36:586.9599999999999] Now, I have to say that the gradient of f
+[586.9599999999999:591.0799999999999] is given by this minus dA transpose x divided by 1
+[591.0799999999999:595.56] plus exponential minus d times a transpose x times the vector
+[595.56:597.68] a.
+[597.68:599.68] Seems complicated, but it's not.
+[602.48:604.48] So let's think about the following composition.
+[604.48:608.88] Here is h of x, which is a transpose x.
+[608.88:613.6] Its Jacobian is literally a transpose.
+[613.6:615.12] All right.
+[615.12:616.2] Good.
+[616.2:618.96] Here is a single-valued function that
+[618.96:623.36] takes in a single non-dimensional input, log of 1 plus
+[623.36:626.6800000000001] exponential minus dU.
+[626.6800000000001:629.5600000000001] Single input, singular output, the Jacobian is also
+[629.5600000000001:632.28] one-dimensional, like single entry.
+[632.28:634.76] And it's the derivative, right?
+[634.76:638.0799999999999] So you take the derivative, which is fixed so log derivative
+[638.0799999999999:642.4399999999999] is the derivative of the input divided by itself.
+[642.4399999999999:645.1999999999999] And the derivative of 1 plus exponential minus dU
+[645.1999999999999:650.64] is minus d exponential minus dU divided by itself.
+[650.64:653.64] We applied Jacobian chain rule.
+[653.64:655.4399999999999] So it's minus d.
+[655.4399999999999:657.28] So h of x is just this.
+[657.28:659.4] You plug it back in.
+[659.4:663.1999999999999] And then the Jacobian here is h transpose.
+[663.1999999999999:665.04] We have the Jacobian of the composition.
+[665.04:667.56] The gradient is just its transpose.
+[667.56:670.3199999999999] Because it's a scalar, it just remains there.
+[670.3199999999999:672.92] And h transpose transpose is a.
+[672.92:674.9599999999999] All right.
+[674.9599999999999:678.76] So if you can see, it's a simple mechanical process.
+[678.76:681.72] There's nothing magical.
+[681.72:684.04] Just apply the Jacobian's on top of each other.
+[684.04:687.4399999999999] Multiply things are done.
+[687.44:690.9200000000001] Here's a more complicated example.
+[690.9200000000001:692.36] All right.
+[692.36:694.48] So here's the weird nonlinear function.
+[698.7600000000001:702.6800000000001] A function whose name shall not be named.
+[702.6800000000001:706.6] It takes this vector w2 transpose
+[706.6:709.24] goes through what is called a Stigmoid or activation
+[709.24:713.32] function, some nonlinear function that applies to each
+[713.32:714.44] coordinates.
+[714.44:718.0400000000001] And you have an FIneMapping.
+[718.0400000000001:719.7600000000001] I'm going to roll here.
+[719.7600000000001:722.24] FIneMapping of the inputs, right?
+[722.24:725.08] With network matrices, let's say, w's.
+[728.12:729.36] All right.
+[729.36:730.6800000000001] So here's a weird function.
+[730.6800000000001:733.84] How do we take its gradient?
+[733.84:736.32] Currently, in PyTorch, you can just do automatic
+[736.32:739.2800000000001] differentiation for this.
+[739.2800000000001:743.5200000000001] Because it's literally one hidden neural network.
+[743.52:745.84] All right.
+[745.84:749.0799999999999] But let's go a bit old school.
+[749.0799999999999:753.0] So its gradient is given by this particular expression.
+[753.0:761.88] So w1 transpose times sigma derivative w1x plus mu
+[761.88:767.3199999999999] cordoned-wise inner product with w2 seems complicated.
+[767.3199999999999:769.6] What I would like to argue is that it is not.
+[769.6:772.4] OK.
+[772.4:774.28] How do we see this?
+[774.28:776.9200000000001] Again, this is a simple composition.
+[776.9200000000001:780.36] In fact, there's the triple composition.
+[780.36:785.08] Let's take h of x as the define mapping.
+[785.08:791.8000000000001] G of x is this nonlinear mapping that goes over each coordinate.
+[791.8000000000001:795.76] So maybe these should not be bold.
+[795.76:797.72] So these are not bold.
+[797.72:801.52] It literally looks at the vector x and looks at each coordinate.
+[801.52:803.88] So maybe we need to correct this.
+[803.88:806.8000000000001] And then here's another function that takes an input.
+[806.8000000000001:808.64] It just multiplies it with w2.
+[808.64:817.0400000000001] As you can see, this original f is k-p composition, g-composition, h.
+[817.0400000000001:818.36] You take this.
+[818.36:819.96] You plug it in here.
+[819.96:821.6800000000001] Then you take this.
+[821.6800000000001:824.4] You plug it back in here and you obtain this f.
+[824.4:826.9200000000001] Hopefully this is clear.
+[826.92:828.9599999999999] Well, you just apply the chain row.
+[828.9599999999999:833.7199999999999] The Jacobian of x is the Jacobian of k evaluated
+[833.7199999999999:841.36] at g-composition with h times the Jacobian of g evaluated at h of x.
+[841.36:849.36] And then times the Jacobian of h times the evaluated x, a bit of a math, hopefully.
+[849.36:851.3199999999999] OK.
+[851.32:860.96] So the Jacobian of k, if you look at this, it's still going to transpose.
+[860.96:864.4000000000001] You're not evaluating it at anything because it's a constant.
+[864.4000000000001:865.7600000000001] So you just plug this in here.
+[871.0400000000001:871.44] OK.
+[871.44:875.1600000000001] What is the Jacobian of g evaluated at h of x?
+[875.1600000000001:881.2] Well, the Jacobian of g is this matrix.
+[881.2:886.4000000000001] Where, because it's a vector and each entry in the vector only depends on the particular
+[886.4000000000001:888.2] coordinates, actually a diagonal matrix.
+[892.44:892.6800000000001] Right.
+[892.6800000000001:896.96] Because the first entry does not depend on the other entries.
+[896.96:900.88] The second entry does not depend on the other entries except the second coordinates.
+[900.88:902.12] No?
+[902.12:906.9200000000001] And by looking at the definition of Jacobian, it will be just the derivative of the
+[906.92:913.24] denominator, see, evaluate at, so these are not both face, but they're the entries of
+[913.24:916.4] the vector x, OK?
+[916.4:917.4] Good.
+[917.4:922.4399999999999] So it's a diagonal matrix, sigma transpose, evaluate at h of x, but h of x is just the
+[922.4399999999999:923.4399999999999] affine transformation.
+[923.4399999999999:931.5999999999999] So you plug them in here and look at the individual coordinates times Jacobian of h x, which
+[931.5999999999999:933.1999999999999] is just the w1.
+[933.1999999999999:936.0799999999999] Here it is.
+[936.08:941.8000000000001] You just notice that a diagonal times this particular vector is actually an element-wise
+[941.8000000000001:944.6800000000001] product of the entries.
+[944.6800000000001:947.5200000000001] And the Jacobian is the transpose of the gradient.
+[947.5200000000001:950.4000000000001] Hence, w1 transpose comes here.
+[950.4000000000001:958.32] You take these, so this applies element-wise and take an element-wise product that the
+[958.32:959.32] w2.
+[959.32:964.76] Oh, hopefully this is clear.
+[964.76:971.16] I think it just takes a little bit of an extra size, but you see this kind of a divide and
+[971.16:973.3199999999999] conquer approach, right?
+[973.3199999999999:976.6] You haven't very complicated looking function.
+[976.6:982.2] You write compositions of these, then all you need to do is compute the Jacobians and
+[982.2:983.2] multiply.
+[983.2:989.88] You get the gradients by taking the transpose of the final Jacobian.
+[989.88:993.68] Is this clear?
+[993.68:996.56] Or you can still do it the Taylor way.
+[996.56:1000.3599999999999] I claim that the Taylor way here will be more difficult.
+[1000.3599999999999:1002.3599999999999] All right?
+[1002.3599999999999:1003.3599999999999] Good.
+[1003.3599999999999:1004.3599999999999] Okay.
+[1004.3599999999999:1005.3599999999999] 6.
+[1005.3599999999999:1006.3599999999999] All right.
+[1006.3599999999999:1011.3599999999999] So it sets the collection of points.
+[1011.3599999999999:1016.7199999999999] A closed set is a set that contains all of its limit points.
+[1016.72:1031.24] And open set would not contain its boundary and the closure of it is the smallest closed
+[1031.24:1033.56] set that contains it.
+[1033.56:1040.76] So when we talk about, you know, functional parameters, the constraints, if you have the
+[1040.76:1047.76] boundary and if the maximum or the minimum occurs, it's the boundary as far as if you use
+[1047.76:1049.8] max or min.
+[1049.8:1058.68] But if it's an open set, then you have to use the supreme or infimum for paying the values
+[1058.68:1062.2] at the boundaries, okay, and the limit points.
+[1062.2:1063.2] Good.
+[1063.2:1066.32] Now convexity of sets.
+[1066.32:1068.28] So now we're getting somewhere.
+[1068.28:1072.6] So let me ask you guys this, my farce audience.
+[1072.6:1075.12] Do you know what convexity is?
+[1075.12:1077.12] A convexity?
+[1077.12:1081.44] Yes, yes, yes, yes, good.
+[1081.44:1084.68] Again, this is like a review.
+[1084.68:1092.24] So we would call a set convex if you take any two points within the set, you put a straight
+[1092.24:1097.3999999999999] line connecting them, all those points in that straight line, straight line, musty within
+[1097.4:1101.52] the same set, okay, musty contain in the set.
+[1101.52:1108.24] Now you would call a set strictly convex if that line is strictly in the interior set,
+[1108.24:1109.24] right?
+[1109.24:1115.48] So this is a strictly convex set, but this is not because here you take two points and
+[1115.48:1120.44] it is literally the boundary and it's not in the interior, right?
+[1120.44:1124.3600000000001] And here's the set that is non-term x because you take two points, you connect and these
+[1124.36:1128.6799999999998] entries here do not belong to the set itself.
+[1128.6799999999998:1133.0] All right, good.
+[1133.0:1139.76] A convex call of a set of points is the smallest convex set that contains that those set of
+[1139.76:1141.28] points.
+[1141.28:1145.56] And the way you obtain the convex call is you take the points and you take all the
+[1145.56:1152.36] simplistic combinations, meaning you take ways that sum up to one, non-negative, and
+[1152.36:1159.36] you just literally just connect all these points that will create the convex call of that
+[1159.36:1163.08] set, okay?
+[1163.08:1169.04] This will be useful when I talk about atomic norms, engage functions and so forth in the
+[1169.04:1182.8799999999999] interior set.
+[1182.8799999999999:1187.72] If it obeys this particularly in Pauline, meaning that you take two points, you take a
+[1187.72:1190.32] statistical combination of these two points, right?
+[1190.32:1197.76] So some alpha x1 plus one minus alpha x2, where alpha is in between 0 and 1.
+[1197.76:1205.68] If it is less than or equal to alpha times f of x1 plus one minus alpha times f of x2.
+[1205.68:1214.68] So actually, you know, if you want to visualize this, here's f of x1, here's f of x2.
+[1214.68:1222.2] What this does is it interplates between f of x and f of x1 and f of x2.
+[1222.2:1228.0] So this is this particular interpolation, right?
+[1228.0:1237.3600000000001] It literally just takes the line and looks at, it goes between f of x1 and f of x2 as you
+[1237.3600000000001:1239.68] vary alpha, right?
+[1239.68:1245.0] As long as this line is above the function itself, you would call the function functions,
+[1245.0:1246.0] right?
+[1246.0:1250.28] If this line intersects with the function, it is comics.
+[1250.28:1257.28] And if it this line is always below the function, you would call the function concave.
+[1257.28:1264.72] Can we extend this?
+[1264.72:1270.0] So there's something called extended value functions.
+[1270.0:1274.0] This is the way of actually incorporating constraints that will be useful.
+[1274.0:1278.6] So the way I define this is that suppose you have a function.
+[1278.6:1283.8799999999999] The function is in some, so you define the domain this HL, within the domain of the
+[1283.8799999999999:1288.6799999999998] function, you have the function, otherwise, plus infinity.
+[1288.6799999999998:1289.6799999999998] All right?
+[1289.6799999999998:1292.7199999999998] All of the time being just put this in the back of your mind.
+[1292.7199999999998:1294.9199999999998] Don't worry about this.
+[1294.9199999999998:1299.4399999999998] I will remind you what is an extended real value function is when I talk about constraints
+[1299.4399999999998:1301.08] and so forth.
+[1301.08:1303.08] All right.
+[1303.08:1307.12] Now let's think about some examples.
+[1307.12:1313.9199999999998] So the vector norms when p is greater than or equal to 1 are comics functions.
+[1313.9199999999998:1316.2399999999998] Square root is a concave functions.
+[1316.2399999999998:1323.0] Maximum of convex functions is also convex and it is easy to visualize.
+[1323.0:1327.04] Some of convex functions are convex.
+[1327.04:1330.7199999999998] Similarly minimum of concave functions are concave.
+[1330.7199999999998:1333.3999999999999] Logite mix functions.
+[1333.4:1338.48] So log is a concave function.
+[1338.48:1345.0800000000002] So log that of x, that is the determinant of the matrix is a concave function.
+[1345.0800000000002:1352.0800000000002] So if it is minus log that x is a convex function and it's gradient is equal to the inverse of
+[1352.0800000000002:1354.16] the function.
+[1354.16:1358.96] So if you do not know, by the way, for derivatives, there's an excellent reference called the matrix
+[1358.96:1361.16] cookbook.
+[1361.16:1366.52] If you think a derivative is too complicated, you just type in matrix cookbook, you will
+[1366.52:1368.52] find the derivatives.
+[1368.52:1369.52] There.
+[1369.52:1370.52] Good.
+[1370.52:1374.76] If I'm functions, eigenvalue functions, right?
+[1374.76:1379.8000000000002] So you can think of the maximum eigenvalue of a symmetric matrix.
+[1379.8000000000002:1381.6000000000001] It's a function, right?
+[1381.6000000000001:1385.0400000000002] It gives you a single entry and its input is a matrix.
+[1385.0400000000002:1386.8400000000001] It's a complex function.
+[1386.8400000000001:1388.3600000000001] All right.
+[1388.3600000000001:1389.3600000000001] Good.
+[1389.36:1394.6399999999999] There are alternative definitions of convexity.
+[1394.6399999999999:1401.4399999999998] So epigraph of a function is the set that is defined as this particular way.
+[1401.4399999999998:1406.84] You look at the set of points x and u where f of x is less than or equal to u.
+[1406.84:1409.4799999999998] So the epigraph of a function, so here's a function.
+[1409.4799999999998:1414.28] Epigraph of it would be just whatever the endpoints are.
+[1414.28:1419.28] So you include that into the set, you take it to infinity and it will be this particular
+[1419.28:1420.28] shaded area.
+[1420.28:1422.28] All right.
+[1422.28:1424.52] Now, a function is convex.
+[1424.52:1428.84] If it's epigraph, which is a set, is convex.
+[1428.84:1434.68] So this is a very natural definition.
+[1434.68:1436.68] Alternative definitions.
+[1436.68:1447.68] A function is convex.
+[1447.68:1449.8400000000001] So here's a function f of x.
+[1449.8400000000001:1454.3200000000002] You take any Taylor first order Taylor's series expansion.
+[1454.3200000000002:1457.96] So f of x, look at the Taylor's series expansion.
+[1457.96:1463.76] It's y, f of y plus the gradient f y, inner product with x minus y.
+[1463.76:1470.76] So this is the first order approximation that is literally tangent hyperplane at the point
+[1470.76:1472.0] y.
+[1472.0:1478.24] If the function is above it for any y, then the function is convex.
+[1478.24:1480.0] All right.
+[1480.0:1486.12] Now, another definition, which is a bit more advanced, is that a function is convex.
+[1486.12:1491.8] If you take two points, you take any product with the difference between the two points,
+[1491.8:1497.84] the difference of the gradients, if it is always positive, non-negative, the function is
+[1497.84:1498.84] convex.
+[1498.84:1504.8] Either some definitions for maybe PhD students.
+[1504.8:1510.1599999999999] That is, in this case, the gradient is so-called a monotone operator.
+[1510.1599999999999:1511.1599999999999] All right.
+[1511.1599999999999:1519.0] Because the gradient takes in an input vector, produces the same, in the same space.
+[1519.0:1520.0] All right.
+[1520.0:1526.56] So it's an operator that takes the vector and maps it into another vector.
+[1526.56:1529.96] So it's a more operator because the goal is greater than or equal to zero.
+[1529.96:1531.96] It's called a monotone operator.
+[1531.96:1532.96] Anyway.
+[1532.96:1536.92] Alternative definitions.
+[1536.92:1539.52] You have a differentiable function twice the Frenchable.
+[1539.52:1542.84] If it's hisham, it's positive, it's a mid definite.
+[1542.84:1544.84] It's convex.
+[1544.84:1545.84] All right.
+[1545.84:1552.84] So if you think about it, it always has a zero or positive curvature.
+[1552.84:1558.6799999999998] Hence, you start from any point, you always have either a zero or positive curvature.
+[1558.6799999999998:1561.84] The function is convex.
+[1561.84:1563.84] All right.
+[1563.84:1567.6399999999999] Note that this does not exclude the flatness of f.
+[1567.6399999999999:1572.84] So there looks like, there's a king here, but it's the derivatives continue.
+[1572.84:1573.84] Okay.
+[1573.84:1579.84] Now, street convexity is like my last name in French.
+[1579.84:1583.84] Professor Sederr, Sederr, convexity.
+[1583.84:1584.84] All right.
+[1584.84:1592.84] So you just replace the less that are equal to strictly less.
+[1592.84:1597.84] Whenever you have the strictly less stuff, this is where the supermooms and implements occur.
+[1597.84:1598.84] All right.
+[1598.84:1607.84] So if you think about this, if you have a flat convex function, you don't have this
+[1607.84:1608.84] trick.
+[1608.84:1614.84] You know, because here you take the two points, you interpolate, and there's equality.
+[1614.84:1620.84] But here, this is the strictly convex function.
+[1620.84:1623.84] All right.
+[1623.84:1630.84] Good.
+[1630.84:1633.84] Stop the Frenchals and stop gradients.
+[1633.84:1634.84] All right.
+[1634.84:1638.84] This is where the Taylorval thinking is helpful.
+[1638.84:1646.84] Now, when you have a function that is not the French should lay everywhere, yeah.
+[1646.84:1656.84] So here is the w function.
+[1656.84:1666.84] It's not the French, it's not the French will there.
+[1666.84:1674.84] So actually, I think I forgot to update this line because the, okay, we're doing for
+[1674.84:1676.84] commix functions.
+[1676.84:1680.84] I will do the stop differential for non-commix functions later on.
+[1680.84:1681.84] Sorry.
+[1681.84:1686.84] This is why I was a bit surprised because there is also stop differential definitions for non-commix functions,
+[1686.84:1690.84] which is a local definition.
+[1690.84:1699.84] So a stop differential for a commix function is actually a set.
+[1699.84:1700.84] Okay.
+[1700.84:1703.84] It's a set of vectors in fact.
+[1703.84:1706.84] It's a set of vectors that satisfy this inequality.
+[1706.84:1712.84] And the inequality is, if you remember, a function is commix, if it is a ball,
+[1712.84:1714.84] all the tangent hyperplanes, okay.
+[1714.84:1717.84] All of its tangent hyperplanes.
+[1717.84:1719.84] Then a function is non-smooth.
+[1719.84:1724.84] Here, you can put a bunch of hyperplanes where the function is a ball.
+[1724.84:1725.84] You know?
+[1725.84:1727.84] So here, take a look at this.
+[1727.84:1729.84] Here, there's a kink.
+[1729.84:1732.84] So on this line, you can just put it.
+[1732.84:1734.84] Just put one hyperplane.
+[1734.84:1736.84] The hyperplane would continue like this.
+[1736.84:1738.84] And the rest of the function is a ball.
+[1738.84:1741.84] So the function is commix, right.
+[1741.84:1743.84] Here, you can put a hyperplane.
+[1743.84:1746.84] The function is a ball.
+[1746.84:1747.84] It's commix.
+[1747.84:1754.84] But if this kink, because it's a kink, you can put a variety of hyperplanes here.
+[1754.84:1756.84] There are different.
+[1756.84:1764.84] So there exists a variety of these that was satisfied with particular inequality.
+[1764.84:1768.84] Not a single one, but multiple of them.
+[1768.84:1772.84] And if you list all of this, you know, it creates a set.
+[1772.84:1775.84] And that set is called the sub differential.
+[1775.84:1780.84] And then sub gradient is an element from the sub differential.
+[1780.84:1787.84] And then you take one element from that set.
+[1787.84:1789.84] It's called the sub-regions.
+[1789.84:1791.84] All right.
+[1791.84:1795.84] And then the function is the principal.
+[1795.84:1798.84] The set always have a unique entry, single.
+[1798.84:1801.84] Which is the gradient.
+[1801.84:1802.84] Is that it?
+[1802.84:1803.84] Do you understand this?
+[1803.84:1804.84] Right.
+[1804.84:1807.84] So like, if the function is the principal everywhere,
+[1807.84:1813.84] it's only a single V that will satisfy this, which is the gradient.
+[1813.84:1814.84] Right.
+[1814.84:1816.84] But if the function is non-smooth, right.
+[1816.84:1818.84] So there's a kink.
+[1818.84:1822.84] There will be a variety of these that satisfy this.
+[1822.84:1830.84] That set is called the sub differential and elements from that sub-differentials called sub-gradients.
+[1830.84:1832.84] Good.
+[1832.84:1836.84] Now let's think about smooth functions per say.
+[1836.84:1841.84] I will wrap things up hopefully in 15 minutes.
+[1841.84:1845.84] Now we talked about lip-ships continuous functions.
+[1845.84:1846.84] Right.
+[1846.84:1859.84] And the lip-ships continuous functions were such that you look at the function itself.
+[1859.84:1865.84] And how much it varies when it's input varies.
+[1865.84:1869.84] You would call a function L-lipsych gradient.
+[1869.84:1877.84] If it is gradient is lip-ships meaning, you put gradients here, you put a norm here,
+[1877.84:1880.84] and this constant becomes an L.
+[1880.84:1881.84] Right.
+[1881.84:1893.84] So if the function gradient is varying smoothly, okay.
+[1893.84:1895.84] Is this clear?
+[1895.84:1896.84] Right.
+[1896.84:1900.84] You would call a function L-lipsych.
+[1900.84:1901.84] Right.
+[1901.84:1905.84] If itself is changing smoothly, you know.
+[1905.84:1910.84] Actually, it does not need to be smooth by the way.
+[1910.84:1911.84] Right.
+[1911.84:1919.84] So if you think about just this absolute value, you know, it's one L-lipsych.
+[1919.84:1924.84] Right.
+[1924.84:1928.84] Because the function itself is within this column.
+[1928.84:1934.84] Nice sort of like you should take this column, you move it to here, the function, I don't know actually.
+[1934.84:1935.84] Sorry.
+[1935.84:1936.84] I don't know.
+[1936.84:1937.84] Sorry.
+[1937.84:1940.84] Forget about this.
+[1940.84:1944.84] I apologize for the confusion.
+[1944.84:1949.84] All right.
+[1949.84:1953.84] So you would call a function L-lipsych gradient if it's gradients and lip-ships.
+[1953.84:1954.84] All right.
+[1954.84:1955.84] So it satisfies this.
+[1955.84:1958.84] The interesting alternative definitions, right.
+[1958.84:1970.84] A function has L-lipsych gradient is you take a quadratic scaled by L, you subtract the function if the H of H is complex.
+[1970.84:1972.84] It's very interesting.
+[1972.84:1976.84] Then you can think about second or third or third or the lip-ships nest.
+[1976.84:1979.84] So you can look at the differences in the Hessians.
+[1979.84:1987.84] And if they're upper bounded by the differences, the function is second or the lip-ships and so on and so forth.
+[1987.84:1998.84] And there's this notorious notation for a complex function, this F-L-M-L, which is L times the Frenchable,
+[1998.84:2005.84] M to order lip-ships with constant L.
+[2005.84:2009.84] In this class, we try to specify explicitly.
+[2009.84:2012.84] So we write adults.
+[2012.84:2021.84] But from time to time you may see this notation, which means that it's L times the Frenchable M to order lip-ships with constant L.
+[2021.84:2022.84] All right.
+[2022.84:2025.84] Okay, some examples.
+[2025.84:2029.84] So here is the logistic regression.
+[2029.84:2032.84] We saw how to derive this.
+[2032.84:2034.84] I'll speak.
+[2034.84:2040.84] Alright, so here's the maximum likelihood formulation.
+[2040.84:2043.84] In this case, the function is lipshisk gradient
+[2043.84:2047.84] with the lipshisk constant of 1 quarter a transpose a,
+[2047.84:2049.84] spectral law.
+[2049.84:2051.84] Alright?
+[2051.84:2052.84] How?
+[2052.84:2055.84] Take a look at the handout.
+[2055.84:2057.84] Alright?
+[2057.84:2060.84] There is a derivation.
+[2060.84:2063.84] I'm just giving you the result.
+[2063.84:2068.84] But this is also actually easy to do.
+[2068.84:2072.84] If you were to go ahead and do the look at the gradient
+[2072.84:2075.84] that we took for the logistic function,
+[2075.84:2077.84] you write the definition down.
+[2077.84:2082.84] You will see this 1 quarter a transpose a naturally pops up.
+[2082.84:2086.84] Alright, let's talk about strong-income mixed functions.
+[2086.84:2091.84] Strong-income mixed functions are like extra-com mixed functions
+[2091.84:2098.84] in the sense that when you do this interpolation
+[2098.84:2100.84] between the two points, the function,
+[2100.84:2104.84] a complex function will be a ball of this interpolation.
+[2104.84:2109.84] What strongly-com mixed means is that it's also a ball.
+[2109.84:2113.84] Let's say you can fit a quadratic in between.
+[2113.84:2115.84] Alright?
+[2115.84:2118.84] So it's not only needs to be below it,
+[2118.84:2121.84] but it needs to be further below it,
+[2121.84:2127.84] where there is a quadratic and u is this strong-comixity parameter.
+[2127.84:2134.84] So here this is that.
+[2134.84:2136.84] When you subtract this quadratic,
+[2136.84:2139.84] which is mu over 2 alpha,
+[2139.84:2143.84] 1 minus alpha x1 minus x2 squared here.
+[2143.84:2145.84] This is the quadratic.
+[2145.84:2150.84] The function still needs to be below this particular quadratic.
+[2150.84:2155.84] Does this make sense?
+[2155.84:2158.84] So there is an extra bit of strong-comixity.
+[2158.84:2163.84] It's not just below the straight line.
+[2163.84:2168.84] It's even below a quadratic.
+[2168.84:2170.84] Alright?
+[2170.84:2175.84] Now, the interesting thing is that a convex function can be strong-comixed
+[2175.84:2177.84] even if it's non-moves.
+[2177.84:2178.84] Alright?
+[2178.84:2184.84] So here's the alternative definition for the alto norm.
+[2184.84:2189.84] You would call a function strong-comix if you subtract a bit of quadratic
+[2189.84:2191.84] and it is still convex.
+[2191.84:2196.84] Alright? That's what I mean by this extra-comixity.
+[2196.84:2199.84] In this case, we know...
+[2199.84:2201.84] So let's take this function f of x,
+[2201.84:2206.84] which is 1 norm plus mu over 2 norm squared.
+[2206.84:2209.84] As you can see, I just subtract this
+[2209.84:2211.84] and 1 norm is still convex.
+[2211.84:2214.84] So this function, even if it's not defrainsiable,
+[2214.84:2217.84] because 1 norm is not defrainsiable,
+[2217.84:2222.84] it is strongly convex with parameter mu.
+[2222.84:2229.84] Because I just subtract that quadratic and remains convex.
+[2229.84:2231.84] Alright?
+[2231.84:2233.84] Other definitions.
+[2233.84:2238.84] For twice defrainsiable functions, look at the hexion.
+[2238.84:2241.84] If it's semi-definite ordering,
+[2241.84:2243.84] it's greater than mu times identity.
+[2243.84:2247.84] If you recall, this is positive semi-definite.
+[2247.84:2258.84] So...
+[2258.84:2267.84] This is a positive semi-definite matrix.
+[2267.84:2269.84] This is a matrix.
+[2269.84:2271.84] This identity is a matrix.
+[2271.84:2273.84] This is the inner product.
+[2273.84:2276.84] This is the product mu with the matrix.
+[2276.84:2279.84] It's a diagonal matrix.
+[2279.84:2282.84] And if you think about this, the hexion is a symmetric matrix.
+[2282.84:2285.84] So if you do the eigenstack composition,
+[2285.84:2289.84] I'll say this is mu-sigma-sum transpose.
+[2289.84:2296.84] What this means is that mu-sigma-sum is mu identity-sum transpose.
+[2296.84:2306.84] So that means the smallest eigenvalue of sigma needs to be greater than or equal to mu.
+[2306.84:2310.84] Does that make sense?
+[2310.84:2314.84] Remember, if you have u-u-transpose,
+[2314.84:2318.84] you can just write identity as u-u-transpose.
+[2318.84:2325.84] If you sigma-u-transpose minus u times u-u-transpose,
+[2325.84:2328.84] so I just say u-transpose here,
+[2328.84:2331.84] mu here, it's sigma-u-transpose,
+[2331.84:2334.84] mu times identity.
+[2334.84:2342.84] This is the diagonal matrix with the eigenvalues.
+[2342.84:2347.84] In which case for it to be positive semi-definite,
+[2347.84:2354.84] this diagonal matrix needs to have eigenvalues on the diagonal that are greater than or equal.
+[2354.84:2359.84] Hence, on this smallest eigenvalue of sigma,
+[2359.84:2365.84] it's greater than u, this cannot happen.
+[2365.84:2372.84] Right?
+[2372.84:2375.84] Okay.
+[2375.84:2380.84] So the simple example, f of x is one-half x squared.
+[2380.84:2384.84] This is, previously, the strong convexity parameter is one.
+[2384.84:2386.84] You can just subtract that quadratic.
+[2386.84:2391.84] You get the zero function, which is convex.
+[2391.84:2394.84] Yes.
+[2394.84:2401.84] For example, Haitian is less than or equal to l times identity.
+[2401.84:2405.84] That is exactly the definition of the lift-sum continuous gradient,
+[2405.84:2409.84] which I will put you upon in the next lecture.
+[2409.84:2413.84] So we'll again review this material when we do the lecture.
+[2413.84:2417.84] We'll start using these properties.
+[2417.84:2421.84] Remember for a function to be strongly committed,
+[2421.84:2424.84] I gave an example where it did not need to be smooth.
+[2424.84:2428.84] It would l1 norm plus quadratic.
+[2428.84:2431.84] If it is smooth, then you can look at this Haitian
+[2431.84:2435.84] and look at the smallest eigenvalue of the Haitian.
+[2435.84:2439.84] If it is strictly greater than zero,
+[2439.84:2443.84] it is strongly complex with that value.
+[2443.84:2450.84] Hopefully this answers the questions.
+[2450.84:2452.84] Okay. Thank you.
+[2452.84:2454.84] Let's continue.
+[2454.84:2458.84] So for the lead squares problem,
+[2458.84:2460.84] if you have a matrix like this,
+[2460.84:2463.84] so here's our lead squares.
+[2463.84:2466.84] If you just write it out,
+[2466.84:2469.84] if Haitian is A transpose A,
+[2469.84:2472.84] if it is over-determined,
+[2472.84:2478.84] then the smallest eigenvalue will be greater than zero.
+[2478.84:2482.84] That will be our new strong-committing.
+[2482.84:2485.84] For a constant flow function, the Haitian is zero.
+[2485.84:2488.84] So it's smart, strong-committs,
+[2488.84:2492.84] strong-committs, the constant needs to be zero-to-one.
+[2492.84:2494.84] All right.
+[2494.84:2498.84] There are additional properties.
+[2498.84:2500.84] So for a strong-committs function,
+[2500.84:2503.84] there's a nice lower bound as well,
+[2503.84:2505.84] which is quadratic.
+[2505.84:2508.84] And then for strong-committs functions,
+[2508.84:2511.84] you also have this particular inner product property.
+[2511.84:2515.84] So this is a bit more advanced material.
+[2515.84:2518.84] Okay. Good.
+[2518.84:2522.84] So there's a special function class
+[2522.84:2524.84] that are strong-committs,
+[2524.84:2525.84] and leaves its gradient.
+[2525.84:2529.84] And for those, when you look at the linearization,
+[2529.84:2531.84] there's an upper bound,
+[2531.84:2533.84] which depends on the upper quadratic bound,
+[2533.84:2534.84] which depends on L,
+[2534.84:2536.84] and a lower quadratic bound,
+[2536.84:2538.84] which depends on mu.
+[2538.84:2541.84] And an equivalent condition is that the Haitian,
+[2541.84:2543.84] in the same-adetive ordering,
+[2543.84:2545.84] is less than or equal to L times identity,
+[2545.84:2548.84] and greater than or equal to mu times identity.
+[2548.84:2550.84] Just keep these properties in mind,
+[2550.84:2557.84] and we will actually derive this
+[2557.84:2560.84] in the lecture next speech.
+[2560.84:2561.84] Okay.
+[2561.84:2564.84] So here's the property that you just take it for granted
+[2564.84:2565.84] for the time being,
+[2565.84:2567.84] and we'll do a derivation later on,
+[2567.84:2572.84] because you will see that it's a key in getting gradient descent methods.
+[2572.84:2577.84] Anyway, so same thing here.
+[2577.84:2578.84] All right.
+[2578.84:2580.84] Now, you will see that these constants
+[2580.84:2584.84] will show up in the conversion traits of algorithms,
+[2584.84:2587.84] but typically these constants are not known as priori,
+[2587.84:2589.84] but when they are known,
+[2589.84:2591.84] they will help significantly.
+[2591.84:2592.84] Okay. So next lecture,
+[2592.84:2596.84] we'll touch upon this.
+[2596.84:2598.84] Okay.
+[2598.84:2601.84] So the time is over, actually.
+[2601.84:2604.84] But I literally have two slides.
+[2604.84:2608.84] Is it okay if I go over these slides or you stop here?
+[2608.84:2614.84] I'm really sorry that I took maybe longer than necessary.
+[2614.84:2615.84] Okay.
+[2615.84:2618.84] So the convergence,
+[2618.84:2621.84] like we'll talk about algorithms and convergences
+[2621.84:2623.84] and so on, so forth. Okay.
+[2623.84:2627.84] So it is important to just refresh our memories
+[2627.84:2629.84] about what convergence is mean.
+[2629.84:2634.84] So we think about sequences.
+[2634.84:2637.84] So you want you to, you K.
+[2637.84:2640.84] We say that it converges to some u star.
+[2640.84:2642.84] If in the limit,
+[2642.84:2646.84] you K will attain your star.
+[2646.84:2648.84] And you will see me,
+[2648.84:2649.84] maybe you know,
+[2649.84:2651.84] how to time talk about rates,
+[2651.84:2654.84] conversion traits.
+[2654.84:2658.84] So it characterizes how fast the sequence gets to that point.
+[2658.84:2659.84] Okay.
+[2659.84:2664.84] And the ones that I would like you to remember are sublinear,
+[2664.84:2667.84] linear quadratic.
+[2667.84:2668.84] Okay.
+[2668.84:2673.84] The sublinear rate is when this sequence converges at a rate
+[2673.84:2676.84] that is polynomial in the iteration count.
+[2676.84:2678.84] I guess it's like 1 over K,
+[2678.84:2681.84] 1 over square root of K.
+[2681.84:2686.84] Linear is when you look at it with some power
+[2686.84:2690.84] of a number where that number is smaller than 1.
+[2690.84:2692.84] So you take alpha to the K.
+[2692.84:2697.84] And quadratic is something like alpha to some number to the K.
+[2697.84:2699.84] Okay.
+[2699.84:2701.84] Roughly speaking is like this.
+[2701.84:2704.84] You know, a sublinear convergence means that, you know,
+[2704.84:2706.84] suppose you've done some works,
+[2706.84:2709.84] suppose we're getting the digits of pi by doing some work.
+[2709.84:2711.84] Okay.
+[2711.84:2714.84] A sublinear convergence means that you do some work.
+[2714.84:2716.84] You get a digit, right?
+[2716.84:2719.84] To get the next digit, you need to do the cumulative work
+[2719.84:2721.84] that you've done so far.
+[2721.84:2722.84] All right.
+[2722.84:2725.84] So you've done some work to get two digits.
+[2725.84:2728.84] To get the third digit, you need to do the same amount of work
+[2728.84:2731.84] that you've done for the first two digits.
+[2731.84:2735.84] Not the linear rate means that you've done some work to get a digit.
+[2735.84:2740.84] The next digit comes with you with the same work amount of work.
+[2740.84:2744.84] Quadratic convergence actually is pretty fast.
+[2744.84:2746.84] You do some work to get a digit.
+[2746.84:2747.84] You do the same work.
+[2747.84:2749.84] You double the digits.
+[2749.84:2751.84] You know, super fast.
+[2751.84:2752.84] All right.
+[2752.84:2756.84] Take a look at these particular definitions and we'll touch upon them.
+[2756.84:2761.84] So it is particularly important to look at these plots.
+[2761.84:2765.84] So here is the convergence rate for a sublinear, a linear,
+[2765.84:2766.84] and a quadratic.
+[2766.84:2768.84] So here's a superlinear example.
+[2768.84:2771.84] Here is the log, log plot.
+[2771.84:2774.84] A sublinear convergence here would be a straight line.
+[2774.84:2777.84] So here's a sublinear convergence.
+[2777.84:2779.84] Here's linear convergence.
+[2779.84:2781.84] A linear convergence.
+[2781.84:2785.84] So here is the normal iteration count, not a logarithmic scale.
+[2785.84:2786.84] Just linear scale.
+[2786.84:2787.84] Here's log.
+[2787.84:2792.84] A linear convergence would be a straight line here.
+[2792.84:2796.84] And if you look at the convergence rate, quadratic convergence
+[2796.84:2798.84] again is the past.
+[2798.84:2800.84] So with that, I will end.
+[2800.84:2802.84] Take a look at the handout.
+[2802.84:2806.84] We will go to the gory details of these convergence rates.
+[2806.84:2812.84] We will get into the gory details of how to compute the elliptic constants.
+[2812.84:2815.84] There will be solutions to the handout.
+[2815.84:2818.84] Please try to work these things on your own.
+[2818.84:2819.84] You have questions.
+[2819.84:2820.84] Contact me.
+[2820.84:2822.84] Contact the head TA.
+[2822.84:2825.84] One thing we do is usually if you have further questions,
+[2825.84:2828.84] you can schedule a discussion with one of the TA's.
+[2828.84:2831.84] You just need to contact the head TA.
+[2831.84:2835.84] And have a good weekend.
+[2835.84:2837.84] I'll see you guys Monday morning.
+[2837.84:2864.84] I apologize for being a bit late.

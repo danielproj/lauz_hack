@@ -1,0 +1,233 @@
+~Lecture: Introduction Q&A
+~2021-09-27T15:14:33.271+02:00
+~https://tube.switch.ch/videos/OigpnTQ6on
+~CS-451 Distributed algorithms
+[0.0:2.0] person. Yeah.
+[2.0:3.0] Yeah.
+[3.0:4.0] Uh, uh, uh,
+[4.0:6.0] for the integration of the
+[6.0:8.0] data, so this is the
+[8.0:10.0] final foot, actually,
+[10.0:12.0] the center of the
+[12.0:14.0] to the center of the next
+[14.0:16.0] stage, like,
+[16.0:18.0] nothing is not a final
+[18.0:20.0] title and nothing is
+[20.0:20.0] the,
+[20.0:21.0] the idea of the
+[21.0:22.0] standard.
+[22.0:24.0] So, uh, this is
+[24.0:26.0] a classic, um,
+[26.0:28.0] few of the versus
+[28.0:30.0] the standard of story.
+[30.0:32.0] Um, when we deal with theory,
+[32.0:34.0] um, our goal is mostly
+[34.0:36.0] always to, um,
+[36.0:40.0] focus on something that is
+[40.0:42.0] very simple, very well
+[42.0:44.0] defined, very easy to prove.
+[44.0:45.0] Right.
+[45.0:48.0] Um, I, an approximation
+[48.0:50.0] at least of real world.
+[50.0:52.0] Perfect links is TTP,
+[52.0:53.0] right?
+[53.0:56.0] And while when you go
+[56.0:58.0] to the implementation of TTP,
+[58.0:60.0] obviously, you do have
+[60.0:62.0] knowledgements and stuff.
+[62.0:64.0] You will find throughout
+[64.0:66.0] this entire, um, course that
+[66.0:68.0] there's a very sharp
+[68.0:70.0] distinction between, um,
+[70.0:72.0] what things look like in theory,
+[72.0:73.0] right?
+[73.0:74.0] And the optimization you can apply
+[74.0:75.0] to them.
+[75.0:76.0] And you can list it
+[76.0:77.0] here if you,
+[77.0:81.0] if you go to look at what systems
+[81.0:83.0] papers, uh, do versus
+[83.0:87.0] theory papers do, um, most theory
+[87.0:91.0] papers go completely crazy on, uh,
+[91.0:92.0] system resources.
+[92.0:95.0] For example, you, you read most
+[95.0:97.0] system, sorry, more, most, uh, theory papers,
+[97.0:99.0] having incredible memory
+[99.0:100.0] beats, right?
+[100.0:102.0] That you would not be able to tolerate
+[102.0:103.0] in, in a real system.
+[103.0:106.0] And so this is, this is a theoretical class.
+[106.0:109.0] And we just imagine that we have infinite resources,
+[109.0:110.0] most of the time.
+[110.0:112.0] And then there's, there are some
+[112.0:114.0] obvious optimization that allow you to
+[114.0:116.0] for example, in the case of
+[116.0:118.0] perfect length, not waste
+[118.0:120.0] resources on simple tasks.
+[120.0:122.0] But you want to focus here, mostly
+[122.0:124.0] on what improves about,
+[124.0:126.0] about what you can class
+[126.0:129.0] rather than, um, how to actually
+[129.0:130.0] optimize them.
+[130.0:132.0] Because the point is, keep the paper
+[132.0:134.0] simple as simple as possible when
+[134.0:135.0] you're writing it.
+[135.0:140.0] Yeah.
+[140.0:141.0] Please repeat the question.
+[141.0:143.0] Oh my gosh, sorry, of course.
+[143.0:145.0] So you've got an answer.
+[145.0:147.0] So there was a student here
+[147.0:149.0] was surprised by seeing a
+[149.0:151.0] program that goes like,
+[151.0:153.0] oh, while through send a
+[153.0:154.0] message, right?
+[154.0:155.0] It obviously doesn't seem like
+[155.0:156.0] the most efficient thing to,
+[156.0:158.0] the most efficient thing to do.
+[158.0:160.0] And yes, this is something that
+[160.0:161.0] you will see throughout,
+[161.0:163.0] throughout the course.
+[163.0:165.0] Something that looks theoretical is
+[165.0:166.0] theoretical.
+[166.0:167.0] And then, you know,
+[167.0:168.0] you can see that, you know,
+[168.0:171.0] that's something that looks theoretical is
+[171.0:172.0] theoretical.
+[172.0:173.0] Obviously implement,
+[173.0:175.0] obviously optimizations exist.
+[175.0:177.0] And they are obviously
+[177.0:179.0] rolled out in implementation.
+[179.0:180.0] Yeah.
+[180.0:181.0] Okay. Any other questions?
+[181.0:182.0] Oh, yes.
+[182.0:183.0] Yeah.
+[183.0:185.0] Regarding the last question.
+[185.0:187.0] Uh, is just important that for the project
+[187.0:189.0] as you will see tomorrow,
+[189.0:191.0] you'll not really be able to do something
+[191.0:192.0] like while to send it.
+[192.0:193.0] So for project.
+[193.0:195.0] For practical parts,
+[195.0:197.0] you're going to need to,
+[197.0:199.0] you know, implement the things in a
+[199.0:200.0] best possible way.
+[200.0:202.0] But this is a theoretical part of the course,
+[202.0:205.0] but the practical part of the course is going tomorrow.
+[205.0:207.0] And you'll hear more about this from
+[207.0:208.0] Arsene and, uh,
+[208.0:209.0] I'm talking.
+[209.0:211.0] So yeah, thanks.
+[211.0:213.0] We really like keeping the two
+[213.0:215.0] stories completely distinct.
+[215.0:217.0] We actually have in the field of
+[217.0:218.0] distributed computation,
+[218.0:219.0] different conferences.
+[219.0:222.0] One is some are for the theory of
+[222.0:224.0] distributed computation and some are for
+[224.0:226.0] the implementation of the,
+[226.0:229.0] of the distributed systems that are developed
+[229.0:231.0] in those in those theoretical conferences.
+[231.0:232.0] I have a,
+[232.0:233.0] I have a question on,
+[233.0:235.0] on the chat.
+[235.0:237.0] What is the action of delivery?
+[237.0:240.0] Is it about sending the message to another layer?
+[240.0:241.0] Well, yes, this,
+[241.0:245.0] this is already a very good understanding of the story.
+[245.0:247.0] Imagine that we are,
+[247.0:248.0] did you guys get the questions?
+[248.0:250.0] So what's the delivery about?
+[250.0:251.0] So,
+[251.0:255.0] much of what we will see here has to do with
+[255.0:259.0] messages going around in various different ways
+[259.0:261.0] with various different
+[261.0:263.0] guarantees, right?
+[263.0:268.0] You should always think about what you're developing here as.
+[268.0:269.0] The,
+[269.0:273.0] the easiest thing for me is to imagine it as being a
+[273.0:274.0] library.
+[274.0:276.0] Imagine that you're writing a library,
+[276.0:277.0] right?
+[277.0:280.0] And this library will be used as a black box from
+[280.0:282.0] some application that sits on
+[282.0:285.0] top of it, right?
+[285.0:288.0] So when you say deliver in your library,
+[288.0:290.0] it means,
+[290.0:292.0] so I did all my operations.
+[292.0:296.0] I can now provide all the guarantees that I claim to have.
+[296.0:300.0] I'll take whatever message I have received from
+[300.0:301.0] lower layers.
+[301.0:303.0] This could be directly the perfect length or even lower
+[303.0:304.0] level of instructions, right?
+[304.0:308.0] I'm going to package it and send it to whoever is using my
+[308.0:309.0] library, right?
+[309.0:313.0] So, you know, if you have consensus,
+[313.0:318.0] and you have a small consensus library, the idea can be that
+[318.0:321.0] you then take your decision and you package it and give it to
+[321.0:324.0] the upper layer that I don't know, implement the cryptocurrency
+[324.0:328.0] or a social network or whatever else that we don't care about.
+[328.0:332.0] What we do here is we focus on the fundamentals that we need
+[332.0:335.0] to develop those applications rather than the applications themselves.
+[335.0:337.0] I hope this answers your questions.
+[337.0:340.0] So, I had another question up there, yes?
+[340.0:343.0] So, the question was,
+[343.0:346.0] is, so given that tomorrow's,
+[346.0:350.0] just the project session will be online,
+[350.0:354.0] will all project sessions be online?
+[354.0:355.0] The answer is no.
+[355.0:358.0] So, does tomorrow have a
+[358.0:367.0] project session will be online?
+[367.0:368.0] No.
+[368.0:373.0] So, just tomorrow's project session is going to be online,
+[373.0:374.0] yes?
+[374.0:378.0] So, from next week, we start everything, doing everything
+[378.0:379.0] physically.
+[379.0:382.0] Of course, there are going to be recordings,
+[382.0:384.0] but we really do encourage you guys to,
+[384.0:390.0] if you can, come and see the sessions in place.
+[390.0:391.0] So, yeah.
+[391.0:395.0] So, only tomorrow things are online.
+[395.0:399.0] From next week, there are going to be physical lessons.
+[399.0:400.0] Okay.
+[400.0:402.0] We miss seeing your apps or phases.
+[402.0:403.0] It's been a long last year,
+[403.0:408.0] or now, all one-chain class.
+[408.0:409.0] Okay, yes, yes.
+[409.0:413.0] It will be exercise sessions be recorded as well.
+[413.0:414.0] So, yeah, that's all.
+[414.0:415.0] So, yeah.
+[415.0:418.0] Yes, we do think so, but do double check with them,
+[418.0:420.0] just in case tomorrow.
+[420.0:424.0] Definitely tomorrow's class will be recorded,
+[424.0:429.0] ask the other TA's that will help out on the project side,
+[429.0:434.0] if those are going to be recorded.
+[434.0:439.0] Are we going to implement fair links in the project?
+[439.0:442.0] I don't think that's the point.
+[442.0:443.0] Okay.
+[443.0:449.0] I would suggest that you ask the teaching assistants
+[449.0:452.0] that are in charge of the projects.
+[452.0:455.0] This question, if you want my guts feeling,
+[455.0:458.0] I would say you're probably going to implement something
+[458.0:463.0] in higher level and you're going to use TCP as a nation.
+[463.0:465.0] Actually, you asked about fair links.
+[465.0:468.0] Okay, no, you can't implement fair lost links, right?
+[468.0:472.0] You would need to unroll a piece of Ethernet wire somewhere.
+[472.0:478.0] No, you can definitely use the whatever happens
+[478.0:482.0] in the hardware of your computer as a good approximation of fair lost links.
+[482.0:483.0] Don't worry about it.
+[483.0:489.0] I don't think you'll actually ever see any theoretical implementation of fair lost links
+[489.0:496.0] unless you go into like some weird networking conference.
+[496.0:499.0] No, no, no, no, we definitely build on top of fair lost links.
+[499.0:505.0] For a moment, I assume that you were talking about perfect links.
+[505.0:507.0] And even in that case, no, don't worry.
+[507.0:512.0] You'll probably use TCP unless the other TA is telling you otherwise.
+[512.0:516.0] Any other questions?
+[516.0:521.0] Any other questions in the virtual world?
+[521.0:522.0] Okay.
+[522.0:529.0] So, as a conclusion, my name is Mattel.
+[529.0:532.0] It's actually pronounced my fail, but anyways.
+[532.0:543.0] And you have the two of us are going to be the TA's for the theory part of this video algorithms.
+[543.0:548.0] So you will see us in class mostly on Mondays.
+[548.0:552.0] And yeah, okay.
+[552.0:554.0] We'll see you everybody.
+[554.0:581.0] I'm going to see you next time.

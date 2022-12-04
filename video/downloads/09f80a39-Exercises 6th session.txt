@@ -1,0 +1,258 @@
+~Exercises: 6th session
+~2020-11-04T10:33:38.775+01:00
+~https://tube.switch.ch/videos/09f80a39
+~CS-451 Distributed algorithms
+[0.0:9.120000000000001] Now, hello everyone. Welcome to the weekly exercise session. Today I'll be discussing the solutions
+[9.120000000000001:17.44] while Yaván proposes a new set of exercises. So the exercises from last week were about
+[17.44:29.92] consensus. We gave you a model and an algorithm, right? And we asked you to prove that the
+[29.92:37.84] algorithm was indeed implemented consensus in the model that we gave you, right? And then we asked
+[37.84:43.28] you to spice things up a little bit. We gave you a model, we didn't give you an algorithm,
+[43.28:52.24] and we asked you to both develop an algorithm to implement consensus in that model and to also
+[52.24:61.2] prove that the algorithm was indeed correct. Okay, so let's get started. The first algorithm
+[61.760000000000005:69.12] that we described to you guys was in the synchronous model and it's called Flapset. So the idea is
+[69.12:77.28] quite simple. The since all computers are synchronous, so processes are synchronous. We can
+[77.28:86.32000000000001] design the algorithm to unfold in rounds, right? At every round, every correct process essentially
+[86.32000000000001:91.68] propagates the information they have about the system. So more specifically, the idea is that every
+[93.6:101.44] correct process, right, every process that has not yet crashed, has a set. And the set
+[101.44:110.32] represents all the proposals that the process has seen at any specific round, right? Now,
+[112.48:117.84] at the beginning, every process starts with a set that contains only its own proposal. This
+[117.84:123.44] is obviously the beginning process on it knows about its own proposal. And then at every set,
+[123.44:128.96] at the process, sends the sets of all the proposals that it discovered to every single other,
+[128.96:136.08] to everything that will have the process. Right? Now, yes, so this is the algorithm that I
+[136.08:143.92000000000002] just described. And at every round, everybody broadcasts the set of all the proposals that it
+[143.92000000000002:149.84] is called to everyone else. Right? Now, we want to prove that the algorithm is correct and we
+[149.84:158.4] stupled it for you a guided proof so that you can have at least a taste of how proofs of the
+[158.4:166.32] correctness of consensus algorithms work kind of in real life. So the first step that we asked
+[166.32:175.36] you to prove was the following. So let's assume that at some specific round, no process happens
+[175.36:181.04000000000002] to tail. Right? So you saw it around R and by the end of round R, the set of processes that
+[181.04000000000002:188.72000000000003] have crossed has not changed. Right? So you have a specific set L, let's say, a process that
+[188.72000000000003:195.36] has not yet crashed. And that set L is exactly the same at the beginning of round R and at the
+[195.36:203.28000000000003] beginning of round R plus one. Right? So what we asked you to do is to prove that at the end of
+[203.28:212.88] round R, every process that is correct, the opposite did not crash, more specifically, the
+[212.88:225.76] opposite did not crash by the end of round R, is had the same set of proposals. Right? So how can
+[225.76:233.84] we prove this? So wait a second, okay, okay, here we go. So the idea is the following. At the
+[233.84:241.76] beginning of round R, the set as they said L of processes that did not crash is had
+[241.76:247.2] anticals to the set L of processes that did not crash by the beginning of round R plus one.
+[247.2:255.51999999999998] Right? So if every process at the beginning of the round sends its own, I mean, the sets of
+[255.51999999999998:262.0] proposals that you discovered to every single other process in the system, then by the end of
+[262.0:268.08] round R, every process that survived, which is also the same set of processes that we had at
+[268.08:274.64] the beginning of the round, will see just simply the union of all the processes, of all the
+[274.64:282.0] proposals that were discovered by all the processes in L. Right? So by doing the set, we proved
+[282.71999999999997:290.8] that if we have any single round, right? Such that during that round everybody survived,
+[290.8:295.36] right? There's no specific crash during that round, then we're good to go. Right? At that point,
+[295.36:300.32] everybody has the same set of proposals, right? And that is some very useful thing as we
+[300.32:310.56] will see in the next step. Now, the second part that we asked to prove was that if at some point,
+[310.56:319.52] right, you have the condition where every process that is still alive has the same set of
+[319.52:325.28] proposals, then from that point on, this will be true for all the subsequent rounds as well.
+[325.28:331.76] Right? Now, how this is certainly simple to prove because you know, at some point at the end
+[331.76:339.28] of some round R, every process that is still alive has the same set of proposals, then essentially
+[339.28:347.11999999999995] at every round in the next steps, every single process will be just standing around exactly the
+[347.11999999999995:354.32] same message, which is always the set on which everybody agrees. So as we keep computing the union
+[354.32:358.0] of the union of the union over and over and over and over of the same set, essentially,
+[358.71999999999997:365.52] we are going to have always the set of proposals each process discovered is not going to change,
+[365.52:374.4] right? Now, if you take these two steps and you put them together, you can notice why we asked
+[375.03999999999996:383.68] to perform S plus 1 rounds, right? Because now, at this point, we ask you to prove that the algorithm
+[383.68:391.68] does implement census, right? By the properties that we discussed in class, that you discussed
+[391.68:399.28000000000003] in cross-favorite sheet. Specifically, you have been given two flavors of validity. In the first
+[399.28000000000003:407.92] flavor, everybody has either everybody proposes the same value, sorry, the first, let's say like this,
+[407.92:412.96000000000004] the first flavor of validity says, if everybody proposes the same value, then that's the value
+[412.96:421.76] that everybody has to decide. And the second one, which is stronger, is if somebody decides,
+[421.76:428.0] if some process decides the value, and that value must have been proposed by at least another
+[428.0:435.44] process, right? Now, the first step that we kind of ask you to do here is to realize these two
+[436.08:441.28] properties are not exactly the same, right? So the first property is actually weaker than the
+[441.28:447.91999999999996] second one. The reason for this is exactly, including an implementation of the flat set algorithm,
+[447.91999999999996:455.03999999999996] as we gave it to you in the last exercise session. Specifically, if the set contains only,
+[455.03999999999996:459.67999999999995] if the set of proposal that I discovered at the end of the S plus 1 rounds contains only one
+[459.67999999999995:466.96] element, then you decide that, otherwise you decide some default value, right? Like B0. Now,
+[466.96:472.47999999999996] this implementation underlines the difference between the two flavors of validity, because this algorithm
+[472.47999999999996:478.88] is going to satisfy one of the two flavors, but not the other one. Specifically, we don't have a
+[478.88:487.28] requirement for B0 to be an element of the original proposed set, right? So that means,
+[487.28:494.47999999999996] in principle, that even if nobody proposed B0, we end up, despiteing B0, the reason for that
+[494.48:499.04] being that we didn't agree at the beginning on what the proposal should be, right? So
+[500.56:507.92] let's go to prove the theorem that flat set does implement consensus, and then the second step
+[507.92:514.88] we'll ask you to do is like a little extra step. We asked you to prove with a two extent flat
+[514.88:524.88] set, in a way that also satisfies the stronger flavor of validity, right? So we assume that there's
+[524.88:534.56] no more than a failure, right? And we explicitly designed the system to unfold in S plus 1 rounds.
+[534.56:540.96] Why? Because we could use then the pigeonhole principle, right? By the pigeonhole principle,
+[540.96:548.96] if you have, you know, S plus 1 rounds, and only S processes can fail, and necessarily one round
+[548.96:557.0400000000001] must satisfy having no process trashing throughout that round, right? Otherwise, you know,
+[557.0400000000001:563.6800000000001] you have a contradiction, right? So by the pigeonhole principle, some round in these F plus 1
+[563.68:576.4] exists such as no process trashing during that round. By the first lemma, we have the end of that round,
+[576.4:585.28] let's say, round R, no two processes see different sets, right? They all have the same set of
+[585.28:592.0] proposals. And now from that point on, as we proved for lemma 2, you actually have the guarantee that
+[592.0:600.32] this equality among the sets of proposals is going to be preserved all the way through to the F plus 1 round,
+[600.32:608.56] right? So let's go and prove all the properties. The termination is going to be quite simple,
+[608.56:614.16] truly the system unfolds in F plus 1 rounds. By the assumption of synchrony, every single round is
+[614.16:620.88] going to be terminated, finite, well refined, amount of time, right? validity is also simple,
+[620.88:627.76] if we thought if everybody starts with the same proposal, everybody starts with the same sets,
+[627.76:631.76] and only contains one element. So it's very easy to see that the entire algorithm will unfold
+[632.32:637.2] simply by, you know, the exchange of the same messages over and over and over, all containing
+[638.24:643.6] the only proposal that there was proposed in the system, right? So validity is also easy.
+[643.6:648.56] And now the traps that unfold in F plus 1 round and lemma 1 and lemma 2, they were all
+[648.56:655.76] designed to help you prove agreements, right? Since you have F plus 1 round, one of them must
+[655.76:661.76] see no crashes at the end of that round, everybody agrees on the sets, right? And at the end of that round,
+[662.3199999999999:667.68] everybody, if at the end of that round everybody agrees on the set and they do also have the last round.
+[668.4799999999999:677.28] Now, how can you improve this algorithm, right? Which we prove to be just the size of
+[677.28:681.1999999999999] information validity and agreement, but the weak form of validity, how can we improve it to
+[682.24:688.3199999999999] to satisfy strong, stronger form of validity? Well, that's quite easy. You have also seen that
+[688.3199999999999:694.56] in class, the idea being that once you have one correct process, you know, has the same set of
+[694.56:700.0799999999999] proposals, you kind of, you kind of hit jackpot. Like at that point, everything is quite easy to,
+[700.08:709.76] right? Specifically, any deterministic function that satisfies, I mean, any deterministic function
+[709.76:718.4000000000001] that from a set of proposals extracts one proposal is going to, it's going to be, it can be used
+[718.4000000000001:724.0] at the end of the F plus 1 round to also provide the stronger form of validity. The idea being,
+[724.0:727.9200000000001] if a correct process has the same set of proposals, you know, the easiest thing you can do,
+[727.92:732.9599999999999] for example, is just sort them alphabetically and pick the first one in alphabetical order,
+[732.9599999999999:736.4] right? That's going to be quite simple, right? And since everybody sees the same set,
+[736.4:740.8] everybody's going to pick the same proposal. Since you're only picking an element from the set
+[740.8:745.92] of the proposal that everybody saw, necessarily, everybody's going to pick the same proposal,
+[745.92:752.24] and the proposal has been proposed by at least summer. So it's quite easy to extend the,
+[752.24:759.04] the, the, the flat set algorithm to also account for stronger form of validity. Is there any questions here?
+[763.76:770.08] Well, okay, I assume so, I think it was fairly reasonable. So let's move on to the,
+[771.6:778.72] to the next set. So we asked you to evaluate the complexity of the flat set algorithm, right?
+[778.72:789.6] So we, we asked you to notice that there's a difference between the number of messages that is
+[789.6:796.4] exchanged in, in an algorithm, right? And the number of bits, that's exchanging an algorithm,
+[796.4:804.48] right? I would argue that the number of bits is a more reliable and meaningful observable on
+[804.48:811.52] the quality of your algorithm, right? Because of course, for example, there exists algorithms
+[811.52:816.16] and listeners, that at the beginning look extremely good, right? Maybe they have an extremely low
+[816.16:821.2] complexity in terms of number of messages that you go in, and you actually notice that each
+[821.2:827.04] message is immense, right? So what we actually, you know, what we actually design our computers to do
+[827.04:832.64] is to move around bits, right? The specific semantic of the message doesn't have that much sense for
+[832.64:839.04] a computer. Yes, the exchange packets, but they all have a bounded size. So in, in, in a real case
+[839.04:845.76] scenario, messages are going to be split in multiple packets. So I think that the, that the
+[846.8:852.3199999999999] bits complexity is somewhat more meaningful. We asked you to compute both, right? So,
+[853.68:860.56] did I skip it? Yes. So the total number of messages exchange is fairly easy to compute,
+[860.56:864.8] why? Because at every set, everybody, at the correct process, every process, sorry,
+[865.8399999999999:872.4799999999999] sends a message to every other process, right? So if you have M processes, essentially every
+[872.4799999999999:876.7199999999999] process is going to send a message to all the others. So you have a single event squared
+[876.7199999999999:882.8] messages exchange, right? And so this is going to fold for s plus 1 messages, sorry for that
+[882.8:888.88] plus 1 round. The total complexity of the algorithm is s plus 1 M squared, right? Now because we
+[888.88:894.08] have the number of bits, and this, you know, makes the, the quality of the algorithm even a little
+[894.08:900.0] bit more kind of a kind of a bummer. And the reason being that at your message that they exchange,
+[901.04:905.92] in general, is going to contain at most, but in the worst case scenario is going to contain
+[906.56:913.36] and proposals, each of which has B bits in size, right? So the total number of bits exchange,
+[913.36:923.92] it's going to mean s plus 1 and into the cube B. Now it's fairly easy to see why these algorithms
+[923.92:930.5600000000001] cannot really use, you know, in practice, right? Because the number of messages exchange,
+[930.5600000000001:936.24] or even more than a number of bits exchanged by every single process is going to somehow grow
+[936.24:944.0] quadratically, in this case, with the number of, with the number of processes. So essentially,
+[944.0:949.76] the heavily obtained, the every single process must do. And remember that the bottom line in our
+[949.76:953.44] system is always going to be, you know, what's finite and what's bound is always going to be the
+[953.44:959.2] computational power of every single process in the system. You know, every process is going to
+[959.2:965.6800000000001] have to do M squared amount of heavily obtained, which makes it, which makes the algorithm extremely slow
+[965.68:972.9599999999999] and practice when we actually, you know, run for a distantly sized system. So obviously,
+[974.8:981.1999999999999] you know, a trend that you will often see in the distributed systems is that the easier the algorithm,
+[981.1999999999999:988.4799999999999] right, the easier it approves, usually the more complexity the algorithm has. Why, because in order to
+[988.4799999999999:992.9599999999999] achieve the simplicity of the proof, you kind of have, you know, to brute force a lot,
+[992.96:1003.0400000000001] which brute force a lot in, in order to do that. Okay, so the next exercise that we have for you
+[1003.6800000000001:1009.0400000000001] and was kind of a bonus exercise, it was kind of reminding you of the previous exercise,
+[1009.0400000000001:1015.76] that the sign was typed up the model. We still have a synchronous model, so we can unfold in rounds
+[1015.76:1023.6] and, you know, every process, meaningfully, I've received a message from a process in that round,
+[1023.6:1030.32] or, you know, it can simply assume that the process dies, right, the process crashed. But the sign,
+[1030.32:1034.8] we organize the processes in a way that doesn't allow them to communicate all to all us, we did in
+[1034.8:1044.56] the previous scenario, right. So in this case, we have a grid whose size is W times, sorry, yeah,
+[1044.56:1051.84] W times H, right, so with times H, H, right. And every process is connected,
+[1052.8:1058.72] north, south, east, west, to four other processes, except obviously the ones on the boundaries,
+[1058.72:1065.12] we don't have cycle conditions in case somebody was wondering, right. So we ask if you design
+[1065.12:1070.1599999999999] an algorithm, kind of, you know, using what we discovered in the previous exercise,
+[1070.16:1076.96] to implement consensus, right, in the story. And we also tell you to neglect the case where
+[1077.52:1083.92] any two processes might be disconnected, right. Specifically, we tell you that a path exists
+[1083.92:1091.1200000000001] always between any two processes, right. And a, and that the number of, the total number of
+[1091.12:1100.08] crashes is no more than n plus W, right. So actually, we ask you to go in step, we first ask you
+[1100.08:1108.0] to write a protocol that achieves consensus, right. And then we, then we'll see in the next step,
+[1109.1999999999998:1114.8799999999999] what happens if, you know, some of the processes crashed. So in a scenario where you have no
+[1114.88:1122.64] policy processes, it was that the exercise was designed to reach a notice, but essentially,
+[1122.64:1128.64] you can implement the exact same algorithm as before, except that this sign, you've not
+[1128.64:1135.68] gossiping the set of proposals that you discovered to every single other process, right. But you
+[1136.3200000000002:1143.44] are gossiping, you are propagating your, the proposals only to, to your neighbors, right.
+[1143.44:1155.92] So, in, in doing so, essentially, the number of rounds is bound by the total, I mean, by the,
+[1155.92:1162.96] by the maximum length of the longest path, they can connect any two processes in this topology.
+[1162.96:1168.56] Now, this topology is known as the manaccent topology, so how much does it take for you to go from
+[1168.56:1174.24] one specific point in a square grid onto another specific point of the square grid, that's quite
+[1174.24:1180.24] simple. The longest path happens between the two elements that sit on the posed elements of the
+[1180.24:1186.3999999999999] day animal, and essentially, you have to go, you know, w steps in one direction and a steps in the
+[1186.3999999999999:1193.76] other direction to reach one another. So, the, the maximum number of rounds that was required in
+[1193.76:1203.12] this, in this story was two, was two, so the maximum number now was a, w plus h, right. So,
+[1203.68:1209.68] if you assume that no process crashes, then the total number of rounds that you need to achieve
+[1209.68:1214.48] convergence, essentially, in the same flavor here, we proposed you, we proposed you know, a little
+[1214.48:1222.56] bit more of a specific algorithm where everybody is, where everybody is given track of, you know,
+[1222.56:1228.1599999999999] the proposals for specifically everyone, but you know, more or less that, that's the kind of the,
+[1228.1599999999999:1235.84] of the same idea as the flood sets, right. Now, we ask you what happens now if you allow w plus h
+[1235.84:1243.12] processes to crash, right. And, but while still working in the distant end that every correct
+[1243.12:1247.28] process is connected by a chain of correct processes to every single other, right. So, the
+[1247.28:1252.8] question was how many rounds do you need now. And the answer was kind of a, you know, kind of a
+[1252.8:1261.04] geometrical game. So, if we give you w plus h nodes, right. And we ask you to kill
+[1261.76:1270.24] double evosation nodes in the grid and, and we ask you to maximize, right. The number, I mean,
+[1270.24:1276.0] the length of the longest path that exists in the graph without disconnecting it, because we gave
+[1276.0:1282.0] you the assumption that the correct processes stay connected. Then you can kind of have this,
+[1283.68:1288.48] this weird apology where you nearly cut all of the diagonal and then you nearly cut all of the
+[1288.48:1297.6] diagonal again, right. So, especially you have, you know, w plus h housed kind of, for one
+[1297.6:1304.0] diagonal w plus h, a half for the other diagonal. And at every single step you've got to go upright,
+[1304.0:1309.76] upright, upright, all the way up the diagonal, then around the corner and then down the diagonal
+[1309.76:1319.12] again. So, that told a number of rounds, I think, was, so I would say, I would say two w plus h
+[1319.12:1325.76] for something like this. So, this was just a small geometrical exercise. It wasn't too critical to,
+[1325.76:1330.72] you know, to come up with an actual tool, just if you came up with a, with a sketch like this one,
+[1330.72:1339.2] it's more thin enough. Also, if you have proposals for something more efficient, I'm not sure if we
+[1339.2:1347.84] have a proof, if for why this should be the longest path possible. So, if you do have solutions that
+[1347.84:1355.28] are, that have a total path that is, I don't know actually, because you've got to go up the
+[1355.28:1363.36] diagonal again, right? So, it's, I would say two w plus h times one point five. So, I would say three
+[1363.36:1368.3999999999999] w plus h. So, if you have any proposals, yeah, yeah, exactly, exactly, that's exactly, yeah,
+[1368.3999999999999:1372.6399999999999] yeah, that's exactly what I said. And that's exactly what I should have said, yes, three h plus
+[1372.6399999999999:1378.8799999999999] egg. If you have any proposals that perform better than this, I'm happy to hear about them. Otherwise,
+[1378.88:1387.2] this session is finished on my side. I'll, I'll give the, the four to Yobun to continue for the next
+[1387.2:1399.44] exercises. Okay, guys, have a great everything and I'll pass the word to Yobun. Cheers.
+[1399.44:1409.44] Hello guys, thank you, Motel. Can you please stop sharing your screen so I can try my
+[1413.04:1413.68] thank you.
+[1413.68:1435.76] Okay, guys, so do you see, do you see the screen? Do you see the screen? And do you hear me? Yeah. Okay.
+[1435.76:1446.96] Okay, so yeah, let's have, let me just check where the, yeah. Okay, so I guess you heard the last time
+[1448.8:1452.8799999999999] in receipt's lecture about non-blocking atomic commit and
+[1453.28:1458.32] terminating reliable broadcast primitives. So today we're going to, you know, pose you some
+[1458.32:1465.6] questions with regarding these two primitives and yeah, I guess we can start. So the first
+[1465.6:1472.1599999999999] a primitive we're going to talk about is non-blocking atomic commit. So if you remember, non-blocking
+[1472.1599999999999:1476.72] atomic commit is specified by four properties, right? So termination,
+[1476.72:1487.3600000000001] um, commit validity, abort validity and just a second and of course agreement. Yeah, so
+[1488.48:1493.28] when we have talk about the termination proper property of the non-blocking atomic commit,
+[1493.28:1500.72] we say that eventually all correct process should be decided, right? But here we ask you to
+[1500.72:1509.1200000000001] device an algorithm for a non-blocking atomic commit, somehow, somewhat weaker specification. So
+[1509.44:1514.88] let's say instead of termination that says, as I already mentioned, every correct guy eventually
+[1514.88:1520.32] decides, let's say that we have a property that is specified here. So we have one process,
+[1520.32:1525.52] which is distinguished and everyone, every single process, every single process in the system
+[1525.52:1530.4] knows who that process is. We can refer to that process as a leader, for example. Let me say,
+[1530.4:1537.44] if the leader doesn't crash, then all correct process eventually decide. So pretty much,
+[1538.0:1542.64] now we ask you to implement, as I said, to implement a non-blocking atomic commit
+[1543.3600000000001:1549.44] by replacing the termination property with this weaker notion of termination that we call
+[1549.44:1559.44] weak termination. But now we want you not to use consensus, consensus of structure. However,
+[1559.44:1568.24] you still can use the perfect failure detector. So I can guess something you already heard on
+[1568.88:1577.92] Boshid's lecture, but nevertheless, let's see whether everything is clear and everything is
+[1577.92:1586.96] understood. Okay, let me try to question whether there are some questions. Okay, so the second exercise,
+[1586.96:1593.8400000000001] again, we play a bit with a non-blocking atomic commit, but now we want to weaken the termination
+[1593.8400000000001:1599.3600000000001] property even further. So now we say, okay, let's say a very, that we have a very weak termination
+[1599.3600000000001:1603.44] property instead of a termination property, and that very weak termination property
+[1603.44:1609.92] simply says the problem. If no process crashes, then all process is decided. So we ask you now
+[1609.92:1616.4] to device an algorithm that implements non-blocking atomic commit with this very weak termination
+[1616.4:1621.3600000000001] property instead of the classical termination property, and we ask you not to use consensus,
+[1622.4:1630.24] and more interestingly, we ask you the following. Do we really need to use a failure detector in order
+[1630.24:1639.3600000000001] to implement it into solve this problem? Okay, now we are going to talk a bit about terminating
+[1639.36:1648.1599999999999] reliable broadcast. So we said that the terminating reliable broadcast as defined by Rochid and his
+[1648.1599999999999:1655.1999999999998] course, so we have one designated source that broadcasts a message, and we have some properties
+[1655.1999999999998:1662.9599999999998] that say, for example, integrity says, of course, every process delivers message and then M is
+[1662.96:1669.68] equal to some null or T message, or to a message broadcast by this designated source, this designated
+[1669.68:1677.92] center. Also, we have a termination that says that eventually every correct process eventually
+[1677.92:1683.8400000000001] delivers exactly one message, agreement that says that if a correct process delivers a message
+[1683.8400000000001:1689.44] and then every correct other correct process delivers message and divalidity that says if the
+[1689.44:1698.0800000000002] source is this designated center is correct, then it eventually delivers message broadcast by
+[1698.0800000000002:1702.4] itself, but then agreement ensures that also other correct process will deliver.
+[1703.44:1707.8400000000001] So what we ask you here, and the implementation you have seen on the
+[1708.72:1715.68] lecture, is that is the one that uses a perfect failure detector, but now we ask you,
+[1715.68:1721.76] okay, can we weaken this, can we implement terminating reliable broadcast, but without a perfect
+[1721.76:1730.96] failure detector, but with eventually perfect failure detector. Okay, the fourth exercise now
+[1730.96:1739.3600000000001] simply asks you to implement consensus using multiple instances of terminating reliable broadcasts.
+[1739.36:1748.1599999999999] So we want to solve consensus problem by using potential solution, by using a solution for the
+[1748.1599999999999:1756.08] terminating reliable broadcasts. And lastly, we ask you to do the similar thing, but now we want
+[1756.08:1761.9199999999998] you to implement the total of the broadcasts by using terminating reliable broadcasts.
+[1761.92:1772.24] Okay, so let me see whether we have any questions. Okay, so yeah guys, these are the exercises for
+[1772.96:1778.4] the non-blocking atomic commitments terminating reliable broadcasts. So please, if you have any
+[1778.4:1794.5600000000002] questions, ask them now otherwise we can close this session.
+[1794.56:1809.76] Okay guys, since I don't see any questions, then that would be it. So for the next time please
+[1810.96:1817.36] try to deal with these five exercises, and yes, I will be discussing the solutions next time,
+[1817.36:1827.04] and yeah, that would be, that would be I guess it for this session. Thank you very much, and yeah,
+[1827.04:1830.1599999999999] that's it. Stay safe.
+[1830.16:1845.6000000000001] Mateo, I guess you can stop recording.

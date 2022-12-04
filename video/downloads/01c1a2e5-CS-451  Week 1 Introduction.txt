@@ -1,0 +1,1329 @@
+~CS-451 / Week 1: Introduction
+~2020-09-14T17:06:00.007+02:00
+~https://tube.switch.ch/videos/01c1a2e5
+~CS-451 Distributed algorithms
+[0.0:10.24] Okay, hope, I hope that everything will work fine.
+[10.24:12.72] So you probably understand the rules by now.
+[12.72:17.88] One third of the students come to the class and then two third or more, stay home.
+[17.88:22.400000000000002] Of course you can also stay home and don't come, but I like to think that it's good to
+[22.400000000000002:28.88] come and meet people and change atmosphere and not stay at home all the time.
+[28.88:37.16] So this class is about distributed algorithms and it's as I will explain a rather theoretical
+[37.16:45.0] class with a project to help you understand the field from the practical perspective.
+[45.0:51.36] And this year the theory part is going to count for 70% of the grade and the practical
+[51.36:52.36] part 30%.
+[52.36:56.16] So it's exactly like my other class concurrent algorithms.
+[56.16:63.44] And again, you are very welcome to collaborate with groups within groups, but every project
+[63.44:65.24] has to be individual.
+[65.24:70.0] So at the end of the semester you give back a piece of code that is yours and you will
+[70.0:72.6] be asked to comment it.
+[72.6:78.56] We are not going to check if your structure of your program is very, very different from
+[78.56:79.96] the others of other people.
+[79.96:85.64] We're not police, but please at least try to send the names of the classes of the
+[85.64:91.76] variables of things, try to do some efforts to make it at least look yours.
+[91.76:96.56] And then you will be asked, I don't know whether it's run or not, to comment your project
+[96.56:98.16] and you will ask to explain.
+[98.16:101.48] So even if you collaborate, please try to understand what's going on.
+[101.48:105.72] And it's very fine that there are groups of students, some students are as much faster
+[105.72:108.56] than others in writing code, fine.
+[108.56:114.28] But at least try to understand what's going on, the recommendation.
+[114.28:119.72] The theory part of the class is in the form of algorithms you would need to understand
+[119.72:124.76] and reason about produced proof, et cetera.
+[124.76:131.04] And these algorithms are not the same as the algorithms you have been studying before,
+[131.04:133.84] except if you did distribute the computing or concurrent computing.
+[133.84:135.0] They are different.
+[135.0:136.0] So be careful.
+[136.0:140.2] Sometimes the field looks very easy and simple and intuitive.
+[140.2:145.04] But then many students say, oh, it looks easy, looks easy, but then the exam comes and
+[145.04:147.11999999999998] then we realize that it's not that easy.
+[147.11999999999998:148.11999999999998] So try to do the exercise.
+[148.11999999999998:150.56] Don't go to the solutions immediately.
+[150.56:153.16] Try to do the things yourself.
+[153.16:157.67999999999998] There is one source of the course, which is a book.
+[157.67999999999998:159.95999999999998] In fact, there are two books.
+[159.95999999999998:164.39999999999998] One of them is called Introduction to Reliable Distributed Compute Programming.
+[164.39999999999998:165.92] And the second edition is bigger.
+[165.92:170.83999999999997] It's called Introduction to Reliable and Secure Distributed Programming.
+[170.83999999999997:174.6] So I really suggest that you get at least one of them.
+[174.6:177.32] One is an extension of the other.
+[177.32:180.95999999999998] The secure and reliable is an extension of the reliable.
+[180.95999999999998:183.39999999999998] The class is mainly about the reliable.
+[183.39999999999998:188.44] Everything I'm going to say is in the first edition of the book and also in the second.
+[188.44:191.6] So if you want to buy, maybe you can buy the second because it will help you when you
+[191.6:198.72] do a bit going blockchain, whatever other topics that you might be interested in.
+[198.72:201.16] It's in the library and I don't think it's very expensive.
+[201.16:205.6] Now of the record, I'm sure you can download these things for free somewhere.
+[205.6:207.6] So you can also do that.
+[207.6:211.88] Please try to get the book in some form or another because it will help you.
+[211.88:218.48] The TAs are there to answer your questions, but all the exercises, many exercises are there.
+[218.48:227.04] And if you read the book, you will find probably better explanations.
+[227.04:233.79999999999998] So now I have a problem with the slides like I did this morning.
+[233.79999999999998:237.79999999999998] Why?
+[237.8:248.88000000000002] What happens?
+[248.88000000000002:249.88000000000002] Okay, okay, sorry.
+[249.88000000000002:250.88000000000002] It's fine.
+[250.88000000000002:251.88000000000002] My bad.
+[251.88000000000002:252.88000000000002] I managed.
+[252.88000000000002:253.88000000000002] I'm sorry.
+[253.88000000000002:256.2] I was on the YouTube page.
+[256.2:259.2] So this is the second edition of the book.
+[259.2:261.40000000000003] The first edition looks exactly the same.
+[261.40000000000003:262.40000000000003] It's like it's smaller.
+[262.40000000000003:265.16] It doesn't have secure in it.
+[265.16:268.08000000000004] But you can have either one.
+[268.08000000000004:269.40000000000003] The secure is more complete.
+[269.40000000000003:270.40000000000003] It's more up to date.
+[270.40000000000003:273.40000000000003] It talks about many things you may want to have.
+[273.40000000000003:277.56] And by the way, I'm not advertising the book because we get to reach by these books.
+[277.56:278.8] We don't get to reach by these books.
+[278.8:281.16] It's really for your own sake.
+[281.16:283.16] Okay.
+[283.16:291.40000000000003] Back to history and understand what a distributed algorithm is.
+[291.4:296.12] In the old times, there were algorithms.
+[296.12:301.88] Since humanity started thinking and calculating, there were algorithms.
+[301.88:305.4] Algorithms to do addition, algorithms to do multiplications, etc.
+[305.4:307.84] Those algorithms were executed by humans.
+[307.84:314.84] Okay, there was one smart person inventing an algorithm to help other less smart in the
+[314.84:316.44] mathematical sense.
+[316.44:321.76] And then, they had to compute something by executing an algorithm.
+[321.76:326.84] When you do addition, you have an algorithm, you add and then you have one up there if
+[326.84:330.32] it's more than 10 and then you do if you multiply, these are all algorithms that are there
+[330.32:333.52] from the early days of humanity.
+[333.52:338.92] And then people start saying, oh, given that smart people can write algorithms that less
+[338.92:340.92] smart in the mathematical sense.
+[340.92:344.15999999999997] Can write, why don't we have them executed by machines?
+[344.16:346.76000000000005] And people started inventing machines.
+[346.76000000000005:351.72] It's important to understand these history and I will try to use it.
+[351.72:354.40000000000003] History is the best way to understand concepts.
+[354.40000000000003:359.6] It looks like the brain likes to tell stories or record stories.
+[359.6:364.28000000000003] So try to, whenever you have to explain something, give a talk, try to use history, you will
+[364.28000000000003:366.12] notice that it works.
+[366.12:373.56] So people started building computers to behave like those people who would execute algorithms.
+[373.56:380.28000000000003] And the interesting part is that in the beginning, there were machines that execute one algorithm
+[380.28000000000003:382.2] each.
+[382.2:386.88] The Pascaline of Blase Pascal was executing addition.
+[386.88:390.64] But the machine was only doing addition in the hardware.
+[390.64:395.76] The addition was coded in the machine.
+[395.76:399.76] And then, Leibniz came and said, oh, I can do a machine that does multiplication.
+[399.76:402.56] But the machine of Leibniz was only doing multiplication.
+[402.56:410.84] And it was a little bit considered fine because machines are not, they don't learn.
+[410.84:413.68] And therefore, they can only do one algorithm at a time.
+[413.68:418.32] Until, during came and said, no, no, no, maybe we can do like humans.
+[418.32:422.56] Maybe we can do machines to which we can teach algorithms.
+[422.56:428.56] And we're going to teach them addition, multiplication, and so forth.
+[428.56:433.0] And then he invented the curing machine that I hope you understand because it's, I think,
+[433.0:434.88] the foundation of the field.
+[434.88:439.36] The curing machine behaves like humans in the sense that you can give it the algorithm
+[439.36:441.56] in the form of data.
+[441.56:445.88] And then the machine digested the data and then can execute it.
+[445.88:448.24] You can give it addition, multiplication, whatever.
+[448.24:453.32] You can invent a new algorithm or you can even have the machine invent its own algorithm
+[453.32:454.72] like humans do.
+[454.72:460.88000000000005] So this is the starting point of computing a machine that learns algorithms.
+[460.88000000000005:464.12] Okay, good.
+[464.12:466.64000000000004] What was an algorithm in all those days?
+[466.64000000000004:474.0] It was an order set of elementary instruction, elementary depending on the machine, of
+[474.0:479.96000000000004] course, that at hand, but usually it was simple things like simple tests or a scientist
+[479.96:486.2] variable to the other except and all those instructions were executing on one machine,
+[486.2:487.84] one to machine.
+[487.84:495.24] For example, we measure how fast an algorithm is by counting the number of instructions
+[495.24:496.67999999999995] more precisely.
+[496.67999999999995:502.47999999999996] We count how does the number of instructions vary according to the size of the data of
+[502.47999999999996:503.47999999999996] the inputs.
+[503.47999999999996:505.47999999999996] This is called complexity.
+[505.48:513.4] So complexity theory is based on this view that an algorithm is an order set of instructions
+[513.4:519.88] and something that we consider it granted is that all instructions are equal.
+[519.88:522.04] All those elementary instructions are the same.
+[522.04:527.96] Okay, this is the field of algorithms, I would say, until recently.
+[527.96:532.84] This was the field and this is what you study when you do algorithms.
+[532.84:539.0] It turns out that algorithms today are not anymore like that.
+[539.0:542.76] Even if we study them like that in reality, they are not like that.
+[542.76:545.76] They are distributed and concurrent.
+[545.76:550.64] They are distributed because when I write an algorithm here and execute it, as long as
+[550.64:555.72] the algorithm is doing something really sophisticated, the algorithm is going to access some data
+[555.72:556.72] somewhere.
+[556.72:559.6] It's going to execute part of it in some cloud or whatever.
+[559.6:565.28] The algorithm is going to be distributed and furthermore, even the part of this algorithm
+[565.28:571.6] that is executed on my machine is going to have several concurrent algorithms.
+[571.6:575.28] Okay, so this is the current state of affairs.
+[575.28:579.64] We don't anymore have this like nice sequential algorithm executed.
+[579.64:586.0400000000001] No, we have several algorithms connected and each of them is itself parallel.
+[586.04:591.28] So this course studies how you devise algorithms that execute on networks.
+[591.28:594.92] The part that executes on a single machine is my other class.
+[594.92:600.9599999999999] Some of you I recognize as I was about to say some face, at least some eyes that are
+[600.9599999999999:603.0799999999999] following my other class concurrent algorithm.
+[603.0799999999999:607.04] So the other class zooms into what executes inside the machine.
+[607.04:612.04] This class is about the algorithms that are distributed worldwide that execute, make
+[612.04:617.36] machines communicate in the cloud, in the fog, in whatever it's called, sans-scores
+[617.36:618.68] whatever.
+[618.68:625.88] And when you think of algorithms executed across machines, the game changes as we are
+[625.88:628.52] going to see during these weeks.
+[628.52:634.16] The game changes because in the classical way of reasoning about algorithms, we assume
+[634.16:636.5999999999999] we have instructions.
+[636.5999999999999:640.76] And when you finish instruction one, you go to instruction two and then instruction
+[640.76:642.16] two, etc.
+[642.16:646.84] When you think that part of the algorithm is executed here, another part is maybe in burn,
+[646.84:651.04] another part is on Amazon cloud or whatever.
+[651.04:654.64] Maybe the part on Amazon is now down.
+[654.64:657.56] And that is not considered something exceptional.
+[657.56:661.8] When you write distributed algorithm, you should always assume that part of the algorithm
+[661.8:669.16] is executed somewhere that has failed or even worse that is behaving maliciously.
+[669.16:674.0799999999999] Of course, if everybody is behaving maliciously, you cannot do much.
+[674.0799999999999:679.8] But today when you write a distributed algorithm, it is considered good practice to assume
+[679.8:685.9599999999999] that some part somewhere is not only failing, but maybe it's hacked and it's trying to
+[685.9599999999999:687.92] kill your algorithm.
+[687.92:691.36] So the way you reason about the algorithm is different.
+[691.36:697.9599999999999] Think of Amazon programs or even Facebook programs or bits going programs or whatever.
+[697.96:702.96] These are all distributed programs where you can never assume that everybody is working
+[702.96:703.96] correctly.
+[703.96:707.1600000000001] This is major difference number one.
+[707.1600000000001:711.5600000000001] Major difference number two is what is now complexity?
+[711.5600000000001:714.48] What I have an algorithm executed in the cloud, for example.
+[714.48:720.4000000000001] How do we measure, how do I mathematically capture the fact that the algorithm is fast or
+[720.4000000000001:721.72] slow or whatever?
+[721.72:725.6] I cannot really say all instructions are equal.
+[725.6:727.9200000000001] That doesn't make any sense.
+[727.9200000000001:734.08] And more precisely, whenever I send a message somewhere, this costs much, much more than
+[734.08:735.6800000000001] what I do locally.
+[735.6800000000001:740.64] So counting the number of instructions that everybody does doesn't say much.
+[740.64:746.44] What matters and what we're going to see is how many messages do we need to exchange?
+[746.44:748.0] How many communication rounds?
+[748.0:752.4] For example, if I have an algorithm where I need to send you a message and then you need
+[752.4:756.3199999999999] to send him a message and then he needs to send them a message.
+[756.3199999999999:761.76] The measure here is like one, two, three communications steps.
+[761.76:763.9599999999999] That is how we measure complexity.
+[763.9599999999999:768.52] Or I need to send the message to all and then everybody sends a message to all.
+[768.52:772.0] Oh, this is like an end square and is the size of the system.
+[772.0:773.1999999999999] It's an square complexity.
+[773.1999999999999:777.16] It's completely different from how we use to count.
+[777.16:778.16] This is important.
+[778.16:781.96] Of course, I'm just giving you one overview here, but the game changes.
+[781.96:788.24] So, when did this start?
+[788.24:795.5600000000001] It started in, maybe people like to say that it started in the 60s when we started having
+[795.5600000000001:798.64] distributed operating systems by Dijkstra.
+[798.64:804.0400000000001] And then I think Lamport was the one to whom we attribute the field of distributed systems
+[804.0400000000001:805.88] or distributed algorithms.
+[805.88:808.72] And Lamport has a definition.
+[808.72:815.6] He says a distributed system is one that stops your application because a machine you have
+[815.6:818.0400000000001] never heard from has crashed.
+[818.0400000000001:821.28] Of course, this is the bad distributed system.
+[821.28:826.28] We would like the distributed system to work well even if some machines fail.
+[826.28:832.6] But it gives you the flavor that you write algorithms on many machines that you don't
+[832.6:835.0] completely control.
+[835.0:839.16] So let's see Lamport, who knows about listy Lamport?
+[839.16:841.16] Heard the name.
+[841.16:844.08] One, two, four, four, four, four, six.
+[844.08:847.96] You know what, what did you win recently?
+[847.96:852.88] What's the best thing you can win as a computer scientist?
+[852.88:854.24] Two in a world, okay?
+[854.24:856.76] So in other disciplines, they have the normal price.
+[856.76:859.16] In computing, you have the two in a one.
+[859.16:864.04] So, let's see Lamport got the two in a world, two years back.
+[864.04:866.0799999999999] And something I will explain later.
+[866.0799999999999:868.64] I will explain to you why he got the two in a one.
+[868.64:871.12] But he was one of the first who says, be careful.
+[871.12:875.3199999999999] Now we need to think distributed because we need to connect algorithms and we need to
+[875.3199999999999:880.92] have a clean way of thinking about algorithms.
+[880.92:883.3199999999999] In the seventies, there was something interesting.
+[883.3199999999999:886.4] There was listy Lamport trying to understand distributed algorithms.
+[886.4:890.3199999999999] But there was another person who was also trying to implement them.
+[890.3199999999999:892.28] His name is Jim Gray.
+[892.28:893.8399999999999] Who heard about Jim Gray?
+[893.84:896.44] Another two in a one.
+[896.44:899.72] Nobody knows about Jim Gray.
+[899.72:900.72] Okay.
+[900.72:906.64] So Jim Gray is a very, very interesting character in computing because he invented the notion
+[906.64:909.48] of transactions that you have seen in databases.
+[909.48:911.48] And in particular, distributed transactions.
+[911.48:915.0] I will come back to what distributed transactions mean.
+[915.0:917.84] But something you should remember about Jim Gray is the following.
+[917.84:921.24] And I really believe in the power of history.
+[921.24:925.52] And Jim Gray was working in the Bay Area.
+[925.52:930.64] And I think he was a professor who were working in some research lab and Microsoft wanted
+[930.64:931.64] to hire him.
+[931.64:934.92] So Bill Gates, but this is a story.
+[934.92:938.48] Bill Gates in Portland came to some friends.
+[938.48:944.0] He'd go flew and then say, Mr. Professor Gray, we want to hire you because we believe transactions
+[944.0:945.92] are important for Microsoft.
+[945.92:948.72] We need people to understand transactions.
+[948.72:949.88] Can you work with us?
+[949.88:954.68] And Jim Gray says Microsoft, Oregon, no.
+[954.68:956.04] Why not?
+[956.04:959.84] Because I like the Bay Area and I stay in the Bay Area.
+[959.84:962.48] And I have my boat in front of the university.
+[962.48:968.36] So Jim Gray said, wow, but we are going to pay you a lot of money and you can buy another
+[968.36:971.36] boat in Portland, Oregon and do this and that.
+[971.36:972.36] And oh, thank you.
+[972.36:974.16] This place is very important to me.
+[974.16:975.16] Okay.
+[975.16:976.48] But of course Bill Gates is Bill Gates.
+[976.48:980.0] And they want something and it's so what did he do?
+[980.0:981.2] He says, sure, no problem.
+[981.2:983.0] What is the place where is your boat?
+[983.0:984.44] See, my boat is here.
+[984.44:985.44] Sure.
+[985.44:992.8000000000001] We're going to build a Microsoft tower in front of your boat in San Francisco and you stay
+[992.8000000000001:993.8000000000001] work here.
+[993.8000000000001:996.4] You work for Microsoft, but you work here.
+[996.4:999.6800000000001] And we're going to pay you what I promised that we'll pay you.
+[999.6800000000001:1002.64] Of course Jim Gray said, yes, now I'm happy.
+[1002.64:1003.64] I'm going to do that.
+[1003.64:1005.12] So he was hired by Microsoft.
+[1005.12:1011.48] And now if you go to the harbor of San Francisco, you would say the gray's tower of Microsoft
+[1011.48:1012.96] Gray's tower.
+[1012.96:1017.08] So he was working and then when the wind was nice, he would go and stay.
+[1017.08:1019.8] And fortunately, one day he didn't come back.
+[1019.8:1021.5600000000001] So he passed away a few years back.
+[1021.5600000000001:1028.92] Well, I think it's a good way to die like that instead of dying in a hospital somewhere.
+[1028.92:1030.16] Those were the 70s.
+[1030.16:1035.48] And then in the 80s, the theory of distributed computing that I'm going to teach you really
+[1035.48:1037.64] got written on Marble.
+[1037.64:1042.88] And one of the key persons who did that was a woman, Nancy Lynch.
+[1042.88:1044.64] Anybody heard about Nancy Lynch?
+[1044.64:1045.64] Okay.
+[1045.64:1046.64] Okay.
+[1046.64:1049.88] So I will tell you what she discovered.
+[1049.88:1055.44] And I think she has some fundamental contributions in the fields in particular.
+[1055.44:1058.1200000000001] Some things about the consensus problem.
+[1058.12:1062.6799999999998] And she was really the one defining the consensus problem and proving things about the consensus
+[1062.6799999999998:1064.2399999999998] problem.
+[1064.2399999999998:1070.6] Just to give you an intuition, today when people talk about Bitcoin and blockchain, they
+[1070.6:1075.28] really say, or they claim, oh, in blockchain, you have a consensus among a large number
+[1075.28:1079.1599999999999] of nodes who agree on a chain of blocks.
+[1079.1599999999999:1080.7199999999998] They solve consensus.
+[1080.7199999999998:1081.7199999999998] Okay.
+[1081.7199999999998:1086.1599999999999] When they say many people who say that don't really understand the work of Nancy Lynch because
+[1086.16:1091.3600000000001] Nancy Lynch has shown with other colleagues that the problem of consensus is impossible.
+[1091.3600000000001:1094.2] So you cannot really say we solve consensus.
+[1094.2:1099.92] You have to say we solve it probabilistically or we solve it assuming this and that.
+[1099.92:1104.24] And some shortcuts are being taken, which are a little bit disappointing.
+[1104.24:1108.72] So the interesting fact about distributed computing today is that everybody's doing it either
+[1108.72:1114.0800000000002] in the cloud or in blockchains and bitcoins or in things like that.
+[1114.08:1118.24] But unfortunately, the foundations are not well understood.
+[1118.24:1124.8799999999999] And it's, there is a race between trying to do things fast and have them run and taking
+[1124.8799999999999:1129.28] the time to understand concepts that are not always trivial.
+[1129.28:1134.8] And the goal at EPFL is that we want you to do both to learn how to write distributed
+[1134.8:1137.08] program but also to understand the fundamentals.
+[1137.08:1142.9199999999998] We believe that this is crucial and that's what would make a difference between you and
+[1142.92:1150.76] somebody who just want to write in TCP code or UDP and quickly deploy.
+[1150.76:1155.48] So this course is complementary to the course concurrent algorithms.
+[1155.48:1161.68] Okay, they share some spirit because in both cases we don't talk about classical algorithms.
+[1161.68:1167.28] But here we have machines, nodes, I call them processes.
+[1167.28:1170.96] Geographically distant communicating by message passing.
+[1170.96:1172.48] Okay, they exchange messages.
+[1172.48:1177.72] In the class concurrent algorithms, I assume I have process serves.
+[1177.72:1183.6] I simply call them also processes that are sitting inside the same machine.
+[1183.6:1185.44] But they don't exchange messages.
+[1185.44:1187.92] They read and write in the same shared memory.
+[1187.92:1188.92] They share memory.
+[1188.92:1191.8] Whereas in this class, they don't share memory.
+[1191.8:1192.8] Processes exchange messages.
+[1192.8:1198.0] Okay, and you will see that of course, this is fundamental.
+[1198.0:1200.0] Okay.
+[1200.0:1208.88] A distributed system is a set of, I call them processes.
+[1208.88:1210.52] But please think of them as machines.
+[1210.52:1216.36] The same process is simply, it could be some center network where the processes are very
+[1216.36:1220.36] small entities or they could be huge machines or servers or phones.
+[1220.36:1221.76] I don't care.
+[1221.76:1223.6] These are two-ring machines.
+[1223.6:1225.88] They have the ability to execute code.
+[1225.88:1231.2800000000002] But we have a set of them and they communicate by sharing messages.
+[1231.2800000000002:1234.2800000000002] Sometimes we talk about client server.
+[1234.2800000000002:1237.24] Sometimes we talk about multiple servers, peers to peer, whatever.
+[1237.24:1238.96] You will understand the difference.
+[1238.96:1243.5600000000002] Some people even go further and say, oh, they are distributed and decentralized.
+[1243.5600000000002:1245.3600000000001] To me, all these things are noise.
+[1245.3600000000001:1249.88] Either you have an algorithm that execute on one machine or you have an algorithm that
+[1249.88:1252.72] executes on several and you need to exchange messages.
+[1252.72:1253.72] Okay.
+[1253.72:1254.88] This one is centralized.
+[1254.88:1258.88] This one is called distributed, decentralized, whatever.
+[1258.88:1261.88] This one is what we are studying here.
+[1261.88:1263.88] Okay.
+[1263.88:1265.0] Okay.
+[1265.0:1274.88] So, I try to convince you that distributed algorithms are important.
+[1274.88:1276.2] And let me emphasize that.
+[1276.2:1284.3600000000001] I cannot emphasize that enough because today, again, most interesting distributed algorithms,
+[1284.36:1288.24] most interesting algorithms are distributed and concurrent.
+[1288.24:1292.4799999999998] If you think of Google, for example, I don't know, maybe some of you will go for internships
+[1292.4799999999998:1298.6399999999999] there or go after PhD or whatever, and then you realize how distribution is important.
+[1298.6399999999999:1309.6799999999998] A Google job involves thousands of machines, one Google job, thousands of machines.
+[1309.68:1315.3200000000002] Then machines go down per day and of course, you don't know which ones are going to go down.
+[1315.3200000000002:1318.72] If you knew it, then you simply don't use them.
+[1318.72:1322.88] So you don't know, which means that when you write an algorithm, you write an algorithm
+[1322.88:1327.8400000000001] for thousands of machines and you write an algorithm for thousands of machines and you always
+[1327.8400000000001:1331.0] assume that some of them are not going to work.
+[1331.0:1333.3600000000001] It's just like exception handling.
+[1333.3600000000001:1336.24] But this is like exception handling in the space.
+[1336.24:1337.24] Processments can fail.
+[1337.24:1339.24] What should you do?
+[1339.24:1350.56] Of course, the other example of that is interesting is this story of Bitcoin.
+[1350.56:1353.0] Who didn't hear about Bitcoin?
+[1353.0:1354.4] Who did not?
+[1354.4:1356.0] Don't be ashamed.
+[1356.0:1358.68] You can say I didn't hear about Bitcoin.
+[1358.68:1359.68] Everybody did.
+[1359.68:1360.68] Okay, good.
+[1360.68:1362.08] So the story is interesting.
+[1362.08:1368.64] Somebody, maybe some revolutionary or some G. Lee-June or whatever.
+[1368.64:1374.0] And despite it 12 years ago, these centralized banks are enough.
+[1374.0:1375.0] They suck.
+[1375.0:1376.0] So we need something else.
+[1376.0:1379.1200000000001] We need the democratic banking system.
+[1379.1200000000001:1384.6000000000001] And this person started with some political opinions about the fact that we don't want,
+[1384.6000000000001:1386.72] it was after the financial crisis.
+[1386.72:1389.64] We don't know, we don't want these big banks to control us.
+[1389.64:1397.16] So we want to write a different financial system where the bank, it's not that the bank
+[1397.16:1399.3200000000002] does not exist.
+[1399.3200000000002:1401.24] The bank is all of us.
+[1401.24:1403.3600000000001] We all own the bank.
+[1403.3600000000001:1406.0800000000002] This is Satoshi Nakamoto.
+[1406.0800000000002:1411.0] The person's name is Satoshi Nakamoto, but people have been checking.
+[1411.0:1414.52] They didn't find any Satoshi Nakamoto who would stand by somebody who could have written
+[1414.52:1415.52] that stuff.
+[1415.52:1417.92] It's probably a fake name.
+[1417.92:1420.6000000000001] But we're going to use the name Satoshi Nakamoto.
+[1420.6000000000001:1425.1200000000001] Some people found somebody called Nick's label who looks like he could have written the
+[1425.1200000000001:1426.1200000000001] code.
+[1426.1200000000001:1427.1200000000001] Anyway.
+[1427.12:1435.8] So he wrote a, sorry, wrote this political view and then a paper.
+[1435.8:1440.9599999999998] And in that paper, what that person did and that's why the field of computing, I find
+[1440.9599999999998:1443.32] it personally fascinating.
+[1443.32:1445.36] He just wrote a paper, few pages.
+[1445.36:1449.8] Again, you remember that what Alan Turing did is just wrote a paper.
+[1449.8:1450.84] He didn't build a machine.
+[1450.84:1455.9599999999998] First, I mean, of course, if you go see the movie in Igbo, you see him building a machine,
+[1455.96:1462.24] but the thing he did in 36, the first thing he did is just a water paper where he explained
+[1462.24:1466.16] the principle of a machine without building a machine.
+[1466.16:1467.64] Other people did.
+[1467.64:1469.4] This guy did the same.
+[1469.4:1475.92] He wrote a paper explaining the principle of a distributed bank.
+[1475.92:1479.28] The idea is, if you think about it, very simple.
+[1479.28:1483.8] At the heart of bank, there is this transactional book.
+[1483.8:1488.3999999999999] The idea has deposited this amount of money.
+[1488.3999999999999:1490.9199999999998] Rashid has withdrawn this amount of money.
+[1490.9199999999998:1495.24] This guy has transferred this amount of money to that person and so forth.
+[1495.24:1496.6399999999999] This is the bank.
+[1496.6399999999999:1501.1599999999999] They have a book of transactions or I don't know how it is called.
+[1501.1599999999999:1502.32] Look, he did a critique.
+[1502.32:1504.48] He read a critique.
+[1504.48:1505.8] This is the bank.
+[1505.8:1510.76] What this guy did, he says, well, we can all have the book.
+[1510.76:1512.72] We replicate this book.
+[1512.72:1516.28] And now there is nothing like I deposit or I withdraw.
+[1516.28:1523.44] No, you always deposit to somebody and somebody, the main transaction is somebody sending money
+[1523.44:1524.72] to somebody else.
+[1524.72:1526.48] This is the main thing.
+[1526.48:1529.96] Because we don't have a bank, we are exchanging money.
+[1529.96:1540.56] And the idea of Macamoto was to say, let's have a book where that everybody shares.
+[1540.56:1542.72] And he has the same copy of the book.
+[1542.72:1545.04] Everybody knows that I have spent money to this person.
+[1545.04:1547.72] I have spent money to that person, etc.
+[1547.72:1555.28] If you all have the book and we all start from some initial state, then at any point in
+[1555.28:1560.1599999999999] time, I can look at the book and say, oh, now Rashid has this amount of money.
+[1560.1599999999999:1562.2] The idea has this amount of money.
+[1562.2:1564.3999999999999] On to one has this amount of money and so forth.
+[1564.3999999999999:1566.28] I can exactly know who has what.
+[1566.28:1568.2] I just do addition and subtractions.
+[1568.2:1570.04] Very simple.
+[1570.04:1571.6399999999999] If you think about it, it's very simple.
+[1571.6399999999999:1580.1599999999999] Of course, the difficulty is to make sure that we indeed have the same copy of the book.
+[1580.1599999999999:1583.24] Because when I send money to somebody, I send a message.
+[1583.24:1584.24] Right?
+[1584.24:1585.36] I send him money.
+[1585.36:1587.76] It means that maybe I update my copy of the book.
+[1587.76:1589.12] He updates his copy of the book.
+[1589.12:1598.92] How do we make sure that you update your book based on this transaction before he sends
+[1598.92:1604.96] money to somebody else or before I send money to somebody else and more precisely?
+[1604.96:1611.52] If we are not very careful, what I can do is start with 5,000 francs and then send the message
+[1611.52:1614.4] saying, I give you my 5,000 francs.
+[1614.4:1616.2] Give me your old car.
+[1616.2:1620.24] And at the same time, I go to him and say, I give you my 5,000 francs.
+[1620.24:1622.48] Why don't you give me your nice bicycle?
+[1622.48:1624.8000000000002] And at the same time, this is called double payment.
+[1624.8000000000002:1625.8000000000002] Okay?
+[1625.8:1629.12] If I have a single bank, I cannot do that.
+[1629.12:1630.12] It's hard.
+[1630.12:1633.12] Because they look at me and they say, oh, which one is first?
+[1633.12:1635.9199999999998] Oh, you don't have money anymore.
+[1635.9199999999998:1640.48] In a distributed setting, I can play that game because I can give him this money.
+[1640.48:1644.04] And then at the same time send a message to somebody else.
+[1644.04:1651.6399999999999] The paper that Nakamoto wrote is an armory to solve this double payment problem.
+[1651.6399999999999:1654.8799999999999] And he claims, if you solve this problem, you can build a distributed bank.
+[1654.88:1656.16] And he's right.
+[1656.16:1661.7600000000002] If you solve the double payment problem, the bank is implemented in a distributed fashion.
+[1661.7600000000002:1666.96] So the paper that has actually very, very interesting to read is called something like
+[1666.96:1669.4] the double payment problem, how to solve it.
+[1669.4:1670.7600000000002] And he explains how to solve it.
+[1670.7600000000002:1680.0] And since then, people have written thousands of programs and code to implement his algorithm.
+[1680.0:1685.0] Of course, he came up with some friends with an original protocol and then people have
+[1685.0:1686.56] been implementing others.
+[1686.56:1690.64] But again, it was a paper.
+[1690.64:1693.88] This is something, please remember that later.
+[1693.88:1701.28] It's not the car industry or the plane industry or building nuclear power and enriching uranium
+[1701.28:1702.28] or whatever.
+[1702.28:1708.16] No, it's just writing some mathematical, not even equations, some mathematical formulas
+[1708.16:1711.68] that are in this process, that process, that's that.
+[1711.68:1713.68] This is the discovery, this is the invention.
+[1713.68:1715.16] You keep that in mind.
+[1715.16:1722.4] It's a field where everyone can do something radically revolutionary by writing a paper of
+[1722.4:1724.5600000000002] few lines.
+[1724.5600000000002:1732.64] Initially, the first code, the first program written on this idea of Nakamoto was used
+[1732.64:1740.96] simply to sell and buy computer oriented devices, architecture, some houses, some cables,
+[1740.96:1741.96] etc.
+[1741.96:1743.48] To his main before that.
+[1743.48:1746.24] And then people start saying, oh, this, it works well.
+[1746.24:1750.88] Maybe we can use this money to buy and sell fidgets instead of cables.
+[1750.88:1753.16] And then people say, maybe we can do more than fidgets.
+[1753.16:1755.16] Maybe we can do cigarettes.
+[1755.16:1757.92] Maybe we can do bicycles.
+[1757.92:1759.92] Maybe we can buy and sell drugs.
+[1759.92:1763.04] Now it became interesting.
+[1763.04:1766.8400000000001] And then people started using it for all kinds of things.
+[1766.8400000000001:1775.3200000000002] So initially, the value was really, really small, zero, that zero, zero, five dollars,
+[1775.3200000000002:1777.0800000000002] the Bitcoin.
+[1777.0800000000002:1780.6000000000001] And then now is something like ten thousand dollars, which is pretty impressive because
+[1780.6000000000001:1785.04] if you think about it, it's nothing.
+[1785.04:1790.36] And the original paper, Nakamoto said, okay, here is the algorithm.
+[1790.36:1795.44] He and some friends implemented the first version of the protocol and they initialized
+[1795.44:1797.92] some variables.
+[1797.92:1800.24] What variables did they initialize?
+[1800.24:1805.76] Some variables saying, oh, P1, P1 is processed Nakamoto.
+[1805.76:1811.36] Initially has ten thousand Bitcoin.
+[1811.36:1813.08] Initializing a variable.
+[1813.08:1816.3999999999999] That's the value, zero, that's zero, zero, zero, five.
+[1816.3999999999999:1821.76] That's the value you can get up and down, whatever.
+[1821.76:1824.6799999999998] You initialize a variable, you let people play with it.
+[1824.6799999999998:1829.04] Few years later, one of the variables becomes ten thousand francs.
+[1829.04:1831.8799999999999] And of course, the other variables costs a lot more.
+[1831.8799999999999:1832.8799999999999] Okay?
+[1832.8799999999999:1833.8799999999999] Remember this.
+[1833.8799999999999:1838.56] We are just talking about initializing variables, writing some piece of code, people executing
+[1838.56:1839.56] it.
+[1839.56:1846.9199999999998] So you have, I don't know how many startups in Switzerland raised in huge amount of money
+[1846.9199999999998:1849.2] to implement protocols like this.
+[1849.2:1856.3999999999999] So I know a couple who are really doing very, very well, starting from this idea.
+[1856.3999999999999:1861.0] The heart of this, I'm recorded, but I can say it, there is nothing.
+[1861.0:1865.56] You're not building a plane or building a car or building something physical.
+[1865.56:1871.84] You are initializing variables and assigning this to that and getting a lot of money.
+[1871.84:1873.84] Okay.
+[1873.84:1875.8] So I just gave you two examples.
+[1875.8:1878.2] Of course, there are others.
+[1878.2:1892.2] If I think of the current crisis or COVID crisis, zoom, the company zoom is now richer
+[1892.2:1897.1200000000001] than all airplane companies together.
+[1897.1200000000001:1903.28] You put Lufthansa, KLM, American Airlines, whatever you add, their capitalization, Boursier,
+[1903.28:1904.8] I don't know how to say that.
+[1904.8:1906.8] Zoom is higher.
+[1906.8:1908.28] What is zoom?
+[1908.28:1915.76] Zoom is a small company that starts as a split of Cisco, doing streaming.
+[1915.76:1920.28] And the guy who was working at Cisco at some point said, oh, this is very important to
+[1920.28:1923.76] be able to do streaming and we have to do with distributed.
+[1923.76:1924.76] Why?
+[1924.76:1927.84] Because we don't know in advance how many people are going to join.
+[1927.84:1930.8799999999999] So we need to find a smart way to distribute the streams.
+[1930.8799999999999:1931.8799999999999] Okay.
+[1931.8799999999999:1935.04] So it has distributed algorithm to do some streaming.
+[1935.04:1941.08] Now the company is richer than the biggest companies who they buy airplanes, they buy
+[1941.08:1942.68] these day by day.
+[1942.68:1945.56] The company is richer.
+[1945.56:1948.6] And the company is about a distributed algorithm.
+[1948.6:1949.6] Okay.
+[1949.6:1955.9199999999998] So when we talk about distributed algorithms, where do these algorithms fit?
+[1955.9199999999998:1957.7199999999998] Where do they sit?
+[1957.7199999999998:1959.1999999999998] Where do their life physically?
+[1959.1999999999998:1960.1999999999998] Okay.
+[1960.1999999999998:1962.7199999999998] So this is important.
+[1962.7199999999998:1965.9199999999998] And this is something that composes sometimes the students.
+[1965.9199999999998:1967.9199999999998] Okay.
+[1967.9199999999998:1975.9199999999998] If you think of a network, who had a class on networking?
+[1975.92:1981.28] Maybe you had, I don't know, LeBoudeck, raise your hand, those who had LeBoudeck.
+[1981.28:1982.28] Okay.
+[1982.28:1987.44] Some of you had LeBoudeck, some of you had Katheen Argyraki.
+[1987.44:1991.04] So you had some notions of networking.
+[1991.04:1996.52] And then you had programming languages, maybe Scala, C and C++.
+[1996.52:2001.0800000000002] So where are really distributed algorithms that we study?
+[2001.08:2006.1599999999999] We are somehow in between, and I will explain to you what I mean.
+[2006.1599999999999:2012.76] Essentially, when you study networking, you study how to do UDP or how to do TCP and stuff
+[2012.76:2013.76] like that.
+[2013.76:2023.6] But if I give you UDP or TCP and ask you, can you build a system that does Bitcoin like
+[2023.6:2025.96] blablabli and do distributed transactions?
+[2025.96:2027.8] You will find it hard.
+[2027.8:2033.08] You will find it hard because it's like starting from assembly and trying to write a high level
+[2033.08:2034.3999999999999] program.
+[2034.3999999999999:2038.24] You lack the basic abstractions to build your program.
+[2038.24:2043.0] It's really like saying, I give you assembly and you have to do some nice interface.
+[2043.0:2044.9199999999998] Today, nobody does that.
+[2044.9199999999998:2050.88] We give you some intermediate abstractions that you are going to use to build your application.
+[2050.88:2053.7599999999998] Distributed algorithms are exactly like that.
+[2053.76:2060.76] These are abstractions that you use on top of a network and understanding those abstractions
+[2060.76:2066.5600000000004] not only help you because you can reuse them, you can find them more and more in the web,
+[2066.5600000000004:2071.44] but they help you understand what it takes to build a distributed algorithm.
+[2071.44:2073.88] What does it mean that it is correct?
+[2073.88:2076.5600000000004] What does it mean that it is fast, etc.?
+[2076.5600000000004:2082.32] So the goal of this class is to teach you these abstractions that you can use because you
+[2082.32:2089.32] can find more and more of them and because we want you to be able to implement them yourself.
+[2089.32:2101.92] So the main action is that the network is not enough to build modern distributed applications.
+[2101.92:2106.32] When I say the network, I mean UDP or even TCP.
+[2106.32:2108.04] This is too low level.
+[2108.04:2109.6000000000004] You need more.
+[2109.6:2117.7999999999997] You need more because the applications somehow today are based on has some requirements like
+[2117.7999999999997:2120.16] safety, security, dependability, etc.
+[2120.16:2128.04] That if you only give you UDP, it's a might.
+[2128.04:2132.7599999999998] So the abstractions we are going to study are the following.
+[2132.76:2140.36] So to give you an analogy, when we first start programming languages, we usually try to
+[2140.36:2147.1600000000003] teach you sets, record inheritance between sets or records, whatever.
+[2147.1600000000003:2150.76] And these are the abstractions you study.
+[2150.76:2156.96] And then you study for example how to order a set or how to do this and that.
+[2156.96:2161.7200000000003] Here the abstractions we study are of course network oriented.
+[2161.72:2167.3599999999997] And they have to do with broadcasting because we assume we have a set and we want this set
+[2167.3599999999997:2170.04] of processes to do something together.
+[2170.04:2174.64] So we need to inform them of something or we need to make them agree, etc.
+[2174.64:2177.3199999999997] So these are the abstractions we are going to study.
+[2177.3199999999997:2180.9599999999996] The live broadcast, causal broadcast, how to emulate a shared memory.
+[2180.9599999999996:2182.7599999999998] I will explain that.
+[2182.7599999999998:2186.7999999999997] Consensus, total order broadcast, atomic commutation of live broadcast.
+[2186.7999999999997:2188.9599999999996] These are the abstractions we are going to study.
+[2188.96:2196.7200000000003] The goal is to teach you of course these abstractions but also to give you to teach you
+[2196.7200000000003:2197.88] a discipline.
+[2197.88:2201.88] How do you even define these abstractions precisely?
+[2201.88:2204.44] How do you reason about the algorithm?
+[2204.44:2210.92] And the goal of the project that you have is to take you bring you to Earth to teach you
+[2210.92:2212.48] how to program them.
+[2212.48:2213.48] Okay?
+[2213.48:2216.04] Again, you are master students.
+[2216.04:2222.64] The goal here is not to, we are not trying to select the best and then the others will
+[2222.64:2226.08] go to the man or to this or go home or whatever.
+[2226.08:2227.08] No.
+[2227.08:2229.88] We want all of you to succeed in your studies, etc.
+[2229.88:2234.24] But the goal is that you all succeed in finishing studies by understanding some fundamental
+[2234.24:2235.24] things.
+[2235.24:2236.24] Okay?
+[2236.24:2242.12] So don't you ever think that the project or the class is there to select or to do this
+[2242.12:2243.12] and that?
+[2243.12:2245.12] I close that bracket.
+[2245.12:2246.12] Okay.
+[2246.12:2255.96] So before diving and giving you examples to these abstractions, it is important to understand
+[2255.96:2258.3199999999997] that of course you can do without them.
+[2258.3199999999997:2263.04] It's just like saying I want to build a program with a great interface for something and
+[2263.04:2264.04] I start from assembly.
+[2264.04:2265.04] Of course you can do it.
+[2265.04:2267.04] You can do anything on the touring machine.
+[2267.04:2273.72] But when we give you some libraries of graphical interfaces, it helps you achieve your goal
+[2273.72:2277.56] faster and also give you examples of what you should do and not do.
+[2277.56:2279.08] So this is the same.
+[2279.08:2282.4399999999996] Of course you can build a distributed program without this.
+[2282.4399999999996:2287.7999999999997] But for example, if I take something that is very hard today, machine learning.
+[2287.7999999999997:2291.8399999999997] Of course, everybody talks about machine learning and I'm sure you have classes on machine
+[2291.8399999999997:2292.8399999999997] learning.
+[2292.8399999999997:2298.68] If you think about it today, what is the success, why is machine learning successful?
+[2298.68:2301.56] It's because we have a lot of data.
+[2301.56:2307.44] But the fact that we have a lot of data means we need several machines to treat the data.
+[2307.44:2314.72] Now all machine learning that are reasonably effective are distributed.
+[2314.72:2319.0] You look at machine learning program, it's the distribution.
+[2319.0:2323.84] You have one machine playing some role, another machine playing some roles.
+[2323.84:2329.0] Sometimes we talk about client servers, sometimes we talk about multiple servers, etc.
+[2329.0:2338.32] But the goal of the machine learning algorithm is just to play a game like Go or whatever.
+[2338.32:2344.0] Sure, it works if all the machines are up and running, maybe it's going to learn quickly
+[2344.0:2350.88] and then you're going to beat the World Champion of Go today or tomorrow or whatever.
+[2350.88:2351.88] No problem.
+[2351.88:2358.36] But if the Go now is not only to play a game and show something extraordinary but somehow
+[2358.36:2367.2000000000003] funny, if the goal is to teach how to drive or how to fly or how to cure.
+[2367.2000000000003:2372.08] Now we are talking about critical applications and the fact that we have something distributed
+[2372.08:2379.1200000000003] over a network, I need to be careful because some of the machines may be faulty or even worse,
+[2379.1200000000003:2385.6800000000003] they may be some data may be corrupted or some data may be malicious in the sense that
+[2385.68:2391.12] somebody has put some fake data or whatever, I need to reason in terms of a distributed
+[2391.12:2398.3999999999996] program where parts of it can be faulty or even hacked or even malicious.
+[2398.3999999999996:2404.3599999999997] Just to give you a bit of history to help you understand the tendency of computing.
+[2404.3599999999997:2408.8799999999997] 15 years ago you go to the biggest conference, you know what the biggest forums in machine
+[2408.8799999999997:2414.3199999999997] learning are, you know the names, some of you are maybe PhD students.
+[2414.32:2420.1600000000003] In machine learnings you have two big conferences, one of them is called NERIPS and ICMF, okay.
+[2420.1600000000003:2424.6800000000003] The latest results are there, the biggest Google researchers, Facebook researchers, they
+[2424.6800000000003:2425.6800000000003] published there.
+[2425.6800000000003:2431.0] 15 years ago people would write about the statistics of this and that and they think.
+[2431.0:2439.6800000000003] Now today there is a major subcategory of papers in those conferences just talking about
+[2439.68:2444.3599999999997] distributed machine learning and what is called Byzantine machine learning.
+[2444.3599999999997:2450.64] We use the Byzantine to say and I will explain that, some of the machines are actually hacked
+[2450.64:2453.7599999999998] and it's becoming one of the main topics of machine learning.
+[2453.7599999999998:2460.72] How do you learn if a subcategory or sub sets of your machines are bad?
+[2460.72:2464.2] So even if you do machine learning you have to understand the distributed algorithms
+[2464.2:2467.3599999999997] and how to build them, okay.
+[2467.36:2469.6800000000003] Now I will come back to those examples.
+[2469.6800000000003:2474.6400000000003] Now let me give you two examples of abstractions we are going to study and I will try to draw
+[2474.6400000000003:2478.92] the parallel with Bitcoin, distributed machine learning, whatever.
+[2478.92:2484.2000000000003] For example we are going to study reliable broadcasts, what is reliable broadcasts, okay.
+[2484.2000000000003:2489.56] It's the primitive that we are going to study, we are going to reason about it in the class
+[2489.56:2493.76] and then you are going to implement it as a project.
+[2493.76:2503.7200000000003] And ensures that when somebody sends a message the message is received by all or by none,
+[2503.7200000000003:2504.7200000000003] okay.
+[2504.7200000000003:2508.7200000000003] So if I take for example take TCP, TCP is considered reliable.
+[2508.7200000000003:2512.0400000000004] Assume I want to tell you something, all of you.
+[2512.0400000000004:2516.96] I want to tell you hey next Monday there is John Fediral, but we are going to have a class
+[2516.96:2520.96] because I have something very important to tell you and you should come, okay.
+[2520.96:2527.64] So I open a channel with all of you with TCP and I stand on you this information, okay.
+[2527.64:2534.76] And TCP, the specification of TCP is such that if my machine is correct and your machine
+[2534.76:2539.28] is correct you will get my message, okay.
+[2539.28:2546.08] But what if my machine is not correct and not correct means it has some frequent interruptions
+[2546.08:2551.0] or the internet connection doesn't work very well or maybe it's even cut from the network.
+[2551.0:2556.72] It could be that some of you get the message and some of you do not, okay.
+[2556.72:2562.7999999999997] So TCP does not guarantee that either all of you get it or none does.
+[2562.7999999999997:2564.88] Are you with me?
+[2564.88:2569.7599999999998] So even if TCP sounds reliable, it's not that reliable as long as I want to say something
+[2569.7599999999998:2575.0] to all of you because I could fail in the middle and therefore some of you could get the
+[2575.0:2577.28] message and some of you could not.
+[2577.28:2582.48] The reliable broadcast is something that you implement on top to guarantee that either
+[2582.48:2585.52] we all get it or none does.
+[2585.52:2592.28] But you can tell me why do you want this particular case where none does, none does receive
+[2592.28:2593.6] the information.
+[2593.6:2599.16] But what if my machine fails immediately without even sending the information to anyone?
+[2599.16:2604.56] This is a case where I cannot prevent a situation where nobody does receive the information.
+[2604.56:2611.7599999999998] Then you can tell me, okay, but how do you guarantee that if some get the message, everybody
+[2611.7599999999998:2615.72] does, assuming that my machine has failed in the middle.
+[2615.72:2617.32] How do we guarantee that?
+[2617.32:2622.24] Well we guarantee that because we have an algorithm that is distributed, that is going to ensure
+[2622.24:2629.4] that if he does get the message and he notices that I have failed, he is in charge of sending
+[2629.4:2631.16] it to all of you.
+[2631.16:2633.16] Okay.
+[2633.16:2638.3599999999997] Wait, but what if he is malicious?
+[2638.3599999999997:2640.04] Now things become interesting.
+[2640.04:2642.68] This is exactly what this field is about.
+[2642.68:2643.68] Okay.
+[2643.68:2649.48] How do you build these reliability things, assuming that some processes can fail or even can
+[2649.48:2650.48] be malicious?
+[2650.48:2651.48] Okay.
+[2651.48:2657.92] And we are going to see that certain things are easy but very expensive in terms of complexity,
+[2657.92:2661.68] some things are impossible, some things require some assumptions, et cetera.
+[2661.68:2664.52] And this is what we want you to understand.
+[2664.52:2665.52] Okay.
+[2665.52:2669.48] How to reason about, oh, this is, this sounds impossible.
+[2669.48:2672.2] This I need that assumption, this I could do it that way.
+[2672.2:2673.2] Okay.
+[2673.2:2675.52] So reliable broadcast is something we are going to study.
+[2675.52:2677.96] Atomic committee is something else.
+[2677.96:2685.3199999999997] Atomic committee is like, okay, so let's pretend we didn't hear the ring and we keep going
+[2685.3199999999997:2687.3599999999997] and I promise I finished earlier.
+[2687.36:2692.2400000000002] So those of you who came late were not going to break because I'm still not comfortable
+[2692.2400000000002:2694.4] stopping the recording and continuing.
+[2694.4:2697.52] So we are going to continue on a software year.
+[2697.52:2701.6800000000003] Atomic committee is another abstraction that has a slightly different flavor.
+[2701.6800000000003:2707.4] In reliable broadcast, there is some process informing others about something.
+[2707.4:2709.52] Atomic committee is slightly different.
+[2709.52:2713.1600000000003] We all need to agree on something.
+[2713.16:2721.3999999999996] And we need to agree on committing a transaction or aborting a transaction.
+[2721.3999999999996:2722.3999999999996] Okay.
+[2722.3999999999996:2723.3999999999996] All of us.
+[2723.3999999999996:2729.3599999999997] And the property of atomic committee is that if any of us wants to abort, the transaction
+[2729.3599999999997:2730.3599999999997] is abort.
+[2730.3599999999997:2731.3599999999997] Okay.
+[2731.3599999999997:2737.04] So let's say we want to have a party somewhere and the party involves us all.
+[2737.04:2739.44] Everybody is very important to the party.
+[2739.44:2745.04] So if everybody wants to organize the party, the party is going to be committed to happen.
+[2745.04:2752.0] But if one of us does not want, we have to abort.
+[2752.0:2757.7200000000003] You can tell me, this is very easy because it's enough to ask everyone, what do you think,
+[2757.7200000000003:2759.56] what do you think, what do you think, wait.
+[2759.56:2764.16] But what if we ask everyone and then he tells me, I don't, I want to do the party and
+[2764.16:2766.88] everybody tells me I want to do the party.
+[2766.88:2772.32] But she didn't get the same information because when he was standing, heard the message,
+[2772.32:2773.32] he failed.
+[2773.32:2775.7200000000003] He sent me the message, he's machine failed.
+[2775.7200000000003:2780.2400000000002] And then when he wants to send her the message, he's machine failed.
+[2780.2400000000002:2783.44] She might believe that no, there is no party.
+[2783.44:2785.6800000000003] And I might believe that there is a party.
+[2785.6800000000003:2786.6800000000003] What do we do?
+[2786.6800000000003:2787.6800000000003] Ah, we need to agree.
+[2787.6800000000003:2788.6800000000003] How do we agree?
+[2788.6800000000003:2791.6] Because when we start, agree, I sent her my message.
+[2791.6:2792.6] She doesn't reply.
+[2792.6:2794.56] Oh, did she get it or not?
+[2794.56:2795.76] Maybe she failed.
+[2795.76:2798.76] Now again, we have the problem, but we want to agree.
+[2798.76:2801.48] It turns out that this is very, very difficult.
+[2801.48:2805.76] And we are going to study these things.
+[2805.76:2806.76] Okay.
+[2806.76:2814.6800000000003] The players, I mean, what are we going to play with when devising the civil algorithms?
+[2814.6800000000003:2816.6800000000003] Of course, we have processes.
+[2816.6800000000003:2820.28] Again, remember, processes, they model machines.
+[2820.28:2821.28] I cause them processes.
+[2821.28:2826.4] I don't want to use the firm machine because it depicts something heavy.
+[2826.4:2830.92] Sometime processes are just sensors that even use swallow to watch your heart and they
+[2830.92:2836.6800000000003] send messages to some machine with some doctor or they call something.
+[2836.6800000000003:2837.6800000000003] Okay.
+[2837.6800000000003:2840.0800000000004] So machines can be phones, can be anything.
+[2840.0800000000004:2841.48] Then we have channels.
+[2841.48:2842.48] Okay.
+[2842.48:2845.84] Channels are the way to send messages.
+[2845.84:2851.2400000000002] And we're going to define the channels precisely because this is going to be something.
+[2851.24:2855.7599999999998] But there is also something very important that we are going to use in this class, which
+[2855.7599999999998:2857.7599999999998] is the notion of failure detectors.
+[2857.7599999999998:2858.7599999999998] Okay.
+[2858.7599999999998:2863.3599999999997] I'm going to explain to you what it is today and use that as an example to explain, to
+[2863.3599999999997:2866.56] give you an intuition of what the civil algorithms are.
+[2866.56:2870.56] I'm going to use this example as well as the example of channels.
+[2870.56:2871.56] Okay.
+[2871.56:2875.9199999999996] So we have a set of processes.
+[2875.92:2883.36] You want PN or PQR, every pair is connected by a link or a channel and the processes they
+[2883.36:2886.08] can exchange messages through this link.
+[2886.08:2887.08] Okay.
+[2887.08:2896.4] So this is the baseline.
+[2896.4:2902.4] Every process has a piece of the distributed algorithm.
+[2902.4:2906.84] So this is also something rather confusing for many students, but I hope you get used
+[2906.84:2907.84] to it.
+[2907.84:2910.0] A distributed algorithm is what?
+[2910.0:2915.08] Is a piece of code that is executed at more than one process.
+[2915.08:2920.12] Here we typically assume that we have N and we typically assume that they all execute
+[2920.12:2921.12] the same piece of code.
+[2921.12:2925.6800000000003] Of course, they don't really all execute the same piece of code because sometimes I'm
+[2925.6800000000003:2932.32] going to say this is the piece of code executed by process PI.
+[2932.32:2936.6000000000004] PI is like this in programming languages, but I call it PI.
+[2936.6000000000004:2941.7200000000003] And I would say if I equals one, do this and that.
+[2941.7200000000003:2948.1200000000003] This means that in my mind, in my system, P1 plays an important role.
+[2948.1200000000003:2955.56] Or if P1 fails and I equals two, now I'm electing a new leader in my system, it's P2.
+[2955.56:2956.56] Okay.
+[2956.56:2961.0] So I have the same piece of code, but of course I'm going to play with this I, which is the
+[2961.0:2963.24] this if you want.
+[2963.24:2964.52] Are we together?
+[2964.52:2967.64] I have several that called P1, P2, P3.
+[2967.64:2973.76] They all execute the same code and I typically use a variable that tells me who are we talking
+[2973.76:2974.76] about?
+[2974.76:2977.2] Who is executing the actual piece of code?
+[2977.2:2984.16] If this looks to abstract, not panic, there will be tons of exercises.
+[2984.16:2990.4] What is also important to understand is how do we write these pieces of code?
+[2990.4:2994.92] We write them using some even based programming.
+[2994.92:2999.04] I think you have some of you have seen that in Scala or in other languages.
+[2999.04:3004.52] In distributed computing is convenient to things in terms of events because I have this
+[3004.52:3007.6] machine, there was this machine there and this machine there.
+[3007.6:3010.32] The machine, my machine is sitting.
+[3010.32:3013.32] And maybe it's not initiating anything.
+[3013.32:3016.56] It's receiving messages.
+[3016.56:3022.24] So it's a little bit like waiting or triggered by an event and what I'm going to write in
+[3022.24:3028.68] my piece of code is if you receive a message from that guy, how do we call this if you receive?
+[3028.68:3035.48] Or if I press this button asking you to send a message, this is like event based programming.
+[3035.48:3036.48] Okay.
+[3036.48:3040.56] In classical programs, I have a beginning of the program and an end.
+[3040.56:3046.04] Here, there is no real beginning and there is no real end.
+[3046.04:3048.72] How can you think of a beginning or end of a Google program?
+[3048.72:3051.64] It's sitting there on tons of machines.
+[3051.64:3052.96] You can even replace the machines.
+[3052.96:3055.68] It's running or Facebook or whatever.
+[3055.68:3058.24] These are even based modules.
+[3058.24:3061.2799999999997] They are just waiting there with an event.
+[3061.2799999999997:3070.6] The way we write typically the algorithms is by staying a pun event, event one.
+[3070.6:3072.72] He means event of this type.
+[3072.72:3075.36] Even one is like the type.
+[3075.36:3078.4] Maybe the bench of attribute do something.
+[3078.4:3082.92] So the model is sitting and waiting for something to happen.
+[3082.92:3087.8] The something to happen can come from another machine or can come from the application running
+[3087.8:3089.8] on the actual process.
+[3089.8:3092.08] The application is me saying buy.
+[3092.08:3093.08] Sell.
+[3093.08:3094.08] I want to transfer money.
+[3094.08:3096.08] I want to do this or that.
+[3096.08:3097.08] Okay.
+[3097.08:3099.92] So upon events, okay.
+[3099.92:3102.6800000000003] So I wake up and into do something.
+[3102.68:3105.7599999999998] I do certain things and I trigger another event.
+[3105.7599999999998:3106.7599999999998] Okay.
+[3106.7599999999998:3109.44] So this is something important.
+[3109.44:3115.08] Upon event and trigger as I are like the interface of the model with the external of the
+[3115.08:3119.44] module with the external world.
+[3119.44:3125.52] Between upon event and trigger, whatever is executed are local instructions and just
+[3125.52:3128.7999999999997] execution things that are local to my process.
+[3128.8:3134.52] Assign value to a viable test something, do some match or whatever.
+[3134.52:3141.6000000000004] What is distributed aspect is this upon event and trigger and I'm going to give you a few
+[3141.6000000000004:3144.1600000000003] simple examples.
+[3144.1600000000003:3145.84] There is also something important.
+[3145.84:3154.84] So I have modules and these modules are sometimes sitting on different machines.
+[3154.84:3159.2000000000003] I have different modules on the same machine.
+[3159.2000000000003:3160.2000000000003] Why is that?
+[3160.2000000000003:3163.84] As you are going to see, we have layers on one machine.
+[3163.84:3164.84] Okay.
+[3164.84:3170.76] I have an application, Bitcoin and then I have UDP or something like that on the bottom.
+[3170.76:3173.52] Between these two, I have several layers.
+[3173.52:3179.84] Maybe I have a layer implementing reliable broadcast that I talked to you about you earlier.
+[3179.84:3185.6400000000003] The on top of reliable broadcast, I have something even more sophisticated, total order
+[3185.6400000000003:3188.2400000000002] broadcast because that's more complicated.
+[3188.2400000000002:3194.4] So when I implement my total order broadcast, I use the module reliable broadcast and the
+[3194.4:3198.6800000000003] module reliable broadcast uses reliable channels which is TCP.
+[3198.6800000000003:3201.84] So I have a structure of modules.
+[3201.84:3209.1200000000003] It's exactly like staying when I build my class graphical interface.
+[3209.12:3215.08] I use some classes in my implementation and the class use other classes and so forth.
+[3215.08:3216.08] Okay.
+[3216.08:3220.12] Except that here, these modules, I have them on this machine and on that machine and on
+[3220.12:3221.12] the other machine.
+[3221.12:3225.44] And it's like you have a view that is vertical and also horizontal.
+[3225.44:3229.0] Again, if this looks to abstract, no panic.
+[3229.0:3234.08] We have 14 weeks together to make that precise.
+[3234.08:3237.3599999999997] The piece of important terminology.
+[3237.36:3244.04] There is a notion of sending a message, requesting an event, etc.
+[3244.04:3248.96] And there is also something like an indication or a callback.
+[3248.96:3251.88] When I get an event, it's like a callback.
+[3251.88:3256.6] I don't know if you have studied callback, sometimes in programming event for graphical interfaces
+[3256.6:3257.6] or something.
+[3257.6:3261.4] It's like an operation waiting to be called by some external entity.
+[3261.4:3263.96] We call it a callback.
+[3263.96:3270.68] Delivering something that is also confusing is the act of delivering a message.
+[3270.68:3271.68] Okay.
+[3271.68:3278.28] Remember that delivering a message is like staying in a finite implementation, a reliable
+[3278.28:3279.28] broadcast.
+[3279.28:3284.16] Delivering a message means now I'm sure that the property of reliable broadcast is ensured
+[3284.16:3286.8] because the message is delivered.
+[3286.8:3289.56] It is not the same as received.
+[3289.56:3293.8] Sometimes I receive a message that, like I said earlier, I want to rely on the message
+[3293.8:3294.8] to live broadcast.
+[3294.8:3295.8] I stand the message.
+[3295.8:3297.8] He receives the message.
+[3297.8:3300.88] But he doesn't deliver the message to his application.
+[3300.88:3305.1600000000003] I mean, he is the piece of code implementing reliable broadcast.
+[3305.1600000000003:3309.84] He does not deliver the message to his application because he says, oh no, I should not do that
+[3309.84:3314.2400000000002] too fast because I need to make sure the property of all or nothing.
+[3314.2400000000002:3318.1200000000003] So before doing that, maybe I should first send it to more processes.
+[3318.1200000000003:3320.92] I don't know if you see what I'm saying.
+[3320.92:3324.12] The act of delivering is like committing.
+[3324.12:3327.12] The message I have the properties of reliable broadcast.
+[3327.12:3328.48] Again, I'm going to explain that.
+[3328.48:3331.08] I'm just giving you warnings.
+[3331.08:3333.08] Be careful with the terminology.
+[3333.08:3339.76] Receiving is not the same as delivering a message as you would see in a couple of slides.
+[3339.76:3341.56] Okay.
+[3341.56:3343.6800000000003] So this is how we are going to proceed.
+[3343.6800000000003:3348.6] And I'm going to do that on two examples today, very simple.
+[3348.6:3353.56] For every abstraction or we want to implement reliable broadcast, atomic, commit, etc.,
+[3353.56:3356.8399999999997] we start with defining it precisely.
+[3356.8399999999997:3357.8399999999997] Okay.
+[3357.8399999999997:3360.56] And believe me, this exercise is crucial.
+[3360.56:3362.2] What are the properties that we want?
+[3362.2:3365.7599999999998] When you say you want all or nothing, can you be precise?
+[3365.7599999999998:3366.7599999999998] What does that mean?
+[3366.7599999999998:3369.16] And the devil is in the details.
+[3369.16:3371.68] We will specify the abstraction.
+[3371.68:3375.24] Then we are going to make some assumptions.
+[3375.24:3376.72] What does that mean?
+[3376.72:3378.7999999999997] In classical computing, we don't do that.
+[3378.7999999999997:3382.48] We simply say, I have a tool in the machine that executes one instruction.
+[3382.48:3384.48] The second, now I have a set.
+[3384.48:3385.48] Okay.
+[3385.48:3387.9599999999996] What do I assume about this set?
+[3387.9599999999996:3391.2] Can I assume that a half can fail?
+[3391.2:3392.2] Okay.
+[3392.2:3393.7599999999998] I can maybe this is an assumption.
+[3393.7599999999998:3396.2799999999997] Can I assume that two-thirds can fail?
+[3396.2799999999997:3399.9199999999996] Can I assume that they simply can fail by stopping?
+[3399.9199999999996:3405.4399999999996] Or can I assume that they can attack my algorithm that's by starting pretending to be
+[3405.44:3407.48] somebody else?
+[3407.48:3410.2400000000002] This notion is called an adversary.
+[3410.2400000000002:3416.64] Writing a distributed algorithm is like playing a game against somebody who is malicious,
+[3416.64:3418.76] who is trying to defeat you.
+[3418.76:3420.7200000000003] And it's convenient in reality.
+[3420.7200000000003:3423.4] Usually, there is no real attacker.
+[3423.4:3424.4] Sometimes there is.
+[3424.4:3425.4] But sometimes there is not.
+[3425.4:3426.7200000000003] It's just bad luck.
+[3426.7200000000003:3431.2000000000003] But when you write an algorithm, you say, my algorithm is going to be correct.
+[3431.2:3438.96] As assuming I have majority of processes who don't fail are not malicious, they work
+[3438.96:3439.96] correctly.
+[3439.96:3444.3199999999997] The Bitcoin protocol works under that assumption.
+[3444.3199999999997:3446.8399999999997] Majority of nodes are correct.
+[3446.8399999999997:3448.16] This is the assumption.
+[3448.16:3453.3599999999997] We assume that the adversary, the attacker, cannot control half.
+[3453.3599999999997:3454.3599999999997] Okay.
+[3454.3599999999997:3459.3199999999997] So this is a mindset that is important when you write a distributed algorithm.
+[3459.32:3466.28] And once we have the specification, once we define the power of the adversary, the assumptions,
+[3466.28:3467.6000000000004] now we go to the algorithm.
+[3467.6000000000004:3472.7200000000003] And usually the discipline is to say we don't care about complexity first.
+[3472.7200000000003:3475.88] We make sure we have an algorithm that works.
+[3475.88:3480.2400000000002] Even if it requires crazy amount of messages, even if we don't care.
+[3480.2400000000002:3482.2000000000003] We want something correct.
+[3482.2000000000003:3483.2000000000003] Why?
+[3483.2000000000003:3484.8] Because something there is no algorithm.
+[3484.8:3486.84] Sometimes there is no algorithm.
+[3486.84:3489.6400000000003] Having an algorithm that is correct is already a good step.
+[3489.6400000000003:3492.44] It says, oh, this problem is solved.
+[3492.44:3494.56] Now let's try to make it faster.
+[3494.56:3496.84] But first let's make sure it's solved.
+[3496.84:3497.84] Okay.
+[3497.84:3505.44] First specification, then assumptions, and then algorithms.
+[3505.44:3511.88] When we define specifications of an abstraction, there are two kinds of properties.
+[3511.88:3513.8] One kind of property is called safety.
+[3513.8:3517.6400000000003] This is the property that states that nothing bad should happen.
+[3517.6400000000003:3523.52] For example, there should never be a situation where some people believe the party is going
+[3523.52:3524.52] to take place.
+[3524.52:3526.2400000000002] Other people believe it is not.
+[3526.2400000000002:3528.36] This is called safety.
+[3528.36:3531.2400000000002] There is never a situation where parts of you get the message.
+[3531.2400000000002:3533.1200000000003] The other parts don't never get it.
+[3533.1200000000003:3535.1200000000003] This is safety.
+[3535.1200000000003:3537.76] The other kind of property is called liveness.
+[3537.76:3546.0800000000004] Liveness is a property which states that something has to happen.
+[3546.0800000000004:3553.5200000000004] You have to think about it as if it's a property.
+[3553.5200000000004:3558.84] Somehow if you wait, it has a chance of being satisfied.
+[3558.84:3564.7200000000003] For example, safety has this characteristic that sometimes it's over.
+[3564.72:3568.56] We have reached this agreement.
+[3568.56:3570.3199999999997] Safety is violated.
+[3570.3199999999997:3575.9199999999996] Liveness is a class of properties that you can always hope to achieve.
+[3575.9199999999996:3585.56] It's like with some variance of Christianity.
+[3585.56:3587.56] You can still ask forgiveness.
+[3587.56:3589.8399999999997] It can be a real bastard.
+[3589.84:3594.76] If you ask forgiveness at some point, maybe you are forgiven.
+[3594.76:3596.92] You have this liveness thing.
+[3596.92:3600.84] You can, in some other religions, if you are a real bastard at some point, you can do
+[3600.84:3603.4] whatever you want.
+[3603.4:3612.6400000000003] Remember this distinction because it's going to be very important when we define specifications.
+[3612.64:3621.8399999999997] Let's keep in some things that I will come back to later.
+[3621.8399999999997:3626.3599999999997] I just want to give you an example.
+[3626.3599999999997:3633.2799999999997] To give you this example, we are going to make the following assumption in this case and
+[3633.2799999999997:3634.2799999999997] in most of the class.
+[3634.2799999999997:3639.48] We are going to make the assumption that we have a set of processes and these processes
+[3639.48:3642.76] either they run correctly or they stop.
+[3642.76:3644.48] They are not malicious.
+[3644.48:3648.04] When I will assume that they can be malicious, I will say it.
+[3648.04:3650.32] Now they can only stop.
+[3650.32:3655.32] Now I want to define the properties of channels between two processes.
+[3655.32:3657.76] I want to define them precisely.
+[3657.76:3662.2] And I say from the weakest channels that we know about, we have studied.
+[3662.2:3663.2] What is that?
+[3663.2:3668.28] If you take a network, what is the weak form of channels you have studied?
+[3668.28:3669.28] What's the name?
+[3669.28:3670.28] protocol.
+[3670.28:3671.28] UDP.
+[3671.28:3674.0400000000004] Have you studied UDP?
+[3674.0400000000004:3675.0400000000004] Good.
+[3675.0400000000004:3678.76] If you get asked, what does UDP really guarantee?
+[3678.76:3680.1600000000003] What does it give you?
+[3680.1600000000003:3682.0800000000004] You can say, not much.
+[3682.0800000000004:3683.0800000000004] Okay.
+[3683.0800000000004:3684.0800000000004] Why not?
+[3684.0800000000004:3686.4] Tell me more.
+[3686.4:3687.6400000000003] I need to know more.
+[3687.6400000000003:3690.52] You cannot simply say it doesn't guarantee much.
+[3690.52:3692.48] Let's be precise.
+[3692.48:3696.2000000000003] Being precise is called defining specification.
+[3696.2:3699.8399999999997] Okay. Here are the properties of UDP.
+[3699.8399999999997:3705.12] UDP in distributed communities that are called ferrolyse links.
+[3705.12:3707.3199999999997] Okay.
+[3707.3199999999997:3708.3199999999997] What is ferrolyse links?
+[3708.3199999999997:3713.04] Ferrolyse links are abstractions that guarantee the three properties here.
+[3713.04:3715.68] And let me go to them one by one.
+[3715.68:3723.68] The first one says, if a message is sent infinitely option by P1, PI to PJ, a net and
+[3723.68:3730.64] a net or PI or PJ questions, if they keep sending those messages, then M is delivered infinitely
+[3730.64:3731.64] often by PJ.
+[3731.64:3732.64] Okay.
+[3732.64:3740.3599999999997] If you take UDP channel, you have two nodes and then one of them keeps forever, sending
+[3740.3599999999997:3745.24] the same message to the other one, then the message is delivered.
+[3745.24:3746.24] Okay.
+[3746.24:3749.24] This is something that UDP gives you.
+[3749.24:3755.6] In other words, whenever you send a copy of the message, there is some probability that
+[3755.6:3757.4799999999996] it gets there.
+[3757.4799999999996:3763.4399999999996] If you keep doing that forever, the probability gets close to one.
+[3763.4399999999996:3765.4799999999996] Okay.
+[3765.4799999999996:3772.2799999999997] First property, second property, if a message is sent in a finite number of times by PI to
+[3772.2799999999997:3776.52] PJ, then M is delivered a finite number of times.
+[3776.52:3777.52] Okay.
+[3777.52:3782.84] You cannot with UDP send M three times and then M arrives two hundred times.
+[3782.84:3783.84] It's impossible.
+[3783.84:3786.48] This is another property I have.
+[3786.48:3791.08] The third property says no message is delivered unless it was sent.
+[3791.08:3793.96] The channel does not invent messages with UDP.
+[3793.96:3794.96] Okay.
+[3794.96:3803.56] These three properties, I claim they precisely define what UDP in fact, Ferlow's links are.
+[3803.56:3808.68] Is the first property a safety or a livenous property?
+[3808.68:3814.16] In other words, is it a property that I can always hope to achieve?
+[3814.16:3817.64] Yes or no?
+[3817.64:3820.2799999999997] Let me start with the third.
+[3820.2799999999997:3824.96] Is the third property a livenous property or a safety property?
+[3824.96:3832.64] Again, if you want to answer to this question, try to ask yourself, can I look at an execution
+[3832.64:3839.7999999999997] of my system and say, oh, the property is violated at time two or time ten, whatever.
+[3839.7999999999997:3847.68] The third property is a safety property because if a process delivers M and nobody has sent
+[3847.68:3852.12] M, then this means that the channels are not Ferlow's.
+[3852.12:3853.12] Okay.
+[3853.12:3855.12] Are we together?
+[3855.12:3861.68] It is a clear point where I can see that the property is violated.
+[3861.68:3866.64] If I look at the first property, if Ferlow's, can I stay at some point that it is violated?
+[3866.64:3867.64] No.
+[3867.64:3872.3999999999996] I can never observe the violation of the property.
+[3872.3999999999996:3876.96] It's something that I can always hope to achieve.
+[3876.96:3882.48] And you will see that this distinction between safety and livenous is crucial when I reason
+[3882.48:3887.04] about the correctness of algorithms, when I want to prove them correct.
+[3887.04:3892.36] The second property is also a safety property or a livenous property.
+[3892.36:3893.36] What do you think?
+[3893.36:3897.36] Is it a safety or livenous?
+[3897.36:3912.08] In fact, it's so safety or livenous.
+[3912.08:3919.7599999999998] It is actually a livenous property because I can never observe that an infinite number
+[3919.7599999999998:3923.68] of messages have been delivered or not.
+[3923.68:3926.68] Okay.
+[3926.68:3935.2799999999997] I'm saying by this property that the message cannot be delivered an infinite number of times.
+[3935.2799999999997:3938.88] But how can I observe that it has not been delivered an infinite number of times?
+[3938.88:3942.2400000000002] I cannot observe it in a finite execution.
+[3942.2400000000002:3944.04] Again, these things look abstract.
+[3944.04:3945.04] Don't worry.
+[3945.04:3947.48] I'm just getting you acquainted with the terminology.
+[3947.48:3948.7200000000003] So it's you.
+[3948.7200000000003:3950.2400000000002] I have links like this.
+[3950.2400000000002:3953.04] Ferlow's links.
+[3953.04:3960.36] And I want to build applications with this.
+[3960.36:3966.52] This is really cumbersome and difficult because whenever I want to exchange messages,
+[3966.52:3972.04] I need to build some loops of sending messages, do this, do that.
+[3972.04:3973.04] It's really complicated.
+[3973.04:3977.8] So nobody writes really high level programs with these channels.
+[3977.8:3980.92] People build higher level abstractions.
+[3980.92:3981.92] Okay.
+[3981.92:3984.44] For example, the following.
+[3984.44:3985.44] This is an example.
+[3985.44:3991.36] So this is another kind of channels that I call stubborn channels or stubborn links.
+[3991.36:3997.1200000000003] And these ones have two properties. If a process PI stands the message M to a correct process
+[3997.1200000000003:4003.52] PJ and PI doesn't crash, then PJ delivers M an infinite number of times.
+[4003.52:4006.76] So PI stands M and PI is correct.
+[4006.76:4011.0] Then PJ delivers M an infinite number of times if PJ doesn't crash.
+[4011.0:4013.0] It's called stubborn delivery.
+[4013.0:4018.56] On the second property, no message is delivered unless it was sent.
+[4018.56:4019.88] Now.
+[4019.88:4022.6400000000003] The second property is clearly a safety property.
+[4022.6400000000003:4023.6400000000003] Okay.
+[4023.6400000000003:4026.96] Because again, I can observe that it is violated at some point.
+[4026.96:4028.7200000000003] The first property is liveness.
+[4028.7200000000003:4032.04] Now please focus for one minute.
+[4032.04:4039.28] How do I implement this abstraction here using the produced abstraction?
+[4039.28:4040.88] What do I need to do?
+[4040.88:4044.88] Very, very simple.
+[4044.88:4050.84] What algorithm should I put in the module of sending a message?
+[4050.84:4052.32] What should I do?
+[4052.32:4053.32] Okay.
+[4053.32:4055.6400000000003] I want to I have this.
+[4055.6400000000003:4059.88] I want to implement this.
+[4059.88:4062.88] Okay.
+[4062.88:4072.92] So process PI needs to stand the message in an infinite loop.
+[4072.92:4073.92] Absolutely.
+[4073.92:4074.92] Very, very simple.
+[4074.92:4075.92] Okay.
+[4075.92:4076.92] How do I do that?
+[4076.92:4077.92] Now it's very easy.
+[4077.92:4082.16] You just need to get acquainted with this way of writing algorithm.
+[4082.16:4083.92] I want to implement what?
+[4083.92:4084.92] Stop on links.
+[4084.92:4085.92] The second kinds of links.
+[4085.92:4087.76] This is what I want.
+[4087.76:4088.92] What am I using?
+[4088.92:4090.92] I'm using fairly slim.
+[4090.92:4091.92] I'm using UDP.
+[4091.92:4092.92] Okay.
+[4092.92:4095.08] You understand the first two lines.
+[4095.08:4097.24] First line tells you what is it that you want to implement?
+[4097.24:4100.64] Second line tells you what is that you use.
+[4100.64:4102.8] Now I start the implementation.
+[4102.8:4105.6] What does it mean to implement tover links?
+[4105.6:4108.96] It means mainly implementing two kinds of events.
+[4108.96:4113.2] The act of sending and the act of receiving something.
+[4113.2:4114.2] Okay.
+[4114.2:4115.56] The act of sending.
+[4115.56:4122.04] When a process wants to stand, I write it stubborn, pierced, to pierced, send this message
+[4122.04:4123.84] end to some destination.
+[4123.84:4126.2] This is the third line of the code.
+[4126.2:4132.72] When a process wants to send the message end to some destination and satisfy the property
+[4132.72:4138.88] of stubborn links, knowing that underlying this I have fairly slim.
+[4138.88:4140.52] I need to enter a loop.
+[4140.52:4142.360000000001] This loop needs to be infinite.
+[4142.360000000001:4146.72] I need to do while true and use the underlying links.
+[4146.72:4149.2] The underlying links are fairly slim.
+[4149.2:4156.240000000001] I know that in the underlying links, if I invoke, send an infinite number of times and will
+[4156.240000000001:4159.4400000000005] be delivered an infinite number of times.
+[4159.44:4162.799999999999] This is exactly what I have achieved.
+[4162.799999999999:4168.879999999999] If a process PI sends a message, the message is delivered an infinite number of times.
+[4168.879999999999:4170.24] This is what I do.
+[4170.24:4175.16] When I want to send a message end, I create a loop.
+[4175.16:4177.24] Nobody is going to use this to build an application.
+[4177.24:4183.679999999999] I'm simply telling you how to read about the properties, how to write those algorithms.
+[4183.679999999999:4188.839999999999] This loop is going to ensure guarantee that the message will be delivered an infinite number
+[4188.84:4193.24] of times if the sender and the decenators don't say.
+[4193.24:4196.24] Good.
+[4196.24:4198.400000000001] The second part is very easy.
+[4198.400000000001:4206.8] When I get to deliver a message with fairly slim, I simply give it to the above layer,
+[4206.8:4209.360000000001] which is stubborn.
+[4209.360000000001:4210.72] Something you need to understand here.
+[4210.72:4214.4800000000005] I want to implement stubborn links.
+[4214.48:4220.12] So I need to first, I implement the act of standing with stubborn links.
+[4220.12:4224.719999999999] And there I use the act of standing with fairly slim.
+[4224.719999999999:4229.32] For receiving and delivering messages is the other way round.
+[4229.32:4230.32] Okay.
+[4230.32:4235.959999999999] I am saying I have underlying network with fairly slim.
+[4235.959999999999:4240.16] What happens when a message arrives with fairly slim?
+[4240.16:4242.16] Do I need to do something?
+[4242.16:4243.36] No, I don't need to do anything.
+[4243.36:4247.679999999999] I just give it to the upper layer with the stubborn semantics.
+[4247.679999999999:4252.5199999999995] Are we together?
+[4252.5199999999995:4255.0] There is nothing magic behind this thing.
+[4255.0:4259.08] The difficulty is in the way of writing the algorithm, the layering.
+[4259.08:4261.839999999999] That's what I want you to get used to that.
+[4261.839999999999:4263.16] This part is crucial.
+[4263.16:4264.16] Okay.
+[4264.16:4267.4] I want to implement some channels.
+[4267.4:4272.839999999999] And I'm using Channel A. And I'm using underlying channel A something that exists.
+[4272.84:4275.0] And I'm using the function of B.
+[4275.0:4280.88] Implementing A with B consists of implementing how I stand and how I receive.
+[4280.88:4286.2] I implement how I stand with A and I use how I stand with B.
+[4286.2:4292.68] But for receiving messages, I say if a message comes with Channel B, because this is what
+[4292.68:4299.52] I have, and I then invoke receiving with the semantics of A.
+[4299.52:4300.52] Okay.
+[4300.52:4304.040000000001] Don't panic if this looks fuzzy.
+[4304.040000000001:4308.4400000000005] I hope it clarifies now or later.
+[4308.4400000000005:4314.64] Let's try to go even have something stronger, have perfect links.
+[4314.64:4321.88] I want now perfect links because my application will be easier to write if I have perfect links.
+[4321.88:4325.200000000001] Perfect links are defined with three properties.
+[4325.200000000001:4327.76] Validity, no duplication, no creation.
+[4327.76:4328.76] Validity says.
+[4328.76:4337.64] If P i and P j are correct, then every message sent by P i to P j is delivered by P j.
+[4337.64:4340.96] Eventually means inevitable moment, not even channel.
+[4340.96:4341.96] Okay.
+[4341.96:4343.56] The sounds reasonable.
+[4343.56:4344.56] I am correct.
+[4344.56:4345.56] You are correct.
+[4345.56:4346.56] I send you a message.
+[4346.56:4347.56] You get the message.
+[4347.56:4348.56] Very easy.
+[4348.56:4350.56] No duplication says.
+[4350.56:4354.2] No message is delivered more than once.
+[4354.2:4355.400000000001] No creation says.
+[4355.400000000001:4357.84] No message is delivered unless it was sent.
+[4357.84:4358.84] No.
+[4358.84:4359.84] This channel looks very reasonable.
+[4359.84:4361.64] This is exactly what we want.
+[4361.64:4363.360000000001] What is this?
+[4363.360000000001:4367.4400000000005] What channel do you know gives you these properties?
+[4367.4400000000005:4369.04] Sander and receiver are correct.
+[4369.04:4370.56] Message arrives.
+[4370.56:4371.56] TCP.
+[4371.56:4372.56] Okay.
+[4372.56:4376.0] So TCP is exactly this.
+[4376.0:4377.0] Perfect links.
+[4377.0:4380.96] Now, how do I implement really TCP?
+[4380.96:4386.16] If I have stubborn links, stubborn links is what I presented earlier.
+[4386.16:4388.8] What do you need to do?
+[4388.8:4391.24] Let's see.
+[4391.24:4392.5599999999995] Not is complicated.
+[4392.5599999999995:4397.72] So here, I am implementing perfect links with stubborn links.
+[4397.72:4399.16] Stubborn links themselves.
+[4399.16:4402.16] I have implemented them with fairly low links.
+[4402.16:4404.4] In fact, stubborn links are just intermediary.
+[4404.4:4405.4] Okay.
+[4405.4:4407.4] What do I do?
+[4407.4:4411.08] Again, here it turns out that I need a local variable.
+[4411.08:4413.72] I need a local variable which is delivered.
+[4413.72:4417.240000000001] Where this, as you will see, very important.
+[4417.240000000001:4422.84] It enables every process to remember what messages it has delivered.
+[4422.84:4423.84] Why?
+[4423.84:4427.400000000001] Because I don't want processes to deliver twice the same message.
+[4427.400000000001:4431.16] So I put a variable delivered, initially empty.
+[4431.16:4436.68] And then I implement the abstraction of reliable channels.
+[4436.68:4442.16] Implementing the abstraction of reliable channels means the act of sending and the act of
+[4442.16:4443.16] delivery.
+[4443.16:4444.16] Okay.
+[4444.16:4445.16] I implement sending.
+[4445.16:4449.88] Upon events, I call it perfect channel.
+[4449.88:4454.0] So it's perfect, peer to peer send, M to a destination.
+[4454.0:4455.08] What do I do?
+[4455.08:4459.28] I simply use my stubborn link to send M.
+[4459.28:4466.68] I don't need to do more because I know that if I use my stubborn links and I send M,
+[4466.68:4467.68] what is going to happen?
+[4467.68:4471.72] Stubborn links is going to guarantee to me that the message is going to arrive infinitely
+[4471.72:4473.88] often to the destination.
+[4473.88:4475.88] An infinite number of times.
+[4475.88:4476.88] Okay.
+[4476.88:4477.88] Good.
+[4477.88:4479.68] So I don't need to do more.
+[4479.68:4483.52] I cannot do more than sending a message an infinite number of times.
+[4483.52:4484.52] Okay.
+[4484.52:4488.360000000001] Now I need to implement the act of receiving.
+[4488.360000000001:4490.08] The act of receiving again.
+[4490.08:4492.2] You have to think the other way around.
+[4492.2:4493.92] You have stubborn links.
+[4493.92:4501.280000000001] Therefore, you're going to deliver a message M from the source with the semantic of stubborn
+[4501.28:4502.92] peer to peer deliver.
+[4502.92:4506.639999999999] And there, I cannot immediately forward the message.
+[4506.639999999999:4507.639999999999] No.
+[4507.639999999999:4511.0] Because stubborn links sends a lot of copies of M.
+[4511.0:4514.8] So I first check, did I already deliver M?
+[4514.8:4520.5199999999995] If M is not in the set delivered, this means this is the first time I see M.
+[4520.5199999999995:4527.5199999999995] And in that case, I mean, in that case, only I do deliver M with the semantic of perfect
+[4527.5199999999995:4528.5199999999995] peer to peer.
+[4528.5199999999995:4530.92] This is the last line before the end.
+[4530.92:4534.24] And then I add M to the set deliver.
+[4534.24:4535.24] Okay.
+[4535.24:4544.32] This algorithm, I can prove that it guarantees the properties here.
+[4544.32:4548.12] Estimating, I have this.
+[4548.12:4551.76] So if I have this as underlying channels.
+[4551.76:4559.0] And on top, I write this algorithm, then I can prove.
+[4559.0:4561.0] There is no magic in proving this.
+[4561.0:4562.24] It's simply first order logic.
+[4562.24:4567.56] I say, if I is correct, given it that has used stubborn channel, and by the property of
+[4567.56:4572.72] valid it of stubborn channels, then the message has arrived, that it has nothing magic.
+[4572.72:4578.68] Just legal organization of abstractions.
+[4578.68:4581.4] I can implement my reliable links.
+[4581.4:4585.36] I can ensure validity, no duplication and no creation.
+[4585.36:4589.679999999999] For example, let's try to look at the third property, no creation.
+[4589.679999999999:4595.28] No message is delivered until, unless it was sent.
+[4595.28:4600.32] Prove that this algorithm satisfies this property.
+[4600.32:4603.04] No message is delivered until, unless it was sent.
+[4603.04:4605.48] I look at the parts that concerns me.
+[4605.48:4612.04] The part that concerns me is the act of, is the line before the end, delivering a message
+[4612.04:4615.72] M from some source.
+[4615.72:4618.4] I want to prove that no message is delivered, unless it was sent.
+[4618.4:4625.16] So I say, assume that a message is delivered, delivered with the semantics of perfect links.
+[4625.16:4631.64] I say, if I trigger the line, the last, the, the, the, the, the, the, the, the, the line,
+[4631.64:4640.0] the event before the last line, this means that M has been delivered by the stubborn semantics.
+[4640.0:4647.16] But the stubborn semantics guarantee that if M is delivered, this means it was sent.
+[4647.16:4650.8] Ah, this means that the message was sent by the stubborn semantics.
+[4650.8:4655.04] But the only reason for a message to be sent by the stubborn semantics, it means it was
+[4655.04:4659.6] sent by the perfect channel semantics.
+[4659.6:4660.6] Nothing magic.
+[4660.6:4663.44] I'm just following some line of reasoning.
+[4663.44:4665.44] Are we together?
+[4665.44:4666.44] Okay.
+[4666.44:4670.24] And I can also try to do the same with validity.
+[4670.24:4672.48] I say, validity requires the following.
+[4672.48:4678.48] If a process PI sends M to PJ, M is delivered.
+[4678.48:4679.48] How do I prove this?
+[4679.48:4680.48] Okay.
+[4680.48:4685.719999999999] Assume PI sends M, perfect, pure to pure send.
+[4685.719999999999:4689.96] It's going to transmit the message to the stubborn link.
+[4689.96:4695.839999999999] The stubborn link guarantees that M is going to be, to arrive an infinite number of times.
+[4695.84:4699.400000000001] Which means that it will arrive at least once.
+[4699.400000000001:4706.24] Then by the implementation, if the message has not been delivered, it is going to be delivered.
+[4706.24:4707.64] So I have my property.
+[4707.64:4710.72] Are we together?
+[4710.72:4713.68] I didn't show you anything new.
+[4713.68:4718.84] The way TCP is implemented with UDP is classic in networking.
+[4718.84:4725.24] I'm trying to get you used to how we reason about these layers, how we talk about them,
+[4725.24:4726.24] how we reason about the algorithm.
+[4726.24:4729.5599999999995] Of course, later we are going to go above TCP.
+[4729.5599999999995:4733.16] We are going to build stronger abstractions.
+[4733.16:4739.08] But it is important to understand what you already know in these terms.
+[4739.08:4742.32] Okay.
+[4742.32:4747.639999999999] In this class, and I'm going to stop here, we assume we have a liable links.
+[4747.639999999999:4749.12] Assume we have TCP.
+[4749.12:4754.5599999999995] Because which means you don't need to reason about stubborn links or fair lost links.
+[4754.56:4760.320000000001] We are going to assume that if PI is correct and PJ is correct and PI stands M to PJ, the
+[4760.320000000001:4762.320000000001] message correct is delivered.
+[4762.320000000001:4763.320000000001] Okay.
+[4763.320000000001:4764.8] We are going to assume that.
+[4764.8:4770.280000000001] And we are going to assume, as I pointed out, processes can only fail by crushing.
+[4770.280000000001:4772.04] They don't behave maliciously.
+[4772.04:4777.320000000001] I don't come back to that later in the class.
+[4777.320000000001:4783.0] Essentially reliable links ensure that messages exchanges between correct processes are not
+[4783.0:4784.0] lost.
+[4784.0:4790.2] So, I'm going to stop here for this class.
+[4790.2:4794.88] Next time, which is not next Monday, next Monday is June.
+[4794.88:4796.64] So next Monday, you're going to skip it.
+[4796.64:4800.68] I really recommend that you start the project slowly.
+[4800.68:4802.16] There is nothing magic.
+[4802.16:4803.16] Start gets acquainted.
+[4803.16:4804.36] Pick your language.
+[4804.36:4810.0] Ask the TA what really you need to do, what recommendation advices.
+[4810.0:4816.2] And then in two weeks, we're going to start some meets in this class and then the TA theoretical
+[4816.2:4819.68] exercises will start at that point.
+[4819.68:4824.6] Nothing prevents you from starting to read the book to get an idea of the abstractions.
+[4824.6:4828.36] This class is not difficult, but it's not trivial.
+[4828.36:4829.36] Okay.
+[4829.36:4831.16] It's not difficult, it's not trivial.
+[4831.16:4832.8] You have to work a little bit.
+[4832.8:4834.24] You have to think about it.
+[4834.24:4841.04] And especially you have to put this mindset of a distributed algorithm that is horizontally
+[4841.04:4870.6] composed of civil layers, but also vertically composed of civil layers.
+[4871.04:4872.04] Okay.
+[4872.04:4873.04] Okay.
+[4873.04:4901.04] Okay.

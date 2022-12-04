@@ -1,0 +1,667 @@
+~EE-556 / Lecture 3 - 2/2 (2020)
+~2020-10-03T13:36:53.944+02:00
+~https://tube.switch.ch/videos/93b7b8f8
+~EE-556 Mathematics of data: from theory to computation
+[0.0:8.96] So we talked about creating the sentiment it said that it does not match the lower bounds
+[8.96:13.96] and then we introduced the accelerated gradient sentiment that does in absolute
+[13.96:14.96] elements.
+[14.96:18.12] We then discussed their adaptive bounds.
+[18.12:23.92] But what about non-com next problems?
+[23.92:30.400000000000002] Now in the case of non-com next city you don't have this notion of sub of now or non-com
+[30.400000000000002:38.96] next problems we cannot often more often than not like this.
+[38.96:43.84] If you recall for non-com next problems there is local minima there's first order stationary
+[43.84:44.84] points.
+[44.84:49.28] So it's the first order stationary point, it's the second order stationary point, it's
+[49.28:53.64] the global minimum.
+[53.64:64.24] So what we can talk about is how well reduced the gradient norm in general.
+[64.24:71.24000000000001] And for this the lower bound on the square of the gradient norm might be so this is important.
+[71.24000000000001:82.2] You will see different papers giving different, some paper might be talking about one over
+[82.2:86.12] square of k lower bounds.
+[86.12:90.44] They typically talk about that when it's just the norm of the gradient.
+[90.44:94.28] So we're talking about the norm of the gradient squared.
+[94.28:96.52000000000001] It's important.
+[96.52000000000001:104.48] In this case it's one over k so the lower bound there is the yaya carbon's work.
+[104.48:115.48] There is starting at Tel Aviv either this semester or next semester.
+[115.48:122.12] So in this case gradient percent is optimal because we did talk about gradient percent.
+[122.12:127.60000000000001] How it reduces the norm of the gradient in which is for the previous lecture, no previous
+[127.60000000000001:129.6] lecture, we did talk about this.
+[129.6:130.6] Right?
+[130.6:132.6] At the end of the lecture.
+[132.6:139.6] And in this case there is no need to think about acceleration.
+[139.6:145.2] All right?
+[145.2:151.95999999999998] So if you think about it for the case of comics, it's from the problems, gradient percent
+[151.95999999999998:156.92] and absolutely gradient percent, there's a difference between night and day.
+[156.92:163.2] So for non-commit not so much.
+[163.2:166.39999999999998] This is gradients.
+[166.39999999999998:170.76] Then why should we say anything else?
+[170.76:177.39999999999998] I'm like, I'm so sorry, see you guys.
+[177.39999999999998:180.32] All right.
+[180.32:185.23999999999998] So here's an interesting twist to this problem that we've been looking at.
+[185.24:191.4] So if you remember in statistical learning theory, we were looking at problem, we were
+[191.4:198.4] trying to learn functions in some function class that minimizes the population risk.
+[198.4:199.4] You know?
+[199.4:202.92000000000002] Remember the empirical risk versus the population risk.
+[202.92000000000002:207.68] The population risk is this expected value of loss function.
+[207.68:208.68] Right?
+[208.68:212.16000000000003] So here is our data, here is our prediction.
+[212.16:217.4] Here is the loss function, which is a metric or a super metric that measures the discrepancy
+[217.4:219.35999999999999] between two.
+[219.35999999999999:226.72] What we take and execute the value over the randomness of A and B.
+[226.72:232.28] So if you think about it, how do we do gradient percent here?
+[232.28:239.48] What we can do is think about an abstract gradient percent on the function space for functions.
+[239.48:240.48] Right?
+[240.48:242.88] It's an abstract method.
+[242.88:246.6] I'm not saying this is implementable, but if I were to write the gradient percent, that's
+[246.6:254.6] it, but I would write is the next function is equal to the previous function.
+[254.6:267.08] I updated with the gradient of the risk, expected risk, the expected are function.
+[267.08:268.08] Right?
+[268.08:271.56] So this is an abstract gradient method.
+[271.56:272.56] So what is this gradient?
+[272.56:273.56] Right?
+[273.56:280.52] So there's like bunch of properties that I'm going to slip on there, the carpets.
+[280.52:286.28] I think my case is Maria will shoot me because I'm just exchanging the expectation and
+[286.28:287.28] derivative.
+[287.28:288.28] Yeah.
+[288.28:289.28] I'm a terrible person.
+[289.28:293.2] I do it from time to time.
+[293.2:299.24] So here, you can think of it as taking the gradient and then maybe taking the expectation
+[299.24:300.24] afterwards.
+[300.24:302.08] Remember, we don't know the distribution.
+[302.08:303.84] These are unknown distributions.
+[303.84:304.84] Okay?
+[304.84:311.44] Now, even if you make this parameterized, it's still challenging.
+[311.44:312.44] Right?
+[312.44:318.32] So here's one parametric example.
+[318.32:325.48] So in portfolio optimization, what we would like to do is somehow, let's say you have some
+[325.48:328.64] assets that you want to allocate for some stocks.
+[328.64:329.64] Right?
+[329.64:333.64] What you want to do is maybe hit a particular return.
+[333.64:339.52] You want to have some sort of an expected return, which is greater than some threshold, while
+[339.52:343.88] maximizing your variance risk.
+[343.88:344.88] Right?
+[344.88:350.12] Like, even in this case, it's expectations.
+[350.12:351.12] It's stochastic.
+[351.12:353.24] Like, how do we take derivatives?
+[353.24:356.0] How do we compute these things to run a gradient descent?
+[356.0:358.4] And this is even constrained.
+[358.4:361.92] So that's what we're going to do now.
+[361.92:365.6] We're going to think about what is called as stochastic programming.
+[365.6:366.68] All right?
+[366.68:373.44] So the particular setting, what we're going to do is we're going to write this function
+[373.44:380.92] f, which is an expectation over f of x, x is the parameters.
+[380.92:381.92] Right?
+[381.92:384.76] But with some randomness here.
+[384.76:385.92] Okay?
+[385.92:393.88] I think with more concrete examples, it will become clearer what this means.
+[393.88:398.15999999999997] So let's start with some examples.
+[398.16:404.28000000000003] Now in this particular case, here is the famous or the infamous stochastic gradient descent
+[404.28000000000003:406.52000000000004] method.
+[406.52000000000004:411.28000000000003] So let's begin with the initial vector.
+[411.28000000000003:419.20000000000005] And then let's pick a gradient, which is an unbiased estimate of the full gradient.
+[419.20000000000005:423.24] I'll make this a bit clearer later on.
+[423.24:434.08] So here, what I mean by that is when you take the expectation of this g, this expected
+[434.08:438.44] value should be equal to the gradient itself.
+[438.44:443.68] Does this make sense?
+[443.68:446.56] I'm not telling you how to do that yet.
+[446.56:458.48] And just saying, suppose you have a stochastic estimate of the gradient, which is unbiased,
+[458.48:465.12] meaning it's expected value is actually equal to the deterministic gradient.
+[465.12:469.12] All right?
+[469.12:470.72] Okay.
+[470.72:477.72] There's the bidder of the original stochastic.
+[477.72:485.44000000000005] A bit about this f is 1.
+[485.44000000000005:491.8] So it's almost taken out that we need to update this.
+[491.8:503.12] So if this gradient is an unbiased estimate, we kind of expect in expectation this method
+[503.12:504.12] to perform.
+[504.12:506.52000000000004] All right?
+[506.52000000000004:516.76] Now here, we assume that there's some independence property between the randomness of the gradients.
+[516.76:522.68] But the most important thing here is that SGD is not a monotonic dissident method if the
+[522.68:524.68] gradients are stochastic.
+[524.68:525.68] Why?
+[525.68:527.92] Something like that.
+[527.92:532.16] Now let's think about this method with a concrete example.
+[532.16:538.8] If you recall, for the statistical learning framework, we talked about population risks,
+[538.8:542.56] and then estimating the population risk with an empirical risk estimate.
+[542.56:543.56] All right?
+[543.56:547.4] We call this empirical risk optimization.
+[547.4:552.8399999999999] There, we said that the averages tend to converge using the strong law of large numbers
+[552.8399999999999:556.8] to the expectations.
+[556.8:563.1999999999999] So in each case, we said, you know, ah, you can have an f, which is basically an average
+[563.1999999999999:565.1999999999999] of bunch of f's.
+[565.2:577.1600000000001] And so in the case of the empirical risk optimization, that could be h, a, i, b, i,
+[577.1600000000001:580.5600000000001] sum, right?
+[580.5600000000001:586.76] i is 1 to n, which was the data size, and we divide by n.
+[586.76:592.24] If you parameterize our function cross-sweet, some parameters x, this is what you get.
+[592.24:601.24] And this k is your fj of x would be, right?
+[601.24:602.24] 1 over n.
+[602.24:606.24] Oh, no, sorry.
+[606.24:611.24] There's the scaling of the real thing.
+[611.24:623.24] Now, hx, a, i, j, bj, is this here?
+[623.24:625.24] All right?
+[625.24:631.24] Remember, we talked about this problem when you were talking about statistical learning
+[631.24:632.24] here.
+[632.24:633.24] What?
+[633.24:635.24] Statistical learning framework.
+[635.24:640.24] There, we also said, look, you know, you can think about this expected population risk,
+[640.24:643.24] but we can compute that.
+[643.24:647.24] So instead, we can approximate it with the empirical risk.
+[647.24:655.24] And the empirical risk required us to take averages, because that's an easy way to approximate
+[655.24:658.24] an expectation.
+[658.24:659.24] No?
+[659.24:669.24] So in this particular case, problems of finite sums, if they're nice direct connection
+[669.24:672.24] with n-trickle, this minimization.
+[672.24:673.24] All right?
+[673.24:680.24] Now, one way to think about this is that, so this f of x, which may have this particular
+[680.24:689.24] form, you can think of it as an expectation over these indices of fi of x.
+[689.24:690.24] Okay?
+[690.24:693.24] So you have a bunch of data points.
+[693.24:700.24] And with the same one over n probability, you pick one point.
+[700.24:702.24] Does this make sense?
+[702.24:706.24] And if you wanted to take the expected value, right?
+[706.24:709.24] For each index, the probability is, right?
+[709.24:715.24] Probability of that index is one over n.
+[715.24:718.24] You multiply the function.
+[718.24:720.24] Sorry.
+[720.24:723.24] So if you want to take the expected value, right?
+[723.24:728.24] What is it?
+[728.24:736.24] It's a summation of the probability of i, fi of x, right?
+[736.24:739.24] The probability is what we're in.
+[739.24:742.24] As you have, this function.
+[742.24:745.24] Does that make sense?
+[745.24:754.24] Right? So this i now is our randomness data in the stochastic programming.
+[754.24:762.24] In this case, what would be a way of choosing a stochastic gradient?
+[762.24:765.24] So pick one n-trick and take its gradient.
+[765.24:773.24] So if you look at this, we take the gradient of the individual loss function,
+[773.24:780.24] take its expected value here.
+[780.24:783.24] You literally take the gradients,
+[783.24:789.24] grade them by one over n, and that will be actually the two gradient at that point.
+[789.24:790.24] Is this clear?
+[790.24:798.24] It's important that this is clear.
+[798.24:804.24] So here is a version of stochastic gradient descent for finite sums.
+[804.24:812.24] You can take an individual data point at this one,
+[812.24:820.24] get the gradient and use the stepsons.
+[820.24:825.24] Just like the dancing motions of the event with the gradient descent,
+[825.24:828.24] we're going to discuss how to choose that step size that we don't want.
+[828.24:832.24] But the conceptual algorithm is the same.
+[832.24:836.24] So for finite sums, you have bunch of data points.
+[836.24:841.24] You pick a loss function randomly.
+[841.24:849.24] There are variations along the theme.
+[849.24:852.24] You can choose it with replacement or without replacement.
+[852.24:857.24] So you can pick an index, you use the gradient,
+[857.24:863.24] and then you can put it back, it can replace the tag.
+[863.24:866.24] Or you don't replace it back without replacing it.
+[866.24:872.24] You choose the gradient, you're no longer allowed to choose that data point.
+[872.24:877.24] In scenarios such as streaming, this is reasonable.
+[877.24:883.24] You literally take data on your computer, just streams it to you.
+[883.24:889.24] You just take the gradient of individual loss functions and you update the graph.
+[889.24:893.24] So it's strictly one, multi-pass one,
+[893.24:897.24] but we're not going to get into those.
+[897.24:900.24] Okay, so let me show you the performance of this.
+[900.24:906.24] So here we're just going to use some constant set size for SGD.
+[906.24:913.24] The purpose of this experiment is to show you a very important phenomena.
+[913.24:919.24] It's just SGD starts to be super fast and hits hard initially.
+[919.24:926.24] So here's a simple least squares problem.
+[926.24:932.24] Okay, so the data is very large, so 10,000 dimensional.
+[932.24:937.24] The normal dimension, the standard dimension is 100, nice or P is 100.
+[937.24:942.24] So this is our matrix.
+[942.24:946.24] Now if you are to run gradient descent, you need to do computation, right?
+[946.24:955.24] And this computation is proportional to 10,000 vector inner products.
+[955.24:958.24] Right, because you have to go over the data.
+[958.24:965.24] Now let's just say one epoch is something like one pass over the gradient.
+[965.24:970.24] All right, you just go over all the points in the gradient.
+[970.24:973.24] Meaning you go over all of your data.
+[973.24:977.24] Right, so what does the gradient method do?
+[977.24:981.24] It starts from here, it goes over the gradient.
+[981.24:984.24] So it waits while going over the gradient.
+[984.24:989.24] It does an update and then makes an update.
+[989.24:993.24] So that's your first gradient step.
+[993.24:995.24] Then it does the same thing.
+[995.24:998.24] This is your second gradient step.
+[998.24:1000.24] Then it does the same thing.
+[1000.24:1002.24] This is your third gradient step.
+[1002.24:1010.24] And before that, remember here, we're doing gradient descent and we need to step size one over lift shift constant.
+[1010.24:1014.24] So to get the lift shift constant, you need to do what?
+[1014.24:1021.24] Let's say power terations on your data matrix, which means you need to start with 50 terations, let's say.
+[1021.24:1030.24] So 50 epochs to get L, the lift shift constant, then this starts.
+[1030.24:1037.24] So if you want to have a fair comparison, actually, gradient descent starts from the 50th epoch.
+[1037.24:1044.24] Now, I'm going to talk about how to choose the test size for the stochastic gradient.
+[1044.24:1049.24] There, you don't need to go over the whole data points.
+[1049.24:1055.24] You can immediately start and take a look at it.
+[1055.24:1062.24] Before the gradient descent does even one iteration and my new disassume, you had the lichest constant.
+[1062.24:1069.24] The stochastic gradient descent is already at a very good point.
+[1069.24:1072.24] And this is the magic.
+[1072.24:1077.24] In 2010, so I'm from Georgia Tech.
+[1077.24:1087.24] I was visiting Arcade in the master.
+[1087.24:1092.24] It was very exciting about stochastic gradient descent.
+[1092.24:1095.24] At the time, I was more interested in an entronicization.
+[1095.24:1101.24] The history of the George Land, they were writing papers about stochastic gradient descent.
+[1101.24:1106.24] It was so better, so much so well that it's incredible.
+[1106.24:1110.24] It's all he talked about.
+[1110.24:1117.24] One insight that you get from talking to him is that he was like,
+[1117.24:1122.24] is the data dimension become larger and larger?
+[1122.24:1127.24] It becomes almost like the time it takes for a std to convert.
+[1127.24:1131.24] It becomes almost like smaller and smaller.
+[1131.24:1135.24] It's such a method that if you have a bond and so theta,
+[1135.24:1140.24] you can basically go over a fraction of the data.
+[1140.24:1142.24] Think about this.
+[1142.24:1145.24] If you go over 10% of the data,
+[1145.24:1149.24] without having to see the full data, 10%,
+[1149.24:1152.24] you randomly pick 10%.
+[1152.24:1158.24] You already have a good solution.
+[1158.24:1163.24] Now, arguably speaking, you could do something similar with the gradient method.
+[1163.24:1170.24] If you try to do that, the picture will look similar.
+[1170.24:1175.24] It will again go like this,
+[1175.24:1178.24] and so on and so forth.
+[1178.24:1183.24] There is some advantage.
+[1183.24:1189.24] Let's talk about some of these stepsized elections first.
+[1189.24:1199.24] For this, I'm going to have this boundedness assumption on these rates.
+[1199.24:1202.24] If you want to get rid of this,
+[1202.24:1204.24] you need to do some sophisticated analysis.
+[1204.24:1207.24] I didn't want to bother you guys on this one.
+[1207.24:1210.24] I'm just going to keep this as an assumption.
+[1210.24:1214.24] There's some sort of a domain.
+[1214.24:1219.24] Also a bounded gradient assumption.
+[1219.24:1221.24] It's simple assumptions.
+[1221.24:1223.24] They're interpretable.
+[1223.24:1225.24] Let's not get too technical.
+[1225.24:1227.24] If you keep the stepsized,
+[1227.24:1229.24] decreasing with square root of k,
+[1229.24:1234.24] and you have a low k divided by square root of k rate,
+[1234.24:1237.24] inexfected down.
+[1237.24:1243.24] If the function
+[1243.24:1249.24] is also strongly convex.
+[1249.24:1251.24] Now,
+[1251.24:1253.24] they're interesting conditions here.
+[1253.24:1258.24] If you assume some sort of a bounded variance on the stochastic gradients,
+[1258.24:1261.24] meaning, okay, in expectation,
+[1261.24:1264.24] the stochastic gradients may be equal to the gradient,
+[1264.24:1272.24] but they may have unbounded variance, for example.
+[1272.24:1275.24] Under the assumption that there's some bounded variance,
+[1275.24:1278.24] if you run stochastic gradient descent
+[1278.24:1281.24] with the constant step,
+[1281.24:1285.24] constant, just like the example that I showed.
+[1285.24:1286.24] Take a look at this.
+[1286.24:1288.24] It does not go to zero.
+[1288.24:1295.24] It saturates here.
+[1295.24:1296.24] In this case,
+[1296.24:1299.24] what you can show is that you will have linear convergence
+[1299.24:1306.24] to a noise-dominated region.
+[1306.24:1314.24] All right, I think this...
+[1314.24:1319.24] Okay.
+[1319.24:1323.24] So, if there's no noise in the gradients,
+[1323.24:1326.24] you get linear.
+[1326.24:1330.24] This occurs for an algorithm called touchmars method.
+[1330.24:1332.24] This is how you get the linear convergence.
+[1332.24:1336.24] I think we have it in some of the advanced materials once that method.
+[1336.24:1339.24] All right.
+[1339.24:1344.24] But,
+[1344.24:1348.24] if you decay this type of size,
+[1348.24:1352.24] in this case, you get this nice stop being your vector.
+[1352.24:1355.24] Okay.
+[1355.24:1359.24] So, the gradients may be noisy,
+[1359.24:1362.24] but you can merge.
+[1362.24:1365.24] So, the tip-to-listing.
+[1365.24:1366.24] Okay.
+[1366.24:1369.24] It's supposed to be using one over square root of k-rate step size.
+[1369.24:1374.24] In this case, you use a one over k type of step size.
+[1374.24:1379.24] And the optimal step size is something like a one over two new
+[1379.24:1381.24] or something like this.
+[1381.24:1385.24] So, you use a strong-comic-sl parameter.
+[1385.24:1386.24] All right.
+[1386.24:1391.24] Is this clear?
+[1391.24:1393.24] So, remember, we have strong-comic-sl,
+[1393.24:1399.24] so we can give guarantees in terms of the objective value or in sequence.
+[1399.24:1402.24] These are mean solutions.
+[1402.24:1409.24] So, here's some syntactic least-grace problems.
+[1409.24:1412.24] You know,
+[1412.24:1416.24] if you look at some of these step sizes,
+[1416.24:1423.24] you'll see it does fairly well.
+[1423.24:1426.24] Okay. So, it's one over new.
+[1426.24:1431.24] I think this is empirically, because I remember that George Landtapers is one over two new
+[1431.24:1435.24] something like this.
+[1435.24:1441.24] You can out-check and then maybe update this value.
+[1441.24:1444.24] Okay.
+[1444.24:1449.24] Now, one thing I recommend, please take a look at handout two.
+[1449.24:1457.24] In handout two, we talk about convergence rates and how we can see them from plots.
+[1457.24:1462.24] Now, when you look at these plots, I would like to notice certain features.
+[1462.24:1465.24] Now, take a look at this.
+[1465.24:1474.24] So, this is one, two, three orders of blocks, I think.
+[1474.24:1475.24] Now, take a look at this.
+[1475.24:1478.24] This is one, two, three.
+[1478.24:1485.24] So, the convergence rate of this algorithm is something like this.
+[1485.24:1491.24] What would be the rate here?
+[1491.24:1507.24] The reason why I'm asking this is that this is a typical exam question for this course.
+[1507.24:1512.24] Right? You may want to think about that one.
+[1512.24:1514.24] Okay.
+[1514.24:1517.24] Again, take a look at the handouts.
+[1517.24:1521.24] Sure, you can read the plots. Right? We talk about convergence rates.
+[1521.24:1528.24] I'm showing you practical performance of an algorithm.
+[1528.24:1533.24] So, is this one over K?
+[1533.24:1536.24] Is this one over K to some alpha?
+[1536.24:1538.24] What is it?
+[1538.24:1541.24] Try to answer this question. It's important.
+[1541.24:1545.24] At least, work through handout two.
+[1545.24:1549.24] If you don't work through it, at least look at its solutions.
+[1549.24:1551.24] Let me release them.
+[1551.24:1560.24] All right? Trust me. This will be in the exam.
+[1560.24:1562.24] Okay.
+[1562.24:1566.24] So, I want to make a comparison here.
+[1566.24:1568.24] Which is very important.
+[1568.24:1573.24] And this is like the point of the SGD.
+[1573.24:1576.24] So, let's think about the simple problem.
+[1576.24:1580.24] Function is a finite sum.
+[1580.24:1585.24] And if a fix is a summation average of a bunch of other f chains.
+[1585.24:1586.24] Okay?
+[1586.24:1588.24] This is to make a fix is from mix.
+[1588.24:1594.24] In this case, we get a linear rate.
+[1594.24:1595.24] Linear converges.
+[1595.24:1602.24] In fact, the rate would be something like l minus mu divided by l plus mu to the power t.
+[1602.24:1611.24] So, to give to an epsilon accuracy, we need log 1 over epsilon iterations.
+[1611.24:1613.24] You know? Not many.
+[1613.24:1621.24] Because at every iteration, you're cutting it by l minus mu divided by l plus mu to a distance.
+[1621.24:1622.24] You know?
+[1622.24:1623.24] Good.
+[1623.24:1625.24] What's the cost for iteration?
+[1625.24:1631.24] The cost for iteration, you need to compute the individuals.
+[1631.24:1634.24] N is here and then sum them up.
+[1634.24:1642.24] So, the cost is proportional to N.
+[1642.24:1644.24] Does this make sense?
+[1644.24:1651.24] Because you need to compute N gradients for these functions f chains.
+[1651.24:1654.24] N is sum them up.
+[1654.24:1656.24] So, what's the total cost, then?
+[1656.24:1664.24] Roughly speaking, the total cost is N times log 1 over epsilon.
+[1664.24:1665.24] Right?
+[1665.24:1668.24] To get to some time, it will be proportional to N.
+[1668.24:1669.24] Right?
+[1669.24:1671.24] Okay.
+[1671.24:1673.24] Now, let's consider this.
+[1673.24:1675.24] Straight?
+[1675.24:1678.24] What are you doing?
+[1678.24:1685.24] Right?
+[1685.24:1695.24] What's the iteration for?
+[1695.24:1700.24] So, as in number of iterations, we need to get to epsilon.
+[1700.24:1705.24] It's not log of 1 over epsilon.
+[1705.24:1711.24] What's the cost for iteration?
+[1711.24:1717.24] Let's compute 1 ring.
+[1717.24:1721.24] 1.
+[1721.24:1726.24] So, what's your total cost?
+[1726.24:1729.24] It's what is better.
+[1729.24:1734.24] Gradient method has linear rate, faster.
+[1734.24:1739.24] It takes no time for iteration.
+[1739.24:1744.24] This was the iteration.
+[1744.24:1745.24] You know?
+[1745.24:1748.24] So, our code is remark makes perfect times.
+[1748.24:1749.24] Right?
+[1749.24:1753.24] So, if you normalize this by the data,
+[1753.24:1760.24] this goes down with the data, literally.
+[1760.24:1762.24] Now, here I'm cheating a little bit.
+[1762.24:1767.24] The total cost for fgv is not order N.
+[1767.24:1772.24] Why?
+[1772.24:1776.24] It's actually order log N.
+[1776.24:1781.24] Why?
+[1781.24:1788.24] In the papers for this tricky question.
+[1788.24:1793.24] It's because you need to pick a random index.
+[1793.24:1798.24] So, you need to pick a random number in N dimensions.
+[1798.24:1807.24] You can do that in log N cost.
+[1807.24:1815.24] People even shave that log N cost cost by arguing about tick-lick.
+[1815.24:1818.24] They say, you know, today there's some sort of an ordering.
+[1818.24:1819.24] There is somewhat random.
+[1819.24:1824.24] You can just take them and do the AI and so on.
+[1824.24:1829.24] But like, to be pedantic, not exactly independent of N,
+[1829.24:1833.24] but somewhat logarithmically dependent form N.
+[1833.24:1836.24] The way at least I describe it.
+[1836.24:1842.24] Why?
+[1842.24:1845.24] SGD with averaging.
+[1845.24:1848.24] Now, here's an interesting picture.
+[1848.24:1851.24] So, here's the optimum location.
+[1851.24:1856.24] Unless the plastic gradients are all zero at the optimum,
+[1856.24:1860.24] if you start the algorithm, even at the optimum location,
+[1860.24:1866.24] it will jitter around.
+[1866.24:1874.24] By the way, when would the gradients be all zero at the optimum?
+[1874.24:1879.24] Suppose you're trying to solve a linear system that is consistent.
+[1879.24:1881.24] Like little examples.
+[1881.24:1885.24] You know that AX is equal to B.
+[1885.24:1887.24] You know that there's like, it's solvable.
+[1887.24:1889.24] There's an exact solution.
+[1889.24:1892.24] In this case, if you were to think about the least squares,
+[1892.24:1893.24] right?
+[1893.24:1897.24] So, it is AI transpose X minus the I squared.
+[1897.24:1901.24] So, these are individual terms.
+[1901.24:1904.24] So, if you were to take a look at this plastic gradient here,
+[1904.24:1908.24] it's AI transpose X squared minus the DI.
+[1908.24:1911.24] AI.
+[1911.24:1913.24] At the individual locations, if you're at the optimum,
+[1913.24:1917.24] even these are zero.
+[1917.24:1918.24] Right?
+[1918.24:1925.24] So, there are problems where the plastic gradients are zero at the optimum.
+[1925.24:1928.24] These are very nice problems because in that case,
+[1928.24:1931.24] there's linear convergence of the SCD,
+[1931.24:1934.24] which is what the catch marks are going into this.
+[1934.24:1940.24] This is a smaller, more advanced material.
+[1940.24:1942.24] But anyway.
+[1942.24:1945.24] But in general, as you did last later on,
+[1945.24:1954.24] the two solutions because the plastic gradients are almost never zero at the optimum solution.
+[1954.24:1961.24] So, if you average these risks, it will reduce the distillation effect.
+[1961.24:1964.24] There are different averages.
+[1964.24:1967.24] The vanouli average just simple averages work well.
+[1967.24:1970.24] So, in this case, it's just one.
+[1970.24:1975.24] So, there's another factor that we should fix here.
+[1975.24:1979.24] It's like 36.
+[1979.24:1982.24] The beta-davages, there's things called tail averaging
+[1982.24:1987.24] that you only average the loss of every number of iterates.
+[1987.24:1990.24] It gives you a worse rate, but performs very in practice.
+[1990.24:1994.24] There are a bunch of averaging techniques.
+[1994.24:2001.24] What is cool about the average is that, you know,
+[2001.24:2010.24] a few similar rates.
+[2010.24:2015.24] But you can actually use a constant step size as JD.
+[2015.24:2020.24] Look here.
+[2020.24:2025.24] Oh, no, not in this case.
+[2025.24:2028.24] Okay, so you can flip that.
+[2028.24:2031.24] If you use a constant step size as JD,
+[2031.24:2033.24] you can average the iterates.
+[2033.24:2036.24] That one will stick in the range.
+[2036.24:2042.24] So, if you look at the example I gave here,
+[2042.24:2045.24] you're using constant step for SGD.
+[2045.24:2047.24] It will saturate.
+[2047.24:2053.24] But if you take the averages of the iterates,
+[2053.24:2059.24] and then you consider the average iterates, like this one,
+[2059.24:2063.24] SGD will bounce around the constant step size,
+[2063.24:2070.24] but the average will slowly go to the optimum.
+[2070.24:2073.24] Okay.
+[2073.24:2077.24] So here's a bit more convergence characterizations
+[2077.24:2079.24] for the average SGD.
+[2079.24:2086.24] So the guarantees are on the average sequence.
+[2086.24:2088.24] All right.
+[2088.24:2092.24] Is this clear?
+[2092.24:2095.24] It helps with the oscillation effect.
+[2095.24:2098.24] It reduces the oscillation effect.
+[2098.24:2099.24] Now look at these.
+[2099.24:2105.24] Super smooth.
+[2105.24:2109.24] All right, so average the SGD.
+[2109.24:2111.24] All right.
+[2111.24:2121.24] You no longer see this iterating thing.
+[2121.24:2124.24] It's just the visualization.
+[2124.24:2127.24] All right.
+[2127.24:2134.24] Don't worry, you get the increment in play with this algorithm.
+[2134.24:2138.24] Now, for the particular case of the least squares,
+[2138.24:2141.24] if you remember that I mentioned this, you know,
+[2141.24:2143.24] Markov's portfolio example,
+[2143.24:2145.24] so think of it this way.
+[2145.24:2149.24] You're trying to solve this spicastic programming problem,
+[2149.24:2152.24] right?
+[2152.24:2155.24] In this case, if you use the constant alpha,
+[2155.24:2159.24] constant step size, and look at the averages,
+[2159.24:2164.24] you get a bottom work K rate.
+[2164.24:2166.24] Pretty fast.
+[2166.24:2174.24] It's awesome.
+[2174.24:2176.24] Does this make sense?
+[2176.24:2178.24] You want me to go over the solid algorithm?
+[2178.24:2181.24] I actually have the time to go over the solid algorithm.
+[2181.24:2184.24] So let's go over the solid algorithm.
+[2184.24:2187.24] All right.
+[2187.24:2189.24] Now, in this particular case,
+[2189.24:2192.24] we can assume that our function,
+[2192.24:2196.24] parametric, whoa.
+[2196.24:2202.24] Let's see, I apologize.
+[2202.24:2203.24] Okay.
+[2203.24:2204.24] Our parametric function,
+[2204.24:2211.24] H of X, A, is, A, X,
+[2211.24:2216.24] so we have a linear predictor.
+[2216.24:2223.24] We're looking at the population loss.
+[2223.24:2225.24] All right.
+[2225.24:2230.24] Remember, this is our f of X.
+[2230.24:2233.24] All right.
+[2233.24:2238.24] So the randomness is over the data.
+[2238.24:2240.24] A and B.
+[2240.24:2245.24] We're always samples.
+[2245.24:2247.24] Now, in the list,
+[2247.24:2249.24] where think about it as follows.
+[2249.24:2254.24] So what you do is you read one of these rows.
+[2254.24:2258.24] Okay.
+[2258.24:2263.24] So what are these rows?
+[2263.24:2265.24] It's literally our vector, okay.
+[2265.24:2266.24] Okay.
+[2266.24:2270.24] So here we have A i transpose.
+[2270.24:2273.24] And you have, let's say, the 500x.
+[2273.24:2276.24] You know, you have A i transpose X.
+[2276.24:2281.24] You get B i.
+[2281.24:2283.24] So this is simple.
+[2283.24:2287.24] What you do is the following.
+[2287.24:2291.24] So I'll get maybe into more boring details on this.
+[2291.24:2294.24] So initially, you draw a data point.
+[2294.24:2296.24] When you look at it,
+[2296.24:2299.24] no.
+[2299.24:2302.24] See?
+[2302.24:2305.24] Maybe that's it.
+[2305.24:2307.24] Okay.
+[2307.24:2313.24] So there's one.
+[2313.24:2316.24] So what we're going to do is that each iteration,
+[2316.24:2319.24] we're going to compare.
+[2319.24:2324.24] So we're going to hit a token, let's say, alpha.
+[2324.24:2328.24] Which is the maximum.
+[2328.24:2333.24] Of alpha from the previous iteration.
+[2333.24:2335.24] All right.
+[2335.24:2338.24] And then four times.
+[2338.24:2339.24] A i squared.
+[2339.24:2343.24] So the current rows squared.
+[2343.24:2346.24] Right. So suppose you had some rows to begin with.
+[2346.24:2349.24] In the very first iteration, you don't have any rows.
+[2349.24:2350.24] You grab a row.
+[2350.24:2352.24] You compute.
+[2352.24:2355.24] The norm of that data vector.
+[2355.24:2357.24] Okay.
+[2357.24:2359.24] What's going to be our.
+[2359.24:2361.24] Sorry, not alpha.
+[2361.24:2362.24] We're going to call one.
+[2362.24:2364.24] I don't know.
+[2364.24:2365.24] Sorry.
+[2365.24:2370.24] This is one over alpha.
+[2370.24:2373.24] This is the.
+[2373.24:2375.24] This is the liqueous constant.
+[2375.24:2376.24] Okay.
+[2376.24:2379.24] So we're going to call this Lk.
+[2379.24:2384.24] And alpha k will be one over Lk.
+[2384.24:2387.24] Just to repeat myself.
+[2387.24:2393.24] We're going to try to have.
+[2393.24:2396.24] Elicent constant estimates.
+[2396.24:2398.24] Think of it that way.
+[2398.24:2401.24] So locally thinking you get this data sample.
+[2401.24:2402.24] Right.
+[2402.24:2403.24] A i.
+[2403.24:2406.24] What you can do is just look at the norm of a i squared.
+[2406.24:2409.24] Right.
+[2409.24:2414.24] That's going to be our liqueous constant for that.
+[2414.24:2417.24] But for the algorithm to do well,
+[2417.24:2420.24] what we're going to do is we're going to look at the history.
+[2420.24:2424.24] If the current row was smoother, we're going to say, okay, okay.
+[2424.24:2425.24] I'm not going to use.
+[2425.24:2429.24] The bigger liqueous constant that I've seen so far over all roads.
+[2429.24:2432.24] Then I have it.
+[2432.24:2433.24] Okay.
+[2433.24:2434.24] So this is what it is doing.
+[2434.24:2438.24] It's looking at the previous maximum.
+[2438.24:2441.24] And it's comparing it against the current row known.
+[2441.24:2442.24] Okay.
+[2442.24:2445.24] And then picking the maximum of the two.
+[2445.24:2451.24] And then we set the step size to one over four times this.
+[2451.24:2454.24] Okay.
+[2454.24:2457.24] So here if you make this squared,
+[2457.24:2460.24] then you don't need to square.
+[2460.24:2461.24] So that's what I'm doing here.
+[2461.24:2468.24] Okay.
+[2468.24:2470.24] Then you call them.
+[2470.24:2472.24] You can start the algorithm at any time.
+[2472.24:2473.24] Right.
+[2473.24:2475.24] We don't need to compute any liqueous constants.
+[2475.24:2479.24] All we need to do is kind of retain in memory.
+[2479.24:2485.24] The maximum row known that we've seen so far.
+[2485.24:2487.24] Does that make sense?
+[2487.24:2489.24] It's a simple comparison.
+[2489.24:2493.24] We just retain a single number in memory.
+[2493.24:2495.24] Right.
+[2495.24:2501.24] We compute the norm of the data that we observed just now.
+[2501.24:2503.24] We can pair the two.
+[2503.24:2506.24] If the current one is bigger than what we observed so far,
+[2506.24:2509.24] we can replace it with the prime one.
+[2509.24:2512.24] It's smaller, it's cheaper.
+[2512.24:2513.24] The previous one.
+[2513.24:2515.24] Okay.
+[2515.24:2517.24] And this one gets an optimal.
+[2517.24:2521.24] This is also statistically optimal mind you.
+[2521.24:2522.24] Okay.
+[2522.24:2530.24] So this is actually statistically optimal.
+[2530.24:2531.24] It's a merious.
+[2531.24:2537.24] This is a little bit simple complexity for statistical estimation.
+[2537.24:2541.24] As you can see, it will go down with P over n.
+[2541.24:2545.24] Order P divided by n.
+[2545.24:2546.24] All right.
+[2546.24:2554.24] This is the square root of the dimension of square root.
+[2554.24:2559.24] And if you think about it, there's more or less constant step size.
+[2559.24:2561.24] Why?
+[2561.24:2565.24] Because if the data is, let's say, some bounded rows,
+[2565.24:2567.24] then in the end, this will, at least,
+[2567.24:2570.24] to converge to the maximum row number, right?
+[2570.24:2572.24] Which we assume is a constant.
+[2572.24:2575.24] So this is constant step SGD.
+[2575.24:2582.24] But the guarantees on the average sequence.
+[2582.24:2584.24] All right.
+[2584.24:2585.24] All right.
+[2585.24:2589.24] That things up.
+[2589.24:2592.24] You can do what is called as mini batch.
+[2592.24:2597.24] If the gradient noise is large, you can try to reduce it or control it.
+[2597.24:2601.24] There's acceleration possible, but it's unnecessary.
+[2601.24:2605.24] Yes, SGD has the optimal rate.
+[2605.24:2607.24] There's momentum version, whatever.
+[2607.24:2614.24] There are adaptive methods to talk about them.
+[2614.24:2617.24] Let me talk about the term.
+[2617.24:2620.24] Right?
+[2620.24:2624.24] For non-com next problems,
+[2624.24:2626.24] I show this for completeness.
+[2626.24:2630.24] I don't expect you to memorize or know this exactly.
+[2630.24:2634.24] You can actually give some guarantee for conversions.
+[2634.24:2635.24] Right?
+[2635.24:2650.24] But the guarantee is that you did it in the sense that you have some sequins and one of the entries of the sequins will achieve a gradient norm which is smaller than an extra.
+[2650.24:2654.24] So it's not like the last one for it.
+[2654.24:2657.24] It's like one of them.
+[2657.24:2665.24] And if you're doing this for castically, you never know how to compute the gradient of the function anyway.
+[2665.24:2669.24] So it's a bit of a weird statement.
+[2669.24:2677.24] But it is accepted that in the gradient norm, the stochastic gradient descent will have like a square of k-rate.
+[2677.24:2678.24] Right?
+[2678.24:2680.24] For non-com next problems.
+[2680.24:2685.24] We'll talk about this more when we talk about different.
+[2685.24:2688.24] All right?
+[2688.24:2689.24] Good.
+[2689.24:2693.24] So the remaining splines are advanced.
+[2693.24:2697.24] As you can see, there's some number of splines.
+[2697.24:2701.24] So there are some enhancements for the accelerated methods.
+[2701.24:2705.24] We start line search.
+[2705.24:2708.24] Here, there is more details on the accelerad.
+[2708.24:2711.24] It's theoretical performance.
+[2711.24:2720.24] Our MS prop, add-on, MS grad is bunch of stuff that you can take a look.
+[2720.24:2724.24] You're not responsible for this material.
+[2724.24:2726.24] For this course.
+[2726.24:2729.24] But, you know, like, let's follow scientists.
+[2729.24:2731.24] Maybe you're interested.
+[2731.24:2732.24] Take a look.
+[2732.24:2735.24] If you have questions, I think you're happy.
+[2735.24:2736.24] Have a great weekend.
+[2736.24:2741.24] I'll see you Monday morning.

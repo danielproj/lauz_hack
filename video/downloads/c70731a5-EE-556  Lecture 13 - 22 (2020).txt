@@ -1,0 +1,327 @@
+~EE-556 / Lecture 13 - 2/2 (2020)
+~2020-11-30T12:04:26.624+01:00
+~https://tube.switch.ch/videos/c70731a5
+~EE-556 Mathematics of data: from theory to computation
+[0.0:13.86] Okay, so what we were talking about is something that is based on a various
+[13.86:22.5] simple idea in this minimax problems. The dual is non-smooth, so what we can do is
+[22.5:31.380000000000003] maybe the strategy is very simple, right? We use minimax duality, so we swap in
+[31.380000000000003:36.76] in the max, then we consider doing maximization over the max maximization over
+[36.76:42.94] the dual variable. Dual is in general non-smooth, so we have to use that as
+[42.94:47.82] sub-region method, but instead what we do is the augment in the load
+[47.82:53.66] of the region, in which case we have a smooth dual function whose optimal value
+[53.66:61.66] can size with the value of the original dual, in which case you can do
+[61.66:75.3] accelerated methods in order to solve. Now in this setting we describe bunch of
+[75.3:79.74] algorithms and I'm showing you the result. I think that this double loop
+[79.74:86.58] algorithm that solves these problems in exactly and then use an accelerated
+[86.58:92.94] scheme in the outer loop. This algorithm tends to outperform the other ones
+[92.94:97.42] because you know with the accelerated method what you end up doing is you
+[97.42:107.34] kind of resetting also the acceleration every time you cut down the V-shet, the
+[107.34:111.48] accelerated method and it tends to also adapt to hidden strong-from-exitist
+[111.48:122.38] structures that may be in the problem. Now what I would like to do is talk about
+[122.38:127.78] particular class of non-comics problems that come from maybe things like
+[127.78:133.82] non-linear operators. So here, consider the following template, you have an
+[133.82:142.54] f of x and maybe g a of x which is our usual composite formulation, but maybe
+[142.54:148.42] here a of x is non-linear and g could be even an indicator function, so you're
+[148.42:158.54] thinking about problems that are non-comics. A particular example of this, so
+[158.54:167.26] here g can be an indicator function. And I'll give you a couple of examples of
+[167.26:172.89999999999998] the next slides, but one interesting example that fits into this template is
+[172.89999999999998:177.98] this blind image decombo-lution which will be a topic in your third homework.
+[177.98:187.5] So we'll have the CSI was done in enhancing a license plate where the
+[187.5:195.38] license plate photo is the blur, just like in the movies. The idea here is that
+[195.38:202.1] you know like due to motion and in the macro aperture of her lens you can
+[202.1:207.1] image that has some blurring transformation. This is what it is,
+[207.1:213.1] typically a Gaussian function, that averages the pixel around. So you have an
+[213.1:218.66] image, you blur it, you obtain this blur image, and what you need to do is
+[218.66:222.18] somehow figure out what the blurring was and what the original image so that
+[222.18:228.57999999999998] you kind of decombo-luted. That is why it is called decombo-lution. Here this
+[228.57999999999998:235.78] has this, in this case, a convolution operator. And then you can put a regularizer
+[235.78:242.5] for the image being gave it as far as the blurring transform being maybe
+[242.5:249.02] gubbar representations far. So if you think about this, this problem is non-format,
+[249.02:255.74] because it has this product of the, well, it has this more or less the product
+[255.74:267.1] through the convolution of this non-linear transformation of the image. Now in the
+[267.1:275.54] advanced material we cover some algorithms for this particular case that has
+[275.54:282.5] broad applications, but the concepts there are a bit too advanced for this
+[282.5:287.74] fast, but it follows closely to some of the ideas that I just described here,
+[287.74:291.86] things like the augmented Lagrangian, the inexagnance of the augmented Lagrangian.
+[291.86:296.54] And then what you do is you come up with conditions under which as you make
+[296.54:301.1] progress in the augmented Lagrangian, how does that kind of relate to the
+[301.1:311.94] original? I had some information zone initialization, so on and so forth. But if
+[311.94:315.34] you're interested in this particular topic, it's an active research area that
+[315.34:322.58] people have been publishing lately over the last year and so on. And so in the last
+[322.58:328.78] nerve, we had some work that is summarized in the advanced material. All right.
+[328.78:337.18] What I want to do in our moralist final lecture is to talk about how to solve
+[337.18:343.82] these problems, but with maybe different type of Oracle in particular this
+[343.82:349.14] linear minimization Oracle. So if we recall, we talked about the Frankfurt method
+[349.14:355.76] that solves this particular template, so minimize f of x, f is which is
+[355.76:361.82] continuous gradient, and then you have some constraint set, a polytope, or
+[361.82:367.21999999999997] some could be a polytope, and you use the gradient of this, and you use the
+[367.21999999999997:374.18] linear minimization Oracle in finding a solution to this problem. Now again, so
+[374.18:384.12] this particular case, it nicely fits this complex optimization hierarchy. And in
+[384.12:390.3] this particular case, we're going to have this x is a bounded set, and it fits
+[390.3:397.86] into this particular hierarchy. We talked about the beginning of glitch. Now what
+[397.86:402.5] we're going to focus on is semi-definite programs that fit into this template.
+[402.5:410.02] So the standard form of a semi-definite program has the following. So you have a
+[410.02:417.90000000000003] traced cx, which is a matrix inner product of a matrix c, and our decision
+[417.9:427.06] variable x. x is in p by p dimensions. It's also her mission. It's equal to its
+[427.06:436.21999999999997] vermition conjugate. Its vermition meaning transpose conjugate, and we have a
+[436.21999999999997:442.7] positive semi-definite cone constraint. An HTTP is set basically at top of this
+[442.7:446.41999999999996] commercial optimization hierarchy in the sense that it covers all these
+[446.42:452.42] discipline comics programming approaches. Remember, comics programs means that
+[452.42:456.66] the local minima has global minima. It does not mean that they're tractable,
+[456.66:462.14000000000004] because HTTP is like the boundary moral in terms of tractability. You can come up
+[462.14000000000004:469.42] with some cone programs that are not tractable, but are comics.
+[469.42:481.74] Good. So here the definition of the definition of the inner product, and just
+[481.74:486.34000000000003] like we took this particular optimization template and reformulated to put it,
+[486.34000000000003:494.54] you can take an HTTP and basically put it into this. It's just a bit of work,
+[494.54:499.14000000000004] but there are a base of doing that. You show components, you use a bunch of tricks
+[499.14000000000004:505.62] to come up in this particular form. Now what we're going to do is we're going to
+[505.62:509.42] assume this, and then we're going to put a trace constraint, and this could be
+[509.42:517.74] actually an inequality. So what we're going to have is either equal or less than
+[517.74:526.14] or equal to some constant. And this naturally pops up in many problems. So trust me,
+[526.14:534.86] I'm adopted. So this is you can use. The issue with this problem is the following.
+[534.86:542.54] So in general, you have P by P methods. The constraint set is this positive
+[542.54:549.02] semi-different cone. And let's say you also have the trace constraint projecting onto this particular trace constraint.
+[549.02:556.3] So this particular problem has to minimize the district of Y given X for being this norm.
+[556.3:566.9] So Y is such that Y is permission. Y is positive definite. And then trace of Y is less than or equal to alpha.
+[566.9:573.34] But this particular projection requires you to do full SVB, singular value of the compositions.
+[573.34:579.42] Given that decision-nabel is P by P, this means that standards first order methods would
+[579.42:586.26] require you to use something like PQ per iteration. And this is how the motivated
+[586.26:592.1] front walls to begin with. As opposed to doing PQ per iteration, we were going to do something
+[592.1:601.78] cheaper. And linear minimization articles was the way to do this. Now what I want to do is motivate
+[601.78:610.14] some of these STPs to understand a particular structure. So many of these STPs actually can be derived
+[610.14:617.98] from relaxation, so combinatorial commutation problems. And it turns out that STP relaxation,
+[617.98:626.38] which follows a particular technique called lift and relax, is the best we can hope to do if
+[626.38:633.1] this unique game's conjecture is true. All right, it's one of these fancy conjectures in
+[633.1:639.4200000000001] theoretical computer science that talks about the epoxinability or the in-eproxymeability of certain
+[639.4200000000001:645.4200000000001] costs of problems. So what I want to do is tell you how you can get STPs from some of these combinatorial
+[645.42:653.02] problems. And then it'll enable us to identify certain structures that we can use when we use
+[653.02:659.0999999999999] things like transport type of methods. All right. So for this, let's consider this weight of max
+[659.0999999999999:665.9] problem. And the idea is that you give it a graph. Right, so maybe we hit some on the graph.
+[667.18:673.98] And these have some weights, C, I, J, and J mode. And what you want to do is cut the graph
+[673.98:680.22] in such a way that the weight of this cut is maximum. All right, so it's like you, you try to
+[680.22:689.26] separate two networks by creating the maximum, let's say a panel to on the floor that these two
+[689.26:695.74] networks can have. Right. Good. So like when you cut, you can assign a plus one to this side and
+[695.74:705.9] minus one to the side. And what you would like to do is you want to maximize this cut. So if you
+[705.9:716.46] think about it, whenever you assign something to one side, you have a particular, so if you think
+[716.46:724.0600000000001] about all the weights summed up, what you're doing is you're basically summing the weights in one
+[724.06:727.9799999999999] side, summing the weights in the other side, and then you're subtracting this. This is what this
+[727.9799999999999:736.38] does. Right. If I and J are in the same cluster, minus one or plus one, then there's zero
+[736.38:742.78] cost. And if they are in the different cluster, meaning you pick this one here and that one there,
+[742.78:756.6999999999999] then you end up accumulating this cost. So what you can do is you can lift and relax this
+[756.6999999999999:762.78] form. So here there's a pair of wires interaction. What you can do is you can define a matrix that is
+[762.78:772.38] that is the outer product of these vectors. Okay. So this is an integer problem. All right. Maybe
+[772.38:781.98] we just fold for this X. Then you can write this problem. So maybe it's actually max here. Right. So
+[781.98:794.94] this is max or min. You can take a look at this as a problem where, you know, because you're
+[794.94:801.26] assigning plus or minus one, in the end, the diagonal of this matrix is all ones. So you have to
+[801.26:811.34] have a matrix. So X is X X transpose. So the diagonal needs to have all ones. Because this is an outer
+[811.34:817.58] product, it needs to be positive. Same left hand, right. Because like you you multiply with any
+[820.7:827.02] any vector from left and right, this is basically X transpose A squared. And this is created
+[827.02:832.54] no equal to 0 by definition. And what we're doing is we're looking for a solution. Also,
+[832.54:838.54] type of here I apologize. This needs to be capital X and you want the rank of the solution to leave
+[838.54:844.06] on. All right. So this problem is if we look to that problem, which is three formulae to be
+[847.18:855.74] all right. Now given this, what do you do? It's very simple. In this particular case,
+[855.74:867.02] you can, you can, you can, so we can just take it and next. You can think of dropping this rank
+[867.02:875.26] constraint. So let's just assume that we do away with this one constraint. Then all of a sudden,
+[876.3:883.58] this problem, you can actually write it as a matrix inner product C X equi-infully.
+[883.58:891.9000000000001] So in this particular case, you are minimizing C X subject to the linear FI constraint A X
+[892.7:900.7] and our case D constraints. And because this matrix on the diagonal has all ones, then the
+[900.7:908.62] trace of X is actually equal to P. I hand this additional boundary constraint. And what is cool
+[908.62:918.62] about this formulation is that it always delivers after some randomized rounding a good approximation
+[918.62:925.02] of the original cut meaning you run this. You take X, which will be somewhat low rank and then from
+[925.02:930.3] this low rank solution, without even the rank constraint, the solution can't be low rank.
+[930.3:938.3] And there's a whole depth to this particular thing actually. That's, you know, it gives you
+[938.3:943.9799999999999] this optimal value in approximation of the optimal value. After you take the date, you do the
+[944.78:951.5799999999999] decomposition and you look at the values and run them to minus one or plus one with some randomization.
+[952.9399999999999:956.2199999999999] And you get a very good approximation of the original combinatorial problem.
+[956.22:965.74] Now, let's think about other examples where SPT is pop-up. One is to do clustering.
+[968.0600000000001:980.46] In this clustering problem, what we do is I give you some points.
+[980.46:993.4200000000001] What you would like to do is maybe pick one of these points as a clustering center and then you
+[993.4200000000001:1000.7] want to minimize your L2 distances to these clustering centers. And you would like to pick
+[1000.7:1007.5] K clusters in such a way that the distances when you assign points to a clustering center in
+[1007.5:1015.26] the L2 sense, it's minimized. So you look at the sum of squared distances of all points to their
+[1015.26:1023.82] cluster centers is minimized. So you can write this as an integer problem where you need to assign
+[1023.82:1031.26] each point at least one cluster. And then you would like to have K clusters. So this Z is an
+[1031.26:1039.42] assignment matrix which is K by K. And then what you can do is actually give it an assignment you
+[1039.42:1047.34] can find so even continuous cluster center meaning you just take a data average of these points and put
+[1048.06:1053.98] a cluster center. There is a way to lift and relax this.
+[1053.98:1069.1] That naturally leads to an STP with a trace constraint. And there are LT relaxations to this and
+[1069.1:1075.26] you also do run in boys algorithm. But this has certain approximation guarantees that are very nice.
+[1077.02:1082.8600000000001] But depending on how far away the clusters are, this tends to succeed more often than things like
+[1082.86:1093.6599999999999] LT relaxations. Here's another example. So given a neural network, what you're interested in is
+[1093.6599999999999:1099.82] to find the infinite elitious constant. Now this is interesting in the following class because you
+[1099.82:1107.26] use this in data education for example. So let's say given a neural network you're using
+[1107.26:1115.1] its sign as a way of classifying points. That's what cats and dogs for example. And what you would
+[1115.1:1126.3] like to do is maybe figure out when the sign doesn't change in the sense that you take a minus a
+[1126.3:1133.58] prime, that's the infinite norm is less than or equal to some delta. And what you would like to do
+[1133.58:1139.34] is figure out this delta so that given an a, the classifier doesn't change its decision.
+[1140.6999999999998:1146.6999999999998] This just means that you pick a point and then you kind of put a box around that point and then say
+[1146.6999999999998:1154.22] that I verify that around this box, my classification doesn't change. So you verify the solution
+[1154.22:1158.22] that within these bounds the solution classification decision doesn't change.
+[1158.22:1167.34] And in this particular case you can show that as long as you have something like Hx of a
+[1167.34:1177.34] absolute value, sorry this needs to be LH, as long as the lictious constant. So you can
+[1177.34:1183.82] you can certify that given a, you can evaluate H whatever the value is and you divide it by the
+[1183.82:1189.26] lictious constant of H, then you have this bound directly. Which is very nice.
+[1192.78:1205.34] Because then you have this verification. So here this little x has this x1, x1, x2,
+[1206.1399999999999:1213.4199999999998] just the concatenation all of these. That's it's verification. You can think about the perturbations
+[1213.42:1220.14] at the serial examples and we talked about how this particular lictious constant also pops up
+[1220.14:1230.78] in the generalization bounds for neural networks. It turns out that findings such a thing,
+[1231.5800000000002:1235.1000000000001] this particular lictious constant. So again I apologize for typos.
+[1235.1:1249.4199999999998] lH it fits into this particular STT. Remember in this particular case the neural
+[1249.4199999999998:1257.26] network is given to you. So you have these values and what you would like to do is do some
+[1257.26:1265.66] verification. So you need this lH constant. The way you do that is you take these given matrices
+[1265.66:1274.94] in the vectors, you create this cost matrix, right? And you try to minimize cx subject to this.
+[1274.94:1280.62] And in this particular case given that the diagonal of the matrix is again one, you can easily add,
+[1280.62:1288.62] trace the x its t and hence you factor this original STT with a bound constraint. And this is
+[1289.7399999999998:1294.78] this is a very active research area. Even in the current ICLR you will find a bunch of papers
+[1294.78:1300.62] that try to do this scalability or more efficiently or with better tnts and so on and so forth.
+[1301.34:1307.58] We had some work on this where we showed that you can extend this approach to multilayer
+[1307.58:1316.9399999999998] neural networks with STPs which scales terribly. And so we also gave some linear programming approaches
+[1316.9399999999998:1324.06] for the ARM and Paul where you use the crib in the certificates to come up with linear programs.
+[1324.06:1332.46] This is a test and an infact. Okay. Now if you recall the conditional gradient,
+[1332.46:1339.58] the method is actually something. So imagine we are interested in minimizing,
+[1340.6200000000001:1346.54] okay. So you can see minimizing f beta of x subject x is in this x.
+[1347.26:1358.3] All right. What you do is you look at the linear minimization or a code of gradient f beta xk,
+[1358.3:1370.86] x minus xk. I mean you minimize this subject to this constraint which is written here.
+[1372.1399999999999:1380.22] So here's the, sorry. So what, all right, let me get that couple.
+[1380.22:1392.78] Imagine we had a lectures gradient objective f beta of x and we have this particular x.
+[1394.3:1398.78] What's responsible for conditional gradient percent method root 2 is the following.
+[1399.98:1406.3] So you would look at the LMO linear minimization oracle which is minimize the gradient of
+[1406.3:1414.46] f beta xk x minus xk with the constraint say. This is a linear minimization oracle because now
+[1414.46:1420.46] the objective is linearized linear with respect to x and then you keep the constraint.
+[1420.46:1431.4199999999998] Okay. So let's say an argument of this is except of k. All right. So it's an element of
+[1431.42:1440.94] there may be multiple. Then what you do is you say my xk plus 1 is like 1 or gamma xk plus
+[1440.94:1454.8600000000001] gamma xk. All right. So we call this argument operator an LMO. All right. And here if you notice
+[1454.8600000000001:1460.8600000000001] this doesn't matter. So this particular linear product with x is what matters. So the LMO
+[1460.86:1469.58] takes an x and this derivative of this function. In this case we're going to choose this f beta as
+[1469.58:1479.5] a penalized version of the constraint with fixed penalty. Now if you were to apply conditional
+[1479.5:1485.26] gradient method with fixed penalty you're not solving the constraint problem. Instead you're
+[1485.26:1493.66] solving this relaxed problem. So the idea here is that while doing updates with the conditional
+[1493.66:1504.3] gradient method you update the penalty parameter. So for fixed beta the conditional gradient
+[1504.3:1511.18] method would get a 1 over k rate. So per iteration we update beta k as something like beta 0
+[1511.18:1516.54] square root of k. In which case if we get 1 over square root of k rate that's the idea.
+[1517.18:1522.6200000000001] So it's not much different from the homo-talkie method that we talked about or the quadratic
+[1522.6200000000001:1528.7] method that the quadratic penalty method that we talked about. For fixed beta we could have
+[1528.7:1533.98] applied conditional gradient methods but that would not solve the original constraint problem.
+[1533.98:1541.66] So we increase the penalty so that it goes to infinity that way you solve the original problem
+[1541.66:1554.22] and that gives you a bit of reduction in the rate. So under just simple duality assumptions
+[1554.22:1562.06] you can prove that this particular algorithm gets sort of k rates. And there are ways to handle
+[1562.06:1571.02] this general formulation but the conceptual algorithm remains the same. And what is interesting
+[1571.02:1578.86] is that in this particular case you can look at stochastic objectives. So trace cx,
+[1578.86:1586.22] per iteration you can have a ck who's expected value c. This is trying to work with my
+[1586.22:1599.26] kst. And even you can add stochastic constraints. So your ai x is equal to bi. You can draw them
+[1599.26:1604.7] stochastically so you don't need to look at all the constraints all the time but you somehow
+[1604.7:1611.98] accumulate these constraints. Curituration which gives you all the problems that are
+[1611.98:1617.74] anytime in the sense that you know like in general for running these problems you have to store c.
+[1619.58:1625.74] So it approaches like this gives you an ability to as opposed to storing c like randomly
+[1625.74:1638.6200000000001] grab a chunk of c computed and then continue. Now just like what we were doing with the
+[1638.62:1646.86] um penalty method there's an augmented Lagrangian version of this. So the augmented Lagrangian
+[1646.86:1653.02] will have this dual size and what you do is you do a conditional gradient method step
+[1653.9799999999998:1659.7399999999998] in the primal you take a dual step and then you increase beta progressively.
+[1659.74:1667.5] Um the ideas are very similar. It's just as opposed to using the gradient step.
+[1669.9:1678.06] I used the linear minimization lawful step. And the algorithm in this case is very simple. So here
+[1680.6200000000001:1686.94] you get this dual variable when you're doing the uh LMO update and then you do the
+[1686.94:1693.66] uh dual update and then you just run the conditional gradient method with um
+[1696.22:1703.8200000000002] with um the usual step size. Now in this particular case we again retain the same type of
+[1703.8200000000002:1709.98] cantis. You get one over square of k, one over square of k and you can take a dual step size
+[1710.8600000000001:1715.1000000000001] from uh what is called as the smoothed cap. It's some work that we've done in the
+[1715.1:1725.34] wild back um with uh cook and ove. Um it gives you an ability to determine a step size for the
+[1725.34:1732.86] dual without doing any matrix operations which is very nice. So some extensions are in the
+[1732.86:1739.34] events material. Now for this case if you think about the k means clustering you can
+[1739.34:1747.1799999999998] run these methods. So the homotopy cgm method meaning you take the quadratic penalty and you update
+[1747.1799999999998:1753.4199999999998] the penalty parameter will get this nice one over square of k rate. And in fact this is like
+[1753.4199999999998:1760.3799999999999] you can take a ruler and just draw this uh it will just flat out fit on top of it.
+[1760.3799999999999:1766.3799999999999] Right. And by the way be careful with these rate type of plots and reading plots because it will
+[1766.38:1774.6200000000001] be in the exam. All right just like a hidden secret between the ones that are in the attendees
+[1774.6200000000001:1781.42] and maybe the ones that are watching the videos later on. These rates reading rates will be in the
+[1781.42:1791.5] exam. All right so look at handout one for example. Okay. So this conditional gradient
+[1791.5:1803.74] um methods with the augmented Lagrangian. Right. Um maybe we should have followed augmented
+[1803.74:1811.58] Lagrangian penalty so that it was cgalt out was the student that uh did this work with me so that
+[1811.58:1818.86] would mean the in retrospect more appropriate for uh may mean the algorithm. Um but in the end
+[1818.86:1824.2199999999998] the event that cgalt because it flies I mean it performs significantly better than the homotopy
+[1824.2199999999998:1831.26] method. In in particular it tends to get one over k rate. Um we thought about many conditions
+[1831.26:1838.78] to see if we can do prove this but we cannot um unfortunately we had not been able to but in practice
+[1838.78:1848.1399999999999] gets one over k rate um but it performs really well like same computation complexity as um nearly
+[1848.14:1854.14] the same computation complexity as this but um the empirical performance is much better just like
+[1854.14:1861.42] your augmented Lagrangian method engine. So you can look at the mass max cut is the p's the same
+[1861.42:1869.18] thing applies um you get a faster rate with the um cgalt conditional gradient augmented Lagrangian
+[1869.18:1875.18] than the quadratic penalty method. And the puriteration cost of these when I talked about Frank Wolf I
+[1875.18:1880.94] tried to make this clear it's just like uh power iterations or shifted power iterations or the
+[1880.94:1886.7] the line chose method. All right just take a look at the linear algebra or supplementary
+[1886.7:1893.42] material there are advanced uh algorithms that explain what the shifted power method is what
+[1893.42:1905.74] line chose is and so on and so forth. And these tend to cost p squared all right good okay now
+[1907.74:1912.8600000000001] this is the template that we talked about right so here this is either equality or inequality
+[1912.86:1923.5] um what I will do is I'm going to tell you about a challenge and then the solution of this
+[1923.5:1929.5] challenge is actually an advanced interior right this this this particular approach has the best
+[1929.5:1940.1399999999999] complexity for semi-datin programming currently. In general the decision-nabel requires p squared
+[1940.14:1947.5800000000002] storage right I was like p times p minus 1 divided by 2 so the diagonal entries and the upper
+[1947.5800000000002:1954.6200000000001] diagonal because it's symmetric but the solutions typically are low rank right so if you set up
+[1954.6200000000001:1963.3400000000001] a max stop problem we're literally looking for a rank long solution. So we saw this in the end you
+[1963.34:1974.62] get a low rank solution so the storing the solution for example is something like order rp storage
+[1975.26:1984.9399999999998] right so where r is much less than p. Now in particular there's something that says that so
+[1984.9399999999998:1988.54] think about the following right so if I wanted to solve a linear program
+[1988.54:2000.22] um oh sorry let's say I want to find this far solution to this x is equal to b where a is n by p
+[2000.7:2010.3799999999999] there always exists an n sparse solution to this right meaning that you can find n
+[2010.38:2021.66] dimensional vectors that satisfy this and r sparse. Same thing applies to these kind of
+[2021.66:2029.0200000000002] semi-datin programs in the sense that you can always find something like a so you have let's say
+[2029.02:2038.1399999999999] um d constraints so you can always find something like rank is equal to order square of d
+[2039.58:2044.1399999999999] rank solutions right you don't need to go beyond this strength you will always satisfy the
+[2044.1399999999999:2054.7] stp. So even in this case the storage um for this the solution would be square of d by d which is
+[2054.7:2064.3799999999997] much less than p squared sorry the solution will be let's say um if the constraints are not too many
+[2067.2599999999998:2077.8999999999996] this could be much much less than p squared right now in general we talked about having
+[2077.9:2087.26] um it's a notation I am mixing yes so the number of constraints is in fact n I apologize this is n
+[2090.7000000000003:2099.1800000000003] I had something like order this so the ones that we talked about the constraints were just like p
+[2100.46:2107.5] for the max cut the diagonals are equal to one and they're only p diagonal entries so there are
+[2107.5:2116.14] only um p um square of p rank is approximately square of p rank is sufficient what
+[2117.82:2124.22] and what is interesting is that because we're talking about combinatorial problems these operators
+[2125.26:2133.66] these linear operators also have stp structure in that they work with low rank um vectors all right so
+[2133.66:2141.74] in general you start with a combinatorial problem you lift it by taking it out to product so these
+[2141.74:2148.62] matrices usually operate on the individual factors in this particular function and you just need
+[2149.66:2158.54] small storage for their computations right and if you wanted to solve this the major problem is not
+[2158.54:2164.62] the computation because this conditional gradient of grantele granger method requires p squared complexity
+[2164.62:2176.86] curiteration not to bad right but storing this matrix can be the challenge all right it's very
+[2176.86:2185.5] difficult to store this matrix for example for a max cut on the European um European network
+[2185.5:2194.38] I think what you need is something like 10 to the 13 p squared is on 10 to the 13
+[2195.9:2202.06] like 3 in his 10 to the 12 right 3 in entry so if you want to store this I don't know you're looking at
+[2202.06:2211.9] gigabytes hundreds of gigabytes all right so storage becomes the main bottleneck not the arithmetic
+[2211.9:2221.34] complexity for solving semi definite programs right and in fact using these ideas um um you can come
+[2221.34:2227.1800000000003] up with algorithms that solve the problem storage optimal fashion in the sense that you use the
+[2227.1800000000003:2233.82] same space that you need to write down the problem and its solution because writing down the problem
+[2233.82:2244.94] requires you to do order n plus rp storage right the solution being rp storage um typically the
+[2244.94:2250.6200000000003] c matrix is simple but the decision variable is the main function so you can actually solve this
+[2250.6200000000003:2256.78] without ever having to instantiate auxiliary decision variables if you know the solution is
+[2256.78:2265.98] the rank of green i'm just see the advanced material for this r good so here it is the last
+[2266.7000000000003:2275.42] lecture um what we will do next week is that we're going to release a mock exam for this course
+[2275.42:2289.66] now the mock exam is a great foreshadowing of the final exam and the final exam is worth one point
+[2291.1800000000003:2297.42] so take the two hours next week take a look at the mock exam okay the following beach we're
+[2297.42:2304.7000000000003] going to release videos for the solutions of the individual questions all right so the following
+[2304.7:2313.18] week during the class time listen to those solutions all right now the final exam itself will be
+[2313.18:2318.8599999999997] during the exam period will give you something like four hours normally it's three hours but
+[2318.8599999999997:2324.54] will give you something like four hours to write down your solutions and somehow take
+[2324.54:2333.98] photos and put them into pdf and submit it through the model right an additional hour if you will
+[2335.1:2339.82] now one thing that i would like to say is that sort of the for the regular recitation
+[2339.82:2345.58] hours we're going to continue with the homeworks so it's just we will release homework three
+[2347.5:2352.06] um and it's going to be on the is the immunization or occult and so on so forth just
+[2352.06:2357.5] continuing interacting with us in t.a.s send me your questions directly also
+[2361.2599999999998:2370.06] now in the final exam also just regular homeworks you know please don't cheat all right so for the
+[2370.06:2375.74] homeworks i allow you know collaboration you can talk to your friends but you need to write down
+[2375.74:2381.2599999999998] your own solution but for the exam you're not supposed to talk to anybody you're supposed to do
+[2381.26:2393.5] this on your own all right and um please do not risk your final grade over a final exam that only
+[2393.5:2399.98] has one point in your final grade like the impact of this so you begin with something like a one point
+[2399.98:2408.46] for just coming to the class the homeworks take you to five points you can collaborate with your
+[2408.46:2415.66] friends as long as you write down your own problem and the final exam takes you to six five the
+[2415.66:2420.38] final exam basically separates people that have been studying this material and know this material
+[2420.38:2429.9] well in terms of getting a six point right do not risk something like this grade by cheating in
+[2429.9:2442.3] your final exam please it's not worth it why do what you can you will have more time than the
+[2442.3:2451.34] usual because of the strange COVID times try to do your best right even if you get a 50 point out
+[2451.34:2461.1800000000003] of 100 you get a 5.5 so do not risk all the work you've done so far on this course because you
+[2461.1800000000003:2467.58] you want to get maybe slightly higher grade in your final right i'm just trying to put this into
+[2467.58:2473.58] context here please do not cheat um
+[2473.58:2482.7] um i mean i don't want to end on this negative terms so i'd just try to to cheer things up a
+[2482.7:2489.18] little bit i think that this year's the math of data has been remamped quite nicely it now includes
+[2489.18:2495.34] many of these modern neural networks concepts embedded into the lectures so if you have any
+[2495.34:2500.62] recommendations making the course a bit better please send them to me i would be happy to incorporate
+[2500.62:2506.94] them these slides will be online so you can also look at them later on in case you didn't say them up
+[2508.2999999999997:2513.42] i think that you know maybe i'll redo some of the videos so that they're a bit smaller in sizes
+[2513.42:2520.8599999999997] for the teaching you know look at them also a bit easier later on as opposed to going over
+[2520.86:2531.58] these chunks of 45 minutes in any case it was a pleasure this class is very very dear to me
+[2531.58:2553.5] and i hope you enjoyed it and see you all later okay bye

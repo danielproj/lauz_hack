@@ -1,0 +1,94 @@
+~COM-516 lecture 10.1
+~2020-11-15T21:22:55.789+01:00
+~https://tube.switch.ch/videos/29a70d31
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:22.0] In this video we come back to the coloring problem where I already stated the problem,
+[22.0:34.0] gave a metropolis algorithm and stated a theorem about the mixing time of this metropolis algorithm
+[34.0:39.0] if the number of colors is sufficiently large.
+[39.0:46.0] Now we are going to prove this theorem and develop the whole analysis.
+[46.0:63.0] So it's about the analysis of the metropolis chain.
+[63.0:74.0] So first of all let me recap the problem.
+[74.0:83.0] We have a graph constituted of a set of vertices and edges.
+[83.0:109.0] So suppose this is the graph and you want to sample from the space of proper colorings.
+[109.0:125.0] What are proper colorings? Proper colorings are colorings such that two neighboring vertices
+[125.0:144.0] are called M u and V here, U v which are part of the common edge, don't have the same color.
+[144.0:166.0] So a useful notation, the set of colors is labeled by 1, 2, 3, up to q.
+[166.0:186.0] It's the set of colors and we label by delta the max degree of a vertex V in the vertex set.
+[186.0:204.0] Okay, this sampling problem is about sampling configuration that alcohol S x equal to x1,
+[204.0:227.0] x2 up to xn where n is the number of vertices and xV is the color assigned to the vertex V.
+[227.0:248.0] So the distribution we want to sample from is pi of x equal to the indicator function that x is a proper coloring divided by z.
+[248.0:269.0] The normalization factor that counts the total number of colorings is counts total number of proper colorings.
+[269.0:285.0] Now we have to recap the proposed algorithm.
+[285.0:304.0] So we start from an initial proper coloring.
+[304.0:324.0] I explained last time that if we don't know about such an initial proper coloring at time 0, well we can start from any coloring and apply this algorithm which will decrease the number of false edges.
+[324.0:340.0] And in the regime that we study we will convert to the set of proper colorings, the type of proof that we do here also works to show this fact.
+[340.0:367.0] But for simplicity we assume now that we can start from an initial proper coloring then we select vertex V uniformly at random.
+[367.0:385.0] Then we select the color c in the set of colors uniformly at random.
+[385.0:412.0] And finally we recolor vertex V, the selected vertex, if c is an allowed color, if and only if c is an allowed color and otherwise we reject the move.
+[412.0:420.0] Otherwise we do nothing.
+[420.0:433.0] So the move is from an assignment of colors to a neighboring assignment of colors where there is at most one color that has changed.
+[433.0:442.0] And recap the theorem that we will prove.
+[442.0:450.0] First of all, as explained last time this is an instance of metropolis chain.
+[450.0:459.0] We wrote down the base chain, the acceptance probability, etc.
+[459.0:464.0] But we won't do this again, we just take this algorithm and just study.
+[464.0:488.0] So the theorem that we are going to prove is the following is that we will assume here it's not the optimal assumption but we'll assume the number of colors is greater than 3 delta.
+[488.0:495.0] 3 times the maximum degree.
+[495.0:524.0] Then for any initial proper coloring x, if we look at the total variation between the distribution obtained by initializing at x and iterating n times.
+[524.0:548.0] So that is the distribution with initial condition x after n iterations of the algorithm of these steps here.
+[548.0:557.0] So the total variation between this distribution and the uniform distribution, total variation norm.
+[557.0:572.0] This is less than capital n, the total number of vertices, exponential minus little n over capital n, 1 minus 3 delta over 2.
+[572.0:582.0] Since q is greater than 3 delta, the exponent here makes the exponential decrease.
+[582.0:585.0] The parenthesis here is positive.
+[585.0:595.0] You have this minus sign, the exponential here decreases.
+[595.0:605.0] Okay, recall so n is the total number of vertices.
+[605.0:634.0] And the mixing time defined as t epsilon, which is the smallest time such that the max over proper colorings.
+[634.0:646.0] Of this total variation is less than epsilon.
+[646.0:667.0] The mixing time satisfies t epsilon is less than 1 minus 3 delta over q in a denominator times n log n.
+[667.0:676.0] And as usual, there is a log of 1 over epsilon that comes in here.
+[676.0:689.0] Okay, so essentially if you fix an epsilon small enough, the mixing time will go like n log n.
+[689.0:702.0] But this is for a sufficiently large number of colors. And if the number of colors is less than 3 delta, well, you can still prove this kind of result.
+[702.0:707.0] This kind of result also holds.
+[707.0:719.0] In fact, okay, let me make a few remarks here.
+[719.0:748.0] Certainly, the theorem with somehow similar but more complicated proof holds for q greater than 2 delta.
+[748.0:764.0] Now, if q is smaller, then the situation is more complicated and subtle and might depend on the class of graphs.
+[764.0:788.0] Okay, for q smaller, well, this is out of our scope here and the problem becomes much harder.
+[788.0:803.0] For q too small, this kind of theorem breaks down.
+[803.0:819.0] Okay, another remark here is the following. And we will follow up this kind of things during the quiz session.
+[819.0:844.0] So, if q is equal to delta plus 1, then certainly we can color the graph.
+[844.0:873.0] Okay, because if you have a vertex V and a degree delta, say, around it, if you have delta plus 1 colors, then you would be able to, of course, to color the graph here with different colors.
+[873.0:902.0] Okay, so here, here I take q equal 5.
+[902.0:912.0] Okay, and delta equals 4.
+[912.0:941.0] Now, it is a fact that if q is greater than 3 delta, like in the theorem, the chain of the algorithm,
+[941.0:967.0] now the fact, now, what I want to say here is that, in fact, the chain of the algorithm might not be irreducible.
+[967.0:977.0] So, for q equal delta plus 1.
+[977.0:997.0] So, to see this, for example, consider the simple following graph, just a triangle here and take three colors.
+[997.0:1010.0] So, q equal 2 and q equal 3. Take these three colors.
+[1010.0:1038.0] Okay, and the question is, can you move out of this configuration by following the algorithmic steps?
+[1038.0:1063.0] Moving out of this configuration would mean to go to another configuration here, where I have these three colors.
+[1063.0:1076.0] Or move to another configuration, where you have three colors, are arranged like that.
+[1076.0:1095.0] For example, here, here, here, or maybe it's not very clear, like that.
+[1095.0:1116.0] Let me do the picture. Okay, and you want the three colors to be assigned the following manner.
+[1116.0:1128.0] Okay, so, how do you move from here to here? So, you see that the chain, these are not connected.
+[1128.0:1153.0] So, the chain will not be irreducible. Now, it is a fact that
+[1153.0:1163.0] for q greater than 3 delta, the chain is irreducible.
+[1163.0:1175.0] So, you will have enough colors. So, for example, here, if you add one more color, then you'll be able to move out of,
+[1175.0:1191.0] to make this chain irreducible here, irreducible. Okay, so, certainly the chain is irreducible for this, but in fact,
+[1191.0:1206.0] but also for q greater than delta plus 2, as one can show.
+[1206.0:1218.0] So, the case q greater than q greater or equal to delta plus 2.
+[1218.0:1225.0] So, you add one more color to this example.
+[1225.0:1233.0] And we will follow up this kind of thing during the quiz session.
+[1233.0:1251.0] Follow up this during the quiz session for a little proof. And meanwhile, if you want, you can think about it.
+[1251.0:1268.0] So, we are going to prove it here. Okay, as a last remark, before we start the proof,
+[1268.0:1291.0] let me say that the proof of the theorem will use this fact that for q greater than 3 delta,
+[1291.0:1298.0] the chain is irreducible.
+[1298.0:1325.0] And the proof will proceed by a coupling argument.
+[1325.0:1345.0] And so, we are going to construct two chains, one that we call xn, and one that we call yn.
+[1345.0:1355.0] And to in order to carry out this coupling argument, these will be coupled chains.
+[1355.0:1366.0] So, xn is the chain of interest, chain of interest produced by the algorithm.
+[1366.0:1376.0] This is another chain. Okay, we will couple them.
+[1376.0:1384.0] And you'll have to recap the following property,
+[1384.0:1409.0] that the total variation distance between pxn minus another chain that moves according to y here,
+[1409.0:1434.0] q say xn is lesser equal, in fact, is equal to the infimum over all couplings.
+[1434.0:1449.0] Let me state it a bit informally of the probability distribution that xn is different than yn.
+[1449.0:1468.0] Okay, we don't have here to start exactly at the same initial condition.
+[1468.0:1479.0] Okay, so the proof is going to be carried out in the next video.

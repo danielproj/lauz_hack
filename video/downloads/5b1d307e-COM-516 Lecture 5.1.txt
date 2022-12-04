@@ -1,0 +1,245 @@
+~COM-516 Lecture 5.1
+~2020-09-02T11:10:48.233+02:00
+~https://tube.switch.ch/videos/5b1d307e
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:8.0] Hello, so starting from now I would like to tell you about the rate of convergence of
+[8.0:14.72] Markov chains towards equilibrium towards the stationary distribution pi.
+[14.72:21.0] And in order to tell you about this, I first need to introduce the following concept,
+[21.0:28.0] which is the concept of reversible chains and detailed balance.
+[28.0:45.0] Actually, strictly speaking, this is not necessarily needed to talk about rate of convergence
+[45.0:53.0] of Markov chains, but it will create a kind of restrictive setup in which we can show
+[53.0:62.0] nice things, perhaps also get nicer expressions for convergence, but we could talk about
+[62.0:67.0] rate of convergence of general Markov chains if we want it.
+[67.0:71.0] Okay, let me tell you what does that mean to be a reversible chain?
+[71.0:76.0] So the definition is as follows.
+[76.0:83.0] So of course, now we have, if we want to talk about rate of convergence, we have to have
+[83.0:84.0] convergence chains, right?
+[84.0:95.0] So we will choose Xn to be an ergodic Markov chain.
+[95.0:101.0] Okay, so therefore what do we, let me remind you, ergodic means irreducible, apayodic and positive
+[101.0:113.0] recurrent, and okay, with a certain state space S.
+[113.0:119.36] And because it is ergodic by what we have seen before, it admits a unique stationary and
+[119.36:123.6] limiting distribution pi.
+[123.6:143.6] On top of that, it is said to be reversible
+[143.6:168.6] if it is stationary, distribution pi, satisfies what another equation, which we call
+[168.6:186.6] a detailed balance equation.
+[186.6:200.6] So this equation reads as follows, pi i times pi j is equal to pi j times pi j for every couple i j in S.
+[200.6:212.6] Okay, so this is saying that if you have a policy pi i to be in state i, you multiply by pi j.
+[212.6:217.6] So pictorially you can imagine the following, so let's say you know, you're in state i, you
+[217.6:220.6] have a certain probability pi i to be there.
+[220.6:229.6] And of course from i, you have a certain probability pi j to go to state j.
+[229.6:235.6] And from j, you have a certain probability pi j to be there and you go with a certain
+[235.6:242.6] probability pi j i to state i.
+[242.6:248.6] And you would like that these two probabilities, these two products of probabilities are equal
+[248.6:250.6] for every i and j.
+[250.6:257.6] So you can think of this as a kind of exactly what it's written here, a detailed equilibrium.
+[257.6:258.6] Right?
+[258.6:265.6] Not only you have the global equilibrium pi is equal to pi p, but for between any two pair of states,
+[265.6:267.6] you have this kind of equilibrium.
+[267.6:273.6] What flows from left to right is equal to what flows from right to left.
+[273.6:276.6] Okay.
+[276.6:291.6] So this is just a definition, let me now try to give you some, make some remarks about this definition,
+[291.6:293.6] which are important.
+[293.6:309.6] So first remark is that, let me call this equation with simple star.
+[309.6:332.6] The first remark is that pi equals to pi p does not ensure that equation star is satisfied.
+[332.6:339.6] That is saying, if you have a global equilibrium pi, this does not necessarily imply that you
+[339.6:342.6] have a detailed equilibrium.
+[342.6:343.6] Okay.
+[343.6:348.6] We have counter examples, we are going to see some of them.
+[348.6:370.6] On the contrary, if equation star is satisfied, then pi is equal to pi p.
+[370.6:380.6] And here is the proof.
+[380.6:381.6] You know, we have to check, so let me compute pi p, component j of this.
+[381.6:392.6] So this is sum over i in s of pi i times pi j.
+[392.6:401.6] Because of this detailed equilibrium, this I can rewrite as sum over j in s of pi j times
+[401.6:412.6] p, i j, I'm sorry, I shouldn't change the sum here, sum over i in s.
+[412.6:420.6] Sum over i in s of pi j times p j is all the detailed balance equation.
+[420.6:428.6] And now pi j does not depend on i, so I can take it out of the sum.
+[428.6:433.6] And because I have a stochastic matrix, so you know, because it's a transition matrix,
+[433.6:437.6] this will be equal to 1 for a rigid.
+[437.6:439.6] And that's exactly what we want, right?
+[439.6:442.6] So this whole thing here is just equal to pi j.
+[442.6:448.6] And that's exactly, if you read from left to right, that's exactly the equation pi p is equal to pi.
+[448.6:455.6] So local equilibrium implies global equilibrium.
+[455.6:463.6] Now, perhaps another remark about this definition is, why do we have, okay,
+[463.6:468.6] so this is this detailed balance equation, why, why, given, it is given this name,
+[468.6:472.6] is hopefully clear now.
+[472.6:479.6] But why do we say then that the chain is reversible in this case?
+[479.6:487.6] So the reason is the following.
+[487.6:500.6] That assume that you have a chain pi j, which is inequitable equilibrium from the beginning.
+[500.6:507.6] So you start a chain, which has the stationery distribution at time zero.
+[507.6:515.6] Then of course, it will have the stationery distribution at every time, okay, time.
+[515.6:521.6] And look at the chain backwards.
+[521.6:532.6] Now we look at the chain backwards in time.
+[532.6:539.6] So you have a chain, which is doing something like this.
+[539.6:546.6] So you have a, you know, it might be, you know, this is your, I don't know how you, sorry,
+[546.6:553.6] how your chain behaves or something, something like this, right?
+[553.6:557.6] This is your xn and increases.
+[557.6:564.6] And now instead of looking at the process x0, x1, x2, x3, you look at the process xn, xn,
+[564.6:566.6] n minus 1, xn minus 2, and so on.
+[566.6:572.6] So you look at this, this process backwards.
+[572.6:583.6] It turns out, and you can do the computation, it turns out that,
+[583.6:596.6] that if equation star is satisfied,
+[596.6:624.6] then the backward chain has the same transition probabilities as the forward chain.
+[624.6:633.6] So in this case, you can reverse the chain and still get the same process.
+[633.6:636.6] In general, you can always do this, by the way, should mention.
+[636.6:641.6] If you have a Markov chain and you look at it backwards, there is something which is always true
+[641.6:645.6] that the backward chain will also be a Markov chain.
+[645.6:650.6] Perhaps not time, not time, how much it used, but it will be a Markov chain.
+[650.6:655.6] Here, on top of also having a Markov chain in the reverse direction,
+[655.6:661.6] we also have a Markov chain which has exactly the same transition probabilities as the forward chain.
+[661.6:666.6] Therefore, the name reversed, but, and okay, it's a good exercise if you want to try this.
+[666.6:670.6] I'm not going to do it here.
+[670.6:675.6] So you know, you have to compute the transition probabilities from xn plus 1 to xn,
+[675.6:680.6] and you know, see what you get.
+[680.6:687.6] Okay, so we will need this assumption again for cosmological reasons, kind of,
+[687.6:693.6] but it's also important to understand when a chain is reversible, when it is not.
+[693.6:708.6] So let me just make a few talk about a few examples here, and examples and counter examples.
+[708.6:718.6] Because it's good to get a kind of intuition about when is a chain reversible, when it is not.
+[718.6:726.6] Another thing I want to mention is that you could define the concept of reversible chain in a marginal setup.
+[726.6:728.6] For example, you don't need a limiting distribution here.
+[728.6:732.6] We're only talking about, you know, the properties of the stationary distribution.
+[732.6:734.6] Let's just forget about this.
+[734.6:740.6] Our goal is to deal with a rate of convergence of Markov chains.
+[740.6:745.6] And so we want to stay in the framework where the chain is agodic,
+[745.6:748.6] but you could be a little more general if you want it.
+[748.6:753.6] Okay, so the first example will be a counter example, and it's a very important one,
+[753.6:761.6] because it says that if there exists two states, i, j, and s,
+[761.6:786.6] search that p i j is positive, but p j i is zero, then the detailed balanced equations cannot be satisfied.
+[786.6:793.6] Or obvious reasons, right? On one side, you'll have something bigger than zero.
+[793.6:796.6] On the other side, you have something equal to zero.
+[796.6:798.6] Okay.
+[798.6:809.6] And of course, because remember, if we are in the agodic setting, then every pi i is strictly positive.
+[809.6:812.6] Okay. So every pi i, every pi j is strictly positive.
+[812.6:817.6] So it cannot be that pi i times pi j is equal to pi j times pi j.
+[817.6:822.6] Okay, so already this supersers quite a lot of candidates, right?
+[822.6:830.6] If you have a very large graph and you spot in one place that there is an arrow in one direction and no arrow in the other direction,
+[830.6:834.6] then you know the detail that balance equation cannot be satisfied in this case.
+[834.6:838.6] Okay, for an agodic chain.
+[838.6:846.6] But there is another example, which is again a counter example, actually, which is the following.
+[846.6:861.6] If you, we have already seen this example, the random walk, or I call it the cyclic random walk, I think, the cyclic random walk.
+[861.6:870.6] On the state space s, which is zero, one, up to capital N minus one.
+[870.6:881.6] I think you remember this. So we have a chain, which is moving clockwise and counterclockwise with some probability.
+[881.6:892.6] So it's moving clockwise with probability p and counterclockwise with probability q and it makes a circle like this.
+[892.6:898.6] Okay.
+[898.6:907.6] Okay, so this chain has parameters, we will assume that both being q are between zero and one.
+[907.6:913.6] And we also assume that p plus q is equal to one. Otherwise, we don't have a mark of chain.
+[913.6:921.6] And on top of that, if we want to consider the agodic case, we should consider that N is odd.
+[921.6:925.6] So that we have a limiting distribution.
+[925.6:939.6] And what is this limiting distribution? Well, actually, we saw that already. The limiting a stationary distribution pi.
+[939.6:946.6] But by the way, what I'm saying here again, I want to stay in the agodic case, but I could consider N, any number.
+[946.6:950.6] And we would reach exactly the same conclusion.
+[950.6:957.6] The limiting stationary distribution is simply one over N, one over N.
+[957.6:963.6] If you remember, in this case, we have a double isochastic matrix p.
+[963.6:971.6] So the stationary distribution is uniform. And here we have a finite set.
+[971.6:978.6] So we have a uniform distribution. It exists. And that's what it is.
+[978.6:986.6] Okay. So now the question. Do we have detailed balance in this case?
+[986.6:992.6] And in order to check whether we have detailed balance.
+[992.6:1004.6] Then we have to check whether, you know, pi i is time p ij is equal to pi j times p j i for every ij.
+[1004.6:1010.6] Now, of course, here, this will be satisfied. If you take two states, we do not communicate with each other.
+[1010.6:1015.6] If you have zero equals zero, that's fine. So we only have to check this for nearest neighbors here.
+[1015.6:1023.6] So here it would be one over N times p i to i plus one.
+[1023.6:1030.6] Is it equal to one over N times q? The priority to go from i plus one to i.
+[1030.6:1042.6] And here, of course, the answer is only if p equal q equal half.
+[1042.6:1051.6] So if you have a chain, which is cyclic with equal priorities to go left and right, then you will have detailed balance.
+[1051.6:1054.6] In all the other cases, you don't have detailed balance.
+[1054.6:1061.6] So, but you do have stationary distribution pi. The uniform distribution is always a stationary distribution.
+[1061.6:1072.6] But you don't have detailed balance. And if you think about it, think of p being zero per 99 and q being zero per 0.01.
+[1072.6:1075.6] Then what does the chain do in the long run?
+[1075.6:1086.6] The chain will simply be turning around in one direction. It will be turning from zero to one and follow rotation.
+[1086.6:1094.6] From time to time, it will go back counterclockwise, but in general, it will just go clockwise, forever.
+[1094.6:1099.6] And we say that in this case, we have a stationary distribution, which is the uniform distribution.
+[1099.6:1106.6] That's correct. The chain is going to explore with equal probability all the states. But this chain is not really at rest.
+[1106.6:1110.6] It continues turning, turning, turning, forever.
+[1110.6:1123.6] And so, in any chain where you have such cycles, such kind of cycles appearing, well, okay, you have to be careful and check in every example, because it is not a roll.
+[1123.6:1129.6] But as soon as you have this cyclic behavior somewhere in the chain, you won't have detailed balance.
+[1129.6:1135.6] But you have to check this with the equations and the formulas you get for the stationary distribution.
+[1135.6:1149.6] Okay. So that's another counter example. So now, perhaps, let me go for an example, finally, or two examples, actually.
+[1149.6:1170.6] One is the following. If S is finite, and P and the matrix P is tree diagonal.
+[1170.6:1186.6] So the matrix P is tree diagonal, which means that, which means the following, to P has this form.
+[1186.6:1196.6] Right. There are some non-zero coefficients in the diagonal, in the upper diagonal, in the lower diagonal.
+[1196.6:1211.6] But that's all. All the other coefficients of the matrix should be zero. Okay. So here is the place where you have non-zero coefficients.
+[1211.6:1222.6] So that's a chain where you only have newest neighbors move between the states. Right. You have a line of states, and you only have a neighbor to the left or moving.
+[1222.6:1245.6] You only move either to the left or to the right. Okay. In this case, then, then, the chain is reversible.
+[1245.6:1258.6] Okay. And that's not a general statement. You know, you know, provided it is also a godick. Okay. So let's assume you have an algorithm chain with this, with the matrix P of this form.
+[1258.6:1266.6] Then, in this case, the detail balance will be satisfied.
+[1266.6:1290.6] So you may say, oh, but that's smallest what we had here. Not quite, because for the cyclical on the mark, for the cyclical on the mark, we have nearly a tree diagonal matrix.
+[1290.6:1309.6] We have a chili P, which is zero P. And then there is a list of zeros in the first row. And then a Q at the end. And then we have Q zero P. And then all zeros.
+[1309.6:1329.6] And then zero Q zero P and so on or zeros. And then a P in the last corner here. And then a Q in a zero. And here you have a P. You know, something like this.
+[1329.6:1343.6] And we saw these matrix already. It's a double stochastic matrix. But so if you look here and here. And you know, if you look at the tree diagonals, indeed, they are nearly the only non zero coefficients of the matrix.
+[1343.6:1353.6] But there are these two non zero probabilities into corners that prevent P from being a tree diagonal matrix.
+[1353.6:1366.6] And therefore we have a counter example in this case. It's not always the case that you have a counter example. If you have non zero coefficients in the upper and lower corners. But here it is a counter example.
+[1366.6:1384.6] So, so the so what I'm telling you is coherent so far. Okay, let me go for a specific example of three diagonal matrix where we're going to compute the stationary distribution using the tail balance.
+[1384.6:1408.6] So, here is now a true example. And let me describe what the process is. So consider two irons with capital N numbered balls.
+[1408.6:1424.6] So this example sounds like you know, very abstract probability example. But actually this example is was invented by Aaron fest and was meant to model physics.
+[1424.6:1440.6] So it's a very interesting model and that led to very interesting questions. So here is here is what the model is. So you have two irons.
+[1440.6:1461.6] Okay, represent them schematically like this. And I have N number balls. So let's say I have eight of them. And let's say I have you know, I have some balls here like bill your balls right with numbers. And I have here other balls.
+[1461.6:1477.6] Okay, something like this. Okay, and let me now describe what the process is at each step.
+[1477.6:1499.6] So here N is equal to eight right. Pick a number. A number between one and N uniform in a random.
+[1499.6:1521.6] That's all random process the basis of the process. Okay. And take the ball with this number.
+[1521.6:1547.6] And switch its position. And switch its position, which by which I mean the following. So let's say you know, you have chosen a random number five.
+[1547.6:1559.6] So if you have chosen a front on the number five, then what you're going to do is take the ball from number five and put it in the other.
+[1559.6:1580.6] Okay, yeah, perhaps I should write therefore put it in the other. Sorry, that would be clearer.
+[1580.6:1600.6] Now the mark of chain will be the state of the chain will be what XN will be the number of balls in round one.
+[1600.6:1606.6] Say, so we have to learn one in two.
+[1606.6:1623.6] XN will be the number of balls in one at time and so here I started with the situation where you have the same number of balls in the towards, but the next step then will be five balls on the left side and only three on the right side.
+[1623.6:1639.6] Okay, and this is now clearly a random process because I'm choosing the numbers at random. And this this chain has the following transition probability.
+[1639.6:1660.6] You know, we have the state of the chain. Now we have the following transition probabilities. You can stop the video and try computing this yourself before listening to the solution.
+[1660.6:1673.6] So the probability to transit from, of course, right, it can only move. That's an example of chain where you can only move from I to I plus one or I minus one, right?
+[1673.6:1687.6] Because yeah, there will be there will be a change. You will not stay put right. Pi I will be zero, but Pi I plus one will be positive and what will it be?
+[1687.6:1701.6] Well, if you want to have one more ball in one, we should do something like I did here in this example. So we should pick a ball, which is at the moment in in on two.
+[1701.6:1720.6] Since I have I balls in one, then I have only N minus I balls in two. So that's the problem. So the probability that I move from I to I plus one is the party that I choose a ball in.
+[1720.6:1745.6] Two, which is N minus I over N. Likewise, the party to go from I to I minus one will be I over N because I have I balls in one and two, the party that I, I, there is one ball less in the earn one will be the party that I've chosen a ball in one.
+[1745.6:1757.6] And all the other ones are zero, because here the sum of these two priorities is equal to one. Okay, so that's my transition matrix, which is three diagonal.
+[1757.6:1767.6] Because it has no probability to go from I to I plus two for example. Okay, and here it doesn't even have a party to go from I to I.
+[1767.6:1779.6] Okay, but that we don't we don't care. So now if you want to compute the station distribution, of course, what you can do is solve the system of equations, pi is equal to pi p.
+[1779.6:1795.6] In this case, it's quite complicated to do. And if you go and try. Okay, so here we know we have a tree diagonal matrix. So we know there will be that detail the equilibrium, as I said before.
+[1795.6:1802.6] But in general, it's always a good thing to try if you try to solve the equation pi is equal to pi p or find the stationary distribution.
+[1802.6:1816.6] It's always a good try to try to compute using detail balance equation, unless you know for sure, because you have the other cases I have described before, you know for sure that this won't happen.
+[1816.6:1836.6] But in general, it's a good idea to try detail balance. Okay, and if you do this, so if you if you if you try to solve this detail balance equation.
+[1836.6:1851.6] In this case, for example, you get the nice thing right? You get that pi i times pi i plus one is equal to pi i plus one times pi plus one.
+[1851.6:1878.6] I, which is which can be written as pi i times n minus i over n is equal to pi i plus one times pi i plus one, which will be i plus one over n.
+[1878.6:1896.6] So, so from there you get the following recursion that pi i plus one will be actually n minus i over i plus one times pi i.
+[1896.6:1914.6] And this is this is an easy this is something that you can solve easily. You will get that pi i will be equal to n factorial.
+[1914.6:1933.6] Okay, well, I could write in the mirror step. This will be n minus. Okay, so n minus i times n minus i minus one.
+[1933.6:1952.6] No, sorry, minus i plus one divided by n so on and so forth until until the last will be n times pi zero and below we will have i times i minus one.
+[1952.6:1967.6] Until one times pi zero. Like if you do a recursion of this, which can be written as the binomial coefficient n i times pi zero.
+[1967.6:1984.6] Okay, and then you have the normalization condition, you know, that sum over i from zero to n of pi i is equal to one.
+[1984.6:1999.6] And if you apply this, you get that pi zero is one or this sum of this binomial coefficients.
+[1999.6:2005.6] And this sum of binomial coefficients is one over two to the n.
+[2005.6:2015.6] Okay, so this is not such not such an easy computation, but trust me, it's much easier than trying to solve the system pi is equal to pi p in this case.
+[2015.6:2026.6] Here we get a nice recursion and this allows us to solve the whole, not find the station and distribution in an easier way.
+[2026.6:2035.6] Okay, and I hope that you see here that indeed there is detail balance because you know the way the process is defined.
+[2035.6:2041.6] There is no, there is no cycle and there are no arrows that go in one direction and no arrow going in the other direction.
+[2041.6:2044.6] So we have we indeed have detail balance.
+[2044.6:2059.6] So just for a small comment, this was used as a model in physics to describe, let's say for example, if you have two two chemical two different chemical products in water.
+[2059.6:2068.6] So you have two two pot of water, one with let's say yellow chemical products and the other one with a blue chemical product.
+[2068.6:2076.6] And you put them together in a, you join them with a solitude.
+[2076.6:2087.6] Let me just draw a very schematic thing here. You know, you have a kind of bath and here there is a, there is some membrane here in the middle.
+[2087.6:2097.6] So on the left hand side, you'll have something which is yellowish on the right hand side, you'll have something which is blueish.
+[2097.6:2109.6] And you have some membrane and this membrane lets, let's particle of water go for chemical products go from, from left to right a little.
+[2109.6:2112.6] It's a little permeable, so it allows.
+[2112.6:2114.6] So okay.
+[2114.6:2124.6] So this model of earns thiscribes quite well what happens over time with the concentration of the yellow product on the left hand side.
+[2124.6:2134.6] So of course what's going to happen is that as time goes by, there will be some exchanges between the two baths, right.
+[2134.6:2144.6] And of course at some point it's the whole thing will become completely green, okay, where the changes mix of the yellow and the blue.
+[2144.6:2154.6] And yes, so this, this is a good model for physics, for explaining how those, how does this exchange happen over time.
+[2154.6:2168.6] As abstract as this model is, it turns out that it's a quite good model and, and there was an interesting products that was raised, that was raised by this question because you know, if you mix yellow and blue,
+[2168.6:2176.6] two products, two liquid products with yellow and blue on one side, you get something green.
+[2176.6:2183.6] And there is no way that you will get back to yellow and blue at some point, right.
+[2183.6:2185.6] It seems that of course it's impossible.
+[2185.6:2193.6] But once you have mixed the two products, there is no way you can get back unless you do some sophisticated extraction process.
+[2193.6:2205.6] And so in, so there was a little product here because you have a modellization of what happens with this Markov process, which is a reversible chain, right.
+[2205.6:2217.6] So exactly we have detailed balance, so we have a reversible chain, which is saying that you have, you have particles going from left to right constantly.
+[2217.6:2228.6] And so because the chain is reversible, it stays in particular that every state of the chain will be visited infinitely many times, right.
+[2228.6:2238.6] And typically the state zero, so the state where all the yellow particles are on the left hand side will be visited infinitely often, right.
+[2238.6:2252.6] Because it has a positive probability, so it will be visited infinitely often. And so if this model were right, it should in physics, what we should see when you do this physically, we should see that, you know, first you start with yellow and blue.
+[2252.6:2265.6] And then, and then we should start seeing at some point, again, not only green, but at some point where the left hand side becomes again yellow, the right hand side becomes blue.
+[2265.6:2272.6] And of course, in physics, we never observe this right. If you do, if you do an experiment, you will never observe this.
+[2272.6:2282.6] But okay, so the paradox is solved here. It's quite interesting because it's not completely solved, but it's a good explanation.
+[2282.6:2289.6] I feel is that of course when we are talking about physical phenomena, we have lots of particles.
+[2289.6:2298.6] And typically, capital N is the other of the either gadron number, which is 10 to the 26 of something like this, right, of 10 to the 22.
+[2298.6:2311.6] So now pi zero, yes, will be non-zero, but it will be one over two to the power 10 to the 22.
+[2311.6:2329.6] So even though it's not zero, it's saying that the time it would take to see again by chance an occurrence of the physical process where you see yellow on one side and blue on the other side is just so close to zero, right.
+[2329.6:2343.6] There is no, in the average time to transit from state zero to state zero with this number capital N is just infinite. Okay, and that's that's kind of the solution of the products.
+[2343.6:2354.6] Okay, so with this, I want to finish this introduction to the topic of rate of convergence of Markov chains.
+[2354.6:2364.6] And now we have this framework where we will deal only with Markov chains, which have, which satisfy these detailed balance equations.
+[2364.6:2393.6] And we will see that in this framework, we will be able to tell precise results on the rate of convergence.

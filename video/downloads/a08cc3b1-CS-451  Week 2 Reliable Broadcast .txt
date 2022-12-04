@@ -1,0 +1,626 @@
+~CS-451 / Week 2: Reliable Broadcast 
+~2020-09-29T11:42:33.022+02:00
+~https://tube.switch.ch/videos/a08cc3b1
+~CS-451 Distributed algorithms
+[0.0:6.16] on this computer and I hope that you can hear me on the internet.
+[6.16:8.16] That yeah, can you be okay, good.
+[8.16:8.96] Okay, so
+[15.44:21.12] so today we are going to study reliable broadcast and I would try to stay here so that you can see me
+[21.12:29.28] but I cannot prevent moving here and there. So last week I told you about why this field is
+[29.28:33.84] important that today a lot of algorithms are distributed.
+[34.56:41.120000000000005] Either they are distributed because the data they need to access are spread or they are
+[41.120000000000005:46.0] distributed because if we put them on a single machine the machine becomes vulnerable
+[46.0:50.72] and we want to make them highly available. So there are two motivations for distribution.
+[50.72:57.28] In both cases we need to think differently about algorithms because the algorithms are spread
+[57.28:63.36] over different machines and we have to think of what happens if some of the machines fail
+[63.36:69.2] and the others keep working. So this is essentially the difference. The other difference as I explained
+[69.2:74.48] has to do with what it means for an algorithm to be fast, the notion of complexity.
+[75.84:84.0] And what I told you is the following. In order to really learn to reason about distributed
+[84.0:90.88] algorithms the best strategy is to start building distributed algorithms and what we are going to do
+[90.88:98.64] in this class is to start building some specific distributed algorithms that can be useful
+[98.64:104.24000000000001] for other systems and applications and we are going to start from very basic algorithms and
+[104.24000000000001:110.4] keep going up into the layers of what would be useful. So last week I gave you as an example
+[110.4:119.36000000000001] we addressed as an example the problem of how to build reliable channels TCP-like channels over
+[119.36000000000001:126.72] UDP-like channels. Of course the goal was to help you really start to see how distributed algorithms
+[126.72:134.24] are organized and should be reason about. Today we are going to go one step above. We are going to
+[134.24:141.04000000000002] look into reliable broadcasts and uniform reliable broadcasts. So we are going to study broadcast
+[141.04000000000002:148.96] primitives. If you have TCP or UDP you can of course build broadcast primitive and we are going
+[148.96:157.44] to see that. You can connect group of processes and start making them exchange information as we
+[157.44:163.92000000000002] do when we broadcast. But as we are going to see today if you do that in a live manner you end up
+[163.92:169.28] with abstractions that are not really good and will even post problems when you build applications.
+[169.28:179.83999999999997] So you have to think about that in a careful manner.
+[179.84:189.04] Something is wrong sorry.
+[189.04:210.23999999999998] Can you see the slides? I hope it is going to work now. Something is weird.
+[210.24:226.16] Okay. So essentially a broadcast primitive is a primitive that enables any of the processes to
+[226.16:234.08] stand information messages to the entire set. We call that broadcast. Later during the semester
+[234.08:239.52] we are going to study multicast. It is the situation where you don't stand the messages to the
+[239.52:244.64000000000001] entire set but to a subset. For now broadcasts we want to communicate with everyone.
+[245.20000000000002:254.24] And we are going to distinguish here three categories three times of broadcasts. What we call best
+[254.24:261.36] effort reliable and uniform. Think of them as a little bit similarly to what we did last week.
+[261.36:268.56] There is we studied what I called fair lost channels UDP like then stubborn channels and then
+[268.56:273.52] reliable. So this will be a little bit similar and say in a little bit three kinds of broadcast
+[273.52:284.64] primitives. If you want to think about where these broadcast primitives sit in the network layer
+[285.36:291.68] think of the following picture you have the channels we have seen last week and then on top of them
+[291.68:298.8] we have some reliable broadcast primitives. And if at the end of this class you can assume that now
+[298.8:304.48] the developer of a distributed computing this distributed application will come and be able to use
+[304.48:310.56] the reliable with broadcast primitive as if they were provided directly by the network.
+[310.56:315.28000000000003] Okay. The developer will not see any difference. There is something else we are going to use today
+[315.28000000000003:320.08] which I didn't talk about last week but I will talk about today and the week after.
+[320.08:329.68] The first is the notion of a failure detector. So think that you have a system made of machines.
+[329.68:336.56] These machines have channels they communicate to and they also have some services or some
+[338.47999999999996:343.12] specific primitives. One of these primitives is the failure detector and I will come back to
+[343.12:350.4] it later today but to give you a head up a failure detector is some think of it as a device
+[351.12:360.32] that tells a machine process PI P2 has failed or P3 has failed or P4 is still correct.
+[361.12:366.16] And as we will see this device is extremely useful in distributed computing.
+[366.16:373.52000000000004] And when we will build algorithms we will always assume that this device is perfect.
+[374.32000000000005:380.72] And then we will ask what if this device is not perfect. What if failure detection can be
+[380.72:386.64000000000004] inaccurate and then we will come back to the algorithms and I will explain to you how we build
+[387.44000000000005:393.44000000000005] perfect fellow detectors and what assumptions we need to do that and what happens if we don't have that.
+[393.44:400.08] So for now be patient I'm going to come back to what a perfect failure detector is,
+[400.08:404.64] what an imperfect failure detector is etc and we will come back to that but keep in mind that
+[404.64:409.28] this is going to be an important ingredient. Okay so we want to study broadcast.
+[410.96:416.8] Broadcast is useful in all kinds of applications in particular. Applications where
+[416.8:425.28000000000003] for example some processes subscribe to events we talk about public subscribe computing.
+[425.28000000000003:431.68] Okay so you want to subscribe to EPFN News and then you subscribe and other people subscribe
+[431.68:439.44] and from there on you will get broadcast information. The set is all people who have subscribed to EPFN News.
+[439.44:446.16] Okay other people would subscribe to LeKip or would subscribe to LeMonde or to BBC or CNN or whatever.
+[446.16:455.20000000000005] The world of internet is full of such subscriptions. Each one of them, each one of them is a system as we study today.
+[455.20000000000005:462.16] Okay when I talk about the system is one subscription set. Everybody is interested in getting all events.
+[465.6:474.64000000000004] What is important is that depending on how critical the application is the subscribers might require
+[474.64:481.36] some reliability. Okay so sometimes you don't really care. You simply want to know about some
+[481.36:486.64] football results or ski results. So you want something fast and if it doesn't work it's not a big deal.
+[487.28:493.12] But sometimes if you are subscribing to a stock exchange application you really want to know when
+[493.12:499.84] this stock has increased or decreased because you are willing to sell or buy. So there you are not
+[499.84:505.28] really willing to give up. You believe that it's a fairness issue and you want to reliability.
+[505.28:511.2] And the different categories of reliability we are going to study might each be appropriate for
+[511.2:521.36] a certain kind of applications. Okay so the three forms of reliability we are going to consider are
+[521.36:527.04] best efforts, the library broadcast sometimes called regular and uniform library broadcast.
+[527.04:533.28] And all these things are in the book that I mentioned last week. Remember that I told you that
+[533.28:539.36] there is a book called Introduction to Reliable and Secure Distributed Programming. All this stuff is
+[539.36:548.56] there and more. The way we are going to study these broadcast abstractions as well as any abstraction
+[548.56:555.5999999999999] we study is always the same. We first define precisely the specification of the abstraction
+[555.6:562.88] and then we study the algorithms by making very strong assumptions about the network.
+[563.76:569.36] And later on we say what if we make weaker assumptions? Can we still solve the problem?
+[569.36:575.6800000000001] Okay so specification is the problem. Then we start by relatively easy algorithms which is what
+[575.6800000000001:583.12] we are going to do today. And later on harder algorithms. Harder algorithms means weaker assumptions
+[583.12:588.5600000000001] on the system. Okay if you assume that the system is perfectly synchronized everybody communicates
+[588.5600000000001:596.88] with everybody the algorithm is going to be easier. Okay but always the same approach. Okay first
+[597.6:606.96] specification. The first part of the specification is what is the interface of this abstraction we
+[606.96:618.08] want to implement. Okay here the interface is made of two elements. One you one you can view it
+[618.08:624.1600000000001] as an operation that a processor wants to broadcast will invoke. Okay when a process wants to
+[624.1600000000001:630.96] invoke a message I am the director of EPFL communication and I want to inform you of something.
+[630.96:639.52] I invoke operation broadcast M just like I invoke operation send M last week. Okay so this is an
+[639.52:647.2] operation invoked by the process who is willing to broadcast some information. The second
+[647.2:653.0400000000001] kind the second element is slightly different. It's not an operation that a process invokes.
+[653.6800000000001:660.4000000000001] It's called a callback. Okay so I broadcast information because I am director of the
+[660.4:670.16] communication of EPFL and this as an effect will basically invoke the act of me doing that
+[670.16:676.72] invocation will invoke something on your machines. A callback operation. A callback operation tells
+[676.72:684.96] you hey something has it's like a notification. Something has arrived. Okay then it's up to you
+[684.96:690.88] to open it or see it or forward it or whatever. This is called the callback. So the second part of
+[690.88:699.12] the interface is called a delivery and the delivery has as a parameter and the message but also the
+[699.12:706.24] source. In this case the source is me director of communication at EPFL. Okay when I broadcast that
+[706.24:711.9200000000001] information I don't need to care about whom I am broadcasting it to. There is a system within which
+[711.92:720.7199999999999] I am doing that. I hope we are together. Okay so broadcast there is just like communication
+[720.7199999999999:727.92] channels last week. One operation that I invoke when I want to stand the message and one callback
+[728.56:735.36] that is invoked on the receiver. Okay and that callback is called deliver and usually we write
+[735.36:742.4] here deliver but as a prefix the semantics of the operation here we have best effort deliver.
+[742.4:751.12] So please I hope that you start getting acquainted with this kind of interface and then
+[752.16:758.48] there are three properties that are supposed to be guaranteed and sure by best effort broadcast.
+[758.48:767.44] The first property is called validity it says if the IMPJ are correct correct processes remember
+[768.32:774.5600000000001] correct means a process that never fails never fails in the context of an execution.
+[775.6:782.0] Okay remember that there are two kinds of situations in an execution either you are correct or
+[782.0:790.08] you are faulty. Faulty means you crash at some point correct means you never crash you never behave
+[790.08:798.64] badly. Okay so if the IMPJ are two correct processes then every message broadcast by PI is
+[798.64:806.96] eventually delivered by PJ. Okay so IMPI I'm director of communication at EPFL I broadcast a
+[806.96:814.24] message. If my machine doesn't crash if it's correct for the entire duration of the semester or
+[814.24:822.0] the month or whatever scope we have and if your machine is correct if it doesn't crash then the
+[822.0:830.96] validity property says eventually eventually means inevitable. It does not mean a tetr
+[830.96:837.6] eventual moment it means inevitable eventually you will deliver that information it doesn't say when
+[838.1600000000001:844.1600000000001] we are not talking here about real-time guarantees we can discuss that later here we are simply
+[844.1600000000001:852.0] want to ensure that you will get that message this is what proper first property says the second
+[852.0:859.44] property says no message is delivered more than once okay you are not allowed to get two messages
+[859.44:865.6800000000001] that are the same two times the same message the third property says no message is delivered
+[865.6800000000001:874.48] unless it was broadcast okay this captures a security it has a security flavor it means nobody
+[874.48:882.1600000000001] can enter the system and tells you oh EPFL communication is telling you that Martin Vetterly is
+[882.16:890.16] telling you everybody has succeeded this year okay this is maybe Martin Vetterly will say that
+[890.16:895.76] but nobody else can say that okay nobody will hack the system this is the third property remember
+[895.76:903.1999999999999] that I told you last week that the world of properties in computing in general is divided into two
+[903.2:912.5600000000001] categories safety property tells you something bad should never happen and you can recognize a safety
+[912.5600000000001:920.6400000000001] property by saying if I look at an execution if the property is not correct then I can trace a
+[920.6400000000001:927.6800000000001] point where it's not correct where it's violated and liveness properties liveness properties are
+[927.68:935.04] properties that are that can be violated but you can never say it's violated at this point you
+[935.04:942.56] can only say that it's violated if you look at infinity so can you tell me if no creation is
+[942.56:950.7199999999999] safety or liveness it is the safety property because the no creation property if it is violated
+[950.72:957.6800000000001] this means that at some point somebody has sent a message somebody has delivered a message that
+[957.6800000000001:966.88] was not broadcast okay no duplication is safety or liveness safety because for for it to be
+[966.88:972.5600000000001] violated this means that somebody has delivered twice the same message and this will happen at
+[972.56:982.3199999999999] some point validity is it liveness or safety it is liveness why because I cannot look at the
+[982.3199999999999:988.9599999999999] prefix of an execution and say it is violated if I broadcast a message the property will be
+[988.9599999999999:995.68] satisfied if eventually you will deliver it I cannot come to you and say oh the property you
+[995.68:1000.0799999999999] is violated because you did not deliver it but maybe you tell me oh yeah but I will deliver it
+[1000.08:1006.4000000000001] tomorrow why I deliver it next week okay so this is the liveness property and as you will see
+[1006.96:1013.12] all distributed computing abstractions have properties that are under liveness on safety
+[1014.32:1020.4000000000001] if you have a specification where you have only safety or only liveness this is a very bad sign
+[1022.24:1029.44] so I cannot insist enough specifying the problem precisely is very important in distributed
+[1029.44:1036.24] computing and in computing in general so this is the first one so what does best effort broadcast say
+[1036.88:1042.56] it says if somebody broadcasts a message then the message eventually
+[1043.68:1051.28] arrives we stay delivered at this destination destination means all processes that are correct
+[1051.28:1060.3999999999999] correct what happens if the broadcaster the initiator of the message fails okay questions
+[1060.3999999999999:1070.96] in that case if I look at the properties of the the the broadcaster primitive basically anything
+[1070.96:1078.08] can happen okay there is no property that forces me and when I say me that forces the abstraction
+[1078.08:1086.8] forces the primitive to do anything so p1 broadcaster m1 in this case it turns out that
+[1088.1599999999999:1096.08] there was enough time to deliver m1 and then p1 broadcaster m2 but then p1 fails
+[1096.08:1101.28] catches in that case all bets are open in particular in this case
+[1101.28:1112.6399999999999] p2 delivers m2 and p3 did not deliver m2 this is this does not violate the specification of best
+[1112.6399999999999:1120.8] effort broadcast okay are we together so if I look at this execution this execution such as
+[1120.8:1128.6399999999999] finds the specification that I just presented the three properties okay and as we will do as we
+[1128.64:1136.8000000000002] will try to do later the goal when you build an algorithm for best effort broadcast is that all
+[1136.8000000000002:1142.88] executions of the algorithm should satisfy the specification here I just give you one specification
+[1142.88:1152.0800000000002] that satisfies the properties but you might tell me one but this is very weak this this
+[1152.08:1159.28] broadcast primitive is weak because it allows it considers as correct certain things that maybe
+[1159.28:1166.1599999999999] for some applications are not good so for example here the machine of p1 fails and as a result
+[1166.8799999999999:1172.72] some processes get the message and other processes do not get the message okay this is what happens
+[1172.72:1179.76] here okay and you might consider for certain applications that this is unfair okay
+[1179.76:1187.36] okay that's why we have stronger primitives one of these stronger primitives is called a
+[1187.36:1194.64] lively broadcast so a lively broadcast is a strong form of best effort broadcast it is strong in
+[1194.64:1202.56] the following sense it satisfies the properties one two three that we have seen before by the way
+[1202.56:1210.08] it has also an interface with one operation and one callback and it satisfies the properties of best
+[1210.08:1220.8799999999999] effort broadcast one validity two node application three node creation plus plus it prevents the
+[1220.8799999999999:1229.44] unfairness situation that I depicted earlier in particular it guarantees a property called
+[1229.44:1237.92] agreement which says for any message n if any correct process delivers n then every correct
+[1237.92:1247.6000000000001] process delivers n okay what's your name yes John
+[1251.8400000000001:1258.56] it's hard okay let's try again remove the mask for half a second so that I hear it just remove
+[1258.56:1261.76] the mask
+[1263.6:1272.24] Zoe okay this primitive says if Dalia receives the message then Zoe receives the message
+[1273.2:1279.9199999999998] even if the initiator fails okay so this is crucial in best effort broadcast we don't have that
+[1279.9199999999998:1285.6799999999998] guarantee here we have the guarantee that if any correct delivers every correct deliver
+[1285.68:1293.44] so if veterans telling you something important and if if his machine doesn't fail then the
+[1293.44:1298.48] validity property guarantees that everybody's gonna deliver the message but if his machine fails
+[1298.96:1306.16] best effort broadcast doesn't guarantee fairness doesn't guarantee agreement reliable broadcast forces
+[1306.96:1313.44] agreement it says if anybody who is correct delivers the message then everyone delivers the message
+[1313.44:1324.56] we together okay good so this is reliable broadcast and this picture here depicts the fact that
+[1325.76:1337.6000000000001] in this case p1 broadcasts m1 and then broadcasts m2 and even if p1's machine crash the messages m1
+[1337.6:1343.84] and m2 are delivered by all correct processes so this execution is correct with respect to
+[1344.7199999999998:1352.32] the lagle broadcasts what about this execution p1 broadcast and one please notice the the
+[1352.32:1360.48] the symbols I'm using here the horizontal arrow is an execution of a process the vertical line
+[1360.48:1366.7199999999998] means delivering a message they live in a message means giving it to an application considering
+[1366.72:1375.1200000000001] that the message has been arrived has arrived so here p1 broadcasts m1 and then p1 broadcasts m2
+[1376.4:1384.56] m1 is delivered by everyone and two is delivered by none there is no vertical arrows the fact that the
+[1384.56:1391.52] message has been transmitted does not mean it has been delivered it could have arrived to Daliah's
+[1391.52:1397.52] machine but the layer that is implementing reliable broadcast did not give it to the application
+[1397.52:1404.16] so we don't care we consider that it was not delivered so this execution satisfies the properties
+[1404.16:1412.24] of reliable broadcast okay remember reliable broadcast says if the standard is correct everybody
+[1412.24:1419.12] delivers if the standard is correct if any correct delivers every correct delivers but here
+[1419.12:1427.84] no correct delivers which we are fine are we okay good so this is reliable broadcast
+[1430.8:1438.3999999999999] what about the following execution in this execution we have again three processes p1
+[1439.1999999999998:1448.0] broadcasts two messages m1 and then m2 and then p1 fails but p2 also fails at some point and my
+[1448.0:1457.52] question to you is is this execution correct with respect to the specification of reliable broadcasts
+[1460.72:1472.32] or does it violate any of the properties okay so who believes this is correct raise your hand
+[1472.32:1488.8799999999999] okay so who believe it is not correct okay so why do you believe it is not correct okay so I'm
+[1488.8799999999999:1493.4399999999998] repeating the question because now I realize that people on the internet did not hear the question
+[1493.44:1505.04] the answer the answer is this is not correct because p2 delivers m2 and p3 does not deliver m2 good
+[1505.8400000000001:1514.16] which property of reliable broadcast is violated remember we have four the fourth one is agreement
+[1514.16:1527.0400000000002] okay let's go back to agreement agreement says for any message n if a correct process delivers n
+[1527.0400000000002:1532.5600000000002] then every correct process delivers n so do it is this property violated
+[1532.56:1546.6399999999999] it is not violated because p2 is not correct you see what I'm saying so there is a subtle
+[1546.6399999999999:1551.52] things there a subtle thing there that one has to be very careful about but you could tell me yes
+[1551.52:1560.56] that I don't want this to happen because for example in my application if I whenever I deliver a
+[1560.56:1568.48] message I buy stocks and I might buy one million stocks and I don't want you you be in the one
+[1568.48:1574.96] who is selling the abstraction to tell me yes but your machine has crashed the machine of p2 has
+[1574.96:1581.84] crashed I would say I don't care before my machine crashed I did buy a lot of stocks so it is
+[1581.84:1588.48] important for me that whatever I did even before crashing is somehow consistent in the system in
+[1588.48:1598.56] that case we use uniform broadcast so uniform broadcast is an even stronger form of broadcast it is
+[1598.56:1605.92] called uniform because the properties as we are going to see the agreement properties it requires
+[1605.92:1613.92] applies uniformly to processes whether they are correct or not okay so the this subtle things
+[1613.92:1620.96] have a huge impact as we are going to see today in the algorithms and later so uniform broadcast
+[1622.64:1632.4] is like reliable broadcast with a subtle but major difference which is the following the
+[1632.4:1639.3600000000001] agreement property we call it uniform agreement because it says for any message n if a process
+[1639.36:1647.36] delivers n it does not precise correct process it says if any process delivers n meaning if a
+[1647.36:1654.32] process delivers n and that's something we did before crashing then every correct process delivers n
+[1655.4399999999998:1662.6399999999999] okay so this is and again I cannot insist enough these specifications even if they look oh yeah
+[1662.64:1670.88] of course are crucial you have systems running today used in applications today and people will
+[1670.88:1677.1200000000001] tell you yes I guarantee this but if you are if you don't look very carefully at what they guarantee
+[1677.1200000000001:1684.16] you make use the system for something that was not really adequate so it's important to really
+[1684.16:1690.0800000000002] start to learn how to read about this so uniform reliable broadcast is the strong form of reliable
+[1690.08:1699.28] broadcast that guarantees uniform agree so in particular this execution would be correct according
+[1699.28:1709.4399999999998] to uniform reliable broadcast and so will this execution in this case message m2 will not be
+[1709.4399999999998:1717.04] delivered including by p2 okay so in this case it's okay so we have seen three times of
+[1717.04:1728.32] broadcast primitive best effort regular and uniform so we have seen the interfaces and
+[1728.32:1736.96] the specifications and now we are going to see the algorithms before diving into the algorithms
+[1737.68:1744.32] let me tell you that building systems that implement reliable broadcast uniform reliable
+[1744.32:1751.36] broadcast is very important and they use there have been some researchers in the field of distributed
+[1751.36:1760.24] computing who became millionaires some time ago millionaires by building systems that implement
+[1760.24:1769.04] what I just present they became billionaires millionaires why because stock exchange notification
+[1769.04:1777.2] systems etc badly needed such systems and some researchers some professors in the context of
+[1777.2:1782.56] their research they build such systems they decided to create startups and they immediately found
+[1782.56:1789.6] customers today at least with respect to reliable broadcasts and these things I don't think anybody
+[1789.6:1795.68] is going to become millionaires why because you have algorithms implemented available as open source
+[1795.68:1803.2] okay which is the case for reliable and uniform reliable if you go to other systems like
+[1804.64:1810.88] virtual currencies and etc situation is more complicated we still don't really have open source
+[1811.44:1817.52] stuff but in any case these are critical algorithms and specifications to have
+[1817.52:1826.4] okay so we are going to start from an algorithm to build the best effort broadcast then we are
+[1826.4:1833.52] going to see regular broadcasts and uniform and in the exercise session you will be asked to think
+[1834.08:1839.76] about alternative algorithms to build what I'm going to present to you today and I will explain
+[1839.76:1851.92] why they will be alternatives okay so first algorithm is extremely simple we want to build
+[1852.64:1860.72] best effort broadcast and I'm always I keep using the same symbols and language if you wish
+[1862.4:1866.72] and this language is I believe adapted to writing distributed algorithms
+[1866.72:1874.64] we want to implement best effort broadcast so we have the first line that says this what we are
+[1874.64:1880.72] in what we are writing here implement best effort broadcast and remember implementing best effort
+[1880.72:1887.52] broadcast means implementing one operation to be invoked and one callback okay the operation to be
+[1887.52:1896.96] invoked is best effort broadcast and we are going to use this is something we immediately write after
+[1896.96:1902.48] uh implement we are going to use the abstraction that we have seen last week which is perfect links
+[1903.12:1910.4] we are using tcd okay this is what we are using so we are going to implement the two events the
+[1910.4:1917.28] operation and the callback the implementation of best effort broadcast is very easy what we do
+[1917.28:1925.04] is whenever we want to broadcast a message and not remember that this code is executed by every
+[1925.04:1930.8] process you have your system you install this code I call it code so the code at every process
+[1931.36:1938.72] whenever some process wants to invoke broadcasts with best effort's comment of a message and
+[1939.52:1946.08] then we do the following and here I'm using viable asks which is the local viable at every process
+[1946.08:1953.28] and it depicts the set of processes in the system so here I'm making a strong assumption which is
+[1953.52:1960.8] everybody knows everybody and at the starting point of my system everybody has this local
+[1960.8:1969.12] viable asks that contains the identities of all processes this is crucial later on in the semester
+[1969.12:1975.6] we will start asking ourselves what happens if we don't know who is there in advance or what happens
+[1975.6:1980.6399999999999] if processes are anonymous and so forth here there is no anonymity we know everybody
+[1982.56:1992.8799999999999] for all processes in set s do trigger perfect links or perfect peer to peer stand m to p i
+[1992.8799999999999:1998.9599999999998] so it's like saying I open a socket connection with everyone using tcp and I send
+[1998.9599999999998:2004.6399999999999] a I'm not talking here about socket connections this is implementation detail the way you implement
+[2004.64:2010.24] the perfect links is another story I'm simply saying if you have perfect links you just open and
+[2010.24:2017.5200000000002] then you send m to everyone very simple very very simple as we will see later on things will stop
+[2017.5200000000002:2026.24] being simple as soon as we will want more properties good now if I'm both casting a message and
+[2026.24:2032.96] I'm going to do that and as an as an effect or processes in the system including myself
+[2032.96:2044.72] we'll get a callback and the callback says peer to peer deliver p i m e me a message m arrived
+[2045.52:2053.52] from some process with the semantics of perfect links okay everybody will get that and what are
+[2053.52:2060.08] we going to do is simply deliver that message nothing more okay so what I'm telling you here is
+[2060.08:2067.7599999999998] building a best effort broadcast is nothing else than using n times n is the size of the system
+[2068.88:2080.48] perfect links we don't do anything more okay very simple so indeed I can check that here it
+[2080.48:2086.88] depicts the fact that broadcast in a message means standing it to all and we can even try to prove
+[2086.88:2091.6800000000003] this of course you will tell me that the proof is immediate sure it's immediate but
+[2092.8:2098.48] get trained to it what does it mean to prove that the algorithm I presented is correct
+[2099.2000000000003:2105.76] the algorithm claims to implement best effort broadcast so implements proving it correct means
+[2105.76:2115.12] going to all the properties let's do that validity validity property test for any message n if
+[2115.12:2122.48] m is broadcast by a correct process p i then all processes p j deliver m is this property correct
+[2122.48:2129.2799999999997] how do we reason about that there you have to remember we are using perfect links so we are
+[2129.2799999999997:2134.96] going to leverage we are going to exploit the fact that we have perfect links so the way we say it
+[2134.96:2141.52] is by the validity property of perfect links and you have to remember the validity or perfect
+[2141.52:2147.2] of perfect links or at least go back to the fly if you remember perfect links also has the
+[2147.2:2152.16] validity property it tells you if a process sends a message to another process and both are correct
+[2152.16:2162.56] that it is so by the validity property of perfect links and the very fact that we see we the algorithm
+[2162.56:2170.88] says the standard stands the message to all and every correct process that delivers by the channels
+[2171.84:2183.36] the message best effort delivery then we have an it i could have devised an algorithm where
+[2184.24:2191.2799999999997] when a process gets the callback peer to peer perfect links peer to peer deliver n don't do
+[2191.28:2197.0400000000004] don't do anything don't deliver the message to the high level in that case validity will not be
+[2197.0400000000004:2204.7200000000003] satisfied because i would have blocked the message okay this might look trivial but they
+[2204.7200000000003:2213.44] with me these steps are important so the validity property is satisfied because we have perfect
+[2213.44:2220.1600000000003] links and we have an algorithm that one smits does not block does not filter the message good
+[2220.16:2227.2799999999997] no duplication and no creation they immediately follow from the no creation and no
+[2228.56:2235.7599999999998] duplication properties of perfect links good very easy
+[2238.72:2246.64] indeed this algorithm satisfies what it is supposed to satisfy but it doesn't do more in particular
+[2246.64:2257.2] if the process of broadcasts who is p1 indeed broadcast m1 and m2 and p1 crash
+[2258.4:2266.16] bad things could happen why because if you remember the algorithm for broadcasting it says
+[2266.8799999999997:2276.4] if p1 broadcasts the message m and to loop or do for i equal one to n or for all processes
+[2276.4:2285.36] in s sends n so there is a set of instructions if the process fails in the middle then it will
+[2285.36:2291.52] start sending messages to some and not to the other and even it starts sending messages to some
+[2292.2400000000002:2298.64] the properties of perfect links do not guarantee anything if you open a TCP connection and
+[2298.64:2307.3599999999997] the standard crashes then the message in transit might never arise so indeed it could happen that p1
+[2308.0:2318.56] broadcast m2 and m2 gets to some processes and not to others okay in other words the algorithm
+[2318.56:2325.2] that i presented does not guarantee a live broadcast it guarantees simply best for broadcast
+[2325.2:2333.7599999999998] okay are we together good so now i want you to think a little bit without looking at the slides
+[2335.2:2344.24] very simple how do i improve augment the algorithm i just presented in such a way that we guarantee
+[2344.24:2360.7999999999997] a live broadcast think a little bit either you are at home or here without looking at the slides
+[2374.9599999999996:2396.64] so the problem why we don't guarantee a live broadcast is because in this algorithm
+[2396.64:2406.72] the broadcaster of message m tries to send it to all and indeed if it is correct it will manage
+[2406.72:2415.2799999999997] to send it to all and anyone who gets the message simply transmits it to the application and i'm
+[2415.2799999999997:2423.92] asking you how can we prevent the situation where should the broadcaster fail in the middle of its
+[2423.92:2433.6800000000003] service send we want to guarantee that nobody delivers or nobody no correct process delivers or
+[2433.6800000000003:2440.56] all correct process deliver but we don't want to be in between go ahead
+[2440.56:2448.48] i'm sorry i cannot maybe
+[2460.64:2466.48] yeah okay good so the question is this ambiguity between receiving and delivering okay
+[2466.48:2475.36] what what interest us is the act of delivering according to the semantics when i when we define for
+[2475.36:2484.4] example a live broadcast to events are important the fact that the application stays i want to broadcast
+[2484.4:2491.76] a message with reliable semantics and an application that delivers a message according to the
+[2491.76:2498.0] reliable semantics this is what we look at when we specify okay now when we build an algorithm
+[2498.88:2507.0400000000004] we are using something underneath for example we are using send and receive or perfect channels
+[2507.6000000000004:2514.32] and there we talk about i stay received to simply distinguish the fact that it's the channel
+[2514.32:2522.56] who is putting the message in your buffer and from the other situation which is the algorithm
+[2523.1200000000003:2530.32] gets that message and decides to give it to the application the one underneath i call it
+[2530.32:2537.36] receive and the one that i want to implement i call it deliver it's just a distinction because
+[2537.36:2544.8] we have several layers okay so now i want to deliver according to some semantics so the question is
+[2544.8:2554.0] how do we how do i enhance this algorithm such that if any correct delivers every correct
+[2554.0:2563.04] deliver you could tell me maybe we can we can change the second part of the algorithm here down
+[2563.04:2572.24] here and say when a process receives receives giving delivers according to the perfect channel
+[2572.24:2578.72] semantics and it doesn't do anything in that case nobody will deliver a message
+[2581.6:2589.92] but we violate validity because validity tells us if the broadcaster is correct everybody should
+[2589.92:2599.44] deliver i cannot say well maybe the guy is going to die you never know and you cannot one thing
+[2599.44:2604.8] that i didn't say we cannot kill processes because if we could kill processes you can say i
+[2604.8:2610.16] satisfied the property by killing the broadcaster and i don't do anything we're not allowed to do that
+[2611.44:2617.92] okay so i have to deliver i have to transmit the message so it's not an option to kill the
+[2617.92:2628.8] broadcaster any suggestion of how yes who is we good but who is so that the the suggestion is
+[2628.8:2631.84] we could broadcast again who could broadcast again
+[2635.52:2642.48] excellent good so the suggestion is to say the broad if you think about it the broadcaster
+[2642.48:2648.08] cannot do much more than what it is doing what it's doing is really the maximum it can do it
+[2648.08:2656.56] broadcast the message to all however processes so as i pointed out we are not breaking but we stop
+[2656.56:2665.04] earlier the broadcaster cannot do more but those who receive the messages they can do more
+[2665.04:2670.4] and we are building a distributed algorithm are really distributed algorithms people are
+[2670.4:2680.48] supposed to help each other so whenever a process gets refused a message we will ask that process
+[2681.12:2689.04] why don't you forward the message to all okay and a simple algorithm will consider saying
+[2689.04:2699.7599999999998] anyone a process that peer to peer according to the perfect channel delivers a message and also
+[2701.04:2709.2799999999997] sends it to all so when i broadcast my message or when vitally broadcasts an information
+[2709.28:2719.76] anyone of you sends that message to all this would guarantee that if any correct delivers every
+[2719.76:2727.6800000000003] correct will deliver are we together it will be a little bit expensive because this means
+[2727.6800000000003:2737.6800000000003] end-quare communication okay but it's possible it turns out that we can do slightly better if we have
+[2737.68:2744.24] some information about failures and this is what going what we are going to do so the algorithm i'm
+[2744.24:2754.24] going to to propose here uses besides best effort broadcast so best effort broadcast we still how
+[2754.24:2760.08] to implement it it was the algorithm before so we can assume it remember best effort broadcast is
+[2760.08:2768.96] what is not reliable we are going to use it plus we are going to use a perfect fail detector okay now
+[2768.96:2775.84] I need to tell you what it is exactly we have a distributed system of a number of processes and
+[2775.84:2783.68] the distributed system is called s people know each other and I need I want processes to be informed
+[2783.68:2794.72] okay I want p i to be informed if p j fails and I call it perfect when there is no force positive
+[2794.72:2802.0] whenever p i is informed that p j failed p j indeed failed how do I implement a perfect fail
+[2802.0:2808.16] detector how do I implement in general a fail detector anybody has an intuition how do people
+[2808.16:2819.44] do that in network systems yes yes the the key is ping you send ping messages so in
+[2819.44:2826.72] much distributed systems that I know of there is of course application running there are all
+[2826.72:2835.3599999999997] kinds of stuff running and also there is a specific distributed algorithm running behind the scenes
+[2835.36:2843.28] the goal of this distributed algorithm is simply to have processes periodically send to each other
+[2843.28:2850.56] ping messages so let's say every five minutes every one of us sends to everybody else a ping
+[2850.56:2857.92] message the ping message basically says I am alive I am alive I am alive every five minutes or
+[2857.92:2868.0] every ten minutes whatever and also besides everybody standing ping to everybody else every process
+[2868.0:2880.88] also tries to trigger or record a timeout such that this timeout is bigger than the ping period
+[2880.88:2886.4] so I ask you to stand to everybody sends everybody a message within five minutes and I have a time
+[2886.4:2894.4] out that every six minutes or so looks at the messages that everyone receives if I receive a
+[2894.4:2904.08] message from all of you but one I don't get it from the idea that I say the idea has failed okay
+[2904.08:2911.92] I'm implementing a failed detector so the failure detector basically tells p i p j has failed
+[2911.92:2920.88] what is the meaning of has failed p j did not send its ping message within the time period that was
+[2920.88:2928.88] devoted because to do that I need to know my network I need to know that messages in my network
+[2928.88:2934.4] do not take more than five minutes because otherwise my failure detector is going to be a disaster
+[2934.4:2943.84] okay the perfect failure detector is what is a distributed abstraction that we can implement using
+[2943.84:2953.52] ping messages that inform processes about who has failed and we say that it is perfect if whenever
+[2953.52:2962.32] somebody fails everybody else is informed after the timeout period this is called completeness if
+[2962.32:2970.0] somebody fails everybody learns about it it's called completeness plus accuracy accuracy says
+[2970.6400000000003:2978.1600000000003] if my failure detector tells me somebody failed the process has indeed failed it did not send the
+[2978.1600000000003:2984.6400000000003] message within the time period okay so a perfect failure detector is a particular device that is
+[2984.64:2992.7999999999997] simple to implement and that is very useful for now I'm assuming that I have a perfect failure
+[2992.7999999999997:3003.92] detector not is something if I have a small system in in a well controlled area and communications
+[3003.92:3011.04] are I synchronous synchronous means I know with very very high probability that all messages take
+[3011.04:3015.84] at the most five minutes including a transmission including however then I can implement a perfect
+[3015.84:3023.52] failure detector but if I'm on the internet even if I have a ping even if I use as a timeout
+[3023.52:3031.2] period six hours sometimes messages will arrive two days after they have been sent so in that
+[3031.2:3037.7599999999998] case I cannot really have a perfect failure detector okay I will come back to that for now we are
+[3037.76:3043.44] going to build our algorithms assuming a perfect failure detector the later one we are going to say
+[3043.44:3049.28] but what happens if I'm in a wild system and failed detectors are not perfect and decent that
+[3049.28:3054.4] if you think of blockchains or things like that you cannot assume perfect failure detector because
+[3054.4:3060.48] processes get plugged and unplugged etc we are going to come back to that now we make the strongest
+[3060.48:3067.84] assumptions possible we have a perfect failure detector so I'm using I'm using best effort mode
+[3067.84:3073.2] cast which we have just implemented few slides ago and the perfect failure detector and I'm going
+[3073.2:3082.2400000000002] to implement my reliable mode cast here I need to initialize certain values so in addition to
+[3082.88:3089.84] operation broadcast and call back deliver I have a specific event initialize it's like a
+[3089.84:3096.6400000000003] constructor okay so the event initialize initialize some variables I have three
+[3097.36:3104.0] variables variables delivered initialize to the empty set you will see what this is about
+[3105.04:3114.56] variable correct initialize to the entire set of processes and they also have a special
+[3114.56:3121.68] variable or a set of variables that I initialize as follows for all processes in the system
+[3122.56:3132.24] for each one of them I have a variable from PI so I have an array from every element of the
+[3132.24:3140.56] array is devoted to one process and in fact it's telling me I deserve the messages I deliver it
+[3140.56:3147.6] or I received from process PI okay so this is the third variable I'm going to feeling those
+[3147.6:3153.04] variables in the following or empty them for the case of correct and using
+[3155.68:3161.7599999999998] what do I do when I want to broadcast the message and according to the reliable semantics okay
+[3161.76:3171.5200000000004] this is what's depicted on this slide 26 first thing I do is I add n to my variable when I say my
+[3171.5200000000004:3179.76] I am the process executing this code I add n to the variables delivered and then I trigger reliable
+[3179.76:3193.1200000000003] broadcast n self-means I am the source okay and then I best effort broadcast the message so
+[3193.1200000000003:3198.2400000000002] notice that I first deliver the message and then I broadcast it it doesn't make a difference
+[3198.2400000000002:3206.0] whether I broadcast it or not I did I best effort okay so the broadcaster that that simply
+[3206.0:3213.44] used best effort n nothing complicated here one thing to remember I put n in the variable
+[3213.44:3223.36] delivered okay so this is what I do as a broadcaster now I have a fail-on-detector the fail-on-detector
+[3223.36:3232.24] has one specific event that defines it the interface of this device the interface of this device
+[3232.24:3239.8399999999997] is simply a callback that tells me P.I. has crashed P.G. has crashed P.K. has crashed okay it tells the
+[3239.8399999999997:3249.04] process who unims this code who has crashed and whenever it tells P.I it tells the process that
+[3249.04:3257.52] it has crashed what I do in this algorithm is I remove P.I. from the state correct so I have my
+[3257.52:3264.16] state correct which was initialized to S the entire set of processes if my fail-on-detector tells me
+[3264.16:3274.48] A.B. careful P.T. has crashed I remove P.I. P.T. from S this is what I do here the last two lines
+[3274.48:3277.84] I will come back to them in a minute forget about them for now
+[3277.84:3289.1200000000003] so I told you in two slides ago that the broadcaster when it wants to broadcast according to the
+[3289.1200000000003:3294.88] reliable semantics the message it simply uses the best effort broadcast okay we know that the best
+[3294.88:3301.92] effort broadcast is going to do it best to make sure everybody delivers the message okay so what
+[3301.92:3311.04] happens when a process using best effort broadcast because this is what I use gets message M so the
+[3311.04:3319.2000000000003] the language or the symbols there means the source is P.I. and the message is M you will
+[3319.2000000000003:3327.44] understand why I put this data P.J.M data is the type of the message okay you will see in a minute
+[3327.44:3336.88] what what that symbols are so when a process gets the message it first checks did I already
+[3336.88:3343.04] deliver M as you will see this could happen that I could have gotten M from another source you
+[3343.04:3353.36] will see that if not I add M to the variable delivered okay and then I deliver M according to
+[3353.36:3363.6800000000003] the reliable broadcast semantics but I don't stop there I also check if P.I. the process who has
+[3363.6800000000003:3369.28] sent me the message is not correct you will tell me that how could it send you the message if
+[3369.28:3375.1200000000003] it's not correct but maybe it sent me the message and then it failed and did not send the
+[3375.12:3383.52] P.I. and got detected in in the meantime I got the message and now I look at the variable correct
+[3383.52:3393.12] and I see that the sender is not alive and kicking anymore it is not correct in that case I relay
+[3393.8399999999997:3402.56] the message I broadcast the message okay not is one thing the suggestion made earlier was to say
+[3402.56:3410.0] everybody broadcast every message here what we are doing we only relay a message if the sender
+[3410.0:3418.16] has failed okay so this is what we are doing so when I receive a message I check is the source
+[3419.36:3425.2] does the source belong to the set correct or not if the source does not belong anymore
+[3425.2:3431.68] because it belonged in the past if it does not belong anymore to the set correct then I relay
+[3431.68:3436.0] the message what does it mean to relay the message is I use Vestafor broadcast but now
+[3437.8399999999997:3446.72] I send it also to all and here I put the source the original source P.J with data M that's why
+[3447.6:3455.52] early in this slide you can see the almost weird syntax I'm using I'm using a syntax where
+[3455.52:3461.68] I have the actual source of the message I'm receiving but maybe the source of the message I
+[3461.68:3467.2] receiving is simply somebody relaying the message and the actual message is coming from
+[3467.84:3473.92] vetterly and I'm I'm rachid forward in the message okay so that's why I have this this
+[3473.92:3483.7599999999998] semantics okay and then I the last line here says I remember from whom I got this message so the
+[3483.76:3493.0400000000004] last part is I remember that I got from PI message M why do I do that now we go back to fail
+[3493.0400000000004:3500.48] our detector this is these are the two lines I told you to skip when my failure detector tells me
+[3500.48:3509.44] if somebody has failed I don't only remove that process from the set correct I also check
+[3509.44:3518.32] did I get a message from that process who has failed in the meantime if I did then I relayed
+[3518.32:3528.4] that message okay so now please focus I'm not the broadcaster I'm any process in this system
+[3529.12:3534.88] there are two situations in which I relay a message I broadcast a message to all I'm not the
+[3534.88:3540.96] original broadcaster the original broadcaster will broadcast but my fail if I'm any process in the
+[3540.96:3549.6] system there are two cases where I can relay a message first case is I get a message from the
+[3549.6:3557.36] broadcaster and my failure detector tells me oh he failed in the meantime I relayed okay second
+[3557.36:3568.0] situation my failure detector tells me somebody has failed I check did I what are the messages
+[3568.0:3575.28] that I get I got from that guy I relayed them I hope and now I want to ask you a question and I
+[3575.28:3581.36] want you to focus believe me focusing now we'll save you a lot of time around Christmas where you
+[3581.36:3591.2000000000003] will be preparing the exam the word exam is like sex it attracts attention there are few words
+[3591.2000000000003:3601.92] like that one okay so the question is the following why do I need to relay the message in these
+[3601.92:3609.84] two places why for example don't I simply do the following I don't relay a message in this case
+[3609.84:3619.2000000000003] here I relay only in this case if my failure detector tells me somebody is not correct anymore I check
+[3620.4:3627.92] the messages that I got from that process and then I relayed them I don't do that here in this
+[3627.92:3635.6800000000003] situation when I get a message I check if the source is correct what happens if I remove I
+[3635.68:3647.68] simplify this code and I remove line line 5 and 6 I remove them please think
+[3647.68:3661.52] yes
+[3678.64:3687.12] yes so if I remove so I'm looking to about to a first thing if I remove the lines here when I
+[3687.12:3694.3999999999996] relayed the messages consider the fellow in situation the broadcast the broadcast stands in your
+[3694.3999999999996:3703.9199999999996] message okay and fail my fail of the texture tells me assume the broadcast is P1 the fail of
+[3703.92:3710.96] the texture tells me P1 has failed I check did I receive any message from P1 no so I don't do
+[3710.96:3722.16] anything and later on I get a message from him from P1 I don't relay the message because when
+[3722.16:3730.56] the failure detector told me that he failed at that point I did not get anything from him I got
+[3730.56:3740.4] a message from him after I did the failure detector oriented stuff okay so I have to do that also
+[3740.4:3749.44] when I get a message now the analogous question why do I remove why can't I remove this
+[3749.44:3760.2400000000002] relaying of messages here and I keep it only here basically why do I need this in the two places
+[3766.8:3775.6] again the same situation can happen I can indeed get a message from the broadcaster I check
+[3775.6:3782.72] is the broadcaster in the set correct yet it's in the set correct so I don't do anything but then
+[3782.72:3792.4] the broadcaster fails it failed after I checked if it's in the set correct my fail of the texture
+[3792.4:3800.08] will tell me it has failed therefore I also have to do it here okay so these things are crucial
+[3800.08:3805.12] I don't know the fail the texture tells me that somebody has failed but it's not going to tell me
+[3805.7599999999998:3810.96] it has failed but after it has done this was before it has done that or whatever no so I have to
+[3810.96:3819.84] take care of these two cases so putting these two relaying possibilities in these two places
+[3819.84:3830.0] is necessary for correctness I hope you understand this fact any problem concern questions
+[3830.0:3852.56] so proven this again proven in an algorithm this is just like mathematics
+[3852.56:3862.56] in math proven something is convincing someone that you are right the proof is not something that
+[3862.56:3869.6] guarantees that what you're talking about is right it's about convincing okay in this case it's
+[3869.6:3876.4] about convincing yourself that the algorithm is correct okay you're not publishing this and
+[3876.4:3883.6] the proof is usually the best way to explain the algorithm and force you to see mistakes and
+[3884.56:3893.6800000000003] one hint to realize that your algorithm is wrong is if your proof does not use all the
+[3893.6800000000003:3899.92] underlying abstractions that you are using in your algorithm so my algorithm that I presented says
+[3899.92:3906.4] I used the investor for modcast and I'm using a perfect failed detector good I write in my algorithm
+[3906.4:3913.2000000000003] I go to the proof if I don't use the perfect the assumptions that I have a perfect failed detector
+[3913.2000000000003:3920.64] or the assumptions that I have a best effort modcast this means something is fishy either in my
+[3920.64:3929.12] proof or in my algorithm okay so let's go here the third properties that are above they are very
+[3929.12:3936.7999999999997] similar to the first algorithm if the standard is correct that everybody's going to deliver the
+[3936.7999999999997:3942.48] messages because I have a best effort broadcast good the second two other properties
+[3943.2799999999997:3950.08] need to I think more more work because here there is a possibility of delivering a messages from
+[3950.08:3956.16] different sources I can get it directly from the broadcaster where I can get it from another
+[3956.16:3964.08] process who is relaying it that's why I have variable deliver it variable deliver it is there
+[3964.08:3970.64] to prevent me from delivering the same message twice or several times okay so variable deliver
+[3970.64:3978.24] is proof in the proof it's the proof of no duplication okay let's focus on the third part which
+[3978.24:3985.7599999999998] is agreement agreement says if any correct process delivers every correct process deliver this is
+[3985.76:3994.8] agreement let's go to it assume some correct process PI are be delivered a message and this
+[3994.8:4002.7200000000003] message M was originally broadcast by some process PK okay there are two cases to consider
+[4002.7200000000003:4010.88] either PK is correct or not if PK is correct the original broadcast then by the property the
+[4010.88:4016.2400000000002] validity property of best effort broadcast or collect processes are going to deliver that message
+[4017.04:4023.52] case easy the case that is more complicated is if the original broadcaster PK is faulting
+[4024.32:4031.44] PK has crashed in that case by the perfect failure detector property remember the
+[4031.44:4036.7200000000003] failure detector has two properties completeness and accuracy I'm using here completeness
+[4036.72:4044.64] by the completeness property of the final detector everybody will know about it will know about
+[4044.64:4055.2799999999997] the fact that PK has failed at some point PI will detect the crash of of the process no matter
+[4055.2799999999997:4062.48] what happens it will detect it either it will detect it before delivering the message or after
+[4062.48:4068.32] delivering the message these are the two cases I discussed earlier in both cases this process will
+[4068.32:4076.16] broadcast the message we just said that PI is correct by the validity property of the best
+[4076.16:4088.96] effort broadcast every correct will deliver the message so we have agreements okay one piece of
+[4088.96:4096.32] information here that that will come back to later I'm only using here the fact that the failure
+[4096.32:4105.52] detector is complete if somebody fails it tells me that it has failed I told you that a perfect
+[4105.52:4110.96] fair detector has another property which is called accuracy and the accuracy property says
+[4110.96:4120.72] no process is detected or suspected unless it has failed I didn't use this property in the proof
+[4120.72:4132.16] okay which means that if I use let's be very practical if I use small timeouts okay and I detect
+[4132.16:4141.599999999999] someone I detect P1 but P1 actually did not fail okay I detect it wrongly first accuracy
+[4143.84:4153.599999999999] okay defamation is that bad is that a big problem not really in this algorithm it's not a big deal
+[4153.6:4162.64] this simply means that I have relayed a message and actually I didn't it was not necessary but it's
+[4162.64:4172.0] not a big deal so in a sense my failure detector is stronger than what I really needed question
+[4172.0:4186.0] no yes question yes in the worst case if the failure detector is really goes crazy and starts
+[4186.0:4190.96] detecting everyone oh this guy has failed and this guy has failed and they all slow and they are
+[4190.96:4197.04] lazy and they don't do this and that in the worst case this means I will generate and square
+[4197.04:4206.8] messages everybody will be relaying all messages but the algorithm remains correct okay good
+[4207.92:4216.56] good so we have reliable broadcast so now I'm going to tackle the last parts of the talk of the
+[4216.56:4224.96] talk of the class which is uniform remember the difference between reliable and uniform looks
+[4224.96:4233.12] almost negligible epsilon it's simply in one case in the reliable broadcast case I say if
+[4233.12:4240.72] any correct delivers every correct deliver in the uniform reliable case I say if any process
+[4240.72:4248.16] delivers every correct deliver okay in the first case if any correct delivers than every correct
+[4248.16:4259.36] deliver in the second case if anyone delivers every correct deliver and now I can already ask myself
+[4259.36:4267.44] does this algorithm that I just presented that it actually ensures uniformity in fact it does
+[4267.44:4276.88] not it's easy to see from the algorithm because processes only relay messages after they deliver them
+[4276.88:4284.72] they get them they deliver them and they relay if they fail if if I'm the broadcaster and only one
+[4284.72:4290.08] process gets my message and I fail immediately he might deliver that message and fail himself
+[4291.04:4302.64] nobody will see the message okay so we need intuitively we need to be more conservative processes
+[4302.64:4309.200000000001] should not deliver messages too early okay so this is what we are going to do in this uniform algorithm
+[4312.56:4317.04] again I'm going to use best effort broadcast and the fellow detective
+[4319.200000000001:4325.200000000001] and the the variables I'm going to use are almost the same except that they will convey the
+[4325.2:4334.4] fact that I'm going to be more conservative in the previous algorithm I store messages and if I
+[4334.4:4342.32] detect the failure I relay and the from variable was telling me oh be careful you got that message
+[4342.32:4349.5199999999995] from that guy you should relay it here I don't have this from I have something called act and
+[4349.52:4357.84] forward and you will see the usage of that so here when the failure detector tells me somebody has
+[4357.84:4364.080000000001] failed I simply remove that process from the set this is not where the action is happening
+[4364.8:4371.4400000000005] action is happening as well when I broadcast a message according to the uniform like broadcast
+[4371.44:4381.28] semantics I use now my viable forward and the forward means simply that I'm relaying the message
+[4382.96:4390.4] and so I best effort broadcast so when I want to broadcast the message I best effort best effort
+[4390.4:4402.4] broadcasting now when any process in the system receives best effort deliver a message here and
+[4404.96:4413.839999999999] what I do is I put myself I check did I forward the message before did I relay the message before
+[4413.84:4423.12] if I did not then I relay the message so here whenever a process receives the message it
+[4423.12:4429.2] relates it if it did not relate before okay this is different than the previous algorithm in the
+[4429.2:4435.4400000000005] previous algorithm I don't relay a message until I detect the failure of the standard here I
+[4435.4400000000005:4441.2] relate immediately my the viable forward is simply to remember that I did it in order not to do
+[4441.2:4454.4] it several times there is one specific event here which is when do I deliver a message by
+[4454.4:4461.2] the way let's go back to the previous line here I don't deliver the message here I don't
+[4461.2:4469.36] deliver the message either I'm simply broadcasting broadcasting when do I deliver a message intuitively
+[4469.36:4482.88] I deliver a message when I'm sure that all processes got have seen that message I cannot risk
+[4483.5199999999995:4489.12] delivering them even if I relay a message let's say I broadcast and somebody gets the message
+[4489.12:4494.4] and relay the message none of us should deliver that message because maybe we deliver it
+[4494.4:4503.2] we die and then the message didn't go to doesn't it doesn't get to all processes okay are we together
+[4504.32:4510.24] so so far everybody's just relaying messages and the question is when do we deliver
+[4512.0:4521.28] we deliver I as a process in the system I deliver when I have seen when I have realized that all
+[4521.28:4528.719999999999] processes or processes that at least are still correct they have relayed themselves the message
+[4530.8:4538.48] are we together so it's like I'm marching veteran I tell you something you are not supposed to
+[4538.48:4543.599999999999] deliver that information unless you are sure that every correct will deliver it so what do you do
+[4543.6:4551.360000000001] you relay everybody relates the message but when do you deliver well each one of you
+[4551.360000000001:4561.04] waits until it gets a notification or a relaying of the message from other one else
+[4562.400000000001:4566.88] not really everyone else everyone who is still correct are we together
+[4566.88:4581.4400000000005] so this is what the last slide here does each test if at some point for any message that I have
+[4581.4400000000005:4587.84] myself forwarden which means I did not deliver yet I simply relayed that message the message is
+[4587.84:4599.2] will be in my viable forward all processes in the set correct are in AKM when do I put stuff in
+[4599.2:4608.64] AKM I put stuff in AKM when I receive a message from somebody else if all correct processes have
+[4608.64:4618.320000000001] acknowledged and and and was not delivered now I deliver the message okay so I'm doing two things
+[4618.320000000001:4627.360000000001] I'm relaying messages and I'm remembering those from whom I have seen the relay I put the
+[4627.360000000001:4634.240000000001] letter in AK and I put myself in the forward message because I remember messages I have forward
+[4634.24:4641.92] also remember those that have acknowledged if nobody fails in the system this algorithm means
+[4642.88:4651.5199999999995] if we are 100 that I never deliver a message until unless I see 100 processes relaying that message
+[4655.92:4661.5199999999995] are you could tell me but this is this is not optimal sure but let's have it correct first
+[4661.52:4667.68] let's have things correct and then we can think and we do better it's not obvious to do better
+[4667.68:4675.360000000001] not obvious at all if you want this strong form of uniformity there is no choice there is but
+[4675.360000000001:4682.400000000001] you might see that in the exam or might see that two exercises later but it's not obvious so
+[4682.400000000001:4687.84] uniform or live in broadcast is very important in many applications this is what you want you want
+[4687.84:4694.56] complete fairness and the price of complete fairness is you have to wait until everybody has seen
+[4694.56:4702.96] the message okay so I'm going to skip these two pictures and go to the proof so how do we prove
+[4702.96:4714.32] these things so here no creation and no duplication they follow from best effort broadcast and the fact
+[4714.32:4720.88] that I have variable delivered now I have two properties that I need that I remain one of them
+[4720.88:4726.96] is validity validity says that if I'm correct and I broadcast then all correct processes should
+[4726.96:4733.12] deliver and agree with it turns out that both of them for both properties I'm going to use the
+[4733.12:4739.84] same piece of proof the piece of proof is a lever I'm going to use the following lever the following
+[4739.84:4748.8] name I says if a correct process be I based effort deliver a message and then the process will
+[4749.6:4756.16] itself uniformly deliver and intuitively if a process has seen a message and the process is
+[4756.16:4764.8] correct then every that process would deliver that message okay how do I prove that I say consider
+[4764.8:4773.92] a process that delivers and that process will also broadcast and this is by the algorithm okay by
+[4773.92:4778.96] the completeness property of the failure detector and the validity property of the best effort
+[4778.96:4786.72] broadcast there is a time at which PI will deliver and from every correct process because everybody
+[4786.72:4793.52] is doing the same everybody is relaying so if I'm correct I will not only relay but I would also
+[4793.52:4803.360000000001] receive from all those who are correct so this is a lemma now I can go to the two properties the
+[4803.360000000001:4809.76] first property if correct process won't cast a message and then the lemma immediately gives
+[4809.76:4817.52] me the fact that the I you are be delivered now agreement assume some correct process uniformly
+[4817.52:4826.56] deliver a message and by the algorithm and now now I'm using not only the completeness but also
+[4826.56:4832.160000000001] the accuracy property of the failure detector why am I using the accuracy property of the failure
+[4832.160000000001:4840.56] detector because if I believe if I wrongly believe that somebody has failed this means that I will
+[4840.56:4850.240000000001] not wait to make sure that process has indeed seen and forward the message okay so assume
+[4850.240000000001:4856.4800000000005] our failure detector in the left in the right part of the room tells us the left part of the room
+[4856.4800000000005:4862.400000000001] have failed wrongly because there is a partition in the network and we didn't get a pinged message
+[4862.4:4871.12] from them we consider them 40 our failure detector is not accurate we could deliver a message without
+[4871.12:4878.96] making sure that they have seen the message uniform or live broadcast will be violated so here
+[4878.96:4886.639999999999] I'm using the fact that my failure detector indeed tells me when somebody fails but also that
+[4886.64:4894.4800000000005] my failure detector does not tells me wrongly that people have failed if they are correct because
+[4894.4800000000005:4902.320000000001] if it tells me that I might never forward or wait for them to have seen the message are we together
+[4903.76:4911.360000000001] good so we have seen three kinds of broadcast first one is very simple best effort second one
+[4911.36:4916.799999999999] is slightly more sophisticated the third one is very strong and we will see stronger abstraction but
+[4916.799999999999:4925.679999999999] this is strong we we need strong guarantees we need a strong form of fairness this strong form of
+[4925.679999999999:4934.96] fairness it's really expressed in in some small details whether we say any process delivers or
+[4934.96:4940.24] any correct process delivers things like that but these things are crucial I'm not I'm not
+[4940.24:4945.76] requiring that you remember all what I'm saying today okay this is normal you need to get used
+[4945.76:4951.599999999999] to this stuff but the philosophy the discipline of reasoning about these algorithms is crucial
+[4952.639999999999:4960.5599999999995] we are going today you're going to get a TA session with some exercise about logic and the
+[4960.5599999999995:4965.679999999999] couple of exercise about reliable broadcast and uniform or live broadcast please try to do them
+[4965.68:4972.400000000001] the the time you spend on these today and maybe tomorrow and next Monday is going to make a big
+[4972.400000000001:4980.16] difference when you start preparing the exam again as I said last two weeks ago the goal of
+[4980.16:4987.84] these classes and any master classes is not to fail you right nobody's going to the man anymore
+[4987.84:4995.360000000001] a good man the goal is to make sure that you go and then you take the EPFL degree etc but it will
+[4995.36:5001.12] be a shame for us if you go somewhere and you don't understand the difference between reliable and
+[5001.12:5009.759999999999] uniform or live literally will be very unhappy and I will commit suicide have a nice evening see you
+[5009.76:5027.04] next Monday oh see you on the internet next Monday

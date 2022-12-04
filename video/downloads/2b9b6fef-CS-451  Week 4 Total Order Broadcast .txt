@@ -1,0 +1,329 @@
+~CS-451 / Week 4: Total Order Broadcast 
+~2020-10-12T18:42:28.912+02:00
+~https://tube.switch.ch/videos/2b9b6fef
+~CS-451 Distributed algorithms
+[0.0:5.0] that it will work. Good idea.
+[13.5:15.5] Okay.
+[18.5:21.0] Today I'm going to talk to you about
+[21.0:25.0] the total of the broadcast.
+[25.0:29.0] I'm going to stand here so that you can see me.
+[29.0:36.0] Stand in line. Okay. So I told you last week that the plan in this class is to build
+[36.0:57.0] abstractions for distributed programming and while building these abstractions to help you understand, learn how to specify distributed abstractions, how to devise the properties that you need to implement, implement in the theoretical sense first, and then how to get the soda code and even how to reason about their correctness.
+[57.0:67.0] So we are doing two things at the same time and trying to teach you some abstractions that will be helpful and also teach you how you actually reason about those abstractions.
+[67.0:72.0] So the abstractions I'm going to talk about today is called total order broadcast.
+[72.0:78.0] This is a very, very important abstraction. It's probably the most important as I will try to explain.
+[78.0:89.0] I started by explaining to you basic library channels, then various forms of reliable broadcasts, best effort to reliable uniform.
+[89.0:97.0] Then I told you that in reliable broadcast, the characteristic one characteristic of reliable broadcasts that messages are independent.
+[97.0:103.0] We reason about one message at a time. Okay. There is no relation between messages.
+[103.0:110.0] And then we studied last week because of all the broadcasts where we assume that there are relations between messages.
+[110.0:117.0] I post something on Facebook, you comments, what I posted, these two events or messages are related.
+[117.0:122.0] And it doesn't make sense to have the comments before the post.
+[122.0:143.0] If you actually notice some Facebook versions.
+[143.0:157.0] So he seems to be interacting me from time to time. And now it's, it should be fine. Okay. Good. Today we are going to see another form of relation between messages, which is total order.
+[157.0:165.0] And I will explain. And I will do the same as I always do, which is start from specifying total order broadcasts, giving you the properties, the motivation.
+[165.0:175.0] And then I will give you an algorithm. It turns out that algorithms for total order broadcasts are extremely complicated. They are much more complicated than cause of any report.
+[175.0:182.0] And as I will explain, sometimes under certain circumstances, the algorithms are impossible.
+[182.0:188.0] In order to make things simpler, I am going to use an abstraction. I will explain later.
+[188.0:195.0] I'm going to use the abstraction of consensus in order to implement total order broadcast. You will trust me.
+[195.0:202.0] Assuming that we do have this abstraction, which I will explain. And then I will explain to you how we can do consensus. Okay.
+[202.0:211.0] Later. Okay. So we are talking about broadcast abstractions. I hope that now you are all familiar with this, this very notion.
+[211.0:219.0] Broadcast means we have a system of end processes. And we want to send information to everybody. Okay.
+[219.0:228.0] I assume that we have already done the exercise, which consists in saying, this is my system. I am only concerned about this subset of processes.
+[228.0:236.0] And I'm going to work in this context.
+[236.0:246.0] In reliable broadcast, this is what I explained in a minute ago. The processes are free to deliver messages in any order they wish.
+[246.0:252.0] When we say, if you remember validity in broadcast, simply tells you, eventually you have to deliver a message.
+[252.0:264.0] It doesn't tell you before that or after that message. In causal broadcast, the processes need to deliver messages by respecting what we call causality.
+[264.0:270.0] A message should not be delivered before a message that causes it. There is a notion of causality.
+[270.0:282.0] However, however, causality order broadcast is not a total order. You can still deliver messages in a order that is different across processes.
+[282.0:292.0] That could happen. Okay. I will explain that in a minute. Total order broadcast as the name indicates is an order that is not partial, it's total.
+[292.0:304.0] And I will explain. So think of the following example. We have P1, P2 and P3. They all broadcast messages.
+[304.0:314.0] And P1 broadcast in one, P3 broadcast in three. These two messages.
+[314.0:329.0] P1 and P3 are not causally related. And therefore, you can deliver them in any order. P1 can deliver M1 and then M2.
+[329.0:340.0] P3 can deliver M3, M2 and then M1. And P2 can deliver M3, M1 and then M2. It's not the same order of delivery.
+[340.0:349.0] And we don't violate causality. Okay. Why? Because the messages are not causally related. It's not all of them.
+[349.0:358.0] In total order broadcast, we require that all processes deliver all messages according to the same order.
+[358.0:364.0] So of course, this is not always needed. Why would you want to do that? I'm going to explain.
+[364.0:371.0] Notice before I'm going to explain that that the total order we are going to talk about does not need to respect causality.
+[371.0:379.0] Total ordering means the same order. Cause of ordering is a partial order that has to respect something very specific.
+[379.0:387.0] If I sent P1 and then M2, everybody should deliver M1 and then M2. Total order doesn't say anything of the sort.
+[387.0:394.0] So you can have total order broadcast that is causal. And of course, you can have a causal order broadcast that is total.
+[394.0:401.0] And in many systems, you have a primitive that gives you both a total order broadcast that also respects causality.
+[401.0:409.0] Just to keep that in mind. We are focusing here on total order broadcast, not on the causal part. We have seen that last week.
+[409.0:420.0] So total order broadcast says P1 broadcast M1, P3 broadcast M3, and then P1 broadcast M2.
+[420.0:428.0] We need to guarantee that all the deliveries are the same in the same order. Everybody delivers M2 and then M1 and then M3.
+[428.0:433.0] Everybody delivers M1 and then M2 and then M2.
+[433.0:441.0] Here is another example where we deliver M1 and M2 and M3 without respecting causality.
+[441.0:449.0] So why should we care about total order broadcast? What is the main application of this? Why should we need to solve this problem?
+[449.0:458.0] It turns out that total order broadcast is something that was defined a long time ago. Now it's being revived.
+[458.0:472.0] It was defined in a paper by Leslie Namport, I think in 1780. And Leslie Namport defined, even if he didn't explain that precisely in that paper, the notion of state machine application.
+[472.0:475.0] This is one of the most important notions in the civil compute.
+[475.0:485.0] So let me explain to you what that means. And let's be very channel.
+[485.0:503.0] In 36, Alan Turing defined the universal machine. Machine that can solve.
+[503.0:519.0] We started using Turing machines and the machine of Alan Turing of course executes on one computer. The intuition of Leslie Namport was to say if we have a network of N machines, each of them is a Turing machine.
+[519.0:540.0] They all actually are the same. They replicate the same states. If we make sure that all these this network executes all operations in the same order, whatever of those operations are, then we will be building the abstraction of a distributed Turing machine.
+[540.0:550.0] It's M copies. They all execute all operations in the same order. So they all have the same state assuming that deterministic.
+[550.0:561.0] So if you have state machines that do not use random coins or whatever, if they are all deterministic, if you execute all operations in the same order, then what did you build?
+[561.0:573.0] You build a Turing machine that is distributed and highly available. You build a universal immortal Turing machine. This is what you do.
+[573.0:591.0] If you have a customer, a client using your machine, you need to make sure that the message sent by this client and the message sent by another client and a third client, or reach the copies of the state machine at the same time.
+[591.0:607.0] In the same order, if you guarantee that, then you have ensured that you built the abstraction of a distributed Turing machine. We call that state machine replication. We could have called that Turing machine replication or immortal universal machine.
+[607.0:609.0] Are you with me?
+[609.0:623.0] Why do we need total order intuitively? We need to replicate states or services. We need to make them look all the same at the same time. We have been speaking the same logical time.
+[623.0:647.0] We need to make sure that the state is deterministic. So state machine replication is something very important. Today, in 25 or 30 years ago, it was only an idea that lab port and others wanted to implement in some network of machines controlling some airplanes.
+[647.0:661.0] It was not airplanes. It was airplanes. Now, it's all over the place. Must cloud systems, Amazon or Google or whatever, they implement some form of total order.
+[661.0:681.0] They use some algorithms. I'm going to explain later. The goal is implement the abstraction of a state machine that is replicated and that look as the
+[681.0:701.0] system is implemented. The mic seems to be stopping from time to time. I will repeat what I just said. Today, many systems implement total order broadcast in order to have this abstraction of a replicated state machine.
+[701.0:717.0] It is very important. We are going to see how implement total order broadcast. We want to implement and give to some application. Maybe the application is going to be the state machine replication.
+[717.0:745.0] We are going to use not only what we have seen so far, reliable broadcast and failed detectors, but we are going to use something we didn't see yet, which is consensus. We are going to see that later. I just thought it would be easier to first explain to you total order broadcast state machine replication and then explain consensus because the motivation for inventing or the notion of consensus abstraction was exactly this.
+[745.0:760.0] Now we are ready to specify to define the properties of total order broadcast. These properties are going to be particularly subtle and there is some ambiguities that you will see can actually pose big problems.
+[760.0:777.0] We have two primitives, an operation to be invoked by the process who wants to broadcast, which is the overall cast and a callback operation that is invoked on the processes that deliver that will deliver the message.
+[777.0:794.0] I was telling you that state machine replication, we are replicating some states, doing something for a customer, let's say some e-commerce application and you have customers buying something. The customer who is buying is actually invoking the overall cast.
+[794.0:811.0] All the copies are going to deliver the message and coming from that customer is the source. This is what we have seen so far. We have two broadcasts, an operation that is invoked and then to deliver which is a callback.
+[811.0:826.0] We are going to see later how to implement these. Now let's focus on the properties. When we talk about total order broadcasts, we can have different forms, reliable or uniform, which is stronger.
+[826.0:841.0] For live broadcasts, we have reliable and uniform. So we will have the properties of a live broadcast or uniform on a broadcast plus an additional property that will tell us how to relate the messages.
+[841.0:865.0] So these are the four properties we have seen earlier. This famous RB1, RB2, RB2, RB4. Validici says, Validici says, if PI and PJ are correct, then every message broadcast by PI is eventually delivered by PJ. Good.
+[865.0:875.0] So this is a live and a property. We have seen no duplication, no messages delivered more than once, no creation, no messages delivered unless it was broadcast.
+[875.0:890.0] And then we have seen two forms of agreement. One of them says, for any message M, if any correct delivers M, every correct delivers M, and we have seen stronger form, for any message M, if any process delivers M, then every correct delivers M.
+[890.0:897.0] This is what you have seen and hopefully by now these things are clear.
+[897.0:904.0] Now to close this.
+[904.0:924.0] Now the properties. The total order property, let's think a little bit how we can define it. This is one approach to define it. The total order property says, let M and M prime be any two messages.
+[924.0:934.0] Just like earlier we used to say, let M be any messages. Here we care about relations between messages. We say, let M and M prime be any two messages.
+[934.0:942.0] Let PI be any correct process that delivers M without having delivered M prime.
+[942.0:955.0] Then no correct process delivers M prime before M. So the uniform version of this property consists in removing correct.
+[955.0:970.0] The non-uniform consists in having correct in the definition. So the uniform version which says, let PI be any process that delivers M without having delivered M prime, then no process delivers M prime before.
+[970.0:985.0] So basically what I'm saying is, I take any two pair of messages and then I focus this is crucial. I focus on any one process and say, let any process that you did not deliver M prime before M.
+[985.0:995.0] Therefore, no process should have done that. So this is how I do. First order logic, but first order logic is crucial here. The quantifiers are crucial.
+[995.0:1014.0] Let me give you two alternative properties and believe me, this is crucial. You go today, you see all these companies and I will come back to them who are building, for example, virtual currencies using total order of broadcasts or whatever.
+[1014.0:1032.0] Sometimes you look at what they claim to guarantee the properties are sometimes shaky. So it's very important to really understand what properties you are talking about. Let's see two alternatives.
+[1032.0:1050.0] They apologize for the mic. The mic seems to have some problems. Let's be IMPJ be any two correct processes that deliver two messages M and M prime. If PI delivers M prime before M, then PJ delivers M prime before M. This is one of them.
+[1050.0:1064.0] Notice what we do here. We start with the processes. We zoom on two processes and we say let's be IMPJ be two correct processes that deliver two messages. And then we want them to deliver the message in the same way.
+[1064.0:1083.0] There is another third possibility which says let's be IMPJ be any two processes that deliver a message M. We take two processes. We do want a message. And we say if one of them before M has delivered something else, then the other one should have done the same.
+[1083.0:1095.0] So these are two variants. And I want you to think a little bit about which of the three variants is the strongest.
+[1095.0:1103.0] Let you think a little bit. So we have the variant that is the official one. This one.
+[1103.0:1115.0] We take two processes M and M prime. Then we take one process. We zoom on that process that delivers M without having delivered M prime. And then we have questions. And then these two alternatives.
+[1115.0:1123.0] So I let you think a little bit.
+[1123.0:1141.0] Which of them is the strongest? Take the following execution. So if we if you get asked which one is the strongest and this is the question you can have at the exam.
+[1141.0:1154.0] And then we have to get your attention. The best way to answer is to start drawing. So I to draw and think a little bit about the differences. Take the following execution. In this execution, we have four processes.
+[1154.0:1166.0] P1 broadcast M1 and before broadcast M2. And then we have P2 that delivers M1 and later on M2. And then we have P2 that delivers M2.
+[1166.0:1174.0] And then crash. So let's let's not even think about question. Just consider the case and the non uniform versions.
+[1174.0:1189.0] And my question to you is. Is this execution correct with respect to the first property here?
+[1189.0:1201.0] Is this execution correct with respect to the first property here?
+[1201.0:1209.0] See if you want to reason about.
+[1209.0:1225.0] If you want to reason about this, you should reason by contradiction. You should say, okay, for this execution not to be correct, we should have two processes that deliver two messages.
+[1225.0:1232.0] Do I have two processes that deliver two messages? No. So the execution is correct.
+[1232.0:1240.0] I cannot violate the property because I cannot focus. I cannot zoom on two processes that deliver two messages.
+[1240.0:1249.0] Remember that the delivery for those of you who missed some classes is represented in these pictures by this vertical line.
+[1249.0:1253.0] The fact that you get the vertical line means that the process delivers the message.
+[1253.0:1271.0] Otherwise the process might receive but ignore the message. So this execution does not violate that property. That vertical line.
+[1271.0:1285.0] Oops, sorry, I'm gay, get bothered by. What about the second property here?
+[1285.0:1303.0] The second property says, let's be I and PJ be any tool for that correct processes that deliver M. If a PI delivers M prime before M, then PJ delivers M prime before M.
+[1303.0:1311.0] Does this execution is this execution correct with respect to the property I just mentioned, which is the third in the order?
+[1311.0:1322.0] Here I do have a process P2 and the process P3 both deliver a message. And I can zoom on P2 and say, oh, I have P2 who delivered M2.
+[1322.0:1331.0] And it delivered M1 before M2. And I have another process P3 who delivered also M2. But it did not deliver M1 before M2.
+[1331.0:1344.0] So according to the second property, this execution is wrong. We together. Good. Now, let's look at this third execution.
+[1344.0:1359.0] Here I have two messages, M1 and M2. P2 delivers M1 and P3 delivers M2. Here I cannot even violate the second execution, the second property.
+[1359.0:1367.0] The second property is not violated because the second property says, let's be I and PJ be any tool for that deliver the same message.
+[1367.0:1376.0] But these guys here, do not deliver the same message. So there is no violation of the property.
+[1376.0:1390.0] So this execution here is correct with respect to both properties, the lot is because the processes did not deliver the same message. Yet this is not what you expect.
+[1390.0:1416.0] Because you violate total order as we really want it to be. We have P2 who delivers M1 and P3 who delivers M2. And P2 does not deliver M2. P3 doesn't deliver M1. If we were implementing this state machine application and one process is doing one message and the other one is doing another message, the state is going to be different because these are two different messages.
+[1416.0:1423.0] So this is telling you that how you define the properties is crucial.
+[1423.0:1431.0] Now let's look at the execution we actually want. The property we actually want.
+[1431.0:1443.0] The property we actually want says, let an imprimed be any two messages. If I look at my second execution, I can map M2 and 1 and imprimed M2.
+[1443.0:1454.0] Let's say let's be I be any process that delivers and without having delivered imprimed. I do have process P2 who delivers M2 without delivered M1.
+[1454.0:1466.0] Then no process should deliver M2 without having delivered M1 for vice versa. I don't remember. But in any case, the execution violates this property.
+[1466.0:1478.0] Because I zoom on the messages, I say consider any two messages M1 and M2. Consider a process P2 that delivers M1 without having delivered M2.
+[1478.0:1484.0] Then P3 should not have delivered M2 without having delivered M1. Is that clear?
+[1484.0:1495.0] So I might have said things that are not completely coherent with what I want to say. But I hope you see that this is the only the first property excludes this execution.
+[1495.0:1505.0] The first property is actually the strongest among these three. When you talk about total order, it's that property that you want. That property that you need.
+[1505.0:1525.0] Yes, we are talking here about the uniform version. Yes, because if I don't care about uniform, given that these processes crash, the property will be correct.
+[1525.0:1537.0] Remember that uniformity is something that is stronger than non-uniformity because uniformity says things should be correct even if processes fail later.
+[1537.0:1543.0] This is the difference with non-uniformity. So that's why I didn't mention the non-uniform version.
+[1543.0:1560.0] I hope that I have convinced you of the importance of being clear about the spec. In many cases, you cannot imagine the situations where people build algorithms test them, they look correct, they seem to be correct, and Adianus said, no, no, they're wrong.
+[1560.0:1569.0] In fact, the testing was correct, but it was against a property that did not really reflect the intuition we wanted to have.
+[1569.0:1582.0] So spending time on the spec is crucial. Here, the spec is the first order logic of quantifiers, but the way you put the quantifiers and on what you put them is crucial.
+[1582.0:1590.0] So we have seen the specification of total order broadcast. Now, we are going to see how to implement it.
+[1590.0:1601.0] It turns out that implementing total order broadcast is very difficult, as I pointed out, much more difficult than causal, although it seems almost the same, it's much more difficult.
+[1601.0:1613.0] Intuitively, why? Because with causality, if you remember, you only say, don't deliver a message without delivering its past.
+[1613.0:1620.0] And given that you can transport in the message its past, you can actually easily implement causal broadcast.
+[1620.0:1630.0] Of course, you can do things without delivering the entire past, simply encoding the past, but still you can implement causal broadcast in a relatively simple manner.
+[1630.0:1637.0] Here, what we are saying is two messages that have nothing to do with each other. There is no causality between them.
+[1637.0:1645.0] You should still find a way to relate them, such that they are delivered in the same order by our process.
+[1645.0:1653.0] The first algorithms to implement total order broadcasts were extremely complicated, and still many of them are.
+[1653.0:1661.0] And I claim that the reason they are complicated is because we did not extract from them the consensus parts.
+[1661.0:1670.0] In any total order broadcast, there is the consensus part. I am going to explain it. And as long as you don't extract that part, the algorithm looks complicated.
+[1670.0:1681.0] And what we are going to do here is explain the relation between consensus and total order broadcasts, and of course, I will explain consensus in much later.
+[1681.0:1693.0] Let me just give you the specification of consensus. What is this B-s? Called consensus, which is the most important abstraction slash problem in distributed compute.
+[1693.0:1698.0] Consensus problem, again, there is the uniform and non-uniform version.
+[1698.0:1705.0] The processes propose values, and need to agree on one among the values. So this is consensus.
+[1705.0:1712.0] We are, I don't know, 12 to 15. Each of us proposed a...
+[1712.0:1720.0] I used to take the example of we want to go to the movies, but today nobody goes to the movies.
+[1720.0:1724.0] So we want to watch a movie tonight, and we want to watch that movie together.
+[1724.0:1732.0] If each one of us proposes a movie, and we are communicating by messages, how do we agree on the same movie to see?
+[1732.0:1743.0] Consensus basically tells you it's an abstraction, you propose to it the name of a movie, and it gives you one out of the end movies you presented, such that,
+[1743.0:1749.0] such that validity, the movie decided should be one of the movie proposed.
+[1749.0:1759.0] See, if none of us proposes, I don't know, gay electrons, then this should not be designed.
+[1759.0:1764.0] If something is decided, something has proposed, somebody at least one has proposed it.
+[1764.0:1771.0] Notice one thing, consensus doesn't tell you the value decided should be proposed by a majority or anything like that.
+[1771.0:1776.0] No, consensus tells you the value decided should have been proposed by at least one.
+[1776.0:1787.0] This is important. The second property, and this is where uniformity, or non-uniform agreement comes to place, no two processes decide differently.
+[1787.0:1794.0] This is the uniform version. The non-uniform version says no two correct processes decide different.
+[1794.0:1799.0] So intuitively this says if we go to the movies, we go to the same.
+[1799.0:1807.0] The non-uniform version says if we go to the different movies, and one of us dies, it's not a big deal.
+[1807.0:1814.0] This is what the non-uniform says. Here we are saying no, non-uniform, uniform says we go to the same.
+[1814.0:1820.0] Semination tells you every correct process eventually goes to the movies, eventually decides.
+[1820.0:1829.0] Notice that eventually it doesn't mean tonight, it means at some point. Integrity says every process decides at most ones.
+[1829.0:1840.0] Of course, because if we all, if we are any, and we all go to, we have two years to go to as many movies as we want, it is very likely that we will solve consensus.
+[1840.0:1850.0] So here we say we have one decision. So this is the consensus problem, and this is the most important problem in the civil society computing, and you will see why.
+[1850.0:1862.0] After some weeks you will see why. It's not the only important problem, because an online broadcast is also important, but consensus is much more important as you will see later.
+[1862.0:1873.0] So how do we define this consensus abstraction? I will show you how to implement it later. It has two.
+[1873.0:1883.0] Again, to event associated to it, an operation proposed V, proposed V means I propose to go and see V and V is.
+[1883.0:1904.0] So this is my thing, and this side is a callback. I don't invoke this sign. I am, I receive a message telling me a message.
+[1904.0:1915.0] It gets invoked by this abstraction called consensus that tells me that this is in its V problem. It might not be my V, but it's somebody's proposal.
+[1915.0:1927.0] And the properties of consensus are these. So this is an abstraction called consensus.
+[1927.0:1939.0] It is very important in particular, because if we solve it, we can solve total order broadcasts intuitively.
+[1939.0:1951.0] We have this universal distributed machine. As if we build the Turing machine distributed. I will come back to that later.
+[1951.0:1960.0] So now that we define consensus, we are going to assume that we have implemented consensus. And I will implement it later.
+[1960.0:1965.0] I will show you how to implement it later. But for now, let's assume we have this consensus box.
+[1965.0:1973.0] And I want you to think a little bit about how to implement total order broadcasts if you had consensus.
+[1973.0:2000.0] So think about it a little bit.
+[2000.0:2009.0] So if you have a idea in this room, some of you may have seen this distributed algorithm and consensus, so they should know.
+[2009.0:2017.0] So if you have an idea, go ahead.
+[2017.0:2036.0] So the intuition is exactly this, as you will see the data. But the intuition is what has just been suggested, which is, we have an abstraction called consensus.
+[2036.0:2047.0] So let's use it not to agree on the movies, but to agree on the order. But how do we represent the order?
+[2047.0:2056.0] For example, I say I want M1 to be before M2. This is my proposal. And another process says I want M3 to be before M4.
+[2056.0:2071.0] Sure, we agree, but see, we are talking about different things. It's all the way of M1.
+[2071.0:2077.0] I'm sorry, this mic is posing some problem.
+[2077.0:2097.0] So the idea is to agree on the ordering, but how? In fact, what we are going to do, and this is something that almost implemented, but by most algorithms, I know of, most algorithms, I know of a total order broadcasts and their tons of them rely on these princesses.
+[2097.0:2107.0] However, if you don't know it, if you don't know this principle, you may think that the algorithms are different, but the idea is the follow.
+[2107.0:2114.0] We want to deliver messages in the same order, and we usually, the application is something like state machine application.
+[2114.0:2133.0] We are deterministic. So what we are going to do is to agree on steps. You will consensus to agree on steps of messages. If we agree on steps of messages, so for example, we agree on the set M1 M2.
+[2133.0:2154.0] And later on, we agree on M3 and M4. And later on, on M6 and M7. If we agree on the same set, it's easy to deliver in the same order. Why? Because we can take as a discipline or as a rule that whenever we have M1 and M2, we execute them based on the lexical graphic order.
+[2154.0:2164.0] For example, if M1 comes from P1 and M2 comes from P2, then M1 should always go first. This is a rule. We decide this rule in advance.
+[2164.0:2177.0] If M1 and M2 comes from the same process, we first deliver the first message broadcast by that process. What I'm telling you is, agreeing on the set, you're done.
+[2177.0:2187.0] Now, once you agree on the set, you're done. Because you can have a separate rule that is already defined in the processes that will solve the problem.
+[2187.0:2195.0] So I want to implement total order broadcast. I'm going to use two abstractions, reliable broadcast and consensus.
+[2195.0:2211.0] And intuitively, reliable broadcast is to send messages around and consensus is to agree on sets of messages. And in fact, I'm not going to use one instance of this abstraction called consensus.
+[2211.0:2220.0] Why? Because a total order broadcast is a long-lived abstraction. It's an abstraction that I don't always use in a one-shot manner.
+[2220.0:2229.0] And I just like on every broadcast, I keep broadcasting messages. So I will also keep using consensus in a way I would explain in a minute.
+[2229.0:2241.0] We have two variables, two that actually are very similar because they're going to store messages, the variable an order and the variable delivery.
+[2241.0:2259.0] These are going to be initialized to the empty set. And then I have another variable of a different form, which is called weight.
+[2259.0:2277.0] I will explain why that is important. And I have another variable called stick-on-summer. Intuitively, I'm going to execute sequences of consensus. And SN is going to tell me I'm doing consensus number SN, number one, the number two, the number three.
+[2277.0:2290.0] Let's see how we are going to implement total order broadcast. For a process to broadcast a message with the T-O semantics, this process is going to use reliable broadcast.
+[2290.0:2299.0] If I want to broadcast a message, I want to implement the primitive, I use reliable broadcast. That's what I do. I send the message with reliable broadcast.
+[2299.0:2308.0] What's going to happen? A reliable broadcast is the primitive that I know will make sure all processes that are correct will deliver the message.
+[2308.0:2319.0] So which means that the callback RB delivered will be invoked on those processes. Now I'm zooming into what happens with the process.
+[2319.0:2337.0] RB delivered a message M coming from the source SM. And here I'm writing things slightly different than last weeks. Instead of saying a pond deliver RB deliver SMM, check if N is not variables delivered.
+[2337.0:2351.0] I add that to the event just to show you that we can write things differently. So I'm saying if I have seen M for the first time, I did not put any variable delivered, then I add M to the variable and order.
+[2351.0:2370.0] Today is the IMA process. Somebody has T-O broadcast M, which means that that process has a Miami broadcast M. I am one of the participants in the system. I get M from that source. I check if M has not been delivered yet by me.
+[2370.0:2399.0] If not, I put in the set in a variable and order the pair SMM. Are we together? Good. Now I focus on this and order. And periodically remember the writing he means this upon means you can view it as periodically or whenever an order is not empty set and waits.
+[2399.0:2419.0] It's false. Okay, which means not wait is true. I put wait to true. And then I trigger consensus. Okay, so what I do is whenever I have a message in the variable and order, I call consensus.
+[2419.0:2438.0] So we'll discuss later that we can optimize these things. Whenever I have a message, I don't know what to do with it. I don't know what to do with it means I did not deliver it yet.
+[2438.0:2455.0] It's not in variable delivered and I don't know the order. I call consensus. Okay, good. What do I propose to consensus? Remember consensus has this operation proposed. I propose to consensus the content of valuable and order.
+[2455.0:2471.0] I could contain one message, but it could contain several messages. Why? Because remember that I have this variable wait that I will explain in a moment when wait equals true messages could accumulate.
+[2471.0:2484.0] So when wait equals true, maybe I'm not doing anything. I'm simply waiting. I get messages. I put them in an order and I am waiting for wait to become false. And I will explain when wait becomes false.
+[2484.0:2494.0] So I propose to consensus and here I have my sequence number meaning that this is the essence instance of consensus and invoke initially.
+[2494.0:2512.0] S n was equal to one. The first time I'm going to propose an order to S n 1 means to the first consensus. So as we did last week, let's continue and I promise we finish only.
+[2512.0:2531.0] Now consensus is going to execute and consensus as 10 is going to terminate. It's going to terminate on our processes that invoked it. Okay, processes who did not invoke consensus, they're not going to finish consensus that those who invoked consensus, they will get something.
+[2531.0:2546.0] What is that they get if we propose movies, we get movies, if we propose value, we get value, we are. If I propose a set of messages, then consensus is going to give me a set of messages.
+[2546.0:2557.0] I encode this set of messages by variable decided. So decided is a set of messages. Okay, what do I do with this set?
+[2557.0:2573.0] I first remove messages in the set decided I remove them from an order. Remember, an order R is the variable that contains all messages I have seen and did not order.
+[2573.0:2596.0] Okay, when I get from consensus delivered decided I remove from an order with all those messages. It might be that decided is exactly the same as an order. This could happen if decided is exactly what I propose and I did not get any message in the meantime.
+[2596.0:2608.0] Together, in that case, an order will be the same as this side.
+[2608.0:2622.0] I'm sorry about the mic again. I will say an order will be the same as decided if consensus decides.
+[2622.0:2642.0] Okay, question can decided be empty? No, because decided is something that is given by consensus and consensus has to give me a value that has been proposed and remember processes only invoke consensus.
+[2642.0:2656.0] If an order is not empty, so all the proposals are variables that are not empty by construction. Good question. So the decided cannot be empty.
+[2656.0:2671.0] It is a set of messages and I remove from an order this set. It might be that at some processes decided contains more messages than an order.
+[2671.0:2685.0] Maybe P1 has seen message M1, M2 and M3 and proposes that to consensus. And another process has only seen M1. So that process proposes to consensus and order it with only M1.
+[2685.0:2703.0] And then that guy got the same as everybody else, which is for example M1 and M2 and M3. What I mean by removing from an order decided, of course that process is going only to remove the message it has is M1.
+[2703.0:2727.0] Now, I use this variable decided to construct a total order. So the variable order is what is a set containing exactly this set of the same set as decided to which I apply this rule I told you before.
+[2727.0:2742.0] For example, we already agree that we are going to execute messages in lexicographic order decided. Or the word is a deterministic sort of the sign. This deterministic sort is the same everywhere.
+[2742.0:2757.0] It can be order the messages according to the processes the identity of the processes who send them and if it's the same process by the time they send them. Are we together?
+[2757.0:2763.0] Any question from the room? Good.
+[2763.0:2781.0] Now, we ended up all of us processes who are returned from the same consensus as then have the same sets of messages and in fact have the same list order.
+[2781.0:2796.0] We have the same set by consensus and by our usage of the same ordering function we end up with the same sequence of messages, order of sequence.
+[2796.0:2811.0] Now, it's things that is the because I'm going to deliver them one by one. I'm going to take all the messages in this sequence according to the same deterministic sort, deliver them one by one.
+[2811.0:2825.0] Whenever I deliver a message I put the message in the set delivery. I remember, oh, I have delivered that message. Therefore, if I get it again, now this is something subtle.
+[2825.0:2843.0] If I get it again, I know I have delivered. How could that happen? I tell you deliver a message and then I are being delivered that message. Well, that could happen in the example I mentioned.
+[2843.0:2856.0] P1 is fast. He broadcasts M1, M2, M3 and then he are being delivered them and put them in viable and order it and propose an order to consensus.
+[2856.0:2876.0] Another process has just C, has just RB delivered M1. He did not RB deliver M2 and M3. Both of them invoke consensus. Maybe consensus will give as an output M1 and M2.
+[2876.0:2891.0] We order them with deliver M1 and M2 and then P1 and RB delivered M2. Okay, after T O delivered. In that case, this viable delivered is going to be crucial.
+[2891.0:2906.0] We say, oh, I have delivered that message. Are we together? Any question? So, there are two. Yes.
+[2906.0:2926.0] Say that higher. Yes, yes. Of course. Of course. The question is, what happens if the variable correct me if I hear the question very well?
+[2926.0:2947.0] What happens if the number of messages is huge? Okay. And therefore, consensus cannot handle it or other. Okay. Good. We are doing theory here. We assume that the viable and order can grow indefinitely. Of course, in practice, what you typically do is you don't wait until the viable becomes a huge.
+[2947.0:2962.0] But to get a viable huge, if the messages are not videos, you really need a lot of work. Of course, if the variables.
+[2962.0:2980.0] So, the answer to the question is in theory, we don't consider this problem and even in practice for this problem to happen, you really need to have a huge message. And usually you don't agree on huge message. You agree on the identifiers of the messages in practice.
+[2980.0:2987.0] Okay, so keep that in mind. But good question.
+[2987.0:3001.0] So, what we did here, I hope you understand. And I encourage you to try to go back to the algorithm again. And the best way to understand an algorithm is to do two things.
+[3001.0:3011.0] Try to simplify it. Try to say, why do I need to do this test? Let's remove this test. You would see, oh, maybe I needed because that will help you understand the algorithm.
+[3011.0:3022.0] The second way to understand the algorithm is try to prove its correct. For example, let's try to see whether this algorithm guarantees validity.
+[3022.0:3031.0] What is validity? Remember, validity says, if a correct process to a broadcast message, all correct process, they will deliver that message.
+[3031.0:3048.0] Is this property insured here? Well, assume I am correct and I broadcast a message M by, I do, I do, I do, broadcast by the validity property of RB broadcast or correct processes are going to RB delivery.
+[3048.0:3062.0] And this is question. All of them are going to RB delivery. Therefore, intuitively, all of them are going to put it in the environment and order it if they did not deal with it.
+[3062.0:3074.0] So, how do I need to prove this? The best way to prove this is by contradiction. You see, in particular this property, you say, assume a message is to broadcast via correct.
+[3074.0:3087.0] And some correct process does not see, or deliver that message. How could that happen? This can only happen if that process did not get the message to decide it.
+[3087.0:3100.0] This is the only reason because if that process gets the message through decided, this will never happen. If that process did not get it to decide it, this means no process, no correct process gets it to decide.
+[3100.0:3123.0] Because this consensus. If no process gets it to decide it, this means that there is at least for every consensus instance, there is at least one process which does not put that message and in variable and order.
+[3123.0:3139.0] Together, there has to be at least one proposal that doesn't contain the message. If all proposals contain that famous message M, everybody will get that M in design.
+[3139.0:3150.0] Given that we are using reliable broadcast, and this is crucial, given that we are using reliable broadcast, all processes will get the message M correct.
+[3150.0:3159.0] And therefore, all proposals to consensus are going to contain M. I hope we have together.
+[3159.0:3177.0] Given that all processes will get, will propose M in the set, all of them will get M to this line. So validity is not completely trivial.
+[3177.0:3192.0] It will lies on the fact that we use reliable broadcast plus the fact that the value decided by consensus must have been proposed. And if all proposals contain M, the decision has to contain M.
+[3192.0:3214.0] And therefore, processes will deliver. In this case, validity is more complicated than agreement. Agreement of total order or total order is easy here. Why? Because everybody executes messages by this total deterministic order here.
+[3214.0:3233.0] And by the sequence number of consensus, so all processes execute all messages in the same moment. So total order is easy, is easier than body. Notice something important. Why do I use valuable weights?
+[3233.0:3254.0] I told you that in order to understand the algorithm, try to simplify it. We can say, why do we need this weight? Intuitively, the weight statement simply says, while I am busy doing consensus number two, I should not lounge consensus number three.
+[3254.0:3269.0] This is what it says. I need to finish consensus number two and then move to consensus number three. Otherwise, I could get the message from consensus number three before finishing those of consensus number two. And then I would violate total order.
+[3269.0:3286.0] So the weight statement simply says, whenever I propose something to some consensus number, I keep in need, putting my messages in viable and ordered, but I don't hurry and go to the next consensus.
+[3286.0:3309.0] Together, I know that if I am correct, I might go to next consensus if I have more messages, but I don't hurry and go there. Is this clear? Any question at this point? Assuming you have the consensus abstraction.
+[3309.0:3315.0] Assuming.
+[3315.0:3327.0] I think I am going to have nightmares between the mic and the pop-ups. I used to be relaxed in my classes because I used to remove the internet, work all over the place right on the board.
+[3327.0:3338.0] Those times are over. Now I need to stay at the same place and watch my screen. Nightmares are coming. Winter is coming too. Any questions? Yes?
+[3338.0:3363.0] Okay, good question. What about consensus processes that do not core consensus? Now assume a process, a good question. Assume a process, broadcast, I broadcast a message and now we are saying what happens if if Marta is one person in the world does not core consensus?
+[3363.0:3377.0] Of course, if he does not invoke consensus, he is not going to deliver the message and. But can he not core consensus? Let's think a little bit. Again, we are using reliable broadcasts.
+[3377.0:3384.0] Which means if Marta doesn't crash, he is going to deliver the message, according to our be deliver.
+[3384.0:3396.0] Which means if he did not get L, if he did not get TO delivery, which he cannot do, if he didn't core consensus, he will put the message N in variable and on.
+[3396.0:3408.0] And this will force him to invoke consensus. In fact, as long as we have messages that are broadcast, every process is going to invoke consensus.
+[3408.0:3422.0] All of them, all correct process. Of course, they are not going necessarily to invoke consensus at the same speed. Maybe some of them are very fast. They keep getting messages, invoking consensus.
+[3422.0:3432.0] Much faster than the other. So I can be on consensus number five and one process is still in consensus number one. That could happen.
+[3432.0:3446.0] That could very well happen. Now, maybe in the implementation of consensus, things will need to go in phases. But that's a different story. I'm simply assuming a consensus box.
+[3446.0:3456.0] As long as the consensus box is concerned, we can be at different consensus instances. But every correct process will keep invoking consensus.
+[3456.0:3466.0] As long as that process did not TO deliver all the messages. Any other question? Yes.
+[3466.0:3494.0] So the question is, can you explain again how can processes be?
+[3494.0:3508.0] I assume I am a process and I broadcast messages. And then there is another process that broadcast messages. So I broadcast M1 and 2. And another process also broadcasts other messages entry and 4.
+[3508.0:3526.0] It might be that our network, the two-boardcaster, is set of the process in the system. They immediately get all messages. These processes that are close to us as far as the network is concerned are going to be delivered.
+[3526.0:3540.0] They are going to deliver these messages pretty fast. They are going to put them in their variables and order it. And they are going to invoke consensus. So these guys are going to invoke consensus. Maybe the consensus is going to finish early.
+[3540.0:3550.0] And they are going to actually TO deliver the messages. And then a couple of processes with very, very slow connection.
+[3550.0:3562.0] Given that we are using a live broadcast, they are going to be delivered the messages. But much later, maybe we have already done consensus 1, consensus 2, consensus 3.
+[3562.0:3572.0] And then these consensus 99, who is lost somewhere with bad connection, finally gets message 1.
+[3572.0:3590.0] These guys are going to put message 1 in an order and invoke consensus 1. Consensus 1 is already finished by many others. But the consensus specification tells you no matter when you invoke it, as long as you invoke the same consensus, which is identified by a number.
+[3590.0:3596.0] You would get the same thing as what we got for consensus 1.
+[3596.0:3610.0] So consensus 2 has nothing to do with consensus 1. Completely different. Except that in the algorithm, we are only invoking consensus 2 after we are done with consensus 1.
+[3610.0:3615.0] Any other questions?
+[3615.0:3635.0] So please, this is a crucial algorithm. All of the places used in some form or another. I will come back to that later. But you go to many companies today, building virtual currencies, smart contracts, et al. you, whatever, you find these kinds of algorithms.
+[3635.0:3646.0] And what are the order of messages or contracts or whatever, based on some form of consensus? Of course, what they first usually is how you implement the consensus.
+[3646.0:3664.0] This is what usually changes. But this idea of agreeing on sets and having a local way to to sort out messages locally is usually the same.
+[3664.0:3684.0] So I have shown you how we can build consensus using total order broadcast. Now a question. Can we build also? Can we build total order broadcasts using consensus?
+[3684.0:3695.0] This is what we have done. Sorry, I have shown you how we can build total order broadcasts with consensus. Can we build consensus with total order broadcasts?
+[3695.0:3706.0] Assume we want to build now consensus. We want to go to the movies. And the network gives us total order broadcasts. We don't know how it is implemented.
+[3706.0:3718.0] But the network gives us total order broadcasts. Can we go to the movies? Obviously, yes. What do we do? We use our total order broadcasts primitive.
+[3718.0:3724.0] We all put our movie there and we broadcast. I broadcast a certain security.
+[3724.0:3736.0] That yeah broadcast do the right things somebody else broadcast something else. And then we wait to see or deliver the messages.
+[3736.0:3748.0] We can decide again this is something you have to understand. We can have a rule that says the movie we are going to see is the first that we see or the third.
+[3748.0:3763.0] We have to have the same rule. With that rule we would have solved consensus. What am I saying? I am saying the two abstractions consensus and total order broadcasts are computationally speaking equivalent.
+[3763.0:3768.0] Once you have one you can implement the other.
+[3768.0:3784.0] So these two problems are very very similar. They are not very similar. They are actually computationally speaking the same. Of course, it's not the same complexity if I only do consensus because when I do total order broadcasts I need several instances or whatever.
+[3784.0:3788.0] But whenever I have one, I can implement the other.
+[3788.0:3803.0] This notion of equivalence is the civil computing is very very important. And you have to realize that in classical computing if you did the theory of computing notion of equivalence usually involves complexity.
+[3803.0:3828.0] We say two problems are equivalence. If I can implement one with the other without adding performance overhead without adding too many instructions that are both linear or they both exponential over that this is classical equivalence in distributed computing equivalence means I can do it with the other abstract.
+[3828.0:3851.0] It doesn't say I don't need exponential number of messages or whatever. No, we are only talking about computability. This is very important. Why in classical computing all problems are possible.
+[3851.0:3867.0] You have a set of problems that are possible. And this is the problems we consider. Of course, outside the high team problems and others. And within the scope of two in machines everything is possible in distributed computing that is not the case.
+[3867.0:3886.0] Depending on the kind of distributed computing you consider, not all problems are possible. When you say two problems are equivalent, you mean whenever there is a distributed system where I can solve a problem, my total order broadcast, I can solve consensus.
+[3886.0:3898.0] When I talk about different kinds of distributed systems, what do I mean? I mean a distributed system with perfect value. This is one kind.
+[3898.0:3927.0] The distributed system with an eventually perfect value. And distributed system with a majority of collect boxes. And distributed systems where anybody can fail. These are the kinds of distributed systems. Equivalence between two abstractions means whenever the assumptions made on the distributed system allow me to solve one of these.
+[3927.0:3937.0] They will allow me to solve the other. Any question on these things because it's crucial and we are going to use it over and over later.
+[3937.0:3949.0] So this notion of equivalence is crucial. I can whenever I have consensus, I can use it to build total order broadcast, which is what I did.
+[3949.0:3961.0] And we can also whenever I have total order broadcast, I can also build consensus, which is I just explained here. So the two problems are equivalent. Of course, I assume in my chat.
+[3961.0:3980.0] So I don't think it's wise to dive into consensus here because I'm going to explain to you several consensus algorithms in the next week weeks, including showing your situations where consensus is impossible. This is very important to understand.
+[3980.0:3995.0] What when I mean by situations where consensus is possible, I mean if you have a distributed system where you cannot make any assumption on fail of the text. Consensus is impossible. Therefore, total order broadcast is impossible because that equipment.
+[3995.0:4015.0] So we are going to spend time there and I suggest that maybe wise to stop here for this week. If you have questions feel free to ask me and for those of you who come late. If you have questions on the project, please use the time period of the project to ask questions to the TA's.
+[4015.0:4031.0] You can use model or you can send them questions directly. Model is better because everybody sees the questions.
+[4031.0:4053.0] For the TA and the theory parts, also the same. Please use the theory session to ask questions, either to move the or not. Last but not least, as I pointed out last week, I couldn't come because of some, I was a little bit afraid to be to have been contaminated, but I'm not so I'm back on track.
+[4053.0:4063.0] So see you at 5 p.m. for those who are coming to the TA or next week for the distributed algorithm or the project tomorrow.

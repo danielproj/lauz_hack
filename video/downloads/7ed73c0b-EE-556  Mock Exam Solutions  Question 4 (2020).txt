@@ -1,0 +1,130 @@
+~EE-556 / Mock Exam Solutions / Question 4 (2020)
+~2020-12-14T01:13:54.792+01:00
+~https://tube.switch.ch/videos/7ed73c0b
+~EE-556 Mathematics of data: from theory to computation
+[0.0:12.0] Hello everyone. I will be giving you the solutions of problem 4. So in the first part,
+[12.0:21.0] part A, we give you a function at x, which is the average of functions at 5, where
+[21.0:28.0] I is 1 over 2, 5, AI transpose x minus vi squared. So basically this is a quadratic function
+[28.0:32.0] of the linear function. So we are going to apply the chain rule to compute the gradient
+[32.0:37.0] of that. First of all, we are going to compute the gradient for quadratic function. What we
+[37.0:47.0] do is, so we are going to write 3 and a verify, x is for the quadratic function under constant
+[47.0:59.0] front. We have 2 multiplied by the input of the function, which is 5, AI transpose x minus
+[59.0:64.44] vi. Then we need to compute the gradient of the linear function, which is the input of the
+[64.44:72.0] quadratic. And the gradient of the linear function is pretty straightforward. We need to compute
+[72.0:81.0] this guy. And this is basically a vector. And this kind of concludes the solution for
+[81.0:92.0] part A. For part B, we are going to have to 3 sub parts of this. So here we are talking
+[92.0:99.48] about this gd basically. We have the sgd updates. And we are interested in particular
+[99.48:104.48] the average itch which is average, which is expected to the step size that we have in
+[104.48:112.08] each iteration. So there are 3 conditions. First our fs convex and its house mode, which
+[112.08:119.88000000000001] means its gradient is the psh continuous. Our gradient estimates gk are unbiased. And
+[119.88000000000001:125.68] we are telling you that expectation of the norm squared of our gradient estimates are
+[125.68:132.68] up and up or bounded by some constant m squared. And the initial distance to the solution is
+[132.68:139.68] given as d. So in equation 1, we give you actually the expression for the convergence, which
+[139.68:146.68] is d squared plus m squared, sum of a step size squared is divided by 2 times sum of step
+[146.68:156.68] size. And in first one, first part B1, we are interested in finding the optimum constant
+[156.68:165.68] step size alpha. So here as it is going to be a constant, it cannot depend on j, but
+[165.68:170.68] it can depend on k, the time horizon. So this is something an additional information that
+[170.68:177.68] obviously is going to depend on d and m. So we can actually compute this by optimizing the
+[178.84:186.96] upper bound. So we are going to basically optimize this upper bound. So if you write down,
+[186.96:193.24] we can actually write this in a simple form. Let's call it for simplicity. Let's call
+[193.24:200.24] this h of alpha. And this is d squared plus m squared, g equals 0 to k alpha d squared
+[207.72:217.72] divided by, oh my goodness. So since we are going to use a constant step size, we can
+[217.72:224.72] multiply it in right squared m squared k plus 1 alpha squared divided by 2 times k plus
+[230.24:237.24] 1 alpha. So if you want to take the gradient of this function, because since we want to
+[242.28:246.88] optimize this upper bound, we are going to take the gradient of this function h alpha and
+[246.88:253.88] then equate it to 0 and then find the optimal value of alpha. So when you take the gradient,
+[256.68:263.2] we can do the following. So we can first, okay, let's first simplify it. Write it in
+[263.2:269.2] this step bit more simple form, I think it's going to be easier. So it's d squared divided
+[269.2:276.2] by 2 k plus 1 over alpha plus m squared divided by 2 times alpha. So okay, if it takes the
+[285.8:292.8] gradient of this simplified form, we are going to have, so derivative of 1 over alpha is
+[292.8:299.8] going to be minus 1 divided by alpha squared. So this is going to be d squared 2 times
+[303.88:310.88] k plus 1 minus 1 divided by alpha squared plus the derivative of the linear part, which
+[315.04:322.04] is m squared or 2. And from here, we can say that this is, so we are going to equate
+[322.04:329.04] this to 0. If you do that, we are going to see, okay, let's do that way. So this is
+[331.40000000000003:338.40000000000003] equal to 0, which implies square divided by 2 is equal to d squared 2 times, plus 1, whatever
+[338.4:345.4] alpha squared, which is equal to d squared divided by 2 squared plus 1, then we can say
+[345.4:352.4] that alpha is the m square plus 1. Okay, we see that the constants that are not going to
+[375.9:382.4] reach p the same size, the potential of the game. If we pull out the we, and we get a
+[384.67999999999995:391.67999999999995] size of nd y, the spectral denomene, which is the f star plus n, will be equal to n to
+[396.21999999999997:399.21999999999997] m. Let's say the f star is square minus 1 over alpha is up the exponential, minus two
+[399.22:406.22] So we're going to say, that's far.
+[406.22:412.22] So I'll perform it to pi squared and squared.
+[412.22:418.22] Again, we know it's constant, so we can write it that way.
+[418.22:423.22] Or maybe I can.
+[423.22:430.22] So this is the opposite of it's, opposite of it's, we can see everything.
+[430.22:432.22] Okay.
+[432.22:440.22] And we put alpha squared, which is d squared divided by m squared,
+[440.22:454.22] and the denominator is 2, 1 alpha, which is the squared of a plus 1.
+[454.22:458.22] So here we have some simplifications.
+[458.22:481.22] It's 2 d squared divided by 2 d divided by m squared, which is equal to d times m divided by d equals 1.
+[481.22:488.22] So if we use this value as our constant subsides, given that we know the time horizon,
+[488.22:493.22] this will be our rates.
+[493.22:494.22] Okay.
+[494.22:503.22] So the next one actually asks you something related, but in this one, we're interested in the optimal subsides policy, alpha k,
+[503.22:508.22] given that we don't know the time horizon, and also the corresponding optimal rate.
+[508.22:519.22] So here, if you go back, we're dealing with a convex assumption, which is only smooth, but not strongly convex.
+[519.22:535.22] So in this setting, we actually know that the time dependence subsides needs to be in the order this.
+[535.22:540.22] So anything which is of order 1 of square root of k is acceptable.
+[540.22:547.22] You can also say that this is some constant divided by square root of k.
+[547.22:555.22] And the corresponding convergence rate in this case becomes, let's write it down.
+[555.22:563.22] Again, we're interested in this weighted average x bar k plus 1, and this one.
+[563.22:570.22] So we can say that is of order.
+[570.22:577.22] So anything in this form is acceptable by us.
+[577.22:585.22] So in this case, when we have a decrease in step size, which is time dependence, our rate is going to be low k or square root of k.
+[585.22:593.22] So it's to be clear to actually make the distinction between b1 and b2.
+[593.22:603.22] Here, we're interested in an alpha, which depends on horizon k, but maybe to be more clear for any iteration j.
+[603.22:606.22] If you write this that way, I think it's going to be more clear.
+[606.22:613.22] This is going to be the order of square root of j, which is independent of the time horizon k.
+[613.22:619.22] And in the last words, we asked you to kind of compare the results of b1 and b2.
+[619.22:628.22] So here, the one thing is, so in the b1 case, test that, write it down.
+[628.22:635.22] In the b1, we had alpha, which was order 1 over square root of k.
+[635.22:646.22] And in b2, we had a decreasing step size in the case alpha j is of order 1 over square root of k.
+[646.22:649.22] And let me look into these.
+[649.22:660.22] The convergence rate here was, let me write this down.
+[660.22:667.22] This is of order 1 over square root of k.
+[667.22:683.22] And in this one, for b2, we need to be sensible to be to write down.
+[683.22:689.22] This is of order, okay, divided by square root of k.
+[689.22:695.22] So the important difference is, since the b1, we know the time horizon, we can pick a step size, which is more important.
+[695.22:700.22] But in the second case, we assume that we don't know the time horizon.
+[700.22:702.22] So we need to have a decreasing step size.
+[702.22:705.22] And in this case, we're suffering a locate factor.
+[705.22:709.22] So actually, if you go back, you can see why we have this.
+[709.22:716.22] So let's just focus on this time, okay, this summation in the numerator.
+[716.22:744.22] If we write this down, as if we were doing synopsis, we're going to see that from j equal 0 to k alpha j squared in the setting where we have the increasing step size, it's going to be 1 over j, which is upper bound by, okay.
+[744.22:757.22] But in the other case, since it was constant, what was the, what's the, yes.
+[757.22:775.22] So in this case, it is d squared, m squared, k plus 1, what's this? Okay, sorry, this is the denominator.
+[775.22:780.22] So this is basically d squared to our defined squared, which is our constant.
+[780.22:793.22] So the one thing we would like you to say is, or write down is, since we know the time horizon in the first case, we can get up at the rate, which is, depends on some constant here.
+[793.22:799.22] But in the other case, since we are decreasing step size, we're suffering a factor of locate.
+[799.22:813.22] So anything actually related to SGD and the convergence of its, could give you some partial points, such as the reason in the lecture notes, we are specifying that the reason why we have decreasing step sizes.
+[813.22:821.22] Since we have a stochastic gradient estimates, it has a variation from a true value.
+[821.22:840.22] So to actually control the variance of the gradient estimates, we need to decrease its step size to make sure we converge to the optimal value, because if we have a constant step size, which doesn't depend on the time horizon, which can depend on the leftist constant, for instance, we can only converge to a neighborhood of the solution, not the solution itself.
+[840.22:853.22] And to remedy this problem, we need the decreasing step size. Anything in the direction should also get to your partial gradient. But this is basically what we would expect you to write down.
+[853.22:860.22] So in this part, which is basically the last part, we have the modified superlose.
+[860.22:871.22] So the modified superlose is basically consisting of our constant parts, which is here, and we have a quadratic region, and then we have a linear region.
+[871.22:877.22] So basically we ask you to take the gradient of fi, so let us write it down.
+[877.22:890.22] So fi in our case is that it's T i x, which is this piecewise function plus we can write this down.
+[890.22:909.22] Okay, two square root. Okay, so, okay, right away, let's go ahead and into two. Okay, let's call this portion h i x.
+[909.22:937.22] So gradient of fi x is gradient of ti x plus always called just h. And it's creating which is x plus we have a quadratic here, which is square of the Euclidean norm in the gradient respect.
+[937.22:944.22] So basically this. So let's have a look at how we need to compute the gradient of fi.
+[944.22:950.22] So again, we tend to listen to piecewise manner. Sorry.
+[950.22:952.22] So we have.
+[952.22:979.22] So the first one is the constant function. So this constant region, the data is basically zero, and which is when this linear term is greater than or both the h.
+[979.22:986.22] The second region is when this holds.
+[986.22:992.22] We have quadratic function. So we study the quadratic function and the gradients in the first part.
+[992.22:1000.22] So let's write the constant down first, 1 plus 4 h, 1 divided by 4 h. Sorry.
+[1000.22:1012.22] Then there comes the two and the inputs to our quadratic function, which is this linear term.
+[1012.22:1030.22] And then we write the gradient of the linear term, which is minus the i, i. So let's write here. So we can write minus 1 over 2 h.
+[1030.22:1042.22] And the last part is linear and we're creating this basically this. So yeah, basically the gradient of fi is gradient of ti, which is a piecewise function.
+[1042.22:1060.22] Let's write the condition. This is the gradient of ti x plus 2 mu x. And the final part, this is again similar to b2.
+[1060.22:1078.22] Here we want you to identify the function f itself. So, okay. And we want you to write down what is the decreasing step size, optimal step size alpha k and the corresponding convergence rate.
+[1078.22:1090.22] So if the govian look, we know for a fact that this is a convex function. The piecewise function in the first region is constant, which is convex.
+[1090.22:1100.22] In the middle section, it is the quadratic, which is convex. And we have a linear function, which is also convex. So this function is actually convex.
+[1100.22:1114.22] Plus we have this quadratic term, which makes the function strongly convex. And we also need to talk about the smoothness of the function.
+[1114.22:1122.22] One thing we can do about this is we can check if the Hessian is founded. So again, similarly for the constant part, we know it is founded for the linear parts.
+[1122.22:1132.22] Hessian is again founded, which is zero, basically. In the quadratic part, we know that quadratic functions, the second derivative is going to be a constant again.
+[1132.22:1141.22] So, all in all, we can say that this Hessian is founded, meaning it's a smooth function. So we're dealing with basically a smooth and strong convex function.
+[1141.22:1157.22] In this setting, we know that we can get an accelerated, not an accelerated, but we can get a faster rate compared to one of the square feet. In order to do that, we need to select alpha k
+[1157.22:1174.22] at time dependence steps, which is of order one or two sides. We can also write something constant, divided by some initial value plus k, assuming k is zero, or do we just attunee parameter?
+[1174.22:1200.22] And the rate, the rate in this setting is again accelerated. We can say this is one over k, or we can say some constant to do either way.
+[1200.22:1215.22] The important thing is it's going to be a straight up one over k, and basically, these are the answers for problem four.

@@ -1,0 +1,197 @@
+~COM-516 Lecture 5.2
+~2020-09-02T16:36:31.428+02:00
+~https://tube.switch.ch/videos/0a7782d5
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:7.0] So now we can start talking about the rate of convergent towards equilibrium of Markov chain.
+[7.0:31.0] So we will consider Markov chain which is ergodic as promised.
+[31.0:38.0] On a state space S and with transition matrix P,
+[38.0:56.0] initial distribution pi 0 which is arbitrary,
+[56.0:61.0] n stationary and limiting distribution pi.
+[61.0:78.0] So we know that this one exists by the previous theorem that we have seen.
+[78.0:89.0] Okay, so now we will add to this assumptions the two more assumptions.
+[89.0:108.0] So moreover we assume that S is finite.
+[108.0:120.0] Okay, so the size of S is equal to some letter capital N which is finite.
+[120.0:137.0] And that detail balance holds.
+[137.0:158.0] So as I said before detail balance is not a necessary condition to find convergence rates of Markov chains.
+[158.0:159.0] Certainly not.
+[159.0:165.0] And the other one that S is finite is not needed either.
+[165.0:169.0] So here we just want to make these two assumptions.
+[169.0:173.0] So have so as to have something a little cleaner.
+[173.0:178.0] And I would like to mention something about the first one.
+[178.0:186.0] So the first one is really it really doesn't change anything actually except that if you don't assume that S is finite,
+[186.0:191.0] we will deal now with eigenvalues of the matrix P.
+[191.0:196.0] So if S is finite, P is a finite dimension matrix as we know it.
+[196.0:199.0] And we know it's eigenvalue.
+[199.0:202.0] We can know it in compute it's eigenvalues and etc.
+[202.0:210.0] But if S were infinite, we would just we could just redo the same thing just that we would be in an infinite dimension,
+[210.0:214.0] etc. This is probably something less familiar to some of you.
+[214.0:219.0] So that's why I focus on the case where S is finite.
+[219.0:227.0] But really all the results are more or less the same in the in the modern all case.
+[227.0:230.0] Okay.
+[230.0:236.0] So now or aim.
+[236.0:255.0] So or aim in the following is to find another bound on what we have already analyzed in the previous lectures,
+[255.0:266.0] which was the total variation distance between PIN and Pi.
+[266.0:270.0] So remember what is this?
+[270.0:277.0] This is the I's row of the matrix P to the N,
+[277.0:285.0] which is also the state of the chain, the distribution of the chain at time N,
+[285.0:288.0] given that you start in state I.
+[288.0:290.0] Okay.
+[290.0:293.0] So let me perhaps write this down.
+[293.0:306.0] So this is the distribution at time N,
+[306.0:314.0] given that by zero is delta I,
+[314.0:318.0] that is you start in position I, the chain.
+[318.0:319.0] Okay.
+[319.0:330.0] And so the other variation distance measures how far you are from the limiting distribution, which is Pi.
+[330.0:336.0] So remember what is this total variation distance we have already seen it in the previous lecture,
+[336.0:339.0] but I am going to write it with the simplest formula for it,
+[339.0:348.0] which is one half, sine the sum over all states in S of Pi i,
+[348.0:353.0] j n minus Pi j.
+[353.0:355.0] Okay.
+[355.0:363.0] Pi i, j n is nothing but, so this thing here is just the component i, j of the matrix P to the N,
+[363.0:367.0] as we have already seen.
+[367.0:368.0] And okay.
+[368.0:382.0] And the, the algorithm theorem tells us that this goes to zero as N goes to infinity by the algorithm theorem.
+[382.0:385.0] So we know it goes to zero.
+[385.0:393.0] So we know that as N goes to infinity we are getting closer and closer to the limiting distribution of the chain.
+[393.0:398.0] But of course now we would like to know how fast we go to zero.
+[398.0:405.0] And of course this is very important because the limit as N goes to infinity is a nice thing,
+[405.0:407.0] but if let's say now N is 1000,
+[407.0:412.0] you would like to know how close you are from the actual distribution Pi, right?
+[412.0:417.0] Is it that the chain is already kind in this,
+[417.0:425.0] close to this equilibrium or if this total variation distance is very close to one still for N equals 1000,
+[425.0:430.0] then you have to run the chain longer and the question is how long, how long, right?
+[430.0:438.0] How much should we wait until we get to something which is decently close from the limiting distribution?
+[438.0:444.0] This waiting time, this time you have to wait until you get close to Pi is also called the mixing time.
+[444.0:449.0] And we will give a precise definition of it later.
+[449.0:450.0] Okay.
+[450.0:456.0] So that's all N.
+[456.0:462.0] Okay. So here of course exactly like for the algorithm theorem, you could say,
+[462.0:467.0] well, let's not try to find an answer to this general answer.
+[467.0:471.0] Let's just be pragmatic.
+[471.0:474.0] You give me a Markov chain, a matrix P.
+[474.0:478.0] And I compute the end power of this matrix.
+[478.0:481.0] I compute the total variation and I can compute it for every matrix.
+[481.0:485.0] For every Markov chain you give me, I can compute how far you are for a given N.
+[485.0:490.0] Okay. But now that's already one thing.
+[490.0:495.0] But as I already mentioned, computing powers of matrices,
+[495.0:500.0] especially if the number of states capital N is large, this can be quite cumbersome.
+[500.0:507.0] And we would like some more nicer criterion for this for this conversion to.
+[507.0:512.0] We would like to get something which is at the same time general and easily computable.
+[512.0:517.0] You give me a matrix P. I can tell you quickly how far you are from the equilibrium
+[517.0:521.0] for such and such values of N.
+[521.0:523.0] And then what do what can we do?
+[523.0:526.0] So here comes a natural thing.
+[526.0:529.0] So we are composing powers of a matrix.
+[529.0:533.0] And you know that in order to compute powers of a matrix efficiently,
+[533.0:538.0] nothing is better than computing its eigenvalue eigenvector decomposition.
+[538.0:545.0] So that's what we will be after.
+[545.0:559.0] So eigenvalues and eigenvectors of N.
+[559.0:568.0] And this is kind of another preliminary until we get to the result I want to state today,
+[568.0:577.0] which is the synthetic convergence result for the mark of chains.
+[577.0:580.0] Okay. So now comes the first question.
+[580.0:583.0] We have a matrix P which is a stochastic matrix.
+[583.0:591.0] So it's a matrix with nonnegative entries, actually all the entries are between 0 and 1.
+[591.0:596.0] And every row sum is equal to 1.
+[596.0:606.0] A priori, it's not given that this has a nice, this matrix P has a nice eigenvalue eigenvector decomposition.
+[606.0:609.0] We know there is always the Jordan form of a matrix P,
+[609.0:614.0] but in general it's not necessarily diagonalizable, right?
+[614.0:619.0] Here, nevertheless, because we have made these extra assumptions,
+[619.0:626.0] which are, okay, fine-eateness of S and detailed balance,
+[626.0:632.0] we can find, we know something about the eigenvalues of P.
+[632.0:635.0] And let me show you how this goes.
+[635.0:640.0] I'm not going to try to compute the eigenvalues of P and eigenvectors of P directly.
+[640.0:647.0] I'm going to define a new matrix,
+[647.0:656.0] Q, as follows.
+[656.0:673.0] So Q, I, J will be equal to square root of pi i times pi j times 1 over square root of pi j for i j ns.
+[673.0:683.0] Okay, so this, well, we, of course, we are in a privileged position because we have an agodic mark of chain.
+[683.0:686.0] So we know there exists a stationary distribution pile.
+[686.0:689.0] So we can do that, certainly.
+[689.0:693.0] And pi is always positive, pi i is positive for i, rei.
+[693.0:698.0] So we can divide by, by j, that's fine.
+[698.0:702.0] And this new matrix has an interesting property,
+[702.0:709.0] and that follows from our extra assumption on detailed balance.
+[709.0:714.0] So what do we know about this matrix Q?
+[714.0:723.0] Well, first of all, Q i i will be equal to pi i will be, you know, for every i ns.
+[723.0:726.0] Okay.
+[726.0:737.0] The Q i j's are non-negative numbers for every i and every j ns.
+[737.0:746.0] But it is not anymore necessarily the case that this Q matrix is stochastic.
+[746.0:756.0] So if you sum the Q i j over over j, you don't necessarily get one.
+[756.0:758.0] So now we lost the property.
+[758.0:760.0] So situation seems worse.
+[760.0:772.0] But the third bullet point here is very important is that Q i j is equal to Q j i for every i j ns.
+[772.0:779.0] That is to say that Q is a symmetric matrix.
+[779.0:780.0] Okay.
+[780.0:783.0] And here is the proof.
+[783.0:786.0] Indeed.
+[786.0:800.0] If you compute Q j i, this is going to be square root of pi j times P j i times one over square root of pi i.
+[800.0:812.0] And let me rewrite this as one over square root of pi j times pi i times pi j P j i.
+[812.0:817.0] I've just multiplied and divided by square root of pi j.
+[817.0:819.0] Okay.
+[819.0:835.0] And now we use the detail balance assumption that tells us that this is equal to one over square root of pi j pi i times pi i P j i.
+[835.0:843.0] So really this is because of the detail balance assumption that we have this.
+[843.0:850.0] And now if you simplify this expression, you get square root of pi i.
+[850.0:853.0] Sorry.
+[853.0:859.0] Pi j times P j i is equal to pi i times P i j.
+[859.0:866.0] Okay. Now I simplify the expression. I get square root of pi i times P i j times one over square root of pi j.
+[866.0:872.0] Which is exactly Q i j.
+[872.0:882.0] So because of detail balance, we have that we have been able from P to construct a new matrix Q, which is symmetric.
+[882.0:893.0] And that's very interesting because now for symmetric matrices, we know something about their eigenvalues and eigenvectors.
+[893.0:900.0] We know that these matrices have nice eigenvalues and eigenvectors.
+[900.0:919.0] And this is contained in what is known as the spectral theorem.
+[919.0:941.0] As Q is symmetric, there exists real numbers that can be ordered, let me order them decreasing order.
+[941.0:962.0] So if lambda 0 greater than lambda 1 greater than dot dot dot until lambda n minus 1, which are the eigenvalues of Q.
+[962.0:983.0] So we have two eigenvectors, u 0 up to u n minus 1, which are equal to the eigenvectors of Q.
+[983.0:1001.0] So such that Q times U k is equal to lambda k times U k for every k between 0 and n minus 1.
+[1001.0:1007.0] So I have capital in of these eigenvalues and eigenvectors.
+[1007.0:1014.0] So I have to evaluate them from 0 to n minus 1.
+[1014.0:1029.0] And because the matrix Q is symmetric, we moreover have that the set of eigenvectors u 0 up to u n minus 1,
+[1029.0:1049.0] and then we have the matrix Q times an orthonormal basis of R to the n.
+[1049.0:1059.0] So this theorem I am not going to prove is linear algebra theorem, and that's very convenient, right?
+[1059.0:1069.0] Because it says that not only is the matrix Q diagonalizable, but on top of that, the eigenvectors are orthonormal, so that's very good.
+[1069.0:1079.0] Of course, these are the eigenvectors of Q. So now we would like to say what are the eigenvectors of P.
+[1079.0:1089.0] And here is the nice proposition is that so the very surprising thing, perhaps slightly surprising thing,
+[1089.0:1098.0] is that the eigenvalues of P are actually the same as the eigenvalues of Q.
+[1098.0:1120.0] And eigenvectors are not that different. So if you define, instead of these u's, you define phi k to be equal to the vector made of whose components are UKJ divided by square root of Pi J,
+[1120.0:1144.0] or J in S. So you divide each component by this root of Pi J, or Pi J, then it turns out that P times phi k is equal to lambda k times phi k for every k between 0 and n minus 1.
+[1144.0:1167.0] So that's quite nice because it says that P is diagonalizable. So because of this detailed balance assumption, P is a diagonalizable matrix, not, you know, well, the phi k will not be orthonormal, sure, or except in some very particular case, in general, the phi k will not be orthonormal.
+[1167.0:1176.0] But the nice thing is that the eigenvalues are the same, and therefore the lambda k's are also non-negative, real.
+[1176.0:1187.0] But on top of that, we will see that we will be able to say more about this lambda k. No, they are not necessarily non-negative. Sorry, take this back, but they are all real.
+[1187.0:1199.0] Let me just prove this to the proof of this proposition from what we have above is a simple computation.
+[1199.0:1225.0] So we just have to check that we just have to compute this, right, P, phi k, component i of this. So by definition of matrix vector multiplication, this is the sum of J in S of Pi J times P J k.
+[1225.0:1253.0] And now we have everything in place. We just replace P, but by its values in terms of Q. So remember, there is a transformation between, we have seen that Q defined in terms of P. So of course we can revert this, and this will give us 1 over square root of Pi i, Q ij square root of Pi J times P J k,
+[1253.0:1270.0] which is exactly U J k over square root of Pi J. So what we see here is that of course these two terms can sell. Of course, things are made so that things will be nice.
+[1270.0:1285.0] And this can be everything as 1 over square root of Pi i, we are summing over J. So this we can take out of the sum, sum over J, Q ij, U J k.
+[1285.0:1311.0] But this is nothing 1 over square root of Pi i, Q times U k, the component i of the vector Q times U k. Since U k is an eigenvector of Q with a eigenvalue lambda k, this is nothing, but 1 over square root of Pi J times lambda k times U J k.
+[1311.0:1334.0] Sorry, U i is our i's. And by the definition of phi, this is equal to lambda k times P k i. And of course this is true for every k between 0 and capital N minus 1 and for every ins.
+[1334.0:1347.0] So P has an eigenvector, phi k is an eigenvector of P with eigenvalue lambda k.
+[1347.0:1371.0] So really this detailed balance assumption is handy here. It allows us to find the, to know that the eigenvalues of P are real and to even have the eigenvectors to know that P is diagonal visible.
+[1371.0:1392.0] So at this point, we could be more general here. If P, if we didn't have this detailed balance assumption, then what could happen is that, well, the matrix P need not be diagonal visible.
+[1392.0:1402.0] But that I mentioned before, P, there is still, we could still have the Jordan decomposition of P and we could still work with this.
+[1402.0:1410.0] The expression we would get later would be a little less nice, but you know, you could, you could always work in this more general setup.
+[1410.0:1423.0] Likewise, if you don't assume that you have a finite matrix, then there is a general theorem for operators, general spectral theorem for operator, which are symmetric symmetric operators.
+[1423.0:1435.0] And you can also get similar expression. So also really we could, we could be more general, but I just stick to this, to this case here.
+[1435.0:1454.0] Okay, so now I'm going to state a few properties of this eigenvalues that we are, we are not going to prove this, this week, but I want to state a certain list of properties, and this will lead me to finally being able to state a nice result about this rate of convergence.
+[1454.0:1481.0] So here are some facts about eigenvalues about D eigenvalues of P, which are to be proven next week when I prove the whole theorem.
+[1481.0:1494.0] Okay, we will see the following fact.
+[1494.0:1521.0] The first fact is that the largest eigenvalue is always equal to 1, to plus 1. And the corresponding eigenvectors is the all 1 eigenvector, so it's the all 1 column eigenvector.
+[1521.0:1539.0] All eigenvalues are less than 1 in absolute value. So all the other ones, if you own the first one, of course, lambda zero, but also all the other ones, it's in 1 and n minus 1.
+[1539.0:1558.0] And the third property is that the second eigenvalue, so lambda 1, the second largest eigenvalue is strictly less than 1, and lambda n minus 1 is strictly greater than minus 1.
+[1558.0:1581.0] So let me just draw this in a line. Okay, so we have a quite precise information about the location of the design values. Here I have plus 1, let's say, here I have 0 and here I have minus 1.
+[1581.0:1598.0] So what do we know? We know that lambda zero is here. And the other eigenvalues are on the real line, but they are not everywhere on the real line. They are in some interval here between minus 1 and plus 1.
+[1598.0:1616.0] And this interval is a closed interval that doesn't touch, near minus 1, no, plus 1. So here you'll have lambda n minus 1, and lambda 1. Of course, this is one example. In general, there could be any closed interval inside minus 1 plus 1.
+[1616.0:1640.0] So it could be completely shifted to the right or to the left. Okay. Finally, if I want to state the result, I'm going to define lambda star to be the maximum of these eigenvalues.
+[1640.0:1658.0] So these eigenvalues between 1 and n minus 1. You can check, okay, so the maximum in absolute value of these eigenvalues, the one with the largest eigenvalue, the largest absolute value.
+[1658.0:1679.0] And so you can check that this is equal to the maximum of lambda 1 and minus lambda n plus 1. This is an interesting exercise to realize that this is the case, right? It can be written like this.
+[1679.0:1689.0] And the fact about this maximum here is that it cannot be equal to 1. So it's always strictly less than 1. So this lambda star is always less than 1.
+[1689.0:1701.0] With all this that still has to be proven, we can state the main theorem that we will prove next week.
+[1701.0:1727.0] Is that? So, okay. And they're all the above assumptions. And perhaps let me repeat them so that everything is clear.
+[1727.0:1743.0] So we have an algorithm chain. We have a finite state space S and we have detailed balance.
+[1743.0:1770.0] It holds that the total variation distance for a finite n for every possible finite n, the total variation distance between the distribution of time n and the limiting distribution pi is less than lambda star to the power n divided by 2 square root of pi i.
+[1770.0:1779.0] And that's true for every r in s and for every n greater than 1.
+[1779.0:1799.0] Okay. So this is a very simple formula that gives a precise bound. Well, not always precise as we will see, but at least it gives a maneuver bound on how far you are from the limiting distribution pi.
+[1799.0:1810.0] And of course, it's very interesting in its formulation because here we have an exponential bound that decreased exponentially since lambda star is less than 1.
+[1810.0:1821.0] Lambda star to the n is decreasing exponentially to 0. So this gives us a quick decrease to 0 of this expression.
+[1821.0:1835.0] Of course, how fast it is going to 0 depends highly on the value of lambda star. If lambda star is very close to 1, then this is decreasing exponentially fast, but not so quickly.
+[1835.0:1855.0] And so we will see many examples of this in the following and we will see why that this also this upper bound can sometimes be lose as we will see, even though we have an exponential decay, we will see this more precisely.
+[1855.0:1869.0] So I'm going to give some examples in the next video and also define the two concepts related to this to this theorem, which are the notion of mixing time and spectral gap.
+[1869.0:1897.0] This is coming in the next video.

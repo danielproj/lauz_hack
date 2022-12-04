@@ -1,0 +1,504 @@
+~CS-451 / Week 12: Distributed machine learning
+~2020-12-07T17:43:12.280+01:00
+~https://tube.switch.ch/videos/cd33fab4
+~CS-451 Distributed algorithms
+[0.0:5.08] So Leigh is probably you all know him if you are interested in science.
+[5.08:11.84] Leigh is a famous YouTuber and if you sometimes have spare time, in fact even if you don't have
+[11.84:13.84] spare time, go for science.
+[13.84:16.72] Some videos are really amazing.
+[16.72:19.48] I learned a lot by watching the videos.
+[19.48:21.68] Sometimes they're given from the mountains.
+[21.68:26.96] Sometimes they're given from some very, very natural places and they talk about mathematics,
+[26.96:28.8] computer science, etc.
+[28.8:32.120000000000005] So Leigh is working partly with the lab at DSL.
+[32.120000000000005:37.84] He's also attached to the Faculty of Computer Science where he explains science in general
+[37.84:38.84] terms.
+[38.84:44.36] He has been explaining the applications with COVID of Switzerland in a very nice and pedagogical
+[44.36:45.36] manner.
+[45.36:49.480000000000004] So today Leigh is going to, so Leigh, I forgot to say that he graduated from a corporate
+[49.480000000000004:56.56] technique of Paris and then he did his PhD in Canada and then a postdoc at MIT.
+[56.56:59.24] He will talk today about machine learning.
+[59.24:63.480000000000004] So machine learning is something that is very, very popular and very hot.
+[63.480000000000004:68.96000000000001] But Leigh, myself and others like to think of machine learning as a pure distributed computing
+[68.96000000000001:70.24000000000001] problem today.
+[70.24000000000001:76.2] So I leave the floor to Leigh to talk to you about the relation between agreement, maybe
+[76.2:78.2] and machine learning.
+[78.2:79.2] Merci, Leigh.
+[79.2:80.2] Reutable.
+[80.2:81.2] Yeah.
+[81.2:82.2] Thank you very much, Rashid.
+[82.2:83.2] Hello everybody.
+[83.2:85.68] So today I'm going to tell you about a distributed machine learning.
+[85.68:91.56] I'm going to try to insist on the fact that it's become critical to have this distributed
+[91.56:96.44000000000001] and particularly like visiting to Leigh on the safety mindset when designing these large
+[96.44000000000001:99.96000000000001] scale machine learning algorithms.
+[99.96000000000001:103.88000000000001] And also I'm going to try to, well, I'm going to present results from the lab and from
+[103.88000000000001:109.04] myself, but I'm possibly trying to insist on open problems because I always think that
+[109.04:112.92000000000002] this is more exciting than what we already know.
+[112.92000000000002:113.92000000000002] Okay.
+[113.92:121.56] So machine learning, as I'm sure like many of you have heard a lot of, is really about
+[121.56:125.04] like tweaking the parameters of some big model.
+[125.04:130.2] Like you really consider this huge model that has like thousands, millions, if not billions
+[130.2:135.04] of parameters, it's like these little knobs that you can turn.
+[135.04:139.0] And then the idea of machine learning is that you're going to decide how to turn these
+[139.0:141.0] knobs depending on the data.
+[141.0:145.8] And essentially you're going to turn the knobs such as that you're going to fit the data.
+[145.8:152.0] So typically you want to learn a function that inputs an image and tells an output like
+[152.0:156.32] whether it is an image of a cat or of not a cat.
+[156.32:160.6] And you're going to treat the parameters so that whenever you actually receive an image
+[160.6:166.0] of a cat, it says cats and whenever you receive an image of not a cat, it says not a cat.
+[166.0:172.16] Of course you'll have more complex applications of this very general framework.
+[172.16:180.4] Now the way you're going to change these parameters, this, like so you have this small change
+[180.4:182.52] to each of the knobs.
+[182.52:186.72] This is called, so you have this one number essentially that says how much you change
+[186.72:187.72] per knob.
+[187.72:188.72] This is called the gradient.
+[188.72:192.08] It's a vector like it's a list of numbers in higher dimensions.
+[192.08:198.56] If there are like a billion knobs, then that's a one billion dimensional vector.
+[198.56:204.76000000000002] And what's interesting is that you can compute this gradient, how to treat the knobs.
+[204.76000000000002:209.92000000000002] By essentially looking at more or less like the performance of your algorithm on some
+[209.92000000000002:210.92000000000002] data.
+[210.92000000000002:216.32000000000002] So if you know the parameters of your algorithm and you know the data, especially labeled
+[216.32000000000002:222.0] data, then you can determine these gradients that is how you treat the knobs.
+[222.0:225.4] And essentially the idea of machine learning is that you're just going to repeat this and
+[225.4:230.24] this as you input more and more data, more data you have, the more you're going to treat
+[230.24:234.64] these parameters, eventually you get very good performances.
+[234.64:238.6] Now eventually, usually means after a future number of iterations.
+[238.6:244.68] So typically you like in modern applications, you need like sometimes billions, sometimes
+[244.68:249.52] even a lot more than billions of data points to have good performances.
+[249.52:254.56] And this way is issues because a billion data points is like a lot of data and sometimes
+[254.56:257.76] they don't even fit on the single machine.
+[257.76:262.16] And this is why I actually, one of the reasons why today like machine learning is more and
+[262.16:263.16] more distributed.
+[263.16:269.96000000000004] It's like to explore it more and more of the different transitions of this learning from
+[269.96000000000004:271.28000000000003] the data.
+[271.28000000000003:277.36] And so typically what you can have is like different workers that are going to be given the parameters
+[277.36:282.84000000000003] of the model, so there's a first, like the server sends to the model CbK, what the values
+[282.84000000000003:284.88] of the parameters.
+[284.88:290.48] And then the workers will look based on their local data, what is the gradient, how the
+[290.48:292.52000000000004] knobs should be tweaked.
+[292.52000000000004:298.8] And then they're going to send to the servers their local gradient estimates.
+[298.8:303.28000000000003] And then the server is going to export all these two updates, the parameters and then you
+[303.28000000000003:305.40000000000003] have the soup that was on and on.
+[305.4:311.35999999999996] And of course if you have this distributed computing mindset, you immediately ask what
+[311.35999999999996:315.59999999999997] happens if one of the workers is Byzantine.
+[315.59999999999997:322.4] And well it turns out that this can be extremely bad, like if one of the workers is flawed
+[322.4:323.4] for some reason.
+[323.4:328.28] So there may be multiple reasons for this, like one of them is of course the laptop or
+[328.28:330.32] the machine, the worker being hacked.
+[330.32:334.52] But another reason for this is just like it's being fed full data.
+[334.52:339.08] And this happens a lot of machine learning, like poor data or the norm, like if you have
+[339.08:343.76] a data set, let's assume you assume that there's a non-zero probability that there's
+[343.76:346.08] something wrong with this data set.
+[346.08:350.0] And the trouble with this is that then the gradient set in sense can be very, very bad
+[350.0:355.44] and it can be so bad that it completely upset the learning of the server.
+[355.44:360.32] So this can be called Byzantine worker-to-revent machine learning model, where you assume
+[360.32:365.2] that you have the framework have described.
+[365.2:369.2] And this framework has been introduced in the lab three, four years ago.
+[369.2:375.12] And has that series of publications by different people, for instance, because there's a POT
+[375.12:383.08] or MediaMandee who received the best POT, I don't think it was, not really, it's been announced
+[383.08:386.44] yet, but it will be announced soon.
+[386.44:390.64] And then you have a lot of people continue to do this kind of work, like George Zett,
+[390.64:396.04] the machine also has a POT with results about this.
+[396.04:399.64] You can assume as an entrepreneurs the network, you can make different sorts of assumptions
+[399.64:400.64] like that.
+[400.64:402.92] There's a lot of interesting things to be said.
+[402.92:408.96] But another interesting thing that I do want to highlight is that a team's point is
+[408.96:409.96] data.
+[409.96:413.76] Yes, both these were proposed for the best thesis of a world at TPS.
+[413.76:416.68] Oh, yeah, I didn't know about that.
+[416.68:418.4] We are waiting for the results.
+[418.4:419.4] Okay, excellent.
+[419.4:420.4] Great thesis, thanks.
+[420.4:421.4] Thanks.
+[421.4:428.68] Yeah, another interesting thing is that the solutions that have been proposed that have
+[428.68:433.08] to do with robust statistics, like you want to aggregate a lot of data and make sure that
+[433.08:440.84] no single data is going to completely upset the estimation of the gradient.
+[440.84:444.71999999999997] This seems to have applications even if there's no Byzantine in the system.
+[444.71999999999997:449.11999999999995] This is something that has been suggested by this paper, in the case of natural language
+[449.11999999999995:450.11999999999995] processing.
+[450.11999999999995:456.47999999999996] And the reason for this is essentially because the distribution of the gradients, then
+[456.47999999999996:465.08] to have this so-called heavy tailed, which kind of is kind of like a small Byzantine.
+[465.08:468.67999999999995] There's a lot more research to be done about this than maybe you can actually improve the
+[468.68:473.48] performance of machine learning by exposing the results that we already have.
+[473.48:478.52] This is an open question, of course, slightly open question.
+[478.52:487.76] Now this is a very interesting model, but if you have distributed computing mindsets again,
+[487.76:492.28000000000003] then this could strike you as not fully distributed.
+[492.28000000000003:498.2] And the reason the one key point that you may have with this is what is the server goes
+[498.2:499.2] with Byzantine.
+[499.2:505.88] If it gets hard of it crashes, this is not fully distributed because there's a single
+[505.88:506.88] point of failure.
+[506.88:508.68] Let me hear the server.
+[508.68:516.92] And so over the last one or two years, we've been looking into a fully, a genuinely distributed
+[516.92:517.92] model for machine learning.
+[517.92:523.2] We're not only the workers with BD centralised, but also the server with BD centralised as well.
+[523.2:527.24] We've been studying this and we can assume Byzantines on both sides.
+[527.24:532.0] And we also, we actually found out that this would be eventually actually equivalent to
+[532.0:538.48] considering that, or more like, equivalent, to considering that actually you have more
+[538.48:542.5600000000001] general setting where you have different nodes and the nodes are both the workers and the
+[542.5600000000001:543.5600000000001] servers.
+[543.5600000000001:550.88] They all have local data and they have to collaborate to reduce the learning based on the local
+[550.88:555.36] data, but maybe also you want to exploit other nodes data.
+[555.36:559.52] Especially if you don't have that many data yourself and if most nodes don't have a lot
+[559.52:564.0] of data, it would make sense to try to collaborate to improve the performances of all machine
+[564.0:566.36] learning algorithms.
+[566.36:572.76] So this is what we call the collaborative learning and then our program is can we design an algorithm
+[572.76:578.84] so that all of them learn collaboratively, but that is still resilient to one node going
+[578.84:582.24] Byzantine, for instance.
+[582.24:586.6] And of course, there's a solution to this particular program which is to use consensus
+[586.6:593.4] or state machine learning applications like this, but these solutions are extremely costly
+[593.4:598.08] or you follow the process so you should know this.
+[598.08:604.04] And especially in the case of machine learning you want to make a huge number of updates and
+[604.04:608.96] you have these huge models with a lot of parameters so like using consensus it seems like
+[608.96:611.96] an overkill in this situation.
+[611.96:616.9200000000001] But you still need a subtle solution especially to avoid the one thing called the model
+[616.9200000000001:622.2] drift problem and that's due to the fact that if two different servers have parameters
+[622.2:627.5600000000001] that are more and more different than any gradients that you compute for one, maybe completely
+[627.5600000000001:633.0] irrelevant for the other, especially in the case of what you call non-convex optimization
+[633.0:637.6800000000001] which is most of machine learning today, your networks rely on this.
+[637.68:641.68] The point is that this model drift can be a huge problem in practice and you really want
+[641.68:642.68] to avoid this.
+[642.68:647.88] So you want the parameters to remain close to one another so that the gradients apply
+[647.88:650.12] to them all.
+[650.12:655.9599999999999] And in fact what we've considered in a recent paper is like a very, very general framework
+[655.9599999999999:656.9599999999999] for this.
+[656.9599999999999:661.56] You know, one of the most general model we can think of, maybe like we consider Byzantine
+[661.56:667.3199999999999] nodes, we consider Ashencrony, we consider non-convex optimization function and perhaps
+[667.32:672.0400000000001] to most interestingly we consider heterogeneous data, data points.
+[672.0400000000001:675.72] Meaning that the data sets at one node can be drawn from a distribution that is very
+[675.72:680.4000000000001] different from the distribution of the data points on another node.
+[680.4000000000001:684.24] And this obviously happens all the time in practice.
+[684.24:689.96] So typically if you are training on medical data, maybe the data at one hospital will not
+[689.96:695.1600000000001] be the same as the data at another clinic, maybe because like people who are extremely
+[695.16:699.6] weak go rather to the hospital than to the clinic and this creates distributional shifts
+[699.6:702.64] between these two.
+[702.64:708.12] And not the example is like natural language processing, the way I text may be very different
+[708.12:711.9599999999999] from the way other people text because I use my own slang.
+[711.9599999999999:717.12] And it's even more the case if you consider of course different languages.
+[717.12:722.8399999999999] So this is a very, very general framework with a lot of applications.
+[722.84:726.36] And this feels like a very exciting problem for this reason.
+[726.36:728.36] So we've been studying this.
+[728.36:729.88] We've formally defined this problem.
+[729.88:734.6800000000001] So the formal definition is called collaborative learning and there's a parameter C which
+[734.6800000000001:737.52] measures the quality of the collaborative learning.
+[737.52:745.1600000000001] Essentially, collaborative learning means that it's achieved if all honest nodes achieve
+[745.1600000000001:746.48] epox metagreements.
+[746.48:751.72] So that means that other parameters that are learned on all nodes are a very close one
+[751.72:752.72] and another.
+[752.72:759.9200000000001] So we measure this using delta 2 here is like the diameter using the Euclidean norm of
+[759.9200000000001:760.9200000000001] the parameters.
+[760.9200000000001:765.12] But you can just think of this as a measure of similarities between norms between the
+[765.12:767.52] different nodes parameters.
+[767.52:776.24] And also we say that the collaborative learning is achieved if the norm of the gradient, so
+[776.24:779.64] the gradient is how much you treat the parameters, you should treat the parameters according
+[779.64:781.4] to the different nodes.
+[781.4:785.92] And the size of this gradient is very small.
+[785.92:788.6] Then it means that you're close to solving the requirements.
+[788.6:792.4] And so you don't have any improvement left by treating the knobs.
+[792.4:797.92] And so we say that learning is achieved if the gradient is very small.
+[797.92:802.68] And by very small, like we have a formal definition for this, that depends on how
+[802.68:809.0799999999999] this similar, the C here is a parameter that measures how this similar, the different
+[809.0799999999999:811.3199999999999] data distributions are different nodes.
+[811.32:816.48] And to TV, like the more different the nodes are the harder it is to learn.
+[816.48:818.8000000000001] So that's a parameter K.
+[818.8000000000001:821.48] So delta here is just a very small constant.
+[821.48:829.7600000000001] And see here is how far you are achieving this value K, which is the best possible because
+[829.7600000000001:835.4000000000001] of like if the local data distributions are very different, I think to TV you cannot do
+[835.4000000000001:836.4000000000001] anything.
+[836.4000000000001:837.4000000000001] And that's measured by this K value.
+[837.4:844.88] Again, we have this very formal definition that really captures what you could mean naturally
+[844.88:848.28] by collaborative learning.
+[848.28:857.48] And the remarkable finding that we've had this year was to realize that actually this
+[857.48:861.72] collaborative learning is a equivalent to an averaging agreement problem.
+[861.72:864.52] So averaging agreement I'll get to this in a little bit, but essentially it's a
+[864.52:871.52] simple problem, like I think it's a simple to state problem in distributed computing
+[871.52:874.0] with asynchronous, Byzantine, and so on.
+[874.0:877.84] So essentially what we've done here is to reduce this very complex problem of collaborative
+[877.84:883.68] learning to this very simple problem, which is essentially estimating an average.
+[883.68:891.56] And what I mean by equivalent, what I mean is that if you can solve collaborative learning,
+[891.56:895.76] then you can solve averaging agreement, but converse here more interestingly.
+[895.76:900.4399999999999] If you can somehow find a primitive that solves the averaging agreements, then you can use
+[900.4399999999999:904.56] it to solve collaborative learning, this more complex problem, which is collaborative
+[904.56:907.0799999999999] learning.
+[907.0799999999999:908.92] So let me describe averaging agreement.
+[908.92:912.7199999999999] What I mean by averaging agreement, so what I mean by averaging agreements, you can
+[912.7199999999999:919.28] imagine different nodes, so here we have four nodes, and each of them starts with a vector.
+[919.28:924.0] And each of them has different vectors, so these typically would correspond to different
+[924.0:929.1999999999999] local data distributions, but never forget about this connection with distributed learning.
+[929.1999999999999:935.16] It's just in terms of distributed computing, so everyone has this vector initially.
+[935.16:941.36] And what every node is going to try to do now is to compute the average of all the vectors
+[941.36:944.1999999999999] of onus nodes.
+[944.1999999999999:949.12] So of course the difficulty is that if there's a Byzantine here, you cannot just
+[949.12:952.72] receive collect all the messages that you are sent and compute the average.
+[952.72:953.72] Why?
+[953.72:958.5600000000001] Because what the Byzantine can send you like numbers that are very, very different from the
+[958.5600000000001:965.64] actual average, and he will pull you very bad towards very bad vectors.
+[965.64:970.88] So here typically the two average among the onus vectors, the three, the other three are
+[970.88:974.96] onus, would be three to four.
+[974.96:980.9200000000001] Now you can imagine you run this algorithm and eventually each node concludes with the
+[980.9200000000001:988.64] vectors, it's like the one on the top left here, confused with two to three.
+[988.64:996.9200000000001] What he fails to compute the two average for exact averaging is not achieved and it's
+[996.9200000000001:997.9200000000001] impossible.
+[997.9200000000001:1000.88] It's like equivalent to actually not equivalent.
+[1000.88:1004.6800000000001] But it's somehow solving consensus.
+[1004.68:1008.8399999999999] Here we just want it to be close enough to the two average, but you also want it to be
+[1008.8399999999999:1010.4399999999999] close to what the other obtains.
+[1010.4399999999999:1015.0] And what's interesting here is that it's quite close to what the other obtains, even though
+[1015.0:1017.5999999999999] it's not the two average.
+[1017.5999999999999:1023.64] So the formal definition of this form of averaging agreement that I've sketched here is that
+[1023.64:1028.9199999999998] not only all nodes must agree, so again it depends on this parameter of delta that can
+[1028.92:1036.8400000000001] be like for any delta that I give you need to be able to solve this to have these inequalities.
+[1036.8400000000001:1041.72] And so averaging agreement is defined as a way to everyone five one to conclude.
+[1041.72:1047.04] So the concluding vector is wise, so each vector, each node concludes with a local value
+[1047.04:1053.3200000000002] of y and I denote y with a narrow as all the y's from all the local nodes.
+[1053.3200000000002:1058.04] Like you want essentially all the local nodes to terminate with a vector that's close to
+[1058.04:1060.36] the other onus nodes.
+[1060.36:1066.8] And so this question to the first inequality here saying that all local nodes must end up
+[1066.8:1069.0] with very similar vectors.
+[1069.0:1075.6] And the other condition that makes the point very interesting is that they need to be
+[1075.6:1087.6799999999998] asked to be close enough to the two average of the two parameters of the two average of
+[1087.6799999999998:1091.9199999999998] the onus vectors onus nodes vectors.
+[1091.9199999999998:1098.6399999999999] And so while intuitively like this can like very hard to put a bound on this, especially
+[1098.6399999999999:1100.6] like if initially they were very far away.
+[1100.6:1105.76] But that's why on the right hand side we also include essentially the initial vectors
+[1105.76:1107.76] were very far away.
+[1107.76:1112.8799999999999] Like we only need like it's okay if we have an error that increases the proportionate
+[1112.8799999999999:1115.08] to how far away they are.
+[1115.08:1119.76] But the value here means that what is a bound?
+[1119.76:1126.3999999999999] Like essentially they cannot be too far from the two average and here is the bound.
+[1126.3999999999999:1130.36] So essentially you're computing nearly the average up to an error that's proportional
+[1130.36:1133.9599999999998] to how far initially the vectors are.
+[1133.9599999999998:1141.8799999999999] So if you can solve this C of urging agreement problem then you can solve C collaborative learning.
+[1141.8799999999999:1146.4799999999998] And what's remarkable is that the opposite is true like if you solve C collaborative learning
+[1146.4799999999998:1148.3999999999999] then you solve C averaging agreement.
+[1148.3999999999999:1153.0] So the theorem is not exactly that like it has the exenoms and dentals that goes, but
+[1153.0:1157.6399999999999] it's essentially like in spirit it is this like if you actually so if you can solve C averaging
+[1157.64:1162.48] agreement what you can solve is actually C plus epsilon for an positive epsilon collaborative
+[1162.48:1163.48] learning.
+[1163.48:1168.72] Anyway, so the point is like the two, these two problems are essentially equivalent and
+[1168.72:1170.6000000000001] that's quite a remarkable finding.
+[1170.6000000000001:1175.2800000000002] It means that any result you prove for this much simpler like conceptualist simpler
+[1175.2800000000002:1182.0400000000002] problem of a version agreement can be immediately translated using a century reduction to
+[1182.0400000000002:1186.16] a solution to collaborative learning.
+[1186.16:1191.64] So the proof sketch very quickly I'm going to give you a few ideas of the proof.
+[1191.64:1199.4] The reason why like you can go you can solve C of collaborative learning if you solve
+[1199.4:1206.96] C averaging agreement is that collaborative learning can be instantiated by saying that
+[1206.96:1210.68] the loss on trend is minimizing is the sum of squares.
+[1210.68:1216.64] Essentially minimizing the sum of squares is equivalent to solving the average.
+[1216.64:1218.88] The average minimizes the sum of squares.
+[1218.88:1225.28] So that's why if you can solve C averaging then you can solve C collaborative learning.
+[1225.28:1234.2] And the other way around is that if you know how to solve C averaging then you can and
+[1234.2:1236.96] you want to solve C collaborative learning.
+[1236.96:1242.8] What you're going to do is to run a stochastic gradient descent but whenever like so in stochastic
+[1242.8:1249.28] gradient descent like is the idea of of computing these gradients and then taking the average.
+[1249.28:1255.92] But essentially whenever you compute the average you replace it by C averaging agreement which
+[1255.92:1258.56] is going to be more robust and have better guarantees.
+[1258.56:1262.8] It's a little bit more complicated than this because you also need to avoid the model
+[1262.8:1268.1599999999999] gift issue but essentially you can use C averaging agreement as a black box to solve
+[1268.1599999999999:1272.96] any C collaborative learning problem.
+[1272.96:1279.8] Okay and so then the next question is can we solve C averaging because again you see
+[1279.8:1283.0] like these two problems are equivalent so if you cannot solve C averaging then you cannot
+[1283.0:1287.6399999999999] solve C collaborative learning.
+[1287.64:1293.0] And so we have quite a few results about this.
+[1293.0:1299.0400000000002] One is like a positive result for when N is larger than 3F so for enlarger than 3F we
+[1299.0400000000002:1304.44] can essentially rely on reliable broadcasts and witness mechanisms and this thing called
+[1304.44:1308.24] ETIT coordinate wise treatment.
+[1308.24:1313.2] So quite it was like treatment is like you just remove like the extremes so you collect
+[1313.2:1318.16] like for each coordinate you collect all of the inputs and then you remove the F extreme
+[1318.16:1323.2] values and then you compute the mean of what's remaining.
+[1323.2:1330.64] Well this allows you to solve the averaging agreement problem and thus you can reuse
+[1330.64:1334.48] your unique like reliable broadcasts and witness mechanisms and then you can use all
+[1334.48:1340.04] of this to solve C collaborative learning with the same guarantee or Byzantine tolerance
+[1340.04:1343.16] guarantee of N-later than 3F.
+[1343.16:1350.16] We have more few answer about this for instance we also prove that if N is smaller than 3F
+[1350.16:1352.72] C collaborative learning is impossible.
+[1352.72:1359.76] We also have lower bounds and upper bounds on the value of C that can be achieved by different
+[1359.76:1363.1200000000001] algorithms.
+[1363.1200000000001:1367.6000000000001] So this is the paper where we have all of these results.
+[1367.6:1373.56] So yeah I think I'll be happy to send you this paper.
+[1373.56:1377.32] I think it takes a lot of the important ground work to better understand and study this
+[1377.32:1379.6] program of collaborative learning.
+[1379.6:1389.28] Okay now I do want to discuss open problems because I think this is already exciting.
+[1389.28:1394.28] Moving forward I think there are a lot more questions that needs to be addressed to understand
+[1394.28:1400.2] better how to do collaborative learning and to really enable this and to move to actual
+[1400.2:1409.36] deployments for instance to make machine learning more secure and more robust.
+[1409.36:1416.24] So like you know setting so we assume it's not good enough.
+[1416.24:1422.84] So you know setting we assume a minority or Byzantine or this is classical you cannot
+[1422.84:1426.32] do anything if there's a majority or Byzantine.
+[1426.32:1431.56] But the other assumption that we made is that we assume that there was a majority of
+[1431.56:1433.9199999999998] honest notes.
+[1433.9199999999998:1441.04] And in practice you can really question this assumption and maybe if you have applications
+[1441.04:1446.6] that have a lot of impacts so typically if you think of recommendation algorithms that
+[1446.6:1451.4399999999998] influence billions of people and their opinions and they have each every day which can then
+[1451.44:1458.68] influence political decisions and have lots of other consequences then any machine learning
+[1458.68:1463.04] like collaborative learning that you would deploy or if you think about COVID or stuff like
+[1463.04:1470.4] this that they're going to be huge incentives from different actors to to balance the machine
+[1470.4:1476.6000000000001] learning like algorithm and the decisions is going to make eventually in their favor.
+[1476.6:1482.6] So typically like if you think of social media there are huge incentives to influence
+[1482.6:1489.04] the population some some populations which you believe some some some ideologies or promoting
+[1489.04:1495.32] some some some countries or some some private company interests and so on.
+[1495.32:1502.84] So an argue be in this huge better feel like everyone is kind of acting like most people
+[1502.84:1506.84] are acting kind of strategically or at least they're defending their ideologies or the
+[1506.84:1511.24] point of view on something like this and maybe they're going to send them there because
+[1511.24:1517.72] of this data that are trying to promote the views or the way they think and they're not
+[1517.72:1523.3999999999999] really being Byzantines in the sense that they're not like being bad for the system.
+[1523.3999999999999:1527.12] They're being strategic in the sense that they're just trying to optimize for their own
+[1527.12:1529.12] gains.
+[1529.12:1534.12] And the problem of of this is that if everybody is being strategic then maybe we get a learning
+[1534.12:1539.12] that's very different from what we would want to obtain and to be what we would want to
+[1539.12:1543.32] obtain is like visuals for the actual case where everyone is honest.
+[1543.32:1549.6] So can we design algorithms that are robust to a minority of Byzantines and to a majority
+[1549.6:1550.6] of strategic nodes.
+[1550.6:1558.12] I think this is a very exciting research direction that is arguably critical to solve
+[1558.12:1565.12] in practice for particular large-scale applications.
+[1565.12:1570.52] Another thing that I think is extremely exciting, we've just started to investigate this
+[1570.52:1575.76] that there's a lot more research to be done, is what if instead of everyone learning the
+[1575.76:1581.36] same model, which is like if you think about this, I think it makes sense for some applications
+[1581.36:1585.84] but in many applications that you don't need to have the same model as your neighbor.
+[1585.84:1590.9599999999998] The reason why you would engage in collaborative learning is to improve your own model.
+[1590.9599999999998:1594.72] And the reason why you would want to engage in collaborative learning is because other
+[1594.72:1597.84] people have data that maybe useful for your own training.
+[1597.84:1603.12] But maybe other people also have data that's irrelevant to your own training set or I
+[1603.12:1605.6] think it's not very relevant.
+[1605.6:1614.52] So one interesting point is just to define and to understand and to enable personalized
+[1614.52:1618.6399999999999] collaborative learning, one that is learning a model that may be different from everybody
+[1618.6399999999999:1619.6399999999999] else's model.
+[1619.6399999999999:1625.16] Like in this case, you might want to ask like intuitively like everyone gradients will
+[1625.16:1628.8] be completely useless to other users' gradients.
+[1628.8:1633.92] But maybe we can create a set of, well you still communicate these things and you just
+[1633.92:1637.52] don't take them as your gradients, but they can be useful to your training as well.
+[1637.52:1639.52] And that's actually what we're working on.
+[1639.52:1647.52] I think we are very promising, preliminary ideas, but there's still a lot of research
+[1647.52:1649.6399999999999] to be done in this direction.
+[1649.6399999999999:1654.08] And this is, I want to be a consistent one fact that probably this is the model that is
+[1654.08:1658.52] going to have the most applications in practice and impact.
+[1658.52:1666.2] So typically today if you think of social media and if you replace these nodes by users,
+[1666.2:1671.68] because you can think of users like, when a user is using YouTube for instance, whenever
+[1671.68:1677.28] he likes the video, whenever he clicks on the video, he's acting kind of like a node.
+[1677.28:1682.1200000000001] He's sending these data, they're not quite gradients, but quite similar to gradients.
+[1682.1200000000001:1690.2] Now, then going to not modify his model, it's going to solve that because the model,
+[1690.2:1695.8400000000001] well, the recommendation algorithm of YouTube for yourself depends on your data.
+[1695.84:1701.12] So whenever you provide data to YouTube, YouTube is improving the model for yourself.
+[1701.12:1705.72] But YouTube is also going to export your data to improve the recommendation algorithms
+[1705.72:1707.72] for other users.
+[1707.72:1713.8799999999999] And this is very interesting if everybody is honest because then it allows you to learn
+[1713.8799999999999:1716.52] better the preferences for all users.
+[1716.52:1720.84] But on YouTube and on all social media, there are lots of very malicious actors that
+[1720.84:1727.0] just are not malicious, actually strategic actors that just want to promote their views.
+[1727.0:1733.52] And so what a lot of people have surely realized, a lot of bad actors have surely realized,
+[1733.52:1738.36] is that just by engaging, by creating a lot on some kinds of videos, there will increase
+[1738.36:1742.76] the probability that these videos will be recommended to other users.
+[1742.76:1749.9599999999998] In other words, by providing some sort of data to the collaborative learning system, they're
+[1749.96:1757.68] going to modify, they're going to affect the recommendation algorithms for other users.
+[1757.68:1760.28] So this is exactly what we're talking about here.
+[1760.28:1767.28] When this person on the left is sending data to the collaborative system, this is the
+[1767.28:1771.68] user going to change because of the data sent by this user.
+[1771.68:1776.56] And if this user wants this model to, for instance, recommend some contents rather than
+[1776.56:1781.6] users, then she has a lot of incentives to send data to the system that are going to
+[1781.6:1785.6] change this model in the way that this person wants.
+[1785.6:1788.44] So how can we be resilient to this?
+[1788.44:1793.24] I think it is really, really important for social media which are currently constantly
+[1793.24:1794.24] under attacks.
+[1794.24:1799.84] There are papers that for instance show that I think it was like over 70 countries.
+[1799.84:1810.24] There are evidence for 70 countries that are actually engaging in disinformation campaigns.
+[1810.24:1814.6799999999998] So I think all of this is becoming more and more important as we rely more and more on
+[1814.6799999999998:1819.36] the recommendation algorithms.
+[1819.36:1827.8799999999999] And one idea that we had to try to mitigate also all of these issues.
+[1827.88:1832.48] So I can give you the basic idea that we had to mitigate this issue is that instead of
+[1832.48:1838.48] having one person, one vector vote in a sense, like when you're sending a gradient to setting
+[1838.48:1846.0800000000002] one vote in a sense, instead of having one person, one gradient, you're saying one person,
+[1846.0800000000002:1854.64] one unit force, one unit gradient, one unit force in a sense.
+[1854.64:1860.4] And this is very interesting to ideas that are called the geometric medium that all generalizations
+[1860.4:1864.92] are called even coordinate towards mediums, which are generalization of the idea of the
+[1864.92:1867.5200000000002] medium to higher dimensions.
+[1867.5200000000002:1874.92] Because as you might have realized, the medium is very robust to this kind of strategic
+[1874.92:1875.92] maneuvers.
+[1875.92:1882.3600000000001] Like if I'm trying to reach you claim that I'm much more to the left than I really am,
+[1882.36:1887.0] then I'm not going to have more influence on the medium if I'm already on the left.
+[1887.0:1890.84] That's sort of the intuition.
+[1890.84:1898.6] Now one thing that I think would be nice to add to on top of these models is the fact
+[1898.6:1906.56] that usually in basic strategic computing models, we assume that all nodes are really
+[1906.56:1910.8799999999999] like in this new shovel, like we end nodes and we don't say anything specific about
+[1910.88:1912.3600000000001] the different nodes.
+[1912.3600000000001:1915.96] That you think about social medias or different entities.
+[1915.96:1920.64] We actually know different things about the different nodes that are trying to collaborate.
+[1920.64:1927.4] So maybe we know that some of them are Swiss and maybe for some Swiss or more realized Swiss
+[1927.4:1933.92] organizations, let's say, or at least universities, or more realizable than some other countries,
+[1933.92:1936.5600000000002] not into citing a name.
+[1936.56:1942.32] But maybe there's something to be done here by better understanding as well the public
+[1942.32:1945.6799999999998] information that we have over the different nodes.
+[1945.6799999999998:1950.0] And so one research direction that I think is very interesting as well is how to leverage
+[1950.0:1956.1599999999999] the public information between different nodes to improve algorithms and in particular,
+[1956.1599999999999:1961.8] like in this case, how to improve personalized collaborative learning.
+[1961.8:1969.08] And this really makes sense in the case of personalized collaborative learning as clearly
+[1969.08:1975.76] like the two-templar at least, the data from nodes that are very similar to myself are
+[1975.76:1983.76] more likely to be meaningful and relevant for me to take into account than data from the
+[1983.76:1989.12] nodes that are very different from myself.
+[1989.12:1997.1999999999998] And one last thing that also extremely exciting about is, can we leverage all of this to
+[1997.1999999999998:2005.12] design this, this is what I'm called collaborative governance, like this sort of like, I guess we
+[2005.12:2009.2399999999998] can call it sort of like a meta-democracy or super-democracy.
+[2009.2399999999998:2016.2399999999998] But for instance, it allows us to agree on things that there are a few disagreements, there
+[2016.2399999999998:2018.04] are lots of disagreements about.
+[2018.04:2022.6399999999999] So to be clear, this is a problem that, for instance, the Twitter and also the media are
+[2022.6399999999999:2025.76] facing a lot these days.
+[2025.76:2031.8799999999999] There are contents on these platforms, but are really borderline.
+[2031.8799999999999:2039.04] So for instance, some tweets by some presidents of the United States and a lot of people at
+[2039.04:2046.08] this point have decided that this was not desirable, this should be removed from the platform.
+[2046.08:2051.16] But the way this was decided was unilateral.
+[2051.16:2056.52] Like essentially, it's like a bunch of guys in Twitter saying this is not good.
+[2056.52:2058.7999999999997] And this is not what you're showing.
+[2058.7999999999997:2063.3199999999997] This is not like it makes Twitter a single point of failure.
+[2063.3199999999997:2071.44] What if Twitter goes rogue or what if Twitter gets hacked or blackmailed or what if the
+[2071.44:2076.48] new CEO of Twitter and he has different opinions?
+[2076.48:2082.64] And, well, argue these such decisions should be decentralized as well.
+[2082.64:2089.08] And the difficulty of this is centralizing such decisions is that not only that there's
+[2089.08:2093.32] a problem of Byzantine and such like this, but also that the problem of strategic behaviors
+[2093.32:2094.64] and so on.
+[2094.64:2100.44] And so one challenge would be to design systems that allow, and also like there's like
+[2100.44:2103.76] any of our considerable disagreements between what should be done.
+[2103.76:2110.52] I think it would take years for a Republican and a Democratic agreement discussion, for instance.
+[2110.52:2115.0] So in this system, like we need to other ways to move forward.
+[2115.0:2119.44] And one way that we've used a lot of the democracies is to rely on voting.
+[2119.44:2124.68] Essentially, voting is a way to reach agreement when there's no way to reach agreement because
+[2124.68:2129.12] of strategic preferences or something like this.
+[2129.12:2134.6] And so one question would be like how can we use all of these to design a way in which
+[2134.6:2142.04] maybe a subset of the populations or even maybe the whole population or maybe only reliable
+[2142.04:2151.64] nodes on the internet or me can decide collectively on how the social media should be governed
+[2151.64:2156.7599999999998] or at this different contents on the social media should be moderated and maybe all the
+[2156.76:2162.0] content on social media should be more promoted.
+[2162.0:2164.1200000000003] And with this, I conclude my talk.
+[2164.1200000000003:2165.76] I hope I've shown you like it.
+[2165.76:2171.76] There's a lot of very exciting research questions to be taken.
+[2171.76:2177.32] While waiting for questions to be written on the chat or even ask them, let me just point
+[2177.32:2180.44] out an interesting analogy with what we did in the class.
+[2180.44:2185.1600000000003] For example, we have shown in the class that a very practical problem of building a state
+[2185.16:2187.8799999999997] machine that is highly available.
+[2187.8799999999997:2191.6] If you can view it as a touring machine that is highly available, first can be something
+[2191.6:2197.52] that is considered very complicated, very practical, very, until and until people have shown
+[2197.52:2200.3199999999997] that this is exactly equivalent to consensus.
+[2200.3199999999997:2204.2] So as I have shown you in the class, total order broadcast, which is actually implementing
+[2204.2:2208.7999999999997] a state machine replication is equivalent to consensus in the sense that once you have
+[2208.7999999999997:2212.12] one abstraction, you have the other, vice versa.
+[2212.12:2218.0] So this is what Lee presented today with the problem of you can view it as actually we
+[2218.0:2220.2] can call it distributed machine learning.
+[2220.2:2224.0] You can view distributed machine learning also as a form of consensus.
+[2224.0:2228.44] It's a weak form of consensus, but it's a form of consensus and this equivalence actually
+[2228.44:2229.7599999999998] is crucial.
+[2229.7599999999998:2234.72] So late also pointed out many open problems, which means that these problems have not been
+[2234.72:2243.68] addressed yet and they are waiting for motivated and enthusiastic brains and cells to work on
+[2243.68:2249.48] them and you are very welcome to contact Lee or others in the lab to work on these problems
+[2249.48:2252.68] in the context of a master thesis or project.
+[2252.68:2257.8799999999997] I see there is still no question in the chat, so I suppose everything was clear.
+[2257.8799999999997:2262.3599999999997] It was actually so still no question.
+[2262.36:2268.6800000000003] So in the meantime, let me also point out the fact that next Monday morning, Alexander
+[2268.6800000000003:2273.1200000000003] Nagoshević will talk in the context of the concurrent algorithm class on what's going
+[2273.1200000000003:2276.2400000000002] on at Microsoft research in terms of concurrency.
+[2276.2400000000002:2281.28] You will talk to you about the impact of some new architecture on actually the algorithms
+[2281.28:2283.8] along the lines of what Igor presented.
+[2283.8:2288.76] And Monday afternoon, next week, please don't miss that session too.
+[2288.76:2294.6800000000003] We will have a talk by the Facebook, Facebook principle engineer about the role of distributed
+[2294.6800000000003:2300.88] computing in the building, the next generation, Facebook platform or even fixing some of
+[2300.88:2302.5600000000004] the issues of the current platform.
+[2302.5600000000004:2306.2000000000003] So this is going to be next Monday afternoon.
+[2306.2000000000003:2312.5600000000004] Still no questions, so stay safe and have a nice afternoon and thank you very, very much
+[2312.56:2321.12] for taking the time to prepare and present.

@@ -1,0 +1,301 @@
+~EE-556 / Recitation 3 - 2/2 (2020)
+~2020-11-02T11:00:05.265+01:00
+~https://tube.switch.ch/videos/f8e8b595
+~EE-556 Mathematics of data: from theory to computation
+[0.0:1.0] 10 minutes break.
+[1.0:4.0] I may be doing 10 minutes.
+[4.0:9.0] People can ask questions from previous slides if they have any other questions.
+[9.0:10.0] Okay, great show.
+[10.0:12.0] Should we start in 10 minutes?
+[12.0:13.0] We continue.
+[13.0:19.0] But if you have any questions, if you have any questions now for previous slides, you can
+[19.0:21.0] ask them through these 10 minutes.
+[21.0:24.0] Should I stop recording for questions?
+[24.0:28.0] No, not just leave recording in case there is some questions.
+[28.0:29.0] Okay.
+[58.0:68.0] Okay.
+[68.0:72.0] Maybe we could ask questions.
+[72.0:84.0] Is anyone having troubles like installing a bite urge or we python?
+[84.0:94.0] You could also ask these type of questions now.
+[94.0:102.0] Or if any of you has successfully installed bite urge and I'm trying to solve these manipulation
+[102.0:112.0] with testers in the python interpret there also let us know.
+[133.0:142.0] Okay.
+[142.0:171.0] Okay.
+[171.0:181.0] Okay.
+[181.0:191.0] Okay.
+[191.0:201.0] Okay.
+[201.0:211.0] Okay.
+[211.0:221.0] Okay.
+[221.0:231.0] Okay.
+[231.0:241.0] Okay.
+[241.0:251.0] Okay.
+[251.0:271.0] Okay.
+[271.0:281.0] Okay.
+[281.0:291.0] Okay.
+[291.0:301.0] Okay.
+[301.0:321.0] Okay.
+[321.0:331.0] Okay.
+[331.0:341.0] Okay.
+[341.0:355.0] Okay.
+[355.0:359.0] So there was some questions from ResVans.
+[359.0:365.0] So if you don't have a dedicated GPU, I think for the homework, it does not matter.
+[365.0:373.0] Like we won't do any crazy large experiment but you won't finish if you don't have a GPU.
+[373.0:375.0] This is not required.
+[375.0:389.0] Also, bite urge works on CPU as well and it's as fast as the numpy and it should be enough for the experiments in this course in homework 2.
+[389.0:403.0] But I think that you're using some of you might be using Google code which gives you access to GPUs.
+[403.0:421.0] So if that's working for you, it's good enough you don't have to install bite urge locally if it's working on call 11 you can run stuff with it's exactly.
+[421.0:427.0] And as you can run python code in jetty, jetty, jetty, non-books, right? There is some command.
+[427.0:441.0] I mean, call up is basically a Jupyter notebook and you can run batch commands with some magic that let's you like pip install things so you can install python in call up no problem.
+[441.0:469.0] Should I continue?
+[469.0:473.0] I think we can continue in three minutes.
+[499.0:509.0] Okay.
+[509.0:529.0] Okay.
+[529.0:539.0] Okay.
+[539.0:559.0] Okay.
+[559.0:569.0] Okay.
+[569.0:589.0] Okay.
+[589.0:613.0] Okay.
+[613.0:619.0] So there is entwine asking about fighters in math.
+[619.0:633.0] Yeah, fighter is available for Linux windows and Mac also conda and the conda python they all have versions for Linux Mac and windows.
+[633.0:643.0] There are different installation steps.
+[643.0:665.0] So there is a lot of installation guide on the website for any platform for different software providers and go on there and choose the conda one and it will guide you.
+[665.0:673.0] So there are links regarding the installation but personally I use Mac and it works perfectly.
+[673.0:675.0] Egor mostly uses the next networks.
+[675.0:683.0] Find so I think we will have issues because of your operating system.
+[683.0:687.0] So I think we can listen to your so the universe in now.
+[687.0:695.0] So we stopped a bit in the middle of a slide so I'm just quick.
+[695.0:697.0] We will have to move.
+[697.0:699.0] Sorry, could you move?
+[699.0:701.0] You have this black thing.
+[701.0:703.0] Could you move it because it's obstructing?
+[703.0:705.0] Okay, great.
+[705.0:707.0] It's zoom thing.
+[707.0:711.0] I was expecting it to not show up, but I guess it does.
+[711.0:717.0] We encode what we want from our model with the last function where we express our task.
+[717.0:723.0] If you want to have regression, we use the MSE because we want to get close to it.
+[723.0:730.0] But then we don't want to over focus on small differences where there's still larger differences left.
+[730.0:735.0] That's why we use the square here.
+[735.0:745.0] For classification, which means one out of n classes and the class are exclusive.
+[745.0:751.0] The default class thing that people use is the cross entropy loss.
+[751.0:753.0] And cross entropy.
+[753.0:762.0] It's a one way to measure the difference between two probability distributions.
+[762.0:768.0] So what you will usually do is you will make a five classes.
+[768.0:770.0] You will make a five dimensional vector.
+[770.0:777.0] You will put a one in the true label where the dimension belongs to the class.
+[777.0:781.0] So if you have class three, the third dimension will be given a one.
+[781.0:783.0] Everything else will be zero.
+[783.0:790.0] And this indicates like 100% probability that this is label number three.
+[790.0:797.0] Then you want to predict this with neural network and instead of using MSE,
+[797.0:806.0] which would treat this just as a vector, you encode the information that you are dealing with probabilities.
+[806.0:809.0] And use cross entropy instead.
+[809.0:818.0] So you enforce that the output of a neural network is a valid probability distribution by using what is called a softmax.
+[818.0:824.0] There's in the backup slides, there's a definition of a softmax, you can find it online as well.
+[824.0:833.0] It's basically something which makes sure that all of your vector elements sum up to one and up between zero and one.
+[833.0:837.0] And with this, it's a valid probability distribution.
+[837.0:846.0] And then you evaluate this cross entropy term, which from a information theoretical perspective,
+[846.0:856.0] it measures the amount of a surprise or mismatch between the distribution.
+[856.0:868.0] So if this thing is zero, then you don't have any difference in information between the two distributions,
+[868.0:871.0] which means they need to be the same.
+[871.0:882.0] And then with this, you can do your classification. And if you want to try it out, you can try to do a classification task, for example, with MNIST,
+[882.0:891.0] once with MSE and once with cross entropy with the same model, and you will get very, very different results.
+[891.0:894.0] So with this, you specify your loss function.
+[894.0:909.0] And we already saw how to build the model. We have a linear layers for actually doing tasks, like going from a feature actor that we either hand engineer the features or we learn them with the convolution layers.
+[909.0:921.0] And then, like the output of this model we feed into our loss functions to actually get the thing we want to minimize.
+[921.0:925.0] If we put everything together, it will look something like this.
+[925.0:931.0] So in here, we have our defined model.
+[931.0:939.0] PyTorch has utilities to help you with handling data.
+[939.0:948.0] So this data set is a data class that tells it to download the data set and opens the files for you.
+[948.0:956.0] And the data loader will do things like shuffling and batching the data, depending on how you configured.
+[956.0:962.0] And to use them, we simply prepare our network as above.
+[962.0:966.0] We register its parameters with the optimizer again.
+[966.0:972.0] We declare our loss. And because we want to do classification, we use cross entropy.
+[972.0:979.0] We specify a number of epochs that you get to choose, basically.
+[979.0:987.0] This is like a hyper parameter that usually you choose long enough to be sure to convert.
+[987.0:992.0] But there's no hard rule on it.
+[992.0:995.0] And then you just do the loop we already saw.
+[995.0:1001.0] And then at each epoch, you will go through your whole data set like this.
+[1001.0:1007.0] So this will download the MNIST data set and store it in the current directory.
+[1007.0:1014.0] And then you just calculate your losses, do a step, zero to gradients, and so on.
+[1014.0:1023.0] So this is why PyTorch makes it super easy to quickly work with neural networks.
+[1023.0:1025.0] You don't have to deal with the gradients.
+[1025.0:1032.0] This network module thing, we are treating a bit by pre-defining it in some magic library.
+[1032.0:1038.0] But defining this just with PyTorch with layers that are available to you.
+[1038.0:1043.0] So the linear layers, the congressional layers, the loss layers, and some utility layers.
+[1043.0:1052.0] That for example, automatically forward things, like the sequential layer, it would take like 10 lines more.
+[1052.0:1060.0] And this wouldn't put it in a slightly more, but it's still a very easy thing to code up on your own.
+[1060.0:1071.0] And yeah, then you're kind of done with the very basics of training neural networks with PyTorch.
+[1071.0:1085.0] We recommend checking out the references that are mentioned in this slide. So like the survey we have linked here.
+[1085.0:1089.0] There's a very, very good explanation.
+[1089.0:1092.0] This is the Biden and Pellinotor.
+[1092.0:1098.0] Very good explanation of how all of this actually works behind the hood.
+[1098.0:1102.0] And what trails you might want to be aware of.
+[1102.0:1107.0] And yeah, then you initially have fun.
+[1107.0:1116.0] And at some point despair because as your architect just gets more complicated, you will still have to debug this.
+[1116.0:1120.0] But PyTorch is doing everything to make it as painless as possible.
+[1120.0:1122.0] I have more slides in the appendix.
+[1122.0:1127.0] If there's interest, I would ask, wait for questions first.
+[1127.0:1139.0] And also like let you guys decide if you want me to go through them and comment on them.
+[1139.0:1142.0] Sorry, I have a question you were.
+[1142.0:1148.0] So this optimizer that zero grad.
+[1148.0:1159.0] Can you recall what it does and why? Why should it go at the end or at the beginning? I think that it should go at the beginning rather.
+[1159.0:1165.0] So by default, the gradients are zero.
+[1165.0:1169.0] And then whenever you call backwards on them.
+[1169.0:1172.0] And it doesn't give you an error because it has already calculated things.
+[1172.0:1177.0] It will just add the new gradient to the gradient variable on the parameters.
+[1177.0:1188.0] So the important thing is that if you want to only do a single step with fresh gradients, you need to clear it once between the step and the next step.
+[1188.0:1201.0] And obviously not directly after you calculate your brain, but whether you put it at the beginning or the end, it doesn't matter to my knowledge.
+[1201.0:1207.0] But I think, yeah, I agree, but imagine like in the first iteration here.
+[1207.0:1213.0] If you come from some other point in your code, maybe there are gradients accumulated.
+[1213.0:1216.0] So for you think zero grad should go at the beginning.
+[1216.0:1222.0] That way you ensure that even in your first iteration, you start with fresh gradients.
+[1222.0:1227.0] Yeah. Technically the epoch here after the last.
+[1227.0:1239.0] Not actually it's fine. Like so like if we did anything up here with with the gradients, then the first step would use was gradients.
+[1239.0:1242.0] Because it's called it the end here.
+[1242.0:1246.0] Even the epochs are fine. So like we go through this once.
+[1246.0:1251.0] And then the last thing we do is zero of a gradient. So then the next epoch also starts with a zero initialized gradient.
+[1251.0:1262.0] And so in this example, we find if you don't know what else is happening in your code, because you've made like a giant messy research notebook.
+[1262.0:1269.0] Then it's a good like defensive coding technique to put it before your backwards pass.
+[1269.0:1278.0] Yeah.
+[1278.0:1290.0] I should also say there's a library called PyTorch Lightning, which I recommend using, which hand is all of this for you.
+[1290.0:1302.0] Like it gives you even more automation and just ask it to pre-define the optimizer and the network in places, knows and doing the training for pass.
+[1302.0:1310.0] And it will handle the zeroing of the gradients back what call the step all of it is for you.
+[1310.0:1325.0] So if you want to do even less manual coding.
+[1325.0:1332.0] Other questions. Yes, there is one question in the chat.
+[1332.0:1338.0] Why is this is because by default it's not done manually because you might want to accumulate gradients.
+[1338.0:1344.0] So in between I talked about faking large batch sizes.
+[1344.0:1348.0] So let's say this is amnest and you have a GPU.
+[1348.0:1362.0] You will still only be able to fit like maybe 16, 32, whatever images and an algorithm you want to just replicate the results from uses a batch size of 256.
+[1362.0:1367.0] Now you can give up or you can try to make it work somehow.
+[1367.0:1379.0] And if you want to replicate as close as possible by just waiting a bit longer, you can only do the step and the zero grad every.
+[1379.0:1385.0] It would be eight batches.
+[1385.0:1392.0] If your GPU can fit 32 images, you do eight four passes and backwards calls.
+[1392.0:1404.0] So you can do gradients accumulate accumulate accumulate and then you do a single step and zero grad.
+[1404.0:1415.0] And then you do an X thing like this you interleave your gradients and not until if you accumulate your gradients and you can fake larger batch sizes.
+[1415.0:1423.0] Also, if you do actual experiments and research in optimization, you might want to have the gradients.
+[1423.0:1433.0] So that's why pie touch gives you the freedom to decide when you want to be zero.
+[1433.0:1454.0] Yeah, it's just the way backwards work works. So when you call backwards, it completes the gradient with respect to each parameter and then it adds that result on whatever the parameter has in the buffer called dot graph.
+[1454.0:1466.0] So if there was something there, it's not deleted. It just adds on top of it. So that's why when you do when you do optimize it does step, it goes to each parameter.
+[1466.0:1472.0] It checks what does it happen? The buffer called dot graph, which should correspond to the gradient.
+[1472.0:1496.0] So you can do some buffer and then it takes that thing and uses it to update the parameter. So yeah, basically if you do backwards two times, what you will have if you start with zero gradient and then you do backwards, if you call this method backwards two times, you will have twice the gradient because it doesn't delete it.
+[1496.0:1505.0] It's just it's just doing plus equal, relative and just equal. So that's why.
+[1505.0:1511.0] So yeah, there is another question. So is it kind of a result?
+[1511.0:1525.0] It is a gradient. It does. It's a reset in the terms of beginning the gradients zero and you make it zero again, but your parameters don't change. Only the gradient gets reset.
+[1525.0:1541.0] Yes, so I think you saw, yeah, you saw maybe accelerated gradient descent with result. So in that sense, it's not a restart. So what happens? What happens? It doesn't restart. Let's say, accidentally gradient descent.
+[1541.0:1559.0] Because the parameters of the optimizer are in the object in the optimizer object. So when you do zero red, you just zero the gradients, which are in the parameters of the network, not of the optimizer.
+[1559.0:1567.0] So it's different. So in order to like zero the parameters of the optimizer, you would have to do some other thing. I don't know.
+[1567.0:1579.0] So you just recreate it optimizer. Yeah, you that's one way is recreate the optimizer. Just call again optimizer equal is you do.
+[1579.0:1596.0] You would start with an optimizer group like new parameters. But yes, you're right only only zero the gradients that are of associated with the variables in the network in the network, not the optimizer.
+[1596.0:1605.0] So in that sense, it's not a restart.
+[1605.0:1619.0] Other questions.
+[1619.0:1632.0] I want to recall something. So after these traditions, the next week, we will go back again to on Fridays work on homework one.
+[1632.0:1648.0] But then for homework two, which is a homework person into mirrorness, we will go over this again, we will do another like, I mean, not a recitation, but we will hand, we will send you again some fighters tutorial.
+[1648.0:1672.0] We will go again over this thing. See if you want during the TA sessions corresponding to homework to which will be in a couple of weeks after homework one.
+[1672.0:1684.0] Other questions or interest in going over the remaining slides, like if we don't hear anything, I would stop recording here.
+[1684.0:1690.0] I think we could go over the last slide record, right?
+[1690.0:1711.0] Yeah, I can quickly go through them. It's just additional layers. It's, you have a bit more fancy layers here.
+[1711.0:1721.0] And you also have a like in-depth derivation of the complexity of backwards of a backward path. So that one is just for you for reference. I won't go through that.
+[1721.0:1733.0] But we have like the recurrent layers, attention layers and graphical layers. The last two are somewhat hot. The first one is from Schmitt, who was so it's a classical one.
+[1733.0:1745.0] But with most you basically have all types of layers, more or less, which are impractical use in our days.
+[1745.0:1761.0] Yeah, I think we could go over them. If there are any questions of the previous slides, you can also interrupt us.
+[1761.0:1773.0] I'm going to wait a bit for questions otherwise.
+[1773.0:1793.0] Recurrent layers, originally recurrent neural networks. This is the first attempt to model state and time series and sequences with neural networks.
+[1793.0:1807.0] So, what we mean with state is if you have a linear layer like this, you have one input and one output and method.
+[1807.0:1822.0] And previous inputs don't matter because we don't have any way to recall them by adding a hidden state, which we keep between different evaluations.
+[1822.0:1830.0] We add memory to the neural network. So it starts to look like this.
+[1830.0:1845.0] And this means that now the order which you present things starts to matter and you can model sequences. You can say, ah, like a, b, b, a is different than b, b, b, a, because the order is different.
+[1845.0:1853.0] So, if you were just showing this to a P, it couldn't easily model the order of them.
+[1853.0:1870.0] And there's two main things that make this work. One is that you need to have some differentiable way to decide how much you're going to update your hidden state.
+[1870.0:1877.0] And this is this g function, which not only gives you the output, but also your new hidden state.
+[1877.0:1899.0] And the default tries for this are the guru and the LSTM cells, which uses a couple of mini neural networks plus sigmoids to give you a weight for how much you're going to update.
+[1899.0:1908.0] Or forget your hidden state and how much of the hidden state and the current state you're going to put into the outputs.
+[1908.0:1914.0] So it can mix the input, the hidden state and the output to get in different quantities.
+[1914.0:1919.0] And that allows you how to do this decision. And when you want to train this.
+[1919.0:1937.0] And we train it by what's called unrolling it through time. And what this means is just instead of tracking the gradient of a one evaluation and then stopping and trying to do something with respect.
+[1937.0:1950.0] And evaluation is actually looping through these different hidden states, which introduces some recursive calculations.
+[1950.0:1959.0] And now the gradient has to flow through the same variable multiple times, but different values of it.
+[1959.0:1973.0] So you need to keep forcing to me that is around. But then once you've done this, it's just now back prop. It just creates virtual variables that you need to keep track of.
+[1973.0:1977.0] And otherwise the same algorithm applies.
+[1977.0:1991.0] Training tricks, which I will mention here if you want to play with these is that gradients understand to explode with these things and or like vanish.
+[1991.0:2020.0] So gradient clipping and other like gradient stabilization trick, or is not stabilization like you've seen in the lecture, maybe, but to make the gradient less erratic is decent important to get good performance of the office.
+[2020.0:2037.0] And then you have to do some questions on both like you would apply these, for example, if you do machine translation or if you want to try to predict the time series, because it allows you to look at your complete history of a time series and predict the next step or the next two to three steps.
+[2037.0:2045.0] Instead of having to model your time series like a vector, you actually treat it like a sequence.
+[2045.0:2066.0] So quickly check for questions. So this is sequence modeling version one with every network's 2017 attention came around or actually broke through because it had been used to help with longer range dependencies in recurrent models before.
+[2066.0:2087.0] And then the transformer was to do is just all attention layers and it's basically allows you to do sequence processing without a hidden state by making the hidden state.
+[2087.0:2100.0] And then it's like fact that out between layers in a sense, what we do here is we so on the left it's an extended detail.
+[2100.0:2124.0] Intuitively, we create two intermediate values, what are called the key and the query from our sequence and this tells you and then we multiply them together and create an attention weight and this attention weight tells you how much different positions of your input should influence it each other.
+[2124.0:2137.0] So this attention matrix here will be square by the size of your sequence length. So if you have five elements, it will be a five, the five matrix.
+[2137.0:2146.0] And it tells you how much element one should take into account to be affected by elements two, three, four, five, and so on.
+[2146.0:2161.0] And this weighing is applied to this value projection. So it's another projection from your input into some projected space.
+[2161.0:2172.0] And then you do weighted combinations of these projected values to get your final output.
+[2172.0:2187.0] And you do this a couple of times, you will have captured very complex pairwise relations between points and your input, which doesn't have a clear notion of time, but it does have a clear notion of relations.
+[2187.0:2202.0] And code order and causality by masking out parts of this attention matrix. So you can say you are not allowed to be affected by anything in the future.
+[2202.0:2218.0] The first element can only be affected by itself. The second element can be affected by the first element and itself. You have a lower triangular structure to the weights. And you can encode order by explicitly giving a position of signals.
+[2218.0:2236.0] You can be like complex sinusoidal wave that is different at each point in time. And then the network can figure out, this is behind this and so on. And this works out to just be way better than LSTM's for most tasks right now.
+[2236.0:2251.0] There is like pendulum swinging and research being done at Microsoft that makes as the M's competitive as well. But all of the hype is with transformers right now if you've heard of a GPT 2, 2, 3, 3, 3,
+[2251.0:2269.0] and it's all transformers. And these also are a special case of the next layer we're going to see, but I'm going to pause for questions again.
+[2269.0:2281.0] I hope you have a question. If nobody has a question, I doubt anyone is listening because attention is weird in the beginning.
+[2281.0:2299.0] So my question is like, is this like some kind of qualitative layer? Like it looks like you have AA transforms right? Which is the input. So AA transforms contains the quadratic features.
+[2299.0:2317.0] So it's similar to some quadratic layer instead of my mirror. I don't. It's a quadratic layer in terms of like optimization. But you create a you have a quadratic complexity with a number of inputs, like your sequence length.
+[2317.0:2342.0] And then I can implement implementation because you do pairwise relationships. And then with this. Like this AA transpose, it's only transpose because this K is transpose. So this X applied to a is your query X applied to a to a is your key.
+[2342.0:2363.0] And then you do K transpose because you want to at the end have a T by T matrix. And the C by T matrix, you then used to to create the weighted combination of your T timesteps.
+[2363.0:2376.0] So the first element, like your first like zero or like your first row of T elements is T weights, which the softmax has.
+[2376.0:2401.0] And then and short will be something up to one. And you multiply these weights with the with each element of your sequence and sum it up. And this gives you the first element as a combination of projections of all of the other elements, including itself and end itself.
+[2401.0:2421.0] And the same thing with a second row for the second element and so on. And if you impose this like lower triangular structure, you have also encoded a causal relationship in this in that sense of that you don't go backwards in time with your influence.
+[2421.0:2434.0] I don't know if that answer question, like I'm not familiar with quadrographic layers in new networks. But you're not doing any quadrographic parameters or current conversation per se.
+[2434.0:2456.0] You just want to have two different ways to two different projections to allow your input to to like into act of itself in a more complicated way that is more expressive.
+[2456.0:2471.0] What what is the square root of decay? I someone else just the square root of decay is the dimensionality. So, is this just to normalize?
+[2471.0:2489.0] Yeah, this is just to normalize things a bit. It's the to be honest, like it's a hack. Like they just found it work better with that.
+[2489.0:2510.0] They have a number, right? Is this one number? The K here, the small locust K refers to the head because you can do what's called multi-head attention where you you have your.
+[2510.0:2529.0] Like this end up here, you would divide it if you have two heads into two parts of N half and then those get get get get your own like sub attention head, which should concatenate at the end.
+[2529.0:2544.0] In order to make the activation and like the weights kind of similar, they normalize with the square root of D of the head dimension that you use.
+[2544.0:2553.0] But it's just an optimization like stability trick that they just found work better and purer clean.
+[2553.0:2561.0] So like this form of attention is called scaled multi attention is the original attention variant from the transform, transform paper.
+[2561.0:2578.0] The set of the art is different and has a linear complexity because they do some hierarchical things and some like local sense with hashing and stuff like this in order to not need to create this full matrix all the time.
+[2578.0:2586.0] Other questions?
+[2586.0:2612.0] Yes, I'm very question. That's a big question. A big thing is that you can train them better. So the boost comes from Microsoft. It's called QLSTM.
+[2612.0:2619.0] It mainly comes from being able to parallelize better and train more.
+[2619.0:2629.0] With this, you don't need to wait for your unrolled thing to finish and you can update everything on one go and you make better use of a parameters.
+[2629.0:2647.0] There's probably also some other stuff at play here and we're going to get to that in the next layers world, but it's an open question.
+[2647.0:2664.0] People use to think that inductive buys are really important in neural networks that like CNN's are so good at images because they're filters as well. But there's serious questions on whether it's true now because you can make visual transformers as well.
+[2664.0:2679.0] You take an image and treat it like a sequence of pixels and put it into a transformer and it will actually beat the set of the arts with CNN's at certain parameter counts.
+[2679.0:2691.0] CNN still win for industrial stuff. But in research, it's not clear that CNN's actually better models.
+[2691.0:2702.0] So you can say that attention might have an inductive bias or maybe it's that it lacks an inductive bias and it just allows the network to figure everything out.
+[2702.0:2717.0] It's an open question. But on sequences at least, we know that it's because it deals way better with long range dependencies.
+[2717.0:2723.0] So you explicitly allow it like a global view and let it figure out what it wants to pay attention to.
+[2723.0:2731.0] And it was an LSTM. You have to learn how to propagate the information through a long time.
+[2731.0:2750.0] And that becomes really hard to optimize whereas in a transformer, you can think of it more like a couple of steps of a differential equation, which depends on different time steps, but explicitly model that.
+[2750.0:2772.0] And your each layer, each attention layer does one step of update. So if you want to learn features that involve sequences, you allow each layer to specialize on different hierarchies through time in a sense.
+[2772.0:2790.0] And that's probably accounts for boost there. But in sequences where it started, LSTMs are gaining again. And in vision where you would think, oh, this does worse, it actually better now than the stack of inductive bias.
+[2790.0:2805.0] So we will see on the other questions. Otherwise, I will go, I will make the link to the graph layers in the last five minutes and just give you a quick dump because this is cool.
+[2805.0:2814.0] Like, just got call. Don't hold me to this. If anyone sees in a future tell me if I was wrong.
+[2814.0:2828.0] But my intuition is that everyone will be using graph neural networks for whatever they can very, very soon because these things rock.
+[2828.0:2839.0] They're tricky. They're not like super easy to make work. Another lab postdoc named Andreas Lucas is doing super interesting work on this stuff.
+[2839.0:2859.0] Because they're the most powerful thing I've seen in ages. And what they basically do is they generalize your attention from pairwise interaction to end to end or end to end interaction.
+[2859.0:2878.0] Quick recap. A graph is two sets, like a vertex set and an edge set that defines relationships. So a node is connected to another node if it exists an edge that belongs to two nodes.
+[2878.0:2890.0] And you can generalize this to hyper graphs and other stuff, but it's a basic idea. So graphs and directly encode relationships.
+[2890.0:2907.0] A Euclidean space expresses its like neighborhood. If you do a convolution in a 2D image that's equivalent to having a graph structure that is block wise where each pixel is connected to the graph structure.
+[2907.0:2920.0] It's connected to the like if you do a 3 by 3 filter to the 8 pixels that are like its neighborhood in this 3 by 3.
+[2920.0:2928.0] And then you move one pixel over that pixel is now also connected to its free neighbors. And so you have this like specific structure in that graph.
+[2928.0:2940.0] And you can recover convolution from it. You can recover attention from it. Attention is a fully connected graph where each pair is linked to every other pair.
+[2940.0:2962.0] But with graph neural networks, you can also give them a graph capture other non Euclidean and non dense relationships structures and non pair wise. So something can be influenced by more than one thing at a time in a certain way.
+[2962.0:2979.0] And they do this by what is similar as like the message passing framework, which is like a subset of this thing, but message passing is decently full already.
+[2979.0:2993.0] And this figure is from Peter Bataglia's paper from 2018, which was kind of a review.
+[2993.0:3010.0] And the message passing is a reduced framework which omits this global U vector. And since we only have minutes like the way this work is you have every note has a feature vector that identifies this note.
+[3010.0:3025.0] So in the case of pixels, we just the pixel value. Then you have an adjacent matrix, which specifies the relationship between them. So again, for for convolutions and images, you would have this block structure for attention. It would be a fully connected graph.
+[3025.0:3040.0] And then what to do is you apply a new network to each note in your neighborhood. It's like for each note that he wants to get the new note features form.
+[3040.0:3057.0] And then you apply a new network to each note in the neighborhood. And then you aggregate votes and baddings and use them to create your new representation of yourself.
+[3057.0:3070.0] And then you create your own thing by adding yourself to that aggregate or you can replace yourself with this. It's a detail. The important thing is that you become defined by your neighbors.
+[3070.0:3080.0] And your neighbors become defined by you. So your information isn't lost. And with a couple of layers of these, you will have mixed throughout the whole graph.
+[3080.0:3093.0] And then you have a different framework. But I know you also have like some global features. You can also take an account, which you can also update by taking the note features of the whole graph into account.
+[3093.0:3121.0] And then you can do it in a space way. So you can handle large numbers of notes where before if you want to do something like relational networks, if you look into Europe's and I still are three 2015 or 2016.
+[3121.0:3139.0] Like when we try to do logic and relational stuff, you always had some like pair wise evaluation, which blows up the accommodation time or some giant like each pair gets gets encoded in a matrix thing, which doesn't get memory wise.
+[3139.0:3153.0] This stuff hands, relations very well because it only contributes what really has a relationship and it doesn't in a local way and it doesn't in a sparse way. And I recommend googling.
+[3153.0:3168.0] But hardly a graph in networks because they do some very, very cool stuff. They have learned physics simulators and graphics simulators and various other things from pixels. So they have observed.
+[3168.0:3187.0] And then rendered like simulations of fluid dynamics and then starting with the initial like pixel display, they can simulate forward how a certain initial state would play out.
+[3187.0:3205.0] And I have also done it in like a latent state and learned like proper like cloth and other and fluid physics that you can plug and play into a like musical style simulator and just before pass and it just works.
+[3205.0:3220.0] So these things are super super powerful for capturing anything where you do local updates between subsets of things that are important to you, which is basically our physical world and everything we care about.
+[3220.0:3237.0] So if you have like time to waste and check them out also if anyone wants to do semester projects or master projects or like bachelor projects on these I project projects with them.
+[3237.0:3255.0] I'm going to use this for some advertisement as well and like reach out to me via our lab website if you're interested on working with graph neural networks. And this is the last like slide I wanted to go over.
+[3255.0:3261.0] Thank you.
+[3261.0:3271.0] Any final questions.
+[3271.0:3300.0] Next up recording them.

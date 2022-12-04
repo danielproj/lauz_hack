@@ -1,0 +1,1110 @@
+~CS-401 Lecture 7
+~2022-11-02T10:38:12.815+01:00
+~https://tube.switch.ch/videos/sao97WQpIA
+~CS-401 Applied data analysis - Fall 2022
+[0.0:2.0] Volume quickly.
+[10.5:15.68] Test test test. Okay, this should be good. Okay, welcome to lecture seven and
+[17.32:20.76] Happy Halloween a few days late, but here you have it
+[22.56:24.560000000000002] in terms of all
+[25.0:26.44] announcements
+[26.44:30.8] homework one is being graded you will get the feedback next week
+[33.160000000000004:39.480000000000004] Project milestone two is out and it's due on the 18th of November so this is in two and a half weeks
+[39.8:45.6] This seems like a lot of time now and you still do have a lot of time, but don't wait for too much longer
+[46.72:53.8] Also because if you start early then you can benefit more from our help in the office hours on Friday
+[53.8:58.559999999999995] We will do in the lab session Friday. We will do project office hours as
+[59.68:63.559999999999995] One of two parallel tracks and in the other track
+[63.559999999999995:70.64] We will do exercises on today's lecture so the idea is that you would come as usually you would work on the exercises
+[70.64:73.36] but then you have a slot assigned with your
+[74.14:78.03999999999999] With your mentor and during that time you would switch over to zoom
+[78.67999999999999:83.08] Where you will talk one-on-one or team on one with your
+[83.08:87.24] With your advisor and then you can switch back to the exercise session
+[87.24:92.44] So the whole protocol. It's quite an elaborate protocol is explained here in the at post
+[92.44:98.64] We really try to make sure that you all get the attention that you need why without like blocking everyone else while
+[100.52:106.64] While you are being helped. Okay, so please check out that at post later and let us know if anything is unclear
+[106.64:114.68] Okay, so today we'll talk about we start a series of free lectures about machine learning
+[116.12:121.12] Why machine learning as part of data science will remember this data science
+[122.48:124.48] Cascade the analysis
+[125.12:126.52] a pipeline
+[126.52:132.92000000000002] That we discussed in an earlier lecture basically in each of these steps machine learning can help
+[132.92:139.11999999999998] We can go through these if you think about getting the data machine learning can help you get the data for example
+[139.11999999999998:148.51999999999998] You can automatically extract it from let's say from the internet and machine learning can help you automatically label the data for the purpose for example of supervised
+[150.04:153.16] Of analysis later on
+[154.16:160.42] For example is the document about sports and you want to analyze sports documents later on then a machine learning class
+[160.42:168.23999999999998] If I can help you find those documents that are about sports in both exploring the data and communicating the results
+[168.64:175.32] You will want to use visualization and machine learning is a useful tool also for data visualization
+[175.32:179.39999999999998] Imagine you have a data set that has a thousand dimensions. You can't look at that data
+[179.88:184.2] You can look at three dimensions most so machine learning can help you break the data down
+[184.2:189.38] Embedded into a three-dimensional space or a two-dimensional space that you can then actually look at
+[191.51999999999998:193.51999999999998] We have a step model the data
+[194.07999999999998:200.0] And here we already saw an important use case of machine learning for modeling the data regression analysis
+[200.0:204.32] We saw this in lecture five where you fit basically a machine learning model
+[204.88:207.35999999999999] linear regression model and then you look at the weights
+[207.36:214.44000000000003] And also at the very top ask an interesting question machine learning can help you for example
+[214.44000000000003:220.96] You might want to ask the question can news headlines success be predicted from linguistic features
+[221.24:225.92000000000002] This might ring a bell. This is a question that you looked at in homework one and
+[227.92000000000002:232.84] Here the research question itself could be one about machine learning
+[232.84:241.12] Is there is there a difference between successful and unsuccessful headlines such that it could be predicted by a machine learning model
+[241.12:247.2] Which would then be useful for the people who actually write headlines because they could have a machine learning model running in the background
+[247.2:249.52] I would tell them this is a good or this is a bad
+[250.12:252.12] headline
+[252.8:256.36] Some people might think ah machine learning again
+[256.36:260.56] I've seen this in my machine learning time taking an entire class
+[260.56:266.4] I'm staying here after Ada to take the machine learning class. Why do I have to learn about this again? Well
+[267.56:275.16] I'm giving it another spin plus it's good if you see something explained in several ways by several people as
+[275.56:281.92] The great Marvin minskie says if you have understood something only one way you haven't understood it at all
+[281.92:290.40000000000003] So really see this as as an opportunity to maybe look at the same things that you've seen in other classes from another angle
+[290.92:295.40000000000003] Finally a disclaimer whenever you want to use machine learning you need to always be critical
+[295.6:302.40000000000003] Does my model actually do the right thing right never trusted blindly? I think especially in the context of Ada this is an
+[303.08000000000004:309.56] This is an important thing to remember which is maybe not highlighted enough in more technical machine learning lectures
+[309.56:313.04] Okay, so basics of machine learning
+[315.04:321.2] The abroad distinction is between supervised and unsupervised machine learning quick question
+[321.36:327.28] Who has seen that distinction who's aware of supervised versus unsupervised machine learning?
+[327.52:332.72] Okay quite a few but nonetheless to bring everyone on the same page let me give this
+[333.76:339.12] Quick background in supervised machine learning you're giving and given a data set of input
+[339.12:347.52] Output pairs also called a sample or samples bit confusing because a sample can be the set of data points or sometimes we refer to
+[348.12:353.76] As a data point so I'll need to be a bit careful in this lecture
+[353.88:360.32] But so you're given this data set of input output pairs xy where x are the features and y is the label and
+[361.0:364.36] The features are related to the labels via a function f
+[364.36:372.8] So f maps the features to the labels and what we would like to do is to learn that function f
+[373.32:381.8] From the data that we saw we observe the data and then we want to learn what is f such that we can then apply to new data and then infer the y for
+[384.16:386.72] For an x for which we don't have the y yet
+[386.72:393.88000000000005] If we there if the the y the the label is
+[394.92:396.08000000000004] discrete
+[396.08000000000004:402.0] Then we speak of classification and if the label is continuous then we speak of regression
+[403.84000000000003:409.96000000000004] An unsupervised machine learning on the other hand you're only given data points x
+[410.44000000000005:413.28000000000003] You're not told anything about a label why
+[413.28:419.71999999999997] Your own that's why it's called unsupervised because you don't get that supervised signal of what should actually be the right
+[420.28:426.76] prediction for this given x you're only given the x and what you want to do is compute a function f again
+[427.15999999999997:431.55999999999995] Which is kind of a simpler representation of x so we again have
+[431.96:438.76] Want to find this function f that maps x to a y but we're not given y during training actually
+[438.76:448.2] If y is discrete then we called it is clustering then the simplification is basically you take something that can be
+[448.59999999999997:455.0] Complicated like x can be a vector some sort of complex representation and you want to map it to a single
+[455.44:458.84] category cat or dog or giraffe or something like that if
+[459.64:461.64] Y is continuous
+[461.88:467.52] Then we speak of dimensionality reduction because what you're then trying to do is you try to find a simpler
+[467.52:470.32] Representation for the data that you're given
+[471.4:479.64] But what that reputation is should follow from the data itself. You're not told for individual data points what it should be
+[481.2:483.2] In today's lecture we will
+[484.71999999999997:489.35999999999996] Talk about supervised learning and in two lectures from now we talk about
+[490.2:493.28] Unsupervised learning what are we doing in between in lecture 8?
+[493.28:499.11999999999995] I'm actually splicing in one lecture about applied aspects of machine learning which
+[501.2:505.55999999999995] Which we would complement this more this more technical lectures
+[507.44:509.44] So what are examples of
+[511.35999999999996:514.76] Problems that can be solved with supervised machine learning for example
+[514.76:521.24] You're given an image and you're supposed to decide whether it contains a cat dog car or house during training
+[521.24:529.84] You would be told for the for the training images what's in the image and that way you learn that mapping from image to class and then at
+[530.4:536.04] Testing time you can label new unseen images with with those classes
+[536.6:541.88] Another problem you could solve with supervised machine learning is how would this user rate that restaurant?
+[542.44:546.72] You might have a user you have their the history of what they have already rated and
+[546.72:554.36] And how they would rate a new restaurant and then you want to learn that function of users
+[554.52:560.64] Rating history to the next rating that they will make or classic is this email spam
+[560.76:563.32] This is a machine learning model that you're benefiting from
+[564.0:571.12] Everyday so there is a label data set of emails spam or not spam and then you can learn a classifier
+[571.12:576.36] For doing for deciding whether an email is spam or
+[577.36:582.52] Unsupervised learning here are some problems that you can answer that way
+[583.4:588.68] Imagine that I'm giving you a data set of images of handwritten digits
+[588.68:592.76] I know that there are 10 digits zero through nine
+[593.0:600.16] But I don't know for each image which digit is in the image because I didn't want to pay someone to actually do the labeling for me
+[600.16:602.9599999999999] So then I can use unsupervised
+[603.64:609.1999999999999] Machine learning to cluster the images into 10 classes
+[609.1999999999999:615.68] And I would then if the clustering is perfect then I just need to provide one label for each class
+[615.68:620.28] Right, I can then say this is the class of zeros. This is the class of ones and so on
+[622.1999999999999:625.88] But during training no labels would be required for this
+[625.88:630.72] Another problem. What are the top 20 topics in Twitter right now?
+[632.92:638.4399999999999] This would also just come from observing Twitter and then finding in an unsupervised way
+[638.52:643.96] What are the most important topics in there without anyone telling you this
+[644.68:647.64] tweet is about that topic, but it would emerge
+[647.64:656.56] Automatically from the from the text and we'll see in a few lectures when we talk about text analysis
+[656.56:664.08] How this can be done or you have a data set that has 1000 dimensional data points so you cannot look at it
+[664.4399999999999:671.0] But if you can reduce the dimension to two then you can actually visualize the data and machine learning can also help you do that
+[671.0:675.0] for example principal component analysis that would also be an unsupervised
+[675.0:682.52] technique because you're never told what is the correct 2d representation for a 1000 dimensional data point
+[682.52:686.16] But it emerges from just analyzing the
+[687.0:689.0] 1000 dimensional data directly
+[691.48:695.32] Here are just some examples of machine learning techniques
+[696.16:698.16] This is more in the spirit of
+[699.0:700.68] buzzwords
+[700.68:705.4] And so you can kind of separate what you might have heard of into supervised and unsupervised
+[706.3599999999999:711.9599999999999] Supervised techniques you have for example canier's neighbors tree-based models like decision trees random forests
+[712.8399999999999:715.4799999999999] regression models like linear regression logistic regression
+[716.28:719.88] naive-based support vector machine supervised neural networks
+[720.5999999999999:724.76] Today we will look at three of those we will look at canier's neighbors
+[725.56:727.3199999999999] decision trees
+[727.32:732.44] And a little bit of regression you've already seen a lot of regression in lecture five
+[732.44:740.7600000000001] So I'm not I don't have to go deeply there again and when I talk about I selected these techniques because they are well suited
+[741.1600000000001:746.12] For talking about a fundamental issue in machine learning namely the bias variance trade-offs
+[746.5200000000001:748.5200000000001] So I'm basically piggybacking on
+[749.96:755.0] Introducing those techniques in order to then also talk about the bias variance trade-offs
+[755.0:760.52] And then in lectures nine ten and eleven we will see
+[761.64:765.56] The topics of clustering and dimensionality reduction
+[766.2:767.4] so
+[767.4:771.56] Be patient for unsupervised learning today. It will take a deep dive into supervised learning
+[774.52:780.36] And I'll introduce everything with what's possibly the simplest machine learning algorithm namely canier's neighbors
+[780.36:782.36] I
+[783.24:788.52] Will and I will explain canier's neighbors in a nutshell with this example of image classification
+[788.52:793.48] But the algorithm also works for many other kinds of data text data and audio data
+[793.96:796.76] You name it, but here we have image data
+[797.16:800.92] So what you're trying to do is to classify what's in this image?
+[801.8000000000001:803.8000000000001] You're given this query image
+[804.84:807.88] And you're trying to classify what's in it. How do you do it?
+[807.88:812.04] You we assume that you already have a big data set of
+[812.84:820.4399999999999] Images that are already labeled so for each of these images you know what's in it. You know that here. It's a hyena hyena lion
+[821.56:823.56] gnoo
+[823.56:835.32] Kita and so on and what you're doing is you're taking this query item and you're comparing it to every image in your data set and you find the
+[835.32:839.8000000000001] um, you find the K most similar images
+[841.6400000000001:848.5200000000001] In this case, it would be those three cats on the right and you would then have a majority vote between those images
+[849.24:858.44] All of them are already labeled in this case. They would all vote for cat because they're cats and that way you would then label the query image
+[858.44:862.36] Also as a cat because the most similar images that you've already seen are cats
+[862.36:870.6800000000001] That is really about the simplest thing that you can do right you realize that there is actually no training in this at all
+[871.96:880.6800000000001] You're just comparing one data point to other data points that you have so um in a way the um
+[881.8000000000001:884.52] I would say this is the this is the the simplest
+[884.84:886.84] Everything that you can have because
+[886.84:887.8000000000001] uh
+[887.8:892.5999999999999] The bulk of work that's usually involved the machine learning training isn't necessary for this
+[893.24:895.24] uh, but of course there's a trade-off
+[895.8:896.8399999999999] um
+[896.8399999999999:899.88] Because to do this well you need a large
+[900.52:909.0] Data set of already labeled images and you need to compare your data point to each of those data points that you've already seen
+[909.0:915.7199999999999] Which becomes more which becomes harder and harder the more data you have right because you need to do more comparisons
+[915.72:918.0400000000001] So it's not the cheapest algorithm
+[919.0:925.5600000000001] There are tweaks that you can do but there is this trade-off between memory and between complexity of the algorithm and
+[926.28:929.8000000000001] Basically the the runtime of the of the algorithm
+[929.8000000000001:935.72] So conceptual complexity is a very short algorithm to write down, but it's an algorithm that might take a long time to run
+[936.12:937.72] That's the trade-off
+[937.8000000000001:939.8000000000001] It has minimal configuration
+[939.88:944.12] Well, you could say that it actually a little bit of learning because you need to tune that parameter k
+[944.12:948.6] Okay, so um, it's you need to decide how many neighbors do you
+[948.76:956.36] Uh, do you retrieve how many nearest neighbors do you consider when you do that majority vote and that you could consider a parameter
+[956.36:961.64] So if you want you can consider this uh the the training to find this parameter k
+[962.28:966.12] And I'll tell you in a second how you can actually find k the best k
+[967.08:973.96] Um, but there are also two other choices namely what's the similarity metric that you use when you compare your query
+[973.96:976.52] Image to all the other images that you already have in your data set
+[977.5600000000001:981.32] What makes the image close one image close to the other and
+[982.9200000000001:985.1600000000001] um
+[985.1600000000001:992.84] Then when you vote you might want to wait the different images for example you might want to give more weight to the images that are closer to
+[993.96:995.8000000000001] To the query image out of the case
+[995.8000000000001:998.36] So you have your k and you might want to give not
+[998.36:1004.44] I mean, you could share to all k but more weight to some of them than others and as a nuance
+[1006.04:1011.88] You the the similarity metric could in principle be learned also, right? So um
+[1012.6800000000001:1016.44] It's not necessary. That's why I'm saying no training is needed for k nearest neighbors
+[1016.52:1022.9200000000001] But in principle you could have a machine learning algorithm that trains the similarity metric and then there would be
+[1023.5600000000001:1024.52] um
+[1024.52:1030.36] There would be training involved but in the vanilla version no training necessary for k nearest neighbors except for finding k
+[1031.8:1036.84] There are two flavors of can nearest neighbors. You can use it for classification and also for regression
+[1038.36:1042.2] Um, as I said on a previous slide we speak of classification when the output
+[1042.84:1047.4] Label why is described and we speak of regression when it's continuous
+[1049.16:1051.56] Um, so in the classification case
+[1051.56:1057.3999999999999] You would take a majority vote of the can nearest neighbors like we did in the cat image example
+[1057.96:1060.52] And in the regression case you would aggregate
+[1061.24:1065.1599999999999] Over the can nearest neighbors in another way for example by taking an average
+[1065.8:1071.08] Over the three or you could take a median of the three of the k and so on
+[1071.96:1075.72] and um as I mentioned you can also use weights
+[1075.72:1082.3600000000001] um to aggregate of the uh over those can nearest neighbors in the classification case you could
+[1082.6000000000001:1085.72] Can do a weighted vote where not everyone gets the same um
+[1087.0:1093.32] The same importance when you take that vote and similarly in the regression case you can take a weighted average
+[1094.2:1096.2] and the natural way to
+[1096.2:1104.92] An extra thing to use as the weight is of course the similarity between the query and the respective um neighbor
+[1108.2:1114.76] So what I'm doing now is I will give you exact so far. I was agnostic to what this similarity actually is
+[1115.0:1121.4] Okay, and what I'll do on the next two slides. I'll give you examples of similarity metrics that you can use in can nearest neighbors
+[1121.4:1127.24] um, I introduce those in the context of can nearest neighbors, but those metrics
+[1128.2:1131.64] Are relevant across all of machine learning and data mining
+[1134.8400000000001:1137.5600000000002] And what I'm showing here is distance metrics
+[1138.2:1143.72] Although I previously talked about similarity, but they're really kind of the same thing. They're the opposite of each other
+[1143.72:1151.08] Right, so um, you can think of distance as minus similarity or one minus similarity or something that inverts the
+[1152.04:1153.56] the order
+[1153.56:1155.56] the more similar um the
+[1156.68:1158.04] the less
+[1158.04:1159.56] uh distant
+[1159.56:1161.88] the simplest kind of
+[1162.68:1165.4] distance is probably the Euclidean distance
+[1165.4:1175.0800000000002] So this is if you have two vectors what is the shortest the length of the shortest connection between them you've all seen this before
+[1175.4:1178.3600000000001] uh, you can this is also called the L2
+[1179.4:1186.3600000000001] uh distance sometimes, but um really Euclidean distance length of the shortest path in in Euclidean space
+[1187.24:1191.4] Then a very related distance is the cosine distance
+[1191.4:1194.2] which um
+[1195.88:1202.52] Is basically a scaled version of the dot product between the two vectors you take the two vectors you take a dot product
+[1202.92:1208.52] So a point-wise product and then a sum of all the um point-wise
+[1209.72:1212.0400000000002] multiplications and you
+[1213.0800000000002:1215.0800000000002] divide this
+[1215.0800000000002:1217.0800000000002] by
+[1217.08:1223.72] let me backtrack you first normalize each vector to Euclidean norm one so they all have the same length
+[1223.72:1229.6399999999999] and then you take a dot product of these two then you have the cosine similarity if you do one minus this then you have a
+[1229.8799999999999:1231.1599999999999] the cosine distance
+[1231.1599999999999:1237.08] geometrically what does this do who knows what the cosine distance measures geometrically raise your hand
+[1237.24:1239.24] We're sure that a lot of you have seen this before
+[1241.3999999999999:1243.48] It's the angle well it's the
+[1243.48:1249.08] cosine of the angle between the the two vectors. That's where the name cosine distance comes from
+[1249.88:1254.2] um if your data is so the first two are if your data is vector data
+[1255.64:1259.16] If your data is actually uh set if each data point is a set
+[1260.04:1266.52] Then you might want to use a this different kind of metric one that is specific for for sets
+[1267.48:1270.84] Such as the jacquard distance what is the jacquard distance?
+[1270.84:1275.3999999999999] It is the ratio of the intersection and the union of the two sets
+[1276.6799999999998:1281.32] The the size of the union tells you how many
+[1282.1999999999998:1283.3999999999999] um
+[1285.3999999999999:1294.1999999999998] How many elements could the two sets possibly have in common right and the intersection tells you how many do they actually have in common
+[1294.9199999999998:1297.72] so that this ratio tells you
+[1297.72:1304.04] Something about the overlap of the two sets if the two sets are identical
+[1304.76:1312.44] Then the intersection equals the union and you'll get a ratio of one and if the two sets are disjoint have no shared elements
+[1312.44:1318.84] Then you will have zero divided by something and that ratio will be zero and so then that ratio is a similarity
+[1318.92:1325.56] And you do one minus to get a distance if you have string data then you can use something like the hemming distance which
+[1325.56:1329.56] uh this is just a formal way of writing down
+[1330.44:1335.6399999999999] Um something much simpler namely in how many positions do the two strings differ?
+[1337.1599999999999:1339.1599999999999] Okay, so if you have two two um
+[1341.3999999999999:1345.48] Two strings of ten characters each then this counts at how many
+[1345.8799999999999:1349.24] Of the ten positions do the two strings have a different letter
+[1350.44:1351.1599999999999] um
+[1351.16:1357.4] Then finally you have the Manhattan distance also called L1 distance which is very similar to the
+[1358.0400000000002:1364.0400000000002] Euclidean distance in the Euclidean distance you would have a square here you would have a square after the
+[1364.68:1366.52] um absolute value
+[1366.52:1370.8400000000001] And if you do it without the square then you you have what's called the L1 norm or Manhattan distance
+[1371.4:1374.3600000000001] Which is why is it called Manhattan distance because if you have a grid
+[1375.48:1377.24] In Manhattan for example
+[1377.24:1384.2] Most famous street grid you want to get from here to there then it counts how many blocks do you have to
+[1385.08:1386.92] um
+[1386.92:1392.92] How much how often do you have to go up or left or right or down because that's the only thing you can do in Manhattan
+[1393.16:1397.08] You cannot do you click in distance which would be like a bird would fly
+[1397.48:1400.52] Above the skyscrapers you need to walk between the skyscrapers
+[1400.84:1405.0] And so the path that you go has to be like this and you measure the length of this kind of path
+[1405.0:1410.36] And then you have the edit distance also for strings which you might have seen before in your algorithms class
+[1411.96:1417.8] Okay, so now I would like to ask you to push can yours neighbors on your mental stack
+[1418.68:1424.92] Because we're now do I am now using can yours neighbors as a starting point for an excursion
+[1425.4:1432.6] Into a fundamental concept that's relevant for all of statistics and machine learning namely the bear bias variance trade off
+[1432.6:1439.7199999999998] I'll introduce the bias variance trade off now and then you will pop from your stack and we'll apply it to can yours neighbors, okay?
+[1442.6799999999998:1452.52] So maybe the fundamental issue in machine learning and statistics is that you have to work with a finite data set a finite sample
+[1452.76:1456.52] If you had infinite data then most things in the statistics would become really easy
+[1456.52:1462.36] Because of the things like the law of large numbers and the central limits here and so on but it's not like that
+[1462.6:1469.16] Data sets are finite samples from a possibly infinite population and you have to deal with the finite sample
+[1470.04:1471.56] um
+[1471.56:1474.28] Although you're really interested in models of the population
+[1475.08:1478.44] You try to estimate those models of the entire population by
+[1479.08:1485.0] Working with the finite sample that you have so a toy image would be like this if your data set
+[1485.0:1487.0] Consist of all these points
+[1487.96:1489.96] Then you only have um
+[1491.96:1493.96] You only have a few
+[1495.08:1500.68] Samples which are marked as the blue dots here. So whenever I have blue text on the slide. I refer to the blue dots
+[1501.96:1503.96] um, and so for a
+[1504.84:1506.04] Data set
+[1506.04:1510.04] consisting of pairs xy where x are the features and y
+[1511.0:1512.2] um
+[1512.2:1521.24] Is the label we aim to find the true model f that links x to y right there is there always is a function that links
+[1521.8:1523.0800000000002] x to y
+[1523.0800000000002:1527.64] It can be a very complicated function in the worst case. It can just be a lookup table
+[1527.96:1533.56] Right that tells you explicitly for each x what's the corresponding y? So there is always
+[1534.28:1538.92] Such a function f and we're trying to infer f
+[1538.92:1542.6000000000001] From a finite sample that we see
+[1543.64:1547.3200000000002] So we train um our model on a
+[1548.3600000000001:1550.1200000000001] sample d
+[1550.1200000000001:1555.16] Here when I say sample, I mean a set of points a sample here is a data set of points
+[1555.48:1557.48] so we're seeing this finite sample
+[1557.72:1559.24] d
+[1559.24:1568.76] And we can we fit or we we infer we estimate a model based on this data and we call this f subscript d because this is not the true f
+[1569.0:1571.0] Right the true f is what we're after
+[1571.32:1577.8] But we can only estimate it with the data d that we have so we call this estimate f subscript d
+[1579.24:1580.28] um
+[1580.28:1582.28] okay
+[1582.6:1584.6] So now um
+[1584.6:1589.3999999999999] Now about bias invariance given a random training sample d
+[1589.48:1592.76] So you can imagine that from all of the red dots
+[1593.8:1600.9199999999998] From all these dots you take a random sample d and you can do this many times right you can imagine that the world runs
+[1601.24:1602.1999999999998] uh
+[1602.1999999999998:1605.8] Restarts and then next next round you would get another
+[1606.6799999999998:1607.8] sample d
+[1607.8:1612.84] So now assume that you have a random training sample d and from this you get a model
+[1612.84:1614.84] fd
+[1615.08:1620.4399999999998] Don't worry now how you get this model right like you have some machine learning algorithm that gives you this model
+[1620.84:1625.24] The the fact is that for different d you will usually get a slightly different model
+[1625.9599999999998:1628.28] Okay, because you're training it on different data
+[1630.04:1632.04] And now for a new data point
+[1633.08:1638.52] At new data point xy that you haven't seen during training so this data point xy is not part of d
+[1638.52:1642.04] um you have a prediction
+[1642.76:1652.12] A predicted y that's fd of x and now we can compute an error of um like how far are you off on average
+[1653.56:1657.0] How far is your predicted y which is fd of x?
+[1657.72:1661.4] How far is that off from the true y and um
+[1662.76:1665.0] We can we take this
+[1665.0:1671.64] expected squared error we squared because then both uh it always becomes positive and so on you want to
+[1672.36:1677.56] You don't care if you're off in the negative or in the positive so you squared and then it's it's always a positive number
+[1677.88:1686.76] and this this expectation is uh is then the the error so how much to how far do you expect on average to be off from the truth
+[1686.76:1694.52] And e is an expectation over d here so the randomness comes from sampling the training set
+[1696.12:1701.8799999999999] Okay, so um every because every time you sample different training set you get a slightly different fd
+[1702.52:1708.84] And every time you get uh you you get an error that way and if you take an average over all possible d
+[1709.24:1713.4] That you could get then this is the expected um expected error
+[1713.4:1720.8400000000001] And now a a fundamental fact of statistics is that this error can be decomposed into two parts
+[1721.16:1726.6000000000001] If you want to see the derivation there's a link linked to Wikipedia here. It's really basic. It's only basic algebra
+[1727.3200000000002:1733.88] um you can it can be composed into two parts into bias at the variance more precisely the squared error
+[1734.76:1737.4] Can be decomposed into the squared bias plus the variance
+[1738.92:1740.92] On the next slide i will
+[1740.92:1742.76] um
+[1742.76:1746.92] Explain what bias and variance are
+[1748.8400000000001:1750.8400000000001] So the bias is
+[1753.5600000000002:1761.64] This term here it's this is the distance how far is your prediction off from the truth
+[1765.0:1766.52] On average
+[1766.44:1768.6000000000001] Okay, so for for a
+[1768.6:1772.36] When you average over all the different
+[1772.84:1778.52] training data sets that you could have how far on average are you off from the truth
+[1778.6799999999998:1786.04] This can be a positive number or it can be a negative number or it can be zero if you always correctly predict exactly what you should predict
+[1788.04:1789.8799999999999] Next the variance
+[1789.8799999999999:1791.3999999999999] The variance is very basically
+[1791.4:1798.0400000000002] From from training data set to training data set how different are the predictions that you make
+[1798.76:1800.76] So here you have
+[1800.52:1801.72] um
+[1803.3200000000002:1814.52] This f bar is the the average prediction for x overall possible training data sets so every time you uh you train you have a D
+[1816.2:1819.88] So it's this is the average overall fd where the average is over d
+[1819.88:1822.2800000000002] So this measures
+[1823.16:1825.3200000000002] How far are away is
+[1826.0400000000002:1832.0400000000002] This prediction are you are you from the typical prediction? So this is what the variance all right
+[1832.0400000000002:1838.0400000000002] And I think it becomes much more clear if we look at this picture some of you might have seen this picture
+[1838.44:1845.0800000000002] So think about a fixed testing point x y testing point means you have not seen this
+[1845.8000000000002:1849.0] Data point during training. So it's not part of the training data set to d
+[1849.0:1850.6] and
+[1850.36:1852.36] and
+[1853.16:1855.56] Forget the other three um
+[1856.52:1859.56] Circles for now. Let's just focus of this on on this one
+[1860.92:1862.52] Every data point
+[1862.52:1868.04] corresponds to one training data set okay, and everything is for a single data point x y
+[1869.4:1874.84] Every time for every for every training data set you will get an estimate
+[1876.36:1877.56] f
+[1877.56:1884.76] For every training data set D so for d1 you will get fd1 for d2 you will get fd2 and so on for all the different
+[1885.1599999999999:1887.48] training data sets that you could have
+[1889.08:1895.56] And for this specific data point x the prediction let's assume it's you make this two-dimensional prediction
+[1896.04:1899.96] Uh, but it's really just for the um for the sake of of visualizing it
+[1900.04:1904.36] So you predict this position here for the data point x
+[1904.36:1912.6] Uh x if you train it on d2 you predict this position if you trained on d1 and so on does this setup make sense
+[1914.52:1921.3999999999999] Every data point corresponds to the prediction for the fixed data point x when you trained a model on a different data set
+[1924.4399999999998:1926.4399999999998] In red in the middle
+[1926.52:1930.12] This is the true why that you should be predicting
+[1930.12:1936.1999999999998] Okay, this is the uh, this is the ground truth and now um
+[1936.9199999999998:1939.08] What is what does the
+[1939.08:1943.08] bias versus variance in this picture correspond to if
+[1944.4399999999998:1946.76] All your data points are
+[1946.76:1952.84] closed together if you basically always regardless on which data sets you train you always make the same or roughly
+[1953.32:1955.32] the same prediction for
+[1955.8:1957.6399999999999] For this fixed data point x
+[1957.64:1961.96] Then you have low variance, okay, because you consistently always make the same prediction
+[1964.2:1966.2] And if on average
+[1967.88:1972.3600000000001] You your prediction is in the middle then you have no bias
+[1973.48:1977.0800000000002] Because on average you predict the right thing, but these two are orthogonal
+[1977.96:1982.44] You can on average predict the right thing but predict very different things from training
+[1982.44:1989.64] Uh from from training data set to training data set. This would be the example. This would be on the top right
+[1991.0:1997.24] Your predictions differ a lot depending on which data you train on but on average you're right on average
+[1997.88:1999.88] You uh, you predict the thing in red
+[2002.04:2008.52] Whereas in the southwest corner here we consistently make the same prediction, but the prediction is off
+[2008.52:2012.44] It's consistently off. So here we have low variance
+[2012.6:2017.24] Everything is concentrated, but large bias we're far off from
+[2018.68:2019.8799999999999] From red
+[2019.8799999999999:2023.56] What you want to ideally have of course is the picture on the top left
+[2024.36:2029.72] Where you have low variance and you're on average right so you basically always predict the right thing
+[2030.2:2031.6399999999999] But this is
+[2031.6399999999999:2036.76] Because of the tradeoff I talk about this in on the next slide. This is where usually cannot be on the top left
+[2036.76:2044.6] You have to trade off somehow between top right and bottom left and what you definitely don't want to have is bottom right
+[2045.08:2049.56] Because here you're systematically off high bias and
+[2050.12:2054.52] Every time you retrain you get something else. So you have high variance
+[2056.36:2061.32] And so the exposition here was for a fixed data point right xy
+[2061.32:2069.4] The points that were visualized were when the predictions for that fixed data points when you train the model on different data
+[2071.0800000000004:2076.52] And now to get the full bias variance you would also take an average over all the data points xy
+[2077.0:2081.32] So you would have two expectations one over the data sets d
+[2082.2000000000003:2083.48] And then
+[2083.48:2086.44] That would be wrapped into a second expectation over all the
+[2086.44:2090.68] The data points testing points xy
+[2092.84:2101.4] Okay, so here again about the tradeoff since the error or squared error can be decomposed into a square is plus variance
+[2102.44:2111.88] There is a tradeoff you cannot make them both arbitrarily small because they need to add up to the error which is which is a constant for
+[2111.88:2113.88] um
+[2115.8:2117.8] And uh so you
+[2120.84:2122.04] Um
+[2122.04:2126.12] The tradeoff is that for for complex models that have many parameters
+[2127.2400000000002:2130.6] You will usually have low bias
+[2131.2400000000002:2135.7200000000003] Because you can you can fit you have a lot of capacity in your model you can fit the data well
+[2135.72:2143.64] But you will have higher variance because when you wiggle one data point you might get very different prediction for all the other data points
+[2143.64:2145.64] I'll show you an example on the
+[2146.2:2152.9199999999996] Um on the next on one of the next slides whereas for a simple model a model that has fewer parameters
+[2153.56:2155.56] You will have higher bias
+[2156.04:2158.04] Because the model might not be
+[2158.8399999999997:2162.12] Um powerful enough to even fit the data that you have
+[2162.12:2165.64] But you will have lower variance the model will
+[2166.52:2168.52] Um will usually predict
+[2169.0:2174.2799999999997] Similar things when you retrain it on different data. So let me unpack these this is like
+[2175.24:2182.92] This is maybe not super intuitive the first time you see it. So I think you'll have to come back to this after you have seen
+[2183.56:2184.7599999999998] um these
+[2184.7599999999998:2187.3199999999997] Um this more this example that I'm going to show you now
+[2187.32:2196.28] So example imagine you have these uh this very simple data set which has only a one-dimensional a scalar future x
+[2196.84:2198.2000000000003] and then you have a
+[2198.2000000000003:2199.4] scalar
+[2199.4:2201.0] Outcome y
+[2201.0:2209.0800000000004] So this data we can plot in this scatter plot a simple model could be just a line a linear regression that you fit
+[2210.44:2212.44] Whereas a complex model could be
+[2212.44:2219.4] um a polynomial of large degree. So here we have one two three four five six seven eight nine ten
+[2221.16:2226.04] If I have ten data points and I want to fit them exactly what degree polynomial do I need
+[2229.56:2233.2400000000002] If I want to interpolate that data what degree does my polynomial have to have
+[2235.96:2240.84] Nine I need to green that one less than the the data
+[2240.84:2242.04] um
+[2242.04:2244.76] If I have two data points then a line
+[2245.56:2250.1200000000003] Is enough which has degree one right and this uh by induction you would you will see the same
+[2250.52:2254.6800000000003] So here I have a polynomial of degree nine. It will perfectly fit my data
+[2254.92:2259.0] But what happens if I take this data point and I shift it down here
+[2259.08:2264.76] So now I'm taking another training data set right I'm taking this data point and I reduce the y
+[2265.4:2267.88] Then the blue line will pass through here
+[2267.88:2270.6800000000003] But it will also change what the blue line looks like everywhere
+[2273.08:2276.28] So it's that's what's called overfitting we're overfitting to this data
+[2276.84:2280.6800000000003] Um because we we want to fit it exactly, but we don't care about what happens
+[2282.04:2289.2400000000002] Between those data points where we pull this thing down and then all of a sudden actually this might
+[2289.96:2295.48] All of a sudden be down here. So we'll be look very different if we train it on a slightly different data set
+[2295.48:2301.2400000000002] Whereas the line wouldn't look very different if I take this data point and I drop it down here
+[2301.88:2305.32] The line might change a little bit, but it wouldn't change by much
+[2305.96:2311.88] Okay, so that's um that's why this has low variance this has high variance
+[2311.88:2318.28] This makes the same predictions regardless on what red points you train on this makes very different predictions
+[2318.92:2320.76] um based on
+[2320.76:2324.84] um for unseen data right for you might there might be a new data point actually x equals
+[2324.84:2330.6800000000003] Here and you would get a very different prediction for this depending on the the training data set
+[2331.1600000000003:2332.6800000000003] whereas
+[2332.76:2336.84] This has super low bias right you can fit the the data
+[2337.32:2339.32] You can fit data very well
+[2339.4:2344.52] With a powerful model like this, but this has high bias because you will be on average
+[2345.4:2349.8] Much further off from the from the red points. So this is kind of the
+[2350.6800000000003:2352.6800000000003] uh the intuition
+[2352.68:2359.64] um between between that trade off and you you see also why um you can't have both right because
+[2360.3599999999997:2363.96] If you want to decrease the bias so you want to fit the data better
+[2365.16:2372.7599999999998] Then you will do you will have higher variance because on unseen data you might make very different predictions from time to time from
+[2373.48:2375.64] uh from training data set to training data set
+[2375.64:2377.64] If
+[2381.48:2383.24] If the
+[2383.24:2385.8799999999997] variance dominates
+[2385.8799999999997:2387.96] then we uh
+[2387.96:2392.04] We can speak of overfitting so then there's basically um your
+[2392.68:2397.4] Your model has too much capacity to fit the data that that you have so this is called overfitting
+[2397.4:2403.3199999999997] It will it will be able to memorize the data which is what this polynomial does right it memorizes the training data
+[2403.32:2404.6000000000004] um
+[2404.6000000000004:2410.6000000000004] Whereas in the opposite case where you have uh where where bias dominates in this the this decomposition
+[2411.2400000000002:2418.6000000000004] Into bias invariance then we call this underfitting because your model is not strong enough to even fit
+[2419.2400000000002:2424.28] um the the training data that um that it's seeing
+[2424.28:2432.76] Okay, so now I would like you to pop K and N from your mental stack and we'll apply what we just learned about
+[2433.4:2439.32] The bias variance trade off to the concrete algorithm off K nearest neighbors. So um
+[2440.2000000000003:2444.44] As I said the kind of the parameter that you need to fiddle is K
+[2444.76:2450.2000000000003] How many neighbors do you consider in your let's say majority vote or your your average that you do
+[2450.2:2455.56] um and now let's think on the bias variance trade off
+[2456.9199999999996:2459.48] Will small K uh which which one has
+[2460.8399999999997:2464.04] Low variance and high bias versus high uh
+[2465.64:2469.96] High variance and low bias. So if I have a small K do I have
+[2469.96:2478.52] Large bias or large variance and similarly for a large K so I'd like you to think for a second talk to your neighbors
+[2500.2:2512.6] I go okay what have we got small K what's what's high bias or variance for small K if I let's say K equals one
+[2512.68:2521.2400000000002] I only take my nearest neighbor and I copy that that neighbor's value is that high bias or high variance
+[2521.24:2529.9599999999996] I have high bias here I have high variance here and it's actually um
+[2530.8399999999997:2537.64] High variance and low no bias and I'll show you with this um with this example
+[2538.6:2540.6] assume that we have
+[2541.56:2543.56] This blue curve
+[2543.56:2551.08] Basically what generates our data okay, so the true data is generated from this blue curve by adding a little bit of of noise
+[2551.24:2553.7999999999997] Gaussian noise to the y-axis okay
+[2554.44:2559.64] So this way why am I setting it up this way because this way I can create a lot of different training data sets
+[2560.2:2565.96] Right, I can get a different training data set by taking the same blue curve and I
+[2567.0:2571.32] Uh perturb it a bit and then I get my uh my red dots, okay
+[2571.32:2573.48] So that does that make sense?
+[2575.48:2584.44] Okay, so there are there's an infinity of training data sets that I can train on but they all basically are generated by this blue curve now if I
+[2584.84:2588.36] I'm now given one training data set the red dots
+[2590.76:2592.76] and um
+[2595.1600000000003:2597.0] now
+[2597.0:2603.16] What happens when I when I do a small k so what I want I have a training that I have this data set that has
+[2603.96:2610.92] Uh one dimensional numbers and what I want to do is I want to predict for a given x. I want to predict the the y, okay
+[2612.76:2614.76] and um
+[2614.6:2619.64] If I choose k equals one then and I this is the x that um I'm interested in now
+[2620.28:2626.28] Okay, so I take the nearest neighbor that is the data point that is closest to that x position
+[2626.28:2628.28] It uh would be
+[2629.2400000000002:2633.48] Uh would be this one here the green one and now I'm what's my
+[2634.92:2636.2000000000003] um
+[2636.2000000000003:2638.2000000000003] What's what's my error
+[2638.52:2644.36] This is for for this x here. This is what I should predict. This is what I am predicting
+[2645.0800000000004:2651.96] Okay, because I'm copying for k equals one. I'm just copying the value of my of my nearest neighbor
+[2651.96:2658.04] So this is how far I'm off and the bias is um the the average
+[2658.76:2660.52] um over
+[2660.52:2668.36] Of this the bias for this data point x is when I'll take a new data set look that like see now it's a different data set
+[2668.44:2673.7200000000003] Okay, so it's a different set of red points, but they're still generated from this from this blue line
+[2674.2:2676.2] um in this case I
+[2676.92:2679.4] underestimated the true value in that case I
+[2679.4:2681.64] overestimated the
+[2682.6:2684.44] the true value
+[2684.44:2686.44] but I'm always gonna be
+[2686.44:2689.0] I'm always gonna be uh quite close
+[2689.0:2697.0] But I will make uh what's the variance the variance is when I do this many times for many different data sets of red points um
+[2697.56:2699.2400000000002] how far off
+[2699.2400000000002:2701.48] am I um
+[2701.48:2703.2400000000002] how how much do my
+[2703.24:2723.0] my predictions vary so you see it's here it's it's here and then it's over there so it varies this way the prediction that I make but it's usually close to the um to the blue line what happens now if I take a larger k and this is I think when it will become clear I now choose k equals eight
+[2724.2:2728.12] So given my x position I take the eight nearest neighbors
+[2728.12:2742.12] and I take the average which I'm showing here as this uh as this horizontal line this this is the average y value of these nearest neighbors and that's now gonna be my my prediction
+[2744.12:2751.7999999999997] I'm always gonna make the same prediction right because regardless of what precise red uh what red data set I have
+[2751.8:2760.92] it's always the the mean is gonna be more similar than if I take only one point if I take eight points and average them it's gonna be closer um to the
+[2761.8:2774.44] Think about the extreme case where I take all the data points then it would basically be the the mean of the blue line that's what I would then get so I get consistently the same prediction but it's gonna be consistently worse
+[2775.32:2777.32] because regardless of um
+[2777.32:2779.32] um
+[2779.7200000000003:2785.0800000000004] Of the precise red uh data sets it's always gonna I'm always gonna underestimate right you see
+[2785.96:2791.56] In the other case k equals one and sometimes I overestimate sometimes I underestimate but I'm on average close to the blue line
+[2792.1200000000003:2794.36] Whereas for k equals eight I always
+[2794.92:2796.92] underestimate by quite a bit although
+[2797.7200000000003:2801.88] I make the same consistently I make the same kind of error so that means
+[2801.88:2808.92] For small k you can basically you overfit to the data because you rely on only one single data point
+[2809.2400000000002:2817.0] So that way you have high variance and low bias if you take larger k then you rely on more um on more data points
+[2818.12:2822.6] But in the limit you will just predict the the mean of the
+[2822.6:2829.96] um of the entire data set so um this would be far off but it will be consistently bad
+[2833.7999999999997:2839.64] How I will take a break after this slide um how do you choose k in practice
+[2841.08:2843.08] How do you know whether
+[2843.4:2849.3199999999997] Uh your I we could see it here because this was a simple data set and there was basically a toy example
+[2849.32:2855.6400000000003] But in practice how do you know which is the best k that you should choose well and you would you would use
+[2856.28:2858.6800000000003] Um the data to tell you here's how
+[2860.1200000000003:2867.6400000000003] I'm giving you the full data set then what you do at the very beginning is you split it into a train portion and a test portion
+[2868.36:2871.6400000000003] The test portion you put to the side you lock it in the safe you don't look at it
+[2872.76:2874.76] For the training portion you
+[2875.88:2877.4] Can
+[2877.4:2883.32] Pick one data point and you can then um
+[2884.52:2891.2400000000002] Treat that one as a kind of test data point where you want to predict that data points value
+[2891.48:2895.56] Based by using the remaining data points as your labeled data set
+[2895.8:2902.6] Okay, so you pretend that this one data point that you took out that's the one you're not seeing it during training and you want to um
+[2904.44:2906.44] Um, you want to predict its value
+[2906.44:2916.44] So then um for any possible k you can then you run k nearest neighbors for all possible values of k. Let's say k between 1 and
+[2917.88:2919.88] 200 and
+[2920.28:2923.56] Every time you will get an error for that one data point
+[2925.0:2930.6] Then you write down the error you put the data point back in you take the next data point take it out
+[2931.4:2933.7200000000003] Run k nearest neighbors on the other data points
+[2933.72:2935.72] You can use
+[2935.9599999999996:2937.9599999999996] Compute the error for all possible k
+[2938.68:2943.9599999999996] Write it down and so on you do this for every single data point that's what's called leave one out every single data point
+[2943.9599999999996:2949.9599999999996] You leave out once and you compute the error that you would get if you didn't weren't able to use that data set
+[2950.6:2959.16] For training and then you can after this you can check for each different k. What is the average error error that I made
+[2959.72:2961.72] and you pick the
+[2961.72:2964.9199999999996] You pick the k that gave you the lowest error
+[2966.3599999999997:2972.68] Then you unlock the safe you take your data set out your test data set that you put away in the beginning and for that k
+[2973.0:2976.52] You evaluate, but now you're not allowed to change k anymore case fixed
+[2977.16:2979.16] Before you you open the safe
+[2979.8799999999997:2981.8799999999997] so this is um
+[2982.04:2985.56] How you would find the k in practice using
+[2986.2799999999997:2991.0] Uh, loon leave one out cross validation and with that we will take a loop break
+[2991.0:2995.56] um, and we'll come back here at um
+[2996.84:2998.84] Let's say nine
+[2999.16:3006.12] 18, okay at nine 18 because this is nine times two times nine nine 18 we come back here
+[3011.08:3014.04] Can we record again good? Okay, so welcome back
+[3015.56:3017.56] We have now
+[3017.56:3023.0] Discussed ten years neighbors and I've used it to introduce the bias there in the straight-off
+[3023.96:3026.2799999999997] We now turn the page to the next
+[3027.24:3034.84] Machine learning algorithm decision-freeze I first introduced it and then we'll come back again to this question of
+[3035.32:3037.32] bias versus variance, but we'll first
+[3037.88:3039.08] um
+[3039.08:3042.36] Start with an example imagine that your goal is to predict
+[3043.0:3045.96] whether someone will buy a computer
+[3045.96:3048.12] based on
+[3048.12:3050.12] Features that you observe
+[3050.44:3055.88] Uh for them you know how old everyone is what their income is are they're student the external
+[3056.52:3062.6] And what's their credit rating and based on these features you want to predict whether they will buy a computer or not
+[3064.44:3066.44] A very natural way to um
+[3067.4:3069.0] to
+[3069.0:3071.8] So basic a decision tree gives you a sequence of rules
+[3071.8:3076.04] To apply in order to make that prediction whether someone
+[3076.76:3078.76] Uh will buy a computer
+[3078.84:3084.36] So um the decision tree for now assume that this decision tree is fixed. I'm giving it to you
+[3084.76:3086.76] The problem of course will be
+[3087.0:3090.76] To find the best decision tree. That's what we talk about in a slide
+[3091.0800000000004:3097.7200000000003] But for now what does the if you already have a decision tree what does it do at every node it will
+[3099.2400000000002:3100.44] um
+[3100.44:3102.6] It will uh choose an attribute
+[3103.56:3107.16] And break it up into all the possible values that it can take
+[3107.7200000000003:3112.52] And then you will basically percolate down the decision tree like that for example you would first check
+[3112.6:3118.2000000000003] How old is someone if they're less than 30 so they can be less than 30 between 30 and 40 or above 40
+[3118.84:3121.48] If they're less than 30 then the next thing you would check is
+[3122.12:3127.56] Are there students if yes, then you would predict yes, they will buy a computer if no
+[3127.56:3131.88] Uh, then you will predict no if there are between 30
+[3132.52:3141.7999999999997] 31 and 40 you would immediately predict yes, they will buy a computer and um if there are above 40 would first check the credit rating and then um
+[3143.0:3149.32] I just had on that in this case in this toy example this tree will actually let you make perfect
+[3149.96:3154.52] Decisions in the small data set of 14 points that you have here
+[3154.52:3159.64] And now we'll take this running example and we'll see how you can if you're not given the tree
+[3159.64:3165.32] But only the data how can you actually figure out that this is the best tree that you should um
+[3166.28:3168.28] That you should be getting
+[3169.48:3174.04] So here I put again in words what I already said on the earlier side
+[3174.7599999999998:3177.56] how does the uh basically what um
+[3178.68:3183.96] What does the decision how does the decision tree make decisions and
+[3183.96:3185.96] um
+[3185.96:3187.96] There is an
+[3188.12:3192.36] exponentially large set of possible decision trees right if you if I'm giving you
+[3192.92:3194.68] Uh this data set with the features
+[3194.68:3199.7200000000003] There are many many combinations uh in which you can construct such a tree
+[3201.0:3209.96] And our goal is to find out of that huge number of possible trees the one that maximizes the classification accuracy
+[3209.96:3216.2] On the given training data set in this case the training set data set would be this table here
+[3218.04:3219.2400000000002] Since
+[3219.2400000000002:3227.56] The so I said that the number of trees is exponentially large and this is actually a fundamental limit the if you wanted to find the optimal
+[3228.52:3232.28] Pitch and tree for a training data set is actually an NP hard problem
+[3232.28:3240.44] So you cannot do better than try out all the trees as we have a question
+[3240.28:3242.28] Ah
+[3242.2000000000003:3244.2000000000003] Good point thank you
+[3244.92:3251.2400000000002] This means it wasn't loud enough during the break if I didn't even notice during the
+[3253.0800000000004:3255.0800000000004] Okay, here you go um
+[3255.96:3260.1200000000003] I thought you were gonna say no it's not NP hard um I
+[3261.08:3263.08] I solved it, but uh alas no
+[3264.2:3265.96] Okay, so it's still NP hard
+[3265.96:3269.48] So we have to do something heuristic and the typical approach
+[3270.12:3278.52] How how to find a good even if not the optimal decision tree is to do something greedy where we greedily build the tree from the top
+[3279.0:3283.4] Downwards towards the leaves and then we will cut we will prune the tree
+[3283.96:3285.24] um
+[3285.24:3286.68] To make it smaller
+[3286.68:3291.96] So I'll explain what I mean with that in the next slide
+[3292.52:3296.52] The way of constructing this tree is basically with this divide and conquer strategy
+[3296.7599999999998:3300.44] You what you what you're doing essentially to take the data set and split it
+[3300.9199999999996:3304.6] Are recursively into parts in the beginning in the
+[3306.2:3308.2799999999997] In the root of the tree you haven't
+[3308.28:3315.7200000000003] Clear it any attribute yet, right? So you haven't checked anything yet. So there you can imagine that the full data set
+[3317.48:3322.6800000000003] Is still together in the root now when you split when you pick an attribute
+[3323.4:3327.2400000000002] Then you can think of this as splitting the data set into several parts
+[3327.2400000000002:3333.0800000000004] So for example if you have age in the root then you're splitting your data set into three subsets
+[3333.08:3338.84] namely the people that are less than 30 between 31 and 40 and above 40 so each of these nodes
+[3339.88:3346.2799999999997] splits your training data into as many parts as the attribute at that node has possible values
+[3347.24:3349.24] okay
+[3349.24:3353.48] And at the beginning all training samples belong to the root and now
+[3354.52:3360.44] You greedily pick the next best split and what is the next best split?
+[3360.44:3363.8] That's the split that basically
+[3364.84:3370.92] Has the highest discriminative power what do I mean by that? I want to have a split where
+[3371.56:3373.56] such that in both
+[3373.88:3375.08] subsets
+[3375.08:3377.64] The data is as pure as possible
+[3377.64:3383.88] Pure in the sense of ideally I would want to split the data such that in one subset
+[3384.44:3387.4] It's only yes labels and in the other
+[3387.4:3396.76] Subset it's only no labels because if I can do that I'm done right if I can do that then I have perfectly split the training data set
+[3398.6800000000003:3400.6800000000003] Into into subsets and
+[3401.7200000000003:3405.4] We could terminate, but usually there is no such completely pure split
+[3405.7200000000003:3410.36] But you want to get as close as possible to that pick the attribute such that
+[3411.1600000000003:3414.52] Your data becomes within each subset as as purely
+[3414.52:3420.44] A single class label as possible and then the question
+[3421.96:3430.04] We now shifted the problem now the problem is how do we measure how pure such a split or such a subset is
+[3430.6:3432.6] And we can do that with information gain
+[3433.4:3437.64] Or with something like genie impurity. I will focus in the next slides on
+[3438.6:3441.56] Information gain which is an information theoretic
+[3441.56:3443.16] um
+[3443.16:3445.16] Measure based on entropy
+[3445.24:3449.4] When do you stop you can stop the splitting if all
+[3450.04:3454.2] samples in in one of the subsets belong to the same class
+[3454.2799999999997:3459.72] This is what I just said if you if um if they're all yes then why would you split any further?
+[3460.2:3464.2] They're already um they're already all the same that you have in
+[3465.24:3470.2799999999997] After this splitting or you might have no more attributes left
+[3470.28:3476.1200000000003] So you on a path from the root to a leaf you might already have exhausted all the positive attributes
+[3476.6800000000003:3482.28] Um, it's not the case in this exemplary right, but it could be the case that you split on age you split on student
+[3482.6000000000004:3485.88] You split on credit rating. I think these were the
+[3488.1200000000003:3489.32] three
+[3489.7200000000003:3494.6800000000003] Oh, and income we could also split and then if you did that and still your data isn't
+[3494.68:3501.8799999999997] The the the data set that remains in one of these nodes isn't pure then you couldn't do anything anymore
+[3501.8799999999997:3504.2] So you would also just naturally have to stop there
+[3505.16:3511.48] And what you would do then is to but you still need to basically assign a decision to the leaf and you would then just
+[3511.96:3513.48] take the
+[3513.48:3518.7599999999998] Majority vote of all the data set points that are left in that node
+[3520.3599999999997:3521.8799999999997] Okay
+[3521.88:3523.88] Question
+[3537.2400000000002:3543.08] Yeah, yeah, yeah, yeah, yeah, I am keeping it simple. So the question is
+[3543.88:3550.44] If you have attributes that are not categorical this toy example I've only categorical attributes to make the exposition simpler
+[3550.44:3555.96] But you could imagine that age wasn't actually split into these three buckets, but it's actually a
+[3556.44:3564.44] um, you could even think of it as a continuous a real number that's between 0 and 100 and you would treat like 150 point
+[3564.68:3568.68] Eight years differently in principle, you know, you could do that or hyped of someone
+[3568.92:3572.68] There's might not be a natural splitting into into categories
+[3573.4:3575.4] Um, and then you can still
+[3575.4:3581.32] Um, do decision trees for that, but then there's the additional complexity of what do you actually choose as the cutoff?
+[3582.52:3588.6] But then you have things that kd trees and so on so these are all variants of decision trees where um
+[3589.4:3595.96] Instead of deciding which attribute to a split on you also need to decide which attribute and what's my split?
+[3596.44:3598.84] Okay, so it becomes a bit more complex, but
+[3599.7200000000003:3602.6] Otherwise at the higher level the algorithm stays exactly the same
+[3602.6:3611.3199999999997] Okay, so let's go through this example. Here's again the same data sets from before um now if we split on
+[3612.2:3614.2] H then we would
+[3616.2:3624.52] These are all the people that are below 30, okay? So then we now among those people that are oh, sorry
+[3624.68:3630.8399999999997] And then the rest uh 31 to 40 for those you see that actually they all have yes
+[3630.84:3639.2400000000002] All have yes, so we're done. We can just say yes in this case. We don't need to do any further splits that is
+[3640.04:3647.0] Uh stopping criterion one all samples belong to the same class, okay? Um if they are
+[3648.04:3657.56] 40 uh if there are above 40 then there are some yes and some no so we're not done yet. So now let's go back to this group that's um
+[3658.44:3660.44] That's under 30
+[3660.44:3662.44] Um out of those
+[3663.4:3676.36] We we see that uh if we split on student status then they're all in the same group uh everyone who is not a student does not buy a computer and everyone who is a student
+[3678.36:3683.32] Everyone who has here yes here also has yes here buys a computer. So we're done
+[3684.2000000000003:3688.92] Because now student status for that subgroup of under 30 year olds perfectly
+[3688.92:3692.52] Splits the buyers from the non buyers
+[3693.4:3699.56] Now we go back to the branch that is still open the above 40 year olds
+[3699.88:3707.16] Um if we split on credit rating then we see that um those that have an excellent credit rating
+[3707.8:3715.7200000000003] Do not buy a computer and those that have a fair credit rating all buy a computer and so again we would be done
+[3715.72:3719.08] So this is how you would be constructing your tree
+[3719.24:3726.68] What I didn't tell you is what's the oracle that gave me the right uh the right attribute to split on at every step
+[3726.68:3734.6] I just started with age magically right, but how do we decide that we should actually start with age and not with let's say credit rating
+[3734.9199999999996:3736.52] And this is um how you do it is
+[3737.3199999999997:3738.9199999999996] We do this by
+[3738.9199999999996:3743.72] Finding greedily at every point the attribute that gives us the purest
+[3743.72:3745.72] split
+[3746.52:3750.3599999999997] Um, and here's how we can formalize this at the given branch in the tree
+[3751.16:3756.3599999999997] The set of samples that's associated with that node that basically percolated after you did all the splits
+[3756.3599999999997:3765.08] That's the subset that still is in your node in this subset you have p positive and n negative samples
+[3765.56:3769.56] And now we can compute the entropy who knows what the information entropy is
+[3770.8399999999997:3772.3599999999997] who?
+[3772.36:3774.36] Oh, this is low. Oh
+[3775.08:3777.2400000000002] surprising okay, so um
+[3778.36:3785.56] Then I don't know if I can give um I cannot do a big excursion and give the full ramification of entropy
+[3785.88:3791.56] I'll tell you that it's a measure of uncertainty the higher the entropy the
+[3792.84:3795.6400000000003] The less certain you are in the outcome of a random variable
+[3796.36:3798.36] um, this is how it's um
+[3798.36:3807.0] How it's formalized it's basically the expected number of bits that you need in order to uh encode the outcome of the random variable
+[3807.48:3809.48] but for now just
+[3811.0:3813.48] Take it in this formula way
+[3814.2000000000003:3819.6400000000003] Given p and n you can compute the entropy the higher the entropy the
+[3821.1600000000003:3823.1600000000003] um
+[3823.16:3830.44] um the the less pure your your data set basically if you have and uh here you go
+[3830.7599999999998:3837.7999999999997] If you have p with zero so that means no positive examples only negative examples in the set or vice versa
+[3838.44:3840.44] Then your entropy
+[3841.7999999999997:3844.6] Will be zero you have no uncertainty
+[3845.24:3851.3199999999997] Because it's completely if you pick a random one you close your eyes and you pick a random a data point from that sample
+[3851.32:3853.48] You know exactly ahead of time what it will be
+[3854.04:3859.32] Because there are only if p equals zero then there are only negative examples. So there's no uncertainty
+[3859.7200000000003:3861.7200000000003] However if p equals n
+[3862.04:3866.52] Then there's maximum uncertainty if you close your eyes and you pick a random one from that data set
+[3866.76:3868.1200000000003] It's gonna be 50-15
+[3868.1200000000003:3876.04] That's about as uncertain as you can be before you draw and so this is uh the intuition why entropy is a good measure here
+[3876.04:3881.64] Because it tells you how pure that data set is pure with respect to the labels of the data points
+[3883.24:3887.32] So the strategy now is to select the attributes such that after splitting
+[3889.08:3895.24] The data sets that are associated with the child nodes into which we split I have low entropy
+[3895.8:3896.84] because
+[3896.84:3898.44] low entropy
+[3898.44:3899.4] means
+[3899.4:3901.4] No uncertainty means a pure split
+[3901.4:3905.48] Which is what we want because if we have a pure split we can just stop
+[3906.2000000000003:3907.7200000000003] uh
+[3907.7200000000003:3909.96] Stop constructing the tree in that direction
+[3910.92:3912.28] Let's
+[3912.28:3914.28] Do the exercise here
+[3914.76:3916.52] Um, so first of all we have
+[3917.2400000000002:3920.2000000000003] 14 data points here. We have nine
+[3921.1600000000003:3922.2000000000003] uh
+[3922.04:3928.36] positives and five negatives. So in the beginning the entropy here is
+[3928.36:3931.6400000000003] If you calculate it's 0.94
+[3934.36:3936.36] Okay
+[3936.36:3939.32] And now if we split on age
+[3940.04:3945.6400000000003] Then we have three subgroups right if we split on age we will split the original data into three sub sets
+[3946.28:3951.48] Now let's compute the entropy within each of these sub sets if among the
+[3952.04:3954.36] Among the less uh below 30-year-olds
+[3954.36:3962.52] We have two positive three negative if you plug this into that formula you will get an entropy of 0.97
+[3963.4:3971.08] Among the 31 to 40-year-olds we have four negative zero four positive zero negative that gives you an entropy of row
+[3972.36:3978.28] Right, this is that this case here. There is no uncertainty among these you know that they're all positive
+[3978.28:3984.6800000000003] So entropy zero and the over 40-year-olds have three positive two negative which also gives you a
+[3985.32:3987.32] An entropy of 0.97
+[3988.6800000000003:3991.96] And you can do this for every single attribute
+[3991.96:3996.84] So if you take the full data set and instead of splitting it by age you split it by student status
+[3997.2400000000002:4002.76] Then you will also get for each subset an entropy and so on for the other two attributes
+[4003.4:4007.4] Now what we do is we basically can take an average
+[4007.4:4014.52] Um for each of these for each of these groups if we split by age then each subset will be associated with an entropy
+[4014.84:4016.84] so we can take
+[4016.84:4020.2000000000003] The average of this and we take an average that is actually
+[4020.92:4025.56] It's a weighted average by size of this group. So let's look at this here
+[4026.52:4028.52] if we split by age
+[4029.1600000000003:4030.84] then
+[4030.84:4032.84] we have um
+[4032.84:4035.8] What's the what's the fraction of less than 30-year-olds
+[4035.8:4037.8] is
+[4037.8:4041.2400000000002] 5 out of 14 between 30 and 40 we have um
+[4042.1200000000003:4045.96] 4 out of 14 and between about 40 we have
+[4046.84:4048.84] Again 5 out of 14
+[4048.84:4056.6000000000004] So we can build a weighted average of these entropy values that are just computed on the previous slides and then for each of these
+[4057.2400000000002:4061.7200000000003] possible splits for each of the attributes we get an expected entropy
+[4061.72:4066.52] uh that we would have after the split so that what does that mean it means that
+[4067.08:4074.2799999999997] You do the split and then if you randomly pick a data point you see like which of the which of the subsets would it fall into
+[4075.08:4081.3199999999997] Then times what's the entropy in that subset? So that gives you then the um expected entropy if you
+[4082.2799999999997:4089.24] Uh, if you apply that split and now I said low entropy means more certainty
+[4089.24:4095.9599999999996] We want much certainty right we want to have as pure as split as possible. So what do we pick do we pick the
+[4096.679999999999:4101.639999999999] um the attribute that has the highest or the lowest value here
+[4102.84:4111.16] The lowest value exactly so we pick age because it's expected entropy after the split is the lowest out of all of these
+[4113.8:4115.32] um
+[4115.32:4121.0] And then information gain is basically just something minus entropy um
+[4122.12:4128.44] What's the information gain the uh information gain is the entropy that you have in your data set before the split
+[4129.08:4134.04] Minus the expected entropy that you have after the split so the um that
+[4134.92:4140.679999999999] This difference captures the amount of certainty that you gain by performing that split
+[4140.68:4145.88] And you want to pick the split that where you gain the largest amount of certainty
+[4146.280000000001:4152.52] So that's and we picked the the a that has the lowest age. So we picked the one that has the largest
+[4153.16:4155.400000000001] something minus age um
+[4156.4400000000005:4159.72] And this is the information gain okay, so you see we
+[4160.84:4165.88] Really it would work only with with entropy, but somewhere in the literature people talk about information gain
+[4165.88:4172.52] where you have this constant here and you subtract the entropy from it and then you pick the one always that has the highest
+[4172.84:4174.84] information gain
+[4177.4800000000005:4181.32] This is it, but there's a problem because if you do this
+[4182.52:4187.16] Then you will always be able to fit every data set perfectly
+[4188.68:4192.84] Right because every data point has some combination of features
+[4192.84:4197.88] And if you check on enough features then you will always be able to
+[4198.04:4202.360000000001] um to continue growing the trees such that in the worst case you would have
+[4202.76:4207.0] uh this exponential number of leaves and there would be one data point in each leaf
+[4207.4800000000005:4210.28] You haven't really gained anything that way
+[4210.6:4215.4800000000005] So you're completely overfitting to the to the data set that you have so
+[4216.2:4217.400000000001] we
+[4217.400000000001:4221.400000000001] Decision trees don't make sense if we don't make any problem if we don't
+[4221.4:4227.16] Solve that problem in any way if we don't deal with this overfitting that will happen
+[4228.36:4229.16] and
+[4229.16:4231.16] so that's where the
+[4231.799999999999:4237.4] pruning strategies come in so one thing that you can do for example is
+[4238.12:4244.04] To just as you're growing the tree to stop growing it at some point instead of just continuing
+[4244.44:4246.44] um all the way down
+[4246.92:4249.96] into um into this exponential number of leaves
+[4249.96:4252.2] You can say well
+[4253.4:4255.4] If I have less than
+[4255.72:4257.4] 20 data points
+[4257.4:4263.88] Left in a node then I just stop and I take a majority vote of the data points that are still there. So that's one thing
+[4264.84:4266.84] that you can do
+[4266.84:4269.4] um and uh another thing so this is kind of
+[4270.52:4278.36] Prospectively you don't even grow the trees to the end another thing you can do is to grow the trees as far as you can and overfit the hell out of the data
+[4278.36:4280.839999999999] and then backtrack and clip
+[4281.48:4284.599999999999] The branches of the tree to something more healthy
+[4285.24:4294.839999999999] So you can for example first fully build the tree and then recursively backtrack from the leaves so you can say okay. I take
+[4296.12:4299.16] Um, I take one I take a note that's
+[4299.16:4307.5599999999995] Above the leaf level and then I see huh what if I group all the all the leaves that are sitting underneath that node together
+[4309.32:4314.36] and um what happens if I do that and you evaluate it on another data set
+[4315.08:4320.76] What's really important is that you cannot evaluate on the trainings data set that you trained the tree on right because then
+[4321.32:4323.5599999999995] Uh, it's like the snake is spiting its tail
+[4323.56:4330.04] But you will have to have taken out a portion of the data set you didn't use that for growing the original tree
+[4330.4400000000005:4334.360000000001] And then you can check if an out group leaves together
+[4335.4800000000005:4337.4800000000005] Into these larger nodes
+[4338.360000000001:4344.200000000001] does my performance on the um on the head out portion of the data
+[4345.0:4346.120000000001] Become
+[4346.120000000001:4349.56] Become worse if it becomes worse then you keep that split
+[4349.56:4355.96] But if it doesn't become worse then it might even become performance might even become better because you reduce the overfitting
+[4356.360000000001:4362.76] Then you want to actually do this merging of the nodes and then you can do that recursively because now out of by merging several leaves
+[4362.84:4366.04] You create a new leaf and you can do the same process
+[4366.68:4371.96] Up to the point where performance becomes worst again
+[4373.8:4375.8] This makes sense
+[4375.8:4379.08] Okay, cool
+[4381.0:4383.0] So some comments
+[4383.08:4385.08] decision trees are um
+[4385.88:4390.68] A simple example of a classification algorithm, but there are many others out there
+[4390.68:4395.08] We already say saw canier's neighbors today um and there are many more
+[4395.64:4402.4400000000005] But you can also use them as a regression algorithm right so classification if you do a majority vote um
+[4402.44:4407.96] To aggregate over data points and regression if you take something like an average
+[4408.5199999999995:4410.2] Um to do the
+[4410.2:4415.16] aggregation so they're quite versatile in that sense. They're both classifiers and regressors
+[4416.04:4416.919999999999] um
+[4416.919999999999:4418.5199999999995] They might not be the best one
+[4419.4:4426.04] Because they are quite sensitive to small perturbations in the data so they're overfitting that was the point of the previous slide
+[4426.12:4430.5199999999995] They have high variance if you change the data set slightly you might get a completely different decision tree
+[4430.52:4432.52] um
+[4433.64:4437.400000000001] Another disadvantage is that they're non incremental so if
+[4438.040000000001:4441.56] I give you new data points you can't just kind of keep
+[4442.68:4446.68] uh integrate them into the uh the tree that you already have and change the tree
+[4446.92:4452.200000000001] But you would need to redo your entire tree from scratch if I give you a few new data points
+[4452.200000000001:4457.8] That's very different from some other machine learning algorithms um, but what's good about decision trees
+[4457.8:4465.08] Is that they are highly interpretable if I give you the tree you can look at it and you know exactly what are the decisions
+[4465.4800000000005:4470.6] What's the sequence of decisions that is made by such a model so for something like use case like medicine
+[4470.6:4479.72] This is really useful because we can then understand what the model does and we know that there aren't these hidden edge cases where the model would do something completely crazy
+[4480.52:4484.84] Okay, so there's this trade-off here between interpretability and um
+[4484.84:4487.16] performance of the model
+[4489.0:4493.16] Okay, so um, let's get back to the bias variance trade-off
+[4494.4400000000005:4496.4400000000005] As we keep growing a tree
+[4498.76:4505.56] Um as I as I showed you you can have the tree of various sizes right you can either grow it completely and
+[4505.72:4510.68] Overfit the data or you can stop or you can you can prune it and then you will get a
+[4510.68:4515.16] A shorter tree as you increase the depth of the tree
+[4516.200000000001:4518.200000000001] How does that um
+[4519.0:4525.64] How does the bias variance trade-off change and for that I did a little poll
+[4526.4400000000005:4533.08] Um, please go to the usual page and choose the one out of four options the options are
+[4534.200000000001:4535.72] As you
+[4535.72:4537.72] Increase the depth of the tree
+[4537.72:4548.280000000001] Bias increases in variance decreases or bias decreases in variance increases or both of them increase or both of them decrease so there are also
+[4548.68:4550.280000000001] um
+[4551.56:4552.6] For
+[4552.6:4570.6] Possibilities and I'd like you to vote on those
+[4570.6:4572.6] Okay
+[4580.200000000001:4584.52] Okay, cool. So we will do a quick one here. So let's do 10 more seconds
+[4584.52:4603.4800000000005] Four three two one last chance to dance okay, I am stopping this now and I'm taking a screenshot and then I'm sharing the results
+[4604.200000000001:4611.72] So people say that we have a vast majority for bias decreases and various increases
+[4611.72:4617.72] Uh, this is great because this is correct and it means that I
+[4618.92:4622.280000000001] Didn't do such a bad job at explaining things because you understood
+[4623.16:4624.68] um
+[4624.68:4626.12] As you
+[4626.12:4628.12] Keep growing the
+[4628.12:4635.72] Depth if you make the tree deeper the bias decreases because you can you can describe the data better right you have more
+[4636.280000000001:4638.280000000001] degrees of freedom to
+[4638.28:4644.5199999999995] Um to put your data points into buckets, but that way I gave it away with one of the previous slides
+[4644.92:4646.92] Variance increases you overfit to the data
+[4647.24:4651.719999999999] Um as you if I give you a slightly different data set you might come up with a completely different
+[4652.28:4654.92] um decision tree if it's very deep
+[4656.28:4661.719999999999] And so we'll now look at a set of methods that will allow you to
+[4661.72:4666.68] both decrease the bias and decrease the variance
+[4667.400000000001:4669.400000000001] So it seems like a
+[4669.400000000001:4675.16] Seems like magic by doing something special by not working with a single tree but working with several trees
+[4675.400000000001:4681.88] And this is the the family of methods that I'm talking about is called ensemble methods. So um
+[4683.08:4690.280000000001] You can think of ensembles as kind of crowdsourced machine learning algorithms where you take a collection of small or weak learners
+[4690.28:4697.48] And then you combine them or combine their results to make a single better learner like a mega learner kind of there are several types
+[4697.88:4704.28] there is uh bagging stacking and boosting bagging stats stands for bootstrap aggregating
+[4704.28:4712.2] You've already seen the bootstrap for computing confidence in us. So this is very similar here where we train many learners in parallel
+[4713.24:4714.5199999999995] on
+[4714.5199999999995:4716.28] several um
+[4716.28:4724.28] on on different uh uh training datasets and we get the training data sets by resampling uh by sampling with replacement
+[4724.28:4726.28] So here many trainers
+[4726.28:4731.5599999999995] Train on slightly different training data sets and then aggregated stacking is
+[4732.44:4737.16] When you have a bunch of models you train them each you train each model separately
+[4737.24:4742.28] And then you learn a second stage model that learns to combine the outputs of the previous models
+[4742.28:4747.639999999999] You can think of this like a meta reviewer when people review papers every reviewer will get a vote
+[4747.719999999999:4753.24] And then there will be a meta reviewer that takes the reviews and aggregates them into a final decision
+[4753.32:4756.28] So this is kind of what this is you might have a decision tree
+[4756.84:4761.8] A logistic regression a canier's neighbors a naive base each of them makes their predictions
+[4762.28:4764.84] Every one of them is good at something bad at other things
+[4765.0:4771.16] And then you have a second classifier that learns to make the right decision based on by using as features
+[4771.16:4774.599999999999] The predictions made by the other um classifiers
+[4775.5599999999995:4779.639999999999] That's called stacking and then finally we have boosting where we
+[4779.88:4780.76] um
+[4780.76:4790.04] We first train the learner the learner will make mistakes and then we train a second learner that will predict the mistakes or learn to correct the mistakes of the previous learner
+[4790.04:4796.44] So we have the sequence of models where the next stage uh unduz the errors basically that were made by the
+[4797.08:4798.84] uh by the previous stages
+[4798.84:4805.8] We'll see one example of bagging in what follows called random forests and we'll see one example of boosting
+[4805.8:4808.84] Called gradient boosted or boosted decision trees
+[4810.360000000001:4812.6] We start with random forests an example of bagging
+[4813.32:4817.0] So what do we do here? We um have our original data set
+[4817.64:4819.64] That has capital N data points
+[4820.2:4827.64] We now make fake data sets in exactly the same way as i explained when i talked about how to compute how to do to do bootstrapped
+[4827.64:4832.200000000001] A resembling for confidence universe you take your data set you
+[4832.360000000001:4836.200000000001] Re-sample you sample the same number of data points as in your data set
+[4836.200000000001:4839.240000000001] But you do it with replacement close your eyes you take one data point
+[4839.8:4846.6] You write down what it was you put it back and then you take a new data point and you repeat this as many times as you actually have data points
+[4847.08:4852.12] So this means that in your bootstrapped sample some data points will have been
+[4852.12:4860.2] Sampled several times where some will have not been sampled at all, but you get kind of a new fake version of your original data set
+[4861.4:4862.68] and
+[4862.68:4871.72] Now you grow a on each of these fake data sets you fit a decision tree in exactly the way that i showed earlier
+[4872.04:4874.92] You just do a vanilla decision tree on each of these fake data sets
+[4875.08:4877.5599999999995] But you do many of them because you have many fake data sets
+[4877.56:4881.160000000001] As an additional constraint we um
+[4882.92:4888.360000000001] For for every single every time we have to make a split a split we decide on an attribute to split on
+[4888.92:4892.120000000001] We take only a random subset of all the features
+[4892.92:4897.88] We don't allow the tree to choose from all the
+[4898.6:4900.76] Attributes but only from a subset
+[4901.72:4905.400000000001] Why is that because we want to avoid that the
+[4905.4:4911.4] corresponding positions in the we have many different trees and we want to avoid that the different trees kind of do the same thing
+[4912.759999999999:4919.16] So that's why we constrain each of them in a different way by giving them access only to a subset of the
+[4919.24:4920.2] features
+[4920.2:4926.04] This increases the variability we we get more diverse learners that way and then at testing time
+[4926.36:4933.0] We simply stick our data point into each of the trees in parallel each of them will make a prediction and we average the predictions
+[4933.0:4936.44] Or we do a majority vote if we do classification
+[4942.2:4944.92] Strap samples are the insurance that they won't have the same
+[4945.4:4948.28] Yep, it's um that's so the question is
+[4948.92:4950.92] Aren't we doing kind of
+[4950.92:4955.08] The same thing twice by doing bootstrappers samples and doing random selection of features
+[4955.56:4957.4] They're they have the same
+[4957.4:4960.84] Purpose but they do it in slightly different ways so it kind of gives a bit more
+[4961.16:4962.84] um
+[4962.84:4965.0] One covers the blind spots of the others
+[4966.68:4967.8] Um
+[4967.8:4969.400000000001] Okay
+[4969.400000000001:4971.64] so um the
+[4971.64:4978.360000000001] The principle here is that we want to take a vote between different learners and um
+[4979.400000000001:4987.0] And so we don't want the models to be to be too similar and if we just take this bootstrapper samples and you if you imagine that you take a
+[4987.0:4992.76] You have a very large data set and you take a resample from that then the data sets will be pretty much the same
+[4993.0:4999.24] They will vary but they won't be exactly much the same exactly the same but the the properties of those data sets in the limit
+[4999.32:5003.96] You know will be you'll have the same mean you'll have the same standard deviation and so on and so
+[5004.76:5012.2] You want to have even more variability by constraining the set of features that's available at every single split
+[5012.2:5019.72] and um this will be we actually get something that's much better than a single decision tree
+[5020.12:5025.639999999999] Um, and it's it's one of the reasons why random forests are so popular in uh in practice
+[5026.5199999999995:5034.12] So when you see when you look at any of these um of these machine learning challenges random forests are always among the the top runners
+[5034.2:5037.88] They're often on par with with deep neural networks
+[5037.88:5044.04] Uh, but they're actually really easy to implement because it's just a bunch of decision trees right
+[5044.04:5049.96] It's kind of a meta algorithm that takes the decision tree algorithm and runs it multiple times with slightly different
+[5050.36:5056.2] Uh constraints and so it's also super easy to parallelize because you can you can uh
+[5057.24:5065.24] You can grow each tree all the trees in parallel to each other the independent you are there on on independent um bootstrapper samples
+[5065.24:5066.92] But
+[5067.8:5072.5199999999995] It uh takes several passes over the data because it's um
+[5073.719999999999:5080.76] Because it's tree-based when you when you grow a tree every time you do a split you pretty much have to iterate over the whole data set
+[5080.76:5082.76] So it's not it can be
+[5083.0:5085.0] Uh time consuming to fit those models
+[5086.76:5089.0] So uh this was an example of bagging
+[5089.639999999999:5094.12] Because we took we have several models that we train in parallel and then we aggregate over them
+[5094.12:5096.92] Next let's look at an example of boosting
+[5097.5599999999995:5104.28] So here uh the typical example is boosted decision trees a more recent alternative to random forests
+[5105.64:5109.72] Um, whereas in random forests we grow those trees independently in parallel
+[5110.68:5113.72] In uh boosted decision trees are trained sequentially
+[5114.28:5123.48] So it's an example where you train one tree it will make errors then you train the next tree which is trained specifically correct the errors that were made by the previous tree
+[5123.48:5126.759999999999] So this is done by um you take the first tree
+[5127.4:5133.16] You look at uh basically the error being how far off is the prediction from
+[5134.2:5140.36] The truth and then you take that for the next learner you take that as the prediction target you predict
+[5141.08:5149.08] How far off was the previous model because if you know that then you can undo it by just doing minus that basically from the prediction
+[5149.08:5154.12] So that's the the idea here you have this ensemble where um
+[5156.76:5160.92] Where uh the later stage models correct the the previous models
+[5161.64:5165.0] Um, I will take it keep it at this conceptual level here
+[5165.24:5170.12] But if you want to um understand how this is done in a more technical level
+[5170.12:5177.08] Um, I put a little link up there for me the important thing here is that you understand the difference between backing and boosting
+[5179.72:5184.92] Um, okay, so let's look at how those two relate to each other random forests versus boosted trees
+[5185.48:5191.64] Um, actually the geometry of these methods um, I'll explain to you what I mean by geometry is very different in random forests
+[5192.2:5194.2] We will have
+[5194.2:5204.2] 10 a few trees maybe tens or or maybe hundreds but uh fairly low number of trees and each of those trees is deep
+[5205.16:5210.599999999999] What does that give us since the trees are deep this means um
+[5211.72:5221.32] We'll have low bias, right? Remember that was the poll question deep trees have low bias, but high variance. So our our um our goal is to
+[5221.32:5226.92] Decrease the variance while keeping the bias low as well and we'll be with decreased the variance by
+[5227.639999999999:5232.36] Having many many trees by averaging, you know, this is the um kind of central limit
+[5233.0:5240.5199999999995] At the law of large numbers if you take an average over many predictions um, then you will get on average closer to the
+[5241.16:5243.639999999999] To the true to the true mean
+[5243.64:5251.96] Okay, so bias already low variance reduced by aggregating the ensemble now. Let's look at boosted trees
+[5252.360000000001:5256.12] They're very different because in boosted trees the trees are very
+[5257.320000000001:5261.4800000000005] short they're more of these kind of stubs um the literature recommends four to eight
+[5261.96:5266.12] Uh as depths, but then we will have many
+[5267.08:5271.4800000000005] Uh, maybe thousands of such trees in sequence where each
+[5271.48:5281.879999999999] Uh, three correct the errors made by the by the one before now these will um have high each of these trees will have high bias, right?
+[5281.879999999999:5286.5199999999995] Because they're shallow. They don't have the capacity to fit the data well um
+[5288.04:5295.879999999999] But they have low variance because they are they're shallow. So variance is already low and reduce the bias by
+[5295.88:5300.68] um fixed in the systematic errors that are made by the
+[5301.32:5303.32] Uh, previous models in the sequence
+[5304.84:5311.72] So here it's again in one picture random forest few deep trees boosted trees many shallow trees, but they're both
+[5312.36:5314.36] Uh, they both work quite well
+[5315.16:5319.4800000000005] Okay, so um, this is something for your personal producer at home
+[5319.64:5324.84] It's a really nice visualization of some of the techniques that we talked about today
+[5324.84:5330.12] It's an interactive uh website that uh, uh, is in services and introduction to machine learning
+[5330.12:5333.24] So I encourage you to look at this in your own free time
+[5333.8:5339.08] And now in the last four minutes we will cover linear and logistic regression. Isn't that amazing?
+[5339.56:5345.0] Um, linear regression we actually don't have to cover because we already saw it in lecture five
+[5345.8:5352.360000000001] So just as a reminder um, the goal in linear regression is to basically find the
+[5352.36:5358.92] uh linear model like a in this case a line or it could be in a higher dimensions could be a plane or a hyperplane
+[5359.32:5360.599999999999] That best
+[5360.599999999999:5362.599999999999] approximates the data
+[5363.0:5367.5599999999995] That you have okay, so I don't have to go into more detail here because we already saw it
+[5368.12:5373.0] But now I want to raise a question what if my data is not this
+[5373.88:5375.88] kind of full range of
+[5375.88:5380.44] uh, real numbers on the y value, but what if my data is actually
+[5380.44:5387.639999999999] um, binary what if my outcomes are zero or one? Let's imagine I want to predict whether a student
+[5387.96:5389.5599999999995] Will pass data
+[5390.36:5395.879999999999] Then that will be a binary thing either they will pass or they will not pass zero or one
+[5396.839999999999:5404.28] So what I would what I would actually like to predict in this case is what is the probability that a student will pass data
+[5405.4:5409.48] I could do this in principle with linear regression where as the as the y
+[5409.48:5416.759999999999] And the labels that I'm trying to predict I will use zero and one but I get into these odd situations then where if I
+[5417.879999999999:5422.2] Fit that line it might actually make predictions lower than zero
+[5423.0:5428.679999999999] At uh for some cases or predictions that are higher than one right because the line if it has non zero slope
+[5429.48:5431.959999999999] So if it's a non-trivial model it will just
+[5432.679999999999:5435.24] Keep going to infinity and to negative infinity
+[5435.24:5439.88] So in practice, maybe you could round you could say if it's less than zero
+[5439.96:5447.4] I just rounded to to zero or if it's above one around it to one, but it feels like uh it feels like a hack right is there something more
+[5447.4:5449.4] principled that we can do and
+[5450.04:5451.5599999999995] the
+[5451.5599999999995:5459.32] The solution is to think like a gambler um to think not in terms of probabilities, but to think in terms of odds
+[5460.2:5464.44] Odds are the same thing as probabilities. There is a one-to-one mapping between the two
+[5464.44:5471.639999999999] Um if you have probability why then you get the odds simply by y divided by one minus y
+[5472.04:5476.28] Okay, so this is how people who go to the casino think the odds are three to one
+[5477.08:5481.719999999999] This really means that it's a 25% chance of of winning
+[5483.0:5484.5199999999995] um
+[5484.5199999999995:5489.24] I think it's 25% yeah and um, okay, so we already gained something
+[5489.24:5498.599999999999] Probabilities between zero and one odds are between zero and infinity, okay, so already in one direction. We're we're doing better
+[5499.32:5501.8] um, and now we take log odds
+[5502.599999999999:5506.84] Um and log odds are between minus infinity and plus infinity
+[5507.5599999999995:5512.04] Okay, and they also have the nice um the nice property that
+[5513.719999999999:5519.0] You don't care about the order of these two so if you take the logs then two log two
+[5519.0:5523.0] Is as far away from from zero as log of one half
+[5524.04:5529.4] Okay, because log two is one if we take binary logs and log one half is minus one
+[5529.72:5535.16] So they're equally far apart from zero. So that is also a uh quite a nice um
+[5537.24:5543.64] Uh nice property because you don't care about how you define the class as positive and negative if you can permute them and it's gonna be
+[5543.64:5550.360000000001] uh still still equally far apart from zero. So that's really nice because what we can do now is
+[5550.76:5557.08] Since log odds are not between zero and one like probabilities, but between minus infinity and infinity
+[5557.400000000001:5559.64] We can model them as a linear function
+[5560.6:5562.6] And if we predict log odds
+[5563.160000000001:5569.56] greater than one no problem. We can have log odds as large as we want and it still can be mapped to a meaningful
+[5569.56:5573.72] uh probability and this is what you get when you do this. So if we
+[5574.280000000001:5578.280000000001] try to model the log odds as a linear function of the features
+[5578.360000000001:5581.96] That's what what this thing on the left is right this is a um
+[5583.0:5588.92] A weighted sum of the features x by the coefficient's beta beta as the coefficients that you're trying to learn
+[5589.88:5592.120000000001] If you model
+[5592.12:5599.4] The log odds as a linear function of the features and you solve this for y. Do this on the back of an envelope or in your head
+[5599.88:5605.32] Then you will get that y equals this function here one divided by one plus e to the minus beta
+[5606.44:5610.36] x and this if you plot this it gives you this sigmoid which uh
+[5612.5199999999995:5614.5199999999995] Looks like this s
+[5615.24:5621.4] And this is really nice because the sigmoid now is between uh is between zero and one right so um
+[5621.4:5629.719999999999] There is no more no more hacking to be done by um by rounding negative numbers to zero and so on
+[5631.32:5635.96] I also have on this slide added something about how to fit the log
+[5636.5199999999995:5641.879999999999] Logistic regression model with maximum likelihood, but this is more for completeness and for the curious ones
+[5642.36:5646.679999999999] Among you. It's really not so crucial for the purposes of eta. So um
+[5647.4:5650.2] I refer you to the machine learning class
+[5650.2:5654.2] That's going to start in 13 minutes if you want to learn more about this
+[5654.599999999999:5659.639999999999] Okay, just one last slide about overfitting. This is to set the stage for next week
+[5660.44:5664.84] In a model like this if you add more and more features to your feature vector x
+[5666.44:5671.8] Will this always be better? Well, it will allow you to fit the training data better, but um
+[5672.5199999999995:5674.5199999999995] But you will overfit the data
+[5674.52:5682.200000000001] Um what you should then do instead is carefully select the features in order to or do something to your model in order to
+[5682.52:5687.240000000001] Decrease the variance and this is what we look at in the next lecture
+[5687.240000000001:5690.68] For example how to select features how to regularize the model and so on
+[5690.68:5703.64] Okay, so with that uh, let me stop here and see you on Friday. Thank you

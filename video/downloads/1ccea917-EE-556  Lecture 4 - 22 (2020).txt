@@ -1,0 +1,308 @@
+~EE-556 / Lecture 4 - 2/2 (2020)
+~2020-10-05T14:35:57.315+02:00
+~https://tube.switch.ch/videos/1ccea917
+~EE-556 Mathematics of data: from theory to computation
+[0.0:7.0] Alright, let's try to slowly pick the base up back again.
+[7.0:23.5] So, what we've done so far was to talk about maybe incorporating some prior structure
+[23.5:30.5] on the unknown parameters, and this was a fast-t of e. And I did mention that there
+[30.5:38.5] could be other models, you know, things like low rank matrices, maybe had a comics model,
+[38.5:45.5] there could be other structures, fast models that can have a comics regularizer.
+[45.5:52.5] Now, what I will do is I'm going to tell you a principle day of doing this.
+[52.5:59.5] This particular part of the presentation is from the comics geometry of linear inverse
+[59.5:62.5] problems, which was a very good paper.
+[62.5:72.5] I think that's actually the history of this compressive something is interesting.
+[72.5:80.5] So, there is a total variation model that is very famous, which looks at the sparsity of
+[80.5:86.5] the text. So, Justin Romburg, who is a PhD student at Rice University,
+[86.5:94.5] was playing with, let's say, with Shepp Logan Phantom, and it's recovery, some MI
+[94.5:100.5] adaptation, imaging adaptation. And what he realizes is that from a few radio slices
+[100.5:107.5] of the Shepp Logan Phantom, using total variation, he was able to perfectly
+[107.5:114.5] recover it. Then he takes this knowledge, goes to the post-acted Immanuel Candace,
+[114.5:126.5] he was a picotic at the time, and Immanuel has, so goes to the daycare for
+[126.5:132.5] to pick up his kid and then runs into Terence's style. He mentions to Terence
+[132.5:139.5] Teri Tao on a Friday, and then on Monday, there is like a 30 page written manuscript
+[139.5:148.5] by Teri Tao on how this could work. The wrote a paper about that, and then it became
+[148.5:156.5] like a big wave around 2004. Immanuel's post-acted advisor, they don't know
+[156.5:164.5] at the same time, they also proposed an alternative, people with compressed sensing
+[164.5:170.5] in the manual post, compressive sensing, with the sparsely business people
+[170.5:175.5] from there. But, you know, the sparsely business has been around since my team,
+[175.5:182.5] well, actually, even earlier. It became famous with the Los Lusas estimator,
+[182.5:189.5] but before Los Lusas, there was the basis for the stut estimator by Dei Tao.
+[189.5:196.5] It was a major deal in statistics using sparsely and sparsely business.
+[196.5:207.5] And the developments of the 2004, 2005-ish were extended on coming up with structures
+[207.5:214.5] for structures faster than you, which, for example, may be a career.
+[214.5:219.5] And you now also see that even in neural networks, things like path norms,
+[219.5:224.5] which look at the sparsely of connections from the input to the output of a neural network,
+[224.5:228.5] things like this. So what I will tell you now is like a
+[228.5:232.5] principle day of coming up with structures faster than models, which still has
+[232.5:239.5] applications from pressive sensing, not so much, but linear inverse problems,
+[239.5:246.5] is of course important. Okay. Now, here is a basic rest息y.
+[246.5:254.5] So what we do is we start with a set of atoms that our signal is sparse on.
+[254.5:265.5] So then what we say is that we say that the parameter of interest has a simple representation.
+[265.5:270.5] Okay. With respect to this, called, and called atomic set.
+[270.5:275.5] If it is structured in some other way, called molecular set, whatever,
+[275.5:283.5] just constitutes the signal. If it can be represented as a non-negative combination of a few atoms.
+[283.5:289.5] Right. In the case of sparsely, if you were to take the canonical axes,
+[289.5:294.5] that's what take the canonical coordinate vectors and their negatives,
+[294.5:300.5] that constitutes its atomic set for sparse vectors. Right.
+[300.5:306.5] Because you only use a few coordinate elements to explain this signal,
+[306.5:310.5] only S of them, for example.
+[310.5:320.5] So if you want to find sparse representation, what you can do is you can just take the dictionary,
+[320.5:326.5] take the atoms, and put their negatives also into the set, right.
+[326.5:335.5] They're antipodals. Then you have a sparse representation and atomic set
+[335.5:340.5] with non-negative coefficients representing the signal. Right.
+[340.5:346.5] So here, the non-negative is important.
+[346.5:350.5] So the L1 norm is precisely associated with this.
+[350.5:360.5] You know, so if you think about it, you can take the canonical coordinate vectors and their negatives.
+[360.5:375.5] In this case, the convex hull of this atomic set will be the L1 norm.
+[375.5:383.5] So how do we get this? For this, I'm going to do a bit of formalism.
+[383.5:389.5] It's often not completely necessary, but it serves the purpose here.
+[389.5:394.5] We're going to talk about norms, which are centrally symmetric with respect to the origin.
+[394.5:399.5] So it is important that our set has, if it has an element, right.
+[399.5:402.5] It has its antipodal also in the set.
+[402.5:406.5] It used to be symmetric with respect to the origin.
+[406.5:411.5] Because a norm is positive normal genius, which can take any number inside the norm,
+[411.5:415.5] the absolute number of the pops out.
+[415.5:427.5] So what we're going to do is we're going to find the minimal scaling such that a given vector is in this atomic set, the convex hull of this atomic set.
+[427.5:431.5] So that is called the gauge function.
+[431.5:441.5] What you can do is you can define an atomic norm as the value of the gauge for the given vector.
+[441.5:449.5] So the generalization of the loss too is that if you have some atoms, you can define the atomic set.
+[449.5:451.5] You can look at its convex hull.
+[451.5:466.5] Then a given signal, what you need to do is find the minimal scaling of this set, so that the given vector is inside the convex hull.
+[466.5:474.5] So here's an example. So let's take these canonical vectors. I give you a vector here.
+[474.5:481.5] What would be the atomic norm?
+[481.5:484.5] So here what we can do is do geometry.
+[484.5:486.5] Look at the scaling and so on and so forth.
+[486.5:491.5] But in this case, we know that the atomic norm is the L1 norm.
+[491.5:496.5] So this is 6 over 5 then.
+[496.5:500.5] Because all you need to do is sum up the absolute values of the coefficients.
+[500.5:506.5] So what I recommend you do is check that the scaling is actually correct.
+[506.5:510.5] But it is simply the summation of the entries.
+[510.5:519.5] It suffices to scale the one ball so that this thing is in this set.
+[519.5:522.5] Here's another one.
+[522.5:526.5] So here is a gauge function.
+[526.5:533.5] Here's an atomic norm. What would be the expression?
+[533.5:546.5] So if you think about it along the x2x3 coordinates, it is something like the 2 norm.
+[546.5:553.5] And then along the x2x4 coordinates, it is like the 1 norm.
+[553.5:558.5] Here it is.
+[558.5:564.5] So the geometry, how you set things up, you can come up with structuring regularizes.
+[564.5:573.5] You would want to pass it in this direction, for example, but not necessarily in this direction.
+[573.5:581.5] Now, here are some examples that I will not go over the proof, but I leave the proof here for completeness.
+[581.5:593.5] So if you have a vector that is combination of plus minus 1 vectors, in this case, the atomic norm is the L1 finity norm.
+[593.5:603.5] Here's the explanation. It is not a difficult proof, and I will not ask such a proof in an exam.
+[603.5:606.5] But it is good to learn.
+[606.5:609.5] Same thing for low-rank matrix T's.
+[609.5:613.5] Anybody heard of matrix completion for a recommended system?
+[613.5:623.5] The observed is the two entries of the matrix, and you would like to figure out the other entries in the Netflix prize.
+[623.5:632.5] When they had this challenge, the very first algorithm was just doing a single-er-value decomposition, the low-rank transition,
+[632.5:637.5] just scassing everything with an SCD.
+[637.5:642.5] Now, if you think about this, you can set up linear inverse problems with matrices.
+[642.5:647.5] So, BI, inner product of AI, it's natural, that's the BI.
+[647.5:653.5] So, this inner product between two matrices is a trace AX.
+[653.5:663.5] So, there's a linear model in the matrix phase, and if you would like to recover matrices from fewer measurements, you need this structure.
+[663.5:674.5] And if you say that the matrices are low-rank, then you can think of just summation of rank 1 matrices as the atoms.
+[674.5:679.5] So, rank 1 matrices in the key dimensions.
+[679.5:683.5] You can create a set of atoms. In this case, there are infinitely many of them.
+[683.5:692.5] Unlike the sparsity case, for low-rank matrices, you can just come up with so many atoms.
+[692.5:703.5] But you know that any given matrix has just so P by P matrix, that have P atoms representing it, but this is assumed that it is low-rank means of fixed-rank heart.
+[703.5:713.5] In that case, the atomic norm is the nuclear norm, which is basically the L1 norm of the singular values.
+[713.5:718.5] So, you sparsify the singular values.
+[718.5:725.5] You can use the neat derivation. If you have questions about these derivations, I'm happy to take them from them.
+[725.5:730.5] Okay. There are many other things that you can do.
+[730.5:734.5] So, here is sparsity example.
+[734.5:744.5] So, if you look at the valedict coefficients of images, they tend to cluster across the branches of a tree that trace the edges.
+[744.5:751.5] If you... the valedict coefficients have a particular hierarchy of bends.
+[751.5:754.5] You know, low, low, high, low, high, high, high.
+[754.5:762.5] So, if you go down here, it is like high frequencies and then lower frequencies and so forth.
+[762.5:770.5] And the thing about this is that in this particular hierarchy, an age,
+[770.5:775.5] like you have an image, you see an age, which is an important feature.
+[775.5:779.5] This feature is clustered.
+[779.5:787.5] So, valedict coefficients would be large and you can trace that age from one point to another one.
+[787.5:794.5] And they literally cross-clustered on the so-called valedict tree.
+[794.5:799.5] Right? If you have on this tree representation, which would be a plot tree for an image,
+[799.5:807.5] if you have a large coefficient in the leaf nodes, you would have a large coefficient all the way to the root of the tree.
+[807.5:810.5] This is an important sparsity structure.
+[810.5:814.5] As for sparsity, you have a grouped sparsity.
+[814.5:818.5] That's going to all so far.
+[818.5:823.5] So, one thing that I would like to say is that for this particular sparsity,
+[823.5:830.5] it turns out that all the s number of samples of fies,
+[830.5:836.5] in fact, s plus log p and not s times log p.
+[836.5:846.5] So, the guarantee is something like square of s plus log p divided by n for your estimators.
+[846.5:853.5] Very strong structure. But I take this as an interesting theory.
+[853.5:856.5] All right. Now, celestial proveitors.
+[856.5:862.5] So, in general, A is given to you, but there's more and more active approaches in term in A.
+[862.5:870.5] Many of the characterization that I mentioned typically assume a random matrix.
+[870.5:877.5] But in reality, we can't really put together random matrices to do this.
+[877.5:881.5] Then there are structured random matrices.
+[881.5:889.5] You can do subset selection in the Hadamard transform, which is something like a David.
+[889.5:895.5] But there's the book about this. It's a deep topic.
+[895.5:898.5] Now, how do we select the regularization parameter?
+[898.5:905.5] Well, this is also a major issue. There are theoretically a guided base of selecting it,
+[905.5:908.5] which gives you the scaling of the parameter.
+[908.5:915.5] But, you know, typically what you do is force validation given data.
+[915.5:919.5] There are some other heuristics that I gave the citations to,
+[919.5:925.5] so that if you're really interested in this, take a look at them.
+[925.5:932.5] All right. Now, let's think about the optimization aspects of this.
+[932.5:939.5] So, here we're going to be thinking about minimizing a complex function, which is proper clause,
+[939.5:943.5] but not necessarily the French player everywhere.
+[943.5:950.5] Because if you remember what we had is this one norm regularizing.
+[950.5:955.5] So, let's just think about the sub differential again.
+[955.5:960.5] All right. So, for a complex function, we know that,
+[960.5:968.5] for complex functions, they're always about their tangent type of things.
+[968.5:976.5] When the complex function is smooth, there's always a unique tangent type of plane underneath.
+[976.5:982.5] But, when it is not smooth, it can have multiple.
+[982.5:989.5] So, imagine this change. You can have a bunch of different types of planes underneath.
+[989.5:994.5] The way you write this is that you look at the function everywhere.
+[994.5:999.5] You look at the point in which you're putting this type of plane.
+[999.5:1006.5] So, if there are multiple, this V would be multiple vectors,
+[1006.5:1014.5] then the complex function would be above this set.
+[1014.5:1021.5] When the function is smooth, it is unique, and hence this is the gradient.
+[1021.5:1030.5] When it is not unique, the vectors need to satisfy this form the sub differential set.
+[1030.5:1036.5] And you can pick an element from this set and we would call it the sub gradient.
+[1036.5:1043.5] Is this clear? It's just again a refresher.
+[1043.5:1054.5] Okay. So, given L1, if you remember, we went over this example again.
+[1054.5:1067.5] So, at the origin, there are many supporting pipe performance.
+[1067.5:1076.5] So, in this one dimensional example, you can pick anything between minus one and one.
+[1076.5:1087.5] So, for sub differential, I just would like to explain two key concepts that is very important.
+[1087.5:1097.5] Now, we know for complex functions, any local minima is global minima.
+[1097.5:1108.5] This statement does not change when the complex function is not smooth.
+[1108.5:1117.5] Now, how did we find such a low-pollumma? For three small ones, we said that,
+[1117.5:1120.5] oh, you know, set the gradient into zero, that's our first or the stationary point.
+[1120.5:1131.5] And we know that for complex functions, we only have the global minima as the stationary points.
+[1131.5:1137.5] Hopefully, right?
+[1137.5:1144.5] When we don't have the gradient, we have bunch of sub gradients, right? We have a sub differential.
+[1144.5:1154.5] How do we find your team? In this case, the optimality condition is written as an inclusion, meaning,
+[1154.5:1160.5] as opposed to saying that the gradient is equal to zero, you would say that
+[1160.5:1170.5] at the optimum notation, zero must be an element of the sub differential, meaning,
+[1170.5:1177.5] it is included in the set, the sub differential set.
+[1177.5:1184.5] If you were at an optimal point, you could take zero as the sub gradient.
+[1184.5:1189.5] Does this make sense?
+[1189.5:1204.5] Okay. So, the proof actually follows, if an only proof follows somewhat,
+[1204.5:1210.5] trivially, because zero must be an element. So, it is just by definition.
+[1210.5:1217.5] This is not that exciting, but what is important here is the second statement that I will apply.
+[1217.5:1224.5] So, suppose we have a function f, which is little f plus little triv.
+[1224.5:1232.5] If you want to get a sub gradient of this big f,
+[1232.5:1241.5] more or less, Rockefeller theorem says that all you need to do is sum this up.
+[1241.5:1248.5] You can pick a sub differential from f. You can pick a sub gradient from f.
+[1248.5:1255.5] You can pick a sub gradient from g, and that will be the sub gradient for this capital S, which is the assumption.
+[1255.5:1262.5] Now, as you can see, in the way we roll down those two, this is important.
+[1262.5:1266.5] This will be useful.
+[1266.5:1271.5] Okay. So, what can we do with this?
+[1271.5:1277.5] So, let's say we are trying to minimize this non-summit problem.
+[1277.5:1286.5] Here, this is what the sub gradient is sent with, we would pick a sub gradient.
+[1286.5:1296.5] We need a step size.
+[1296.5:1303.5] So, this is not necessarily true. So, there is a front row.
+[1303.5:1309.5] Can we take a note? It is like 24.
+[1309.5:1321.5] So, what we can do is give an xk, we can update it with the sub gradient, given some step sums.
+[1321.5:1330.5] Now, what I will do is I am going to give some assumptions, and then I will try to characterize the rate.
+[1330.5:1343.5] So, let's assume that the functions gradients are bounded. So, the maximum gradient of the function is g.
+[1343.5:1353.5] Now, let's say we start from some sort of a domain radius.
+[1353.5:1359.5] We have some distance between parameter, x star, the initial points.
+[1359.5:1366.5] If we pick the step size in a decreasing fashion is prescribed here.
+[1366.5:1373.5] So, this is something like order 1 over square root of k.
+[1373.5:1382.5] Then, if you look at the iterates, across your past history,
+[1382.5:1394.5] and look at the minimum across the history, then it will satisfy r times g divided by square root of k.
+[1394.5:1400.5] So, let's take a brief pause here and try to digest what this means.
+[1400.5:1404.5] So, a couple of subtleties.
+[1404.5:1417.5] When we were talking about the gradient methods, I mentioned that, you know, you can just have the gradient method in such a way that it is monotonically decreasing the objective.
+[1417.5:1427.5] Then, we talked about the accelerated gradient method, and then we said that look, accelerating the gradient descent method does not need to be monotonous.
+[1427.5:1439.5] As you can see here, the sub gradient method is also not necessarily monotonous.
+[1439.5:1449.5] Because if you think about it, suppose here is our objective function, so x minus 1.
+[1449.5:1458.5] So, we are trying to minimize it, and I start you from 1, the optimal location.
+[1458.5:1465.5] Now, imagine you are not the one picking the sub radians, somebody else is picking the sub radians.
+[1465.5:1473.5] So, here, somebody can give you 1 or minus 1 as your sub radians.
+[1473.5:1484.5] So, in your very first iteration, you can just jump out, and then you can go like this, stacking.
+[1484.5:1501.5] So, if you look at, up to k, the minimum of all of these, so you take k iterations, you started with 0.
+[1501.5:1508.5] So, the minimum, it plus all these k iterations, will satisfy a square of k rigs.
+[1508.5:1517.5] And, here are the constants that kind of make sense.
+[1517.5:1530.5] So, if you think about it, if you start from far away, then sure, you have to do more work, be the iterations.
+[1530.5:1539.5] In this pathological example, I just gave, if you were to start at your location, this r will be 0.
+[1539.5:1544.5] Generally, we don't know what that is.
+[1544.5:1551.5] What is g, which is the bound on the sub radians?
+[1551.5:1564.5] So, if you recall, the liptusness definition, so if you recall, the x minus f1, g, x minus f1.
+[1564.5:1573.5] When the function has some sort of regularity like this, g liptusness, in this case, the gradians are bothered by g.
+[1573.5:1589.5] So, if the function is like newly flatish, not necessarily smooth, but, you know, not varying too fast, then g will be small.
+[1589.5:1596.5] Then you have to do less work, redo iterations.
+[1596.5:1602.5] And, if you look at the convergence rate, it's the slowest so far.
+[1602.5:1614.5] Aside from thisochastic gradient descent method, which we also observe the square of k-rate.
+[1614.5:1616.5] Okay.
+[1616.5:1621.5] Now, let's think about what we would do in the case of stochasticity.
+[1621.5:1631.5] So, if you recall, the whole lecture on stochastic programming, which is important, then you want to minimize the expectation forms.
+[1631.5:1636.5] And it has, you know, this population risk minimization.
+[1636.5:1639.5] So, there, you can also do the same thing.
+[1639.5:1650.5] Literally, step size, a gradient, stochastic gradient, whose expected value is equal to the sub gradient itself.
+[1650.5:1665.5] In this particular case, given the usual assumptions on the step size and the gradians, then what we have is the load k divided by square of k.
+[1665.5:1680.5] Okay. If you think about a territorial threshold, then, as compared to the sub gradient method, one may have a data dependence, like n.
+[1680.5:1683.5] The other one may not. Do you remember this?
+[1683.5:1708.5] So, finite sum. If these f i's are non-smiths, right? To compute the deterministic sub gradient descent methods, what you need to do is look at all these sub gradians.
+[1708.5:1720.5] And if you remember the morrow Rockefeller theorem, it says sub gradient of f is the summation of these sub gradians, right?
+[1720.5:1729.5] To compute one sub gradient of f, you need to compute n sub radians, right? So, i is 1 to n.
+[1729.5:1746.5] So, the word is proportional to the data sums. And you have 1 over square of k rate.
+[1746.5:1760.5] Now, in the case of sub-stub gradient, at the expense of this load k, the perpetration force, moralist, loses that, and depends.
+[1760.5:1776.5] Okay. Now, what I would like to do in the rest of the lecture is to highlight some extenuating factors in the way these set up the lawsuit problem.
+[1776.5:1791.5] So, the way we set up the lawsuit problem is that we would have a smooth loss, like these squares, and a non-smith regularizer.
+[1791.5:1803.5] So, if you were just doing optimization with f of x, we could think of just to instabrate in the center because smooth plus non-smooth is non-smooth.
+[1803.5:1817.5] Now, if we had the smooth plus non-smooth in optimization, this is called a composite problem.
+[1817.5:1826.5] It is composed of two terms, one smooth and one non-smooth. One can give us a gradient, the other one only gives us sub-gradients.
+[1826.5:1835.5] Now, if you just apply, if you were just to apply the sub-gradient method, the efficiency is just terrible.
+[1835.5:1847.5] So, just like a rough calculation, is that if you wanted to do, let's obtain 10 to 2 minus 2 accuracy.
+[1847.5:1857.5] Here, if you were to apply the sub-gradient method, roughly you need times of the four iterations.
+[1857.5:1861.5] Because it's 1 over x-long squared.
+[1861.5:1870.5] Squares of k-ray translates into 1 over x-long squared number of iterations.
+[1870.5:1879.5] So, this is sub-gradient method. If you were to do gradient method, that would be something like 10 to 2.
+[1879.5:1888.5] But if you were to do accelerated gradient methods, that would be like 10 iterations.
+[1888.5:1900.5] Because accelerated gradient method has order 1 over k squared rate, which means that you need order 1 over square of epsilon iterations.
+[1900.5:1903.5] Right? Epsilon is the sub-optimality.
+[1903.5:1912.5] Gradient method on the other hand is order 1 over k, hence you need order 1 over epsilon.
+[1912.5:1926.5] Sub-gradient method, the minimum accuracy iterations has 1 over square of k, which means you need order of 1 over epsilon squared iterations.
+[1926.5:1930.5] Right?
+[1930.5:1938.5] So, look at this radical difference. 10 iterations versus 100 iterations versus 10,000 iterations.
+[1938.5:1946.5] Right? It's just quite a different, it's a big dynamic range.
+[1946.5:1949.5] Okay.
+[1949.5:1960.5] Now, it turns out that for many non-smooth problems, there is this composite structure smooth plus non-smooth.
+[1960.5:1981.5] And the insights may be mid-2000s, 2005 or so, which made a great deal of impact in signal processing, machine learning, data science in general, is that you could solve this particular class of problems as efficiently as if you run the accelerated gradient method.
+[1981.5:1985.5] Even though there is non-smoothness.
+[1985.5:1999.5] Right? So, given this structure, it is actually possible to solve with something like 10 iterations, as we'll post through 10 to 4.
+[1999.5:2004.5] Right? That's what we will cover in the next lecture, the algorithms for this.
+[2004.5:2018.5] Right? We'll focus on the organization. But just to see the applications again, right? Think about the fast regression.
+[2018.5:2033.5] If you think about the generalized linear models, right? So, we have, so maybe here, this is the, again, there's a pipeline here, we don't need this.
+[2033.5:2040.5] So, if you were to look at how we generate the maximum likelihood, like the loss functions.
+[2040.5:2047.5] So, you can have logistic loss here, you can have other losses here.
+[2047.5:2062.5] We can have a fast irregularizer. Right? Non-smoothness gives us an advantage that estimation of the parameter now scales with s-vote p as opposed to p.
+[2062.5:2068.5] Right? We need fewer data samples to be able to estimate.
+[2068.5:2078.5] So, the role of data, you can do more with less data. But you have to solve the harder problem.
+[2078.5:2086.5] Right? Compare that to the maximum likelihood.
+[2086.5:2094.5] There are other applications, right? So, this total variation regularization, this is what Justin Romberg did for medical imaging.
+[2094.5:2103.5] This is how it kickstarted this compressive sensing field.
+[2103.5:2110.5] You can also look at post-on models. So, the loss functions can be different.
+[2110.5:2117.5] And the total variation is semi-norm. It depends in two images.
+[2117.5:2128.5] They use different definitions. You can look at gradients across up, down, also the argonome and so on and so forth.
+[2128.5:2133.5] Right? You try to specify the gradients of the image, for example.
+[2133.5:2142.5] And I'm not sure if this is just this. It is not. You know, like this was maybe the state of the art 10 years ago.
+[2142.5:2150.5] You know, you would give an image, you would do the composite minimization, you would regularize the new optimizer.
+[2150.5:2156.5] Right? This is how what you would do with these classical loss functions.
+[2156.5:2163.5] Does this mean the regular concept of regularizations also not so good anymore? This is not true.
+[2163.5:2172.5] You will see that when we talk about neural networks, we will need regularization again. It will be critical.
+[2172.5:2184.5] And the idea is, why you need regularization? Remain valid.
+[2184.5:2194.5] All right. Now, here's the Gauss Markov random field example.
+[2194.5:2207.5] So, this is a graphical model learning problem, where I give you bunch of data points and what you would like to do is infer the conditional independence relationships.
+[2207.5:2216.5] So conditional independence is encoded by what is called as the Markov blanket or Markov graphically model structure.
+[2216.5:2230.5] In this particular case is that if you model these vectors jointly Gaussian, the precision matrix, which is the inverse of the covariance matrix, encodes the graph structure.
+[2230.5:2244.5] So here it's a color coded. So x1 only has the connection to x2. Then in the precision matrix, you have an on-zero here. The rest is zero.
+[2244.5:2257.5] Here x2 is connected to x1, x3, and x4. In this case, you have x1, x3, and x4.
+[2257.5:2266.5] All right. And so on and so forth. The similar structure applies here.
+[2266.5:2278.5] So one way to learn such graph structures is to minimize, so this load likelihood, we actually drive in recitation, I think.
+[2278.5:2296.5] So you can derive the maximum likelihood estimator for the precision matrix. And given that precision matrices have order p squared degrees of freedom, you need a lot of data to be able to get this precision matrix.
+[2296.5:2309.5] But in this particular case, what you can do is you can do fast regularization on the precision matrix.
+[2309.5:2321.5] And then the number of samples you need to take becomes much smaller. In fact, it is quadratically proportional to the node degree and linearly proportional to the dimension.
+[2321.5:2328.5] All right. So there's some work by pretty pretty much.
+[2328.5:2334.5] Martin made right.
+[2334.5:2338.5] It's like 2008.
+[2338.5:2363.5] So just to wrap things up. So this literally just fetched the phone compresses, assessing it. I mean, what I wanted to do here is to tell you a little bit about composite problems and impact on the sample confection.
+[2363.5:2376.5] The strawmetic understanding, literally, there is an extensive lecture on compressive sensing. Like, go in details.
+[2376.5:2382.5] I mean it, things like Gaussian, mean width and so on and so forth. They're all there.
+[2382.5:2387.5] It tells you about the sand phones, tangent phones, how you generalize them.
+[2387.5:2394.5] Then what you can do is you can use this idea to do source separation.
+[2394.5:2402.5] There's another extended source that you can take a look.
+[2402.5:2412.5] And there's also one lecture on how to get structures, classity models. This is a search presentation, which I encourage you to take a look if you're interested.
+[2412.5:2419.5] So with this, well, we're in a perfect position to end the lecture. If you have questions, I'll take them.
+[2419.5:2447.5] Otherwise, see you guys on Friday.

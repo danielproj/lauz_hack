@@ -1,0 +1,267 @@
+~Homework 1 post mortem
+~2022-11-11T12:09:51.180+01:00
+~https://tube.switch.ch/videos/OEOufbzHcd
+~CS-401 Applied data analysis - Fall 2022
+[0.0:5.28] Okay, so this is the homework post-mortem.
+[5.28:9.48] I will go through the homework, making some comments.
+[9.48:14.72] This is a solution that will push to GitHub when you're new.
+[14.72:18.16] When you see this video, it should already be on GitHub.
+[18.16:24.12] Importantly, this is one possible solution to the homework and the V8 solution does not
+[24.12:26.12] necessarily apply your question was wrong.
+[26.12:28.44] There are arbitrary details that can change your results.
+[28.44:32.36] These are taking into account when we create.
+[32.36:42.68] So basically here, this homework, as you remember, was about UpWorffy.
+[42.68:52.88] We will analyze data from this AB test headlines conducted from January to April, 2013 and 2015.
+[52.88:55.92] And this is an example of how UpWorffy data looked like.
+[55.92:61.6] So you had in each experiment, you had different packages, each package was a combination
+[61.6:67.0] of specific text, image, leads, and so on.
+[67.0:70.24000000000001] It comes from this paper.
+[70.24000000000001:71.88] This is a brief description.
+[71.88:76.64] So here, basically, you were asked to load the data.
+[76.64:79.84] That's very simple.
+[79.84:87.08] Then you were asked to estimate the amount of experiments in the data and the number
+[87.08:91.44] of packages per experiment in average.
+[91.44:100.52000000000001] And as to do a plot of this distribution, and here is a plot and here are the numbers.
+[100.52000000000001:106.12] In this case, there was not a lot of room for getting the wrong numbers because there
+[106.12:109.52000000000001] was no arbitrary decision here.
+[109.52:116.72] Then you were asked to create this column which you calculate the CTR, the clicks, the click
+[116.72:122.67999999999999] to rate, so the click, the number of clicks divided by the number of impressions.
+[122.67999999999999:137.16] And then here in 1.4 to 1.6, you were asked to calculate the number of experiments where
+[137.16:145.8] there was no difference in headline or no difference in a capture ID, where there is only
+[145.8:152.12] one of these across all the packages in the experiment.
+[152.12:162.88] And here, you can get a slight different result depending on how you handle Nance.
+[162.88:168.56] So by default, and this is something that's going to appear a couple of times as we grade.
+[168.56:175.35999999999999] If you do Nance equals to Nance, you basically get false.
+[175.35999999999999:183.48] But here, it could be that it made sense in the data because maybe you just simply have
+[183.48:187.96] a lead, for example, and you're just comparing two had two.
+[187.96:190.51999999999998] You just didn't have a headline.
+[190.52:193.52] And then you're comparing two things that did not have a headline.
+[193.52:195.24] This didn't exist.
+[195.24:196.48000000000002] There was no headline.
+[196.48000000000002:202.0] But basically, whether you considered Nance, like the opinion of whether you did equals
+[202.0:208.64000000000001] Nance equals Nance or not, you would get a slightly different number of experiments
+[208.64000000000001:209.84] filtered.
+[209.84:225.44] But regardless, the point here is that you discard way more experiments when considering
+[225.44:226.6] the images.
+[226.6:235.4] So it was more common to varie headlines at least once than to varie images.
+[235.4:236.4] Also at least once.
+[236.4:243.08] It was more common to have experiments where the headline was varied at least once than
+[243.08:250.96] to have experiments where the image was varied at least once.
+[250.96:262.92] And then in 1.7, you're asked to create this new data frame where you have all combinations
+[262.92:274.36] of pairs of packages where they fulfilled all of these criteria.
+[274.36:278.76] And this is where a lot of the differences across home works comes from.
+[278.76:280.08000000000004] So it comes from two things.
+[280.08000000000004:283.20000000000005] The first thing is what I just said about the Nance.
+[283.2:294.64] And the second thing is about basically whether you considered only experiments within the
+[294.64:297.52] same package or not.
+[297.52:301.08] Sorry, only packages within the same experiment or not.
+[301.08:303.64] We did not penalize neither of these things.
+[303.64:305.24] So you're fine either way.
+[305.24:309.84] But this might explain why you have differences from the solution, for example, because I didn't
+[309.84:313.08] do all the combinations.
+[313.08:319.68] Here, one important thing is that there are two ways of doing it.
+[319.68:324.15999999999997] So you can simply merge.
+[324.15999999999997:327.08] You can do an outer merge.
+[327.08:336.08] Or you can basically do this group by and use iter tools or do the combinations yourself
+[336.08:341.24] and get all the combinations within each experiment that works.
+[341.24:346.68] So these are two common strategies that you could have used across the different tutorial
+[346.68:350.68] solutions.
+[350.68:362.40000000000003] So then after that, you're asked to calculate the average difference in the pair.
+[362.40000000000003:369.92] So when you built this data frame, you had one of the columns had the package that had
+[369.92:372.56] the highest click-through rate.
+[372.56:376.6] And one of the columns had the lowest click-through rate.
+[376.6:387.48] And you're asked to basically calculate the difference in this click-through rate and
+[387.48:391.24] the average click-through rate of the lowest pair.
+[391.24:394.0] And here you get these very low numbers.
+[394.0:399.88] But interestingly, the point here is that, and here I calculated with two.
+[399.88:403.88] So you can see the difference in the different versions of the data set that you could have
+[403.88:404.88] obtained.
+[404.88:410.48] And in either case, what you obtain is that, although you have this difference that can look
+[410.48:417.12] very, very small, 0.004, it's actually like a 40% relative increase.
+[417.12:422.71999999999997] So it's actually a lot because the click-through rate in general is pretty low.
+[422.72:431.52000000000004] So then when we answer 1.9, we basically say that the question is, do you think that headlines
+[431.52000000000004:435.52000000000004] considering your answer to the previous question and assuming that the average differences
+[435.52000000000004:438.72] include through rates between the pairs are statistically significant?
+[438.72:442.88000000000005] Do you think that headlines are impactful in the news business?
+[442.88000000000005:447.72] So basically with this data, you can see that it is like it's a 40% increase.
+[447.72:452.24] So assuming that this is not spewious, assuming that this difference is statistically significant,
+[452.24:453.24] it's a big increase.
+[453.24:459.24] If you have a company and you say, OK, I have a 40% increase in my revenue, it's high,
+[459.24:461.24] it's a high number.
+[461.24:464.28000000000003] OK, so then task 2 is pretty straightforward.
+[464.28000000000003:468.64] So you just ask to create this tree.
+[468.64:473.68] You just ask to create this tree or features.
+[473.68:482.04] So basically the number of words, the type of pronoun, and the sentiment.
+[482.04:489.52000000000004] I think this was very straightforward for most people.
+[489.52000000000004:496.52000000000004] Then in task 3, you're asked to estimate the fact of language on headlines.
+[496.52000000000004:497.52000000000004] So test.
+[497.52000000000004:502.52000000000004] Here, we start with a very simple test.
+[502.52000000000004:505.24] And we're asked to do these two tests.
+[505.24:512.24] And here, in both cases, you find that the differences are statistically significant
+[512.24:513.24] difference.
+[513.24:519.92] So successful headlines are longer, 0.28 words in average.
+[519.92:527.92] And basically, you can also already see here that the match at sample T-test has a lower
+[527.92:532.76] p value than the other one.
+[532.76:537.16] Then there is a series of questions that surround the simulation.
+[537.16:546.08] That basically the idea here was to investigate further the match at sample T-test and testing
+[546.08:547.24] in general.
+[547.24:555.64] So the idea here was that you basically have this simulation where you have four variables.
+[555.64:559.04] And the key thing is that they all have the same expectation.
+[559.04:566.36] Sorry, the first two have expectations 0.5 and the second two have expectations 0.6.
+[566.36:570.24] But they have an interesting dependence structure.
+[570.24:578.52] So X, Z is related to X and Y.
+[578.52:581.68] And K is only related to Y.
+[581.68:593.0799999999999] So K and X are independent, but for instance, K and Y are dependent, and et cetera.
+[593.0799999999999:599.4399999999999] So this dependence is the key to the question that comes, because we'll see how this makes
+[599.4399999999999:604.16] a difference when we talk about the match at sample T-test.
+[604.16:609.1999999999999] And here you are asked to make the simulation with this variable and calculate the variance.
+[609.2:614.96] This was just to make you think about that they had the same variance as we just to help
+[614.96:616.72] guide you.
+[616.72:622.6] And when you do the simulation a thousand times, you're asked to calculate the power of
+[622.6:627.72] the T-test, the match at T-test and the independent T-test.
+[627.72:636.6400000000001] And what we find is that when we are comparing X and Z, X and K, and X and K, like when we're
+[636.6400000000001:639.12] comparing X and X and K, sorry.
+[639.12:645.6] There is no difference between the independent and the paired T-test, like they're very similar.
+[645.6:650.36] On the other hand, when your, their power, their statistical power is very similar.
+[650.36:658.72] On the other hand, when we are comparing the X and Z, the power of the paired T-test is
+[658.72:660.52] much, much higher.
+[660.52:667.0] And the reason why this is, is because these variables are dependent.
+[667.0:675.6] So if you look at X and Z are dependent because you basically define them as some of each
+[675.6:678.2] shot, like that is X divided by two.
+[678.2:684.2] So if X is high, Z would be higher, if X is low, Z would be lower.
+[684.2:687.08] And this is not true for X and K, right?
+[687.08:690.36] And then the question is like, why are paired T-test helpful?
+[690.36:696.04] And it's because they are able to capture, like they're able, like when variables are
+[696.04:697.68] related, right?
+[697.68:706.92] You're able to basically gain power because you're comparing match-ad samples.
+[706.92:709.1999999999999] So you don't have this extra error.
+[709.1999999999999:715.1999999999999] You know, if this is high, and this is also, like, and this is also high, you have less
+[715.1999999999999:717.24] variance when you do your test.
+[717.24:722.76] This can be seen in the formula for the T-test, right?
+[722.76:725.0799999999999] That I put in the homework.
+[725.08:731.6] So here you have that in one case, you calculate, so I'll go back to the formulas here.
+[731.6:738.0400000000001] So in one case, you calculate the, these two things on the top, they are the same, you
+[738.0400000000001:742.88] know, like the difference in average and the difference of the averages.
+[742.88:746.08] But it's not that the case for what's below, right?
+[746.08:751.36] So for here, if the variables are, like, you have this sample variance of the match-ad
+[751.36:757.92] sample, and here you do this fooling of the, of the, the variances across the groups.
+[757.92:764.64] And here, if the variables are correlated, you decrease the, the variance of the difference,
+[764.64:765.64] right?
+[765.64:770.6] Because if the very, if the, the values are very correlated, are perfectly correlated,
+[770.6:771.6] this will be zero, right?
+[771.6:776.4] Because they're always the same, I mean, if they're always the same, it will be zero.
+[776.4:782.36] So because you're dividing by this number, you actually increase the T and you're able
+[782.36:785.3199999999999] to get a higher T value, right?
+[785.3199999999999:786.3199999999999] Intuitively, right?
+[786.3199999999999:792.6] So this gives an intuition of why having this like correlation between the variables is
+[792.6:796.36] important when you have a T-test, right?
+[796.36:804.72] Okay, so then after that, you're asked to implement a bootstrap approach to calculate a bunch
+[804.72:811.8000000000001] of different statistics on that talk about like the difference of usage in the features
+[811.8000000000001:813.1600000000001] that we calculated, right?
+[813.1600000000001:817.2] And here, there were some mistakes about how to implement a bootstrap, right?
+[817.2:819.2] Which was explaining class.
+[819.2:821.6800000000001] So here, it's very simple, right?
+[821.6800000000001:831.72] So you just have to sample the, with replacement, you, you have a sample size n, you do sampling
+[831.72:836.0] with replacement over the sample times, over the sample size n.
+[836.0:843.84] So here, for instance, I'm sampling the, whatever you give me 10,000 times.
+[843.84:850.84] And then you apply a function at each of these, at each time you sample, you apply a function.
+[850.84:857.48] So for instance, if you're doing the mean, the bootstrap in the mean, you would sample,
+[857.48:861.36] you get a sample, apply a mean, get another sample, apply the mean again.
+[861.36:866.52] So one, and then the easiest method to calculate the bootstrap is the quantile method.
+[866.52:873.08] There are other methods, but here you just, you basically put the samples in a line.
+[873.08:877.0] So to speak, like you, you ordered them from the lowest to the highest.
+[877.0:884.32] And you're basically cut off the 25% if you're, if you're aiming for a 5% alpha, right?
+[884.32:886.2] Significance at 5%.
+[886.2:896.24] You cut off the extremities, the 22.5% least extreme values and the 2.5% most extreme values.
+[896.24:904.9200000000001] And the edges, what remains of the edges, the quantiles, the 0.25 and the 0.975 quantiles,
+[904.9200000000001:911.5200000000001] these are the lower and the upper bounds of your bootstrap.
+[911.5200000000001:915.1600000000001] And here, like I just implemented the custom function that does it, no matter what function
+[915.16:923.7199999999999] you pass and here, you just have to pass the mean and the ratio in one of the cases, right?
+[923.7199999999999:926.64] So you do the ratio and the mean and so on.
+[926.64:933.0] It's fine if you did, like some people, they did a bootstrap, like you could either do
+[933.0:937.88] the difference between the match itself and do the bootstrap on the match, on the, on the,
+[937.88:942.9599999999999] on the, on the difference right here, for instance, I did, I did the ratio and then I bootstrap
+[942.96:948.4000000000001] the mean because the average ratio or you could do it in another way.
+[948.4000000000001:953.1600000000001] This is equivalent in a way to the, if you're doing match it sampling and if you're doing
+[953.1600000000001:955.64] independent sampling, like here we have a match it sample.
+[955.64:961.52] So we can just, we can just do it before we bootstrap because the samples have some
+[961.52:963.8000000000001] correspondence to each other, right?
+[963.8000000000001:967.76] So we can do that, right?
+[967.76:971.2] And so here we got some estimates.
+[971.2:977.5600000000001] This could vary a bit depending on some decisions that we talked, but here you can see that, for
+[977.5600000000001:986.48] instance, the conclusions that I think this I do with another, another way here, the
+[986.48:992.76] conclusions that we, we got from this is that for instance, using more words, more negative
+[992.76:999.44] words, more first person singular pronouns, more third person singular pronouns makes
+[999.44:1002.1600000000001] headlines more successful.
+[1002.1600000000001:1004.36] And then we just do five of the confidence intervals, right?
+[1004.36:1008.44] It could be slight differences and we were lenient and we considered it like what you
+[1008.44:1012.36] obtained and so on and so forth, but this is the overall idea here.
+[1012.36:1018.6400000000001] And then we go on to the hardest task, which is task four, where we're trying to study
+[1018.6400000000001:1023.08] the temporal validity and the heterogeneity of the, of the effect.
+[1023.08:1029.48] And the first thing here that we were asked is to create this plot of the number of words
+[1029.48:1032.64] for headline in the winner and loser headlines.
+[1032.64:1036.76] Here I use the match itself that I calculated.
+[1036.76:1038.8] It was like the easiest thing to do.
+[1038.8:1045.16] I understand that you would also make sense to use the regional data set, but this was
+[1045.16:1049.28] not something that we, we penalized.
+[1049.28:1054.84] So here, but you can see that there's an increase in the number of words across both the
+[1054.84:1056.44] winner and the loser headlines.
+[1056.44:1060.52] There's this growing trend.
+[1060.52:1066.72] And here like you're asked to create this plot for the other remaining categories.
+[1066.72:1076.6] So this is an example of a plot with the specification that was given here.
+[1076.6:1080.4399999999998] The only one that seems a bit, that there's some trend, although it's a bit noisy, is the
+[1080.4399999999998:1085.4399999999998] third person singular pronoun that it seems that it has increased.
+[1085.4399999999998:1093.8] And after you do this, you're asked to divide your data in two periods, one between April
+[1093.8:1102.9199999999998] 2013 and March 2014 and one that goes from April 2014 to the latest AB test in the data.
+[1102.92:1112.8400000000001] And then you're asked to create these two data frames and then you're asked to basically
+[1112.8400000000001:1117.6000000000001] determine if the effects were different in T1 or T2.
+[1117.6000000000001:1121.24] So again, there's different ways of doing this.
+[1121.24:1123.48] You can do a T test, right?
+[1123.48:1129.68] You can do a T test on the difference of the values.
+[1129.68:1146.96] So you can basically see the way I implemented here, however, was do you do a double bootstrap.
+[1146.96:1157.8400000000001] So basically you give the two data sets, you estimate, you randomly sample them, you
+[1157.84:1162.3999999999999] estimate the criteria for each of them, the statistic for each of them, like the mean
+[1162.3999999999999:1167.84] for each of the data sets and you calculate the difference in means, right?
+[1167.84:1174.12] And here it was important to correct, to do a statistical correction for the data.
+[1174.12:1179.9599999999998] And like here I used the simplest one and just divided by eight, which is the Bonferoni
+[1179.9599999999998:1185.8799999999999] correction because we're doing eight tests, but you could use other corrections as well
+[1185.88:1187.64] and it was fine.
+[1187.64:1195.88] Overall, when you did this or the T test method, you would find that in some cases it varied
+[1195.88:1199.0400000000002] a bit because the test had different powers and so on.
+[1199.0400000000002:1204.3200000000002] But I guess that the biggest thing that was present across all the tests is that you do
+[1204.3200000000002:1210.7600000000002] see a difference in the usage of negative words, right?
+[1210.76:1216.72] And you're asked to hypothesize reasons that could have led to do observe the fact and
+[1216.72:1225.64] this was just to get your brains going and to determine if things had remained the same.
+[1225.64:1229.84] So things have not remained the same, kind of no matter how you did it.
+[1229.84:1234.8] There are questions here of like what's the best methodology, but here it's just like
+[1234.8:1241.96] everything converged to some difference and here some reasons why the effect can change
+[1241.96:1247.9199999999998] through time are that people may become used to specific headlines and they simply stop
+[1247.9199999999998:1249.2] being as attractive, right?
+[1249.2:1255.28] So you've seen too many Buzzfeed headlines saying that 10 things that will change your life
+[1255.28:1256.56] you won't believe number nine.
+[1256.56:1261.72] And in the beginning, perhaps this was catchy, but then it changes and maybe also different
+[1261.72:1266.96] events happening can be made more salient with different strategies.
+[1266.96:1271.92] For example, in the context of humanitarian crisis headlines were positive words become
+[1271.92:1273.32] more attractive and so on.
+[1273.32:1278.48] So the news interact with the reality with women and maybe this also plays a role.
+[1278.48:1284.28] We're increasingly more stressed and then like it changes what we want to see in headlines
+[1284.28:1285.28] for example.
+[1285.28:1289.96] So these are doesn't need to be true, but this is just a hypothesis.
+[1289.96:1299.0] And then in 4.7 you're asked that features my interact with each other.
+[1299.0:1305.64] Here for instance, you could have that people like first person or singular pronouns in
+[1305.64:1311.1200000000001] headlines containing positive words, but these like headlines with negative words and first
+[1311.1200000000001:1312.56] person pronouns.
+[1312.56:1319.3600000000001] So to help answer this question, we basically create these two data sets, good to data
+[1319.36:1326.8] frames where they contain positive headlines and positive word and negative headline and
+[1326.8:1328.7199999999998] a negative word.
+[1328.7199999999998:1335.9199999999998] And in here using an appropriate methodology and here I use the t test, you're supposed
+[1335.9199999999998:1340.9199999999998] to see if the effect is different across these two cases.
+[1340.9199999999998:1344.8] And here we find that the effect is not different, right?
+[1344.8:1358.08] So this is it in the end you were asked to provide a small summary of what you did and
+[1358.08:1364.9199999999998] we tried to use this as an opportunity to see if you could argument over the things you
+[1364.9199999999998:1370.96] have found and summarize kind of like the cool things that you found throughout homework
+[1370.96:1371.96] and that's it.
+[1371.96:1382.0] So that's the postmortem, you'll be able to access the solution on the GitHub page and
+[1382.0:1393.52] we have a form where you can send complaints about the homework in case you think that
+[1393.52:1400.08] your homework was created incorrectly and we will address it on a per case basis.
+[1400.08:1402.56] So thank you very much and have a good one.

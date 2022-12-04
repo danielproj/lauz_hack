@@ -1,0 +1,449 @@
+~Lecture 1 (2021) part 2
+~2021-09-27T09:26:01.248+02:00
+~https://tube.switch.ch/videos/j2eSQTLUDi
+~EE-556 Mathematics of data: from theory to computation
+[0.0:5.0] I apologize, part of this lecture is not.
+[5.0:7.0] Okay.
+[7.0:12.0] Thank you for leaving me know.
+[12.0:15.0] All right.
+[15.0:16.0] Okay.
+[16.0:26.0] Now, we're going to assume that there is a parameter that exists in this particular state.
+[26.0:29.0] It's natural.
+[29.0:35.0] We have some distributions that now depend on the parameters.
+[35.0:36.0] All right.
+[36.0:43.0] And we have some sample that is distributed with respect to this true parameter and AI.
+[43.0:45.0] Don't worry about the notation.
+[45.0:48.0] On a first look, it may look cumbersome.
+[48.0:52.0] But you see it's it's an acquired taste like whiskey.
+[52.0:56.0] And more you have it or you see it, it'll grow on you.
+[56.0:57.0] Okay.
+[57.0:59.0] So you will get used to this particular notation.
+[59.0:60.0] Maybe on a first look.
+[60.0:61.0] Yeah.
+[61.0:63.0] So there are lots of dependencies and so on.
+[63.0:65.0] So for give yourself time.
+[65.0:66.0] Okay.
+[66.0:67.0] All right.
+[67.0:68.0] So here's an example.
+[68.0:72.0] The Gaussian linear model.
+[72.0:77.0] So let's say the house prices.
+[77.0:85.0] Are somehow distributed according to these features inner product with some magical vector x natural.
+[85.0:90.0] Distributed by a little bit of noise, which means that d i is in fact,
+[90.0:97.0] Gaussian distributed with mean AI inner product with X natural with variance,
+[97.0:101.0] whatever the variance of this w i's are.
+[101.0:103.0] Does that make sense?
+[103.0:110.0] So this distribution that I mentioned this this B i.
+[110.0:115.0] All right.
+[115.0:117.0] You have it.
+[117.0:118.0] You can write it.
+[118.0:121.0] You can do analysis with it.
+[121.0:123.0] All right.
+[123.0:124.0] Now here's one example.
+[124.0:126.0] So here if you look at this.
+[126.0:129.0] Thoughts.
+[129.0:131.0] You know.
+[131.0:138.0] You can have maybe some true parameter x natural, which let's say gives you this.
+[138.0:141.0] You can have the data corresponding to this.
+[141.0:149.0] But when you do estimation, you can see that oftentimes the parameter you will estimate may be mismatched.
+[149.0:150.0] All right.
+[150.0:152.0] We'll talk a lot more about this.
+[152.0:159.0] In general, the linear model looks strange and very simple, but it is actually much more powerful than your things.
+[159.0:161.0] All right.
+[161.0:172.0] You'll see that a lot of the nonlinear models in the high dimensional scaling, you can kind of still use linear models to to have predictors that kind of work really well and robustly.
+[172.0:173.0] All right.
+[173.0:182.0] And there's in fact some sort of a trade-offs, which I will explain when I talk about things like adversarial training models.
+[182.0:185.0] Anybody heard about adversarial training?
+[185.0:189.0] Some of you did.
+[189.0:194.0] We'll really get into the nitty-gritty details of these kind of things.
+[194.0:195.0] Okay.
+[195.0:198.0] So what's the goal of statistical estimation?
+[198.0:205.0] What we would like to do now is as a full suit working, finding some functions and function classes.
+[205.0:212.0] We're going to see to approximate this parameter, right, given our constraints on the parameter.
+[212.0:215.0] And the distributions and the data.
+[215.0:216.0] Okay.
+[216.0:218.0] This is our statistical estimation problem now.
+[218.0:219.0] Clear?
+[219.0:222.0] All right.
+[222.0:229.0] If this model is later in the same way, we assume that the data is in the same place.
+[229.0:233.0] Right now, we're going to assume and go with it.
+[233.0:234.0] All right.
+[234.0:238.0] But we'll talk about additional things later on.
+[238.0:247.0] Before we run, we have to crawl and walk, build ourselves up.
+[247.0:250.0] Okay.
+[250.0:255.0] So we're going to be talking about estimators.
+[255.0:256.0] All right.
+[256.0:257.0] What's an estimator?
+[257.0:265.0] An estimator is a mapping that will take in this problem description and will give you a value for the parameter.
+[265.0:268.0] Extra.
+[268.0:278.0] The output of an estimator depends on the data, which is random, hence the output of an estimator is also random variable.
+[278.0:289.0] And unfortunately, more often than not, the output of an estimator is not necessarily equal to the true hypothetical parameter.
+[289.0:292.0] Expansion.
+[292.0:297.0] And the example I tried to give you just a slide ago makes the case here.
+[297.0:301.0] So look at the lead squares estimator.
+[301.0:308.0] What it does is we parameterize our function with the linear parameters.
+[308.0:314.0] So our h of a is a inner product of x.
+[314.0:316.0] All right.
+[316.0:330.0] And we look at the data we have behind the right our function parameterized.
+[330.0:331.0] Yeah.
+[331.0:336.0] We look at the empirical estimator of the risk.
+[336.0:343.0] So one over n, some one to n and look at the squared loss.
+[343.0:348.0] You can put non negativity constraints.
+[348.0:352.0] You can put some constraints and that will be your calligraphic x.
+[352.0:362.0] And depending on how the data the randomness occurs, you can get this estimate, which will be your x star.
+[362.0:365.0] And the true one could be just this one.
+[365.0:371.0] So this could be x natural and this could be your x star.
+[371.0:376.0] So oftentimes you don't necessarily have the true parameter.
+[376.0:379.0] But hopefully something close.
+[379.0:385.0] And you know, scientists, your job is to ensure that you pick the correct loss.
+[385.0:392.0] So that these two are somehow equal.
+[392.0:394.0] All right.
+[394.0:398.0] So let's dig a little bit deeper into this particular example.
+[398.0:403.0] So the least four estimator can in fact be written in the compact matrix form.
+[403.0:407.0] So what we can do and I'm sorry for people in the zoom.
+[407.0:418.0] I'm going to write it on on the iPad here and maybe we'll share the slides also on models so that you can see for the time being.
+[418.0:423.0] I don't have the ability to have a good projection in class.
+[423.0:426.0] And on zoom.
+[426.0:429.0] So what we will have.
+[429.0:435.0] If you write down a B vector, which is B1 to be n.
+[435.0:436.0] Okay.
+[436.0:441.0] And if you have a matrix A, which is.
+[441.0:444.0] A transpose.
+[444.0:450.0] This particular problem can be written as B minus a x squared.
+[450.0:453.0] So these two.
+[453.0:456.0] Are equivalent.
+[456.0:460.0] Do you see this?
+[460.0:465.0] In the linear algebraicization, I will talk about how we do some of these things.
+[465.0:467.0] So that it's a bit more natural.
+[467.0:471.0] In fact, one of the handouts, I think, talks about this as well.
+[471.0:476.0] It is important that you get used to this particular type of vector in matrix notation.
+[476.0:477.0] Okay.
+[477.0:481.0] So what's the statistical learning view of these squares?
+[481.0:488.0] The sample is AIBI.
+[488.0:494.0] The function class now is this class of linear functions.
+[494.0:499.0] Is this clear?
+[499.0:507.0] So literally, the way I take an input and map it to an output is simply taking the vector input
+[507.0:513.0] and taking an inner product with my parameters x.
+[513.0:518.0] So this, I hope that, I mean, you know a little bit of linear algebra.
+[518.0:529.0] This bracket notation, which is invented by Paul Dirac.
+[529.0:533.0] Is an inner product.
+[533.0:540.0] Okay. So the loss function is the squared loss.
+[540.0:548.0] If you can minimize this problem, you get this, some vector.
+[548.0:551.0] Okay.
+[551.0:553.0] And then the learning machine now.
+[553.0:559.0] So this guy will output this.
+[559.0:568.0] So if you want to test your function in new data sets, this is what you're going to use.
+[568.0:572.0] Easy.
+[572.0:575.0] Okay.
+[575.0:579.0] So there are many ways to choose a loss function.
+[579.0:585.0] And what I will tell you now is like one of the most common ways of doing this.
+[585.0:589.0] And it's called a maximum likelihood estimator.
+[589.0:592.0] So just recall the general setting.
+[592.0:596.0] One idea is to look at the loss function.
+[596.0:598.0] That gives you the highest.
+[598.0:607.0] So find the parameters sitting that gives you the highest likelihood, highest probability of observing the data.
+[607.0:608.0] Okay.
+[608.0:610.0] So how do we do this?
+[610.0:615.0] One thing we can do is look at, so we have let's say access to these distributions.
+[615.0:617.0] We look at.
+[617.0:618.0] So we're doing minimizations.
+[618.0:620.0] I'm going to put a negative here.
+[620.0:622.0] Logar them is a monotonic function.
+[622.0:625.0] So it doesn't change the optimization solution.
+[625.0:631.0] We're going to maximize the likelihood of observing data given our parameters.
+[631.0:637.0] Does that make sense?
+[637.0:646.0] This is called the maximum likelihood estimator.
+[646.0:655.0] So here's one example.
+[655.0:658.0] In the linear model case.
+[658.0:666.0] Again, we can write this regression problem as a compactly invict notation as B, the observed data.
+[666.0:670.0] So we take the R's and concatenate them nicely and tighten to a vector.
+[670.0:675.0] We take the features and create the data matrix A.
+[675.0:687.0] And your B's will be related to A times some unknown true hypothetical parameter X natural plus some noise.
+[687.0:690.0] Now what would be the distribution of the data?
+[690.0:705.0] In this case, it will be the mean of B would be, so if you look at the expected value of B given the model, it will be AX.
+[705.0:711.0] And the Gaussian will give you this particular distribution.
+[711.0:723.0] You can simply write the distribution of B given X, which will be this particular.
+[723.0:726.0] And it comes from a determinant.
+[726.0:731.0] And again, maybe the delineal algebra thing we will talk about this a bit more.
+[731.0:734.0] And this.
+[734.0:737.0] We'll talk more about this later the way how you get there.
+[737.0:746.0] But this is a distribution. Okay, trust me, I'm a doctor.
+[746.0:753.0] In this case, what would it mean to find the parameters that give you the highest likelihood?
+[753.0:761.0] What you can do is look at the problem of maximizing.
+[761.0:771.0] We just take to the probability B. Right, if you think about it, B is now given to you.
+[771.0:773.0] Right, the data is given to you.
+[773.0:778.0] The only thing that is missing is X.
+[778.0:781.0] A is given.
+[781.0:794.0] You can simply plug it into this particular expression and get a value for the probability.
+[794.0:800.0] So the sequence of arguments is max.
+[800.0:806.0] So maybe I should put this down so I have a legible handwriting.
+[806.0:812.0] So this is the second.
+[812.0:813.0] So max.
+[813.0:819.0] PXD with respect to X is in fact max X log PXB.
+[819.0:821.0] Mortonic functions.
+[821.0:828.0] If it will not change the ordering of the probabilities.
+[828.0:830.0] Somehow we are pessimistic.
+[830.0:833.0] So we minimize losses as opposed to maximizing merits.
+[833.0:836.0] So I'm going to flip it around.
+[836.0:846.0] So min minus outside X minus log PXB.
+[846.0:853.0] And remember, you see there is an argument here.
+[853.0:860.0] So this is arg min does not care what the value of the minimization problem is.
+[860.0:863.0] It only cares what minimizes it.
+[863.0:873.0] So if it doesn't matter, if you put a negative here or a positive here and do these sign flips, it doesn't matter.
+[873.0:876.0] You understand this, right?
+[876.0:885.0] You read me or against me.
+[885.0:896.0] So in this particular case, the minimization problem, you go over a bit of algebra.
+[896.0:899.0] Again, you're looking at an argument.
+[899.0:901.0] So the constants here do not matter.
+[901.0:908.0] So notice that this particular term is a constant scaling with a non negative number.
+[908.0:913.0] Scaling with a positive number doesn't matter.
+[913.0:922.0] So here is your ML estimator, which turns out to be the least squares estimator in this case.
+[922.0:923.0] All right.
+[923.0:931.0] So the least square estimator is the ML estimator for the Gaussian linear model.
+[931.0:941.0] Most functions, clotrate tips, comes from the distribution.
+[941.0:948.0] So here's the general recipe in how you come up.
+[948.0:954.0] So with the data, we think about modeling, right?
+[954.0:958.0] Setting up distributions, learning distributions.
+[958.0:965.0] So we somehow set up a conditional distribution of di given ai and x.
+[965.0:972.0] How? Magic.
+[972.0:973.0] All right.
+[973.0:980.0] But it turns out that the laws of nature in such that if you have a lot of, for example, noise sources into the system,
+[980.0:982.0] there is asymptotic normality.
+[982.0:985.0] So Gaussian tends to do really well.
+[985.0:990.0] If you want to, you know, protect yourself against the maximum uncertainty,
+[990.0:996.0] given some bounded variance, Gaussian tends to be the entropy maximizing whatever distribution,
+[996.0:997.0] things like this.
+[997.0:1004.0] You know, you'll do a bit of info theory, you know, to point your academic head and say,
+[1004.0:1009.0] I choose this distribution.
+[1009.0:1013.0] Then you assume independent and identical distribution.
+[1013.0:1018.0] That way, these bi's, the joint probability,
+[1018.0:1021.0] is a product of the individual probabilities.
+[1021.0:1024.0] Again, this is the weakness of this particular framework.
+[1024.0:1027.0] In reality, nothing is iid.
+[1027.0:1029.0] Does that make sense?
+[1029.0:1033.0] So no, this is one of the grand challenge in machine learning,
+[1033.0:1037.0] is to work with non-ID data.
+[1037.0:1042.0] It's a grand challenge.
+[1042.0:1049.0] All of these problems of fairness, bias, all revolves around this.
+[1049.0:1053.0] And I don't know if you know about this particular example, you know,
+[1053.0:1059.0] these law decisions now, they are automated recommenders for the risk in the US,
+[1059.0:1062.0] the judicial system uses these programs.
+[1062.0:1066.0] But they realize that, you know, when a judge is hungry,
+[1066.0:1071.0] the judge's decision could change if the judge is full.
+[1071.0:1077.0] He or she can make a bad, well, not bad, sorry,
+[1077.0:1084.0] maybe a harsher decision if he or she is hungry.
+[1084.0:1088.0] Imagine that, you know, some important decision,
+[1088.0:1094.0] whether or not you go to jail, whether or not you are going to get 100
+[1094.0:1101.0] frank fine for, I don't know, crossing in red lights versus 500 frank fine, you know.
+[1101.0:1107.0] Whether or not that depends on whether, you know, if somebody had lunch.
+[1107.0:1110.0] Of course, people who do machine learning come all,
+[1110.0:1115.0] we will remove these biases, it will be fantastic.
+[1115.0:1119.0] We will avoid this lunch problem, right?
+[1119.0:1121.0] Okay, good, good.
+[1121.0:1124.0] Please, please, yeah, fine.
+[1124.0:1129.0] Except the machine learning algorithms, they run on data,
+[1129.0:1134.0] and if the data is biased, they are biased, right?
+[1134.0:1140.0] I don't know if you know the Google translation example.
+[1140.0:1145.0] In Turkish, when you talk about, for example, a person,
+[1145.0:1149.0] you don't have a gender assignment, right?
+[1149.0:1151.0] You don't say he or she.
+[1151.0:1156.0] If you say somebody is a doctor, you don't know if that person is a male or a female,
+[1156.0:1161.0] or if you say somebody is a nurse, you don't know if that person is a male or a female.
+[1161.0:1166.0] When you take a sentence that is gender neutral and translated in English,
+[1166.0:1170.0] and this was a big showcase in Google Translate,
+[1170.0:1173.0] you say if somebody is a doctor in Turkish,
+[1173.0:1176.0] you don't know what the gender is, Google automatically translates to this,
+[1176.0:1179.0] and this is the key is the doctor.
+[1179.0:1182.0] All right?
+[1182.0:1184.0] I actually have one more example.
+[1184.0:1187.0] So maybe I can afford a couple of more minutes.
+[1187.0:1191.0] So here's a teaser for you.
+[1191.0:1199.0] A father and a son, well, maybe I will tell you guys separately,
+[1199.0:1200.0] maybe an iris station.
+[1200.0:1203.0] It's a fun brain teaser.
+[1203.0:1208.0] It will also show you whether or not you are biased in certain aspects.
+[1208.0:1210.0] So at EPSL, there's some bias training,
+[1210.0:1214.0] and this example was introduced in that bias training.
+[1214.0:1216.0] Oh my god.
+[1216.0:1220.0] So we're going to talk about this, but maybe later.
+[1220.0:1221.0] All right.
+[1221.0:1224.0] So going back here, I went on a long detour.
+[1224.0:1227.0] I apologize.
+[1227.0:1230.0] So what you do is you set up this probability.
+[1230.0:1237.0] The maximizes the probability.
+[1237.0:1239.0] And now what do we do?
+[1239.0:1241.0] The learning machine.
+[1241.0:1244.0] When you want to make a prediction takes the new data.
+[1244.0:1249.0] And then we'll output with this learned parameter.
+[1249.0:1250.0] X star.
+[1250.0:1251.0] Okay?
+[1251.0:1255.0] So XML.
+[1255.0:1257.0] Maximum likelihood estimator.
+[1257.0:1266.0] Minimizes the loss, which is the negative log likelihood.
+[1266.0:1269.0] Maximizing the probability gives the ML estimator.
+[1269.0:1272.0] Maximizing this probability.
+[1272.0:1274.0] And minimizing the negative log likelihood.
+[1274.0:1277.0] Result in the same solution set.
+[1277.0:1282.0] And that is why I don't know if any of your costs.
+[1282.0:1286.0] I don't say equality here.
+[1286.0:1291.0] I use the element of.
+[1291.0:1292.0] All right.
+[1292.0:1296.0] So this may be an on unit.
+[1296.0:1297.0] All right.
+[1297.0:1301.0] It's a set of solutions.
+[1301.0:1302.0] Recipitation one.
+[1302.0:1307.0] We're going to go over some examples.
+[1307.0:1308.0] Okay.
+[1308.0:1315.0] So in general, typically we go through this particular.
+[1315.0:1316.0] I don't know.
+[1316.0:1317.0] Motion.
+[1317.0:1322.0] Then in the end, we end up with an optimization problem.
+[1322.0:1323.0] Okay?
+[1323.0:1329.0] So we end up minimizing some function f.
+[1329.0:1333.0] And this thing in general is called as an m estimator.
+[1333.0:1339.0] Either minimization type estimator or maximum likelihood type estimator.
+[1339.0:1342.0] For example, using the Gaussian model.
+[1342.0:1348.0] We went into a least square estimator, right?
+[1348.0:1352.0] But you could even know the problem is Gaussian.
+[1352.0:1359.0] You could simply say, hey, I'm going to minimize the absolute norm of the errors.
+[1359.0:1363.0] That's called the least absolute deviation estimator, lattice estimator.
+[1363.0:1367.0] It's your choice.
+[1367.0:1370.0] It is your choice.
+[1370.0:1372.0] Okay?
+[1372.0:1378.0] So you can pick whatever estimator you like.
+[1378.0:1384.0] But then you think about some of these issues that ensue.
+[1384.0:1385.0] Okay?
+[1385.0:1390.0] So the question is the formulation reasonable?
+[1390.0:1393.0] What's the role of the data size?
+[1393.0:1402.0] Because one of my favorite estimators is the zero estimator.
+[1402.0:1407.0] So I give you a least square problem and I just tell you my estimator is zero.
+[1407.0:1412.0] I, in fact, wrote transactions on information theory with this estimator.
+[1412.0:1416.0] And it does accept it.
+[1416.0:1422.0] Because it tends to do better than some of the fancy estimators that also depend on your data.
+[1422.0:1427.0] So you can talk about your fancy maximum likelihood estimator.
+[1427.0:1429.0] I can just talk about some other estimator.
+[1429.0:1435.0] How do you prefer one over the other one is the question.
+[1435.0:1439.0] And you'll see the data size matters.
+[1439.0:1445.0] Okay?
+[1445.0:1450.0] So how do we check fidelity?
+[1450.0:1453.0] Okay, so you pick an estimator, it gives you an X star.
+[1453.0:1457.0] There's some true parameter X natural.
+[1457.0:1465.0] In general, what you want to do is make sure that you can prove that this X star is close to X natural in some sense.
+[1465.0:1471.0] Here, we're going to use some metric or pseudon metric.
+[1471.0:1474.0] And that's going to depend the smallness of the systems.
+[1474.0:1481.0] The systems will depend on some conditions, okay? One of which is data size.
+[1481.0:1484.0] All right?
+[1484.0:1488.0] So you can try to verify whether or not the expected value of this system.
+[1488.0:1492.0] Remember the estimators are random data is random.
+[1492.0:1495.0] So you can take expectations over them as well.
+[1495.0:1503.0] You can look at the, you know, probability that the systems of your estimator to the true one will be greater than some thresholds.
+[1503.0:1509.0] And the probability of this is that consistency, you can do.
+[1509.0:1516.0] Or you can go a bit deeper and you can look at the estimator, the distribution of the estimator.
+[1516.0:1521.0] And whether or not it centers around the true parameter, you know,
+[1521.0:1532.0] a synthetic normality or you want to figure out if it is locally, a synthetically normal, meaning it has some sort of a Gaussian distribution.
+[1532.0:1547.0] Again, restitation one has some advanced material that goes into really gory details, including the minimax estimators that are some worst case tens guarantees.
+[1547.0:1552.0] Okay? Advanced material though.
+[1552.0:1553.0] Okay.
+[1553.0:1559.0] So here is the least square estimator.
+[1559.0:1562.0] Some simple example.
+[1562.0:1568.0] This is by summit and pistols and Baba KCB.
+[1568.0:1570.0] It's a simplified model.
+[1570.0:1577.0] So what we're going to do is we're going to populate a with some Gaussian random values.
+[1577.0:1587.0] In this case, you can in fact, given a true X natural, you can look at how far the ML estimator is going to be in expectation.
+[1587.0:1597.0] You can compute it. This particular thing has some sort of a V-shirt distribution and you take the expectations and then you get these.
+[1597.0:1598.0] Okay?
+[1598.0:1608.0] So let's say w, which is this added noise as zero mean and sigma squared variance, iid.
+[1608.0:1615.0] In this case, the performance of the ML estimator is distance to the true parameter.
+[1615.0:1620.0] We'll depend on p, which is the dimension of the unknown parameter.
+[1620.0:1625.0] So the parameters are in p dimensions. The data is in any dimensions.
+[1625.0:1635.0] And as you can see, as the data is greater than the dimension of the unknown parameter,
+[1635.0:1644.0] somehow by taking more data, you can make the ML estimator converge to the true parameter.
+[1644.0:1651.0] So somehow more data, more better.
+[1651.0:1656.0] All right.
+[1656.0:1666.0] Now, actually here, perhaps, I'll go a bit faster.
+[1666.0:1677.0] So in general, for the ML estimators, you can look at under some technical conditions that is a whole book.
+[1677.0:1678.0] Okay?
+[1678.0:1683.0] So there's a lot of overloading by the sentence under some technical conditions.
+[1683.0:1686.0] Let's do a whole book about asymptotic normality.
+[1686.0:1687.0] Yeah?
+[1687.0:1697.0] You can prove that the ML estimator will have a distribution around the true parameter, and so on and so forth, but roughly speaking, and this is the punch line.
+[1697.0:1708.0] And this is something that you should always remember that the distance of this in squared will be something like p divided by n.
+[1708.0:1719.0] Meaning the degrees of freedom in the problem, which is the unknown parameter that our p unknowns, the error will go down with p divided by n.
+[1719.0:1726.0] So if you have 10 times the data, you can guarantee that the error will be one over 10.
+[1726.0:1728.0] All right.
+[1728.0:1732.0] Does that make sense?
+[1732.0:1741.0] Here's an example, and in fact, Ivan, extremely slow in this lecture.
+[1741.0:1746.0] Anybody know about quantum computations, quantum tomography?
+[1746.0:1749.0] It's a topic that we studied in our lab.
+[1749.0:1759.0] We work with real quantum people that take measurements called P-O-V-M measurements, probability operator valued measurements.
+[1759.0:1770.0] Without getting into too much details, what you can do is you can represent the quantum state by what is called as a density matrix.
+[1770.0:1777.0] This density matrix has exponential dimensions with respect to the number of quantum bits that you have.
+[1777.0:1788.0] So if you have q-q bits, you can encode this state with a matrix that is 2 to the q by 2.
+[1788.0:1795.0] Rank one was this.
+[1795.0:1804.0] What you can do is measure the state, and the thing about the quantum state is you duplicate, you measure it in collapses.
+[1804.0:1817.0] So you redo the experiments, and you do the experiment with multiple measurements, and then you record how one of the measurements resulted in an observation or not.
+[1817.0:1829.0] And you can literally write down the load likelihood and come up with what is called as the maximum likelihood estimator.
+[1829.0:1846.0] I will talk about more about this in restitation mode, but the funny thing is, you write down this estimator, you write down the maximum likelihood, you take the real data, plug things in,
+[1846.0:1850.0] and you begin to notice a trend.
+[1850.0:1863.0] So here, this is square root of this distance, so what you expect to get is the square root of P over n.
+[1863.0:1880.0] And here is the actual solution with real data, and guess what, the square root of n seems to be smack on.
+[1880.0:1893.0] So this is not just some hypothetical thing that, like this, you observe it, the real data in real applications, the square root of n.
+[1893.0:1895.0] Really important.
+[1895.0:1913.0] The constant is what matters in the end, so this dimension, the degrees of freedom will matter a lot, and I have lectures truth on this degrees of freedom.
+[1913.0:1927.0] So I apologize, can I take five more minutes and then be wrapped up, because I think the rest of the thing is going to take me ten more minutes, huh?
+[1927.0:1937.0] So is this okay that we're not going to do the next hour, but I want to take maybe ten more minutes and wrap this up, because it's cool.
+[1937.0:1949.0] So remember, we talk about estimators, and we say, you know, you can use least squares, you can use whatever squares, we have the maximum likelihoods, you can just run the lab estimator, right?
+[1949.0:1956.0] It turns out that, you know, not all estimators are created equal, even though you have distributions, okay?
+[1956.0:1972.0] The classic example is the James Stein estimator, so it's a very simple problem. I give you your true parameter plus noise, and I ask you to estimate the parameter, right?
+[1972.0:2000.0] Ideally, it's just the mean, the vector itself, you know, because it's also in the distributed, yeah? It turns out that shrinking it by some dimension dependent manner, which also depends on the normal of the data, you can dominate the maximum likelihood estimator, meaning that I'll give you the James Stein estimator for this case.
+[2000.0:2012.0] Which looks like a complicated thing, and in fact, the plus thing is the thresholding operator, so it can actually give you zero, right?
+[2012.0:2015.0] Zero estimator, anyone?
+[2015.0:2031.0] And it will dominate the ML estimator, right? So in this case, ML estimator is commonly used, but know this, you cannot perform it.
+[2031.0:2040.0] Yeah? Clear? Interesting?
+[2040.0:2050.0] Maybe not, it's close to 6 p.m. on a Friday, right? It's satellites open?
+[2050.0:2053.0] All right.
+[2053.0:2065.0] Good. So what happens when the number of data samples is less than key? So if you remember the expression I gave you guys, which was something like
+[2065.0:2074.0] p divided by n minus p minus 1 sigma square for the error, right?
+[2074.0:2085.0] But this obviously requires you to have n greater than p, all right? So what happens when n, the number of data samples is less than p?
+[2085.0:2102.0] In the same model, meaning you have IID Gaussian data, you fix some x true. If you look at the performance of the least square estimator, in this case is indeed a set.
+[2102.0:2105.0] There is not a unique solution.
+[2105.0:2121.0] If you think about it, the matrix A in this case, so this is n by p, n is less than p. So it has a p minus n-dimensional null space.
+[2121.0:2138.0] So there exists, like if you have, let's say three dimensions, let's say one observation, you had two-dimensional null space, meaning there's a hyperflane of solutions.
+[2138.0:2141.0] All right?
+[2141.0:2148.0] Among these, we can pick one. The one that has the minimum L2 norm.
+[2148.0:2160.0] So that one will minimize the two norm of the solutions and pick the one that will have the minimum L2 norm. We're going to call this the candidate solution.
+[2160.0:2170.0] All right? So if you think about it, anything on this hyperflane is a solution, hence the set of solutions.
+[2170.0:2186.0] So the least square solution is in fact the whole hyperflane. The pick one. All right? The performance of this estimator actually concentrates in high probability.
+[2186.0:2199.0] It'll be something close to one minus n divided by p times the norm square. So your error, so you can take this and put it into the denominator.
+[2199.0:2213.0] Relatively speaking, will be something like one minus n divided by p. So the closer you get with the number of data samples for p, the error will go down for zero.
+[2213.0:2228.0] Does that make sense? All right? There's a question.
+[2228.0:2231.0] All right.
+[2231.0:2249.0] Oh, yeah, this is the paper that that I have with the zero estimator. All right. So let's talk about the roll of computation. The thing that I put flipped under the carpet, which is actually a big aspect of this course.
+[2249.0:2265.0] Roll of computation. We just talked about the estimator's performance, which depends on the amount of data we have, right? But your actual performance.
+[2265.0:2280.0] This is not enough. Like having a bondance of data is not enough. Why? Because the H with all the problem and numerically obtain the solution.
+[2280.0:2298.0] Right? So when we write this, this X star is in this is an idealized problem. You have to solve it in infinite precision. So that you have an extra to rehab infinite precision.
+[2298.0:2316.0] No, by the way, computers are organized. And if you're unlucky, you maybe even need to work with them, a four bits and eight bits computation. You know, like they send, you know, rockets into space with, you know, with one, what was it?
+[2316.0:2334.0] It's like a four bit or 16 bit bus in the space. If you know, like we have finite computation. All right. So if you think about it, here's the true parameter.
+[2334.0:2353.0] And what we were talking about was having X star being closer and the systems depends on data. But we numerically solved a problem, meaning we run an algorithm.
+[2353.0:2375.0] Some iterations. What we're interested in is finding how an algorithm gets near the parameter. Right? And by triangle inequality, what we can do is look at how the algorithm approximates this solution.
+[2375.0:2401.0] And then we know how this solution approximates the true parameter. This depends on data. This depends on computation. Whether or not you have the latest DGX machine from Nvidia, which you can buy at the cheap price, the academic discount of 150,000 francs.
+[2401.0:2421.0] So what the algorithm does is that it will start from initials, cats, it'll update, it'll update. So what you care is inside what you have computationally.
+[2421.0:2439.0] But remember, an algorithm is updating itself to get close to X star. But what X star is trying to do is get close to X natural. Anybody heard of early stopping?
+[2439.0:2454.0] Anyone? Don't be shy. Early stopping. Okay. Can you tell me why early stopping here would help you?
+[2454.0:2476.0] Your trajectory is going towards here because you're optimizing. So the more precise you're in optimizing, the closer you are to X star. But do you really care about being close to X star or do you care about being close to X natural?
+[2476.0:2492.0] If geometry is right, you stop earlier. Sometimes you'll actually do better than a fully precise solution. Interesting. Does that make sense?
+[2492.0:2510.0] Yeah. So in general, you can look at the composition and see the role of computation. Okay. All right. Again, feeling the onion and the rest is actually not that important.
+[2510.0:2527.0] There's the third layer to this, which is the function class, if you recall. So this hypothetical true parameter, true function class, we actually don't know what the true, true, true function class is, the original function class.
+[2527.0:2541.0] So there's actually a model error that is possible here. What we do, and this is like the core of this course, we try to reduce the optimization error with computation.
+[2541.0:2560.0] We try to reduce the statistical error with more data, with better estimators using prior information. And then we try to correct for model errors using flexible and universal approximants like neural networks.
+[2560.0:2580.0] I think lectures eight or something like this. It's a beautiful lecture. You're going to love it. I can't eat. All right.
+[2580.0:2595.0] I'll just continue with this in the next picture. I think that I'm already over time saw it. I don't want to take more of your time. Just rip up. So I'll talk about this later, not to take more of your time right now.
+[2595.0:2610.0] There's just the parameter version of this and what do you mean by what is the training error test error modeling error, excess distance, etc. It would be better to talk about this fresh on Monday, you know, first thing Monday.
+[2610.0:2613.0] All right.
+[2613.0:2630.0] The thing that I would like to say so lecture on Monday. I'm going to take your time between 9 and 11 11 more is free time. Okay. So those of you who want to take info theory, you can take info theory.
+[2630.0:2638.0] You just need to run it run from M A V one, whatever tool here. I think M reduce lecture here.
+[2638.0:2652.0] There will be again, so the exercise sessions. I'm going to occupy with restitation tool, linear algebra. So we're going to talk about linear algebra taking the with is the vector variables, making variables, things like this that are really important.
+[2652.0:2664.0] Okay. And again, I'm not going to take your six to seven business exception only for today. I apologize. All right. Just to again.
+[2664.0:2676.0] So finally, there are also things that you should be aware of. You know, not everything is mathematics, which you're learning. They're additional aspects for life.
+[2676.0:2695.0] There are there are these respect group at EPFL that very about equality treatment equal treatment. I just would like you to be also a there of these kind of resources at EPFL and know that, you know, like.
+[2695.0:2709.0] EPFL is the community is very inclusive and care about the students and everybody. Okay. So with that, I will end. Thank you very much. I again apologize for the excess 10 minutes.
+[2709.0:2737.0] I'm asking you guys on Monday. Have a great weekend.

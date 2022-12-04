@@ -1,0 +1,102 @@
+﻿@using GinasApp.Data
+@using GinasApp.Services.Interfaces
+@inject IGptService GptService
+@inject IJSRuntime JsRuntime
+
+<div>
+    <section>
+        <div class="container py-5">
+            <div class="row d-flex justify-content-center">
+                <div class="col">
+                    <div class="card" id="chat1" style="border-radius: 15px;">
+                        <div class="card-header d-flex justify-content-between align-items-center p-3 bg-info text-white border-bottom-0"
+                             style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                            <i class="fas fa-angle-left"></i>
+                            <p class="mb-0 fw-bold">Follow up questions</p>
+                            <i class="fas fa-times"></i>
+                        </div>
+                        <div class="card-body">
+                            <div id="scrollable" class="overflow-auto" style="height: 570px; padding-right: 15px">
+                                <div class="d-flex flex-row justify-content-start mb-4">
+                                    <img src="bot.svg" alt="avatar 1" style="width: 45px; height: 100%;">
+                                    <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
+                                        <p class="small mb-0">
+                                            Hello, feel free to ask me more about this explanation.
+                                        </p>
+                                    </div>
+                                </div>
+                                @foreach (var (answerRequest, answerResponse) in _history)
+                                {
+                                    <div class="d-flex flex-row justify-content-end mb-4">
+                                        <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                                            <p class="small mb-0">@answerRequest.Question</p>
+                                        </div>
+                                        <img src="user.svg" alt="avatar 1" style="width: 45px; height: 100%;">
+                                    </div>
+
+                                    <div class="d-flex flex-row justify-content-start mb-4">
+                                        <img src="bot.svg" alt="avatar 1" style="width: 45px; height: 100%;">
+                                        <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
+                                            <p class="small mb-0">@(answerResponse?.Answer?? "Did not catch you. Repeat please.")</p>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+
+                            <EditForm Model="_answerRequest" class="form-outline"
+                                      OnSubmit="OnQuestionSubmit">
+                                <InputText class="form-control" id="textAreaExample" rows="4"
+                                           @bind-Value="_answerRequest.Question"></InputText>
+                                <label class="form-label" for="textAreaExample">Ask your question</label>
+                            </EditForm>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+</div>
+
+
+@code {
+    private AnswerRequest _answerRequest = new();
+    private List<(AnswerRequest, AnswerResponse?)> _history = new();
+    private string _oldSessionId = "";
+
+    [Parameter]
+    public string UserId { get; set; }
+
+    [Parameter]
+    public string SessionId { get; set; }
+
+    private async void OnQuestionSubmit(EditContext obj)
+    {
+        if (string.IsNullOrWhiteSpace(_answerRequest.Question))
+            return;
+
+        _history.Add((_answerRequest, new AnswerResponse { Answer = "..." }));
+        StateHasChanged();
+        var response = await GptService.GetAnswerAsync(UserId, SessionId, _answerRequest);
+        _history[^1] = (_answerRequest, response);
+        _answerRequest = new AnswerRequest();
+        StateHasChanged();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        await JsRuntime.InvokeVoidAsync("scrollBottom", "scrollable");
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        if (SessionId == _oldSessionId) return;
+        _oldSessionId = SessionId;
+        _history.Clear();
+    }
+}

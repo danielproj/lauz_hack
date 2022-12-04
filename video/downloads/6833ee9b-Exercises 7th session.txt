@@ -1,0 +1,196 @@
+~Exercises: 7th session
+~2020-11-09T18:14:48.472+01:00
+~https://tube.switch.ch/videos/6833ee9b
+~CS-451 Distributed algorithms
+[0.0:15.0] Okay guys, yes, seems to work. So welcome everybody to today's session of exercises.
+[15.0:25.0] So today, Yavan could not join us. So I am going to be presenting the solutions for last
+[25.0:33.0] week and then introduce the exercises for this week. I hope I can manage this by myself.
+[33.0:39.0] I am quite confident in case I have technical difficulties or such fix them.
+[39.0:44.0] In case I just have questions that I am not ready to give an answer to.
+[44.0:53.0] I will be happy to do further research and then to come back to you at the leisure time.
+[53.0:68.0] Everything should be okay. So last week we asked you how to, how could we generalize?
+[68.0:79.0] How could we, let's say we can, the properties of NBST, asking if we can implement NBST,
+[79.0:85.0] but reducing its properties in a way that makes it easier to implement.
+[85.0:89.0] So we asked you to reduce the termination property of NBST,
+[89.0:92.0] the termination properties that is no matter what happens,
+[92.0:100.0] the correct process remains. Now we will be reduced the property to week termination,
+[100.0:105.0] specifically we say that there is a specific process that everybody gives upon.
+[105.0:110.0] So everybody knows a process B, right? And B is going to be not a crash, right?
+[110.0:119.0] And we want to have this week termination property where if P does not crash,
+[119.0:124.0] it's going to be not a crash, then everybody will actually decide.
+[124.0:128.0] Do you guys have the disaster problem with this algorithm?
+[128.0:134.0] I think it should have been relatively simple. The area should be so,
+[134.0:142.0] as recap, everybody has a proposal, commit or abort, for the specific transaction.
+[142.0:148.0] So NBST works as follows, everybody proposes something, it can be commit or abort, right?
+[148.0:155.0] And then the idea is the following. So if everybody is correct, right?
+[155.0:167.0] And everybody, sort of if everybody says commit, right? And during the execution of the algorithm,
+[167.0:172.0] the nobody crashes, then we have to say commit, right?
+[172.0:175.0] This encodes the interior notion that if everything goes well,
+[175.0:182.0] we should be able to make progress, right? Now if instead at least somebody crashes, right?
+[182.0:190.0] But let's say that everybody says commit, right? And we are free to either make progress and commit or abort.
+[190.0:196.0] Abort doesn't mean that whatever transaction NBST is applied to,
+[196.0:202.0] at the higher level, can be proposed again and maybe accept it later.
+[202.0:206.0] But then if we have a crash, we have a lot to say about.
+[206.0:212.0] Now specifically, any correct process, sorry, if any process actually proposes,
+[212.0:215.0] so if any correct process proposes to abort, right?
+[215.0:223.0] Then intuitively this means that, you know, there's something in here to be wrong
+[223.0:229.0] with the transaction in the transaction process, which means that we need to, to, to, to abort the transaction.
+[229.0:236.0] Okay, so here we, we can set the dimension property from the idea of, you know, the value terminates
+[236.0:242.0] through one and yet, of everybody's domain just as long as, you know, some centralized,
+[242.0:248.0] a fantasy that is in charge of guaranteeing, you know, that everything works fine is,
+[248.0:253.0] a lot of them, right? So the algorithm here was quite simple.
+[253.0:257.0] You could just use p to collect all the proposals, right?
+[257.0:262.0] Now we allowed you to use a perfect failure detector.
+[262.0:266.0] So on this algorithm, what you could have done was to just have p collect all the proposals, right?
+[266.0:275.0] And as usual, p goes through all the processes, you know, to, to receive all the proposals, right?
+[275.0:280.0] And given that we have a perfect failure detector, we are going to see that p,
+[280.0:284.0] I very eventually receives the proposal or eventually detect a fail,
+[284.0:290.0] this is for every other process, right? So as soon as he has collected all the proposals, right?
+[290.0:293.0] It can do the following. So first off, if there's any failure,
+[293.0:297.0] it can arbitrarily stay abort, just do issue, right?
+[297.0:305.0] So if any correct, if any process that sends, you know, if any process is np and abort,
+[305.0:312.0] then p sends to everybody on the board, right? And finally, if, nobody crashed and, you know,
+[312.0:317.0] p can collect all the proposals and all the proposals are commenced, then p, you know,
+[317.0:320.0] commits sends to everybody a commit message, right?
+[320.0:324.0] Now p can just simply use the special broadcast since p does not crash.
+[324.0:328.0] Every process is eventually going to get its message, as a correct process,
+[328.0:333.0] it is going to get its message, which means that as long as p doesn't crash,
+[333.0:338.0] the algorithm works and satisfies victory emanations, right?
+[338.0:343.0] Any questions on this? As long as I can even find a chance.
+[343.0:350.0] This is a confused answer. Do we have questions on this?
+[350.0:355.0] Oh, yes, we do. Okay. So do we also need something like perfect links to
+[355.0:364.0] some proposals to be yet? Yes. Yes. Yes. I think perfect links are always assumed.
+[364.0:369.0] I don't recall of any implementations of the things used perfect links.
+[369.0:373.0] The way I understand this, I don't know if, or should,
+[373.0:377.0] dislike this differently, in that case, the sheet is right and I'm wrong.
+[377.0:382.0] Best effort for broadcast is different abstraction that sits on top of the perfect links, right?
+[382.0:389.0] So the usually the implementation of best effort for broadcasts just sits on top of the perfect links, right?
+[389.0:395.0] And it is just loop through a correct process and, you know,
+[395.0:401.0] sorry, you loop through every process and you send the message to each process, right?
+[401.0:406.0] Now, if you don't have perfect links, maybe you have fair, fair loss links,
+[406.0:409.0] for example, either a chance of links that are lost in the library,
+[409.0:413.0] we can still implement, you know, a written transmission protocols,
+[413.0:419.0] but this is kind of outside of the scope of the specific implementation that we're talking about.
+[419.0:426.0] So best effort for broadcasts, as far as your concern, best effort works that if the center is correct,
+[426.0:429.0] everybody wants to receive the message, right? Then it can sit on top of perfect links.
+[429.0:434.0] Well, we can build perfect links out of no perfect links with the networks,
+[434.0:439.0] which makes it harder than we want, right? The only case where we can't have this is if you actually have links
+[439.0:446.0] that just don't work right? Okay. Yes, but we only want to p.
+[446.0:449.0] So I'm going to read the phrase question again.
+[449.0:453.0] So yes, but we only want to p to receive proposals.
+[453.0:458.0] So processes are supposed to react to VB.
+[458.0:463.0] And p should react to point of front sends.
+[463.0:469.0] No point p to receive. I'm not sure I'm understanding this question. So I'm going to read again.
+[469.0:475.0] We only want to p to receive proposals. Yes, since all correct process is supposed to react to VB,
+[475.0:479.0] but only p should react to point. I'm sorry. Can you can you replace your question?
+[479.0:487.0] I'm not sure I, I understand. Can you hear me? Yes.
+[487.0:495.0] So my point is that when we use p as a leader kind of,
+[495.0:501.0] then p should collect the proposals by receiving point to point messages.
+[501.0:508.0] Yes. But this shouldn't use best effort broadcast because we don't want other processes to receive this.
+[508.0:516.0] Oh, okay. So you're asking if receiving the messages is receiving the proposal via perfect links? Is that your question?
+[516.0:518.0] Exactly. Oh, yes. Yes. Yes. Yes. Yes.
+[518.0:524.0] It was an easier question than I used to. Yes. Yes. Yes. Yes.
+[524.0:530.0] So I don't think all of us, the unemployment is that does not use perfect links.
+[530.0:534.0] The idea being that perfectly, relatively,
+[534.0:548.0] the up-breast, easy abstraction to implement in the abstract case, and they quickly go out of scope as soon as we go into a little bit more technical details.
+[548.0:555.0] But I mean, in real case scenario, as long as you have a routing path between any two processes, you know,
+[555.0:563.0] you just roll CCP on the base of your protocol and you have an extremely good approximation of perfect links.
+[563.0:574.0] So yes, usually the topology of the network that we use always assumes perfect links, which are, you know, a very fair assumption, also because you can build them.
+[574.0:582.0] And it assumes all two of connectivity. Right. Now, if you don't have all two connectivity, you have a different apology than either you do some routing protocol.
+[582.0:594.0] Yes, absolutely. And I think all the calls and protocols that you'll ever see in this course, you just use perfect links and yes.
+[594.0:598.0] Okay. Thank you. No problem.
+[598.0:602.0] If you, yeah, perfect. You're musically even. Okay. Cool.
+[602.0:613.0] So let's go to the second exercise we weekend. We further weekend the termination property of the blocking time commit. Right.
+[613.0:623.0] And we said, okay, let's now remove right the leader and let's assume that, you know, no process crashes are all right.
+[623.0:647.0] So as long as no process crashes, then all processes decide now this obviously this is not very useful abstraction. If we actually need to use general world, because of course, you know, it's the entire field of the distributed algorithms is built around the data that these some processes can be still.
+[647.0:660.0] So we asked how to implement the algorithm now the idea was simple use again as a process to send to your proposal to have a correct process to start to have the other process.
+[660.0:669.0] And then, you know, when you receive all the proposals and you've got to see to receive all the proposal because no other process is ever going to crash.
+[669.0:682.0] And you just look and there's at least one board, if you have all commits, you just commit. So business business is a very, very simple.
+[682.0:701.0] And yes, obviously we didn't use any failure to have. We don't need one as long as we have as long as we have the assumption that, you know, process can ever crash all processes are correct, then, you know, of course, you don't need a fair to the texture.
+[701.0:714.0] Okay. So now this gets you to be slightly more interesting question, right? So we we we split to the remaining grab a request, right?
+[714.0:728.0] Now, certainly, I think we're not work just as an interesting abstraction to you, you know, as we're going to as we're going to discuss now in the next in the next two, two, three slides.
+[728.0:733.0] So maybe for interrupting you, but we don't see the slides anymore.
+[733.0:737.0] Oh, I'm sorry. Yes, let me try again.
+[737.0:745.0] More complicated than I would have thought. Okay. Share screen. Sorry, I guess.
+[745.0:749.0] Okay.
+[749.0:777.0] Does this work? Can you see it now? Sorry, I guess. Okay. Okay, good. Thanks. So as we were saying, yes, for the main thing that I've worked as this panel of of an interesting abstraction because it's one of the relatively few abstractions that as we go about proving now is actually stronger than consensus specifically in some circumstances.
+[777.0:799.0] Yeah, right? Where you can implement consensus, you cannot implement for many things your level broadcast. So a little bit stronger, which is kind of comfortable because once you have consensus, you have, you know, your things you have the possibility to do databases to all the important useful stuff that we want to do with distributed systems.
+[799.0:817.0] You have, you know, a machine application, you essentially achieve the universality moment, you have consensus, you can have a, you can literally have a set of machines, some of which can be faulty, essentially, stimulating the behavior of, you know, unimortal machine that can never go right.
+[817.0:831.0] So at least when I started the distributed systems for the first time, it felt like, you know, once you achieve consensus, there's nothing past that. It's the most powerful abstraction and you can obviously implement anything out of it.
+[831.0:841.0] No, actually, it's from a variable broadcast. It turns out to be stronger than that. And that has to do with the nature of the failure detection.
+[841.0:853.0] So the question that we asked here was the first hand at this. So we asked you can you implement something that may be in your level broadcast with an eventually perfect failure is entropy, right?
+[853.0:862.0] Assuming that of course, at least one processing question, usual, you know, something that you need a lot of broadcast reduces your reliable broadcast.
+[862.0:871.0] If you make the assumption that no process can crash because obviously, you know, the center is just going to best test for broadcast to everyone.
+[871.0:883.0] And you know, it's messages going to get through. However, if you have, you know, a, at least one thing we're, it's not, it's not obviously that figure can be the source.
+[883.0:889.0] It's no longer trivial whether you need a perfect failure detector or not.
+[889.0:897.0] So we try to weaken it and we ask you can we, you know, can we have an eventually perfect failure detector and still have to remain in your reliable broadcast.
+[897.0:900.0] So we can act.
+[900.0:907.0] As usual, I think we have done this like two or three times in these exercise sessions, right?
+[907.0:928.0] We use the as which proof is to use the undistinguished ability of runs, and specifically the idea is that as long as, you know, a process decides and a fine time of time, its decisions need to rely on fine and amount of information, right?
+[928.0:943.0] So the time is amount of information can either be produced by a specific scheduling plus failures for the same specific scheduling plus, you know, we have delays.
+[943.0:958.0] So we have a particular, you know, a process that, you know, the eventually perfect failure detector can, you know, suspect some process that then, you know, you don't know exactly, right?
+[958.0:963.0] But which point you can ensure that the process, that the process crashed, right?
+[963.0:979.0] Let's do the following. I am, I'm going to propose to you two runs, right? The say that you, you come to me and you have an algorithm that claims to be able to solve for anything around the broadcast with an eventually perfect failure detector, right?
+[979.0:995.0] So I'm going to have two runs to a TQC, A and B, right? So, and both A and B, you, we are running the algorithms that you guys claim implements, so many of them are broadcast, right? And so we have the sender as my specific native.
+[995.0:1010.0] Now, in the first scenario, that crashes, right? Immediately as you wake up, first thing that it does, you know, ask crashes, right? So obviously, because we have, you know,
+[1010.0:1025.0] a combination, at some point we have a process, P, necessary must deliver bottom, right? It cannot deliver a message because as did not send, it does send any message, right? So it delivers bottom, right?
+[1025.0:1039.0] Now, what I'm going to do is the following, and I'm going to, you know, take that time to eat, right? And then I'm going to simulate in B, the behavior that every process has in A,
+[1039.0:1053.0] after time T, but in B, this time S is correct, so specifically in B, we run S, right? So, S is correct, S is such sending messages around, right?
+[1053.0:1071.0] But the sign, knowing from the execution in A, that, you know, at time T, as long as they don't receive messages and give them the behavior of the failure detector at some point people deliver bottom, right?
+[1071.0:1085.0] So we delay everything up to some T front that is behavior 20, right? So the message is that P, C is coming from S or every other process since we keep the scheduling exactly as it was in A, you know, are exactly the same, right?
+[1085.0:1098.0] And from the purpose, we also tune the perfect, as the eventually perfective detector to be able exactly the same in A and B. And we can do this, this is not a problem because, you know, the perfective detector,
+[1098.0:1112.0] you mentioned the perfective detector, does not guarantee to suspect, you know, to suspect that money on the finite number of times, well actually yes, the finite number of times, yes, some of the bounds that number of times,
+[1112.0:1119.0] so there's no point where we can say, okay, well, this guy definitely died, right? So we just know that this needs to happen eventually.
+[1119.0:1140.0] So as long as they can delay, you know, the ability of diamond P to detect, you know, actual crashes, past P, which I can obviously do, the behavior of the P, C is in A and B is identical before P necessarily must deliver bottom, also in B, right?
+[1140.0:1152.0] And in previous, we obviously violated the, the validity of property, right? So X is correct, but did not manage to get its message true.
+[1152.0:1163.0] Any questions on this screen sharing is supposed to my screen sharing, okay, any questions on this?
+[1163.0:1176.0] Let's see, yes, okay, perfect, I'm going to go ahead, if you have questions, you'll read it right then, okay, catch up with them as soon as possible.
+[1176.0:1192.0] Okay, so now we have this kind of situation where we just showed that you cannot implement, you know, to make a lot of broadcast, you cannot implement it unless you have a perfect video detector.
+[1192.0:1208.0] Now, we know, however, that we can implement consensus with an eventually perfect video detector, right? So it seems, right now, that there should be, you know, okay, things that,
+[1208.0:1223.0] that, uh, terminating reliable broadcast should be stronger, right, than, than consensus because it requires more, right? So let's try and see if this relationship actually exists.
+[1223.0:1231.0] So if, CRB is strictly stronger than consensus, how do we do this? As usual, we try to implement consensus out of TRB, right?
+[1231.0:1241.0] So if we can build consensus out of TRB, then necessarily TRB is a strong consensus, right? Because we can obviously implement consensus out of TRB.
+[1241.0:1248.0] So the question was, can we can we sign algorithms that implement consensus using multiple TRB instances?
+[1248.0:1254.0] So, yes, yes, we can.
+[1254.0:1267.0] The, the, is quite simple again. The idea here is that you, you just have a process used to work to broadcast its own proposal, right?
+[1267.0:1281.0] So by many sort of TRB, everybody's going to agree either on a value that is proposed by, on the value that is proposed by the, about the original center of a proposal, or they're going to have a bottom, right?
+[1281.0:1287.0] And then this happens if and only if the standard of the proposal fades.
+[1287.0:1304.0] So the idea is, you know, the usual one, which is, as long as, you know, every every process is waiting to either get everyone else's proposal or the bottom for whoever fails.
+[1304.0:1316.0] So I, I've left underlined that doing this, here will be essentially worked as a, as a simple hybrid between, you know, a broadcast abstraction and a perfect failure detection, right?
+[1316.0:1327.0] TRB literally is giving us the values as they broadcast or bottom and bottom essentially is equivalent to saying this, this guy fails, it totally fails.
+[1327.0:1338.0] There's no two ways about it, right? So it actually, TRB here is actually behaving very closely, like a perfect failure detection, right?
+[1338.0:1351.0] So at this point, if we collect all the proposals of the processes that are not passed, we agree completely on which process is passed and which processes did not pass, and all the processes that did not pass, that did not pass, that that process is true.
+[1351.0:1365.0] Then everybody has a set of proposals, all of which, which, which necessarily includes all the proposals of the correct processes, right?
+[1365.0:1374.0] So at this point, we can just pick, and we can just use an arbitrary function, we extract a decision out of the set of proposals, and we're good to go.
+[1374.0:1385.0] As usual, the strategy for us to achieve consensus here is to first attain the set of proposals, and agree on the set of proposals, and then as long as we have a traumatic function to begin.
+[1385.0:1388.0] We're good to go.
+[1388.0:1398.0] Okay, now this is what we ask you, can we build, can we build, can we build, um, total order broadcasts out of, term, and generate a broadcast?
+[1398.0:1414.0] You know, it's just a more logical exercise for you guys, because of course, of course you can, as we have proved before, we can implement a total order broadcast by using multiple runs of processes, right?
+[1414.0:1419.0] And we have just proved, have just proved, proven proved.
+[1419.0:1431.0] We have just proved that, um, you can implement consensus using, you know, the broadcast, so obviously, you just, you know, once you want to achieve consensus, you can also do total order broadcast.
+[1431.0:1433.0] So that was the easiest way.
+[1433.0:1446.0] Now we didn't, um, we didn't spend too much time wondering if there's some more elegance, um, way of, um, being a less, like some somewhat more direct way to implement, um, total order broadcast.
+[1446.0:1458.0] I'm not sure about this. Did anybody come with us, more contrived, more specific solution to data, could build, total order broadcasts and types of, uh, the main thing we have the broadcast?
+[1458.0:1467.0] If not, I mean, it's fine. Like we know that we can do it. So, so that's very much okay.
+[1467.0:1479.0] Okay, so I think these lines were all for last week's, um, okay, just when you have look, I think we lost the screen share.
+[1479.0:1485.0] But, but, okay, so these were all the messages. So yes, nobody has questions, apparently.
+[1485.0:1501.0] So I'm going to move to briefly introducing the exercises for this week. So let's stop the screen share.
+[1501.0:1517.0] Okay, so, um, okay, so here we have exercises about about the group membership and, and the SC.
+[1517.0:1529.0] So first off, we ask you to prove that, um, the perfect for your director is the weakest failure that they can use for group membership.
+[1529.0:1541.0] So essentially, again, we want, we want you to prove that there's no way of implemented, uh, of implementing group membership out of anything less than P.
+[1541.0:1558.0] And the hints that we give you is, you know, trying to actually implement the study actually show that group membership is at least as strong as P and it is by, you know, building P out of group membership, as, uh, as we did in many times.
+[1558.0:1561.0] During the exercise sessions.
+[1561.0:1587.0] And can I ask you to, so the SC is, you know, the way we have, you know, the interface that they have seen for using that occasion is, uh, it's designed to essentially, you know, have this nice broadcast like a structure and, you know, as, as the processes, you know, fail eventually, they are removed from.
+[1587.0:1605.0] From, from the view of every process, which is, you know, kind of, uh, again, kind of a way of, you know, linking the behavior of a broadcast obstruction with the behavior of a, you know, of a failure to that term.
+[1605.0:1617.0] So, um, the idea of the SC, as you have seen in the class, is true, you know, the property that accounts for processes, leaving the system, right.
+[1617.0:1632.0] But then in, in a real case scenario, right, in these, uh, you know, open permissionless systems where, you know, we ideally want, you know, processes will also be able to join, maybe, you know, we have more clients.
+[1632.0:1640.0] We have more, you know, elements and partnerships between, you know, data centers.
+[1640.0:1646.0] So we ask you to generalize the properties of VST to account for joints.
+[1646.0:1656.0] So the first step is to say what properties of the VSC, as we have discussed, as you have discussed in the class, is not suitable for accommodating them, you know, processes join.
+[1656.0:1668.0] And then I ask you to update them, um, in a way that allows implementation of processes that actually join the system and extend the system, I think.
+[1668.0:1677.0] Right. Um, finally, the third exercise, it's a bonus exercise that I think it's still quite useful and interesting is now we ask you to implement the whole thing, right.
+[1677.0:1687.0] And then we generalize the consensus based algorithm that you have seen in class of the C to also account for processes joining.
+[1687.0:1695.0] And this is going to be all, but don't be tricked by the fact that you have three exercises because they're going to be, you know, quite tricky.
+[1695.0:1700.0] They are going to be slightly longer than I expected and hoping.
+[1700.0:1712.0] So I think that for this week, it's going to be all unless you guys have any specific question, I am going to sign off.
+[1712.0:1730.0] Say five, four, three, two, one. Okay. Guys, it's done pleasure and see you in the next session. Cheers.

@@ -1,0 +1,231 @@
+~COM-516 lecture 8.1
+~2020-10-30T17:27:25.922+01:00
+~https://tube.switch.ch/videos/c8171275
+~COM-516 Markov Chains and Algorithmic Applications
+[0.0:14.56] Okay, so in the next few weeks of this class, we are going to change a little bit gears
+[14.56:33.68] and go towards algorithmic applications of Markov chains.
+[33.68:38.800000000000004] Okay, so let me say a few words about what will happen in the next few weeks.
+[38.8:50.64] So till now, I remind you that are the main steps that you saw in the class.
+[50.64:62.8] So Olivier reviews, reviewed the basics of Markov chains and gave you the main, one
+[62.8:76.32] of the main two theorems. So the first main theorem is about the existence and
+[76.32:94.6] the city of a stationary distribution of a chain. And then a second main theorem was
+[94.6:107.56] about the fact that when is the stationary distribution, a limiting distribution.
+[107.56:117.52] Okay, the second theorem answered this question and this question is related to the notion
+[117.52:134.16] of a ergodic chain. Okay, so I remind you an ergodic chain is a chain that is irreducible,
+[134.16:145.04] a periodic and positive recurrent. So in this case, well, you have answers given by
+[145.04:152.04] the two theorems here. So there exists a unique stationary distribution and it is a limiting
+[152.04:170.04] distribution. And the next question that you studied is the rate of approach of the stationary
+[170.04:179.04] distribution. So at what speed do you approach it? And this is related to the notion of mixing
+[179.04:191.28] time and also to the notion of spectrum gap. And this is a difficult subject and it was
+[191.28:214.84] treated within the framework of chains that satisfy detailed balance. But somehow all
+[214.84:231.08] this is about structure of the theory of Markov chains and will be useful as a framework
+[231.08:250.08] in the second part of the semester. So all this has to be kept in mind somehow as a framework.
+[250.08:266.40000000000003] Okay, for the second part of the course. And the second part of the course is going to
+[266.40000000000003:279.68] be more about applications and algorithms. Okay. So somehow we will appeal to the theorems
+[279.68:292.08] when needed, but we will not study anymore structural aspects of Markov chains. Okay.
+[292.08:307.16] So the main algorithmic question that we are going to tackle. So the algorithmic question
+[307.16:329.04] that we will tackle here is about something from a distribution. So priorly this has
+[329.04:337.20000000000005] nothing to do with Markov chain. You have a distribution pile on some state space. So the
+[337.20000000000005:352.88] states are denoted by I. Okay. And here I runs over a state space S. And the question is
+[352.88:376.96] how do you sample efficiency? So I will motivate a little bit this question. And so for today
+[376.96:392.15999999999997] I will motivate this question a little bit. I will give some or it's more maybe almost
+[392.15999999999997:404.44] a reminder if you have never seen, but I will somehow remind some very classical methods
+[404.44:418.6] of sampling. But which will not be our main interest that work well. These methods work
+[418.6:432.44] well for somehow easy in quotation marks distributions, which are somehow low dimensional
+[432.44:449.2] distribution. I will say what I mean here. And I will give examples then of hard invitation
+[449.2:464.28] marks to sample distributions. And it is for these hard to sample distributions that
+[464.28:473.0] will introduce our main method which is called, it's one of the main methods that is
+[473.0:485.2] known it's called Markov chain Monte Carlo method. And that's the generic name of the
+[485.2:500.08] method. It comes in many guises and maybe the most well known is the metropolis.
+[500.08:514.96] So this is here the program of today. And as the name indicates here Markov chain Monte
+[514.96:523.88] Carlo method involves a Markov chain to sample from a distribution here which are
+[523.88:532.52] priori the sampling problem as I said has nothing to do but the Markov chain is going
+[532.52:550.68] to be used as a tool. So that is today's program in this video. And the next one and
+[550.68:577.24] the coming weeks we will talk about applications of the metropolis
+[577.24:592.2] is called a function of the function of a complex function or a cost function if you
+[592.2:601.2] wish. So this will be one topic next time and this is very much related to the annealing
+[601.2:618.6400000000001] algorithms. So we will talk about annealing algorithms and then we will go towards some computer
+[618.64:632.3199999999999] science problem, a theoretical computer science problem which is about coloring a graph. Okay, and we will analyze,
+[632.32:652.1600000000001] we will analyze some MCMC Monte Carlo Markov chain method to color graph. Okay, graph coloring is a
+[652.16:662.48] difficult problem that I will introduce next time already. We will go towards in two or three weeks
+[664.24:678.4] towards the study of the Easing model which is a paradigm of a heart
+[678.4:692.0799999999999] to sample distribution. In fact, I'll give it already as an example today. Okay, and we will
+[692.0799999999999:698.8] speak about variance of the metropolis-rusting algorithm that go under the name of global dynamics,
+[698.8:713.1999999999999] heat bath dynamics and things like that. And finally in the last two weeks or so, we will address a
+[713.1999999999999:721.8399999999999] question which is the following is the question when you sample with these methods, how do you know
+[721.84:733.84] that you have faithful samples? So samples that really come from the distribution pie that you
+[733.84:742.24] wanted to sample initially. This is hard to assess in practice and in some cases this can be
+[742.24:763.12] assessed by a method that's called the prop and we'll some coupling from the past method for sampling.
+[763.12:771.28] Okay, so it's a special implementation of MCMC in fact.
+[771.28:800.88] Okay, so this will occupy here next lecture. Next week, this will take about two weeks.
+[801.76:811.76] I think well maybe one or two weeks. I'll introduce coloring next time.
+[813.8399999999999:816.48] This will take about two weeks.
+[816.48:828.88] And this is one or two weeks. Okay, so I guess.
+[832.8000000000001:835.6] So we see how this seems.
+[835.6:851.0400000000001] Okay, so for today I address the question of the general question of sampling a distribution
+[851.04:863.52] pie i and let me first motivate this question and the most usual way to motivate the question motivation.
+[866.48:869.52] So there are many motivations for sampling
+[869.52:890.0] from a distribution pie i or i is in a state space but for example a very common motivation is to
+[890.0:900.4] compute some integral or to compute some some. So suppose you want to compute.
+[905.04:911.68] So you know in the framework of this class integrals are sums because we work on
+[911.68:921.4399999999999] a discrete setting and suppose you want to compute some over this whole state space of a function
+[921.4399999999999:937.92] f of i times the probability of state by i. Okay, and so this is nothing else than the expectation
+[937.92:949.4399999999999] of f of x. Okay, where x is the random variable x is the random variable such that the probability
+[950.0799999999999:960.64] at x equal i equals by i. In the continuous framework this would be an integral and
+[960.64:972.3199999999999] and as you probably already heard these integrals or these sums can be somehow computed by the Monte Carlo method.
+[978.8:984.64] The Monte Carlo method rests on the ability to sample from pie i.
+[984.64:992.24] So it could be that the state space is too big and it is too complex to write down all terms of
+[992.24:1000.24] the sum and to sum and then you would use the Monte Carlo method and what does the Monte Carlo method?
+[1000.24:1014.16] Well, with the Monte Carlo method you you you you construct or you draw let's say capital M
+[1014.16:1031.44] samples that I'll call x1 x2 xn high id samples independent identically distributed samples
+[1032.3999999999999:1042.8799999999999] from the distribution pie. Okay, so you need a method to be able to sample so we'll talk
+[1042.88:1049.92] about methods a bit later and then you take the estimator
+[1049.92:1075.3600000000001] 1 over m sum from k equal 1 to m of f of xk. Okay, and by the law of law of numbers so this is the estimator
+[1075.36:1089.4399999999998] for the sum above and by the law of large numbers you know that this estimator
+[1089.44:1104.16] tends to infinity to the expectation of f of x which is nothing else than the sum here.
+[1104.16:1117.76] This sum here. Okay, so what is the quality say of the estimator? Well, we can evaluate the variance
+[1117.76:1134.48] here of the estimator so if I write down the variance of the sum from 1 to m f of xk well,
+[1135.68:1144.56] the m 1 over m goes out as 1 over m square and then because I have iid samples I'll get the sum
+[1144.56:1155.12] of the variances. Okay, but all these variances are the same since the xk are identical
+[1155.76:1163.6799999999998] and I have m terms so I get here 1 over m times the variant of f of x. Okay, and we suppose the
+[1163.68:1180.0] variance is finite so we see that in fact the estimator represents somehow is equal
+[1181.44:1191.76] to the expectation of f of x plus a term of the order of 1 over square root 10. Okay, so this
+[1191.76:1199.68] represents the error of the estimator. So if you want a small error you need a large number of
+[1199.68:1221.8400000000001] samples so you better have an efficient way to draw these samples. Okay, so classical sampling methods.
+[1221.84:1232.6399999999999] I want to say a few words about these classical sampling methods. The most classical one or the most naive one,
+[1232.64:1248.24] but very much used and in practice on a computer also,
+[1248.24:1264.08] but this will work for easy to sample distributions. Okay, all these methods and just summarizing here
+[1264.72:1271.6] will work for easy to sample distributions and we will see what are easy to sample distributions
+[1271.6:1281.28] once we have the methods and once we talk about how to sample distributions. Okay, the most
+[1281.28:1294.7199999999998] classical one is the following. You suppose that you have an efficient way. So you suppose that
+[1294.72:1306.64] that's a hypothesis. You have an efficient way to generate a uniform distribution. So you
+[1306.64:1313.68] is a random variable that's uniformly distributed say in the interval 0, 1.
+[1313.68:1326.72] So if you have such an efficient way to generate such a random variable, well then to sample from
+[1331.8400000000001:1343.3600000000001] from the distribution pi, i in s now suppose s for the purpose of notation here is indexed by 0,
+[1343.36:1359.28] 1, 2, up to, etc. Then what do you do? Well, you draw the variable u. Okay, u is in 0, 1. So if you
+[1359.28:1384.16] falls into 0 and pi 0 say, well you declare that your sample x that I did not hear is equal to 0.
+[1384.16:1399.0400000000002] Okay, if u falls in the interval p 0 pi 0 plus pi 1. So the length here of the first interval is pi 0.
+[1399.0400000000002:1407.52] So the probability to get 0 is pi 0. Okay, because here we have the probability that x equal 0 is
+[1407.52:1416.4] indeed pi 0. The length of the second interval is pi 1. So it's not for all to declare that x is 1.
+[1417.2:1427.68] Okay, so the probability that x is 1 here is pi 1 and you go on like that. Okay, so x will be i.
+[1427.68:1446.0] If your random variable u falls into the sum from k to i minus 1 pi k and the sum from k equal 0 to i pi k.
+[1446.0:1455.68] Because here the probability, well when I say the probability that x equals 0 does the same as the
+[1455.68:1466.16] probability that u equals 0. Okay, so maybe it's maybe more clear if I say the probability that u equals
+[1466.16:1474.88] 0 is pi 0, which I want this to be the probability that x equals 0. Here the probability that u equal 1
+[1474.88:1489.44] is pi 1, which is the probability that x equal 1 and here the probability that u equals i is pi i, which is equal to the probability that x equals i.
+[1490.64:1493.7600000000002] Okay, so u acts as a dice, okay.
+[1493.76:1510.96] You throw u, you read the result and then this tells you what value you affect to x.
+[1510.96:1528.8] Okay, now this could be, well I'll say why this could be difficult in practice a bit later.
+[1528.8:1540.32] So maybe two other very classical methods, one method is called important sampling.
+[1543.52:1549.28] There is a short summary of these methods in the notes.
+[1549.28:1578.96] So I'll be a bit brief here. In important sampling, you assume here that we have an efficient method to sample from not the distribution pi.
+[1578.96:1591.1200000000001] From which we would like to sample, but to sample from another distribution that I call psi, I run over the state space.
+[1592.08:1602.96] Okay, so I have an efficient method to compute averages of sums where the samples come from psi.
+[1602.96:1614.8] And now remark the following, which has nothing to do with something is just a trivial math.
+[1614.8:1640.6399999999999] I'll remark some of f of i by i, which is the expectation of f of x under when x is distributed as pi, is equal to some of f of i times w i times psi i,
+[1640.64:1648.8000000000002] where w i is the ratio pi i over psi i.
+[1648.8000000000002:1667.44] Okay, and this here is the expectation of f of x times w of x when x is distributed as pi.
+[1667.44:1693.28] Okay, so the idea is to consider the estimator, the following estimator, the estimator that estimates this quantity here.
+[1693.28:1718.6399999999999] So one over m sum from k to m of f of x k w of x k, where w i is equal to pi i over psi i.
+[1718.64:1744.0] So, yes, w i is pi i over pi i and the sum is over samples, iid samples, xk distributed according to psi.
+[1744.0:1767.84] Okay, so if you look at the variance now of the estimator, well the variance is going to be one over m times the variance of f of x w of x by the same calculation as before.
+[1767.84:1785.1999999999998] Okay, so the error is of order still one over square root m, but multiplied by another coefficient than before.
+[1785.2:1807.76] So before the error was multiplied by one over square root m times the variance of f of x square root, but here you have some other coefficient f of x times w of x square root.
+[1807.76:1835.2] And you could optimize over the choice of w, so over the choice of psi if you wish, over psi somehow or w psi.
+[1835.2:1846.4] Or well, over psi that's the only choice you have to minimize this coefficient, okay, to make it smaller.
+[1846.4:1858.56] And in particular to make it smaller than before, than for a previous method.
+[1858.56:1877.12] Okay, I don't want to say much more, this is called important something because when you carry out this optimization problem, what you find is that, let me draw it here.
+[1877.12:1903.6799999999998] What you find is that if, if phi, if phi gives a lot, gives not so much importance to some values in the state space x, a lot of importance to other values, okay.
+[1903.68:1908.3200000000002] So that would be phi of x.
+[1908.3200000000002:1912.4] I draw it in a continuous manner here.
+[1912.4:1936.0] When you optimize, okay, you find that the new weight, I think the new weight, w gives more, okay, we'll have to check this.
+[1936.0:1952.72] But you give more, no, the psi, the psi is going to give more probability to samples that are more probable under psi.
+[1952.72:1960.16] So under phi, so you find some psi like that.
+[1960.16:1974.16] Okay, but we can discuss this matter as in the exercises more.
+[1974.16:1992.64] Okay, another method that is an elaboration of importance something is called rejection something.
+[1992.64:2004.3200000000002] So rejection something is based on a similar remark like here, like this remark, except we add something.
+[2004.3200000000002:2008.0800000000002] So let me introduce it in this way.
+[2008.08:2030.0] We'll remark that this sum here, f of i, pi i, as we said before is the same as the sum of f of i, w i times psi i.
+[2030.0:2038.56] So I'll write it like that.
+[2038.56:2055.76] W i times psi i, but now instead of taking w i, which is pi i over psi i, let me add a little decoration, I'll take w i tilde and put a constant 1 over c here.
+[2055.76:2073.44] And here I have w i tilde, but if I do that, I need to divide the whole sum here by 1 over c, so that the c at the end cancels.
+[2073.44:2088.32] Okay, so that's just a trivial remark for the moment, f of i times pi i, sorry.
+[2088.32:2098.08] Okay, so this is nothing else than the expectation under pi of f of x.
+[2098.08:2103.2799999999997] And how can I interpret the right hand side?
+[2103.2799999999997:2108.08] Well, I'll interpret this in the following way.
+[2108.08:2125.04] I will say that so I have an easy to sample from distribution side.
+[2125.04:2154.64] Okay, I pick a sample i with probability psi i, and then I accept the sample i with some probability.
+[2154.64:2165.8399999999997] I didn't specify what is c, but I accept it with some probability w tilde equals 1 over c pi i psi i.
+[2165.8399999999997:2183.68] Okay, and I want these numbers to be smaller than 1, so here I need to take c greater or equal say, and the max over all states of the pi i over psi i.
+[2183.68:2197.2799999999997] So that I get a number that's smaller than 1, and now you see why this funny notation 1 over c, because it's kind of easier to see that this is going to be smaller than 1.
+[2197.2799999999997:2205.44] Okay, you accept the sample with probability like that, and otherwise you reject the sample.
+[2205.44:2213.6] And then the idea of rejection sampling is to consider the following estimator.
+[2213.6:2221.84] Consider the estimator sum.
+[2221.84:2241.44] sum k goes from 1 to m prime 1 over m prime, but I will sum over, so, well, I don't like this notation 1 to m prime.
+[2241.44:2262.64] Let me write it like that, sum over k such that the sample xk is accepted, and you take the sum of f of xk as usual.
+[2262.64:2276.56] Okay, and here you have 1 over m prime, and this is the number of accepted samples.
+[2276.56:2301.2] So as before, x1 up to xm, say, which is greater than m prime, these are samples from psi, which is easy to sample, and you accept,
+[2301.2:2320.08] you accept with this probability, the acceptance probability, with this probability, and you accept in total m prime of them.
+[2320.08:2336.48] Okay, and this is the estimator, so why is this the estimator, or well, it's possible to see that if you would compute the expectation,
+[2336.48:2349.44] well, what would be the expectation of this estimator, or what does this estimator represent?
+[2349.44:2368.8] So the numerator represents the sum over i in s, f of i, okay, times the probability that you pick the sample i times the probability that you accept it, w tilde,
+[2368.8:2390.48] divided by here the expectation of m prime, and what is the expectation of m prime is the sum over all samples, the probability that you pick the sample i times the probability that you accept it.
+[2390.48:2412.72] Okay, and let's do this little computation here, well, what is psi i, w tilde, if we put everything together, that's just 1 over c, pi, i, just by this formula here.
+[2412.72:2435.12] Okay, so in the denominator, you see that the sum over s of psi i, w tilde is just 1 over c, this is the 1 over c that, in fact, we had here.
+[2435.12:2458.3199999999997] Okay, and in the numerator, well, we have the terms, so you find immediately that this ratio is nothing else than sum of f of i psi i, w tilde, divided by 1 over c, and this is just
+[2458.32:2478.56] the probability of f of i by i, okay, which is the expectation of f of x, expectation with respect to pi, okay, but the point is that here you use samples from psi.
+[2478.56:2491.2799999999997] Okay, so this is called rejection sampling because you proceed as an important sampling with acceptance and rejection.
+[2491.28:2516.8] Okay, so let me put a note here, you proceed as in an important sampling with some exception, rejection probability.
+[2516.8:2540.4] Okay, and when you accept reject, at the end you need that the number of accepted samples here is big enough, the same prime, and although the method has some advantages, it can have the disadvantage that to get a large and prime, you will need to sample many times, many, many times, more than m times.
+[2540.4:2569.6800000000003] Okay, so again, you better have an efficient way to sample. Okay, so all these are the very classical methods of sampling, and so now we treated this topic and this topic, and let me go here to the topic of examples of heart to sample distributions for which
+[2569.68:2587.2799999999997] these methods are not very efficient because we don't have nice ways to sample. So there are various ways in which it can be difficult to sample.
+[2587.28:2607.0400000000004] And to understand what are these problems, and here I will not exhaustively list the problems, probably it's not possible. Each time you have an application, you encounter, okay, some problems, some well-known problems, or maybe some new problems.
+[2607.04:2625.6] So let me proceed by two examples, and then you will get the main idea examples of heart to sample distributions.
+[2625.6:2655.2] Well, the first one is concerns something that comes from graph theory, somehow, or optimization or theoretical computer science.
+[2655.2:2674.3999999999996] And it's the problem of coloring an arbitrary, very large graph.
+[2674.4:2693.6] So if you have a graph, which is made up of vertices, so the graph might be embeddable in space or not. Okay, so imagine here a very, very large graph.
+[2693.6:2712.7999999999997] And what we call a proper, so suppose you have you have Q colors at your disposal. Okay, I number them from one to Q.
+[2712.8:2732.0] And the problem is, well, and then first let me define what's called a proper coloring of the graph. So the graph is made up of a set of vertices and a set of edges that you see here.
+[2732.0:2761.2] What are the vertices and the edges? And the proper coloring of Q is an assignment of colors to the vertices such that if a, b is an edge, then a and b don't have the same color.
+[2761.2:2788.3999999999996] Okay, so this is the definition of a proper color. Okay, so for example, a proper coloring could be, well, maybe it's going to be too long to draw here, but let me attempt.
+[2788.4:2805.6] So if I, I use enough colors, of course, I'll succeed, but if I don't have enough colors, then it's going to be hard.
+[2805.6:2823.7999999999997] Okay, and so here let me use enough colors so that I succeed. Okay, now the distribution I want to sample from is the following.
+[2823.8:2852.0] Take the, the set of the simple distribution, pi, which is the uniform distribution over the set of all possible proper colorings.
+[2852.0:2864.2] So this is a very simple and at the same time very complicated distribution because suppose you have the set here of colorings.
+[2864.2:2875.0] So this is our state space S. Okay, I call this set S and pi, what is pi?
+[2875.0:2886.0] A pi for a given coloring, a given proper coloring is equal to the indicator function of the proper coloring.
+[2886.0:2901.4] So I don't want to formalize this too much divided by a number I call Z, where Z is the number of proper colorings.
+[2901.4:2912.8] Okay, this notation will always mean number of proper colorings.
+[2912.8:2916.6] So why is it difficult to sample from such a distribution?
+[2916.6:2934.2] Well, first of all, although it's a uniform distribution, you don't know the set. Okay, so remark that you don't know the set S.
+[2934.2:2944.2] It might be hard to list all the colorings. Okay, and the number of proper colorings is enormous.
+[2944.2:2956.6] And you don't know Z also. Okay, the normalization factor.
+[2956.6:2971.2] This strange notation Z for a number is not, he comes from, is there for some reason and later in the class I'll elaborate on the reason for the notation.
+[2971.2:2986.0] You're not obliged to use this notation. Okay, so the normalization factor here is unknown, especially for large graphs.
+[2986.0:3009.6] So it's going to be hard to sample. Okay, you might not even be able to find one coloring, although there might exist.
+[3009.6:3036.2] Okay, and so something here, you might say, okay, that's a strange problem, but something from this distribution is an important problem because since it might be very hard to color a graph, one method would be to sample from the set of proper colorings.
+[3036.2:3047.6] So if you had an efficient method to sample, you could find proper colorings and even answer the question, does there exist one?
+[3047.6:3056.2] And we will see that Markov chain Monte Carlo methods can help us. Okay, they cannot solve completely this problem.
+[3056.2:3072.2] There are many variants of this problem, which are very hard and so on, depending on the class of graphs that you want to color, but Markov chain Monte Carlo methods can greatly help.
+[3072.2:3093.2] And the classical methods that I outlined before are completely inefficient because the classical methods require a good knowledge of being even able to list the set of possible samples, so the set of colorings and then to even compute the pi,
+[3093.2:3104.2] and here we cannot even list the set S and also it's difficult to compute the Z and the pi.
+[3104.2:3113.2] Okay, a second problem that has the same flavor, but is maybe more complicated at first sight is the easy model.
+[3113.2:3129.2] I'll be a bit brief here if you have never seen it, never mind because we'll come back to it. Okay, we will come back to this in a few weeks.
+[3129.2:3137.2] We will also come back to coloring next week or the week after.
+[3137.2:3152.2] Okay, in the easy model you have again a graph says arbitrary a set of vertices and a set of edges and you have a cost function that I call age.
+[3152.2:3174.2] Okay, first you have a random variables assigned to vertices. So to vertices to each vertex the random variable takes binary values plus minus one.
+[3174.2:3202.2] We could generalize this so before you had colorings here you have as if you had two colors or we have two values. Okay, and you have a cost function that I call age that depends on the set on the set of assignments of the graph.
+[3202.2:3217.2] And this age typically takes the form as some over some real number. It's a sum over a high J, which is an edge. So a sum over all edges.
+[3217.2:3235.2] So there is typically a minus by convention S i S j. Okay, and J i J are typically simply real numbers, which can carry signs and so on non-vanishing real numbers.
+[3235.2:3262.2] So they are in R star. Okay, but I sum over edges here. Some is over all edges of the graph. Okay, and the distribution is called the easy model distribution.
+[3262.2:3277.2] In fact, that's a mark of random field or so called a Gibbs distribution for finite graph, but large graph. Okay.
+[3277.2:3306.2] This distribution is by the state space is so the set of assignments. Okay, so here you have the state space is the set of all binary assignments.
+[3306.2:3326.2] S i S v that is in plus minus to the power V. Okay, so no need for the notation here. You understand by by words. And the distribution is by definition exponential.
+[3326.2:3345.2] I'll put a bit just a number for the correlation here, age of S 1. S v and I have to normalize this distribution and I have a factor called Z again and this Z here.
+[3345.2:3366.2] What is it? Well, it's the sum over all possible assignments S 1 to S v, which is a set of assignments plus minus 1 to the power V of E minus beta H, the numerator.
+[3366.2:3387.2] So this sum contains how many terms to the power the cardinality of V terms. Okay, so it's hard to compute some just as in coloring.
+[3387.2:3415.2] It's very hard to compute if G is sufficiently big. It's basically algorithmically impossible or it takes an exponential time. Okay, and so it's going to be difficult to sample from such distributions that are called also high dimensional distributions because you have a lot here of degrees of freedom.
+[3415.2:3434.2] By the classical methods that we that we outlined before. Okay, so the MCMC methods that we will see in the next few weeks again can help to sample from such distribution.
+[3434.2:3448.2] So this kind of model is very paradigmatic. It comes initially from physics, but it has moved in the realm of probability of mathematics of computer science also.
+[3448.2:3471.2] It can represent many many phenomena in physics, but also also in computer science, social networks, etc. So it's pretty important to know how to sample from such kind of distributions.
+[3471.2:3487.2] Okay, so in the next video we go towards the MCMC method that that can be applied to such difficult to sample from distribution.

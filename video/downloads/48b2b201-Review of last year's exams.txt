@@ -1,0 +1,1346 @@
+~Review of last year's exams
+~2021-01-14T19:35:55.427+01:00
+~https://tube.switch.ch/videos/48b2b201
+~CS-451 Distributed algorithms
+[0.0:3.36] Got until you know that you're recorded for your colleagues can.
+[4.08:5.96] Okay, so it should be recording now.
+[6.16:8.52] I guess you guys can also confirm that.
+[8.56:9.36] So we can.
+[9.36:11.08] Yeah, I can see that.
+[11.120000000000001:11.64] Cool.
+[11.64:30.64] So questions anybody.
+[30.64:32.36] Don't rush too much.
+[32.36:38.28] You won't be able to handle all of your requests.
+[38.28:40.28] Okay, so let's do like this.
+[40.28:44.760000000000005] I want to be just have a brief look at the exam just go through both of them.
+[44.760000000000005:45.72] Just very brief.
+[45.72:46.480000000000004] Okay.
+[46.480000000000004:47.0] Yes.
+[47.0:48.84] I'm gonna start with the major exam guys.
+[48.84:59.32] So as you see here, the general structure of the exam is how like a first part where we
+[59.32:68.92] give you kind of more basic simple understandable questions that are about like the course.
+[68.92:69.4] Right.
+[69.4:76.2] So we want to make sure that if you follow the course and you listen to us and you have
+[76.2:81.56] like a good understanding of I mean a decent understanding of you know what's going on
+[81.56:82.56] in the course.
+[82.56:89.96000000000001] You should be already able to get the the basic for that you need to pass, right?
+[89.96000000000001:95.08000000000001] So we usually organize obviously like I can talk statistically and I will exclude from
+[95.08:104.52] my statistics the saturdays exam because of course you know obviously not too much information
+[104.52:108.2] about that one, but you know we can we can discuss how things usually go around here
+[108.2:110.4] when going.
+[110.4:118.84] So usually we have two parts in the first part we tend to kind of evaluate how much
+[118.84:123.48] you understood of the basic stuff that we discussed in class and then we try to have
+[123.48:128.20000000000002] a little bit of a more playful, more creative second part where we actually ask you to
+[128.20000000000002:134.44] figure out new algorithms by yourself or how you know stuff can be assembles different
+[134.44:139.20000000000002] obstructions and used in concept to achieve interesting stuff, right?
+[139.20000000000002:147.28] Usually the exam is designed in such a way that you do not need perfection to get the
+[147.28:154.28] maximum grade.
+[154.28:157.16] I have never believed that making a small, so the political mistake should be a good reason
+[157.16:159.76] for somebody not to get the maximum grade.
+[159.76:165.92000000000002] So what we try to do is always to tune the difficulty of the exam in such a way that very
+[165.92000000000002:171.0] good students that have motivated attentive students that understood well everything they
+[171.0:175.32] can get a text while still having some room for errors, right?
+[175.32:183.88] So usually the total amount of points that you can get amounts to something greater than
+[183.88:188.79999999999998] 6th and then the exam is kept at 6th, right?
+[188.79999999999998:192.92] So if you get 6 and a half you get 6th.
+[192.92:199.07999999999998] Okay, so I'm going to go through the mixture, right?
+[199.08:206.08] And then we'll switch to the final from last year.
+[206.08:207.68] You have an even thinner string, right?
+[207.68:209.68] So I assume the master string is online.
+[209.68:210.68] Yep.
+[210.68:213.72000000000003] Everything seems okay.
+[213.72000000000003:220.76000000000002] When we're going to discuss the final, I will underline even personaling some remarks
+[220.76000000000002:227.48000000000002] about some common mistakes that you guys have done, not specifically you guys, that your
+[227.48:229.48] predecessors have done last year.
+[229.48:234.28] So I really want to make sure that we don't have these kinds of miscommunications this year
+[234.28:235.88] around, right?
+[235.88:242.2] So remaining in the upper broadcast, we have this first part, it was about remaining
+[242.2:243.2] in the upper broadcast.
+[243.2:249.28] We asked you interface properties of remaining in the upper broadcast, those can directly
+[249.28:252.35999999999999] find from the book.
+[252.36:258.04] So I'm not going to discuss them too much in the studio, right?
+[258.04:262.0] Rear broadcast class termination eventually everybody gets out with either a message,
+[262.0:266.2] which is the message that the sender sends or with some symbols that says, I didn't get
+[266.2:268.76] anything, I'm sorry, let's just get up, right?
+[268.76:273.76] And then consistently we have to want everybody to give up or everybody to say, okay, the message
+[273.76:278.12] was received correctly and it's this one, right?
+[278.12:283.24] So then we ask you the difference between a perfect fillet detector and an eventually
+[283.24:284.24] perfect fillet detector.
+[284.24:288.64] Again, this is one of the first things that you saw in class, so it should be kind of
+[288.64:293.72] decently understandable, different being but qualitatively that perfect fillet detector
+[293.72:300.92] tells you somebody died, the process has failed, the process will never come back from the
+[300.92:301.92] dead, it's done.
+[301.92:307.68] While the eventually perfect fillet detector can switch a little bit back and forth between
+[307.68:312.8] I probably suspect this process to have crashed to when, probably it's online, you go back
+[312.8:318.40000000000003] and forth a little bit as long as eventually you're able to determine correctly that a
+[318.40000000000003:326.04] process crashed or that the process is definitely alive in either case.
+[326.04:331.8] So now the question was, can you implement terminating a reliable broadcast out of without
+[331.8:333.8] a failure detector, right?
+[333.8:344.08] So no, no, you can't, I hope you have this, the ways you could do that are two, you could
+[344.08:350.32] either go down the path as we have changed last multiple times of having something to
+[350.32:351.32] think about runs.
+[351.32:358.08000000000004] So basically you have, in one case, you model the system as the standard crashing and then
+[358.08:364.47999999999996] obviously everybody you mentioned needs to say, okay, I have nothing or in another case
+[364.47999999999996:371.32] you can have the standard not crashed but be delayed, but just as much time as whatever
+[371.32:376.08] point in time, all the other processes will say, okay, the guy crashed.
+[376.08:383.96] So obviously you wouldn't be able to achieve termination.
+[383.96:388.12] Now, the other solution was to simply implement a perfect failure detector out of the mating
+[388.12:392.68] either broadcast, especially you use the mating method that broadcast to constantly send
+[392.68:395.28] a keep alive that either goes through or doesn't go through.
+[395.28:399.56] If it goes through the guys alive, the moment the guy, the moment the keep alive doesn't
+[399.56:405.24] go through for the first time the guy said, that's quite easy.
+[405.24:408.96] Interface and paper is not a consensus, whoever doesn't, doesn't know this should probably
+[408.96:413.52] not take a distributed, distributed systems exam.
+[413.52:417.2] In the course, we have discussed it thoroughly.
+[417.2:425.03999999999996] It's a colleague, I'll have a distributed computer so you guys should know this.
+[425.03999999999996:433.15999999999997] And now we ask you if you can implement consensus out of termination reliable broadcasts.
+[433.15999999999997:440.08] So essentially, we ask you, you have instances so you can have one designated standard for
+[440.08:448.4] every single process and here we ask you to be a little bit creative and show that consensus
+[448.4:455.91999999999996] is at least, sorry, the termination reliable broadcast is at least as strong as consensus.
+[455.91999999999996:457.56] How would you go about doing this?
+[457.56:465.79999999999995] You would have just simply every process broadcast its proposal, use intramedronerable broadcast.
+[465.8:476.04] As a result, you would, everybody eventually collects all of the proposals that come from
+[476.04:483.40000000000003] all and only the correct processes, the process that crashed in the meantime, they might not
+[483.40000000000003:491.28000000000003] get their proposal through eventually, we all agree on which proposals are proposed
+[491.28:497.15999999999997] and we just collectively pick one using industry-manicely functions.
+[497.15999999999997:501.76] You can sort them alphabetically and pick the first one and so on.
+[501.76:505.47999999999996] So this was a very simple step.
+[505.47999999999996:508.96] Now, sorry for interruption.
+[508.96:513.56] We have a question about one C, sorry for interruption before you are done with it.
+[513.56:515.16] No, absolutely absolutely.
+[515.16:521.76] So the question was, I guess the question was to give a little bit, you know, a little
+[521.76:526.4399999999999] more details on how the indistinguishable runs proof would look like.
+[526.4399999999999:531.68] So concretely the question was, can we say, after describing the two scenarios that has
+[531.68:536.88] delivers them from validity, I guess because of the validity property but the others don't,
+[536.88:539.8399999999999] so the agreement is broke.
+[539.8399999999999:542.88] So we want to tackle this.
+[542.88:547.64] So I am actually going to open the chat for a second.
+[547.64:551.88] And these days I am confused by Zoom.
+[551.88:552.88] Okay, chance.
+[552.88:554.88] Here it goes.
+[554.88:564.4399999999999] Can we say after describing the two scenarios that has delivered from validity for the other
+[564.44:573.44] scenarios?
+[573.44:575.44] Yes, that's perfectly correct.
+[575.44:576.44] Yes, yes.
+[576.44:579.7600000000001] Yes, the standard as statistical is necessarily as much delivered but by the fact that eventually
+[579.7600000000001:584.6] the guys know having the other process is not having received any message from the
+[584.6:585.6] sender.
+[585.6:592.7600000000001] In order to eventually satisfy termination, they need to they need to output something that
+[592.76:595.76] output must necessarily be nothing.
+[595.76:600.68] Yeah, so essentially they break agreement.
+[600.68:610.6] You can either say they break agreement because the standard outputs are a message and
+[610.6:611.6] everyone else outputs problems.
+[611.6:617.3199999999999] You broke agreement or you can say if they assume that they satisfy the validity, say
+[617.3199999999999:621.52] assuming that they satisfy agreement, you know, the sender needs to necessarily notice
+[621.52:626.48] that they satisfy agreement, but that necessarily needs to output bottom, which for extra validity,
+[626.48:629.52] one of them is broken in some way.
+[629.52:635.52] Yeah, correct, correct, all good.
+[635.52:643.3199999999999] So yeah, going back to constraints, the thing that we asked you to do here is to develop
+[643.3199999999999:644.92] a algorithm, right?
+[644.92:654.28] Now technically what you could have said and we somewhat also appreciate this, but only
+[654.28:662.52] if you do it properly is to say look in the exercise here, I have proved to you that I can
+[662.52:666.04] build a perfect failure if you did that.
+[666.04:669.12] In the exercise here, you have proof that they can build a failure detector out of the
+[669.12:677.88] making a paper broadcast, right?
+[677.88:679.32] And then technically, obviously, you know how to build consensus out of a perfect validity
+[679.32:680.32] detector.
+[680.32:681.32] So obviously you have used that.
+[681.32:688.44] However, let me end it line at the beginning of the exam, we wrote right explicitly do not
+[688.44:691.96] assume any result discussed in class, right?
+[691.96:696.36] So we would not accept or we will give you some fraction of the points, of course, but
+[696.36:702.08] then it would be a good answer saying I showed you that you can do a perfect failure,
+[702.08:706.36] but the detector now do whatever you want with the paper, the detector assume that you
+[706.36:708.76] have seen in class due consensus with that.
+[708.76:713.88] No, if you want to do that way, we are very happy to see you go that way because we like
+[713.88:718.72] students that link the concepts together, that's very good, but we would like you to at
+[718.72:722.16] least discuss the algorithm that you have seen in class, which should be easy anyway.
+[722.16:726.9599999999999] We have some chat.
+[726.9599999999999:733.1999999999999] Okay, so still good.
+[733.1999999999999:742.1999999999999] So again, yes, that was a, that was a, I agree with your vendor and saying we do require
+[742.1999999999999:743.6] still a code, right?
+[743.6:747.48] However, we are also reasonable people.
+[747.48:748.8] This is important for you to know.
+[748.8:752.0799999999999] We are not crazy and we are not here to punish you.
+[752.0799999999999:758.64] I dislike an approach, an all or nothing approach where like either you get it and you get
+[758.64:763.12] all the points or you get nothing because you're wrong, right?
+[763.12:768.76] I understand, we understand that sometimes you can be in Russia, right?
+[768.76:773.9599999999999] Sometimes the question is too much or you spend too much time on one question or you're
+[773.9599999999999:778.0799999999999] kind of shaky and not secure on some others, you end up not being able to write the
+[778.08:779.08] code.
+[779.08:788.12] Fine, your goal is to prove to us, help us understand how much you understood, right?
+[788.12:794.96] So if you have a kind of a clear idea on how the algorithm looks like and you just don't
+[794.96:802.08] have time to write it, just tell us, you know, write a description of the algorithm,
+[802.08:806.6400000000001] fine, you won't get all the points, that's sad, but you will get some of the points, some
+[806.64:811.56] of the questions, if the algorithm is reasonable and it's not like an obvious attempt, I'll
+[811.56:816.08] just blindly shooting at the question without even knowing what you're talking about, right?
+[816.08:818.84] So everything is kind of an aspect to you.
+[818.84:827.92] Yes, the perfect answer will require a fool to the code with nice explanation, proofs
+[827.92:829.84] we want them formal, right?
+[829.84:836.84] If you can't provide a completely formal proof, too bad, but you know, maybe an argument
+[836.84:840.24] will get you 25% of the question or half of the question, right?
+[840.24:846.8000000000001] So whatever you guys can do, do it, don't feel like if you don't do a perfect, then it's
+[846.8000000000001:848.8000000000001] not worth even trying.
+[848.8000000000001:853.4] Oh, look, yes, so let's move on.
+[853.4:860.4] What do we have here?
+[860.4:864.24] The second part was about best effort for testing in the midterm, right?
+[864.24:870.56] So yes, sometimes we introduce these sections, right?
+[870.56:874.8] These small sections that are kind of underlined by an unexplained, right?
+[874.8:879.84] So in class, you might have seen something about complexity that varies ways of defining
+[879.84:880.84] complexity and all that.
+[880.84:885.88] But just to make sure that we are all on the same page, whenever we have something that
+[885.88:891.52] is not completely clear, completely understandable, which is just give you the definition from
+[891.52:892.52] scratch.
+[892.52:894.88] Actually, you can go here and we have completely formal.
+[894.88:895.88] Shall you?
+[895.88:896.88] What's up?
+[896.88:897.88] Right?
+[897.88:902.76] So in this case, complexity and latency time to pop up often in our accents, but every
+[902.76:906.5600000000001] single time we'll re-explain to you, what do we mean specifically there?
+[906.5600000000001:907.5600000000001] Right?
+[907.56:912.1999999999999] So in the latency that's created this together, if a is a distributed term anything algorithm,
+[912.1999999999999:913.1999999999999] right?
+[913.1999999999999:918.28] Then the maximum per process communication complexity of a is the number, maximum number
+[918.28:922.0799999999999] of messages that a process has either sent or received, right?
+[922.0799999999999:929.56] So if a process is participating in a, so if they have four processes, a, b, c, and d,
+[929.56:930.56] right?
+[930.56:934.04] The participate in the distributed algorithm and then throughout an execution, we
+[934.04:939.24] have the line terminating algorithm, so if, obviously, an execution must be well-defined
+[939.24:947.5999999999999] and self-contained, say that a, exchange of three messages, b, exchange of two messages,
+[947.5999999999999:951.64] c, exchange of one message, and d, exchange of nine messages, right?
+[951.64:956.28] Obviously, the maximum per process communication complexity of a is going to be 99 because it
+[956.28:959.8399999999999] has d, that's, you know, exchange of nine to nine messages.
+[959.84:965.0400000000001] That can be 49 received messages and 50 stand messages, I don't know whatever.
+[965.0400000000001:966.0400000000001] Okay?
+[966.0400000000001:969.12] Obviously, the example that it just didn't make any sense because the sum of all the
+[969.12:976.0] received and the sum of all the, the, the sense should be equal, but I, never mind.
+[976.0:978.6] Maybe the guy spent in terms of self-analysis.
+[978.6:984.24] Now, the latency of a is another unit of time that it takes for a to termate an either
+[984.24:985.24] process, right?
+[985.24:989.0400000000001] And the assumption that computation is instantaneous and the delay of every message is one time
+[989.04:990.04] rate.
+[990.04:994.04] So again, let's, let's go back to the basic example of a, b, c, and d, right?
+[994.04:998.4] If you have an algorithm where at the very beginning a sends a message to be, and then as
+[998.4:1002.7199999999999] soon as b, which is the message, b sends a message to c, and then as soon as c, which is
+[1002.7199999999999:1006.0799999999999] the message, c sends a message to d and d terminates, right?
+[1006.0799999999999:1008.36] And d is the last one to terminates.
+[1008.36:1011.92] Then obviously, the latency is four, one, two, three, it's three.
+[1011.92:1018.92] But latency is three, why? Because then if you assume that the system, you know, that,
+[1018.92:1023.56] that the time for a message to be delivered is exactly one time unit, and then all computation
+[1023.56:1031.8] is instantaneous, then you have one hop, one hop, one hop, to get a, b, c, c, d, and then
+[1031.8:1032.8] d terminates.
+[1032.8:1038.2] So the time for this, for the entire algorithm to terminate is three, which is also the
+[1038.2:1044.16] latency of the algorithm. Now I have, I don't know if, do you want to do somebody write
+[1044.16:1045.16] questions in the chat?
+[1045.16:1047.16] I lost it already.
+[1047.16:1049.16] Nope, nothing.
+[1049.16:1052.16] I have a dog out with raised hands.
+[1052.16:1053.16] Yes.
+[1053.16:1056.76] Go ahead and tell us.
+[1056.76:1063.6000000000001] So here we assume that let's say process fee in your example.
+[1063.6:1068.7199999999998] And send messages to all the other processes in constant time.
+[1068.7199999999998:1074.36] So it doesn't take me off end time to send a message to a, b, c, and exactly, and exactly.
+[1074.36:1075.36] Yes.
+[1075.36:1082.04] So for example, which this is actually the case in the access test that we'll see in
+[1082.04:1083.04] in half a second.
+[1083.04:1084.04] But yes, absolutely.
+[1084.04:1088.8] So if you have any form of computation, the spot thing of message is this is all instantaneous
+[1088.8:1095.52] and then we can't, is the number of, you know, causally sequential hops that a message
+[1095.52:1098.76] that messages need to do in order for the algorithm to terminate.
+[1098.76:1103.8799999999999] So actually, I can elaborate on this.
+[1103.8799999999999:1107.56] We ask you to state the interface and properties of best of verbosecast.
+[1107.56:1109.56] Come on, if you don't do it.
+[1109.56:1110.56] You suck.
+[1110.56:1113.0] You're okay.
+[1113.0:1118.08] Then we ask you to provide an algorithm that implements best of verbosecast among end
+[1118.08:1119.08] processes.
+[1119.08:1124.12] We want the latency of, of a, to be, we want the latency of the algorithm to be constant
+[1124.12:1129.0] and it's for maximum preposter communication complexity to people of n, right?
+[1129.0:1134.28] Now this, if you think about it, it's literally best of verbosecast that you have seen in
+[1134.28:1135.28] class, right?
+[1135.28:1139.6399999999999] The sender sends to everyone, right?
+[1139.6399999999999:1141.3999999999999] And everybody receives the message.
+[1141.3999999999999:1146.56] So you have the sender needs to send all of n messages, right?
+[1146.56:1149.12] And the latency is exactly one, right?
+[1149.12:1152.28] Because the sender sends the message.
+[1152.28:1155.32] The message within one hop is received by everyone.
+[1155.32:1157.1599999999999] Algorithm terminates very good.
+[1157.1599999999999:1159.72] Is it all clear?
+[1159.72:1164.84] So kind of keep in mind this understanding of what latency is and communication complexity
+[1164.84:1166.1599999999999] is.
+[1166.1599999999999:1172.8] We will, we will give you the explanation at the beginning of the page every single
+[1172.8:1179.8] time if we give you exercises concerning latency and communication complexity anyways, this,
+[1179.8:1182.08] this, this is kind of the idea.
+[1182.08:1187.36] Lately, it means how long does it take for the algorithm to terminate assuming that communication
+[1187.36:1193.28] is instantaneous and sorry, the time could pass the message is instantaneous but then the
+[1193.28:1199.0] time that it takes for a message to get through is one, okay?
+[1199.0:1203.88] So question B especially asks you to provide the algorithm for best effort broadcast and
+[1203.88:1209.2] notice that the maximum per-process communication complexity is all of n, specifically n, you
+[1209.2:1213.04] have to send a message to everyone, maybe n has one, it needs to send it to your shop
+[1213.04:1220.2] but still all of n, and that the latency of a is all of one, specifically one because
+[1220.2:1226.2] sender sends to everybody and they receive it within one communication delay, right?
+[1226.2:1231.76] Now the second question that we had was now let's fill best effort broadcast among
+[1231.76:1238.56] n processes and the assumption that, you know, the sender can crash but now we don't, we
+[1238.56:1244.44] want to have maximum a constant maximum per-process communication complexity, right?
+[1244.44:1248.72] And we want the latency to be log n, right?
+[1248.72:1250.96] So how do we do less?
+[1250.96:1252.48] We organize everything in tertiary, right?
+[1252.48:1258.64] Let's say that we organize everything into a binary tree, the sender is a throat, so
+[1258.64:1261.76] the sender sends to two, the two is sent to four and so on and so forth.
+[1261.76:1266.48] So if you go ahead and compute, the sender sends two messages, any internal node receives
+[1266.48:1272.76] one message from experience and sends two messages down the two children link and then
+[1272.76:1275.32] the leaves receive only one message, right?
+[1275.32:1283.08] So no process receives and sends more than three messages, yes? And the latency of the
+[1283.08:1284.8799999999999] algorithm is log n, why?
+[1284.8799999999999:1292.9199999999998] Because the latency becomes just the depth of the tree, so if you have a binary tree,
+[1292.9199999999998:1298.1599999999999] then the depth of the tree is log two and the number of hops that the message needs to
+[1298.16:1309.6000000000001] do to achieve to a right to all the leaves is log two of n, which is all a plugin.
+[1309.6000000000001:1312.4] I saw a question go through, but now I'm lost on OK.
+[1312.4:1313.4] Yeah.
+[1313.4:1323.44] I was replying so, but if you want to say, yeah, yeah, no, no, no, no, if you want to, yeah,
+[1323.44:1326.0800000000002] actually, you have one, why don't you answer?
+[1326.08:1328.8] I have a second and then we'll come back.
+[1328.8:1331.04] OK, so what do you want to do?
+[1331.04:1333.32] In a territory, you mean here?
+[1333.32:1336.96] Yeah, OK, that's the way to answer publicly that the chance question.
+[1336.96:1342.36] Yeah, OK, so the question was, again, what do we mean when we say interface?
+[1342.36:1347.6399999999999] So when we say give us an interface, give us the interface of best effort broadcast,
+[1347.6399999999999:1352.96] well, we actually mean, and there was a question in Moodle that when we say interface,
+[1352.96:1357.08] we mean which are the operations that they process within Vogue and which are the, let's
+[1357.08:1360.6000000000001] say, callbacks that the process can, can receive.
+[1360.6000000000001:1365.24] So when we are talking about best effort broadcast, we're talking about the broadcast operation
+[1365.24:1370.08] when any process can invoke in order to disseminate the message with some, with the properties
+[1370.08:1371.92] of the best effort broadcast.
+[1371.92:1376.64] And when we are talking about the callback, we are talking about the delivery callback.
+[1376.64:1380.64] It's in pre-stats, look, there is this message should deliver and you should, you know,
+[1380.64:1383.6000000000001] transfer to your application and then do whatever you wanted it.
+[1383.6000000000001:1387.3600000000001] So this is exactly what we mean when we say interface.
+[1387.3600000000001:1392.2800000000002] And when we talk about, you know, first properties that is like what are the guarantees
+[1392.2800000000002:1397.76] that are insured by the abstraction, by an abstraction we are currently considering.
+[1397.76:1403.96] So I hope this is clear to everyone and this is, yeah, OK.
+[1403.96:1406.96] Then you can take on.
+[1406.96:1410.6000000000001] OK, Darga, tell us.
+[1410.6:1417.4399999999998] OK, so for this question, what you said really makes sense, like the tree structure,
+[1417.4399999999998:1421.8799999999999] the sender sense for two processes, those two sent to two other processes and in log
+[1421.8799999999999:1424.0] and time we get to all processes.
+[1424.0:1430.08] But now I was thinking about putting this down into pseudocode and I was wondering, like,
+[1430.08:1437.6399999999999] I couldn't really figure out how does the process know that the two processes, it's going
+[1437.64:1442.24] to send to, isn't already received it from another process.
+[1442.24:1446.5600000000002] Like, how do we make sure that different processes send to different processes?
+[1446.5600000000002:1449.8400000000001] How do we make sure that the tree is actually branching out?
+[1449.8400000000001:1451.72] Yeah, I understand.
+[1451.72:1460.0400000000002] So I think that we might have done here is to specify you can have processed the identifiers.
+[1460.04:1468.68] So we should have probably, we should have probably said explicitly you can use processes
+[1468.68:1469.68] that are in the files.
+[1469.68:1474.3999999999999] So essentially, as costuming, then every process starts with a, with a unique identifier,
+[1474.3999999999999:1479.68] then, then obviously you can say one is the root, then two and three other shields are
+[1479.68:1484.72] on the root for five, six, seven are the shields are on the shields on the root and so
+[1484.72:1485.72] for some time.
+[1485.72:1493.16] So just one, just one, one important note here is the sender must be the root.
+[1493.16:1498.48] So you cannot, so of course, we assume that you know the identifier of the root of the
+[1498.48:1504.08] sender and let's say the sender is one, and we can always, you know, make it look so,
+[1504.08:1505.3600000000001] then it's exactly.
+[1505.3600000000001:1510.3600000000001] Yeah, but that is a very rough question and yeah, that makes sense.
+[1510.36:1516.8799999999999] So process two would know that I will send it to three and four process five would know.
+[1516.8799999999999:1523.08] Essentially every process receives from it's identifier, everybody but to floor and
+[1523.08:1527.9599999999998] sends to it's identifier times two and it's the identifier times two plus one.
+[1527.9599999999998:1533.32] It's kind of a standard construction and whenever you want to build trees using an array
+[1533.32:1535.32] of numbers, that's usually what you do.
+[1535.32:1543.6399999999999] You start with one, it's the only acceptable situation, you start counting from one, otherwise
+[1543.6399999999999:1548.28] you will be punished, but then that's usually how you do it.
+[1548.28:1551.12] Third question, thank you, it makes sense.
+[1551.12:1559.1599999999999] Yeah, we should have probably specified explicitly that you can use sequence numbers.
+[1559.1599999999999:1561.6399999999999] We can't over stream that, it's true.
+[1561.6399999999999:1562.6399999999999] Thanks.
+[1562.64:1571.96] Okay, so now we asked you, and this was kind of, you see, at one point and usually this
+[1571.96:1576.4] definitely is going to be the point that gets you past six, right?
+[1576.4:1582.3200000000002] We don't expect you to be completely perfect, if you don't reply to this.
+[1582.3200000000002:1585.8000000000002] Can we assume on the next message length in such cases?
+[1585.8000000000002:1590.96] Yeah, so we asked you the length.
+[1590.96:1593.64] Here's the relevant here, right?
+[1593.64:1598.32] We discussed maximum number of messages, right?
+[1598.32:1605.32] So if you have one massive message, technically this keeps the message complexity down.
+[1605.32:1610.4] Sometimes if you actually want any to account for the size of a message, then we will probably
+[1610.4:1611.96] talk about bit complexity.
+[1611.96:1617.2] So, but we have other circumstances where we limit the size of the message, in that case
+[1617.2:1619.1200000000001] we will explicitly tell you, right?
+[1619.12:1627.6399999999999] So it's important that you abide by our constraints, but don't make up constraints that we don't
+[1627.6399999999999:1628.6399999999999] give you, right?
+[1628.6399999999999:1634.36] So if we didn't notice that we didn't put the constraint in and you leverage the fact
+[1634.36:1640.36] that we didn't put that constraint to trick, to get it easily out of the question with
+[1640.36:1645.6399999999999] a trick, you're good, maximum points, you were smarter than us.
+[1645.6399999999999:1646.6399999999999] Good job, right?
+[1646.6399999999999:1648.4399999999998] You saw some kind of evidence.
+[1648.44:1651.52] So that's actually great, right?
+[1651.52:1655.72] Yes, in this case, we're just counting down our messages, so you're free to use what
+[1655.72:1659.16] other size of the message you want.
+[1659.16:1664.28] Okay, so the last question was kind of the tricky one, it was designed to be the tricky
+[1664.28:1670.92] one, and it was kind of designed in order for you to use the previous two questions.
+[1670.92:1675.68] So at this point we ask you, we tell you, look, it's not only the source that can, the
+[1675.68:1682.3200000000002] confale, but actually, you know, some small number of processes have much, much more than
+[1682.3200000000002:1683.92] n can crash, right?
+[1683.92:1693.16] And now we ask you to find a way to find a way that to still carry out best effort for
+[1693.16:1696.44] broadcast even if some of the processes can crash.
+[1696.44:1701.3600000000001] So in this case, where you would have had to do, what to use the two about, right?
+[1701.3600000000001:1705.3600000000001] In one case, you know that you can have only the standard crashing and as long as anybody
+[1705.36:1707.4799999999998] is alive, everything is fine, right?
+[1707.4799999999998:1716.6399999999999] Any other one, you have a tree, so it's super efficient, but then you, if you break anything,
+[1716.6399999999999:1719.12] you know, you're dead and the algorithm doesn't work.
+[1719.12:1726.4799999999998] So in this story, we were asking you essentially to make a hybrid in the room, so essentially,
+[1726.4799999999998:1732.32] what you would have to do is to treat still a binary tree, but the tree is no longer made
+[1732.32:1736.8799999999999] of nodes, but it's made of communities, and each community has a plus one process.
+[1736.8799999999999:1744.52] So the idea is every process sends, relays the message through to every process in its
+[1744.52:1752.56] community and to every process in the children communities, right?
+[1752.56:1756.6799999999998] So by doing this, or even maybe not even, you don't even need to relate to all the processes
+[1756.6799999999998:1761.04] in your community, I know, of course you did because the center obviously is true.
+[1761.04:1765.84] So by doing this, you know that no community can die, at least one process will survive
+[1765.84:1769.04] an edge community because of course, if you have a plus one process in the community,
+[1769.04:1771.8] then at most I have to die.
+[1771.8:1781.32] And this way you still maintain the tree structure, so the latency still goes, still is quite
+[1781.32:1782.32] small.
+[1782.32:1789.36] Yes, we always have a unique standard, yeah.
+[1789.36:1791.36] So that was the answer.
+[1791.36:1794.56] It's kind of trickier questions.
+[1794.56:1802.4399999999998] They're going to be slightly more involved, they will actually require some things sometimes,
+[1802.4399999999998:1807.9199999999998] but then usually those are the questions that pushed you past the six, right?
+[1807.9199999999998:1815.32] Which makes either you able to, you know, balance for some small mistakes.
+[1815.32:1820.04] So usually a very brilliant student will make some mistakes because we are all humans,
+[1820.04:1825.72] and sometimes makes small mistakes, so they'll get to a five or a half, and then they will,
+[1825.72:1830.72] you know, answer interestingly, maybe not even perfectly, but interesting to this last
+[1830.72:1837.8799999999999] question, they get to six point one and get a six and then it's fine.
+[1837.8799999999999:1845.1599999999999] Okay, so sad, then we have, I mean log log,
+[1845.16:1849.88] all f plus one is all log f, right?
+[1849.88:1855.6000000000001] So big annotation.
+[1855.6000000000001:1861.0400000000002] Unique standard is not a priori, yes, yes, yes, yes, just like a single social variable
+[1861.0400000000002:1863.96] class, yes, exactly.
+[1863.96:1872.8000000000002] Okay, so this was the midterm.
+[1872.8:1878.84] But minus should become, and then is this something you're going to help me out?
+[1878.84:1886.6399999999999] I think the language should be all of log n divided by log.
+[1886.6399999999999:1892.68] So all of log n divided by log f plus one is equal to all of log n minus all of log f
+[1892.68:1903.44] plus one, right?
+[1903.44:1905.24] And all of log f plus one is equal to all of log f, right?
+[1905.24:1911.4] Because as a limit, the minus one in the f is completely relevant, yeah.
+[1911.4:1919.24] So either I'm missing something or, I mean, we could have written log n over f, but it
+[1919.24:1923.4] is exactly the same.
+[1923.4:1924.4] Yeah.
+[1924.4:1927.44] Okay, look, moving on to the final exam.
+[1927.44:1935.44] So now I want to do some suggestion on how to read the first page.
+[1935.44:1940.08] The suggestion is read it, okay?
+[1940.08:1941.08] It's important.
+[1941.08:1946.04] It's not like the usual, I mean, I don't know if it usually is distributed.
+[1946.04:1948.4] I can tell you this is not gibberish, right?
+[1948.4:1953.16] It actually gets instructions on how to carry out the exam properly, right?
+[1953.16:1955.0] So number of hours fine.
+[1955.0:1960.2800000000002] But then there are some information here that we give you, for example, don't please
+[1960.2800000000002:1965.1200000000001] don't ask us if the buses fail by crashing, right?
+[1965.1200000000001:1966.1200000000001] Thank you.
+[1966.1200000000001:1970.64] Unless we state otherwise they do fail by crashing.
+[1970.64:1972.5600000000002] We do assume that the next is perfect, right?
+[1972.56:1978.96] So we're not going to ask, sorry, we're not going to repeat in every exercise.
+[1978.96:1981.76] Yes, the links are perfect, right?
+[1981.76:1985.76] Basic assumptions are stated on the first page of the exam.
+[1985.76:1990.04] Please read them, right?
+[1990.04:1996.6] So we are going to also say no, do not assume anything as a no result unless we tell you
+[1996.6:1999.56] to do that, right?
+[1999.56:2016.12] So one thing that we assumed that there's an example to be reasonable, but then, you know,
+[2016.12:2024.6] apparently it wasn't, was can I use something you didn't tell me to use, right?
+[2024.6:2025.8799999999999] No, you can't.
+[2025.8799999999999:2026.8799999999999] Okay.
+[2026.88:2036.88] Sometimes we asked you to, sorry, I'm just going to dump, because my second.
+[2036.88:2041.72] So it's very important that you realize if we give you something but not something else,
+[2041.72:2043.96] you can't use that something else, right?
+[2043.96:2049.08] We are not going to go ahead and specify in every single exercise all the things that you
+[2049.08:2050.6400000000003] can't use because those are infinite.
+[2050.6400000000003:2052.7200000000003] We just tell you what you can use.
+[2052.7200000000003:2054.08] That's it, right?
+[2054.08:2068.64] So the most, the question we received the most last year, to a point that it was conical,
+[2068.64:2071.44] was can I use a perfect failure detector?
+[2071.44:2074.92] What if the perfect failure detector was not available, right?
+[2074.92:2076.3199999999997] No, you cannot.
+[2076.3199999999997:2077.3199999999997] Right?
+[2077.3199999999997:2081.4] Unless we tell you that you can use a perfect failure detector, the detector, you cannot
+[2081.4:2082.7999999999997] use a perfect failure detector.
+[2082.8:2086.04] It was quite crazy at some point through the exam.
+[2086.04:2091.1600000000003] We had to stop everyone, tell you, unless we tell you you can use a perfect failure detector,
+[2091.1600000000003:2094.6000000000004] you cannot use a perfect failure detector.
+[2094.6000000000004:2098.1200000000003] Everybody listened, everybody went back to doing the exercises, we had people pressing
+[2098.1200000000003:2102.1200000000003] hands, went there and the question was, can I use a perfect failure detector?
+[2102.1200000000003:2103.96] And I thought I was going insane.
+[2103.96:2109.1200000000003] So please guys, you cannot use anything unless, which I'll you, very kind.
+[2109.1200000000003:2110.1200000000003] Okay.
+[2110.1200000000003:2111.1200000000003] This is very important.
+[2111.12:2113.16] Okay.
+[2113.16:2118.04] So again, it's kind of organized in two parts, for spot for checking.
+[2118.04:2119.04] What is it for you?
+[2119.04:2120.04] What is it for you?
+[2120.04:2122.7999999999997] Rear book, interface and properties.
+[2122.7999999999997:2124.12] You know them.
+[2124.12:2126.48] You have seen them in class.
+[2126.48:2129.12] Now, define the notion of causality among messages.
+[2129.12:2132.7599999999998] This is also something that I'll discuss in that with Rashid, right?
+[2132.7599999999998:2140.44] So, intuitively, a message M is in causal relationship with a message M prime.
+[2140.44:2150.68] It's essentially a process that the standard all prime either received M or sent M before
+[2150.68:2151.96] M prime.
+[2151.96:2157.7200000000003] And then you have that if A is in causal relationship with B and B is in causal relationship with
+[2157.7200000000003:2163.56] C, then A is in causal relationship with C as well.
+[2163.56:2169.2400000000002] So the question was, what kind of relation is that?
+[2169.24:2178.3599999999997] So equivalence relations would be in A relationship with B implies B in relationship with A.
+[2178.3599999999997:2181.64] And obviously that's not the case.
+[2181.64:2187.2] Total relationship was not the case as well, because to any two messages, which is something
+[2187.2:2190.8399999999997] you have seen in class, might not be related with each other in a way.
+[2190.8399999999997:2198.4799999999996] If you have a process five, that sends a message to a process row, while a process dies
+[2198.48:2203.84] and then has a show of process omega, those two messages are completing the panel.
+[2203.84:2206.32] So causality defines the puzzle of a relation.
+[2206.32:2212.12] Now, we asked you to give the interface number of materials of a result of causal broadcast,
+[2212.12:2216.12] maybe Giovanni wants to come from here.
+[2216.12:2217.12] Yeah, sure.
+[2217.12:2220.52] Next to say that you can do the last one.
+[2220.52:2221.52] What do you say?
+[2221.52:2222.52] Yeah, but I will.
+[2222.52:2224.04] Right, because that's the three just.
+[2224.04:2225.04] Okay.
+[2225.04:2228.96] Let's face them properly with all the broadcasts and again, you have seen in class nothing
+[2228.96:2233.68] to, nothing to complicate it.
+[2233.68:2237.7599999999998] Essentially it's just a reliable broadcast pass, because I did so if you deliver a and
+[2237.7599999999998:2243.44] a is a causal is causally dependent from me, then you have to be able to before a.
+[2243.44:2244.44] Right.
+[2244.44:2248.68] So the question was now, can you implement a level causal broadcast out of reliable broadcast?
+[2248.68:2250.96] And so it was yes.
+[2250.96:2255.6] I think you have seen the algorithm class that has seen the algorithm class.
+[2255.6:2257.6] I think so.
+[2257.6:2261.04] Yes, yes, it should be the case with you.
+[2261.04:2267.28] You can use the Bayonix strategy, which is you take the broadcast and you know, whenever
+[2267.28:2271.44] you want to send the message, you also broadcast its entire causal pass like everything that
+[2271.44:2273.04] is in causally dependent.
+[2273.04:2277.84] That message is just a rebroadcast, but everything and obviously the proofs are truly
+[2277.84:2282.1600000000003] followed from the fact that you re-broadcast everything so you are to leave and deliver
+[2282.1600000000003:2284.96] what comes first and then.
+[2284.96:2285.96] Okay.
+[2285.96:2292.1600000000003] Now, we ask you to give the interface and properties of consensus.
+[2292.1600000000003:2295.88] Again, this is the same as the midterm.
+[2295.88:2301.48] Obviously, when we ask you to give interface and properties, guys, the questions will not
+[2301.48:2310.84] be very clear because you have seen like eight interfaces in class.
+[2310.84:2315.68] So there's a good trick for cheating on the exam and having a lot of points, which is
+[2315.68:2319.08] just to study the interfaces and properties of everything.
+[2319.08:2321.48] That's very, very easy.
+[2321.48:2322.48] Okay.
+[2322.48:2330.12] So this one was a question that I personally liked a lot and they have popped up in the past.
+[2330.12:2338.4] So we ask you to implement these restricted slash knocked off versions of something, right?
+[2338.4:2343.08] Basically, we take an interface and we remove one of its properties, right?
+[2343.08:2351.56] And we do that because we find it interesting what properties come out of it, but because
+[2351.56:2358.72] we want to verify that you want to show it why every single property is necessary, right?
+[2358.72:2364.16] So for example, in this question, we take consensus and we give you two possible variants
+[2364.16:2365.16] of consensus.
+[2365.16:2367.9199999999996] One is without validity and the other one is without agreement, right?
+[2367.9199999999996:2371.52] So if it takes consensus without validity, right?
+[2371.52:2373.8399999999997] How can I implement it?
+[2373.8399999999997:2384.3999999999996] Now I had students that went through the effort of imagining that they could use the perfect
+[2384.4:2390.6800000000003] failure detector, writing the entire algorithm for consensus and saying consensus, implement
+[2390.6800000000003:2392.6800000000003] consensus without validity.
+[2392.6800000000003:2393.6800000000003] Right.
+[2393.6800000000003:2399.64] However, that's not the point of the question and you also cannot assume the perfect failure
+[2399.64:2400.64] detector was there.
+[2400.64:2405.2400000000002] So that in all the students that did that, that was a zero point, like completely missed
+[2405.2400000000002:2406.56] the point entirely, right?
+[2406.56:2411.88] The reason why we asked this question was so you should notice how consensus without
+[2411.88:2416.48] validity or consensus without agreement becomes trivial, right?
+[2416.48:2421.1600000000003] Consensus without validity reduces to output zero.
+[2421.1600000000003:2429.96] Since nobody needs to output anything that somebody has proposed, we might as well agree
+[2429.96:2436.88] to all immediately, regardless of what the proposals are, terminate immediately output
+[2436.88:2441.2000000000003] exactly once and all together output zero, right?
+[2441.2:2445.6] So this was the point of the question.
+[2445.6:2449.6] If you take consensus, you take out validity, it becomes trivial and we want you to show
+[2449.6:2455.64] why it's trivial and why it's interesting that it's trivial, which also implies why
+[2455.64:2458.72] is it important the value is there, right?
+[2458.72:2462.6] Now, the other question was what happens if you set take out agreement?
+[2462.6:2464.3999999999996] Is agreement relevant to consensus?
+[2464.3999999999996:2465.3999999999996] Yes, it is.
+[2465.3999999999996:2470.68] Otherwise you have a trivial algorithm, trivial algorithm being, whenever you input something,
+[2470.68:2476.8399999999997] you don't need to agree with anyone else, just output your own proposal and everything
+[2476.8399999999997:2477.8399999999997] is good, right?
+[2477.8399999999997:2481.7599999999998] No process is outputting something that was not proposed because they proposed it themselves.
+[2481.7599999999998:2482.7599999999998] Right?
+[2482.7599999999998:2488.52] Intermination is to be achieved by the fact that whoever proposes also immediately decides.
+[2488.52:2489.52] Okay.
+[2489.52:2490.52] Okay.
+[2490.52:2494.96] Now, we had single-scalular-procrast, right?
+[2494.96:2501.96] How to implement it.
+[2501.96:2507.04] Yeah, this was also feasible.
+[2507.04:2514.16] Essentially, we asked you to implement single-scalular-procrast out of consensus, right?
+[2514.16:2524.52] So the easy way was to implement, to just have the standards and implement it to wherever,
+[2524.52:2527.16] to all the other processes, right?
+[2527.16:2532.7599999999998] And then whenever you receive a message from standard, you throw it into consensus and
+[2532.7599999999998:2536.72] then if you output something, that's obviously going to work.
+[2536.72:2543.72] Otherwise, you don't output anything, you stay hanging on, definitely, but then this
+[2543.72:2547.28] is not a problem because that would mean that the standard was full-seam, we don't need
+[2547.28:2551.6] to connect it to the living case and it is full-seam.
+[2551.6:2552.6] Yes.
+[2552.6:2559.48] We have, I think, some students that just implemented single-scalular-procrast using perfect
+[2559.48:2567.7999999999997] links out of just perfect links and did the news consensus.
+[2567.7999999999997:2571.52] We definitely appreciated the I-ring.
+[2571.52:2578.16] The point there was kind of to show that consensus is strictly stronger than real-appable
+[2578.16:2582.92] cross-story, we would have appreciated a little bit more showing that you understood, so I
+[2582.92:2587.0] don't think we gave full points to those.
+[2587.0:2596.3999999999996] But, yeah, I mean, technically, yeah, thanks.
+[2596.3999999999996:2600.16] And the last, I hope it was the last question.
+[2600.16:2606.48] The last question was, can you implement consensus out of real-appable workers?
+[2606.48:2613.2400000000002] So please two questions about action into prove, to guide you through the realization that
+[2613.2400000000002:2617.2400000000002] consensus is strictly stronger than real-appable workers because you can implement real-appable
+[2617.2400000000002:2619.68] workers out of consensus, but not vice-versa.
+[2619.68:2620.68] Right?
+[2620.68:2627.08] So the answer here was no, you cannot implement consensus out of just real-appable workers.
+[2627.08:2630.32] Please do not use the perfect fit of the texture.
+[2630.32:2635.0] Unless we tell you that you can use it, it's not a good one.
+[2635.0:2641.4] So the answer was no, and now we ask you to provide intuitive arguments for why.
+[2641.4:2645.0] So we did not require a formal proof.
+[2645.0:2655.12] So most of your colleagues from last year, they replied correctly mentioning the FOP impossibility
+[2655.12:2662.32] result, which kind of famous, essentially the idea is if you can't implement consensus
+[2662.32:2671.6400000000003] without the perfect fit of the vector, then you can obviously implement real-appable
+[2671.6400000000003:2677.6400000000003] workers out of just perfect length, then obviously you can implement consensus out of real-appable
+[2677.6400000000003:2681.28] workers because we're not starting with the other.
+[2681.28:2686.56] You could have gone after different ways, a nice qualitative understanding of the situation
+[2686.56:2691.7200000000003] was to just outline how real-appable workers does not satisfy termination.
+[2691.72:2698.7599999999998] So that's this kind of approach where if everything goes well and the standards correct,
+[2698.7599999999998:2705.8799999999997] then we make progress, but then no behavior is ever going to happen if the standards
+[2705.8799999999997:2706.8799999999997] are faulty.
+[2706.8799999999997:2707.8799999999997] Right?
+[2707.8799999999997:2714.2] Which is kind of what odds intuitively with the way consensus works, which all revolves
+[2714.2:2715.2] around termination.
+[2715.2:2721.6] If an F sum of the processes, you know, cannot really work well together and they crash,
+[2721.6:2725.92] it's fine, we'll fill the managed to get to a decision in the end.
+[2725.92:2732.92] Okay, so I'm going to leave to you, I have the half-test part of the two exams, so the
+[2732.92:2734.7999999999997] other one I would say it's all yours.
+[2734.7999999999997:2740.0] Yeah, so first of all, we had some questions on the chat.
+[2740.0:2749.16] Concrete, one interesting one was whether we have that the mass city is causally depends
+[2749.16:2756.16] on itself because it's a very good point.
+[2756.16:2757.48] That's one of the questions.
+[2757.48:2758.48] Very good point.
+[2758.48:2759.48] Yes, Bravo.
+[2759.48:2773.0] Yes, I mean, I had some people that I might not remember correctly, what was the exercise
+[2773.0:2780.0] that was?
+[2780.0:2780.0] Ah, yeah.
+[2780.0:2784.68] Yeah, it was 0.5 points.
+[2784.68:2792.12] I think that somebody might have actually gone instead of, yeah, look, but if we didn't
+[2792.12:2794.72] specify that the causality is with yourself.
+[2794.72:2798.52] So it's technically not a partial order relation.
+[2798.52:2804.7599999999998] I think they got 0.75 points more than the maximum because they really appreciated the
+[2804.7599999999998:2805.7599999999998] pedanticity.
+[2805.7599999999998:2809.92] The pedanticity, like you should be pedantic, you're right.
+[2809.92:2819.0] That was totally something that was a mistake on our side and we didn't spot it.
+[2819.0:2824.0] So if you do spot something, there'll be an spot and there's obviously right and you
+[2824.0:2831.0] could obviously wrong, like you could even go past the maximum, the maximum rate for
+[2831.0:2832.0] the question.
+[2832.0:2836.0] Yes, are there questions here?
+[2836.0:2837.0] Hmm.
+[2837.0:2838.0] The same.
+[2838.0:2846.76] The pick cannot assume perfect failure detector does it mean we assume I guess eventually
+[2846.76:2850.08] perfect failure detector again, the answer is no.
+[2850.08:2856.88] If we don't tell you that you can use something, you cannot use it.
+[2856.88:2864.16] So you, okay, so we have a question here.
+[2864.16:2865.68] Okay, so one separate time.
+[2865.68:2869.72] So if we don't tell you that you can use an eventually perfect failure detector, you
+[2869.72:2870.72] cannot use it.
+[2870.72:2871.72] Just you can't.
+[2871.72:2872.72] I'm sorry.
+[2872.72:2877.64] So you cannot use a perfect failure detector unless we tell you to.
+[2877.64:2881.2799999999997] You cannot use the rest of that unless you tell you to.
+[2881.2799999999997:2885.72] We cannot use, you cannot use eventually perfect failure detector unless we tell you to.
+[2885.72:2889.72] This is important that I mean it's important that you realize guys that we cannot list
+[2889.72:2893.8399999999997] explicitly all the things that you can't use because they're infinite.
+[2893.8399999999997:2899.04] Just tell you you can use perfect clicks always and then the things that we tell you to
+[2899.04:2900.04] use, right?
+[2900.04:2904.68] So we tell you to use consensus fine, but don't come with an implementation to use the
+[2904.68:2909.56] main divi-liberal broadcast or a perfect failure detector or eventually perfect failure
+[2909.56:2915.3999999999996] detector unless we tell you that you can use something, you cannot use that something.
+[2915.3999999999996:2922.3599999999997] Okay, so should be able to explain the proof of the perfect failure detector from scratch.
+[2922.3599999999997:2927.0] I'm not sure I understand the question.
+[2927.0:2928.96] What is this question about?
+[2928.96:2930.3999999999996] The perfect clicks are always usable.
+[2930.3999999999996:2931.3999999999996] Yes.
+[2931.4:2935.32] We should be able to do it another first page.
+[2935.32:2937.28] You can use perfect clicks all the time.
+[2937.28:2938.28] A copy?
+[2938.28:2941.8] No, you don't need to, yeah, yeah, no problem first.
+[2941.8:2950.44] You don't need to use, you don't need to prove, absolutely, absolutely not.
+[2950.44:2952.4] Don't worry, absolutely not.
+[2952.4:2953.4] No.
+[2953.4:2958.4] We just asked you to give an intuitive explanation so it wasn't anything about proving stuff.
+[2958.4:2961.96] It was just okay.
+[2961.96:2967.48] So remember guys, don't use something that you can't use and we will be there in which
+[2967.48:2976.2400000000002] tomorrow if in case you have questions about the phrasing of exercise, we always try to
+[2976.2400000000002:2979.6] make our best to make them completely understandable.
+[2979.6:2988.68] There's always a way to miss the point for us, for example, but also for me, it can be
+[2988.68:2990.72] anyone's fault.
+[2990.72:2996.64] So if you have questions to ask them, we will not reply to everything of course.
+[2996.64:3005.2799999999997] And at some point I might also refuse to answer a question that was answered a million times
+[3005.2799999999997:3006.2799999999997] before.
+[3006.28:3011.48] For example, last year when the millions of people was asking about this spectacular
+[3011.48:3015.6800000000003] detector story, we just said no, we are not applying it, it's humiliating.
+[3015.6800000000003:3020.36] Like after you said that in front of everyone and no, you can use it for the next question
+[3020.36:3024.92] is can I use it for the detector at some point, you just are using us and you won't
+[3024.92:3025.92] play that game.
+[3025.92:3026.92] Okay.
+[3026.92:3027.92] Yovan, all yours.
+[3027.92:3029.92] Are you asking your screen?
+[3029.92:3030.92] You have it?
+[3030.92:3031.92] Okay.
+[3031.92:3032.92] Thank you.
+[3032.92:3036.92] We are asking so we need to stop sharing your screen.
+[3036.92:3045.16] Let me give you just a second.
+[3045.16:3048.44] So I guess you guys can see the screen, right?
+[3048.44:3051.4] Can you see it moving and everything?
+[3051.4:3052.4] Yes.
+[3052.4:3053.4] Okay.
+[3053.4:3054.4] Awesome.
+[3054.4:3058.64] So we are talking about the last question.
+[3058.64:3061.04] That was quite interesting.
+[3061.04:3067.08] So the last question was, you know, was referred to a leader election problem.
+[3067.08:3068.88] I would say the leader election problem.
+[3068.88:3072.92] That's a very, you know, it's about very well studied.
+[3072.92:3076.16] I would say problem in a distributed computing.
+[3076.16:3084.52] You can of course, as in any other, as with any other problem, you know, study a variety
+[3084.52:3087.92] of different models of different network topologies and stuff like that.
+[3087.92:3092.96] So here we are interested in a leader election problem on the ring.
+[3092.96:3097.0] So you have a ring of process, as you can see here.
+[3097.0:3099.52] Okay.
+[3099.52:3105.04] You have that each process has its left neighbor and his right neighbor.
+[3105.04:3112.6] And the process P1 in this example can communicate directly only with process P2 and V process
+[3112.6:3114.6] with process Ppn.
+[3114.6:3120.68] Okay. So if P1 cannot send a message to Pk direct, is that okay?
+[3120.68:3125.92] So another important point is that here no processing crash.
+[3125.92:3127.24] So all process are correct.
+[3127.24:3128.56] All process are alive forever.
+[3128.56:3134.2] All process will execute their algorithm correctly forever.
+[3134.2:3140.16] So again, what is the idea of the leader election, leader election problem?
+[3140.16:3146.2] The idea is that each process starts with some identify.
+[3146.2:3152.64] And the idea is that each process should be able to eventually discover who is this one
+[3152.64:3156.04] distinguished process that we call a leader.
+[3156.04:3157.04] Okay.
+[3157.04:3159.3599999999997] So what is it that we have?
+[3159.36:3170.1200000000003] So we have here that you have this in it, in it, you know, call back that is triggered
+[3170.1200000000003:3176.1600000000003] to say to any process, hey, you are the process with the identifier ID that is specified here.
+[3176.1600000000003:3180.6400000000003] And now you should start running the, you know, a leader election protocol that you have
+[3180.6400000000003:3184.36] in order to elect one single lead.
+[3184.36:3188.88] And there is a, again, of course, this other call back that is called elected.
+[3188.88:3198.08] That simply says, oh, I know now that the process with the identifier ID is the leader of, you
+[3198.08:3199.6400000000003] know, of this swing.
+[3199.6400000000003:3203.08] So that is how we terminate our protocol.
+[3203.08:3204.08] Okay.
+[3204.08:3208.56] So here we just say simply that the ID is a positive number.
+[3208.56:3214.12] And we use B as the maximum number of beats required to include any ID in the system.
+[3214.12:3222.04] So whatever ID in the system, a process can take, beats are enough to represent that ID.
+[3222.04:3228.68] Of course, B can be said, it's just a log of Fand where N is the biggest ID that can
+[3228.68:3230.44] be taken into system.
+[3230.44:3231.44] Okay.
+[3231.44:3235.6] So we only have the following assumption.
+[3235.6:3241.6] Trigger call back is triggered at every process with the distinct identifier.
+[3241.6:3246.12] So if Matau has an identifier one, I will have an identifier two.
+[3246.12:3247.12] I don't know.
+[3247.12:3248.8399999999997] Receipt will have an identifier free.
+[3248.8399999999997:3252.8399999999997] It is impossible for a street, for example, to also have an identifier one because Matau
+[3252.8399999999997:3254.08] already has that.
+[3254.08:3255.2799999999997] Already has that.
+[3255.2799999999997:3257.68] I hope that this is okay.
+[3257.68:3262.72] So what are the properties of the leader election that, of course, everybody, every correct
+[3262.72:3266.52] process, which is in this case, every process.
+[3266.52:3270.48] Triggers are elected with the same identifier, which means that we all agree that Matau, for
+[3270.48:3272.44] example, is the leader.
+[3272.44:3283.4] And validity is that if I, of course, if I, of course, trigger elected, then elected that
+[3283.4:3289.0] Matau is the leader, then indeed there is a, there is Matau who booted up with, with,
+[3289.0:3298.2] with, there is one process with booted up with the identifier equal to equal to equal to equal
+[3298.2:3299.2] to Matau.
+[3299.2:3300.2] Okay.
+[3300.2:3304.68] So again, as we have seen previously, there is this total communication complexity.
+[3304.68:3305.68] Okay.
+[3305.68:3309.24] That we are, that we are interested in.
+[3309.24:3313.7599999999998] And there is this notion of message bound algorithm.
+[3313.7599999999998:3319.48] So we say that, algorithm, that an algorithm is a message bound, message size bound algorithm.
+[3319.48:3324.8799999999997] If the size of any message exchange in a is always the most ob.
+[3324.8799999999997:3327.68] What does this mean effectively in our case?
+[3327.68:3336.12] It means that, for example, you cannot send a, like you cannot send a set of n identifiers.
+[3336.12:3338.3599999999997] Of course, if n is not a constant, right?
+[3338.3599999999997:3343.2799999999997] So that means that pretty much you are only going to be able to, to send one identifier
+[3343.2799999999997:3346.48] per time if you want to communicate with someone or something like that.
+[3346.48:3347.72] Is that okay?
+[3347.72:3349.72] Okay.
+[3349.72:3356.2799999999997] So as we said, we have asynchronous processes, asynchronous systems, so which means asynchronous
+[3356.28:3359.0800000000004] processes and asynchronous links.
+[3359.0800000000004:3363.1200000000003] So this means that you can never know when the message is going to arrive.
+[3363.1200000000003:3366.2000000000003] It can arrive in two seconds or it can arrive in million years.
+[3366.2000000000003:3368.2000000000003] You don't know that.
+[3368.2000000000003:3374.5600000000004] Again, processes are connected in a, in a ring topology, which simply means as, as I, as
+[3374.5600000000004:3378.92] I explained that you have, in order to send a message directly, you can send a message
+[3378.92:3383.6800000000003] reader to your left neighbor or to your right neighbor, which is captured inside of this
+[3383.68:3386.7999999999997] send left and send right operations.
+[3386.7999999999997:3391.24] And of course, you can receive the messages from your left neighbor or from your right neighbor,
+[3391.24:3397.8799999999997] which is, you know, incorporated in this receive left and receive right callbacks.
+[3397.8799999999997:3403.96] And last and very important thing is that the number of processes is not known.
+[3403.96:3407.56] So if I want to boot, I am in a ring.
+[3407.56:3411.2799999999997] I only know that there is some guy on my left and there is some guy on my right.
+[3411.28:3416.52] But I don't know how many guys are in this ring is that this is, this is extremely, extremely
+[3416.52:3417.52] important.
+[3417.52:3424.4] Otherwise, the problems would be, would not be that hard, would be, would be easier.
+[3424.4:3427.28] So and is not known to anyone.
+[3427.28:3431.76] That's something that is, that is extremely, extremely important.
+[3431.76:3432.76] Okay.
+[3432.76:3439.0400000000004] So, of course, at the beginning, each process, you know, receives this in its trigger,
+[3439.04:3443.84] unit callback in order to, you know, just be informed that, okay, this is your, this
+[3443.84:3444.84] is your ID.
+[3444.84:3451.2] And now you should start performing an algorithm and, you know, you should, I like to leave.
+[3451.2:3457.12] So again, here, here it is just, you know, emphasized one more time that you only
+[3457.12:3460.44] constrict we have are that IDs are assigned.
+[3460.44:3466.2] So you cannot assume that the guy that is on my right has an ID, my ID plus one and the
+[3466.2:3469.4399999999996] guy for my left has my ID minus one or something like that.
+[3469.4399999999996:3472.6] So nothing, nothing like that is assumed.
+[3472.6:3476.8399999999997] You only know that every single identifier in the system is unique.
+[3476.8399999999997:3478.0] And that's it.
+[3478.0:3483.2799999999997] And again, I will emphasize you do not know, I mean, no, no process in the system knows
+[3483.2799999999997:3487.16] how many processes are in the system in the ring.
+[3487.16:3488.16] Okay.
+[3488.16:3495.12] So the first, the first question was, we need to give a message size bound algorithm, which
+[3495.12:3500.7999999999997] means that you cannot transfer more than all of the messages, all of the, of the bits,
+[3500.7999999999997:3507.88] you know, in a message such that we solve this leader election problem with all of n squared
+[3507.88:3510.2799999999997] total communication complex.
+[3510.2799999999997:3511.2799999999997] Is that okay?
+[3511.2799999999997:3517.52] So we need, we can, you know, we can use all of n squared total communication complexity
+[3517.52:3521.72] and we need to give a message size bound algorithm.
+[3521.72:3522.72] Okay.
+[3522.72:3530.4399999999996] In order to solve this, you can really take, you know, multiple, multiple approaches.
+[3530.4399999999996:3538.0] One that might, you know, seem obvious is that, for example, you can ensure that every
+[3538.0:3542.9199999999996] process in the system will eventually see all of those, all of all of n identifiers.
+[3542.9199999999996:3547.9199999999996] And then once that happens, you will be able to just, you know, select, select minimum,
+[3547.9199999999996:3552.68] maximum or whatever you want to just select the, an identifier in a, of course, in a deterministic
+[3552.68:3555.3199999999997] way.
+[3555.3199999999997:3557.16] That might be, might be a solution.
+[3557.16:3564.68] So we all start by, we all start by sending our, sending our, you know, sending my, my
+[3564.68:3569.16] identifier to the right, then I will receive my, I will receive an identifier from the left.
+[3569.16:3573.16] And then I will forward that identifier to the right and so on and so forth.
+[3573.16:3578.56] Until I see my own identifier again, then I will know, okay, I have seen all the n, all
+[3578.56:3585.6] of the, all of the identifiers from the system because, as we said, as we said, you know,
+[3585.6:3589.7599999999998] there are no two same identifiers in the system that are associated with different processes.
+[3589.7599999999998:3596.16] However, the problem with this is, of course, the three needs to somehow ensure that the,
+[3596.16:3601.68] the, you know, the links, the communication links are, are, are ordered because we can,
+[3601.68:3608.48] it must always happen if we must forbid that I can receive my own, my own, I think,
+[3608.48:3614.08] identifier before I see some, some other identifier that I'm not aware of.
+[3614.08:3616.64] Okay, so this is one solution.
+[3616.64:3621.2400000000002] So we need to just, you know, this solution is quite simple, but you just need to be,
+[3621.2400000000002:3626.56] you just need to see that we really need some, some, you know, to, to implement some ordering
+[3626.56:3629.92] between, between, uh, between messages.
+[3629.92:3634.36] So that means that I can, I can, I must sure, I must be sure that I have received this
+[3634.36:3640.44] message, uh, that I have received my own identifier only when I have seen everything that happened
+[3640.44:3641.44] before.
+[3641.44:3648.28] But, uh, another, I would say, more elegant solution is, is the following.
+[3648.28:3654.44] So, uh, when we, when we all start executing the, the algorithm, what happens is that, uh,
+[3654.44:3659.44] I just take my own identifier and I send it to the right.
+[3659.44:3660.44] And that's it.
+[3660.44:3665.44] Then I'm waiting to receive messages from the left, when I receive a message from the
+[3665.44:3670.2000000000003] left, that message contains some identifier, I take a look at that identifier and then I
+[3670.2000000000003:3671.2000000000003] do the following.
+[3671.2000000000003:3677.88] If this is the identifier is bigger than my identifier, then I forward the message to the right.
+[3677.88:3679.6] I forward to other gaps.
+[3679.6:3685.4] If it is, uh, if it, if the identifier I have received is smaller than my own identifier,
+[3685.4:3691.08] then, uh, I just ignore it, that's fine because, oh, I already sent the bigger identifier
+[3691.08:3693.1600000000003] to the right and that's fine.
+[3693.1600000000003:3697.92] And lastly, if the identifier is, uh, if the identifier I have received is my own identifier,
+[3697.92:3700.84] then that means that I can elect myself as a lead.
+[3700.84:3703.44] Let's discuss why this works.
+[3703.44:3709.0] So first of all, uh, figure out that, uh, the guy with the biggest identifier, he will
+[3709.0:3713.1600000000003] send, he's a identifier to the right and that identifier will come back to him.
+[3713.1600000000003:3714.1600000000003] Do we agree with that?
+[3714.16:3715.8399999999997] Do we agree on that?
+[3715.8399999999997:3721.16] The reason is that all the other guys will have, all the other processes will have a identifier
+[3721.16:3726.16] that is smaller than identifier of this, uh, the, the, the guy with the biggest identifier
+[3726.16:3728.2799999999997] and then we'll always forward the message.
+[3728.2799999999997:3734.08] This means that this message will always, uh, reach, uh, the guy who, who started with
+[3734.08:3738.72] it and then the guy will just say, okay, great, now I'm, uh, I'm a lead.
+[3738.72:3739.72] Is that okay?
+[3739.72:3742.3199999999997] So, uh, that is why this works.
+[3742.32:3744.6000000000004] Yeah, yeah, sorry.
+[3744.6000000000004:3749.1600000000003] Um, so we have a question, which is, but might actually be interesting.
+[3749.1600000000003:3756.28] Um, they ask if you can, you can't exploit the rules that there's no, you can't exploit
+[3756.28:3763.32] the fact that there is no rule on how many times the process can make the leader.
+[3763.32:3769.88] So I guess that what Mark is aiming at here is that you could try and spam everything
+[3769.88:3772.7200000000003] on possible ID, right?
+[3772.7200000000003:3780.88] Until you get, yeah, obviously, however, you have your gonna break the litigate, right?
+[3780.88:3786.1600000000003] So I'll just do the, uh, thinking about something else.
+[3786.1600000000003:3795.6] Like every message is forwarded and the process keeps a set of all ID, ID, ID, ID, ID, ID, ID,
+[3795.6:3809.7599999999998] and then, uh, yeah, he has seen and, and all ways, he likes the, a small one, one, and
+[3809.7599999999998:3821.3199999999997] so in the end, sometimes it will, every post says sees every ID and then, and, like,
+[3821.32:3831.6400000000003] uh, I see the same, yeah, and do, yes, and then collect, uh, and times, uh, at maximum.
+[3831.6400000000003:3835.36] But yes, uh, uh, that is.
+[3835.36:3842.48] Um, yes, uh, so what I was, what I was sorry, but I'll do you want to or, no, please
+[3842.48:3844.0800000000004] go ahead, yeah, I'll be ready.
+[3844.0800000000004:3849.84] Yeah, so, uh, the first, the first approach I'd explained was exactly this, except that,
+[3849.84:3854.56] uh, you will not do this, uh, you will not, uh, trigger this, uh, select every time, but
+[3854.56:3857.84] you will just at the end when you know that you have seen everything, you're just, uh,
+[3857.84:3862.04] you will just then, you know, deterministic, we select, uh, uh, the process ID, but I
+[3862.04:3868.0] would say that you, uh, that you're, uh, that you're, um, your solution, uh, your protocol
+[3868.0:3873.0] would, uh, satisfy the, uh, agreement and validity properties.
+[3873.0:3879.52] But, uh, I would say this is due to our mistake and we don't really want to do something
+[3879.52:3880.52] like this.
+[3880.52:3883.36] This does it, uh, it was not, I would say properly defined.
+[3883.36:3884.96] Do you agree with that, Matal?
+[3884.96:3886.96] Yeah, I would agree with that.
+[3886.96:3890.96] I should probably add the time in that, uh, the, uh, multiplication or whatever.
+[3890.96:3891.96] Yeah.
+[3891.96:3896.56] Uh, but yes, it was, uh, it is, uh, it's a very good point, very good.
+[3896.56:3902.44] Uh, good can share, there is, there is another question.
+[3902.44:3914.96] Uh, yeah, exactly so, uh, David, uh, yeah, the question was, uh, for me to just, uh, again,
+[3914.96:3915.96] explain the logic.
+[3915.96:3918.92] So the logic is that you will always forward the ID.
+[3918.92:3924.0] You have, uh, an ID you have received if that ID is greater than your own.
+[3924.0:3928.32] So if I receive an ID from, from, it's just important that we go in one direction.
+[3928.32:3930.28] I receive it from the left, for example.
+[3930.28:3934.36] And then I go and say, okay, this ID, I have received it greater than my own.
+[3934.36:3936.2000000000003] I will forward to the right.
+[3936.2000000000003:3939.6000000000004] If this ID is not greater than my own, it's smaller than my own.
+[3939.6000000000004:3940.6000000000004] I'm just going to ignore it.
+[3940.6000000000004:3942.96] I'm not going to forward it, uh, to the right.
+[3942.96:3946.7200000000003] And the last, uh, is that, of course, is that ID is equal to my own.
+[3946.7200000000003:3949.52] I know that I am, I am the lead and I just like myself.
+[3949.52:3951.44] I say, oh, great, I am the lead.
+[3951.44:3953.5600000000004] So, uh, logic is the following.
+[3953.5600000000004:3958.4] Uh, if I, if I am, let's say that, uh, I am the process, I am a process that has the,
+[3958.4:3963.4] the biggest, uh, the biggest, uh, identify that means that eventually, uh,
+[3963.4:3965.64] you and I send it at the beginning to, to my right.
+[3965.64:3968.88] That means that that identifier will eventually reach me again.
+[3968.88:3969.48] Why?
+[3969.48:3974.48] Because all processes, all other processes have smaller ID than my own.
+[3974.48:3977.92] And they will always forward to the right, forward to the right, forward to the right.
+[3977.92:3979.08] And then I will receive it.
+[3979.08:3984.6] And once I receive it, I will know that, okay, this message went through all other processes in the system.
+[3984.6:3988.32] They all forward, uh, the message, they all forwarded the message.
+[3988.32:3990.76] And since, as I said, all guys are correct.
+[3990.76:3992.32] There are no business things anywhere.
+[3992.32:3995.32] So they all, they all behave according to protocol.
+[3995.32:4000.2000000000003] They, that, then this forwarding means that there are identifiers of smaller,
+[4000.2000000000003:4003.32] which simply means that my identifier is the biggest.
+[4003.32:4007.04] And then of course, in this solution, we just say, okay, this guy just, uh,
+[4007.04:4010.6800000000003] elects himself as a leader, but then the rest of it is trivial.
+[4010.6800000000003:4015.0] I just, you know, create the message saying, hey, I'm a leader and just broadcast to everyone
+[4015.0:4016.6400000000003] and just send to my right.
+[4016.64:4019.96] And this is again, gonna go all the, all the way.
+[4019.96:4022.7599999999998] And everyone will say, oh, this guy liked himself as a leader.
+[4022.7599999999998:4026.52] So this guy, I also going to elect him.
+[4026.52:4027.44] Is that pretty?
+[4027.44:4030.16] There's some questions.
+[4030.16:4035.0] So I think that somebody, like Jonathan missed, uh,
+[4035.0:4039.4] he's back on the, uh, uh, sound.
+[4039.4:4040.16] I don't know.
+[4040.16:4043.8799999999997] He's asking if he can recap again.
+[4043.8799999999997:4045.2] Uh, I started.
+[4045.2:4047.2] I'm not sure if he can do that.
+[4047.2:4048.2] Okay.
+[4048.2:4050.2] So I'll tell you, you can recap again.
+[4050.2:4053.2] You're logic physically asked to you for.
+[4053.2:4056.2] Or I need you on even better greater than your own or.
+[4056.2:4057.2] Yeah, I just did that.
+[4057.2:4058.2] So I guess.
+[4058.2:4059.2] Okay.
+[4059.2:4060.2] Okay.
+[4060.2:4061.2] Sorry.
+[4061.2:4065.2] So then, uh, I think Jonathan, I'll be right here.
+[4065.2:4067.2] I think I'll be right there.
+[4067.2:4068.2] Okay.
+[4068.2:4070.2] So I think the question.
+[4070.2:4071.2] Sorry.
+[4071.2:4074.2] I do also hope the eyes on the stress.
+[4074.2:4076.2] Yeah, so I can take over.
+[4076.2:4077.2] Maybe it's easier.
+[4077.2:4078.2] I don't know.
+[4078.2:4079.2] I'm sorry.
+[4079.2:4080.2] Yeah, please go ahead.
+[4080.2:4081.2] Yeah.
+[4081.2:4083.2] So, uh, Jonathan's question is great.
+[4083.2:4088.2] But now you have, uh, I mean, I have, I have explained how you elect the leader,
+[4088.2:4092.2] where you are the leader, because I said, oh, if I receive a message with, uh,
+[4092.2:4096.2] with my own idea, I will just, uh, you know, say, hey, I'm a leader.
+[4096.2:4100.2] But now the question is, how, for example, Mattel learns the time of leader.
+[4100.2:4105.2] As I said, since everyone is correct, no one is lying, nothing, nothing, nothing, nothing, I can just,
+[4105.2:4109.2] at this point, when I elect myself as a leader, I can just create a message saying, hey,
+[4109.2:4114.2] guys, I'm a leader and put my ID inside of that and just forward to the right.
+[4114.2:4118.2] And whenever you receive that message, you elect that guy as a leader and forward to the right.
+[4118.2:4120.2] You'll receive the message from the left.
+[4120.2:4124.2] You, you elect that guy as a leader, you forward to the right and so on.
+[4124.2:4128.2] So does there is this clear?
+[4128.2:4131.2] Jonathan?
+[4131.2:4134.2] Yeah.
+[4134.2:4135.2] Yes.
+[4135.2:4146.2] It's clear now that we explained it, but at first, when I was reading the exercise,
+[4146.2:4150.2] it was not clear that you could just say to other people, okay, now I am the leader and they will,
+[4150.2:4152.2] 100% trust you.
+[4152.2:4158.2] Well, they will trust you 100% because that is how we design an algorithm.
+[4158.2:4161.2] It's not an assumption, it's not anything.
+[4161.2:4169.2] Of course, we just design an algorithm that says a guy will behave according to your protocol.
+[4169.2:4174.2] But then it's up to your protocol to ensure that, you know, whenever someone says it is a leader,
+[4174.2:4179.2] there is exactly one unique leader and nothing else conflicting in that.
+[4179.2:4182.2] So it's just known that this is not an assumption.
+[4182.2:4188.2] This is a, you know, a way of designing an algorithm that designing the algorithm that we just,
+[4188.2:4197.2] that indeed, you know, this is one classic situation where it's important to read the front.
+[4197.2:4205.2] You, in the front page, it says processes fail only by clashing.
+[4205.2:4209.2] So if you find yourself wondering, should I trust this guy?
+[4209.2:4213.2] Remember, we're not talking about the Byzantine case.
+[4213.2:4214.2] Right?
+[4214.2:4219.2] We are talking about a self-processes implementing an algorithm and the only way a process can fail
+[4219.2:4223.2] is to stop executing the algorithm right for years.
+[4223.2:4232.2] So unless you have Byzantine clear viewers, you cannot have somebody wrongfully or maliciously claiming to be a leader.
+[4232.2:4239.2] If the guy is not a leader, by whatever definition of leader you had in your algorithm.
+[4239.2:4241.2] Exactly.
+[4241.2:4242.2] Okay.
+[4242.2:4247.2] So I guess then we can tackle the last question from David that says that upon forwarding a message,
+[4247.2:4249.2] first is they're all updating their own ID.
+[4249.2:4255.2] No, they do not do that.
+[4255.2:4256.2] So I guess that's clear.
+[4256.2:4257.2] So David, they do not.
+[4257.2:4260.2] So they just take a look at their own ID.
+[4260.2:4266.2] That is, you know, it doesn't change and say, okay, this ID is greater than the Maya will forward.
+[4266.2:4273.2] Otherwise, I will know if it's smaller than I'm not and if that's my ID, I will do it.
+[4273.2:4275.2] And there is a question.
+[4275.2:4281.2] So if I understand correctly, elected sends a message to all processes telling them the leader with ID has been elected.
+[4281.2:4282.2] No.
+[4282.2:4292.2] So you can just think about, you know, unelected, this elected, you know, call back as just something that says,
+[4292.2:4295.2] oh, this is the guy who is elected now.
+[4295.2:4302.2] So you can assume that you have, you know, you have an application that needs to figure out who is the leader in our in our ring.
+[4302.2:4308.2] And this elected will just, you know, pretty much not pretty much just when I informed the application.
+[4308.2:4319.2] So you are implementing, I don't know, a music player and a disc application is a music player and it will just say to your music player implementation.
+[4319.2:4320.2] The leader is this guy.
+[4320.2:4322.2] So now you can use it however you want.
+[4322.2:4333.2] I'm just saying that, for example, as you, as you can see in implementation of the regular reliable broadcast, when you receive a message, you will deliver that message.
+[4333.2:4341.2] You can also trigger this deliver call back, but also then you are broadcasting this message to other guys to ensure that other guys you also deliver.
+[4341.2:4343.2] So this is exactly like this.
+[4343.2:4347.2] Now I know that I am the guy that should be elected.
+[4347.2:4355.2] I trigger this elect ID and I also forward this information to other to allow other processes to also discover that.
+[4355.2:4363.2] Then when I receive when some other guy, Mattel, for example, receives a message saying, hey, Yovan is elected, it will say great.
+[4363.2:4367.2] I trigger this elect, I trigger this elect call back.
+[4367.2:4376.2] So I inform my application that this is what happened, but I also need to take to take care that other process will also be will also elect Yovan.
+[4376.2:4379.2] So then keep forwards the message to the right.
+[4379.2:4391.2] Then when received receives is he also does the same and for versus and so on and so forth. So elect is just you can just think of of the of the, you know, elected is the way of announcing.
+[4391.2:4401.2] A way of, you know, putting the termination, putting an end to what you want to achieve, but that does not mean that you need don't need to execute to do anything else in order to ensure that.
+[4401.2:4411.2] The, you know, the invariant, the fact that other will also I like the guy so elected is is not an operation is just a call back.
+[4411.2:4422.2] So you just now know that you should do something and then I mean you just trigger it so that your application that really cares about that can, you know, receive this call back and.
+[4422.2:4431.2] Is that clear?
+[4431.2:4432.2] Yeah.
+[4432.2:4434.2] Yeah, I guess my only question.
+[4434.2:4451.2] Then in that case when we say that the message complicity has to be of B we are, we are saying that when we want to broadcast who has been elected when we elect ourselves, for example, we have been a work as a measure of of B plus some constant value, right?
+[4451.2:4457.2] We tell that to tell that this is a specific message that needs to be integrated in election thing.
+[4457.2:4460.2] Yes, exactly.
+[4460.2:4464.2] I mean all of B plus something that this constant is.
+[4464.2:4466.2] Yeah, just wanted to make sure I just.
+[4466.2:4468.2] Yeah, thank you very much.
+[4468.2:4470.2] Have a look.
+[4470.2:4472.2] Have a brief look at the big old notation.
+[4472.2:4478.2] This is like calculus one like it's only one, I think.
+[4478.2:4485.2] The big old of something means that with the big old function means that when the function goes.
+[4485.2:4496.2] Okay, if f is the goal of the then at the limit f is within some constant coefficient of g element the cost between.
+[4496.2:4508.2] So X of X plus one is all of alpha.
+[4508.2:4523.2] So it's also good to deal with the X specus.
+[4523.2:4529.2] So it's about to have a look at the big old patient, you're going to get throughout your entire career.
+[4529.2:4531.2] So don't forget about it.
+[4531.2:4538.2] We ensure the ordering that's a very good question. So for example, what you can do is.
+[4538.2:4541.2] So what you can do is that.
+[4541.2:4544.2] Let me just think about it.
+[4544.2:4551.2] So.
+[4551.2:4556.2] You can always kind of think about the.
+[4556.2:4564.2] So first of all, you can of course as in any, you know, as in ensuring ensuring any.
+[4564.2:4568.2] You know, let's say ordering between two parties, you can include just taking some words.
+[4568.2:4571.2] So saying this is the first mass.
+[4571.2:4572.2] It's time to you.
+[4572.2:4573.2] This is the second mass.
+[4573.2:4574.2] It's empty.
+[4574.2:4575.2] This is the third mass.
+[4575.2:4576.2] It's empty.
+[4576.2:4577.2] This is the fourth mass.
+[4577.2:4578.2] It's empty and stuff like that.
+[4578.2:4579.2] And you can and you will.
+[4579.2:4584.2] Let's say take into account message with sick and somber to only once you have.
+[4584.2:4590.2] But you know, you have reacted and you have done your job on a message with the sick and somber.
+[4590.2:4591.2] Number one.
+[4591.2:4593.2] Does this make sense?
+[4593.2:4596.2] So I will I will whenever I send.
+[4596.2:4601.2] Because in the first approach, remember that you're only sending messages to one single guy.
+[4601.2:4605.2] So if I am next to it, Mattel is my right neighbor.
+[4605.2:4606.2] Then I sent him the first message.
+[4606.2:4608.2] I will say, hey, Mattel, this is my first.
+[4608.2:4613.2] And then do it again and do it again and do it again and do it again and do it again.
+[4613.2:4614.2] Okay.
+[4614.2:4623.2] However, there might be a problem that now I figured out is that then the the the big complexity of that message.
+[4623.2:4629.2] The big complexity of that message will be of n plus b, which is not really what we want.
+[4629.2:4635.2] So then it looks for me like we will always need to somehow.
+[4635.2:4638.2] You know, confirm that I have received something.
+[4638.2:4647.2] So for example, I will send a message to Mattel with an identifier and Mattel will need to to acknowledge that he received this message.
+[4647.2:4654.2] And then I will again need to I will I will only send him the next message upon his acknowledge is that is that okay.
+[4654.2:4656.2] Does this make sense?
+[4656.2:4658.2] So for example, let me let me explain.
+[4658.2:4665.2] So if I want to send let's say that I want to send messages one to three to Mattel in that order.
+[4665.2:4672.2] So I will send message one to Mattel and only end then suppose that now I want to send message to well.
+[4672.2:4677.2] I'm not going to send message to until I receive from a tell hey, I'll then I received one.
+[4677.2:4680.2] And then I sent him to and then I sent him free.
+[4680.2:4684.2] And of course, I'm not here talking about numbers from the natural numbers.
+[4684.2:4685.2] I'm talking about ideas.
+[4685.2:4690.2] So I will say to Mattel my ID is five and then Mattel is going to answer.
+[4690.2:4695.2] Hey, I received your IDs five and then I'm going to say, Hey, my the next idea following you is seven.
+[4695.2:4699.2] And then my tears replying, Hey, I received I received that you have sent me ID seven.
+[4699.2:4704.2] And only then I will send the next message.
+[4704.2:4709.2] So this there is this I guess there is this synchronization that that will work.
+[4709.2:4712.2] Do you agree with that?
+[4712.2:4719.2] It's just important to know that sequence numbers in our so the sequence number could not be used in our solution.
+[4719.2:4724.2] Because then you will need to you know include the sequence numbers in numbers inside of a message.
+[4724.2:4731.2] And potentially the sequence numbers.
+[4731.2:4742.2] Well, how do they think maybe it's because we have the biggest ID is going to be can be presented in B bits, which simply means that.
+[4742.2:4752.2] We always have less or equal to the process in the system, which then again means that you can potentially you can I guess use.
+[4752.2:4759.2] Because the number of participants and between the sequence number of messages you're going to send is always going to be great.
+[4759.2:4767.2] It's always going to be smaller or equal than than the number of participants, the number with the biggest.
+[4767.2:4773.2] Because we assume that we assume that I did a positive, but this is now I mean just forget about this.
+[4773.2:4776.2] For example, this acknowledgments can always work.
+[4776.2:4781.2] Okay, so maybe I'm I confuse you a bit, but I hope you understand my point.
+[4781.2:4789.2] Okay, and let's then if there are no other questions, let's then go to the last question of the.
+[4789.2:4791.2] And I'm speaking of this.
+[4791.2:4797.2] I'm 25 minutes eight another. Yeah, do you mind if I?
+[4797.2:4801.2] No, no, just don't know where it's just.
+[4801.2:4807.2] Good luck to all of you guys and few on Saturday.
+[4807.2:4816.2] Okay, so let's talk about the last question.
+[4816.2:4822.2] The last and I would say the last question by far was exactly having have exact same problem.
+[4822.2:4828.2] Okay, but what we just now do is to have an again, total communication.
+[4828.2:4832.2] Okay, so this problem.
+[4832.2:4834.2] How can you solve this problem?
+[4834.2:4843.2] So you can solve this problem by having, you know, by by designing a protocol that will execute in phase.
+[4843.2:4848.2] So let's talk at the beginning.
+[4848.2:4853.2] So let's see that let's say that I am a high on one process.
+[4853.2:4856.2] Okay, and of course they have my why left neighbor.
+[4856.2:4860.2] Let's say that my last neighbor is a tell and my right neighbor that is received.
+[4860.2:4867.2] For example, we can always start by deducing who out of three of us is free.
+[4867.2:4873.2] This is free. This who has the, for example, greatest ID.
+[4873.2:4880.2] Then when we figure out that we can now let's say extend this community, this neighborhood.
+[4880.2:4885.2] So at the beginning, the neighborhood consists of me, received and my dad.
+[4885.2:4894.2] But then when we decide who is the process with the biggest ID, then we can expand the.
+[4894.2:4903.2] You know, the community, the neighborhood by also considering process that are left of material and process that arrived on Roche.
+[4903.2:4917.2] And now we will try to figure who in that neighborhood has the biggest ID and then so on and so forth until we figure out until we take take the entire take the entire ring.
+[4917.2:4925.2] So as I said, this algorithm will proceed will will will be executed in phase.
+[4925.2:4928.2] So we started phase number number zero.
+[4928.2:4935.2] And in phase number zero, any process considers which are the processes.
+[4935.2:4945.2] Any process considers two to the zero process on the left and two to zero process of the right, which means that it considers only one process on the left and only one process on the right.
+[4945.2:4951.2] And now we have this neighborhood and we try to figure out who has the biggest ID inside of this neighborhood.
+[4951.2:4957.2] Is that okay? So how do we do that? Well, we do that on the following matter.
+[4957.2:4964.2] At the beginning, so when you receive this in it figure that says, oh, you should start executing.
+[4964.2:4971.2] You should start doing the you should start executing the leader election algorithm you have.
+[4971.2:4976.2] You will just send your ID to guys on the left and the guys on the right.
+[4976.2:4979.2] So to one guy on the left and one guy on the right.
+[4979.2:4986.2] But this message will have free will have free parameters.
+[4986.2:4991.2] The first parameter is an ID your idea of like my ID.
+[4991.2:4998.2] It will contain the phase number the round number, however we call it, which is going to be equal to zero.
+[4998.2:5018.2] And it also contains this distance that because again, if I am, if I'm starting around number zero, that means that I have one process on the left and one process on the right, which means that once a process on the left, which is not held, receives this message.
+[5018.2:5028.2] It must be able to do something with that and not really forward to the guy left on here because the guy left on here doesn't care who is bigger.
+[5028.2:5033.2] Now right now, who is the biggest right now in in our community, but it needs to get back to me.
+[5033.2:5040.2] So this is this distance count. So of course, this is counter will be initially equal to one.
+[5040.2:5051.2] At the beginning, as I said, I stand this message. Let's call this message election message that contains my ID that contains the number of the phase, which is equal to zero.
+[5051.2:5057.2] And that contains the counter set, which is now equal to one. The distance step, which is not equal to one.
+[5057.2:5066.2] So what does Matel do when he receives this message? So Matel receives this message and it has the following free checks to perform.
+[5066.2:5073.2] The first check is to say, hey, whether the idea I have received is greater than my own ID.
+[5073.2:5086.2] If the idea I have received is greater than my own ID and the distance counter, this other parameter in parameter of the message is smaller than two to the K.
+[5086.2:5103.2] And why two to the K? Because as they said, if we are talking about the phase number phase number K, because each process when it starts executing case number phase, phase number K, it has two to the K process on the left and two to the K process on the right.
+[5103.2:5113.2] If once Patel receives this and say, okay, his distance counter is smaller than two to the K. That means that there are still some processes on the left that are concerned with this message.
+[5113.2:5122.2] So if this is the case, Matel just, you know, for this message to his left. Of course, the same thing is done by received only in symmetrical phase.
+[5122.2:5129.2] This is the first. So the first check is idea I have received is smaller than is greater than my own ID.
+[5129.2:5133.2] And there are guys on the lab that should learn about it. So I do that.
+[5133.2:5154.2] The second check is the idea of the message is greater than my own. And we are at the edge of this neighborhood, which means that this distance counter is equal to two to the K, which simply means, okay, I am now the last guy in this neighborhood with concerns to this message.
+[5154.2:5166.2] I should now get back to get back to the guy who brought us the message. What do I do then? Then you're saying this, you're sending this reply message by saying, okay, I see that you are the great.
+[5166.2:5175.2] I see that you are, you have the greatest, you have the bigger ID than my own. So I am acknowledging that by sending the repayment reply message back to you.
+[5175.2:5183.2] Of course, since we are in the ring, you cannot really send it directly, but you need to go to the guy next to you and then the guy next to you will go back and so on and so.
+[5183.2:5198.2] Pretty much if you see, we are implementing exactly the same idea we used in the first, in the second approach of the first part that says that you only forward the message once the message is greater than your own ID, otherwise you don't do.
+[5198.2:5221.2] So we do the same thing here except that we do not consider the entire range to be the community to be the like this, this neighborhood, but we constantly, you know, we build that gradually, we build, we started small neighborhoods that have only three processes and we have the process with, we have neighbors who the five process and so on and so.
+[5221.2:5236.2] Until we cover the entire ring. Okay, and then again, how the reply, how so we said now how the two only propagate this election message once you have the greater ID than your once election message has a greater ID than your own.
+[5236.2:5248.2] And now it only depends whether you forward it in the same in the same direction or you get back to the guy by forwarding to the, you know, to the opposite direction.
+[5248.2:5256.2] And then it is just less for us to discuss how the reply messages forward bed and that is simple, of course.
+[5256.2:5266.2] So if I receive a reply message an ID of the reply message is not my own, I just forward to the right or I just forward to the left, depending on the side of the message I received.
+[5266.2:5293.2] And how does now the crucial question is how the guy who has a greatest ID in a neighborhood, of course, in neighborhood of specific round, you know, how does he learn that he has he is the greater, he's the greatest ID. Well, he will receive replies from both, from both neighborhoods to agree with this because I go and send my let's consider only my left neighbor.
+[5293.2:5311.2] I go and broadcast my and send my message to be propagated on the line. If I have a greater ID than all the process on the left, that means that I will eventually get back the reply message because the last guy on my left will say, OK, he still has the greatest ID.
+[5311.2:5322.2] So he broadcast, he starts propagating reply to me and that the same stories on my on my life. And if that happens, if that means that I am the greatest in I have the greatest ID in my current neighborhood.
+[5322.2:5337.2] Then I start the next phase by saying again, by executing again, the same thing, it's just that I, you know, I have expanded the neighborhood of the neighborhood of my own.
+[5337.2:5346.2] So this might sound a bit confusing right now, but I will be sure to find because this is a well known algorithm, I will say.
+[5346.2:5358.2] I will be sure to find some pseudo codes that can help you. So I will cause that so that can be, you know, that will be understandable on that side.
+[5358.2:5375.2] So do you guys have any questions? Did you, did you ever like, did you even understand a bit what I'm trying to say here? Please any.
+[5375.2:5397.2] Can I ask you a question about the algorithm? Yeah. So I don't get how you transferred the distance because you can't put the distance into a into the,
+[5397.2:5409.2] you can't send the ID and the distance turns into the same.
+[5409.2:5418.2] Well, that was exactly the last point of my, of the last point of my discussion on the first on the first fight.
+[5418.2:5434.2] So I said that you cannot really use let me just explain. Maybe I'm missing something so you can write me if I'm wrong. So we said the following, you need be bits to represent the biggest idea of the of the ring.
+[5434.2:5450.2] Then we said, suppose that I these are, suppose that I these are, are, suppose that I these are positive numbers, which simply means that the highest idea is equal to five. That means that we cannot really have six crosses in the system.
+[5450.2:5456.2] Why? Because that would mean that we have used all the IDs one, two, three, four, five.
+[5456.2:5468.2] But then the sixth guy must have a bigger ID than the guy number five, which simply means that then the ID five is not the biggest idea of the system. Do you guys agree with me?
+[5468.2:5469.2] Yes.
+[5469.2:5478.2] Which simply means that and can be coded within B bounds of B, B bits.
+[5478.2:5496.2] And the distance, the distance counter cannot cannot cannot be bigger than that, which simply means that you can you can you can encode it in B bits, which then again simply means that you will have again or of two B is equal to all B.
+[5496.2:5503.2] So you will use B bits to represent ID B bits to represent distance and yeah, that's it.
+[5503.2:5509.2] And again, sorry, go ahead.
+[5509.2:5527.2] I was thinking about something like that, but I did the sort that it's all of the end and not the length of B.
+[5527.2:5544.2] Yeah, okay. Yeah. So, yeah, that is again, I'm not saying I'm not claiming that you then you cannot have a better implementation of it, but to better so the code I'm not claiming that this is just a solution that is within our, you know, within our within what we demand.
+[5544.2:5547.2] So it's fine.
+[5547.2:5556.2] So, okay, that's the first question. Thank you.
+[5556.2:5567.2] Okay, so yes, there are some, I'm sure that there are a lot of explanation of this algorithms. So I will be sure to find to find some that I think are, you know, are okay.
+[5567.2:5577.2] And then I will post them online. So you're on Moodle. So you can guys take a look and see whether, whether I'm, you know, whether you understand everything there.
+[5577.2:5601.2] Now, just let's tackle briefly why this is an log in. So, of course, since you're always, since you're always, you know, expanding your, your left and your right neighborhood by two, you will eventually see that you will have, you know, log in phases.
+[5601.2:5616.2] Okay, and you will always have log in phases. And then, of course, in inside of a, in any, in any, in any phase, you will receive how many messages.
+[5616.2:5630.2] So in the phase number zero, the guy who has the greatest ID will send will, so it will send, it will be, it will exchange for messages because it will send to election messages very tight.
+[5630.2:5644.2] And it will receive to refinance which is equal to four. And then if you go, so if you go, if you are following that, that path. So you have what is happening and round one and round two and, round four, round.
+[5644.2:5651.2] I, you will gain that complexity is indeed equal to, to an, to an, or, and log in.
+[5651.2:5660.2] Well, I guess, I hope you guys see that. So for sure, I will still figure out, I will still find the, you know, articles that deal with this.
+[5660.2:5665.2] But if I don't, I will then pose the solution like complete solution, right?
+[5665.2:5674.2] So by tonight, you will have the, like you will have everything regarding this question written. So you can really figure out.
+[5674.2:5681.2] Because I'm sure that just explaining explaining it like this is not, you know, the best.
+[5681.2:5688.2] Okay. I've seen another question.
+[5688.2:5694.2] Question about the properties in the book, non-bocking atomic omit has integrity.
+[5694.2:5701.2] No team, the sides of the course. Can you please Jeremy explain this?
+[5701.2:5706.2] Yeah, like the end back to find them the book has the integrity property.
+[5706.2:5715.2] Where is the one that we found the slides doesn't and, you know, she just slightly confused on why there would be such a difference.
+[5715.2:5729.2] Okay, let me just, let me just open the, let me just open the, what is done on the course and then let's see what is the.
+[5729.2:5733.2] Just a second and let me open what's written in the book.
+[5733.2:5739.2] Please don't think of saying that sounds.
+[5747.2:5758.2] Okay, non-bocking atomic process decides twice, whereas in.
+[5758.2:5769.2] No process, every process eventually decides one can only be decided.
+[5769.2:5778.2] Yes, I would say that yeah, here according to properties written on the in the, you know, from the lectures.
+[5778.2:5784.2] It doesn't mention anywhere explicitly that the process decides at most once.
+[5784.2:5789.2] So I guess that should be that is something that is missing there.
+[5789.2:5796.2] So we should, you should consider integrity properties is, is, is one so no two process decide differently.
+[5796.2:5804.2] That doesn't say anything about how many times process decides every correct process eventually decides, which means that it can decide.
+[5804.2:5812.2] Five times one can only be decided if all process proposed one zero can only be decided if some process crash.
+[5812.2:5824.2] So I would say that yeah, integrity is missing from from this, but it might be that I'm that there are some things that are mentioned before that I'm not aware of, but for sure.
+[5824.2:5830.2] In non-blocking atomic commit process process decide at most once.
+[5830.2:5836.2] Of course, eventually correct process decide so it's correct process decide exactly.
+[5836.2:5839.2] So is that is that the case that clear?
+[5839.2:5842.2] Yeah, that's your things.
+[5842.2:5844.2] Yeah.
+[5844.2:5849.2] Okay, then we have.
+[5849.2:5853.2] Fred asking.
+[5853.2:5864.2] Let's just go over the chat and then Fred is asking, can you please repeat the format of the reply when my ID is larger than the one I received and I'm at the edge of the neighborhood.
+[5864.2:5869.2] So if you are at the edge of the neighborhood, you are just replying to this guy saying great.
+[5869.2:5880.2] You have the greatest you have the ID that is greater than my own and of course greater than all the IDs on my on my right that are starting from you.
+[5880.2:5882.2] So I just reply that to you.
+[5882.2:5884.2] So you can.
+[5884.2:5901.2] I've seen that in the literature day, you know, they they noted the type of this messages reply so you just specify type of the message is reply you specify your which is the received ID and you specify K which just responds to our face.
+[5901.2:5905.2] So it is reply biggest ID comma face.
+[5905.2:5906.2] That's.
+[5906.2:5910.2] Okay.
+[5910.2:5917.2] Bastion is saying integrity groups no creation and notification.
+[5917.2:5920.2] I don't.
+[5920.2:5923.2] Okay, I guess you guys discussed something here.
+[5923.2:5925.2] I have a question about consensus specification.
+[5925.2:5927.2] Let me assume that every process.
+[5927.2:5929.2] Proposes once.
+[5929.2:5930.2] That's a great question.
+[5930.2:5945.2] You cannot really assume that every process proposes once because process might crash at the beginning of time. So at time equals zero before he issues he triggers a proposed.
+[5945.2:5947.2] Propose.
+[5947.2:5950.2] You know, operation.
+[5950.2:5951.2] It can crash.
+[5951.2:5956.2] So you cannot assume that every process every correct process you can assume.
+[5956.2:5960.2] That.
+[5960.2:5973.2] Of course, even in some other implementations, you don't you cannot assume that every correct price proposes, for example, what we've seen with reliable broadcast using a consensus.
+[5973.2:5977.2] So if I understand the if I remember correctly, Mattel said.
+[5977.2:5981.2] You will do this by send a broadcasting on best effort broadcast.
+[5981.2:5986.2] And only then when you receive a message, you will propose that message to a consensus well here.
+[5986.2:5992.2] Recall that you correct process may never propose a message because it may never receive the message from the same.
+[5992.2:5998.2] But once a once all the letter conditions are satisfied for a correct process proposed.
+[5998.2:6002.2] Since it is a correct process in never crashes, it will propose.
+[6002.2:6004.2] I call this clear.
+[6004.2:6012.2] Yeah, I'm sorry. Maybe I may suppose my question, which was about processes don't propose more than once.
+[6012.2:6017.2] Oh, yeah, yeah, yeah, yeah, yeah, yeah, yeah, of course, of course, of course, yeah, yeah.
+[6017.2:6019.2] Yeah, thanks.
+[6019.2:6020.2] Yeah.
+[6020.2:6024.2] I have a question about, okay, Mark, you can ask.
+[6024.2:6026.2] So,
+[6026.2:6034.2] so in the slides, there is a definition about total order.
+[6034.2:6039.2] And it's unique for.
+[6039.2:6044.2] I share my screen or.
+[6044.2:6047.2] Yeah, you can set me just stop sharing mine.
+[6047.2:6050.2] Now it's your all yours.
+[6050.2:6059.2] So, okay.
+[6059.2:6064.2] So here it says uniform.
+[6064.2:6077.2] And I don't see why it is correct that is meant as uniform and not the other way around like.
+[6077.2:6084.2] If it should lift forward, it should.
+[6084.2:6089.2] Yeah, any process.
+[6089.2:6092.2] Yes, yes, I see your point and I agree with it with it.
+[6092.2:6098.2] So if you take a look at the uniform reliable process, then we say no process.
+[6098.2:6102.2] If a process delivers, so it is it should be.
+[6102.2:6107.2] Yeah, you can go around in my opinion, but then there is again another question of can you really have.
+[6107.2:6112.2] Can you really have just a regular total order brought as I doubt that is possible, but maybe it is so.
+[6112.2:6115.2] Yeah, but this is all another so all other stories.
+[6115.2:6120.2] So yes, I see your point and without you know, I think.
+[6120.2:6122.2] I mean, I'm sure you're correct.
+[6122.2:6129.2] So whenever you have uniform uniform goes with any process whenever you have just rely a regular or without uniform.
+[6129.2:6136.2] That refers to correct if correct process does something or this this applies only to correct process or something.
+[6136.2:6140.2] Yeah, OK, thank you.
+[6140.2:6142.2] Thank you.
+[6142.2:6149.2] Let me just see a lot of make sure.
+[6149.2:6153.2] OK.
+[6153.2:6154.2] Let's see.
+[6154.2:6158.2] You guys have a lot of.
+[6158.2:6162.2] Oh, sorry.
+[6162.2:6163.2] A question.
+[6163.2:6168.2] Could you please give us information about the format of questions we could expect.
+[6168.2:6173.2] So we already reply this on on on with also.
+[6173.2:6182.2] The format of questions that are concerned with invited lectures will not be any different from the format of questions we have given you.
+[6182.2:6188.2] You know, during our our exit say so don't expect anything exotic don't be afraid of it.
+[6188.2:6195.2] It's just going to be like if you if you you know if you follow the course if you follow the lectures that we have and the.
+[6195.2:6200.2] The you know our access access sessions don't expect anything different from that.
+[6200.2:6202.2] So don't worry about that.
+[6202.2:6205.2] But of course, I cannot give you more information.
+[6205.2:6211.2] I had a question about consensus algorithms one and two in the slides all the rounds are perfectly aligned, but I don't see why there are no guarantees.
+[6211.2:6216.2] And when the messages will be received when prices are expected.
+[6216.2:6218.2] Yeah.
+[6218.2:6221.2] That is a very good question.
+[6221.2:6224.2] I remember myself asking the same question there.
+[6224.2:6228.2] So there is always.
+[6228.2:6234.2] OK, let me check again the first.
+[6234.2:6238.2] OK, so the question there are perfectly aligned.
+[6238.2:6244.2] Can you please explain what you mean by perfectly aligned.
+[6244.2:6252.2] Basically, we're supposed to think that everybody moves to the next round more or less at the same time.
+[6252.2:6258.2] And only then the leader of that round broadcasts its message.
+[6258.2:6261.2] As well the way I see it.
+[6261.2:6269.2] Well, do we really do we really, you know, ensure that all the process.
+[6269.2:6271.2] Go to next round at the same time.
+[6271.2:6275.2] I would say no because how will you know that you should go into the next round?
+[6275.2:6285.2] Well, you will either go to the next round once you receive a message from the from the leader or once you receive a notification from a from the professor.
+[6285.2:6292.2] The professor is technically the leader of the field.
+[6292.2:6295.2] I don't see these two are not related.
+[6295.2:6303.2] So still it can happen that for example, you all either receive a message from leader at time at some global time, you know, some guard from a time from God's perspective.
+[6303.2:6310.2] At time T equals five, whereas I will receive at time equals 2 million.
+[6310.2:6316.2] So we will proceed to the next round in five different times, but still the algorithm works.
+[6316.2:6318.2] So I don't see what's so.
+[6318.2:6326.2] Well, in that case, my problem is that imagine P1 sends its value to P2 and P3.
+[6326.2:6333.2] And then P2 gets it immediately and P3 gets this message like at time 2 million.
+[6333.2:6345.2] And then P2 and its own value to P1 and P3, which means that P3 would receive a P2 value before receiving P1 value.
+[6345.2:6352.2] And so if the if the rounds are like misaligned, then you could have some sort of a misadoption of the value and you want to.
+[6352.2:6362.2] Very good point, but what I want to say is that a correct process would never a correct process would never let's say react upon a message that is received from a different round.
+[6362.2:6367.2] So I process three will receive a message from process two saying, hey, I'm process two.
+[6367.2:6370.2] This is my value, but process three will see.
+[6370.2:6372.2] Oh, but this is from round number two.
+[6372.2:6375.2] I still don't know what's going on in round number one.
+[6375.2:6377.2] So I'm going to wait.
+[6377.2:6385.2] Okay, so so we can suppose that like process three will buffer this message and then attribute it once I get exactly.
+[6385.2:6393.2] Exactly, exactly, exactly, exactly.
+[6393.2:6402.2] It is true that consensus, you know, makes a let's say makes an impression that everything is done at the same time because pretty much you have all the rounds executed in a lockstep by all process.
+[6402.2:6408.2] But exactly this I will never a correct process would never do something related to round number three.
+[6408.2:6415.2] If it had not, if it has not finished his job in round at number equals to do.
+[6415.2:6428.2] So in this case, you know exactly as you explained, we have some buffer or something like that some safe place where the messages, you know, with respect to round three are received.
+[6428.2:6436.2] And only once it really traversed around number three, it will, you know, it will process these messages at right place, whatever that means.
+[6436.2:6439.2] So I hope you understand that.
+[6439.2:6441.2] Yes, perfectly.
+[6441.2:6443.2] Yeah, great, great question. Thank you.
+[6443.2:6453.2] So, okay, guys, do you have anything else to ask or shall we.
+[6453.2:6456.2] Okay, I'll give you guys 10 seconds.
+[6456.2:6459.2] So.
+[6459.2:6468.2] So you can figure out that you have anything else to ask.
+[6468.2:6472.2] Okay, I hope dog is giving because.
+[6472.2:6477.2] Do we need to bring paper on Saturday or will you provide?
+[6477.2:6480.2] No, no, no, no, no, you will get you will get everything.
+[6480.2:6487.2] You don't need to bring anything except of course for writing material for a pen pencil.
+[6487.2:6490.2] So I hope you're making things.
+[6490.2:6496.2] Yeah, okay, guys, then yeah, I'm going to, I'm going to close the today session.
+[6496.2:6499.2] So I want to wish you all good luck.
+[6499.2:6504.2] It was, you know, it was very fun working with you guys for a whole semester.
+[6504.2:6510.2] So I hope you all guys do well on Saturday and yeah, it's going to be fine.
+[6510.2:6516.2] If you, if you just, you know, follow the course and know our access to sessions, you're going to do well.
+[6516.2:6519.2] You don't need to take yourself and that's it.
+[6519.2:6525.2] So yeah, good luck guys on Saturday and I guess I'll see you then in person.
+[6525.2:6535.2] So and I will also post by tonight the, you know, the detailed answers where you can really see what's going on with respect to.
+[6535.2:6537.2] Two last questions from final exam.
+[6537.2:6543.2] And of course, before Saturday, you know, as fast as, you know, questions in wouldle, we will be happy to answer.
+[6543.2:6549.2] I guess that's it. Okay, thanks guys have a nice, have a nice evening and good luck on Saturday once again.
+[6549.2:6576.2] Bye.

@@ -1,0 +1,1290 @@
+~Recitation 1 (2021)
+~2021-09-27T12:03:52.825+02:00
+~https://tube.switch.ch/videos/5Wr1OkqLDR
+~EE-556 Mathematics of data: from theory to computation
+[0.0:7.0] All right, so let's get started.
+[7.0:16.0] So let's just talk briefly about logistics.
+[16.0:24.0] The people get online on the module and see able to see the material.
+[24.0:31.0] There's some sort of a lot of post solutions in the team.
+[31.0:38.0] All right, I think some different solutions in maybe a video.
+[38.0:43.0] They will also release handoff to this Friday.
+[43.0:45.0] Similar here.
+[45.0:51.0] The idea is that you try to work in one of the windows and not so self.
+[51.0:60.0] And then with the solutions, what do you see the fire frameworks that are coming up?
+[60.0:67.0] What I want to do today is a reservation which is basically lecture one.
+[67.0:71.0] And more details and the examples we discussed.
+[71.0:81.0] So we're going to talk about the scans of the picture example.
+[81.0:86.0] And we're going to talk about how to model things with the linear model.
+[86.0:91.0] Because I made a claim that the linear model is quite general.
+[91.0:95.0] And what I'm going to do is show you how page rank.
+[95.0:103.0] And the data is a linear model.
+[103.0:107.0] So.
+[107.0:111.0] What I'll do is I'm going to go over the hesitation first.
+[111.0:118.0] And then there was a little bit of a non-linear lecture slides left from the previous lecture.
+[118.0:126.0] So that's what we're talking about.
+[126.0:128.0] I expect the last under 11.
+[128.0:135.0] And 11 and onwards that the flower is a substrate.
+[135.0:140.0] Or I'm happy to answer some questions if you have.
+[140.0:141.0] Is this clear?
+[141.0:144.0] So.
+[144.0:150.0] I'm going to take more of these.
+[150.0:153.0] Now.
+[153.0:156.0] Use the outline today.
+[156.0:160.0] There are two parts that are a bit advanced.
+[160.0:164.0] So whenever any of the slides will see this star.
+[164.0:166.0] That is what.
+[166.0:171.0] So if you want to maybe go a bit beyond into some advanced material.
+[171.0:174.0] Because we get those slides.
+[174.0:176.0] But for the course.
+[176.0:181.0] You are not responsible for.
+[181.0:187.0] Like there won't be questions in the homeworks or in the exam.
+[187.0:189.0] On the side slides.
+[189.0:199.0] But if you're doing research, for example, on these topics, they're highly recommended.
+[199.0:206.0] So let's recall this block by that.
+[206.0:212.0] Here, this is basically that needs version of supervised learning.
+[212.0:215.0] The idea.
+[215.0:224.0] This.
+[224.0:229.0] There's a generator that generates these data features a eyes.
+[229.0:230.0] There's a supervisor.
+[230.0:236.0] And how gives us labels or real values of probabilities.
+[236.0:240.0] And as the learning machine, your job.
+[240.0:241.0] To set it.
+[241.0:246.0] Just to learn a map in between the state of AI.
+[246.0:248.0] I.
+[248.0:250.0] We talked about.
+[250.0:256.0] The scripting using some functions for it and we're sticking the function class.
+[256.0:260.0] And oftentimes, the function classes are infinite dimension.
+[260.0:264.0] There are lots of functions.
+[264.0:268.0] What we thought about was to reduce this class.
+[268.0:271.0] Interfer magic class.
+[271.0:273.0] I gave an example.
+[273.0:276.0] Things like polynomials, you know.
+[276.0:281.0] And you stick yourself to 10 or the normal.
+[281.0:283.0] You have 10 positions.
+[283.0:288.0] You make them unknowns and pattern the vector X.
+[288.0:294.0] And that'll be your parameter that's interested in because the moment you have the parameter.
+[294.0:297.0] You have the function.
+[297.0:299.0] So here.
+[299.0:303.0] We're going to be talking about this carmetric model.
+[303.0:306.0] So the function we're using our age.
+[306.0:309.0] They will be parameterized by X.
+[309.0:312.0] That take in AI.
+[312.0:316.0] And the idea is that we're going to try to match.
+[316.0:317.0] The odds.
+[317.0:321.0] And there are lots of elements in this particular game.
+[321.0:323.0] So we have.
+[323.0:327.0] Sometimes some parametric.
+[327.0:332.0] Space where we also constrain the coefficients.
+[332.0:335.0] We can assume that there exists some superometer.
+[335.0:344.0] And we're going to try to argue about estimating the superometer.
+[344.0:350.0] If you recall in lecture one, I talked about the role of data in.
+[350.0:355.0] Somehow getting close to this superometer.
+[355.0:361.0] And oftentimes you end up getting.
+[361.0:368.0] Things like.
+[368.0:372.0] This, if you, for example, use maximum likelihood.
+[372.0:376.0] Like the more data.
+[376.0:382.0] The better your estimators turn out to be with a specific rate.
+[382.0:386.0] We then talk about the role of computation.
+[386.0:392.0] And I'll get back to this in a little bit.
+[392.0:395.0] And we argued that sometimes early stuff,
+[395.0:397.0] you could be advantageous.
+[397.0:402.0] Because what you're trying to do is with the computational approach.
+[402.0:409.0] Not approximate this superometer, but approximate the estimator.
+[409.0:415.0] And I'll bring back the pictures of the refresher memories about this particular important point.
+[415.0:419.0] So.
+[419.0:424.0] We're going to have some class of probability distributions as well.
+[424.0:430.0] So, you know, you can have some prior information on the parameters themselves.
+[430.0:434.0] Our inductive biases and so on.
+[434.0:436.0] And.
+[436.0:440.0] You can think about conditional distributions.
+[440.0:446.0] For the labels given the data and the problem.
+[446.0:448.0] Here.
+[448.0:455.0] This is the estimation basically tries to approximate.
+[455.0:456.0] This.
+[456.0:458.0] From the natural.
+[458.0:459.0] So this.
+[459.0:461.0] This particular symbol.
+[461.0:464.0] I report there's natural.
+[464.0:470.0] For music.
+[470.0:472.0] Or sharp.
+[472.0:476.0] And again, we pulled the definition of estimator.
+[476.0:486.0] An estimator is basically a math thing that takes in these elements in the problem.
+[486.0:492.0] Outputs of value in the problem or space.
+[492.0:495.0] And so that became.
+[495.0:501.0] My daughter is showing us.
+[501.0:509.0] I'll practice the boring background.
+[509.0:511.0] All right.
+[511.0:513.0] Again.
+[513.0:514.0] I'll repeat things.
+[514.0:515.0] And sometimes.
+[515.0:522.0] I'll repeat this earlier in the morning.
+[522.0:525.0] I hope you had the coffee.
+[525.0:530.0] So in general, the office of an estimator is a random variable.
+[530.0:536.0] And remember, how to put an estimator is not necessarily the thermometer.
+[536.0:539.0] And hence your knowledge.
+[539.0:543.0] In this class is useful in understanding.
+[543.0:546.0] And how much computation.
+[546.0:549.0] So that it works.
+[549.0:554.0] The nation's quality is given up and trade offs in between.
+[554.0:556.0] Okay.
+[556.0:558.0] So.
+[558.0:560.0] How do we get an estimator?
+[560.0:561.0] This was.
+[561.0:563.0] One example.
+[563.0:567.0] And what we did is we talked about maximum life.
+[567.0:572.0] An estimator that chooses the parameters based on the principle.
+[572.0:580.0] That the one that maximizes the probability of observing.
+[580.0:583.0] The data.
+[583.0:588.0] It is an example estimator.
+[588.0:590.0] And how do we get to this?
+[590.0:594.0] Let's start with.
+[594.0:596.0] Our data.
+[596.0:600.0] It makes them all.
+[600.0:602.0] And so we have to do this.
+[602.0:606.0] And I will give you examples after this slide.
+[606.0:609.0] About how to do this modeling.
+[609.0:614.0] And our modeling will depend on the function concept you're interested in,
+[614.0:616.0] which is traumatized by the scrambler.
+[616.0:621.0] So we have a conditional distribution.
+[621.0:624.0] The eye given.
+[624.0:631.0] The assumed I ID samples in dependent and identity.
+[631.0:635.0] Which as I explained in the lecture.
+[635.0:637.0] All from not the case.
+[637.0:641.0] And again, a grand challenge in machine learning.
+[641.0:645.0] Is to do this without the idea something.
+[645.0:650.0] Where all this stand as impires questions.
+[650.0:654.0] But the eye.
+[654.0:656.0] I don't know.
+[656.0:660.0] It strikes a nice balance between theory and practice.
+[660.0:663.0] It is the idea idea something that we can do.
+[663.0:664.0] Is the right.
+[664.0:671.0] The probability of these labels given X is just a simple product of.
+[671.0:672.0] Individual.
+[672.0:684.0] And.
+[684.0:686.0] The maximum one piece.
+[686.0:690.0] Estimally is set up simply.
+[690.0:693.0] By minimizing.
+[693.0:701.0] The negative both night.
+[701.0:704.0] And so you.
+[704.0:707.0] Here they find the loss function.
+[707.0:713.0] That looks at the frequency between what you would predict with the function you have,
+[713.0:717.0] which is traumatized by the state of X.
+[717.0:719.0] And what the data says.
+[719.0:722.0] And the idea is that at least.
+[722.0:727.0] This loss function somehow.
+[727.0:734.0] And the one that maximizes the probability of these problems that I can use.
+[734.0:738.0] And then they even talked about its performance, which I.
+[738.0:749.0] I repeat is oftentimes something like this.
+[749.0:751.0] Right.
+[751.0:758.0] And if you were to solve this problem into the precision.
+[758.0:762.0] With the amount of data, you can increase the error.
+[762.0:765.0] The dimension of the problem is important here.
+[765.0:767.0] So the data somehow.
+[767.0:771.0] It's the overwhelm the dimension.
+[771.0:775.0] Yeah, if you have 100 times the dimension.
+[775.0:780.0] Then you can see to get something like one can.
+[780.0:783.0] And then you can see the number of different distance.
+[783.0:786.0] Does this make sense?
+[786.0:790.0] Again, getting this formula.
+[790.0:792.0] It's some work.
+[792.0:794.0] But it's the story.
+[794.0:796.0] You know, trust yourself.
+[796.0:797.0] I apologize.
+[797.0:798.0] I don't know.
+[798.0:799.0] Just not to have this issue.
+[799.0:801.0] I brought the table.
+[801.0:805.0] And somehow there's sort of connection problem.
+[805.0:808.0] All right.
+[808.0:819.0] I also argued.
+[819.0:822.0] I also argued that in general,
+[822.0:826.0] that can be other estimators.
+[826.0:833.0] And the general class is called an M estimator, which is either maximum likelihood type of estimator.
+[833.0:836.0] Or minimization pipe estimator.
+[836.0:839.0] And the example I gave was the lab X estimator.
+[839.0:843.0] That means absolute deviations estimator.
+[843.0:850.0] And then I also gave an example of what is called as the James sign estimator for estimating mean operandum.
+[850.0:856.0] I mentioned that this particular estimator uniformly dominates.
+[856.0:858.0] Maxum likelihoods.
+[858.0:862.0] Or dimensions greater than a week to two.
+[862.0:871.0] So maximum likelihood is a simple estimator that you can always use because it kind of comes with all kinds of.
+[871.0:876.0] Features for probabilistic models and set up using IID.
+[876.0:885.0] You have a nice, let's say workflow that you can follow.
+[885.0:892.0] But at the same time, know this that there can be better estimators for your problem.
+[892.0:904.0] Even though you had these elements that can enable you to sit up the maximum likelihood.
+[904.0:906.0] Now.
+[906.0:908.0] Let's talk about regression problems.
+[908.0:919.0] Remember, um, lecture one, I mentioned that three types of problems we would be interested regression classification.
+[919.0:922.0] Then city estimation.
+[922.0:930.0] The density estimation will come along lecture eight in boy because.
+[930.0:936.0] For the time being, it is a bit easier to work with regression and classification problems.
+[936.0:938.0] This is an example.
+[938.0:942.0] We're going to build up towards the answer.
+[942.0:945.0] Okay.
+[945.0:951.0] So here are the elements of a basic regression model.
+[951.0:959.0] So we're going to have again, our, we're going to assume that there exists this two parameter.
+[959.0:966.0] So given these feature vectors or data vectors in the samples.
+[966.0:970.0] And we know the conditional distribution.
+[970.0:979.0] And we assume IID.
+[979.0:984.0] So the examples we're going to consider are first.
+[984.0:992.0] The Gaussian regression where each the eye with a Gaussian random variable would mean.
+[992.0:996.0] AI in a product with just parameter that is natural.
+[996.0:999.0] And some day and sigma.
+[999.0:1003.0] Now we're going to talk about the logistic regression model.
+[1003.0:1007.0] Where the probability of observing.
+[1007.0:1010.0] So it's going to be a binary.
+[1010.0:1014.0] So we're going to have a model.
+[1014.0:1018.0] We're going to have labels, trust ones and minds forms.
+[1018.0:1021.0] So there's no out label in this concept.
+[1021.0:1028.0] The total of getting one is equal to one minus probability of giving minds one.
+[1028.0:1034.0] And we're going to use this logistic function to lead.
+[1034.0:1037.0] These properties.
+[1037.0:1043.0] So is any of you working on the points kind of applications.
+[1043.0:1049.0] So there are, there are imaging applications very new, for example.
+[1049.0:1056.0] Are an extremely low light to find the image that they brain cells or the time to image some.
+[1056.0:1060.0] It's really strongly also has the same application.
+[1060.0:1065.0] What's end up going is sitting the tip is it from.
+[1065.0:1072.0] And the distribution of this focus on the model to the first one.
+[1072.0:1074.0] Variable.
+[1074.0:1079.0] And then we're going to talk about this one as an example.
+[1079.0:1079.0] So.
+[1079.0:1087.0] There will be a full some relation.
+[1087.0:1091.0] So let's look at first the Gaussian.
+[1091.0:1098.0] And the example I will give is magnetic resonance.
+[1098.0:1103.0] And I think many of you have heard about this before.
+[1103.0:1108.0] As any old me, I'm in.
+[1108.0:1112.0] How many minutes 30.
+[1112.0:1114.0] I'm going to own those lines.
+[1114.0:1119.0] It's not sitting in that narrow.
+[1119.0:1121.0] Sound.
+[1121.0:1124.0] It's a plus for public for good about it.
+[1124.0:1125.0] If you're a kid.
+[1125.0:1127.0] Oh my god.
+[1127.0:1130.0] So terrible.
+[1130.0:1132.0] But it is indeed a useful machine.
+[1132.0:1137.0] And what it does is it gives you.
+[1137.0:1143.0] Let's say an image that can be used for diagnostic purposes.
+[1143.0:1150.0] And I will bring.
+[1150.0:1154.0] You can look at ligaments and you know many problems.
+[1154.0:1157.0] It's a very useful device.
+[1157.0:1161.0] And what it does is very interesting.
+[1161.0:1166.0] It doesn't need to be the image process.
+[1166.0:1171.0] What it can do is make it a few year coefficients of image.
+[1171.0:1174.0] And there are some image.
+[1174.0:1177.0] Which is the magnitude of the conflicts.
+[1177.0:1184.0] Just a matrix or let's give it to the national four stage of image.
+[1184.0:1189.0] What MRI does is the portfolio professions and can read out the three
+[1189.0:1197.0] approfissions along lines, spirals, sometimes even points.
+[1197.0:1201.0] So.
+[1201.0:1205.0] Let me give you a simple mathematical model for this.
+[1205.0:1209.0] There are more involved things here, which I want to simplify.
+[1209.0:1214.0] Compounding factors like 80 current is in whatever.
+[1214.0:1220.0] But I think the simple model is good enough.
+[1220.0:1221.0] Okay.
+[1221.0:1224.0] Now what we're interested in.
+[1224.0:1228.0] So what factors are interested in is giving an image.
+[1228.0:1234.0] So here is a part yet.
+[1234.0:1241.0] So you have the same slides and you can do this multiple times so that you have a volume.
+[1241.0:1245.0] You can have a whole brain volume that you can look at at the slides.
+[1245.0:1249.0] And of course, which slides people and the doctors look.
+[1249.0:1252.0] It's relevant to the problem.
+[1252.0:1255.0] But I'm going to talk about one slice.
+[1255.0:1258.0] What you're interested in is this two image.
+[1258.0:1264.0] Now, does it make sense that there exists a two image?
+[1264.0:1265.0] So yes.
+[1265.0:1273.0] So in the sense, what you like to do is somehow get a faithful representation.
+[1273.0:1276.0] Of your brain as possible.
+[1276.0:1279.0] Maybe a little detail so that.
+[1279.0:1290.0] An envelope is in a stroke is a current in the image.
+[1290.0:1296.0] What I'm going to do is I'm just going to factorize this for simplicity of the.
+[1296.0:1303.0] Notations or I'm going to take it in each and I'm just going to take the form.
+[1303.0:1312.0] What I will describe also works that's mentioned with the piece, but this just makes an efficient.
+[1312.0:1314.0] So.
+[1314.0:1320.0] What the mind pushing does is it takes the discreet Fourier transform.
+[1320.0:1324.0] In fact, it doesn't it takes the continuous three of transform and discretize it again.
+[1324.0:1327.0] There are confirmed in fact this year.
+[1327.0:1334.0] But the simple mathematical model that suffice and you have some.
+[1334.0:1341.0] Complex normal distributed ones.
+[1341.0:1345.0] Meaning you have a real part in imaginary parts independent.
+[1345.0:1351.0] It's on there in this.
+[1351.0:1354.0] And the is the measurement vector.
+[1354.0:1359.0] And you can undo the sectorization and put it as a matrix.
+[1359.0:1366.0] So consider a vector is taking this image and vectorizing it consider math.
+[1366.0:1374.0] For matrix taking the vector and turning it back as an image.
+[1374.0:1376.0] So here.
+[1376.0:1393.0] We have the simple model be the output of the MRI data is equal to the D F B of the MRI in each plus noise.
+[1393.0:1397.0] If there are lots of more sources here.
+[1397.0:1402.0] The situation of the continuous transform,
+[1402.0:1406.0] maybe some electromagnetic noise.
+[1406.0:1409.0] They're all coming together.
+[1409.0:1415.0] It turns out that if you have lots of independent noises added together, they kind of behave like Gaussian as well.
+[1415.0:1421.0] So the small is not too perfect.
+[1421.0:1424.0] What's the ML estimator here?
+[1424.0:1428.0] Well, we have.
+[1428.0:1432.0] It's a situation of the is a.
+[1432.0:1434.0] It's not true. Right.
+[1434.0:1443.0] So in this case, if they have a parameter is a X.
+[1443.0:1448.0] And if you write which is something if you write through the expressions,
+[1448.0:1453.0] you will actually get the least squares estimator.
+[1453.0:1464.0] So the ML estimator here is the least squares estimator, which minimizes D is equal to a x squared.
+[1464.0:1468.0] You would like to find X.
+[1468.0:1469.0] Who is.
+[1469.0:1476.0] Who you transform is equal to the off of the MRI mission.
+[1476.0:1479.0] The magic we're going to use to minimize this.
+[1479.0:1486.0] The script is the out too much.
+[1486.0:1489.0] All right.
+[1489.0:1493.0] Now.
+[1493.0:1499.0] Those of you remember when you asked your graph, can you immediately say that there's like a solution to this, which is.
+[1499.0:1509.0] So this is a.
+[1509.0:1518.0] So this.
+[1518.0:1522.0] So we want to learn a little bit more about the business of MRI.
+[1522.0:1527.0] I refer to you guys in this particular sense.
+[1527.0:1530.0] Here.
+[1530.0:1535.0] These images are the magnitude of the full of transforms.
+[1535.0:1538.0] This is.
+[1538.0:1540.0] What.
+[1540.0:1543.0] The doctor's look at. So if you look at this.
+[1543.0:1552.0] This is simulated in the sense that we actually take a real M I image. So this is that.
+[1552.0:1559.0] Look at the magnitude of the semi image. This is what a doctor would like to look at.
+[1559.0:1560.0] All right.
+[1560.0:1562.0] We take the Fourier transform.
+[1562.0:1566.0] Here I'm again, we know as in the.
+[1566.0:1568.0] The magnitude.
+[1568.0:1569.0] This is complex.
+[1569.0:1579.0] You know, you can see where the energy is concentrated, which tends to be around the center of the frequency.
+[1579.0:1582.0] Now we add a bit of noise here.
+[1582.0:1585.0] So this is the noise spectrum.
+[1585.0:1591.0] We do the inverse at FD and look at the magnitude. So you have this image.
+[1591.0:1595.0] Maybe the projector.
+[1595.0:1604.0] It's not the as obvious as the zoom audience, but there's a bit of noise in this.
+[1604.0:1607.0] All right.
+[1607.0:1611.0] So how do we get the M.
+[1611.0:1613.0] S tomato.
+[1613.0:1615.0] It's simple.
+[1615.0:1621.0] So the density function in this space.
+[1621.0:1625.0] What we need is the mean.
+[1625.0:1638.0] So the way we like this is X minus expectation of X.
+[1638.0:1656.0] So the thing is that this is a complex.
+[1656.0:1664.0] The initial answer to this context has to pass right without getting into too much details.
+[1664.0:1671.0] So the thing is that it's a signal squared identity for the real and imaginary parts.
+[1671.0:1679.0] If you go over the algebra, you will see that the distribution in this case is given by this.
+[1679.0:1685.0] So you don't have this one house here because of this context.
+[1685.0:1697.0] This is B minus. So this is your identity. So it's a product inner product of B minus a X.
+[1697.0:1701.0] And this corresponds to the true known square.
+[1701.0:1702.0] Right.
+[1702.0:1707.0] That's the definition of two.
+[1707.0:1710.0] All right.
+[1710.0:1718.0] Good. So if you write down the negative road likelihood.
+[1718.0:1728.0] Here are the constants that come in so that the distribution is properly normalized to sum up to one.
+[1728.0:1732.0] And here's our.
+[1732.0:1740.0] And then this case.
+[1740.0:1743.0] You can ignore the effect is.
+[1743.0:1750.0] It doesn't change the argument.
+[1750.0:1751.0] We're done.
+[1751.0:1760.0] Next one likely estimator for the Gaussian linear model is the squares.
+[1760.0:1769.0] And what is interesting here is that if you notice, I am not using element of.
+[1769.0:1774.0] Or this particular example.
+[1774.0:1782.0] Because the BFB matrix is a unitary operator.
+[1782.0:1790.0] For the normal.
+[1790.0:1794.0] The thing is it's transpose.
+[1794.0:1796.0] The flying inverse.
+[1796.0:1803.0] It's a team or the state of them.
+[1803.0:1804.0] I mean, please notice.
+[1804.0:1805.0] Please.
+[1805.0:1808.0] I think one of the things you will.
+[1808.0:1813.0] I would like to do.
+[1813.0:1818.0] The solution of the column is.
+[1818.0:1821.0] Whenever you see this sign.
+[1821.0:1826.0] It's a big indicator that it may not be.
+[1826.0:1827.0] All right.
+[1827.0:1832.0] There's a set of solutions.
+[1832.0:1836.0] Now.
+[1836.0:1839.0] I can't.
+[1839.0:1842.0] Accelerate.
+[1842.0:1846.0] It's a really important problem.
+[1846.0:1849.0] And the following sense.
+[1849.0:1851.0] Now.
+[1851.0:1854.0] Maybe is an adult.
+[1854.0:1857.0] You can sit through an M.I. machine for 30 minutes.
+[1857.0:1859.0] But I can tell you my son.
+[1859.0:1862.0] You know.
+[1862.0:1867.0] I can't.
+[1867.0:1870.0] It can sense still that much.
+[1870.0:1872.0] And.
+[1872.0:1876.0] The questions can be maybe not.
+[1876.0:1879.0] Measure all the Fourier transform.
+[1879.0:1881.0] All the coefficients.
+[1881.0:1885.0] And yet still get something that is used.
+[1885.0:1892.0] And.
+[1892.0:1895.0] Or cardiac.
+[1895.0:1897.0] Or sometimes you have to take this.
+[1897.0:1901.0] For a person that is either has gone through a heart attack.
+[1901.0:1903.0] Or even going to a heart attack.
+[1903.0:1906.0] There are also other reasons why you want to make this faster.
+[1906.0:1908.0] Because the person.
+[1908.0:1910.0] And not.
+[1910.0:1911.0] Say.
+[1911.0:1916.0] And.
+[1916.0:1919.0] How can we accelerate this?
+[1919.0:1922.0] Well, one idea is to take less measurements.
+[1922.0:1925.0] So if you think about it.
+[1925.0:1931.0] The measurement duration is equal to the number of measurements you take.
+[1931.0:1934.0] You can take a sense spectrum.
+[1934.0:1936.0] Or you can take out the six.
+[1936.0:1939.0] That means it's patient based half the time.
+[1939.0:1942.0] One third.
+[1942.0:1945.0] There are additional tricks used.
+[1945.0:1946.0] To make it parallel.
+[1946.0:1949.0] So you put multiple coils.
+[1949.0:1955.0] Take simultaneous measurements, which also helps you reduce the position.
+[1955.0:1958.0] But I'm not going to talk about the parallel version.
+[1958.0:1962.0] It's in the end will be something similar to this.
+[1962.0:1967.0] But I'm going to talk about a version where we do succinctly.
+[1967.0:1970.0] And we don't sample the whole three second.
+[1970.0:1976.0] The sample maybe a selected.
+[1976.0:1979.0] In the case.
+[1979.0:1981.0] What do you do?
+[1981.0:1983.0] We have our three.
+[1983.0:1991.0] We can observe just only a subset by a mass omega.
+[1991.0:1993.0] What omega does is if you think about it.
+[1993.0:1997.0] And here's our full spectrum.
+[1997.0:2000.0] You'll just give us these professions.
+[2000.0:2003.0] I'm just going to zero pad.
+[2003.0:2010.0] The ones that I know.
+[2010.0:2011.0] All right.
+[2011.0:2014.0] The notation is this short product.
+[2014.0:2019.0] So the mask is a mathematical way of capturing.
+[2019.0:2026.0] So observe the ones that are given by you or selected by the mask.
+[2026.0:2031.0] In this case.
+[2031.0:2035.0] There could be infinite remaining solutions.
+[2035.0:2040.0] And you can pick the one that has the minimum out to non solution.
+[2040.0:2043.0] It should be given by this fluid in the earth.
+[2043.0:2045.0] So I'm going to overload the notation.
+[2045.0:2050.0] So I'm going to say that this is the DFB coefficient only on the mask.
+[2050.0:2052.0] Past rotation.
+[2052.0:2055.0] All right.
+[2055.0:2061.0] So if you think about it, what you're doing is same cardiac MI.
+[2061.0:2064.0] Here's the fluid spectrum.
+[2064.0:2066.0] We're just going to observe these.
+[2066.0:2068.0] Proficients along these lines.
+[2068.0:2072.0] The black ones we don't observe.
+[2072.0:2075.0] We get this spectrum.
+[2075.0:2077.0] So this is your observation.
+[2077.0:2083.0] If you do the three reverse, this is the image you get.
+[2083.0:2086.0] You know, one tenth the acceleration.
+[2086.0:2090.0] You still something maybe.
+[2090.0:2092.0] It was almost waiting 30 minutes.
+[2092.0:2093.0] You waited three minutes.
+[2093.0:2096.0] Does that make sense?
+[2096.0:2100.0] Now, let me tell you the following.
+[2100.0:2106.0] Modern and Rime machines that the modern algorithm to go down to like 5% timing.
+[2106.0:2108.0] Still get images.
+[2108.0:2116.0] Really close to the two one because there's lots of prior information lots of modeling, lots of conduct devices.
+[2116.0:2123.0] And choosing the sampling locations carefully also please the image by the big.
+[2123.0:2127.0] It's not as secure as this.
+[2127.0:2133.0] I think one of the homeworks.
+[2133.0:2134.0] Okay.
+[2134.0:2137.0] So example two.
+[2137.0:2139.0] Can see the picture.
+[2139.0:2143.0] Was this example clear?
+[2143.0:2146.0] I mean, it's a very simple example.
+[2146.0:2149.0] Hopefully.
+[2149.0:2152.0] Those of you know about the linear model.
+[2152.0:2154.0] I didn't borrow you today.
+[2154.0:2157.0] It's not the intention that you've seen it.
+[2157.0:2159.0] Maybe one more time.
+[2159.0:2164.0] Hopefully, maybe make certain points clear to those of you who did not know about this.
+[2164.0:2166.0] I hope it makes sense.
+[2166.0:2170.0] So let's go over the logistic regression example.
+[2170.0:2174.0] In a similar detail.
+[2174.0:2183.0] So in this case.
+[2183.0:2187.0] What we have is this classification problem.
+[2187.0:2190.0] You have some genetic features.
+[2190.0:2196.0] What we would like to do is make a prediction as to whether or not there's a first cancer.
+[2196.0:2199.0] Maybe we can put the link back on this particular slide.
+[2199.0:2206.0] There's like a database of features, genetic features that we can use and.
+[2206.0:2214.0] We can correlate between cancer or not.
+[2214.0:2216.0] What I will do is give you the very basic.
+[2216.0:2221.0] The actual people try to do these kind of things, but with much more sophisticated models.
+[2221.0:2225.0] That you will be able to understand it.
+[2225.0:2237.0] All right, so the goal.
+[2237.0:2239.0] There is them, but important.
+[2239.0:2243.0] The digital label given a.
+[2243.0:2248.0] Now what we're going to do is we're going to.
+[2248.0:2249.0] Model each.
+[2249.0:2257.0] So the probable that the ice equal to one would be one minus the probability of the eye is equal to minus one.
+[2257.0:2265.0] And it will be one divided by its financial inner product.
+[2265.0:2272.0] This notation again, this is a inner product.
+[2272.0:2280.0] Given this and the eye idea assumption, you write down here is the amount estimated.
+[2280.0:2287.0] Some of what one plus extensions.
+[2287.0:2290.0] Now how do we get there?
+[2290.0:2294.0] I'll tell you a little bit of a generalization here.
+[2294.0:2296.0] So this is like.
+[2296.0:2300.0] I feel like I'm showing you guys how to do or you know.
+[2300.0:2303.0] It's like.
+[2303.0:2304.0] So you fold this.
+[2304.0:2309.0] I tell you quickly and here's one that is already made and you know, this is how you do it.
+[2309.0:2313.0] And then you go, OK, so how do I stretch your head?
+[2313.0:2315.0] And you feel like you don't understand.
+[2315.0:2321.0] So what we're going to go over some of this again, maybe a little bit faster.
+[2321.0:2325.0] OK, so let's take a hit a sequence a.
+[2325.0:2329.0] What we're going to do is we're going to assign a score.
+[2329.0:2336.0] A given sequence.
+[2336.0:2339.0] So.
+[2339.0:2344.0] The way we assign the score can be in general a function.
+[2344.0:2347.0] You're going to know network.
+[2347.0:2354.0] It's nitty-gritty functions that I keep referring to without explaining.
+[2354.0:2359.0] We'll talk about those more than the method you are.
+[2359.0:2361.0] So.
+[2361.0:2368.0] In this case, assuming that the score function is a simple linear function in the sense that.
+[2368.0:2372.0] You put some rates.
+[2372.0:2380.0] On which genes are important.
+[2380.0:2385.0] And then there's a test.
+[2385.0:2390.0] Because you know what the rate of.
+[2390.0:2400.0] You do genes are.
+[2400.0:2403.0] You try to see if the ones that try weights.
+[2403.0:2405.0] In having cancer are present.
+[2405.0:2409.0] So somehow.
+[2409.0:2411.0] The correlation.
+[2411.0:2413.0] A probability of cancer.
+[2413.0:2420.0] Does that make sense?
+[2420.0:2424.0] Again, score functions can be more general.
+[2424.0:2426.0] I'm waiting.
+[2426.0:2427.0] Keep that in mind.
+[2427.0:2430.0] But now we're just going to focus on the.
+[2430.0:2432.0] We're waiting.
+[2432.0:2434.0] For now.
+[2434.0:2439.0] Now.
+[2439.0:2444.0] A model to obtain probabilities is the logistic function.
+[2444.0:2448.0] There's also a folder where just the plain statistics.
+[2448.0:2450.0] The link function.
+[2450.0:2455.0] And what we can do is the idea is to have this score.
+[2455.0:2458.0] So ideally, I value.
+[2458.0:2460.0] Very low value.
+[2460.0:2465.0] And the probability of the.
+[2465.0:2468.0] And this logistic function is one nothing.
+[2468.0:2470.0] We can use other nothing.
+[2470.0:2471.0] So problem.
+[2471.0:2473.0] But it is one nothing.
+[2473.0:2475.0] The moment.
+[2475.0:2477.0] And the way we can.
+[2477.0:2480.0] Then give a probability of a label.
+[2480.0:2482.0] Given.
+[2482.0:2484.0] The genetic data.
+[2484.0:2486.0] And your days.
+[2486.0:2491.0] And the.
+[2491.0:2494.0] Is going to the score function.
+[2494.0:2496.0] And this part of the fashion.
+[2496.0:2498.0] Okay.
+[2498.0:2500.0] And I'll give you one.
+[2500.0:2503.0] Image sort of the clear.
+[2503.0:2505.0] So when we make.
+[2505.0:2506.0] The store.
+[2506.0:2508.0] We take the inner product.
+[2508.0:2510.0] We have a nothing in the real.
+[2510.0:2515.0] So maybe the ways are highly correlated with the ones that are leading to the.
+[2515.0:2516.0] I.
+[2516.0:2517.0] Number.
+[2517.0:2519.0] Because of the high.
+[2519.0:2523.0] And you want that to lead to you.
+[2523.0:2527.0] High probability.
+[2527.0:2532.0] Similarly, there is not correlation or negative correlation.
+[2532.0:2533.0] Finest.
+[2533.0:2537.0] Yeah.
+[2537.0:2540.0] So you can look at these correlations.
+[2540.0:2546.0] And I'll give you through the link function or the store function.
+[2546.0:2549.0] And the logic link.
+[2549.0:2551.0] The probability.
+[2551.0:2561.0] And what you can do is look at the probability of something given.
+[2561.0:2566.0] Maybe you can say, you know, disease or not disease or they on 13.
+[2566.0:2570.0] And further test are required.
+[2570.0:2572.0] Does this next.
+[2572.0:2574.0] It's so far.
+[2574.0:2581.0] There is control.
+[2581.0:2583.0] Okay.
+[2583.0:2588.0] So how do we go to the analysis.
+[2588.0:2594.0] Again, we assume that there is time to waiting.
+[2594.0:2597.0] Is this reasonable.
+[2597.0:2600.0] Maybe not.
+[2600.0:2603.0] Yeah.
+[2603.0:2607.0] But let's assume there is.
+[2607.0:2609.0] We have our data.
+[2609.0:2614.0] We have our samples.
+[2614.0:2621.0] Use our probabilistic model.
+[2621.0:2624.0] Yeah.
+[2624.0:2627.0] They use the IID assumption.
+[2627.0:2631.0] On the probabilistic model.
+[2631.0:2635.0] And take the negative load like this.
+[2635.0:2638.0] Your thing.
+[2638.0:2642.0] The amount estimator.
+[2642.0:2645.0] That's simple motions.
+[2645.0:2648.0] Hopefully you can go over these.
+[2648.0:2654.0] And this is interesting because this and now classifier.
+[2654.0:2658.0] With the score function being linear.
+[2658.0:2663.0] Is in fact a linear classifier.
+[2663.0:2669.0] What it does is give them the data.
+[2669.0:2672.0] You know, we have.
+[2672.0:2675.0] So maybe we have.
+[2675.0:2678.0] We have to do.
+[2678.0:2683.0] And then cancer.
+[2683.0:2685.0] What it will do.
+[2685.0:2688.0] Is to learn.
+[2688.0:2698.0] If I play.
+[2698.0:2700.0] That will separate.
+[2700.0:2708.0] And then the data.
+[2708.0:2710.0] And then we have the data.
+[2710.0:2712.0] That's a feature.
+[2712.0:2714.0] Here.
+[2714.0:2717.0] Is feeling that there exists a true.
+[2717.0:2721.0] It's a team to assuming that the data is being.
+[2721.0:2731.0] So.
+[2731.0:2736.0] So if you had a problem where we know that the data is separable.
+[2736.0:2739.0] Then this linear model.
+[2739.0:2742.0] Maybe.
+[2742.0:2745.0] What it is a digital.
+[2745.0:2753.0] We have.
+[2753.0:2756.0] Something like this.
+[2756.0:2763.0] Not being separable.
+[2763.0:2765.0] That is assuming.
+[2765.0:2766.0] To exist.
+[2766.0:2767.0] It's too.
+[2767.0:2768.0] It's natural.
+[2768.0:2771.0] You can assume.
+[2771.0:2775.0] So there's a assumption that you can model all.
+[2775.0:2803.0] So.
+[2803.0:2813.0] So.
+[2813.0:2821.0] So.
+[2821.0:2839.0] So.
+[2839.0:2840.0] Yes.
+[2840.0:2844.0] Thank you for.
+[2844.0:2845.0] All right.
+[2845.0:2847.0] So.
+[2847.0:2853.0] I'm going to.
+[2853.0:2858.0] I was saying that it is interesting that this linear store function.
+[2858.0:2860.0] It's the linear classifier.
+[2860.0:2864.0] So if your data is leaning in separable.
+[2864.0:2866.0] In the ambient space.
+[2866.0:2868.0] This is great.
+[2868.0:2872.0] But the classical way in machine learning is to take the data.
+[2872.0:2878.0] And the method in the prior dimension so that the data becomes leaning with separable.
+[2878.0:2880.0] It's a classical way.
+[2880.0:2881.0] Machine learning.
+[2881.0:2888.0] Some of these things known as the random features or the extreme learning machines.
+[2888.0:2894.0] And we can use all small linear functions to try to come up with one linear decision.
+[2894.0:2904.0] So.
+[2904.0:2911.0] So here's the person regression model.
+[2911.0:2920.0] In this particular case, what you end up observing is some.
+[2920.0:2930.0] This is maybe a low light image, imaging problem, such as important imaging is one case.
+[2930.0:2937.0] Say, um, imaging set up is such that we literally counting photons.
+[2937.0:2940.0] What you do typically is if you take a sample.
+[2940.0:2944.0] In jigsaw and flourstones agent.
+[2944.0:2950.0] And the cells, for example, start anything photons.
+[2950.0:2953.0] So you need to be right up.
+[2953.0:2956.0] You can't really do this much because typically the cells guide.
+[2956.0:2960.0] So you put a bit of.
+[2960.0:2966.0] A bit of chemical material to light up the cell.
+[2966.0:2972.0] Then you start counting photons coming from the cell to imaging.
+[2972.0:2975.0] Does that make sense?
+[2975.0:2978.0] I mean, engineering is very interesting.
+[2978.0:2982.0] Um, there's a lot of creativity involved in this particular process.
+[2982.0:2987.0] To say the least in addition to the imaging aspects, you know,
+[2987.0:2995.0] meaning they're the computational aspects of your discussing this particular.
+[2995.0:3009.0] So here the analysis, the member is given by this particular product with the photon count times the lower than of this particular.
+[3009.0:3019.0] This is not the statistical for some model, the aging for some model, you know, I'll tell you a business in a little bit.
+[3019.0:3027.0] In this particular case, the distribution of the photon counts.
+[3027.0:3037.0] Your model is a post on an variable with me, which is in the product of this AI.
+[3037.0:3042.0] Say images of sort of here, the idea is that.
+[3042.0:3046.0] The photon counts are not negative.
+[3046.0:3051.0] This AI is something like the lens acting on these photons.
+[3051.0:3054.0] So if you think about this, you don't directly observe the photons.
+[3054.0:3058.0] You typically have a lens.
+[3058.0:3063.0] Depending on the numerical aperture of this lens, you know, like.
+[3063.0:3068.0] The iPhones, these cameras have this 1.8 numerical aperture.
+[3068.0:3072.0] We need to do more like, for example, no.
+[3072.0:3081.0] So this AI is here are these vectors that kind of import the effect of the lens that you're using.
+[3081.0:3090.0] So the better the lens is, the AI has less and less effect.
+[3090.0:3098.0] So what the end of observing is these photons going through a lens and not directly the photons themselves.
+[3098.0:3107.0] And hence the photon and the variable, the number of photons that you observe with a particular location.
+[3107.0:3113.0] We assume that the photon and the variable the mean is in a product.
+[3113.0:3118.0] It's your complete probabilistic characterization.
+[3118.0:3128.0] Here is the. The photon is pounds, even the unknown image.
+[3128.0:3133.0] And this is it may make sense to assume that there is a few.
+[3133.0:3139.0] Even though the cell might be moving and there might be some additional issues.
+[3139.0:3144.0] You know, the fluorescent, the field not activating certain parts and actively not the part.
+[3144.0:3154.0] This is true that there exists a true stationary image using the IID assumption independently.
+[3154.0:3160.0] The assumption, if you write down the probability of.
+[3160.0:3174.0] And then we can see the X. Taking the negative go right to you. This thing is again constant.
+[3174.0:3178.0] So the arguments does not care about that constant.
+[3178.0:3184.0] The more it. And here is the now estimator.
+[3184.0:3194.0] So how do you know this was understood it?
+[3194.0:3202.0] But I just pick up some models. People who we can do the physics of this.
+[3202.0:3209.0] They somehow do these on all the models that kind of fit the reality.
+[3209.0:3216.0] Now, which will come back to the following density estimation problem.
+[3216.0:3219.0] That we want to discuss, which is really fundamental.
+[3219.0:3224.0] So the modern way of estimating that to these is a bit different.
+[3224.0:3232.0] It takes the conditions engineers looking at the problem years of study to come up with some simple model.
+[3232.0:3238.0] And lately what's real life is somewhat computational thinking.
+[3238.0:3245.0] We're not going to later on in the sports, we're not going to show our own people models.
+[3245.0:3253.0] We're going to try to learn models, distribution models, you know, become data with much more expensive power in a way.
+[3253.0:3263.0] That can generate since is that can generate, you know, computer game, ambiances, and so on.
+[3263.0:3270.0] But you understand this is the basic.
+[3270.0:3274.0] All right.
+[3274.0:3278.0] Graphical model during.
+[3278.0:3282.0] So.
+[3282.0:3296.0] You know about multiple.
+[3296.0:3300.0] The traditional models that look at the condition of the pendants is or independent series.
+[3300.0:3306.0] And a bunch of random variables.
+[3306.0:3312.0] In this particular case, you have these so here are vertices.
+[3312.0:3314.0] Five.
+[3314.0:3317.0] Go to see this.
+[3317.0:3321.0] There are some ages in between.
+[3321.0:3328.0] There's a reason for the color code which will become apparent in a little bit.
+[3328.0:3340.0] What this graph says is for example given X2 and X4 X3 is independent from X1 and X5.
+[3340.0:3348.0] We call these independent scenes to address structure.
+[3348.0:3357.0] And it tells you quite a bit about intune or the correlations between the target.
+[3357.0:3364.0] And these applications and these networks because the patient is the social networks.
+[3364.0:3368.0] Including.
+[3368.0:3375.0] Now the question is can we learn such a graph structure.
+[3375.0:3380.0] For the back to model learning problem.
+[3380.0:3387.0] Now it turns off that.
+[3387.0:3389.0] Give them the data.
+[3389.0:3394.0] What we can do is look at this covariance.
+[3394.0:3399.0] The solution of the covariance is in the probability something actually.
+[3399.0:3404.0] I hope for some of you had some chance of getting at it.
+[3404.0:3411.0] I hope that you have a little bit of time.
+[3411.0:3416.0] Maybe take the next hour and take a bit.
+[3416.0:3422.0] The inverse of the covariance matrix is called the precision matrix.
+[3422.0:3427.0] The precision matrix for these random variables.
+[3427.0:3431.0] It goes off that we have an age between the variables.
+[3431.0:3435.0] So we have a zero.
+[3435.0:3437.0] So it is the precision matrix.
+[3437.0:3443.0] That is for us on through this particular graph structure.
+[3443.0:3448.0] And you can see this blue appears here.
+[3448.0:3452.0] Yellow appears here.
+[3452.0:3457.0] And X3 and X1 do not share a link.
+[3457.0:3464.0] And hence nothing zero.
+[3464.0:3469.0] So given some data.
+[3469.0:3474.0] One way to learn such graph structure.
+[3474.0:3476.0] The precision matrix.
+[3476.0:3479.0] And I'm going to take where the non zero locations are.
+[3479.0:3485.0] Is that a sense.
+[3485.0:3490.0] I'm going to take the next one.
+[3490.0:3492.0] Here.
+[3492.0:3496.0] The estimator comes from the signal likelihood.
+[3496.0:3500.0] Which is the following.
+[3500.0:3503.0] This trace sigma hat data.
+[3503.0:3508.0] So sigma hat is the m critical for their ancestor.
+[3508.0:3511.0] We take the data.
+[3511.0:3515.0] So here.
+[3515.0:3517.0] So there's a bit of this.
+[3517.0:3524.0] So this X.
+[3524.0:3528.0] So you observe some time series data.
+[3528.0:3532.0] Same.
+[3532.0:3535.0] Take the alpha product.
+[3535.0:3538.0] Some.
+[3538.0:3541.0] So here are assuming zero mean.
+[3541.0:3545.0] There's no suppression.
+[3545.0:3549.0] So that.
+[3549.0:3555.0] So the estimator here is given by the inner product of sigma
+[3555.0:3557.0] having data.
+[3557.0:3560.0] Minus log bit.
+[3560.0:3564.0] Okay.
+[3564.0:3569.0] So this is the same as the.
+[3569.0:3572.0] I will show you the modeling.
+[3572.0:3578.0] So let's assume that there exists a two precision matrix.
+[3578.0:3583.0] And let's assume that these samples are IID.
+[3583.0:3586.0] Random matrix with zero mean and covariance matrix.
+[3586.0:3591.0] Which is the inverse of this decision matrix.
+[3591.0:3595.0] In this case, the distribution of the data.
+[3595.0:3597.0] And the width of S.
+[3597.0:3601.0] So here's the normalizing.
+[3601.0:3608.0] In fact.
+[3608.0:3610.0] Here is the.
+[3610.0:3615.0] Dowsing distribution for each of these.
+[3615.0:3616.0] Remember,
+[3616.0:3621.0] the Gaussian distribution has seen many more so we're going to play
+[3621.0:3628.0] the position.
+[3628.0:3635.0] This is the probability of the data given the unknown decision
+[3635.0:3638.0] variable.
+[3638.0:3646.0] So.
+[3646.0:3667.0] So.
+[3667.0:3669.0] We have something like this.
+[3669.0:3670.0] Right.
+[3670.0:3679.0] So the product of I want to add.
+[3679.0:3682.0] We take the log.
+[3682.0:3686.0] When you take the log.
+[3686.0:3690.0] Minus and over to log.
+[3690.0:3691.0] That.
+[3691.0:3692.0] Take out.
+[3692.0:3695.0] So this comes here.
+[3695.0:3698.0] Now product.
+[3698.0:3701.0] To sum.
+[3701.0:3703.0] After log.
+[3703.0:3706.0] From minus.
+[3706.0:3708.0] Exponential involved.
+[3708.0:3711.0] Somehow cancel out.
+[3711.0:3718.0] Right.
+[3718.0:3725.0] And we have some.
+[3725.0:3735.0] Something like this.
+[3735.0:3740.0] Because minus also.
+[3740.0:3747.0] Now, here's the term which seems problematic.
+[3747.0:3749.0] So remember.
+[3749.0:3751.0] X.
+[3751.0:3753.0] I transpose.
+[3753.0:3756.0] What are the dimensions of the quantity?
+[3756.0:3758.0] So X i is a vector.
+[3758.0:3760.0] P by one.
+[3760.0:3763.0] The precision matrix is a P by P matrix.
+[3763.0:3767.0] So what's the dimension of this.
+[3767.0:3770.0] Any guesses.
+[3770.0:3775.0] It's a.
+[3775.0:3777.0] Now.
+[3777.0:3781.0] Then this is actually equal to this.
+[3781.0:3786.0] The trace of the scalar is.
+[3786.0:3791.0] And this is also equal to.
+[3791.0:3796.0] This.
+[3796.0:3802.0] Face a B is equal to trace the A.
+[3802.0:3814.0] Now what I will be doing is summing this thing.
+[3814.0:3828.0] Faces are linear operator.
+[3828.0:3834.0] So I can simply take the trace inside these XIs.
+[3834.0:3843.0] Well, let's put this guy in.
+[3843.0:3848.0] This is the empirical.
+[3848.0:3851.0] For very interesting.
+[3851.0:3856.0] Does this make sense?
+[3856.0:3859.0] It's a bit of algebra, but.
+[3859.0:3863.0] It's sometimes nice to see.
+[3863.0:3865.0] All right.
+[3865.0:3866.0] People are okay.
+[3866.0:3868.0] I'm just going to change the slide.
+[3868.0:3876.0] People are done.
+[3876.0:3879.0] So what we end up getting here.
+[3879.0:3882.0] In this case.
+[3882.0:3887.0] And this is this minus load debt.
+[3887.0:3888.0] And this.
+[3888.0:3890.0] And again, there's a.
+[3890.0:3897.0] Seller that you usually don't care.
+[3897.0:3901.0] And notice again, there is this element off.
+[3901.0:3905.0] Because uniqueness or the solution will depend.
+[3905.0:3908.0] They don't have enough data.
+[3908.0:3921.0] Because it turns out that the solution to this problem.
+[3921.0:3923.0] It is a close form solution.
+[3923.0:3925.0] If the empirical.
+[3925.0:3929.0] The variance matrix is full range.
+[3929.0:3935.0] It's literally inverse.
+[3935.0:3939.0] And the data star here is intact.
+[3939.0:3942.0] This inverse center exists.
+[3942.0:3946.0] We'll show how to get this solution.
+[3946.0:3948.0] It's a situation.
+[3948.0:3949.0] Okay.
+[3949.0:3951.0] We talk about how to get.
+[3951.0:3957.0] All the specific.
+[3957.0:3958.0] All right.
+[3958.0:3961.0] Another estimator example.
+[3961.0:3965.0] I'm going to show you.
+[3965.0:3966.0] I'm going to show you.
+[3966.0:3968.0] To go page rent.
+[3968.0:3971.0] I mentioned that the leader model is quite powerful.
+[3971.0:3972.0] And this is the.
+[3972.0:3978.0] But I will do is tell you a little bit about the original page rent paper.
+[3978.0:3984.0] The modeling and the rationale.
+[3984.0:3985.0] So.
+[3985.0:3987.0] Here's a basic model.
+[3987.0:3991.0] I'm going to go to some.
+[3991.0:3996.0] But page.
+[3996.0:3997.0] It links.
+[3997.0:4002.0] And what to do is sometimes to come to those links and follow up.
+[4002.0:4009.0] And what page rent did is to to look at this transition using a grass structure.
+[4009.0:4012.0] Where the.
+[4012.0:4020.0] You can see the.
+[4020.0:4023.0] Vertices for us on the pages and the ages for us on the links between pages.
+[4023.0:4028.0] And the ages and code the probable to that you go from one page to another one.
+[4028.0:4031.0] So here's a point grass.
+[4031.0:4035.0] If you're here, there's one half probably you'll go to the stage three.
+[4035.0:4038.0] One half probably that we'll go to the stage four.
+[4038.0:4039.0] And we can.
+[4039.0:4046.0] And this is an age transition ages.
+[4046.0:4051.0] For example, node one can get in from both to the one third probability.
+[4051.0:4055.0] And if you're in most four, you go back to it.
+[4055.0:4056.0] The one.
+[4056.0:4060.0] And these things will sum up.
+[4060.0:4066.0] To one.
+[4066.0:4073.0] Because of the law of probability, basically, the conditional probability of one from one patient and other one.
+[4073.0:4075.0] And Google has.
+[4075.0:4078.0] Maybe has this chrome.
+[4078.0:4089.0] Navigator or Apple has just a fire navigator that kind of observes this kind of behavior in aggregate.
+[4089.0:4099.0] So we think from the street.
+[4099.0:4105.0] If you think about this, you can apply this to the whole world wide patch.
+[4105.0:4107.0] Last year it was around six billion.
+[4107.0:4110.0] I should have offered this number this year.
+[4110.0:4115.0] I apologize to six billion pages.
+[4115.0:4122.0] And you can think about a huge matrix right six billion by six billion matrix.
+[4122.0:4126.0] A lot of numbers.
+[4126.0:4131.0] If you were to store.
+[4131.0:4134.0] I don't know if this is a.
+[4134.0:4148.0] I'm going to.
+[4148.0:4150.0] So.
+[4150.0:4153.0] Let's try to use a bit of the connective model.
+[4153.0:4157.0] So if you have this each transition matrix.
+[4157.0:4165.0] One thing you can do.
+[4165.0:4167.0] People.
+[4167.0:4170.0] The distribution of people.
+[4170.0:4171.0] Which page.
+[4171.0:4173.0] I don't know.
+[4173.0:4175.0] Maybe you like.
+[4175.0:4178.0] Google news versus RTS news.
+[4178.0:4180.0] Maybe in the morning.
+[4180.0:4190.0] I'm going to.
+[4190.0:4199.0] I'm going to.
+[4199.0:4203.0] If you take this.
+[4203.0:4213.0] If you take this.
+[4213.0:4217.0] It's the state.
+[4217.0:4221.0] Kind of predict how the net is going to evolve.
+[4221.0:4223.0] What.
+[4223.0:4224.0] Does this make sense?
+[4224.0:4227.0] I think so far.
+[4227.0:4233.0] I'm going to.
+[4233.0:4239.0] So how do you find the ranking?
+[4239.0:4241.0] If you think about it.
+[4241.0:4244.0] The stationary state of the internet.
+[4244.0:4248.0] Meaning which pages will collect more people.
+[4248.0:4249.0] Right.
+[4249.0:4254.0] That's the definition of the rank of the internet.
+[4254.0:4257.0] So.
+[4257.0:4260.0] We need all people are equal.
+[4260.0:4263.0] And we want to, you know, attack.
+[4263.0:4264.0] All people.
+[4264.0:4268.0] Now, Google does this much more sophisticated because it's a plot.
+[4268.0:4271.0] I mean now they even look at the computer you have and it's your Mac user or so if you see
+[4271.0:4272.0] user.
+[4272.0:4274.0] They will be different recommendations.
+[4274.0:4275.0] Right.
+[4275.0:4278.0] The reality is now much more complicated.
+[4278.0:4283.0] This is a simple.
+[4283.0:4285.0] So.
+[4285.0:4288.0] There are some issues that you need to take there off.
+[4288.0:4291.0] So if the initial state vector.
+[4291.0:4294.0] I mean.
+[4294.0:4298.0] So you can look at events where.
+[4298.0:4299.0] The page.
+[4299.0:4302.0] If you're at the that page, you will simply quit.
+[4302.0:4305.0] The that page and.
+[4305.0:4308.0] It was a bit distracted and then just open another that page.
+[4308.0:4312.0] So this model was not involved that.
+[4312.0:4317.0] So you can actually model what I just talked about design for that.
+[4317.0:4320.0] You can you can model this.
+[4320.0:4323.0] By putting some.
+[4323.0:4333.0] Seriously, something between so that there is some non zero probability to go from any page to any other page.
+[4333.0:4338.0] There are some pages that have no links.
+[4338.0:4342.0] You can create some artificial signals there and so forth.
+[4342.0:4346.0] So there are some.
+[4346.0:4355.0] Things you also have to see to make the paper acceptable to be conference.
+[4355.0:4360.0] So the mathematical models for these maybe not that important.
+[4360.0:4365.0] So the way to model the event that the server with which.
+[4365.0:4370.0] A small probability.
+[4370.0:4373.0] Of all ones.
+[4373.0:4377.0] You create some signals.
+[4377.0:4381.0] And here is then.
+[4381.0:4383.0] Here's them.
+[4383.0:4385.0] The page rank.
+[4385.0:4387.0] Matrix.
+[4387.0:4388.0] So.
+[4388.0:4392.0] Here's the signal probabilities and here's the quit probabilities.
+[4392.0:4396.0] There's a post looking at the age matrix, age transition matrix directly.
+[4396.0:4399.0] You look at the modified words.
+[4399.0:4404.0] This is it.
+[4404.0:4407.0] And then here's the problem formulation.
+[4407.0:4410.0] What you would like to do.
+[4410.0:4413.0] Is find the state.
+[4413.0:4418.0] That is the name on the matrix.
+[4418.0:4425.0] Like to say the state of internet.
+[4425.0:4428.0] At any given point, there will be people.
+[4428.0:4432.0] People will be clicking on other links moving around.
+[4432.0:4439.0] What you like to do is figure out which pages can attract more.
+[4439.0:4440.0] In city.
+[4440.0:4442.0] Those will be higher rents.
+[4442.0:4446.0] Those are the ones that show up in first page.
+[4446.0:4450.0] So this is what you would like to do.
+[4450.0:4452.0] Find our star.
+[4452.0:4455.0] And our star is a distribution.
+[4455.0:4456.0] So.
+[4456.0:4460.0] Some's up to one all non negative.
+[4460.0:4461.0] So the page rank.
+[4461.0:4463.0] So literally.
+[4463.0:4466.0] You have a six billion by six billion.
+[4466.0:4467.0] Six.
+[4467.0:4469.0] R.
+[4469.0:4470.0] Of n.
+[4470.0:4474.0] You would like to find an on negative R such that.
+[4474.0:4476.0] M R is equal to R.
+[4476.0:4488.0] And are some of them.
+[4488.0:4492.0] Now.
+[4492.0:4494.0] If.
+[4494.0:4496.0] M X is equal to X.
+[4496.0:4501.0] One post function that makes sense is to look at the discrepancy between mx and x.
+[4501.0:4504.0] And minimize.
+[4504.0:4507.0] Does that make sense?
+[4507.0:4514.0] And one way to enforce the sum up constraint is to penalize it.
+[4514.0:4520.0] So you get the penalty if you deviate from something up to one.
+[4520.0:4523.0] Does that make sense?
+[4523.0:4528.0] And ideally, you actually have x very, very diffusier.
+[4528.0:4534.0] So this is our problem.
+[4534.0:4542.0] And you can simply put it into this riskress formulation.
+[4542.0:4546.0] By a simple concatenation.
+[4546.0:4555.0] So the page rank problem is a riskress problem.
+[4555.0:4558.0] Again, the reason why I'm not really.
+[4558.0:4563.0] Explain all the door details is that this is already a simplified version.
+[4563.0:4565.0] That the extremist five version.
+[4565.0:4569.0] So details are not that important.
+[4569.0:4573.0] But the high level messages is it to be correct.
+[4573.0:4584.0] Even the delineate of linear model you can capture something that's important as a term.
+[4584.0:4594.0] So, you can see the whole class of.
+[4594.0:4596.0] All right.
+[4596.0:4602.0] Some unified perspectives for the generalized linear models in statistics.
+[4602.0:4605.0] The whole class of.
+[4605.0:4610.0] Let's say generalization of linear models is given by the following.
+[4610.0:4615.0] And by the.
+[4615.0:4619.0] The generalization comes through this function.
+[4619.0:4625.0] So if I is used to over to this is the linear regression.
+[4625.0:4631.0] If I is this it results in the logistic regression.
+[4631.0:4634.0] And five is exponential use.
+[4634.0:4638.0] So this five is for the link function, depending on the link function,
+[4638.0:4641.0] the regression problems.
+[4641.0:4646.0] And I would like to say that the person regression is a different.
+[4646.0:4649.0] In statistics, then in engineering.
+[4649.0:4653.0] The statisticians are more clever.
+[4653.0:4656.0] So they write the mean.
+[4656.0:4662.0] It's financial aid at home to avoid this zero being in the logarithm.
+[4662.0:4663.0] Okay.
+[4663.0:4667.0] There's a there's a combination difference.
+[4667.0:4672.0] And what is interesting is that for all of these models.
+[4672.0:4673.0] You can take the data.
+[4673.0:4676.0] You can just simply run.
+[4676.0:4678.0] Linear regression.
+[4678.0:4683.0] You will find these solution for any one of these in a state of fashion.
+[4683.0:4686.0] Very important observation.
+[4686.0:4690.0] Meaning that the data was logistic.
+[4690.0:4694.0] You put their route written down the amount estimator and solve it to be connected.
+[4694.0:4697.0] But if you were to take.
+[4697.0:4699.0] Leaks squares.
+[4699.0:4700.0] Soul.
+[4700.0:4709.0] You will find the vector which is proportional to the two vector.
+[4709.0:4711.0] It's unfortunate.
+[4711.0:4715.0] And it's uncanny.
+[4715.0:4721.0] So the model mismatches may not be too severe.
+[4721.0:4725.0] Still power of the email.
+[4725.0:4728.0] Express.
+[4728.0:4730.0] All right.
+[4730.0:4731.0] Now.
+[4731.0:4734.0] Perfect timing.
+[4734.0:4737.0] So the rest of the material is advanced material.
+[4737.0:4742.0] I'll just give you a short TV and then I will wrap up last class.
+[4742.0:4745.0] Is that okay?
+[4745.0:4749.0] So this taking the fidelity questions and important one.
+[4749.0:4752.0] And here.
+[4752.0:4755.0] I mentioned.
+[4755.0:4762.0] You know, looking at the expected error consistency of synthetic normality in local synthetic normality.
+[4762.0:4765.0] There is a big of explanations here.
+[4765.0:4769.0] For example, for the graphical learning problem.
+[4769.0:4773.0] The consistency.
+[4773.0:4778.0] What I mean by that is when you have finite number of samples.
+[4778.0:4784.0] You have to estimate the covariance matrix.
+[4784.0:4786.0] Not exact.
+[4786.0:4792.0] You can look at things like how much you deviate from the true covariance matrix.
+[4792.0:4794.0] And you have samples.
+[4794.0:4796.0] Not enough samples.
+[4796.0:4800.0] You know, some deviation bounds are given here as exact as.
+[4800.0:4803.0] Again, you're not responsible for this in this course.
+[4803.0:4806.0] I'm just showing you to give you an idea.
+[4806.0:4809.0] In the next lectures, there will be more advanced material.
+[4809.0:4812.0] They're kind of like in a similar sense.
+[4812.0:4817.0] If you're a patient, you shouldn't interested in research, people with it.
+[4817.0:4819.0] The questions between the staff.
+[4819.0:4820.0] All right.
+[4820.0:4826.0] So some of these are synthetic normality expressions.
+[4826.0:4829.0] Okay.
+[4829.0:4832.0] There's also the mini-nacks.
+[4832.0:4834.0] Performance.
+[4834.0:4840.0] These are all explained here.
+[4840.0:4843.0] So if you're interested in taking a look at it.
+[4843.0:4845.0] Are you interested in the sort of it?
+[4845.0:4847.0] Confining.
+[4847.0:4850.0] So with that, this lecture.
+[4850.0:4852.0] This particular dissertation pens.
+[4852.0:4854.0] And if you're okay with it.
+[4854.0:4859.0] In the rest of the 10 minutes, I would like to finish this material.
+[4859.0:4861.0] It's all good.
+[4861.0:4869.0] It's a question.
+[4869.0:4872.0] Okay.
+[4872.0:4875.0] Any question so far that we're.
+[4875.0:4881.0] Time to take a breather.
+[4881.0:4882.0] All right.
+[4882.0:4883.0] So.
+[4883.0:4887.0] I'll repeat some of the things I said so that again, maybe.
+[4887.0:4891.0] I'm not sure if it's a clear.
+[4891.0:4897.0] What we've done up to this part was to talk about the estimators performance.
+[4897.0:4902.0] When we are increasing the amount of data.
+[4902.0:4905.0] Now.
+[4905.0:4909.0] An estimator is an idealized set up.
+[4909.0:4916.0] If it assumes that you have the perfect solution, penalization problem, which we never had.
+[4916.0:4922.0] And with these slides, I'm going to highlight the role of competition.
+[4922.0:4929.0] Because it turns out that evaluating the estimators performance is almost never enough.
+[4929.0:4935.0] For understanding our actual performance, by the way, the world is organized computers.
+[4935.0:4938.0] You have to be numerical optimization.
+[4938.0:4940.0] And.
+[4940.0:4950.0] You never had this x star precisely, but up to maybe some numerical precision or the competition effort that you're willing to.
+[4950.0:4956.0] So the practical performance in reality is not.
+[4956.0:4962.0] The estimators performance, but our algorithms performance.
+[4962.0:4964.0] So let's say.
+[4964.0:4971.0] We are running an algorithm with some time steps.
+[4971.0:4974.0] And what we really care about is.
+[4974.0:4981.0] The how our estimate at a given time is doing with the state with two parameters.
+[4981.0:4992.0] By simply trying to the quality, we can decompose this thing into two terms that kind of makes sense that you had a handle on.
+[4992.0:5000.0] The one is that given that our algorithm is trying to approximate x star, you look at the distance of x to x star.
+[5000.0:5009.0] So as equals to infinity if you had a good algorithm, it's evil being to do x star.
+[5009.0:5011.0] And X star.
+[5011.0:5026.0] This is the x natural, which for parameter depends on the formulation that you picked an estimator, an now estimator, lab, these squares or whatever.
+[5026.0:5029.0] And the amount of data.
+[5029.0:5035.0] In the amount case, we know that this particular.
+[5035.0:5045.0] Something like this.
+[5045.0:5048.0] For a month.
+[5048.0:5051.0] Okay.
+[5051.0:5054.0] So now we have two terms, one.
+[5054.0:5068.0] We can make small by using more computation.
+[5068.0:5074.0] More data, more.
+[5074.0:5085.0] Now, geometry speaking, here's a parameter, use the estimator solution so we can make this is smaller data.
+[5085.0:5093.0] Here's our algorithm, hopefully converging towards x star. Remember, the algorithm's target.
+[5093.0:5097.0] Is not this.
+[5097.0:5101.0] The algorithm does not care about this.
+[5101.0:5106.0] If you step up your algorithm quickly, it only cares about one target.
+[5106.0:5110.0] Who's course glasses on.
+[5110.0:5115.0] Post-floor x star.
+[5115.0:5125.0] And I made a parenthetical comments here, which is very important, which is, you know, a lot of the cases people do early stopping.
+[5125.0:5135.0] And basically, you can see why it can make sense here. If you were to stop your algorithm here, you will actually have a bit of generalization performance.
+[5135.0:5140.0] Then if you were to go there.
+[5140.0:5145.0] And in fact, you should optimize up to your quote, unquote, statistical decision.
+[5145.0:5149.0] So this is your statistical precision.
+[5149.0:5153.0] I call jazz for this.
+[5153.0:5159.0] So this second.
+[5159.0:5166.0] The second term is your.
+[5166.0:5191.0] So this is your numerical precision.
+[5191.0:5197.0] Okay.
+[5197.0:5205.0] We really care is this one.
+[5205.0:5207.0] Okay.
+[5207.0:5214.0] Again, so let's go back to the general more general model without the parameters.
+[5214.0:5219.0] So talking about abstract function process.
+[5219.0:5225.0] So let's assume that there is some two function class that includes the true function.
+[5225.0:5227.0] So these H knots.
+[5227.0:5231.0] And let's say this H knot is the two.
+[5231.0:5236.0] This expected risk minimization minimizing all.
+[5236.0:5242.0] Now we in reality need to live with some function class at each of the age.
+[5242.0:5257.0] For the simplicity of the discussion, I'm going to assume H is included in a zero, the two function class.
+[5257.0:5258.0] H star is the estimator solution.
+[5258.0:5262.0] So we wrote down some optimization problem.
+[5262.0:5266.0] It's star solution to that problem.
+[5266.0:5275.0] And H T is our all the solution at time.
+[5275.0:5278.0] We can again do the state composition of air.
+[5278.0:5286.0] What we really care is how well we're doing with respect to the two original function.
+[5286.0:5296.0] We can look at the optimization error.
+[5296.0:5299.0] We can look at the statistical error.
+[5299.0:5306.0] So H to H star, H star to H natural.
+[5306.0:5311.0] And then H natural to H.
+[5311.0:5318.0] And this is the model error, statistical error optimization error.
+[5318.0:5319.0] You see this the composition.
+[5319.0:5323.0] This is really for the real.
+[5323.0:5339.0] But once you have an understanding of this, you can interpret a lot of the jargon to use early stopping model.
+[5339.0:5344.0] So we use optimization error with computation.
+[5344.0:5351.0] We use statistical error with data samples estimators and fire information.
+[5351.0:5355.0] We use the model error with.
+[5355.0:5364.0] What is the neural network?
+[5364.0:5369.0] Maybe by lecture six.
+[5369.0:5373.0] Maybe already know.
+[5373.0:5378.0] I'll tell you a little bit about some of the definitions.
+[5378.0:5384.0] If you look at the same thing in the parametric case.
+[5384.0:5392.0] X naught is the two minimizing risks.
+[5392.0:5396.0] The parameter X natural.
+[5396.0:5399.0] We just picked our assumed model.
+[5399.0:5403.0] X star is the empirical visualization solution.
+[5403.0:5405.0] So here's the empirical risk.
+[5405.0:5409.0] And Xc is the numerical approximation.
+[5409.0:5417.0] So when you look at the empirical risks that we minimize, this is for the training error.
+[5417.0:5420.0] It's the one that we use the data for.
+[5420.0:5423.0] We use the same thing.
+[5423.0:5427.0] We can look at what the training error is.
+[5427.0:5432.0] But you take for example X here and plug it into the two population risks.
+[5432.0:5434.0] Expected value.
+[5434.0:5437.0] That'll be your test error.
+[5437.0:5439.0] You get a test error estimate.
+[5439.0:5441.0] Typically.
+[5441.0:5443.0] Even a data set.
+[5443.0:5445.0] You're slipping to training and test.
+[5445.0:5446.0] You train on one.
+[5446.0:5447.0] You get the product.
+[5447.0:5455.0] But the true test error is evaluation of the population risk.
+[5455.0:5458.0] And you get an estimate of the population risks.
+[5458.0:5462.0] By using the samples you did not use for optimization.
+[5462.0:5468.0] Does that make sense?
+[5468.0:5473.0] The model error would be the true risk evaluated at X natural.
+[5473.0:5477.0] So just take our assumed punching class.
+[5477.0:5481.0] And the optimal parameters of the.
+[5481.0:5483.0] The exit risk.
+[5483.0:5490.0] Is we just take to the fully optimized model what we get with the estimator.
+[5490.0:5496.0] The generalization error is this difference between the population risk.
+[5496.0:5499.0] And.
+[5499.0:5503.0] And here's the optimization error.
+[5503.0:5506.0] And here.
+[5506.0:5508.0] You give a table.
+[5508.0:5512.0] When you fix some of these variables and change one what happens to the other.
+[5512.0:5516.0] For example, what happens with the training error.
+[5516.0:5521.0] If you allow the parameter constraints set to converge towards the original set.
+[5521.0:5528.0] Of course, by making the constraints set bigger, you can make the training error go down.
+[5528.0:5534.0] If the number of data points increased while keeping the constraints the same and the dimension the same.
+[5534.0:5537.0] Typically training error will increase.
+[5537.0:5544.0] And if you have fixed number of data, you start increasing the parameters to make the errors go down.
+[5544.0:5549.0] And vice versa. So here are the explanations.
+[5549.0:5552.0] I do not expect you to memorize this in one shot.
+[5552.0:5554.0] If you keep this again, then down.
+[5554.0:5556.0] So that it is clear.
+[5556.0:5562.0] I hope this is okay with you.
+[5562.0:5568.0] And you know, you can look at the same decomposition of air.
+[5568.0:5570.0] The risk as well.
+[5570.0:5572.0] It'll be the optimization error.
+[5572.0:5578.0] As opposed to calling the statistical error, we're going to call the generalization error and you have the model error.
+[5578.0:5582.0] And this actually.
+[5582.0:5587.0] The derivation sphere, how we get the generalization error.
+[5587.0:5588.0] Okay.
+[5588.0:5589.0] Not expecting.
+[5589.0:5592.0] I'm not expecting you to memorize.
+[5592.0:5595.0] Just a look.
+[5595.0:5597.0] And then.
+[5597.0:5604.0] You can actually go over some simple stylized examples or obtain something that you obtain for a now.
+[5604.0:5610.0] Within general, the generalization error and statistical learning.
+[5610.0:5614.0] Remember, this is not about predicting the parameter.
+[5614.0:5617.0] This is about predicting the risk.
+[5617.0:5618.0] Meaning.
+[5618.0:5620.0] So I'll take maybe a couple of more minutes.
+[5620.0:5623.0] I apologize for it over time.
+[5623.0:5624.0] The explain the difference.
+[5624.0:5627.0] I'm not talking about estimating the parameters.
+[5627.0:5628.0] So imagine.
+[5628.0:5632.0] You're doing brain computing to faces.
+[5632.0:5639.0] And you would like to, for example, have a patient direct a new chair.
+[5639.0:5641.0] Okay.
+[5641.0:5648.0] In the estimation problem, what you're trying to estimate maybe is the state, the brain state of the patients.
+[5648.0:5652.0] That's what looking at the differences in X is mean.
+[5652.0:5655.0] But here, we're looking at the risk.
+[5655.0:5662.0] We're trying to figure out if we're going to predict whether or not the patient wants to go left to right or front.
+[5662.0:5667.0] Or that we don't care what the parameters are.
+[5667.0:5671.0] We care what the risk is.
+[5671.0:5676.0] Whether or not we can correctly predict the patient wants to go left, right?
+[5676.0:5677.0] That's it.
+[5677.0:5680.0] So this measure is back to risk.
+[5680.0:5685.0] Not the parameter distances, but the risk the loss.
+[5685.0:5688.0] Okay.
+[5688.0:5691.0] The subtle difference is super important.
+[5691.0:5696.0] And with that, we will end today's lecture to see guys on Friday.
+[5696.0:5698.0] The PC01.
+[5698.0:5702.0] What we're doing is going to do a bit of a linear algebra.
+[5702.0:5707.0] They found making vector matrix derivatives examples.
+[5707.0:5712.0] So that we can start talking about things I've created.
+[5712.0:5713.0] All right.
+[5713.0:5722.0] At a great week.
+[5722.0:5727.0] See you guys on Friday.

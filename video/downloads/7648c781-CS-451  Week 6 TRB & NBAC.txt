@@ -1,0 +1,805 @@
+~CS-451 / Week 6: TRB & NBAC
+~2020-10-26T23:44:53.698+01:00
+~https://tube.switch.ch/videos/7648c781
+~CS-451 Distributed algorithms
+[0.0:16.6] Let's start the class. So today I'm going to talk to you about two abstractions. They
+[16.6:22.68] are look somehow different, but as we will see they are not that different if we think
+[22.68:29.48] about their algorithm and what it takes to implement them. The first one is what we call
+[29.48:34.92] Termination of Life and Roadcast. The second one is what we call Atonic Commit. They have both been
+[34.92:41.8] developed independently, but they're quite similar. In particular they're quite similar in the way
+[41.8:50.120000000000005] we solve implement them using consensus. So we have seen last week I have insisted two weeks ago
+[50.12:54.76] of the importance of consensus in building state machine replication systems and total
+[54.76:61.32] order broadcast. Last week I presented to you three algorithms to implement consensus in a
+[61.32:67.96] message passing system. One of them very simple algorithm that does not solve uniform consensus.
+[67.96:74.92] It solves the non-uniform version. It has this property that the first leader can decide immediately.
+[74.92:82.6] So latency is zero in the best case. Then I presented to you an algorithm that ensures uniform
+[82.6:88.84] consensus. No two processes decide differently. So a process cannot decide something fail and
+[88.84:94.12] then another process decides something different. So that was a uniform consensus algorithm. Both
+[94.12:101.72] algorithms were devised in a system with a perfect failure detector. Then I presented to you a third
+[101.72:106.92] algorithm which assumes an eventually perfect failure detector. The difference between the first
+[106.92:114.28] two and the third is the fact that we assume that failure detection can be inaccurate. We can make
+[114.28:121.16] mistakes. I didn't present to you any consensus algorithm that does not assume any failure detector
+[121.16:126.75999999999999] and more specifically or more generally any consensus algorithm in a completely asynchronous system.
+[126.76:133.16] For the simpler reason that it's impossible. There is no consensus algorithm in a completely
+[133.16:138.52] asynchronous system. It is important to remember that the previous abstractions I presented cause
+[138.52:145.8] the broadcast, a live broadcast uniform broadcast. We could all solve them in a completely asynchronous
+[145.8:155.0] system. We can use a fail-abetector to boost things or to save messages etc. But we could also have
+[155.0:159.72] an algorithm without a perfect without a fail-abetector. For consensus it's impossible. It's a
+[159.72:164.44] problem for which you need some information about failures and if you have a missing
+[164.44:169.88] consistent you cannot distinguish a correct process from a process that is slow. So consensus
+[169.88:175.24] is impossible in anything consistent. Today we are going to study. So from that perspective
+[175.24:182.68] consensus is a hard problem and today we are going to consider even harder problems, harder than
+[182.68:189.48000000000002] consensus as you will see. The first of these is a form of a reliable broadcast called
+[189.48000000000002:200.20000000000002] Terminating a Live broadcast. So it's a broadcast primitive just like a reliable broadcast and
+[201.08:206.12] uniform reliable broadcast process sends a message to the entire processes in the group.
+[206.12:213.32] Just like a reliable broadcast the goal is to disseminate a message in a reliable manner.
+[213.32:221.4] However, what we call TRB for Terminating a Live broadcast is strictly stronger than uniform
+[221.4:226.84] reliable broadcast and I'm going to explain to you in what sense it is strictly stronger.
+[227.72:234.68] So let's look at a couple of examples to remember what a live and uniform reliable broadcast guarantee
+[234.68:239.96] in order to highlight what they don't guarantee and then we will see what the role of
+[239.96:245.4] of Terminating a Live broadcast which I will simply call TRB is. So here we have three processes,
+[245.4:250.36] P1, P2 and P2 and P2 is the source. It broadcasts a message M.
+[252.36:260.84000000000003] If you have a live broadcast, P2 fails then there is no guarantee, okay, which means that we can
+[260.84:267.47999999999996] have P1 delivering M. Remember that the act of delivering is not the fact that this error arrives.
+[267.47999999999996:273.96] The act of delivering is represented in the picture by a vertical line. This is to insist
+[274.52:280.03999999999996] on the fact that receiving or if you want to be a BBB deliver or whatever is different from
+[280.03999999999996:287.15999999999997] the actual delivery of the message. So it could be that this guy delivers a message and P3 does not.
+[287.16:293.08000000000004] If we have uniform or live broadcast, we have the guarantee that if this guy fails,
+[293.08000000000004:297.16] then it could be that this one delivers and this one does not deliver, okay.
+[297.16:301.48] Sorry, if we have uniform reliable, if this one delivers and this one also has to deliver.
+[304.6:312.68] It could be also that if P2 fails, none of these processes, P1 or P2, then it will deliver the message,
+[312.68:320.44] okay. So this is a possibility. Of course, if P2 is correct, then P1 and P3 have the obligation
+[320.44:324.76] by the validity property of uniform or live broadcast. They have to deliver the message M.
+[325.40000000000003:331.32] But if P2 fails, even if it broadcasts and then it waits three hours before failing,
+[331.96000000000004:337.88] there is no obligation that P1 and P3 actually deliver messages. They do not need to.
+[337.88:345.48] But now think a little bit of an application where we have an event-based system where processes
+[345.48:351.8] subscribe to some important events. So they're waiting for some information from P2 to tell them,
+[352.68:359.0] I don't know, classes are going to be at home or at EPFL. So they're waiting for some day,
+[359.0:367.64] even to know that information. If P2, the source fails, in fact, P1 and P3 might get the information,
+[367.64:373.88] but may also never get the information. So they don't really know what to do because it might be that
+[374.59999999999997:379.96] not only they don't get an information, but they don't know that they're not going to get that
+[379.96:385.71999999999997] information. Of course, in the picture here, we can actually say, oh, they will never get it,
+[385.71999999999997:390.52] okay, they will never get it because I didn't draw this. But it could be that if I go to the right
+[390.52:395.56] of the picture, I can still draw those vertical lines and say, oh, now they got the message.
+[395.56:401.56] So there is something weak about the strongest form of a viral broadcast we have seen,
+[401.56:409.96] the uniform one, which is this lack of knowledge whether P1 and P3 are going to deliver a message
+[409.96:416.12] or not, okay, they don't know. It is okay that they don't deliver the message, if one delivers the
+[416.12:422.6] other one delivered, but they could stay like that forever, okay. So this is something they
+[422.6:428.28000000000003] weak from the perspective of building certain applications where you have to take a decision, okay.
+[430.52000000000004:437.0] Terminating a viral broadcast is a strong form of uniform or live broadcast, which not only guarantees
+[437.0:444.52000000000004] the properties of uniform or live broadcast in particular, if P1 delivers M, P3 does also deliver M,
+[444.52:454.76] but also it guarantees that in case the message is not going to get true, okay, in case P2 fails
+[454.76:462.84] and there is no way for P1 and P3 to actually get located, find out that message. P1 as well as
+[462.84:470.44] P3 deliver a specific indication telling them give up, something I am not gonna know, okay. So
+[470.44:476.6] this message phi basically means don't waste your time, okay. You don't need to wait for me.
+[477.96:483.16] This message is never going to reach you, so you have to go and find the not-of-source of
+[483.16:488.28] information or do something else. So we call it terminating a live broadcast, precisely in
+[488.28:495.8] distance, in the sense that the message might never arrive, but the actual broadcast terminates,
+[495.8:503.72] okay. So terminating a live broadcast does not talk about relations between messages like
+[503.72:510.6] causal broadcast or total order broadcast, it's a not-of-source matter, it's focuses on every single
+[510.6:518.84] message, it simply adds this information that you know that you are not going to deliver the message.
+[518.84:523.48] I hope it's clear for you now, I cannot see your faces to know whether that is clear,
+[523.48:528.52] but just think of an application where you expect in some message and you don't want to wait
+[528.52:532.12] forever. You know that there is a possibility that you're not going to receive it, but you want
+[532.12:540.6800000000001] to know that possibility. So to summarize, like with a live broadcast, correct processes in TRB
+[541.24:547.0] agree on the set of messages they deliver. Like with a live broadcast or uniform,
+[547.0:551.88] every process in TRB delivers every message delivered by any process, sorry, every correct
+[551.88:559.16] process delivers every message, but unlike with a live broadcast, every correct process delivers
+[559.16:565.64] some message, okay. The message can be the actual message sent by the source or this famous
+[565.64:572.36] indication give up, don't wait for me, even if the broadcast is so you get informed about something.
+[573.24:578.52] So how do we define this intuition? So this is something very intuitive that many people would
+[578.52:584.4399999999999] like to implement. How do we define this intuition that looks very simple? We have to be very careful.
+[585.0:590.04] First, it is important to notice that the problem of terminating a live broadcast is
+[590.04:595.72] defined in respect to some source, okay. Of course, we can have different instances of the problem
+[595.72:600.68] for different sources, but here it's important that there is one source. We call it a specific
+[600.68:607.3199999999999] broadcast. So this source here is known by all processes. So we all are expecting an information from
+[609.0799999999999:614.8399999999999] some EPFL authority or the delegate of the class or something which is ASARC. And this process
+[614.8399999999999:621.16] is going to tell us something. So process ASARC source is supposed to broadcast a message.
+[621.16:628.5999999999999] The message can be anything except that this message cannot be. The indication don't wait for
+[628.6:634.2] me because don't wait for me or don't waste your time is a specific indication meaning that you
+[634.2:639.96] are not going to get the message, okay. So the message N is taken from a set of messages from which
+[640.76:647.08] we exclude this specific indication from. So the processes in the system, the other processes
+[647.8000000000001:653.5600000000001] need to deliver N if the source is correct, okay. So this is important. They're not allowed to
+[653.56:659.56] deliver the indication don't wait for me if actually the source is not, sorry, if the source is
+[659.56:666.28] correct, they are not allowed to deliver the special indication file. But if the source crashes,
+[666.28:672.8399999999999] they may or not deliver fine. Either they deliver fine or they deliver the message that the source
+[672.8399999999999:679.0] has sent, but they do deliver something, okay. So now let's go through the properties.
+[679.0:688.6] The properties are the same or most exactly the same as those of our live broadcasts where we
+[688.6:693.56] identify the source. And in the other classical reliable broadcasts we simply say every process can
+[693.56:699.0] broadcast a message and we don't specify a source. Here we do for every instance of the
+[699.0:704.28] native channel live broadcast, there is a source. Just like for those who follow my other class,
+[704.28:710.28] just like a register with a single writer, there is one specific process which is writing something,
+[710.28:717.8] okay. If a process delivers a message M, then either M is file or M was broadcast by the source,
+[717.8:725.16] okay. In classical integrity we usually say M has to be broadcast by the source. Here we say
+[725.16:732.4399999999999] or it is fine, which is not broadcast by the source. If the sender is correct and the sender
+[732.44:739.6400000000001] actually broadcasts a message M, then the source itself delivers M. Of course what we typically want
+[739.6400000000001:746.9200000000001] is not only the source to deliver M, but every correct process, okay. But we are going to find
+[746.9200000000001:752.9200000000001] this constraint that we want every process to deliver M in the following property. The following
+[752.9200000000001:759.0] property says for any message M, if a correct or any process depending whether we want uniform
+[759.0:765.24] agreement or not, delivers M, then every correct process delivers M. If you combine agreement
+[765.24:771.8] with the fact that the source has delivered M, then this means that validity implies every correct
+[771.8:778.76] process delivers M, okay. Termination says every correct process eventually delivers exactly one
+[778.76:785.24] message. So there is something here important. The act that the TRB is defined for one source
+[785.24:791.72] and one message, okay. So it's like we have a type, termination-related broadcast, when you create
+[791.72:798.84] an instance of that type, you define a source. And furthermore, that source in the context of this
+[799.5600000000001:806.76] very instance of the TRB is broadcasting only one message. When it wants to broadcast another message,
+[806.76:813.5600000000001] it's another instance, okay. Every instance is the problem of termination-related broadcast
+[813.56:822.76] was sometimes called the Byzantine generals by Leslie Lamport. Why was he using that terminology?
+[822.76:829.9599999999999] Because he was illustrating some attack in Byzantium in the Old Ottoman Empire.
+[831.64:838.4399999999999] Byzantis which is today Istanbul, there was some fight. And one general was basically trying to
+[838.44:846.36] send some information to a bench of, called them colonels or mutinants or whatever. And the goal
+[846.36:853.5600000000001] was to guarantee that all of them get the information to attack or not attack. Five means they
+[853.5600000000001:860.7600000000001] don't attack. Getting attack means they should all attack the enemy. But there shouldn't be the
+[860.7600000000001:865.5600000000001] situation where some of them get fired and some of them get N and you shouldn't have the situation
+[865.56:871.0] where they wait forever because then they will start. So that was the the origin of this
+[871.8:879.4] terminology Byzantine generals. However, people have been using a termination-related broadcast
+[879.4:885.64] to show somehow the link with the reliable broadcast problem. Okay, now we are going to
+[886.1199999999999:892.76] implement this primitive. And it turns out that the former, the first papers on terminating
+[892.76:897.96] on the reliable broadcast Byzantine generals were extremely complicated to understand. And again,
+[897.96:903.8] they were extremely complicated to understand because we didn't realize the importance of consensus
+[903.8:909.48] as an abstraction in message passing systems. And when we understand it's important, now as we
+[909.48:914.4399999999999] are going to see terminating a reliable broadcast becomes easy because we can build it on top of a
+[914.4399999999999:921.3199999999999] consensus box or abstraction, which we have seen how to implement last week. So we have two
+[921.32:930.2] events, TRB broadcast M and TRB deliver M from the source P. So this is exactly like a reliable
+[930.2:934.6] broadcast and we have these properties that we need to satisfy, which I just defined.
+[936.5200000000001:941.5600000000001] What are we going to use? We are going to use a best effort broadcast. We are going to use a
+[941.5600000000001:947.8000000000001] perfect fellow detector. Okay, and we are going to use consensus. So here you could tell me yes,
+[947.8:953.16] but consensus itself could use a perfect fellow detector. Sure, but we are going to use consensus
+[953.16:960.1999999999999] as a box inside that box. We that box we could implement it with a perfect fellow detector or
+[960.1999999999999:965.8] with an eventually perfect fellow detector. And besides that, we are also going to use as an
+[965.8:973.0799999999999] additional mechanism a perfect fellow detector. And you will see that it is important that maybe
+[973.08:978.76] we have a perfect fellow detector, but still we could have implemented consensus with an
+[978.76:985.0] eventually perfect fellow detector. I will explain that later. But for now, just there with me,
+[985.0:989.72] we have three abstractions, best effort broadcast, perfect fellow detector and consensus.
+[990.36:994.2] When we initialize the system, we initialize two variables, prop,
+[994.2:1003.48] bottom and correct, which is the entire set of processes. Okay, so the source, when it wants to
+[1003.48:1009.1600000000001] broadcast a message M, it is going to broadcast exactly one message M in the context of the execution
+[1009.1600000000001:1014.84] of an algorithm, for instance, it uses best effort broadcast and broadcast message M.
+[1014.84:1024.52] Okay, when a process gets notified of a crash of a source, in fact, processes do not really
+[1024.52:1029.32] care about the crash of each other, but they do care about the crash of the source.
+[1030.1200000000001:1036.1200000000001] So when a process PI gets notified by the fellow detector about the crash of the source,
+[1037.24:1044.2] and this process did not really start, did not deliver any message, or did not do anything yet,
+[1044.2:1053.56] which means prop equals bottom, it puts prop to fine. What does that mean? It means for me,
+[1053.56:1061.8] as a process who got notified of the crash of the source, it means it seems to me that I'm going
+[1061.8:1069.0800000000002] to deliver fine, because I didn't get anything from the source. I simply got a notification from
+[1069.08:1075.6399999999999] fail of the detector that the source has failed, but I'm not delivering fine. I'm simply putting
+[1075.6399999999999:1082.52] a sign into prop 5. Why is that? Because we need to guarantee agreement, which is either all
+[1082.52:1091.56] delivered 5 or some of us delivered 5. The source, remember, the source has broadcast a message M,
+[1091.56:1097.8799999999999] so it could be that, even if it fails, some processes do actually by the best effort broadcast
+[1097.88:1104.68] deliver M. They do the following. If prop equals bottom, which means they did not get any message,
+[1104.68:1112.92] and they did not suspect the failure of source, they put prop to M. So let's see here. Prop
+[1112.92:1120.2] initially is bottom. The source broadcast a message M. There are two options. Either a process
+[1121.0:1126.92] suspects the failure of source before delivering this message of the source, in this case, it put
+[1126.92:1135.24] prop to 5. Or a process first delivers M from the source. If the source doesn't fail, obviously,
+[1135.24:1140.3600000000001] this case is not going to happen, because we have a perfect failure detector. You are not going to
+[1140.3600000000001:1147.24] falsely detect the source, but you put prop to M. Okay, so what is this prop? This prop is
+[1148.04:1154.04] what every process is going to propose to consensus. Remember what we did two weeks ago? We used
+[1154.04:1160.04] consensus in the context of total order broadcast. We were proposing sets of messages. Here we are
+[1160.04:1168.12] not processing, proposing sets of messages. We are proposing singletons either M or bottom. Of
+[1168.12:1176.92] course, we do that if prop is different than bottom, which means that I either got a message from
+[1176.92:1182.2] the source or I suspected the source. When we propose something to consensus, assuming, of course,
+[1182.2:1190.04] that consensus is live, consensus is going to return a value, a decision. The decision here is what
+[1190.04:1196.76] I'm going to deliver. The decision is going to be the same for everyone, for every process. So,
+[1196.76:1203.8] either it is going to be M or it is going to be fine. So notice something important. If the source
+[1203.8:1210.6000000000001] is correct, nobody is going to detect the crash of the source because we have a perfect failure
+[1210.6:1216.28] to detect it. So nobody is going to propose to file. Everybody is going to call to invoke
+[1216.28:1221.9599999999998] consensus with prop. So nobody is going to deliver fine, which is exactly what
+[1224.52:1231.8799999999999] this prop is. If the source S is correct and it broadcasts a message M, then the source
+[1231.8799999999999:1237.32] event to delivers M by the agreement property. This means every correct process is going to deliver.
+[1237.32:1244.36] So what we are saying is that the only case where a process can deliver fine is if the source is
+[1244.36:1251.96] not correct. And this is what we guarantee with the consensus. You cannot decide a value that
+[1251.96:1257.3999999999999] was not proposed. The only situation where you decide fine is if somebody proposed fine.
+[1257.3999999999999:1262.6] For somebody to propose fine, you have to have detected the crash of a process.
+[1262.6:1273.9599999999998] In the rest of the cases, you can decide M. Something important here also. It could be that
+[1273.9599999999998:1280.28] some processes detected the failure of the source and other processes did not detect the
+[1280.28:1286.04] failure of the source. They only detected after delivering the message. So if the source fails,
+[1286.04:1294.44] maybe P1 gets the message, best effort delivered the message. And later on,
+[1295.0:1300.68] detected the failure. But this means that that process is going to propose N. So some processes
+[1300.68:1305.6399999999999] are going to propose N. Some processes are going to propose fine. And this is exactly why we use
+[1305.6399999999999:1312.36] consensus. Because in case a process of the source fails, you can have a pre-element.
+[1312.36:1318.9199999999998] And we solve this agreement, this disagreement to consensus in that case. And this is important.
+[1319.4799999999998:1326.6] The consensus can return either M or fine. If it returns M, it's okay. Every all correct processes
+[1326.6:1331.8] are going to deliver M. Remember that even if the source fails, it is possible to deliver the message.
+[1333.1599999999999:1337.8] In the second case, all processes are going to deliver fine. And this is still okay because
+[1337.8:1345.0] the only way you deliver fine is because the source has failed. Let's look at what let's illustrate
+[1345.0:1353.0] what are just said through examples. So here I have P2 broadcasting a message N and then failing.
+[1353.0:1360.68] Okay, so P1 fails. In this particular case, this guy here did not best effort deliver N.
+[1360.68:1367.16] But it has a perfect failure detector, which means it will get notified of the crash of P2.
+[1367.16:1374.92] And then it proposes fine. This syntax here simply means this guy proposes fine. And in that case,
+[1374.92:1380.68] it could get fine or it could get M. It could get M because this guy here got the message M.
+[1380.68:1386.92] Okay, so it proposed M and it could get fine or M. Of course, they will get exactly the same.
+[1386.92:1392.44] Either they get fine or they get M. But they will get exactly the same thing. Okay, so this is
+[1393.24:1400.76] an execution where the source is P2 and the processes P1 and P3 agree to deliver either fine
+[1400.76:1411.4] or M. In both cases, this delivery is correct. Okay, any question at this point?
+[1411.4:1420.52] If not, you can ask me later and I will take the time to answer through the chat.
+[1421.8000000000002:1427.64] So, terminating a reliable broadcast uses the perfect failure detector. It uses the perfect
+[1427.64:1435.72] failure detector directly because if somebody fails, we need to detect the failure. But not
+[1435.72:1443.08] is that we also use consensus. So we could use the failure detector P in the consensus.
+[1443.08:1450.04] But if there is something important to understand, what happens if the failure detector is not perfect,
+[1450.04:1454.68] it is eventually perfect. Okay, if the failure detector is eventually perfect, we know that we have
+[1454.68:1461.64] a consensus algorithm that is going to be correct. What could happen if the failure detector is
+[1461.64:1466.92] eventually perfect is that we falsely, we wrongly detect the failure, which means that maybe the
+[1466.92:1473.48] source did not fail. It is simply slow. And in that case, we detect the failure of the source.
+[1473.48:1479.88] We will wrongly detect. What could happen is that we are going to invoke, some of us are going
+[1479.88:1486.76] to invoke consensus with phi as a proposal, even if the source did not fail. But if we use
+[1486.76:1493.24] while implementing consensus, an eventually perfect failure detector, and we do have an algorithm
+[1493.24:1500.76] for that, still the consensus decision is going to be the same for everyone. Which means that
+[1501.48:1506.92] everybody is going to deliver M or phi. Of course, we should not have delivered phi, but it's not
+[1506.92:1515.4] a big deal in the sense that we don't disagree. Whereas if I use a consensus algorithm that relies
+[1515.4:1520.68] on a perfect failure detector, like the second algorithm I presented last week. The second algorithm
+[1520.68:1526.0400000000002] I presented last week is a uniform consensus algorithm that relies on a perfect fail detector.
+[1526.0400000000002:1530.76] But if the failure detector turns out not to be perfect, it's only eventually perfect,
+[1531.64:1537.4] then we might have the situation where if the failure detector is indeed not perfect,
+[1537.4:1544.76] of disagreement. So this is important. It means that even if I'm not completely sure my failure
+[1544.76:1550.52] detector is perfect, I simply hope. So I can implement consensus using an eventually perfect
+[1550.52:1557.72] fail detector. And then the external parts, the failure detector used in TRB, it is not perfect.
+[1558.84:1566.36] In that case, the risk is less important than if I used an algorithm that used a perfect
+[1566.36:1582.6799999999998] fail detector. I hope this distinction is clear. So there is a question in the algorithm.
+[1584.36:1594.12] Why do we set proposal to N when we deliver a message? Proposal was button. If I deliver a message
+[1594.12:1599.56] from the source, I put prop to N because prop is what I'm going to propose to consensus.
+[1600.6:1609.32] So prop is initialized to bottom. If I get a message N, it means I'm ready to invoke consensus.
+[1609.32:1618.6799999999998] So I put prop to N. But it could also, I could also put prop to phi. If I detect the failure of the
+[1618.68:1626.68] source, so prop starts from bottom and goes either to N or to phi, depending on whether I get first
+[1626.68:1632.3600000000001] a message and then a failure of suspicion or whether I get first a failure of suspicion and maybe
+[1632.3600000000001:1641.3200000000002] later a message. Okay. So terminating a library broadcast uses the perfect failure detector.
+[1641.32:1648.6799999999998] P is in that sense. If I have a system where I have a perfect fail of the detector, this means
+[1648.6799999999998:1654.84] I can solve the problem. Okay. I can guarantee all the properties. With the subtleties I show you,
+[1654.84:1660.12] it is better in the consensus algorithm to not use P but eventually P. But forget about that
+[1660.12:1664.84] that precision. So if I have a perfect fail of the detector, I can solve terminating a library
+[1664.84:1672.76] broadcast. Now you can ask is P actually necessary? Could we solve terminating a library broadcast?
+[1674.36:1681.3999999999999] It's self just like we did it for consensus. Could we do it using some other algorithm using
+[1681.3999999999999:1686.12] an eventually perfect fail of the detector? Okay. So consensus we have a perfect fail of the
+[1686.12:1692.6] detector based solution and an eventually perfect based solution assuming also majority. Could we have
+[1692.6:1698.6] a terminating a library broadcast algorithm using an eventually perfect fail of the detector and
+[1698.6:1704.9199999999998] maybe a majority of something like that. So this is an important question that one could ask and one
+[1704.9199999999998:1713.0] should ask. In other words, is there an algorithm that implements terminating a library broadcast
+[1713.0:1718.84] with a failure detector that is strictly weaker than P? Either is eventually P the eventually
+[1718.84:1725.32] perfect or maybe something else. If that is the case, this means that P is not necessary.
+[1725.32:1732.12] Okay. It turns out that this is impossible. That the perfect fail of the detector and here you
+[1732.12:1738.04] want me to focus, the perfect fail exactly is actually necessary to implement terminating a library
+[1738.04:1747.48] broadcast. There is no algorithm using an eventually P or anything. How do we prove that? We prove that
+[1747.48:1753.8] by showing that there is an algorithm. Now I need you to focus that there is an algorithm that
+[1753.8:1759.72] uses terminating a library broadcast to implement a perfect fail of the detector. That might seem
+[1759.72:1765.16] weird. What am I saying here? I'm saying that if you remember that I told you that total order
+[1765.16:1770.6] broadcasts and consensus are equivalent. If I have consensus, I can implement total order
+[1770.6:1775.56] broadcasts. If I have total order broadcasts, I can implement consensus to equivalent abstractions.
+[1775.56:1783.8799999999999] You can also view TRB and the perfect fail of the detector P as two abstractions. We already
+[1783.8799999999999:1789.72] know that if I have P, I can implement terminating a library broadcast. Because I can implement
+[1789.72:1794.36] consensus, I always assume I have a line of the channels. I can implement consensus and I can
+[1794.36:1799.1599999999999] implement terminating a library broadcast. What I'm claiming here is that if you have terminating
+[1799.16:1805.8000000000002] a library broadcast, you can also implement a perfect fail of the detector. If you have terminating
+[1805.8000000000002:1811.64] a library broadcast, you can also implement a perfect fail of the detector. Just like if you have
+[1811.64:1817.72] total order broadcasts, you can also implement consensus. So there I could run out. How do we do that?
+[1817.72:1823.5600000000002] Now we need to think a little bit. What is a perfect fail of the detector? A perfect fail of
+[1823.56:1830.76] the detector is also an abstraction that has simply one indication. This indication is if a process
+[1831.48:1839.6399999999999] PI fails or other processes should be informed that PI has failed. Some special event crash of PI.
+[1840.28:1848.36] We need to guarantee that if PJ gets that indication that PI has failed, then PI should have
+[1848.36:1854.76] indeed failed. How do we implement this indication? How do we implement the perfect fail of the
+[1854.76:1861.08] detector? Assuming that we have terminating a library broadcast. This is what we are going to
+[1861.08:1865.08] do here. We're going to give an algorithm that implements a perfect fail of the detector,
+[1865.6399999999999:1871.4799999999998] using terminating a library broadcast. When we say that we have an abstraction,
+[1871.48:1878.2] we have an algorithm that implements one abstraction from the other. We assume that these two
+[1878.2:1883.72] abstractions are in the sense of programming languages, types. We can build as many instances as
+[1883.72:1888.6] what we want. This is what we're going to do. We're going to assume that we have terminating
+[1888.6:1895.48] a library broadcast and we can create as many as we want. In particular, we can have every process
+[1895.48:1904.04] PI, the source of an infinite number of instances of TRB. What I'm saying is that we have TRB
+[1904.04:1909.48] with all processes being potentially the source, which means at least n of them, plus for each
+[1909.48:1919.08] process, we can have as many as we want. Given those TRBs, every process PI will create instances
+[1919.08:1926.6] of TRB broadcasts where it is the source and it keeps TRB broadcasts in messages, M-I,
+[1927.24:1934.28] one, M-I2, etc. Every process is doing this thing, but let's focus on PI for now.
+[1935.72:1942.04] The other processes, they know that PI is creating a list of TRB broadcasts messages,
+[1942.04:1947.56] M-I1, M-I2, so they know that they're going to deliver those messages. They're going to
+[1947.56:1957.72] deliver those messages forever, except if PI fails, if PI fails, they are not processed PKs,
+[1957.72:1968.6] not going to deliver M-I200, but in that case, it will deliver PI. Because by the definition
+[1968.6:1973.8] of terminating a library broadcast, a process who is expecting messages from PI will not wait
+[1973.8:1980.12] forever. So what is the algorithm that we are going to do? Very simple. Every process uses TRB,
+[1980.76:1990.76] every process keeps on TRB broadcasts in messages, M-I1, M-I2, so for example, P1 broadcasts M-11, M-12,
+[1990.76:1998.36] M-1, T-E, etc., P2 broadcasts M-21, M-22, etc. And each of them is also expecting messages.
+[1998.36:2009.8799999999999] Whenever a process does not deliver message M-I-N from a process, but instead delivers
+[2009.8799999999999:2020.76] PI from process PI, that process, let's call it PK Suspects PI. PK Suspects PI. By the properties
+[2020.76:2026.9199999999998] of terminating a library broadcast, we know that this process PK is only going to deliver PI,
+[2026.92:2038.52] if PI has failed. Okay? Strong accuracy. Furthermore, we know that if PI fails, PK is going to deliver
+[2039.48:2047.4] PI. So we have built the abstraction of a perfect error detector because whenever PK delivers
+[2047.4:2055.88] PI, it is exactly like if the fail of a detector does it, PI failed. Okay? It might be that some
+[2055.88:2063.48] processes deliver PI before other processes deliver them, right? Because what I'm not saying
+[2063.48:2071.08] anything about time, but if PI fails or other processes with delivery PI, furthermore, any process
+[2071.08:2080.12] that delivers PI knows for sure that PI has failed. What did we do? We built a perfect error detector
+[2080.12:2086.8399999999997] using terminating a library broadcast. Okay? In other words, we have shown that unlike
+[2086.8399999999997:2093.08] consensus for which we have shown that you can build consensus using an eventually perfect
+[2093.08:2100.04] fail of a detector, here we have shown that we could not have implemented TRB using an eventually
+[2100.04:2105.48] perfect fail of a detector. Why? Because if we could have done that, this means that I could with
+[2105.48:2110.2] an eventually perfect fail of a detector implement a perfect fail of a detector, which we know is
+[2110.2:2117.64] impossible. Okay? So in that sense, terminating a library broadcast is even harder than consensus.
+[2119.0:2123.8] Consensus is harder than event, than causal broadcasts and the term in uniform broadcasts,
+[2123.8:2129.88] etc. Because we need at least something like an eventually perfect fail of a detector. We can
+[2129.88:2135.48] do it with a perfect, but we don't need it. Terminating a library broadcast is stronger than consensus
+[2135.48:2140.36] because we cannot do it with eventually perfect fail of a detector. We need a perfect fail of a
+[2140.36:2148.92] detector. Okay? So I hope I didn't lose you and you are understanding what I'm talking about. So
+[2148.92:2154.76] I gave you the specification of what is called sometimes Byzantine Generals, except that here
+[2154.76:2161.0800000000004] we are not talking about the Byzantine case. Byzantine usually means processes can not only fail,
+[2161.0800000000004:2165.6400000000003] but they can do whatever they want. We're going to come back to that later in these lectures.
+[2165.6400000000003:2172.84] And I have given you the specification. I also have given you an algorithm that is rather simple
+[2172.84:2182.6000000000004] because it uses underlying a consensus box plus a perfect fail of a detector. And I have also
+[2182.6:2188.52] shown you that you cannot build terminating a library broadcast without a perfect fail of a detector.
+[2193.88:2202.92] Somebody said this is static, but does terminating a library broadcast guarantee that if a process fails,
+[2203.72:2212.04] other processes must deliver fine. Yes, good question. So static asked the question, but in this
+[2212.04:2221.32] algorithm I'm presenting here. If a process PI broadcast the message M and fails, indeed processes
+[2221.32:2227.24] could deliver M. Okay? Indeed. And in that case, they are not going to deliver fine, but notice what
+[2227.24:2232.44] we are doing. We are not asking the process to only broadcast one message. We are asking the
+[2232.44:2239.32] process to broadcast an infinite number of messages. So when it fails, it will stop broadcasting.
+[2239.32:2246.1200000000003] Okay? It's a little bit like if it just is about to broadcast and fails to assume the process
+[2246.1200000000003:2254.1200000000003] broadcast 100 message PI and then fails. It is it doesn't broadcast message 101, but the other
+[2254.1200000000003:2260.6000000000004] processes are expecting message 101. In that case, there is no way they're going to deliver
+[2261.1600000000003:2268.6800000000003] message 100 and one because PI did not actually broadcast that message. So they are going to
+[2268.68:2274.3599999999997] deliver fine. Okay? So we do have completeness. We do guarantee that if a process fails,
+[2275.56:2281.8799999999997] the other processes will eventually deliver some 5 of 2 or 3 or whatever.
+[2281.88:2300.12] Okay? So now I need to do something I didn't do before, which is
+[2300.12:2313.3199999999997] to change the slides because I want to move to atomic broadcasts.
+[2330.7599999999998:2332.8399999999997] So
+[2332.84:2344.92] It is a very similar palette.
+[2344.92:2353.32] We see what he was doing here but I am sorry for the mess.
+[2353.32:2355.32] I will show you how I was doing.
+[2355.32:2379.32] I will show you how I was doing.
+[2379.32:2393.32] I will show you how I was doing.
+[2393.32:2411.32] I will show you how I was doing.
+[2411.32:2433.32] I hope you can see the slides of non-broken atomic comets.
+[2433.32:2435.32] I assume you can.
+[2435.32:2439.32] If you cannot do something, raise your hand or whatever.
+[2439.32:2451.32] The termination of a live broadcast is a version of a live broadcast.
+[2451.32:2459.32] We are going to see something else, which is another abstraction that has been invented in a completely different context.
+[2459.32:2467.32] We will see it is quite close to termination of live broadcast.
+[2467.32:2469.32] This is an agreement problem.
+[2469.32:2475.32] It comes from databases, distributed databases.
+[2475.32:2479.32] I will tell you the link with databases in a minute.
+[2479.32:2499.32] I will show you the link with databases.
+[2499.32:2519.32] I will show you the link with databases.
+[2519.32:2529.32] The action comes from databases.
+[2529.32:2539.32] I have a bank transfer.
+[2539.32:2549.32] I have an atomic program in the sense that I don't want this program to stop in the middle.
+[2549.32:2559.32] I don't want to remove money from my account and then not deposit anything in my daughter's account.
+[2559.32:2569.32] I don't want to remove money from my daughter's account.
+[2569.32:2579.32] I want to withdraw money from my account.
+[2579.32:2589.32] I want to withdraw money from my daughter's account.
+[2589.32:2599.32] I want to withdraw money from my daughter's account.
+[2599.32:2609.32] If anything bad happens, I don't want any process involved.
+[2609.32:2615.32] Neither that one or the one controlling the account of my daughter.
+[2615.32:2619.32] None of them should be touched.
+[2619.32:2623.32] Everything should go back or should not have been touched at all.
+[2623.32:2633.32] My daughter is Pierre and Paul.
+[2633.32:2641.32] We give him money and we debit from Paul.
+[2641.32:2661.32] We give him money from his daughter's account.
+[2661.32:2671.32] The properties of transactions as defined by Jim Gray, we are talking about papers in 76, which is really old.
+[2671.32:2681.32] I believe this was the way the properties were defined.
+[2681.32:2691.32] The transaction is consistent and the transaction is transformed into another consistent state.
+[2691.32:2701.32] The effect of a transaction that commits a permanent.
+[2701.32:2711.32] The amount of money that you have to withdraw money to have the original amount of money that value you withdraw.
+[2711.32:2721.32] These properties have been defined and those of you who have database classes know about these properties.
+[2721.32:2735.32] The system has to guarantee automatic isolation and durability, the three properties I mentioned and the programmer who should withdraw 100 and deposit 100.
+[2735.32:2741.32] The system is not going to check that you didn't withdraw less than 100 or more than 100.
+[2741.32:2751.32] This is the job of the programmer.
+[2751.32:2761.32] You don't have one server.
+[2761.32:2771.32] The problem is that you don't have to withdraw money because of high availability and for tolerance you distribute your information.
+[2771.32:2779.32] The fact that we want a transaction, no matter how long it is, we don't care.
+[2779.32:2797.32] In one of two states, abort and commit.
+[2797.32:2811.32] We call it atomic commit problem.
+[2811.32:2821.32] This is not exactly like consensus as you are going to see in a minute.
+[2821.32:2831.32] It took some time.
+[2831.32:2851.32] The first specific case in Harvard came up with the first precise specification.
+[2851.32:2861.32] What is that initial value of the processes?
+[2861.32:2871.32] Let's think a little bit about that.
+[2871.32:2881.32] The decision means I commit.
+[2881.32:2889.32] The document says I commit meaning I promise that the operation that has been executed on me as a server will withdraw 100 and deposit 1000 is going to be durable.
+[2889.32:2893.32] The proposal means the ability of the server to commit or abort.
+[2893.32:2903.32] Let's go back to how the transaction works.
+[2903.32:2915.32] This is the client doing some shopping to Amazon or my smartphone trying to withdraw and deposit money.
+[2915.32:2927.32] At the end I want to terminate my transaction.
+[2927.32:2951.32] This guy has an opinion whether it can commit to a transaction or not.
+[2951.32:2961.32] This guy has failed.
+[2961.32:2981.32] I don't have any problem with the money.
+[2981.32:2991.32] The goal is to guarantee that they have to decide on the same thing.
+[2991.32:3017.32] If you commit to a transaction or not, the number of transactions that commit for a second is a bias to what is committed.
+[3017.32:3027.32] The process has a little right.
+[3027.32:3047.32] If you want to do a transaction, you can have processes vote 1 and decide 0.
+[3047.32:3057.32] This guy has a license to withdraw 1000 and then comes back to them and says, are you ready to commit?
+[3057.32:3067.32] No, I cannot commit.
+[3067.32:3077.32] I think it's very simple and intuitive.
+[3077.32:3097.32] I came up with the specification that Vasos had come up with when he was a PhD student at Harvard.
+[3097.32:3103.0800000000004] So the non-blocking I will come back to the non-blocking aspect later.
+[3103.0800000000004:3107.36] Atomic commit problem says no two processes should be five differently.
+[3107.36:3109.36] This is the atomicity of transactions.
+[3109.36:3111.36] Either we all commit or we all abort.
+[3111.36:3115.2000000000003] This is exactly like consensus.
+[3115.2000000000003:3118.1600000000003] Termination says every correct process eventually decides.
+[3118.1600000000003:3121.84] This is the non-blocking parts and I will come back to it.
+[3121.84:3127.28] Now in consensus we had only one property called validity and validity says the
+[3127.28:3130.44] value decided must have been proposed.
+[3130.44:3131.44] Period.
+[3131.44:3132.44] We don't care.
+[3132.44:3134.76] We can be proposed zero one.
+[3134.76:3135.76] We decide zero one.
+[3135.76:3136.76] We don't really care.
+[3136.76:3139.32] Here we have two properties.
+[3139.32:3145.96] One of them talks about the decision one and the other one talks about the decision zero.
+[3145.96:3151.7200000000003] Commit validity says one can only be decided if all processes propose one.
+[3151.7200000000003:3156.6800000000003] So I can only decide to commit if everybody was able to commit.
+[3156.68:3159.3599999999997] It has the capability to commit.
+[3159.3599999999997:3167.56] A board validity says zero can only be decided if some process crashes or vote zero.
+[3167.56:3174.3199999999997] If you remove this fourth property you can ask yourself maybe we can just focus on the
+[3174.3199999999997:3178.44] problem with the three properties agreement termination commit validity.
+[3178.44:3179.96] Maybe we should not worry.
+[3179.96:3180.96] We should not care.
+[3180.96:3184.2] We should even remove the fourth property.
+[3184.2:3190.3599999999997] It turns out that if you remove the fourth property the problem becomes trivial and interesting.
+[3190.3599999999997:3191.3599999999997] Why?
+[3191.3599999999997:3195.3199999999997] Because you could have an algorithm that aborts all transactions.
+[3195.3199999999997:3200.68] An algorithm that aborts all transactions guarantees agreement.
+[3200.68:3206.8399999999997] It guarantees termination and guarantees commit validity because it will never decide one.
+[3206.8399999999997:3210.08] Such an algorithm will not be very interesting.
+[3210.08:3214.6] It will abort everything.
+[3214.6:3219.3199999999997] It will not solve the global database management system.
+[3219.3199999999997:3223.48] This abort validity is sometimes we call it an non-triviality property.
+[3223.48:3229.64] And usually it is important to realize that in most good specifications you have something
+[3229.64:3231.92] that prevents trivial solutions.
+[3231.92:3235.6] So here we say we are not allowed to abort all transactions.
+[3235.6:3243.96] We can abort a transaction only if somebody proposes zero or somebody questions.
+[3243.96:3251.6] So non-blocking atomic commit processes proposes one or zero in this case unlike consensus
+[3251.6:3253.36] they cannot decide one or zero.
+[3253.36:3257.8399999999997] They have to decide zero.
+[3257.8399999999997:3261.68] Sometimes they can decide zero even if all of them propose one.
+[3261.68:3264.8399999999997] This is a situation where one of them fails.
+[3264.84:3270.1600000000003] So they could decide zero even if the all propose one.
+[3270.1600000000003:3272.2400000000002] Here I'm using that notation zero.
+[3272.2400000000002:3278.56] One means both cases are okay as long as of course they decide the same thing.
+[3278.56:3286.36] So traditionally in the old times until recently actually must database systems use the following
+[3286.36:3287.36] protocol.
+[3287.36:3288.7200000000003] It's called two-phase commits.
+[3288.72:3295.72] Until now you can see many systems like many versions of Oracle and database systems which
+[3295.72:3299.04] implement the following protocol.
+[3299.04:3303.64] At the end of the transaction the initiator of the transaction which is me for example
+[3303.64:3308.8799999999997] if I'm doing some withdrawing money and deposit money I send a message to all this is at
+[3308.8799999999997:3309.8799999999997] the end of the transaction.
+[3309.8799999999997:3313.4399999999996] I say what is your vote?
+[3313.4399999999996:3314.68] Are you willing to commit?
+[3314.68:3317.7999999999997] As far as I'm concerned I propose one.
+[3317.8:3323.96] If everybody proposes one I decide one.
+[3323.96:3327.2400000000002] If somebody proposes zero I decide zero.
+[3327.2400000000002:3332.8] So I propose one and somebody says I cannot either fail or I propose zero then I decide
+[3332.8:3336.04] zero.
+[3336.04:3342.8] So this is roughly speaking the protocol that is used in must distributed database systems.
+[3342.8:3351.0800000000004] The initiator sends a message, collects the vote and if all votes if all proposals are
+[3351.0800000000004:3352.88] one decide one.
+[3352.88:3359.52] If any vote is zero or one process fails then I decide zero.
+[3359.52:3362.48] Okay very easy.
+[3362.48:3366.36] Does this protocol guarantee all these properties?
+[3366.36:3369.6000000000004] It seems to it guarantees that no two processes decide differently.
+[3369.6:3374.48] It's always the initiator who decides.
+[3374.48:3376.0] Does it guarantee commit validity?
+[3376.0:3378.2] Sure because I only decide one.
+[3378.2:3382.16] I'm the initiator if everybody proposes one.
+[3382.16:3383.16] About validity?
+[3383.16:3390.44] Sure because I only decide zero if some process questions otherwise I will never as an initiator.
+[3390.44:3392.2] I will never propose zero.
+[3392.2:3394.96] So I only propose zero if somebody crashes.
+[3394.96:3397.88] Is this algorithm correct?
+[3397.88:3400.88] It turns out that it is not correct.
+[3400.88:3403.4] It is blocking.
+[3403.4:3405.88] That's why we insist on this non-blocking property.
+[3405.88:3410.44] This non-blocking property says every correct process eventually decides.
+[3410.44:3416.12] And in most cases people ignore this because they said okay if this happens it's okay
+[3416.12:3417.88] we will boot the system etc.
+[3417.88:3424.4] But again with modern distributed systems with thousands of machines the probability of
+[3424.4:3429.6800000000003] failures increase we don't want processes to block because somebody fails and therefore
+[3429.6800000000003:3432.48] people revisited this protocol.
+[3432.48:3436.7200000000003] So let's see the problematic case.
+[3436.7200000000003:3440.8] Here processes propose all they all propose one.
+[3440.8:3445.7200000000003] P1 proposes one ask everybody are you willing to commit or abort?
+[3445.7200000000003:3451.52] Everybody tells P1 I vote one but P1 crashes.
+[3451.52:3455.52] What are they going to do?
+[3455.52:3456.52] Why are they blocked?
+[3456.52:3459.08] Because they don't know what P1 has decided.
+[3459.08:3463.56] They cannot deduce that P1 has decided one.
+[3463.56:3464.56] They don't know.
+[3464.56:3471.84] Maybe P1 itself decided zero for some reason because or did not decide at all.
+[3471.84:3474.4] The process is here remain blocked forever.
+[3474.4:3479.2] It's like saying.
+[3479.2:3483.2799999999997] The atomic problem is like think of a wedding ceremony.
+[3483.2799999999997:3488.56] A wedding ceremony on the internet.
+[3488.56:3491.9199999999996] We want to organize the wedding ceremony on the internet.
+[3491.9199999999996:3498.8799999999997] We cannot in the recent time people used to go to Las Vegas to marry very rapidly and
+[3498.8799999999997:3503.3199999999997] now they cannot go to Las Vegas with the COVID so they marry on the internet.
+[3503.3199999999997:3506.8799999999997] So they have some algorithm that guarantee these properties.
+[3506.88:3512.2000000000003] We need both of us if we are on two maybe we can be more we decide the same.
+[3512.2000000000003:3518.92] Either both decide that we are getting to we are married or both of us know that we are
+[3518.92:3519.92] not married.
+[3519.92:3521.4] We cannot disagree.
+[3521.4:3526.52] We should end the protocol by knowing whether we are married or not.
+[3526.52:3531.2400000000002] We can only decide to marry if both of us propose one.
+[3531.2400000000002:3535.96] At least this is how things work nicely when they work nicely.
+[3535.96:3540.48] If zero can only be decided if some process crashes or vote zero.
+[3540.48:3546.12] When the police, the Imam, the Rabbi, what have you comes to the church or the synagogue
+[3546.12:3549.44] or whatever the plan is usually to decide one.
+[3549.44:3555.44] Of course it could be side zero but this has to be the exceptional case where somebody fails
+[3555.44:3556.44] or vote zero.
+[3556.44:3562.52] So if we run to face commit this algorithm on the internet what I am telling you here
+[3562.52:3568.36] is that they could be a case where I am organizing this wedding and the two people are paying
+[3568.36:3570.48] me on the internet to get the marriage.
+[3570.48:3577.2] So I tell them, hey what's on your mind and they tell me something and I also need to
+[3577.2:3582.24] check whether my mind I don't tell them my vote or I didn't tell them my decision yet
+[3582.24:3583.68] because I still don't know.
+[3583.68:3590.2] And before telling them I declare you married I crash.
+[3590.2:3592.6] Not attack or my machine crashes.
+[3592.6:3594.68] In that case they are stuck.
+[3594.68:3598.2799999999997] They don't know if they don't know that they are married because if they knew they could
+[3598.2799999999997:3600.52] just go on and start a life.
+[3600.52:3605.3599999999997] But if they are really strong religious people they didn't know what I told the God so they
+[3605.3599999999997:3607.68] cannot decide that they are married they have to wait.
+[3607.68:3610.0] How long are they going to wait until I recover?
+[3610.0:3611.52] That I might not recover.
+[3611.52:3615.2] So the two face commit is a blocking protocol.
+[3615.2:3621.04] It's blocking because it waits, there is what we call a window of vulnerability.
+[3621.04:3627.6] There is a situation where everybody is waiting for the initiator to recover.
+[3627.6:3633.3199999999997] Of course the example here involves two processes but you can have a transaction involving 100
+[3633.3199999999997:3637.8399999999997] processes and all of them in this situation will be waiting for P1.
+[3637.8399999999997:3643.04] So this is not a truly distributed protocol.
+[3643.04:3648.8] It's not a truly distributed protocol because we have only one process who is leading.
+[3648.8:3652.4] If that process fails we cannot do anything.
+[3652.4:3655.68] So we are putting too much burden on this process.
+[3655.68:3659.68] Of course it looks at distributed protocol but it is not.
+[3659.68:3663.96] It's like the PK blinders.
+[3663.96:3668.12] Without Tommy Shelby you don't have anything.
+[3668.12:3670.64] So the protocol is not really decentralized.
+[3670.64:3676.3199999999997] In Game of Thrones you can kill the current leader and then you have other leaders come and
+[3676.3199999999997:3680.7599999999998] then you go on for two or four episodes even a full series and then the leader fails again
+[3680.7599999999998:3682.68] and then we have a new king and it goes on.
+[3682.68:3684.2799999999997] That's with decentralized.
+[3684.2799999999997:3690.48] So here we would like a non-blocking decentralized atomic commit problem.
+[3690.48:3694.7599999999998] So this is what I'm going to present to you and it's going to look a little bit similar
+[3694.7599999999998:3699.92] to terminating a live broadcast although they were defined in completely different contexts.
+[3699.92:3706.0] Proposed and decided just like the consensus protocol but now the properties are slightly
+[3706.0:3707.0] different.
+[3707.0:3712.56] We seek to decide one but the decision of one is fragile because if somebody proposes
+[3712.56:3717.2000000000003] zero then everybody should decide zero.
+[3717.2000000000003:3722.08] Just like terminating a live broadcast we are going to use the best effort broadcast,
+[3722.08:3726.6] a perfect fellow detector and consensus who are uniform consensus.
+[3726.6:3731.64] So here we have a proposal which is not bottom each one you will see why it is one.
+[3731.64:3733.56] We have a variable delivered.
+[3733.56:3739.4] This is something we didn't have for terminating live broadcast and we have correct.
+[3739.4:3740.68] Okay.
+[3740.68:3744.4] When I detect the crash of a process I remove it from the set correct.
+[3744.4:3746.2799999999997] That's something we are using.
+[3746.2799999999997:3749.0] When I want to at the end of a transaction everyone.
+[3749.0:3752.0] Now I don't have any more one centralized initiator.
+[3752.0:3756.68] We all say what we want.
+[3756.68:3760.04] I propose V. I want to commit or I want to abort.
+[3760.04:3762.08] I vote zero or I vote one.
+[3762.08:3768.12] I best effort broadcast V which means I send my message to all.
+[3768.12:3773.96] Every process is expecting to receive the proposal, the votes from all others.
+[3773.96:3782.6] When the process delivers vote V from another process it puts the name of the process in
+[3782.6:3786.16] the variable delivered and multiplies.
+[3786.16:3790.16] Prop was 1 by the value V.
+[3790.16:3791.16] Why do we multiply?
+[3791.16:3796.0] Well the nice thing about multiplication is that as soon as one of the proposal is zero
+[3796.0:3799.04] this prop is going to stick to zero.
+[3799.04:3800.76] It's going to be 1.
+[3800.76:3802.56] It is initially 1.
+[3802.56:3803.92] It's going to remain 1.
+[3803.92:3808.56] If all the values I get are 1s.
+[3808.56:3809.56] Okay.
+[3809.56:3818.32] When all the processes in my set correct minus those from whom I got proposals is empty.
+[3818.32:3819.32] Okay.
+[3819.32:3821.64] This should be the sign of empty set.
+[3821.64:3822.64] I do the follow.
+[3822.64:3824.48] What do I do?
+[3824.48:3831.2799999999997] Did I get a message from all processes meaning is correct different than the is the correct
+[3831.28:3834.52] equals to the set of processes.
+[3834.52:3837.28] In that case I propose prop.
+[3837.28:3839.7200000000003] Otherwise I put prop to zero.
+[3839.7200000000003:3843.0] So there are two situations where I put prop to zero.
+[3843.0:3849.2400000000002] Either some process sent me an initial vote which was zero.
+[3849.2400000000002:3850.2400000000002] Okay.
+[3850.2400000000002:3855.0400000000004] Then I have put that process in this variable delivered and prop equals zero.
+[3855.0400000000004:3857.84] Or everything I got was once.
+[3857.84:3861.1600000000003] But I didn't get votes from all process.
+[3861.16:3866.2799999999997] One of them failed and the fact that some of them failed means correct is not the set
+[3866.2799999999997:3867.2799999999997] of processes.
+[3867.2799999999997:3869.96] In that case, prop equals zero.
+[3869.96:3876.2] So once either I delivered messages votes from all processes or I detected the failure
+[3876.2:3880.16] of some processes, then I proposed prop to consensus.
+[3880.16:3886.44] So processes are going to propose to consensus either once or zero, but not is something important.
+[3886.44:3896.7200000000003] The only case for a process to propose one if it delivered votes once from all others.
+[3896.7200000000003:3902.84] Because if any process votes zero, prop of any other process is going to be zero.
+[3902.84:3905.16] And then I decide two consensus.
+[3905.16:3909.8] Consensus is going to decide one of the value proposed.
+[3909.8:3913.2400000000002] If anyone votes zero, the decision is going to be zero.
+[3913.24:3919.3999999999996] It could be now it's this is important that some processes propose zero and other proposes
+[3919.3999999999996:3921.12] one.
+[3921.12:3922.12] How can that happen?
+[3922.12:3928.56] That could happen because assume some process all processes initially vote once and the
+[3928.56:3931.64] all broadcast value one.
+[3931.64:3935.9599999999996] All of them delivered that value one except one.
+[3935.9599999999996:3940.52] Because the one guy who sent the value failed.
+[3940.52:3945.0] It's message reaching all processes, but it didn't reach process pk.
+[3945.0:3949.0] This means that pk will propose zero and all others will propose one.
+[3949.0:3953.24] In that case, the decision could be either one or zero.
+[3953.24:3954.56] Both of them are fine.
+[3954.56:3957.96] It is okay to commit even if somebody failed.
+[3957.96:3958.96] Why?
+[3958.96:3964.6] Because that process who failed have already broadcast its proposal one meaning and willing
+[3964.6:3966.28] and ready to commit.
+[3966.28:3969.32] I have stored unstable storage information.
+[3969.32:3970.32] It's all safe.
+[3970.32:3976.48] Of course I failed, but if I recover, I will have on my disk all the information.
+[3976.48:3978.0] Let's see two example here.
+[3978.0:3980.92] I have three processes proposing one.
+[3980.92:3982.4] None of them failed.
+[3982.4:3987.6400000000003] All of them are going together votes one from all processes.
+[3987.6400000000003:3992.96] They're going to propose one to consensus and in this case consensus is going to necessarily
+[3992.96:3994.2000000000003] return one.
+[3994.2000000000003:3999.6000000000004] Because consensus returns some value proposed, all value proposed are ones I decide.
+[3999.6:4004.4] This is committee.
+[4004.4:4008.44] P1 proposes one, P2 proposes one, P3 proposes one.
+[4008.44:4009.52] They all propose one.
+[4009.52:4014.16] So in theory, we could decide one, but this guy fails.
+[4014.16:4015.56] Now the question you when did it fail?
+[4015.56:4019.72] It turns out that it failed before sending its votes to the other.
+[4019.72:4025.52] So both of them are going to propose zero and are going to abort.
+[4025.52:4031.32] The interesting case is if P1 has actually broadcast its message of voting one.
+[4031.32:4036.64] Again, we have to realize that when a process votes one, this is after the execution of
+[4036.64:4037.64] the transaction.
+[4037.64:4041.6] This means that P1 has cleared all possible problems.
+[4041.6:4043.72] It has stored unstable storage.
+[4043.72:4051.56] The transaction, it is ready when it recovers to look into its disk and say, oh, I was about
+[4051.56:4052.7599999999998] to commit a transaction.
+[4052.7599999999998:4054.92] When I recover, I commit that transaction.
+[4054.92:4058.32] So voting one means I could decide one.
+[4058.32:4064.2400000000002] Of course, the process P1 is not going to decide unilatin only one in three covers.
+[4064.2400000000002:4068.16] It's going to ask processes, hey, what happened with that transaction?
+[4068.16:4071.52] They will tell him, we aborted it or we committed it.
+[4071.52:4074.44] Both cases P1 is willing to face.
+[4074.44:4078.56] So P1 broadcast its vote, P2 proposes one, P3 proposes one.
+[4078.56:4083.2000000000003] In this case, this guy, P2 proposes to consensus zero.
+[4083.2:4085.68] Why? Because it didn't get the message of P1.
+[4085.68:4089.68] It suspected the failure of P1 and proposed zero.
+[4089.68:4090.68] This one proposed one.
+[4090.68:4094.08] Here, the decision could be zero or one.
+[4094.08:4096.12] The decision can be zero.
+[4096.12:4099.28] So you have to realize that it's slightly subtle.
+[4099.28:4104.04] There is a situation where we could go zero or we could go one, and we go zero or one,
+[4104.04:4111.08] because we know that no matter what we do, P1 can safely, can safely after recovery,
+[4111.08:4113.36] either abort or commit.
+[4113.36:4120.44] Of course, P1 is going to ask the processes what happened with that transaction.
+[4120.44:4122.76] Same question as before.
+[4122.76:4124.36] Do we need a perfect fail of the texture?
+[4124.36:4125.92] We use the failure detector here.
+[4125.92:4128.36] Do we need a failure detector?
+[4128.36:4134.76] It turns out that in this particular case, again, an eventually perfect failure detector
+[4134.76:4136.64] is not enough.
+[4136.64:4140.5199999999995] An eventually perfect failure detector is not enough.
+[4140.52:4146.0] A failure detector P is needed if one processes crash.
+[4146.0:4148.160000000001] I'm going to explain that.
+[4148.160000000001:4151.4400000000005] I'm going first to show you that eventual P is not enough.
+[4151.4400000000005:4155.200000000001] In fact, the proof is rather easy.
+[4155.200000000001:4158.84] For terminating a reliable broadcast, it was easy because I just shown you how you can
+[4158.84:4163.160000000001] build a perfect fail of the detector with terminating a reliable broadcast.
+[4163.160000000001:4164.92] Here, it's slightly more complicated than that.
+[4164.92:4167.52] So I'm going to go step by step.
+[4167.52:4170.64] First, I'm going to show you that eventual P is not enough.
+[4170.64:4175.72] The way I show that is by considering a counter example.
+[4175.72:4180.96] This counter example consists of a few executions.
+[4180.96:4183.68] First one, I have three processes.
+[4183.68:4186.68] First, propose 0, second, propose 1, third, propose 1.
+[4186.68:4189.64] I assume this guy crashes.
+[4189.64:4196.52] In this execution, it is OK to decide 0 because we didn't hear from P1.
+[4196.52:4198.4400000000005] Look at this execution again.
+[4198.4400000000005:4201.88] In this execution, P1 actually proposed 1.
+[4201.88:4205.88] But P2 and P3 didn't get any information from P1.
+[4205.88:4208.320000000001] So they cannot know that P1 proposed 1.
+[4208.320000000001:4212.400000000001] For them, P1 could have as well proposed 0.
+[4212.400000000001:4214.68] So they have to decide 0 here.
+[4214.68:4215.68] I hope we are together.
+[4215.68:4220.92] I'm simply saying, if a process fails immediately and the other processes did not get anything
+[4220.92:4224.56] from him, they have to decide 0.
+[4224.56:4230.4800000000005] Now look at the situation where actually process P1 proposes 1, P2 proposes 1, P3 proposes
+[4230.4800000000005:4231.4800000000005] 1.
+[4231.4800000000005:4236.400000000001] But given that the failure detector is eventually perfect, it's not perfect, it's eventually
+[4236.400000000001:4242.56] perfect, it could be that the failure detector behaves exactly the same in this case than
+[4242.56:4243.56] in this case.
+[4243.56:4249.400000000001] In this case, the eventually perfect failure detector, forthly suspects P1.
+[4249.400000000001:4252.76] It behaves as if P1 has failed.
+[4252.76:4256.04] In this case, this guy decides 0.
+[4256.04:4258.64] But the failure of the detector is eventually perfect.
+[4258.64:4265.4400000000005] So it becomes perfect later, which means that we have decided 0, even if everybody is
+[4265.4400000000005:4268.08] correct and everybody proposed 1.
+[4268.08:4274.8] In a sense, an eventually perfect failure detector here led us wrongly to a mistake to decide
+[4274.8:4277.16] 0.
+[4277.16:4283.92] So intuitively an eventually perfect failure detector can trick us to violate the specification.
+[4283.92:4289.32] And this means that no matter what algorithm we use, we can fall in this trap.
+[4289.32:4291.16] It has nothing to do with the algorithm.
+[4291.16:4297.0] No matter what we do, we have to decide 0 here, which means we have to decide 0 here,
+[4297.0:4301.36] which means we have to decide 0 here and we will violate the spec.
+[4301.36:4303.0] So this is the first part.
+[4303.0:4307.56] So the perfect is not enough, but there is something interesting, fail of the detector.
+[4307.56:4312.12] P is needed if we show that only one process can crash.
+[4312.12:4317.6] What I'm going to do here is I'm going to assume indeed that not that I have a majority
+[4317.6:4321.72] or I have n minus 1 correct processes.
+[4321.72:4326.8] If I assume that I have n minus 1 correct processes, I'm going to build a perfect failure
+[4326.8:4330.56] detector with termination of a live broadcast.
+[4330.56:4335.52] The idea looks a little bit like what I did with termination of a live broadcast.
+[4335.52:4340.360000000001] I have all processes use not working atomic commit.
+[4340.360000000001:4344.0] And the way they use this, they all propose 1.
+[4344.0:4346.76] First and B, I see they propose 1 and they decide.
+[4346.76:4348.8] They go to the second, they go to the third.
+[4348.8:4350.52] So it's like termination of live broadcast.
+[4350.52:4352.4800000000005] They go from one to the other.
+[4352.4800000000005:4354.200000000001] All of them propose 1.
+[4354.200000000001:4360.120000000001] So if all of them propose 1, as long as they're all correct, they're going to decide 1.
+[4360.12:4361.12] Okay?
+[4361.12:4365.32] So as long as they all decide 1, everything is fine.
+[4365.32:4373.28] But if one of them crashes, then this process who crashes is not going in the n plus 1
+[4373.28:4376.28] instance of atomic commit is not going to propose anything.
+[4376.28:4380.08] I'm not going to propose neither 1 nor 0.
+[4380.08:4383.4] In that case, the processes are going to decide 0.
+[4383.4:4389.2] So processes who decide 0 know that the only reason they decide 0 is because somebody
+[4389.2:4390.2] fails.
+[4390.2:4391.2] Why?
+[4391.2:4396.679999999999] Because we built this algorithm in such a way that everybody uses the box non-blocking atomic
+[4396.679999999999:4398.44] commit by proposing 1.
+[4398.44:4401.48] Now we have a box and we see that we are using it.
+[4401.48:4404.16] So if I decide 0, I know that some process fails.
+[4404.16:4406.72] But I don't know which one.
+[4406.72:4408.639999999999] I know that some process fails.
+[4408.639999999999:4412.08] So what do we do when I decide 0?
+[4412.08:4417.0] Everybody who decides 0 broadcast the message to all say it's not because I failed.
+[4417.0:4418.0] I am alive.
+[4418.0:4419.0] Okay?
+[4419.0:4421.36] So that will process broadcast the message.
+[4421.36:4427.64] If we assume that n minus 1 processes are correct, then all correct processes will know
+[4427.64:4434.24] exactly who failed because they will get all but one message.
+[4434.24:4438.56] And they will know exactly in this case that it's pitted.
+[4438.56:4445.04] You can easily see that if we have 5 processes here, for example, and 2 of them could fail.
+[4445.04:4449.72] And we run exactly the same situation, all process of broadcast messages.
+[4449.72:4452.72] And p1 is now missing 2 messages.
+[4452.72:4456.36] It doesn't know who of them has failed.
+[4456.36:4457.36] It will wait.
+[4457.36:4459.16] But how long is it going to wait?
+[4459.16:4461.68] It doesn't know how long it's going to wait.
+[4461.68:4466.6] It may decide to suspect one of the processes and then get a message from the other.
+[4466.6:4470.56] So it could violate the property of the third attack.
+[4470.56:4476.68] So in this particular case where exactly one process can fail, non-blocking atomic commit
+[4476.68:4481.84] and p are equivalent, but not in the general case.
+[4481.84:4483.68] So this problem is very, very interesting.
+[4483.68:4490.04] It starts from databases, very practical problem in grades 76 and then breaking back to it
+[4490.04:4492.04] in 78.
+[4492.04:4494.76] The non-blocking atomic commits version of it.
+[4494.76:4500.84] I mean, they've seen, notice the problem of the priest who dies or the iman who dies and
+[4500.84:4503.320000000001] defined more precisely non-blocking atomic commit.
+[4503.320000000001:4509.52] And then Herzlakos in 90 and then myself in 95 worked on refined problems, versions of
+[4509.52:4513.52] the problem, trying to define it more carefully.
+[4513.52:4518.76] It turns out that people have tried to define the weakest, which we call the weakest fellow
+[4518.76:4525.76] detected to solve the problem.
+[4525.76:4532.4800000000005] Until three groups of authors from EPL, from Cornell, Toronto came up with exact weakest
+[4532.4800000000005:4534.56] fair detector in the general case.
+[4534.56:4537.72] I'm not going to go into details.
+[4537.72:4542.88] This is for those who, the details about the case where more than one process can fail.
+[4542.88:4544.92] That case is more complicated.
+[4544.92:4551.36] So the few who are interested in doing research in that area can find really fascinating,
+[4551.36:4554.52] intellectual challenges there.
+[4554.52:4563.32] There are also open problems with respect to this specification, which is about the complexity.
+[4563.32:4570.24] The first results about the complexity of atomic commit work in 83 by, I think, the
+[4570.24:4575.92] skin and work for those of you who study privacy, the cinchia work is the person who did
+[4575.92:4577.5599999999995] the differential privacy.
+[4577.5599999999995:4584.679999999999] The first result was in 83, but in fact, it's only very recently that some student from
+[4584.679999999999:4589.5199999999995] the lab has actually closed the problem of the complexity of that problem.
+[4589.5199999999995:4591.8] So this is a very, very important problem.
+[4591.8:4597.76] Define the long time ago and there are still some open questions and people are only starting
+[4597.76:4602.84] to understand the ramification of the problem.
+[4602.84:4607.76] So this is this wing is a student from the lab who's actually defined the best complexity,
+[4607.76:4610.08] I mean, the complexity of the problem.
+[4610.08:4612.6] Okay, so thank you for your attention.
+[4612.6:4619.12] I gave you two examples of problems that are strictly speaking, harder than consensus,
+[4619.12:4624.56] in the sense that we need more than an eventually perfect fair detector to solve them.
+[4624.56:4630.8] Both of them with, there is some reach other in the solutions they adopt in that we can
+[4630.8:4633.52] use consensus and alignment.
+[4633.52:4638.120000000001] Both of them are actually very useful in practice and it turns out who knows, maybe in the
+[4638.120000000001:4645.120000000001] near future you will be implementing some of these solutions.
+[4645.12:4647.099999999999] Okay,YE� PIREL

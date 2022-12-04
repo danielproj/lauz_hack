@@ -1,0 +1,565 @@
+~Week 11: Demystifying Bitcoin 
+~2020-11-29T18:19:53.004+01:00
+~https://tube.switch.ch/videos/c351fde9
+~CS-451 Distributed algorithms
+[0.0:12.08] Hello, I'm going to talk about Bitcoin.
+[12.08:20.8] And the goal here is to demystify the Bitcoin protocol from the distributed computing perspective.
+[20.8:28.0] So this is not a talk about finances or how to make money out of Bitcoin, but this is
+[28.0:40.08] a talk about how to demystify better understanding maybe the underlying Bitcoin protocol.
+[40.08:46.519999999999996] So you probably have heard about Bitcoin, maybe you have heard about blockchain, you may
+[46.519999999999996:53.28] have heard about Ethereum, notions like proof of work, smart contracts and so forth.
+[53.28:59.28] And the goal here is to relate those notions to notions from distributed computing that
+[59.28:65.44] would I believe help understand the above-matchnant lotions, notions such that the notion of
+[65.44:70.48] a leader, consensus, snapshot and broadcasts.
+[70.48:76.16] And the claim here is that by refraising or better understanding the above concepts like
+[76.16:82.96000000000001] proof of work, Bitcoin blockchain in terms of consensus leaders, snapshots, not only one
+[82.96:89.36] better understands the Bitcoin protocols and the handwits alternatives, but also come up with
+[89.36:95.11999999999999] better protocols, better alternatives to the Bitcoin protocols, which is what I will try to do
+[95.11999999999999:103.28] in this talk. So the plan before diving into giving the distributed computing perspective,
+[103.28:110.88] what I call the computer scientist perspective of Bitcoin, I'll go back to some background
+[110.88:118.56] on the Bitcoin system, virtual currency as well as underlying protocol. And coming back to that
+[118.56:124.8] will help me better maybe explain some concepts of distributed computing. So I will go to
+[125.6:131.28] five perspectives on Bitcoin and the Bitcoin protocol. Of course, what interests me most is the
+[131.28:136.0] last one, the computer science perspective, but I believe that the other perspectives are
+[136.0:141.92] important to better understand this interesting concept of Bitcoin and Bitcoin protocol.
+[141.92:150.72] So the first perspective is that of a journalist, that this is basically a chat that one would have
+[150.72:156.4] with a friend or member of the family about Bitcoin. And this would help me introduce at a very
+[156.4:165.92000000000002] high level the notion of Bitcoin. So the historical perspective, 2008, the finance of
+[165.92:173.2] crisis, a lot of people in the world are accusing banks of stealing them or having stolen them or
+[173.2:186.39999999999998] having stolen their retirement savings or whatever. So there was a crisis and perspectives or
+[186.4:197.92000000000002] a motivation on new forms of banks emerged. A paper comes on the web by an author called Satoshi Nakamoto.
+[198.96:206.4] And this paper basically describes an alternative to classical banking. This Nakamoto,
+[206.96:213.12] author of a paper, a white paper on the internet claims to have invented an alternative bank.
+[213.12:219.12] And this alternative bank is basically a peer to peer system where people would be able to
+[219.12:225.52] pay each other but without going through a bank, at least in the classical sense, they would be
+[225.52:233.12] able to pay each other by going to a peer to peer protocol algorithm that basically is stored,
+[233.12:238.8] is hosted not at some basic server somewhere in the world that belongs to some big company,
+[238.8:244.8] but that is stored on all our computers. So the bank is all our computers.
+[247.20000000000002:257.68] Initially, the Bitcoin virtual currency that was described in Nakamoto's paper was supposedly,
+[257.68:264.08000000000004] was planned to trade hardware. And initially it was done for that. So people will, I don't know,
+[264.08:270.8] buy a mouse or buy some piece of hardware and pay with this virtual currency called the Bitcoin.
+[271.52:279.28] But then rapidly people realized that actually the same scheme could not only hold for buying
+[280.15999999999997:288.79999999999995] pieces of hardware but also for buying pizzas or maybe even buying a car or even paying
+[288.8:298.24] registration to some university. So the notion of a virtual currency introduced initially almost
+[298.24:306.72] like a joke became something very serious. And initially the Bitcoin I think was, the value was
+[306.72:320.24] like something that one one cent and then it went all the way through two thousand dollars, 20,000
+[320.24:329.12] dollars, sorry. Today I think in December 2020, I think it's around 16,000. So it's pretty high.
+[329.12:337.68] So from one one cent to 16,000 is pretty high. And as I will explain later, Nakamoto,
+[337.68:343.12] whomever that that is actually saved for for himself or for themselves, for for herself,
+[344.0:351.12] one million bitcoins. The total number of bitcoins issued was 21 million, but one of them was
+[351.12:357.6] actually owned in a way that I will explain later by the author of the paper and the implementer of
+[357.6:364.24] the software. It is important to realize that there was a lot of speculations about who that
+[364.24:370.48] person or that group of group of person is and people have started all kinds of
+[372.88:376.88] even legend sometimes about that person. It reminds me sometimes of this
+[379.36:386.56] this this personage in usual suspect, case of sociality or something like that, that never really
+[386.56:396.16] existed but was really there for for the story. What is also important to notice is that this
+[396.16:404.4] mutual currency, the Bitcoin, has actually the way it was implemented, used, has given wise to
+[404.4:410.48] alternative currencies. One of them is Ethereum, which was also I think following the same path,
+[410.48:418.32] although the goal was not only to pay each other but also to actually execute all kinds of code
+[419.76:424.64000000000004] in a way that is very similar that resembles the way Bitcoin was implemented.
+[425.6:433.20000000000005] This Ethereum concept was also a big a big currency which these days I think costs around
+[433.2:444.47999999999996] the value is around $5,500. This was created in 2014 but the value now is $500. So the idea has
+[446.32:451.52] not only was interesting from the technological perspective which I would talk about in this
+[452.64:456.56] conference but also from the financial perspective because many people started
+[456.56:464.08] imitating this idea. I just mentioned one of these currencies which is Ethereum. So in order to
+[464.08:471.52] understand the idea of of a mutual currency in general and the idea of the Bitcoin protocol
+[471.52:476.96] from a journalist perspective, from a high level perspective, let me take you for a trip to
+[476.96:483.76] to Marrakech. This is a city you should visit one of these days for this for its amazing
+[483.76:490.64] cultural atmosphere. So in Marrakech there is a famous place called Jamenith. Now which is
+[490.64:498.71999999999997] central to the city where tons of people gather. So they gather to play music, to tell stories
+[498.71999999999997:505.84] and also to sell all kinds of things. So you can go there and sell or buy whatever you want. Of
+[505.84:510.15999999999997] course you don't buy whatever you want but you buy certain things that you find in that days.
+[510.16:519.52] Among the things you find there are actually very beautiful carpets. And if you enter in the streets
+[519.52:527.36] close to this place you will find a lot of shops. Of course they sell leather, they sell
+[527.36:532.08] gelabas or things like that but some of them actually sell very very beautiful carpets.
+[532.08:543.2800000000001] And one of these shops has a very smart owner who actually boats all the carpets from a certain
+[543.2800000000001:548.48] area around Marrakech. So you have to, for those of you who don't know carpets, the color of a
+[548.48:557.36] carpet is intimately related to the place where the carpet was actually designed and manufactured.
+[557.36:563.92] And this is very close, this is very special for each area. So you go to one area you will find
+[563.92:570.64] a specific color because the color comes from the actual nature of the land or the water going
+[570.64:577.12] there. So every area has a special color. So this owner of a shop in that place comes from
+[577.84:584.72] some mountain close to Marrakech and he boats all the carpets coming from a bunch of villages and
+[584.72:590.96] therefore has some kind of monopoly on a color of the carpets. And the colors are really amazing,
+[590.96:598.8000000000001] some kind of red. So this person has these carpets which are unique. The business was going pretty
+[598.8000000000001:607.84] well and then this owner of the shop realized that maybe he could pay his employees with carpets
+[607.84:613.0400000000001] instead of paying them with money, he could pay them with carpets. He wouldn't give them the
+[613.04:622.0] carpet. He would simply write in a book that on employee X now owns this carpet with that size
+[622.0:628.8] and then after six months the employee owns another carpet. You will tell me why would the employee
+[628.8:634.9599999999999] buy a carpet? I mean the employees from that shop don't have huge houses and they don't have
+[634.9599999999999:640.88] space to put all kinds of carpets. In fact they don't take the carpets from the shop. The carpets
+[640.88:651.6] stay in that shop. But the fact that employee X called him Omar or Ali owns 10 carpets means
+[651.6:659.6] something because then that employee could pay other employees or actually anyone in that famous
+[660.32:667.28] jamel from a place can pay them with carpets. And the way the payment is actually achieved is by
+[667.28:672.48] going to the owner of the shop and asking the owner please can you put in your book the fact
+[673.28:681.6] that your employee Ali is paying the somebody who is selling chicken one tent of a carpets
+[681.6:688.24] against 10 chicken or something like that. And he would write that in the book. So that book
+[688.24:695.92] actually registers all financial transactions that have to do with his carpets. So initially
+[695.92:702.0799999999999] he was paying his employees. His employees were maybe paying themselves but then they started paying
+[702.64:709.68] everybody in that place and given that you can buy a lot of things in that place people started
+[709.68:716.9599999999999] actually doing all kinds of commercial activities by using this new currency the carpets.
+[717.52:722.4] And everything was written in the book of the owner of the shop.
+[722.4:730.72] The owner of the shop placed the key role here because he owns the book. So it's a bank. The book
+[730.72:736.88] is the bank and that person is the owner of the bank. You could imagine that if Maca Moto,
+[736.88:742.9599999999999] whomever that is, visited that place in Marrakesh, he would basically have warned the people in
+[742.9599999999999:749.76] this place be careful you are putting all your economy within the hand of the owner of that shop.
+[749.76:756.64] And that's very dangerous. Maybe you should actually keep using the currency you are using but
+[757.36:768.56] don't rely only on that owner of the shop. So what Maca Moto would have suggested is to actually build
+[768.56:777.2] a peer-to-peer algorithm that would replace the owner of the bank. What could that algorithm be?
+[777.2:784.8000000000001] In fact, it's actually pretty easy to imagine. Every person in the place who is interested in buying
+[784.8000000000001:792.96] or selling stuff using that virtual currency will have a copy of the book. A copy of the bank's book
+[793.6:801.2] that book which registers all transactions. So everybody will have the copy of the book. Of course,
+[801.2:808.48] for this to work properly, a mechanism is needed to make sure that everything happens as if there
+[808.48:816.08] was only one person own in the book. In other words, everything should happen as if all copies of
+[816.08:822.4000000000001] the book look the same. If you have one copy of the book, things are easy. There is one bank, one
+[822.4000000000001:829.5200000000001] owner of the shop. He registers all transactions. There is no treaty. Of course, he could treat
+[829.52:836.48] everyone else but there is no treaty between people. If you build a peer-to-peer implementation
+[836.48:840.8] of this and everybody has a copy of the book, you need to do something to make sure that
+[842.0:850.16] I do not sell my carpet to different people at the same time. Because if I had a carpet and you
+[850.16:854.72] have different copies of the book and come to you and say, why don't you write in your book that I'm
+[854.72:859.6800000000001] giving you this carpet and you give me your car. I go to somebody else and I give him or
+[859.6800000000001:864.8000000000001] heard the carpet and I get something else. This is called the double payment or triple payments.
+[864.8000000000001:874.32] This is something that can happen if we distribute the task of registering transactions.
+[875.12:881.6800000000001] The way to circumvent this problem, to address this problem, is to mimic what the owner of the
+[881.68:889.68] shop was doing. The way to mimic that is to say, okay, for every, let's divide the time into
+[889.68:898.88] periods, say 10 minutes and every 10 minutes, somebody is going to become the leader, the main person
+[898.88:905.1999999999999] who would initiate, write first in the book and then tell everybody else, here is what you should
+[905.2:913.12] write in the copies of your book. So basically, every period of time, let's say 10 minutes, why am I
+[913.12:919.6] using the 10 minutes? Because somehow I'm taking a period of time that is big enough, such that if
+[919.6:925.76] you register a transaction, you have time to tell everybody in the place, you tell somebody and
+[925.76:934.0] somebody tells somebody in a gossip manner, oh, Rashid has given his carpet to Omar and has taken
+[934.0:941.44] the car of Omar for that car. Okay, one transaction and in 10 minutes in a place crowded like that,
+[941.44:946.88] everybody will know about it and Rashid will not be able to double spend. Okay, but we need somebody
+[947.44:954.48] to somehow play the role of the leader and make sure that I am not able to double spend it.
+[955.6:962.08] How can we do that? If you read Nakamoto's paper, you can actually get inspired from it and say,
+[962.08:968.72] oh, it's very easy. Let's ask all people in the place who would like to play the role of the leader,
+[969.0400000000001:977.2] of the owner of the shop for 10 minutes to solve a big Sudoku, a big problem. And that Sudoku has to
+[977.2:982.4000000000001] be very big because we don't want several people to solve it at the same time. We want one leader
+[983.12:988.48] during a time period and that leader will decide, okay, I am the one writing first in the book and
+[988.48:994.96] then gossiping or informing the others about what I have written. Everybody in that place knows Sudoku,
+[994.96:1002.64] so if you give them a huge Sudoku, they will try. And if the Sudoku is so big that you can only wing
+[1002.64:1010.0] by doing by filling it in a randomized manner, by just trying things without following a
+[1010.0:1015.36] deterministic procedure, then you can actually guarantee that the probability of two people
+[1015.36:1021.6800000000001] solving the Sudoku at the same time is very small. So by doing that, you can actually guarantee that
+[1021.6800000000001:1026.72] you have one leader at a time during a time period and that leader is going to register all
+[1026.72:1032.24] transactions and inform everybody else about the transactions that occurred during that time period.
+[1033.92:1041.76] Now, you could tell me why would anyone basically would like to spend his neurons or cell to solve
+[1041.76:1046.8799999999999] this big Sudoku? Why would we want to do that? Well, in fact, the answer is easy. You can have
+[1046.8799999999999:1053.44] in you can implement in your system attacks mechanism such that if you are elected leader and you
+[1053.44:1060.08] play the role of the owner of the shop, then you gain some percentage of a carpet. And that
+[1060.08:1065.6] percentage of a carpet is money, somehow that you gain yourself. So when you write Rashid has given
+[1065.6:1071.9199999999998] his carpet to this person, then the attacks comes to me. Me means the leader who solved the Sudoku.
+[1071.9199999999998:1079.36] Of course, the Sudoku has this characteristic that when we solve it, it's easy to check that
+[1079.36:1084.08] actually we have solved it. It's hard to solve, but when we solve it, you can just go to the
+[1084.08:1090.6399999999999] lines and it's easy to see. So you have to imagine here a mechanism where the first person who writes
+[1090.64:1096.24] in the book during the time period writes also in the book the solution of the Sudoku and, of course,
+[1096.24:1101.2800000000002] say with this solution, I deserve to be the leader and therefore I deserve to be the first one
+[1101.2800000000002:1106.8000000000002] to write these transactions in the book and therefore I deserve to get the taxes.
+[1108.16:1116.5600000000002] So what I did here is give you an idea, it gave you an idea about what a virtual currency
+[1116.56:1123.12] means in the sense of Nakamoto and what a peer-to-peer protocol would mean to implement such a
+[1123.12:1130.32] virtual currency in a large scale system where you have the ability to quickly exchange messages
+[1130.32:1139.84] and go seek information. So the user, let's go back to reality, let's go out of
+[1139.84:1148.56] of my location and go to reality and now ask the question but a concrete user. How does he actually
+[1149.1999999999998:1157.1999999999998] play with Bitcoin or use Bitcoin? In fact, it's very simple. Just like you go to your favorite bank,
+[1157.1999999999998:1163.04] I mean, you go today, you go to the internet and then you have a client or wallet from your
+[1163.04:1172.56] bank and you start using some key by entering some password and having some key, you start
+[1173.2:1178.3999999999999] sending money and receiving money. A blockchain system or Bitcoin system use
+[1180.0:1185.2] those exactly like that. You just have a wallet that you registered to some identity,
+[1185.2:1193.2] you password and once you have that wallet, you can start sending money and downloading and receiving
+[1193.2:1203.44] money. So the user of a Bitcoin system is basically a wallet. A wallet is think about it as a way
+[1203.44:1211.44] to enter the into to get access to the internet client that enables you to send money and receive
+[1211.44:1218.0] money and basically it means one private key, think of it as a password and some public keys that
+[1218.0:1226.64] people can address you to. From the client perspective, what you know actually, what is
+[1227.44:1233.6000000000001] enough to know is that you basically go to your wallet, you sign a transaction saying,
+[1233.6:1240.8799999999999] I'm sending, I'm giving my my carpet to somebody who will give me a car and you can actually
+[1242.8:1248.32] what you need to know is that something is going to happen and after a while, 10 minutes
+[1249.28:1254.32] we have been using the 10 minutes but it does not need to be 10 minutes. It's not always 10 minutes.
+[1254.32:1261.36] It depends on how difficult is the is the pseudo code to be solved but let's usually it's 10 minutes
+[1261.36:1266.9599999999998] in each coin. You know that during these 10 minutes, you are going to sign your transaction,
+[1266.9599999999998:1274.4799999999998] your transaction is going to get gossiped. It has not been validated yet. I'm simply telling the
+[1274.4799999999998:1282.9599999999998] world I want to give my carpet to somebody and then the mining is the act of solving a suruku.
+[1282.9599999999998:1288.8799999999999] So somebody around me will solve the suruku and will be the one writing my transaction on the book.
+[1288.88:1297.7600000000002] Okay, so a bunch of transactions will be written by that leader who solved the suruku and all
+[1297.7600000000002:1306.16] those transactions written by that leader will be changed. We talk about a block of transaction,
+[1306.16:1315.1200000000001] a block chain in general but a block of transaction. After 10 minutes, thousands of users have seen
+[1315.12:1322.32] what that leader has done and all of them will write in their book the fact that I have given
+[1322.32:1331.1999999999998] money to somebody. So from the user perspective, things are pretty easy. Now what we call the
+[1331.1999999999998:1338.0] participant in the Bitcoin protocol or the Bitcoin system is somebody who we're not talking
+[1338.0:1344.8] here about the user who is going to give money or get money and talking about the participant who is
+[1344.8:1350.96] implementing the protocol. So that participant will have a copy of the book and sometimes we'll
+[1350.96:1356.16] try to be leader and write and be the first to write a bunch of transactions in the book.
+[1356.88:1364.8] Okay, so the participant is somebody who is a miner. We say it's a miner because it will try
+[1364.8:1372.8] to solve the suruku. The suruku is so big that the task resembles that of a miner who goes
+[1372.8:1377.84] to a river and just try randomly to find where the God could be.
+[1382.1599999999999:1388.72] The key idea here that I pointed out earlier is that there is a difference between
+[1388.72:1395.76] solving a difficult task like a suruku and checking it, very fine it. So if I tell you what are the
+[1395.76:1402.88] fine for me, the two integers of which product is 91, it will take you some time to find out that.
+[1402.88:1409.84] If I tell you multiply 7 by 13, you will immediately get to 91. So this is the key idea here
+[1409.84:1415.68] and the line in the notion of participant or miner. It takes a lot of time and you need luck
+[1415.68:1421.3600000000001] to find gold to find the solution but once you have found the solution it's easy to convince
+[1421.3600000000001:1428.0] the race of the world that you have found the solution. And that the fact that you can convince
+[1428.0:1433.2] them easily is crucial because you write in the transaction and book your solution and everybody will
+[1434.24:1440.88] believe, will trust you and therefore they will gossip and really write down the fact that
+[1440.88:1448.3200000000002] Hashid has given a carpet to somebody. The way it looks in practice it's something like this.
+[1448.3200000000002:1453.44] Again, if I want to participate then I have a copy of the book but more specifically I want to
+[1453.44:1461.0400000000002] mine. I'm not going to a river but I will download some piece of some internet client where I will
+[1461.0400000000002:1468.24] try to find it's not actually a solution to the suruku but what we call a non-sum number that
+[1468.24:1475.44] satisfies some property. And for that actually these days I would need a lot of computing
+[1475.44:1481.52] power to have a chance to win because I will have to try all kinds of integers. It's like solving
+[1481.52:1487.76] it suruku trying to find all kinds of numbers and he it's not an integer it's actually a win
+[1487.76:1495.84] number. I will have to try a lot of formulas in a short lapse of time to have a chance to win.
+[1495.84:1504.0] But this will basically consist in just getting a number of a transaction block for which I need
+[1504.0:1509.1999999999998] to solve the problem and then try to solve the problem. There is something important here
+[1509.1999999999998:1519.6799999999998] that I should quickly go back to. This suruku here is it is important that it to be
+[1519.68:1529.28] a triggered or generated online. What I mean by online is in order to avoid that somebody goes
+[1529.28:1536.16] home and try to solve suruku and come and cheat and be leader for a long period of time or whatever
+[1536.88:1544.0800000000002] that the suruku actually is generated based on the transactions that are being produced by the
+[1544.08:1551.36] users on the fly. So this is very crucial. And here when I was talking about the participant who
+[1551.36:1557.76] connects to the internet and say oh I want to try to solve suruku to find this magic
+[1558.48:1566.48] magic number called the nonse it cannot do that the day before because the problem to be solved
+[1566.48:1572.96] is intimately related to the actual transactions to be executed. And those actually the actual
+[1572.96:1580.4] transactions are actually are being proposed by users on the fly during that very time. I cannot
+[1580.4:1589.1200000000001] actually know in advance who is going to send money to home. So to validate a transaction a
+[1589.1200000000001:1596.16] minor has to solve a puzzle including it including that transaction. So that's the online. So there
+[1596.16:1605.92] is a notion of fairness if we want because everybody is basically starting from zero from scratch
+[1605.92:1609.92] to find of course if you have more computing power you have better chances but at least you are
+[1609.92:1616.4] not getting an advantage with respect to knowing what the transactions would be. And there is of
+[1616.4:1621.8400000000001] course some kind of cooperation because we all try to implement the system. So today the incentive
+[1621.84:1627.84] you have to try to solve the problem is you get slightly more than six bitcoins whenever you
+[1627.84:1633.76] solve the problem for a block of transactions. This number has been managed three years ago you
+[1633.76:1644.48] would have gained 50 bitcoins. I told you earlier that initially there were 21 million bitcoins
+[1644.48:1651.92] generated. 18 of them have been already used which means that whenever people have
+[1651.92:1657.44] whenever people have mined they have gained some bitcoins. So there are three left. I told you
+[1657.44:1663.92] earlier that Nakamoto got for himself or from themselves one million. How by generating a
+[1663.92:1672.24] bunch of initial transactions and mining them. So if you if I was alone in 2008 just together with
+[1672.24:1677.2] Nakamoto maybe I could have mined as well and maybe got half a million or something like that.
+[1677.2:1681.2] Nakamoto was alone so he was mining alone so he was getting that that maybe.
+[1683.2:1688.8] So this was the user perspective and the participant perspective. The engineer perspective here
+[1689.76:1695.6] I'm going to go quickly but it is important to know that there are some almost standard mechanisms
+[1695.6:1702.48] that are assembled to make things work. The notion of a peer to peer network is classical in
+[1702.48:1708.3999999999999] computing. It's basically a network without a central server and people can just interact
+[1708.3999999999999:1716.56] exchange messages and sign messages. So signing is also something crucial. The notion of
+[1716.56:1723.76] signature is is classic now in computing. It's basically a mechanism that enables you with
+[1723.76:1731.2] very high probability to secure some information and make sure that nobody can pretend to be you.
+[1731.2:1736.8799999999999] So this is basically the idea. It's just like having a password when you go to the gym and you
+[1736.8799999999999:1741.68] use that password with the high probability to ensure that nobody is going to use your
+[1743.6:1751.36] to access your your cloud. And then another concept that is crucial is that of gossiping. So the
+[1751.36:1757.4399999999998] the notion of gossiping here means that when I send money to somebody it's basically it goes through
+[1758.08:1763.9199999999998] writing a transaction and then sending the information randomly to some neighbors and then the
+[1763.9199999999998:1770.08] neighbors will do that randomly to another neighbors and the power off of exponential gossiping
+[1770.08:1774.8] will guarantee that the information will go to all the system. There is this idea of gathering
+[1774.8:1780.24] a block. I told you earlier that when somebody solves a Sudoku and write a transaction
+[1780.24:1785.36] he or she doesn't only write one transaction but actually a block of transactions.
+[1787.1200000000001:1792.72] So this is the notion of gathering and that's why we talk about block chains. We we we chain
+[1794.88:1802.88] a series of blocks. This is this idea of mining. We call it proof of work. The notion of proof of
+[1802.88:1814.24] work means that somebody had to spend some computing power to solve the problem. So the way
+[1815.68:1820.8000000000002] transactions the way the financial system works is by joining sign in transaction gossiping
+[1820.8000000000002:1826.72] the transaction, gathering transaction inside the block. Mining to make sure that only one person
+[1826.72:1834.88] is going to place the block inside the book of transactions. Once this is done and so Sudoku
+[1834.88:1841.28] solution has been found this solution is changed also to the block and now the block is gossiped
+[1841.28:1847.52] in a validated sense. So when you reach this step gossiping the block this means that now the
+[1847.52:1854.16] transaction has actually been validated because some leader some participant has solved the Sudoku
+[1854.16:1859.8400000000001] and was able to validate by putting the solution to the Sudoku and associating it to the block.
+[1861.6000000000001:1869.6000000000001] And this is usually committed. Sometimes we talk about a boarding if either there is an invalid
+[1870.88:1875.76] bank account or there is not enough money in the bank account, the bank account. In the account
+[1875.76:1881.52] there is no bank in the account or there is a probability that you have several leaders and
+[1881.52:1888.48] there are some mechanisms to make sure that eventually we go back to a situation where only one
+[1888.48:1893.28] leader is winning. I'm not going to describe that mechanism called fork mechanism here. I don't
+[1893.28:1900.8799999999999] think it's very important for what I'm going to say. I'm going to skip this ideas of hashing. I
+[1900.8799999999999:1907.52] think you probably have seen that as well. What is important here to realize is that the book
+[1907.52:1915.92] of transaction that I was talking about is more like a book of blocks of transactions. Every
+[1916.48:1922.8] block starts with the reward and this reward is related to the leader to the person who was
+[1922.8:1928.8799999999999] able to solve the problem. So this is this block. Some house associated with one leader with the
+[1928.8799999999999:1936.8] minor who was successful. And the block starts with the reward and then a bench of sign a
+[1936.8:1941.12] transaction. So it's signed because there is somebody who has signed this transaction saying,
+[1941.12:1949.52] I'm sending my money to somebody else. So you have a bench of transactions and here the validation
+[1949.52:1958.6399999999999] of this block is relies upon the solution of the solution of the pseudo-co is this number,
+[1958.6399999999999:1964.1599999999999] the notes that it's called the notes. The notes that has been found and all the blocks are
+[1964.16:1970.3200000000002] changed. So this is the previous block and this is the current block and there will be another block
+[1970.3200000000002:1976.3200000000002] and all these blocks are changed are related by solutions of the Sudoku. And the solution of the
+[1976.3200000000002:1985.28] Sudoku is somehow the identity of the leader. Okay, so this is basically saying, oh, I as a leader
+[1985.28:1990.64] was able to find this solution and this is easy to check this solution. You can just see the
+[1990.64:1997.8400000000001] solution of the Sudoku. Oh, this is a valid solution and this is a validation of this block.
+[2000.4:2000.72] Okay.
+[2006.8000000000002:2014.16] As I pointed out earlier, after the Bitcoin system was released and used, people started
+[2014.16:2023.3600000000001] thinking of alternative or for other applications of the same kind of scheme beyond payments and in fact,
+[2024.24:2031.28] a generalization of simple payment is that of a contract where not only you say, I'm giving my
+[2031.28:2037.52] carpet to somebody, but you are also saying, I'm giving my carpet to that person and within the
+[2037.52:2045.84] same transaction and that person is giving me back a car which was not in the original transaction.
+[2045.84:2049.7599999999998] In the original transaction, there was only the payment what I was talking about. The notion of
+[2049.7599999999998:2055.92] contract includes things like I'm giving this carpet to this person and this person is giving me
+[2055.92:2061.12] something back and somebody else is going to also benefit and this and that you can even add
+[2061.12:2068.88] conditions if the weather is nice and this can only be executed the next week if it rains or whatever.
+[2069.44:2076.16] The notion of a contract is somehow a generalization of a notion of payment transaction and in fact,
+[2076.16:2082.88] you can use a protocol that is the same as what I presented with the notion of leader and instead
+[2082.88:2088.16] of having only payments, you can have general proposed contract. We call them smart contract.
+[2088.16:2096.3999999999996] And the Italian system that I mentioned execute these contracts. So now I presented the journalist
+[2096.3999999999996:2102.7999999999997] perspective, this shop and carpets and whatever, the user perspective, somebody who would have
+[2104.16:2112.3999999999996] a wallet to which he or she can send money using the Bitcoin system, the participant who can
+[2112.4:2120.2400000000002] mine and also benefit from the system if lucky and also mention some mechanisms that are underlined
+[2120.2400000000002:2128.1600000000003] this system. I call that the engineer perspective. So now I want to spend the last part of this
+[2128.1600000000003:2135.12] talk talking about the computer scientist perspective, the distributed computing perspective.
+[2135.12:2143.92] If you look at if you know about computing and distributed computing, you can easily see that
+[2143.92:2151.7599999999998] what's going on in the Bitcoin protocol is a state machine replication scheme. What does that mean?
+[2151.7599999999998:2159.8399999999997] It means that we basically replicate a state, the transaction book, among all nodes of the system.
+[2159.84:2168.32] It's like a state and we make sure that everybody executes comments on this machine,
+[2168.32:2174.6400000000003] transaction payments in the same order. How do we guarantee that everybody executes in the same
+[2174.6400000000003:2179.6000000000004] order because we have a notion of a leader and the leader we have that leader for a given point
+[2179.6000000000004:2186.08] in time or a given period of time. But during that period of time there is only one leader and
+[2186.08:2192.4] that leader decides the order according to which we are going to execute comments on the machines
+[2192.4:2200.72] or transactions. In fact that leader guarantees that everybody agrees on the order according to
+[2200.72:2207.36] which we are going to execute transactions or in the case of smart contracts any any problem.
+[2208.3199999999997:2214.3199999999997] So what's going on and behind the scenes is what is called in distributed computing state machine
+[2214.32:2221.6800000000003] application and this idea dates back to Leslie Lamport in a semi-known 78 paper.
+[2224.4:2230.0800000000004] Other papers comes after and the problem solved by state machine replication is that of consensus.
+[2230.7200000000003:2238.32] Okay so the consensus problem consists for a set of nodes to agree on something they agree on
+[2238.32:2242.96] the order according to which they execute the comments and the problem of consensus is known
+[2242.96:2248.4] to be universal. What does that mean? If you can solve the consensus problem, if you can agree,
+[2248.4:2254.32] if you can have a set of processes agree on something then you can take any centralized problem
+[2255.2:2262.0] and distribute it and make it highly available. This is exactly what we did here. We started from a
+[2262.0:2271.52] single bank, okay, the owner of the carpet shop and distributed it will distribute its role
+[2271.52:2277.7599999999998] by solving the consensus problem. How do we solve the consensus problem by electing a leader?
+[2277.7599999999998:2283.12] Okay, so this is crucial. So what we are solving is the consensus problem and once we solve the
+[2283.12:2287.7599999999998] consensus problem using that leader we can do payment but we can do everything. We can do smart
+[2287.7599999999998:2296.08] contracts or whatever. We know that consensus is hard in particular in certain settings for
+[2296.08:2301.7599999999998] example if we don't make assumptions about time so here I have been saying 10 minutes and days
+[2301.7599999999998:2308.56] and that but if we consider a general purpose distributed system where we don't make any assumption
+[2308.56:2316.56] on the time it takes for a message from node A to reach node B then we know also that the consensus
+[2316.56:2321.68] problem is impossible. This is a famous result that has been proven in the area of distributed
+[2321.68:2328.64] computing. So the fact that the problem is impossible actually means that it is hard, okay.
+[2329.2:2335.52] The consensus problem is required some synchrony which makes the problem hard so you have to make
+[2335.52:2342.8799999999997] some assumptions and even when those assumptions you can make them this translates into complex algorithms.
+[2342.88:2351.92] And not surprisingly indeed the algorithms that implement Bitcoin they might look simple but
+[2351.92:2358.2400000000002] they're actually complicated. First they require some assumptions about time. I have been assuming
+[2358.2400000000002:2365.76] that people can relatively quickly gossip and exchange information. The algorithms are also
+[2365.76:2372.48] expensive. Mining is very expensive. Electing a leader is expensive so if you take the original
+[2372.48:2380.48] Bitcoin implementations the energy spent mining is huge. I think some journalists and some
+[2380.48:2387.6] reporters have been saying that last year the energy spent on Bitcoin mining is the same as that
+[2387.6:2393.52] of a modern industrial country like Denmark or something so it's a huge so it's not a very green
+[2393.52:2400.56] solution. So people have been looking at alternative implementations without mining so they looked
+[2400.56:2408.24] and in fact given the popularity and of this idea of distributed peer-to-peer banking system
+[2409.2799999999997:2415.68] tons of implementation, thousands of implementations of Bitcoin like protocols have been proposed.
+[2416.48:2422.88] Some using proof of work just like what I presented the fact of mining others used what is called
+[2422.88:2430.88] sometimes proof of stake means the leader is the the richer person others used subcommittees
+[2430.88:2437.84] where the leader has to be selected among a bunch of smaller bunch of committees at the expense of
+[2437.84:2444.48] some fault tolerance fragility in any case there have been tons of implementations and what is
+[2444.48:2452.56] actually not surprising in RedhostTech but you have to realize is that a lot of the effort
+[2452.56:2458.16] spent today on those algorithms and implementations is to try to make sure they are correct.
+[2459.12:2465.6] We have we believe that the original Bitcoin protocol is correct but we know that it's very expensive
+[2465.6:2473.2799999999997] and it might not have been designed for so many users so it doesn't really scale.
+[2474.32:2479.7599999999998] When we scale it we have energy problems there are alternative solutions that are cheaper
+[2479.76:2486.0] but usually in most of the time they're not correct so today what is I would say funny but maybe
+[2486.0:2493.6000000000004] not that funny is that a lot of companies and open source associations who come up with Bitcoin
+[2493.6000000000004:2501.76] protocol alternatives have a hard time proving that the algorithm is correct so these algorithms
+[2501.76:2507.76] are usually a mess and why are they a mess because they solve a very difficult problem they solve
+[2507.76:2514.0800000000004] the consensus problem which I told you sometimes it is just impossible so if you believe you solve it
+[2514.0800000000004:2520.0] then you're not solving it if you make some assumptions that make that circumvent the
+[2520.0:2526.48] impossibility than the algorithms actually turn out to be complicated unless you make very very
+[2526.48:2532.5600000000004] strong assumptions in which case the solution does not is not realistic so I believe that the
+[2532.56:2538.7999999999997] perspective of the scientists of the computer scientists is to try to understand whether
+[2539.52:2547.68] the Bitcoin problem has to be that difficult and the question I'm going to ask in the last
+[2547.68:2554.0] part of this talk is can we implement a payment system asynchronously the consensus problem
+[2554.0:2559.7599999999998] cannot be implemented asynchronously okay it is a synchronous problem it requires a leader it
+[2559.76:2567.0400000000004] requires synchrony and therefore it is difficult but that is because we wanted to implement the
+[2567.0400000000004:2574.1600000000003] payment system using consensus that we ended up having a hard time implementing it but can we
+[2574.1600000000003:2578.5600000000004] implement a payment system without going through consensus in an asynchronous manner
+[2581.6000000000004:2586.2400000000002] in classical computing the world is divided into problem that are
+[2586.24:2592.8799999999997] easy to solve and problem that are hard to solve that is easy to check okay so
+[2592.8799999999997:2601.04] multiply 7 by 13 is a is a P problem is easy finding the two numbers of which product is 91
+[2601.04:2606.4799999999996] is a hard problem in distributed computing I like to think that the analogy the analogous
+[2607.7599999999998:2613.12] distinction or classification of the world is between synchronous and asynchronous synchronous
+[2613.12:2618.24] problems are hard and you need consensus you need finding assumption you need leadership
+[2620.7999999999997:2627.44] asynchronous problems are much easier so is payment any synchronous problem where does payment
+[2627.44:2633.8399999999997] the what I call the payment is is most specifically the problem posed by Nakamoto which is called
+[2633.8399999999997:2638.56] actually the double payment but this is the problem solved by the Bitcoin protocol is it a
+[2638.56:2646.64] synchronous or asynchronous problem line is said to understand a distributed computing problem
+[2646.64:2652.16] bring it to shared memory okay so that is something very important I hope you know a whole
+[2652.16:2664.56] any series when we usually talk about the Bitcoin problem we assume a large number of notes
+[2664.56:2669.92] a large number of processes communicating and these notes are geographically distant I send
+[2669.92:2675.52] money to somebody in Australia who send money to somebody in the US or whatever so this is a
+[2675.52:2682.7999999999997] large scale system reasoning about problem in large scale system is not always easy in fact it's
+[2682.7999999999997:2689.36] usually is usually difficult especially because we typically assume that some of these notes some
+[2689.36:2695.28] of these processes can be very malicious can be very hard very hard in the sense that they can have
+[2695.28:2700.88] a strong power we call the the set the correlation of of people who want to do double payment and
+[2700.88:2707.44] cheat we call that an adversary and we say that the adversary can be very malicious it turns out
+[2707.44:2716.7200000000003] that when we do a distributed computing sometimes we look into the infinitely small meaning we look
+[2716.72:2725.2] inside one computer and study processes accessing the same shared memory here processes are not
+[2725.2:2732.08] really malicious they can be slow so the adversary okay the entity that models what can go wrong
+[2732.9599999999996:2740.3199999999997] is somehow weaker it has weaker power than the stronger of the large scale system further more
+[2740.32:2749.1200000000003] whereas in the infinitely big world processes external messages nodes extend messages in the
+[2749.1200000000003:2754.96] infinities small world they read and write in the same shared memory so these are two perspectives
+[2754.96:2763.36] of distributed computing in fact in the second case we talk about concurrent computing so message
+[2763.36:2770.96] passing is the model where the Bitcoin problem has been initially presented processes nodes extend
+[2770.96:2777.2000000000003] messages and the adversary can be very very bad it can corrupt some processes who send messages
+[2777.2000000000003:2783.6800000000003] they were not supposed to send shared memory is is the model that you typically adopt when you have
+[2785.1200000000003:2791.6800000000003] a single machine with several processes and here P1 and P2 are two processes of the same
+[2791.68:2798.3199999999997] machine and they read and write in the same registers so they have a memory composed of registers
+[2798.3199999999997:2804.56] this memory and shared and they write and read it and here what happens to these processes the
+[2804.56:2809.68] worst that can happen to them is they can sleep for a long while they they they are not going to
+[2809.68:2815.04] well in general we assume that they are not going to try to cheat the system so the adversary is weak
+[2815.04:2822.0] one of the most fundamental results in distributed computing is actually that message passing
+[2822.0:2826.88] a message passing model is equivalent to a shared memory model what does that mean
+[2826.88:2835.92] it means in fact that we can emulate a shared memory in a in a message passing system what I
+[2835.92:2849.12] call the infinitely big assuming I have a column of correct nodes so if I have let's say 100 nodes
+[2849.12:2854.64] in my large scale system and let's say I have enough of them that are correct to constitute a
+[2854.64:2865.3599999999997] column columns are sets of sets of which and that intersects and more specifically in in the case of
+[2866.3199999999997:2872.72] a completely big system with malicious players I can guarantee that such a system can resemble
+[2872.72:2881.7599999999998] can mimic a shared memory system if I have columns of which intersection contains correct
+[2881.76:2887.76] processes I'm not going to into the details details here but if I have an assumption about
+[2887.76:2894.5600000000004] enough correct processes then I can build a shared memory okay so you have to trust me on this
+[2894.5600000000004:2901.44] this is one of the fundamental results in in in message passing how to emulate a shared memory
+[2901.44:2906.32] and the idea for example if you have a weak adversary is to assume that you have a majority of
+[2906.32:2912.1600000000003] correct processes and to give you an intuition if you want to emulate the act of process of the
+[2912.1600000000003:2917.84] writing and shared memory you send a right messages message to all and you wait for a
+[2920.0:2926.32] majority of them to tell you we have this information and therefore when somebody wants to read
+[2926.32:2932.0800000000004] and reads from a majority given that the two majorities intersects the reader will find
+[2932.08:2940.24] the right value as if it was reading in the shared memory something written on a shared memory okay
+[2941.52:2948.7999999999997] if you have malicious adversary you need more correct processes than a single majority usually
+[2948.7999999999997:2953.6] you need two-third to make sure that the intersection contains correct processes this is not
+[2953.6:2959.92] a rocket science but it's fundamental distributed computing result that message passing and shared
+[2959.92:2967.76] memory are equivalent of course you can tell me yes but if we do your equivalence maybe there
+[2967.76:2975.28] are a lot of messages going and if you start with a problem solved in this for example in the shared
+[2975.28:2981.84] memory world and you port it to the message passing world then this will be very expensive of course
+[2981.84:2990.0] but here let's not worry about complexity of sending messages or whatever for now we are just
+[2990.0:2995.92] trying to address the question is the payment problem asynchronous or not
+[3001.84:3010.48] so the payment system is what Nakamoto defined in his paper and we want to ask whether it's an
+[3010.48:3016.56] easy problem or difficult problem I said easy means asynchronous we can solve it we don't need
+[3016.56:3022.2400000000002] consensus we can solve it in an asynchronous manner and there is actually a precise way of asking
+[3022.2400000000002:3028.72] the question of whether a problem like that is asynchronous or not in shared memory what do we
+[3028.72:3033.68] do how do we proceed we typically define the payment system as an object like in classical object
+[3033.68:3042.16] oriented computing and now we say that this object can be accessed as if it was in a shared memory
+[3042.16:3050.0] by several processes and we want to guarantee that the access of those processes is atomic meaning
+[3050.0:3059.3599999999997] every every process feels or access the object as if it was alone but in a weight free manner
+[3059.36:3065.52] weight free manner means indeed we access the shared object as if we were alone like if we
+[3065.52:3071.84] were locking it but we don't lock it if you don't know what locks are or forget the don't wait what
+[3071.84:3077.84] I'm saying here is the fact that we have a clean way of asking the question whether a payment system
+[3077.84:3083.2000000000003] is asynchronous or not in shared memory we define two notions atomicity and weight freedom
+[3083.2:3088.72] they also they back to to lampports and they have been refined by by Maurizio
+[3088.72:3096.3199999999997] so can we implement a payment system asynchronously this question translating to can we implement a
+[3096.3199999999997:3103.12] payment object in an atomic and weight free manner in shared memory so in order to address this
+[3103.12:3108.7999999999997] this question let me address a slightly different question that is easier maybe to understand
+[3108.8:3115.76] just to understand the very nature of the question think of a counter a counter is an object
+[3115.76:3122.0800000000004] that has two operations increment and read the payment system is slightly more sophisticated but
+[3122.7200000000003:3128.4] if you can view it as a counter I will come back to that a counter object has maintained an
+[3128.4:3134.88] integer index initialize to zero and you can increment it and read it when you read you return
+[3134.88:3140.08] the value when you increment you add one and you can ask the question can we implement this
+[3140.08:3147.6] object asynchronously is this object difficult and be in the distributed computing sense or be
+[3148.48:3153.36] it turns out that it's easy to come up with an algorithm to implement the counter in a shared memory
+[3153.36:3166.32] system you have n processors they all share an array of registers when a process i process p i
+[3166.32:3173.36] increments it goes to a register and it increments the previous value when you want to read the value
+[3173.36:3180.56] of the counter use some all the counters so what am I doing here okay let's go back I want to
+[3180.56:3187.12] implement this object counter in shared memory and I want the object to be accessible by n processes
+[3187.12:3194.56] in way three atomic manner if I implement this counter in one single register I would run into
+[3194.56:3199.68] troubles because maybe a process comes reads the value of the counter finds the value of the
+[3199.68:3205.2799999999997] counter zero and wants to increment it but in the meantime other processes come and concurrently
+[3205.28:3212.0800000000004] increment the counter several times put the value of the counter to six and now I put it back to one
+[3212.0800000000004:3218.48] this is not atomic if I want to prevent this case I can use locks but this is not wait for you anymore
+[3220.1600000000003:3227.6800000000003] this idea here of saying let's have different uh pieces of the memory and each process has
+[3227.68:3237.7599999999998] its own piece and increments its own piece when we read with some now we have implemented a counter
+[3237.7599999999998:3243.2799999999997] in an atomic and weight free manner good which means that the counter is a simple problem it's a
+[3243.2799999999997:3249.52] simple object is an instant concept what if I have counter star counter star has in addition
+[3249.52:3255.44] operation decrement okay so the previous counter has we increment now I have decrement
+[3255.44:3262.48] if x is bigger than zero then I can remove one from the counter as I cannot
+[3263.2000000000003:3268.88] I can ask now the question is counter star is synchronous or any is synchronous problem is it a
+[3268.88:3276.4] hard problem or is it as simple as the counter it turns out that the answer to this question is no
+[3276.4:3282.2400000000002] we cannot implement a counter star asynchronously it is a difficult problem how do we prove
+[3282.24:3289.7599999999998] how do we show that counter star is difficult actually we show that if I could solve counter star
+[3289.7599999999998:3295.7599999999998] I could implement consensus among two processes and I'm going to show you how to implement
+[3295.7599999999998:3301.7599999999998] consensus among two processes using counter star every process wants to solve consensus
+[3301.7599999999998:3306.7999999999997] propose a value so let's assume two processes they want to to to to to to persons they want to go
+[3306.7999999999997:3311.6] to the movies one of them says I want to see James Bond and the other guy says I want to see asterix
+[3311.6:3319.04] so both of them propose a value the algorithm is the following each of them writes its own value in
+[3319.04:3325.7599999999998] a register and then they go and they access this counter star the counter star is initialized to one
+[3326.48:3332.08] they decrement the value of the counter given that the initial value is one one of them will get
+[3332.08:3337.8399999999997] okay we'll be able to decrement the other one will not be able to decrement the one who will be
+[3337.84:3345.2000000000003] able to decrement is has succeeded has one it will decide to see the movie it initially proposed
+[3345.2000000000003:3352.88] the other guy who lost who won't be able to decrement will find the the movie to watch in the
+[3352.88:3359.1200000000003] other register what I have done here is I have shown that if I have a counter star I can solve
+[3359.1200000000003:3364.48] consensus given that I know that there is no algorithm that solves consensus among two
+[3364.48:3372.08] processes using registers I know that no asynchronous algorithm implements counter star
+[3372.8:3379.12] among two processes counter star is the difficult is asynchronous problem so counter and counter star
+[3379.12:3387.52] look very similar that counter star has this operation decrement which makes it in fact significantly
+[3387.52:3401.12] hard it makes it a synchronous problem it cannot be solved asynchronously by the way one one one
+[3401.68:3407.6] something important here I told you that this counter star enables you to solve consensus among
+[3407.6:3414.24] two processes in fact it can only solve consensus among two processes you have object that can
+[3414.24:3419.04] solve consensus among three other object that can solve consensus among four more is
+[3419.04:3425.4399999999996] fairly he has defined the notion of a consensus hierarchy where you can classify objects not only
+[3425.4399999999996:3431.2799999999997] whether they are easy or hard but those that are hard you can also classify them according to
+[3431.8399999999997:3437.7599999999998] their hardness and the hardness is their consensus number just like the atomic number with
+[3437.76:3444.32] mandelief stable here the consensus number is how many processes can solve consensus using that object
+[3444.32:3453.0400000000004] I will come back to that later so now an object that looks that resembles the counter is the payment
+[3453.0400000000004:3460.8] so payment is an object that has an integer as a state but here you don't really increment you
+[3460.8:3469.52] transfer amount x from a to b if a is bigger than x a little bit like counter star however unlike
+[3469.52:3478.7200000000003] counter star only the owner of a so every we have owners processes are somehow owners only the
+[3478.7200000000003:3487.04] owner of a can invoke pay a so only I can send my carpet to somebody else and now the question is
+[3487.04:3494.24] can this be a can this object payment object which I call can it be implemented asynchronously or
+[3494.24:3502.32] in other world what is the consensus number of this object okay is this is it one which means
+[3502.32:3508.0] that the problem is very easy or is it two or more than two which means that the problem is hard
+[3508.88:3514.72] counter has consensus number one I cannot solve it I cannot use it to solve consensus among two
+[3514.72:3520.7999999999997] processes the P or object has consensus number I don't know I'm asking the question if it was one
+[3521.52:3527.8399999999997] the problem is easy if it's more than one the problem is how I'm not going to go into details
+[3527.8399999999997:3534.7999999999997] but I'm simply going to claim and to show you that if we implement another object which is called
+[3534.7999999999997:3541.52] atomic snapshot we can implement the payment object and that object called atomic snapshot
+[3541.52:3549.2] resembles the counter in the sense that it's easy to implement so a snapshot has an operation
+[3549.2:3561.84] a date and scan okay so snapshot you can view it as the sets are of all Facebook walls of people
+[3561.84:3569.68] involved in some social network my Facebook so the snapshot is like the the sum of all the
+[3569.68:3579.6] walls of Facebook people everybody can update its wall and at any point in time I can scan the entire
+[3580.7999999999997:3591.44] walls so it's like everybody can act like Mark Zuckerberg and scan the the the walls I'm not going
+[3591.44:3597.3599999999997] to show you how you can implement this object in a shared memory setting without solving consensus
+[3597.36:3604.4] means asynchronous but you have to believe me that this object can be implemented I will share
+[3604.4:3611.6] the slides and the slides give basically an algorithm that is actually very smart to implement
+[3611.6:3618.32] this object in a way to an atomic manner roughly speaking we have an array of registers
+[3618.32:3628.0] everybody has its own register way trite its own wall and what I want to scan I basically read all the
+[3629.84:3637.28] the walls and check if two are the same I know that if two sets of walls are the same I know that
+[3637.28:3643.1200000000003] it's atomic okay this is the main idea of an algorithm to implement the snapshot it turns out
+[3643.12:3649.44] that this algorithm might never terminate if it's just what I presented in fact I need to add to
+[3649.44:3659.52] this algorithm the idea that everybody who wants to update has to try to scan and that will guarantee
+[3659.52:3665.92] to me that if I'm not able to scan because I cannot find two sets of walls that are the same because
+[3665.92:3672.56] somebody's updating I force the process to update to scan and to give me back the scan the
+[3672.56:3683.2799999999997] algorithm is presented in these slides to scan process keeps comparing sets of collect until it
+[3683.2799999999997:3689.7599999999998] finds two other that are the same if it does not this means that somebody is updating but I'm going
+[3689.7599999999998:3697.44] to force the process to update to scan and return the value it turns out that if I can solve the
+[3697.44:3705.6] atomic the snapshot object with a overview how I could solve it I can actually implement the
+[3705.6:3713.12] payment object how every process stores the sequence of its outgoing payment in its wall okay it's
+[3713.12:3717.44] as if in Facebook I say I have given money to this person that person that person
+[3719.04:3726.08] whenever I want to pay a process scans computes its current balance because if I know exactly
+[3726.08:3732.4] how much money I have given to whom and who has given me money I know exactly whether I have the
+[3732.4:3739.36] right to give money to somebody or not the book of transaction is the atomic snapshot remember the
+[3739.36:3744.72] book of transaction it turns out that what I'm saying here is the book of transaction resembles the
+[3744.72:3754.4] atomic snapshot which is an easy object so the payment object can be implemented asynchronously
+[3754.4:3762.0] its consensus number is one okay in fact I can even generalize this result by saying if
+[3764.08:3770.56] I have K people and they all are involved in some transaction this one pays money to this one
+[3770.56:3776.08] and that one pays money to that one etc the notion of smart contract that I was talking about earlier
+[3776.8:3783.44] if these people the number of them is K then the consensus number of this object is K but if
+[3783.44:3788.7200000000003] there is only one process one person who can send money to somebody else as in the original
+[3788.7200000000003:3797.12] bit going protocol the consensus number is one so why is that important that is important because
+[3797.12:3802.4] now we know that the payment system is actually does not need to be that complicated the payment
+[3802.4:3809.52] object is an easy problem so we can implement it in a rather easy way and in fact in in our lab
+[3809.52:3816.24] at the epFL we were able to implement several variants of the payment object of course
+[3817.6:3820.8] what I call s here is the shared memory variant which I
+[3822.24:3826.32] overviewed once you implement the atomic snapshot you can implement the payment object
+[3827.28:3832.72] but you can even go back to the message-passing system and implement actually variants
+[3832.72:3840.24] of the payment system that are actually much easier to understand than the classical consensus
+[3840.24:3846.08] plan based implementation you can show that you you save at least one order of magnitude
+[3847.6:3852.72] lines of code in terms of numbers 9s of code and in terms of latency you can actually be much
+[3852.72:3860.8799999999997] faster than consensus based solutions with the same reliability so for those interested in
+[3860.88:3868.6400000000003] understanding the notion of why the payment object is easy there is a paper that we have written
+[3868.6400000000003:3876.4] in potsy 2019 with colleagues curing students and former students from from my group called the
+[3876.4:3884.0] consensus number of of a cryptocurrency it's it's available on the web at ACM potsy 2019 this
+[3884.0:3892.4] this paper describes the what I overviewed which is you can implement an atomic snapshot
+[3892.96:3898.08] easily this is a known result once you have that you can implement a payment object then there
+[3898.08:3903.44] was one application of that object in the message-passing world of that result in the message-passing
+[3903.44:3911.84] world with again curing and former PhD students showing how you can leverage that results in shared
+[3911.84:3917.84] memory in message-passing and build a scalable payment system in fact we have shown that the
+[3917.84:3924.88] payment system is some sort of reliable broadcast which is known to be easier than consensus so
+[3924.88:3930.7200000000003] this paper shows how you can build a payment system in a scalable manner and the paper got best
+[3930.7200000000003:3938.88] paper best paper awarded at disk this was a rather theoretical work we went a step further and
+[3938.88:3945.76] we implemented this with with more students from the lab and implemented a payment system and
+[3945.76:3952.1600000000003] have shown practically that it's almost the same as a broadcasting messages so this this appeared
+[3952.1600000000003:3958.6400000000003] that I triple a DSN the last one so all these three papers are available on the web and you can
+[3959.76:3965.04] look at the theory part or the practical part there is still a lot of work in the lab on this
+[3965.04:3971.12] on this problem and in fact we have released an open source library implementing variants of
+[3972.32:3978.48] virus payment systems and you can actually download the code from the lab and play with it
+[3979.2:3987.2799999999997] more references I really believe that understanding the foundations of concurrent and distributed
+[3987.2799999999997:3994.8] computing would help understand problems like Bitcoin smart contracts Ethereum and things like
+[3994.8:4001.1200000000003] that I really believe that these concepts of concurrent and distributed computing help you understand
+[4001.12:4031.04] those concepts.

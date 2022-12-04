@@ -1,0 +1,12 @@
+tunnel: ddddcc4b-a073-404e-ba23-16924df7f83b
+credentials-file: /Users/henry.tseng/.cloudflared/ddddcc4b-a073-404e-ba23-16924df7f83b.json
+warp-routing:
+    enabled: true
+ingress: # https://community.cloudflare.com/t/run-multiple-argo-tunnel-in-same-server/313444/5
+  - hostname: kibana.henrybear327.com
+    service: http://localhost:5601
+  - hostname: api.henrybear327.com  
+    service: https://localhost:8080
+  - hostname: gina.henrybear327.com  
+    service: https://localhost:8080
+  - service: http_status:404

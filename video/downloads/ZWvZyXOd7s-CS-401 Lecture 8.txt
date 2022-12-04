@@ -1,0 +1,804 @@
+~CS-401 Lecture 8
+~2022-11-10T14:29:00.641+01:00
+~https://tube.switch.ch/videos/ZWvZyXOd7s
+~CS-401 Applied data analysis - Fall 2022
+[0.0:7.0] So today Bob is out of town and he asked me that I should cover this lecture for you.
+[7.0:13.0] Of course, it's very hard to replace Bob such a charismatic speaker but I'll try my best.
+[13.0:17.0] So today we'll talk about applied machine learning.
+[17.0:20.0] Last class was around supervised learning.
+[20.0:23.0] The next lecture would be around unsupervised learning.
+[23.0:28.0] So we'll see why do we need a lecture around applied machine learning in between.
+[28.0:34.0] So before we proceed to the actual meet of the lecture, first of all, some basics,
+[34.0:36.0] like basic announcements.
+[36.0:40.0] And these are pretty easy homework one.
+[40.0:42.0] The feedback was already released.
+[42.0:44.0] It's accessible via Moodle.
+[44.0:48.0] There would be some of you asked whether you will have access to a reference solution
+[48.0:51.0] or a post-mortem of the homework. We usually do this all the time.
+[51.0:55.0] So this time we'll have a post-mortem which will be a pre-recorded video.
+[55.0:58.0] That will be uploaded to switch to also linked via the website.
+[58.0:61.0] And we'll point you to a reference solution.
+[61.0:64.0] This would be done by this Friday.
+[64.0:68.0] Then moving on, recap of what's due in one and a half weeks now,
+[68.0:71.0] which is the project milestone P2.
+[71.0:75.0] It's due on Friday 18th November 2359.
+[75.0:77.0] Usually stuff.
+[77.0:81.0] The lab session will follow the exact same protocol that was done last time,
+[81.0:86.0] which is you will have an exercise on applied machine learning,
+[86.0:89.0] which will be in person in BCH2201.
+[89.0:93.0] And there will be a track two of project office hours,
+[93.0:96.0] which will be carried over on Zoom with your project mentors.
+[96.0:101.0] Again, we have posted as a reminder on how you should,
+[101.0:105.0] like the protocol that you should follow to participate in the office hours.
+[105.0:109.0] It's elaborate, but again, sorry about that, but again, it's important
+[109.0:116.0] so that you're able to communicate how to efficiently utilize the time with the TAs.
+[116.0:118.0] So that's it for today,
+[118.0:120.0] regarding the announcements,
+[120.0:124.0] but we'll now move to the technical content of the lecture.
+[124.0:126.0] As usual, the feedback link is here.
+[126.0:129.0] If you want to provide a feedback,
+[129.0:131.0] and we'll move further on this.
+[131.0:134.0] So as I hinted on earlier, right?
+[134.0:137.0] So why do we need an extra class on applied ML
+[137.0:142.0] where when you have already looked into supervised machine learning last time,
+[142.0:146.0] and you will discuss on supervised learning in the next lecture?
+[146.0:150.0] So the basic idea behind this is in this paper,
+[150.0:154.0] and the abstract of this paper which says machine learning that matters.
+[154.0:156.0] So if you think about it,
+[156.0:160.0] the first line of the abstract that says it is easy to sit in your office
+[160.0:164.0] and run a Vika algorithm on a data set that you downloaded from the web.
+[164.0:169.0] So allow me a grant and per comment like Vika was still a
+[169.0:175.0] hip machine learning toolkit when I was a student back in 2009 and 2010.
+[175.0:177.0] Like I was an undergrad student,
+[177.0:180.0] and these days it's a psychic learn,
+[180.0:182.0] and even you know,
+[182.0:185.0] PyTorch has trying to make deep learning more commoditized.
+[185.0:188.0] So this is what we have from a classical ML class.
+[188.0:190.0] Of course, you don't need,
+[190.0:192.0] you don't learn how to use the tools,
+[192.0:195.0] the start of the concepts,
+[195.0:200.0] but another important point here is what does AIDA bring to this specific aspect?
+[200.0:204.0] And the key part is in this following line,
+[204.0:210.0] which is it is very hard to identify a problem for which machine learning may offer a solution.
+[210.0:214.0] Determine what data should be collected,
+[214.0:217.0] select or extract relevant features,
+[217.0:219.0] choose an appropriate learning method,
+[219.0:224.0] select an evaluation method, interpret the results, involve domain experts,
+[224.0:229.0] publicize the results to the scientific community, and persuade for adoption,
+[229.0:232.0] then and only then you would have truly made a difference.
+[232.0:237.0] So from your classical machine learning class, you know how, like the underpinnings
+[237.0:241.0] of the algorithms, what are the numerical procedures, how are the optimization
+[241.0:246.0] procedures working on, but here we'll talk about certain basic aspects,
+[246.0:250.0] like how do we even collect data, how do we perform feature selection,
+[250.0:254.0] then if you don't have labels for the data that you have collected,
+[254.0:257.0] how do we label them and you get the idea, right?
+[257.0:261.0] So and also some important aspects about once you have the data, once you have features,
+[261.0:265.0] labels, how do you select a right model for your task?
+[265.0:270.0] So moving on, we'll go through this pipeline, this ML pipeline,
+[270.0:274.0] where we'll first look into data collection procedures,
+[274.0:278.0] then we'll talk about how do we select a model, and finally we'll conclude
+[278.0:282.0] with model assessment. So in this, in the specific lecture for today,
+[282.0:286.0] I will assume a supervised learning setup, because you've already saw
+[286.0:290.0] classification last time, but a similar pipeline would also apply to
+[290.0:296.0] unsupervised learning with minor changes. So we'll first go through data collection,
+[296.0:302.0] as I said, followed by model selection, and then we'll conclude with model assessment today.
+[302.0:308.0] So data collection is the most important part when you want to train a machine learning model,
+[308.0:311.0] because let's say garbage in garbage out, right?
+[311.0:316.0] So if you don't have the right data, your model will not be able to give the
+[316.0:320.0] due performance that's expected, right? And this is more important because without data,
+[320.0:323.0] there is no data science, without data, there is no machine learning, right?
+[323.0:329.0] So and just to describe a bit about this, right? So what do we mean by collecting data?
+[329.0:333.0] What are we really collecting here? Right? For instance, let's say you want to
+[333.0:337.0] classify some images, but before you do that, you need images, right?
+[337.0:341.0] So you would collect images from the web, you can use flicker to crawl images,
+[341.0:345.0] you can crawl it from Google images, you can crawl it from Wikipedia Commons.
+[345.0:349.0] So there are many sources of images that are available out there, right?
+[349.0:354.0] And let's say you want to think about a way to do a medical diagnosis,
+[354.0:360.0] where you want to predict stroke in patients, right? So there, and the reason I took this example
+[360.0:365.0] is because most of the time for collecting data, you need domain knowledge, right?
+[365.0:370.0] You need to know what kind of data you need to collect to solve the underlying problem.
+[370.0:377.0] And to wrap this around in a, you know, crisp definition, what I would say is
+[377.0:383.0] think about a pandas data frame, right? So these columns of the data frame that you usually have,
+[383.0:388.0] are the features that you get from the data, right? So this is basically the data
+[388.0:392.0] that you're trying to model, and then you would all sometimes have a class label,
+[392.0:396.0] which will be the objective that you're trying to optimize, right?
+[396.0:400.0] In a supervised setting, if you don't have a class label, you're just looking for some patterns
+[400.0:406.0] or some doing some unsupervised learning on the set of features that you've extracted from the data.
+[406.0:412.0] So in, so in this case, what's the point here is, if assigning a class label
+[412.0:416.0] is tricky, it's expensive, or it's impossible in some scenarios,
+[416.0:419.0] you need to do unsupervised learning, which will cover in the next lecture.
+[419.0:425.0] But for now, let's focus on once we have a class label, what do we do with this data?
+[425.0:432.0] So this is a big flow chart that we'll follow to discuss about certain key modules in data collection.
+[432.0:439.0] So we'll start with the identification of features that you need to, once you've collected the data,
+[439.0:444.0] then we'll think about if the class label is available or not, if it's not,
+[444.0:449.0] you have to do some efforts to collect the labels for this data that you just gathered.
+[449.0:453.0] If you have the labels already, you move to the next step where you think about,
+[453.0:456.0] do you need to discretize some features, right?
+[456.0:458.0] So again, we're going a bit fast over this flow chart right now,
+[458.0:464.0] but we'll look into each of these modules a bit carefully as we move on with the lecture, right?
+[464.0:467.0] So we're talking about discretization, right?
+[467.0:470.0] So let's say you have a set of features, you already have some labels.
+[470.0:474.0] Now you need to think about are there some features that need to be discretized?
+[474.0:481.0] And we'll look into why discretization is necessary because sometimes some classifiers cannot work with continuous data, right?
+[481.0:485.0] Recall that you were taught about decision trees last time, right?
+[485.0:490.0] So those those datasets, like the input to a decision tree,
+[490.0:493.0] the way it works is that it tries to split the certain features.
+[493.0:499.0] And it can only work well with when the features are discrete and not continuous because when you have continuous features,
+[499.0:504.0] you know, finding a decision boundary in terms of how to split the features is, you know, really hard.
+[504.0:507.0] So this is why you need discretization in some way.
+[507.0:515.0] So we'll look into some unsupervised way to do data discretization while also going through some supervised methods as well.
+[515.0:520.0] Lastly, once you have done all that, right, you might have a lot of features, right?
+[520.0:532.0] And sometimes not all features are equally important or sometimes these features might not be even relevant for the outcome, like the learning objective.
+[532.0:538.0] So for instance, you want to classify certain images, some features that you've already extracted or selected might not be relevant.
+[538.0:547.0] So an important aspect here is to perform feature selection to identify which features are important for your underlying learning objective.
+[547.0:560.0] Lastly, sometimes you need to think about normalization, recall that, you know, when I think we discussed this a bit about like you can recall when you're trying to do a linear regression.
+[560.0:572.0] Sometimes when the features are not in the same scales or the same ranges, like there's an orders of magnitude between different features, it could be the case that your,
+[572.0:581.0] your optimizer puts more importance on a certain feature. So normalization is important in many cases.
+[581.0:595.0] So once we've described this, you know, the high level pipeline now will move into as I promise, we'll move into these specific yellow rectangular boxes and we'll look into them one by one.
+[595.0:605.0] So let's first try to understand identification of features, right? So before we do that, we need to know what kind of features are actually out there, right?
+[605.0:621.0] So you can have continuous features like height, temperature, these are real valued numbers. When for instance, you think about temperature, let's say it's between 0 and 100 degrees and it's a continuum of values, right?
+[621.0:642.0] So you can have infinitely many values between this range. Then there could be certain discrete features, right? And we first mentioned the case, which is ordinary features because these features are discrete, but and specifically the difference here is they possess a certain order, right?
+[642.0:653.0] So we think about set of categorical values like high, medium and low, right? Although they are categorical data, but they have a set of order in between them. There's a natural order being defined.
+[653.0:661.0] Similarly, you can think of this example, which says agree, don't care, disagree. There's again a natural order in these categorical values.
+[661.0:678.0] Then lastly, there is a categorical feature, which is, which is something similar to ordinal, but doesn't have a natural order. For instance, you can think of country or gender as a feature, which takes, you know, country could be the list of all countries in the world.
+[678.0:684.0] Gender is, you know, used to be two male, female, but now even other genders non binary.
+[684.0:705.0] And you can think again of these are a set of categories where there is no, there's no order. Okay. So these are the basic set of features that that we can think about when we are collecting features, but an important thing also to consider here is that these are features that are naturally found, right?
+[705.0:725.0] You can always also generate more features, right? For instance, you can think of simple stats, like the max value of a specific, like the max value of the temperature or the mean or the standard deviation while trying to model as, you know, a certain objective.
+[725.0:738.0] And here, why do we need the right features is that sometimes they might help you, right? Consider this example of, you know, trying to predict which movies would you like to watch next, right?
+[738.0:751.0] So if we have a historical information about which movies you have already seen and let's say you have a preference toward horror movies or, you know, a specific genre like comedy movies, right?
+[751.0:767.0] Then we can use this information like how did you actually rate movies belonging to these genres? Like we can look into certain stats like maximum ratings, the median rating, the mean or the standard deviation and these can then be helpful to the model.
+[767.0:777.0] So the point here is that with this derivation of features, you've already done a lot of heavy lifting for the model and the model would be able to then optimize the objective better.
+[777.0:785.0] Then again, it's important to state that why this retire, these free features are even required is because some there would be some classifiers, right?
+[785.0:799.0] As I alluded to when we're talking about this pipeline that decision trees, for instance, would require a discretization as a pre-processing step before you can even feed the data to these models.
+[799.0:821.0] Okay, so at this juncture, it is important to mention, like I don't know, some of you might have had this thought that features engineering or features selection, these kind of things used to be a things of the past, but with deep learning, they might not be as relevant because, you know, there are different ways how we feed the data to a model today.
+[821.0:841.0] But this is important to describe here is that these, like these aspects that we are covering today were kind of relevant before 2012 in a way that when deep learning was not as popular deep learning had been around even before that, but it wasn't that popular because it was not shown to the world.
+[841.0:855.0] The true wonders that deep learning could do and it was this paper, which was classification of image net data using deep convolutional networks really changed the way people started thinking about deep learning, right?
+[855.0:869.0] And, you know, we update this all the time, this paper had, this paper had 90,000 citations when Bob covered this lecture last year, and this year I was just checking to be curious it had 120,000 citations.
+[869.0:886.0] So imagine and we've seen that, you know, this paper started like five years ago, this paper had 16,000 citations, you can imagine the popularity and the way deep learning has kind of just transformed the way people think about machine learning, right?
+[886.0:905.0] So again, coming back to this, usually what we use the way machine learning used to be like the machine learning pipeline used to be designed before 2012 before this paper was you had an input data, you look into certain cleverly designed features, which was termed as feature engineering.
+[905.0:916.0] And most of the heavy lifting was done here, right? You might have, you know, if you think about this aspect when we talked about simple stats that can be used as derived features, right?
+[916.0:928.0] So you saw that these simple stats could already be useful to make the model perform better, right? So this was a site, right?
+[928.0:937.0] Most of the heavy lifting was done here, and the final performance of the model, right? As you can see, it's only good as the features set.
+[937.0:949.0] So this was really a bulk of the bulk of the effort for any ML pipeline was spent here, and then eventually this was fed to a machine learning model.
+[949.0:958.0] How is how this is done now is in the deep learning era, the way it's done now is the features and models are actually learned together.
+[958.0:976.0] So usually you feed the raw data to a model and then, you know, how these like how this raw data should interact or 25 different patterns that existed in the raw data and then eventually feed it to a machine learning model like a classifier or even an unsupervised learning objective.
+[976.0:992.0] All these things are done together in the world of today, but we will focus for this class again going back to this aspects about, you know, the classical ML because it's important to understand fundamentals.
+[992.0:1003.0] Once you know how these how this task was done in the past, then you will be able to even appreciate the the power of deep learning even more, and then you will be able to understand what's going on, right?
+[1003.0:1010.0] Because if you think about the learning really it's a black box here, right? You really don't know what kind of features are being fed to the model.
+[1010.0:1019.0] So this is why we will will cover the classical setup in today's lecture and I hope you like what you will hear.
+[1019.0:1030.0] So coming back to this again, the slow chart will now we've covered already how we can identify features, what kind of feature engineering can be done.
+[1030.0:1039.0] And now we'll move to the next part, which is if we don't have labels from the data, how can we even perform data labeling.
+[1039.0:1045.0] So let's let's talk about a specific specific use case here, right?
+[1045.0:1064.0] So let's say you want to identify, you know, you really want to talk about our collect data about dietary aspects, right? And you want to really, you know, train a model or even, you know, try to classify certain information from this, right?
+[1064.0:1079.0] So with this aspect, what you have is you can easily collect web pages, right? You can easily write a crawler, which simply collects different web pages, right? Or you can even, you know, write a script to collect images from the web.
+[1079.0:1097.0] But you don't know for this case, for instance, you don't know whether the page that you just collected is it credible or not, right? And for this before even you can train your model, you need to have, you know, a labler who can tell you whether this page is credible or not, right?
+[1097.0:1119.0] And this, this used to be a very expensive task in the past, which was like it was almost always the domain experts would help you label the data. So imagine in the world of today, you wrote a crawler and then in one week, you have a million web pages and you need certain labels extracted from these web pages, right?
+[1119.0:1135.0] So giving money to domain experts or even having any sort of human task force, which is at a smaller scale, would make it really hard to label such amount of data, right? And similarly, you can think of this image net example that we saw in the previous slide, right?
+[1135.0:1155.0] As an image net was a huge data set and collecting labels about whether there is a cat in the image or not, whether this is dog in the image or not, these kind of things, although seem trivial, but at such a scale, they are really time consuming difficult and even a lot of very expensive and in some critical cases, these might also not be possible.
+[1155.0:1172.0] So, as I said, there are multiple ways of actually performing the labeling, right? It could be you who perform the labels, for instance, you know, you could think of, you know, just sit for one day, you can label 10,000 pages, right?
+[1172.0:1186.0] You write a really efficient script, which just shows you different pages that you just collected and you were able to label it. So can anyone think of what can be the problems if you yourself label the data?
+[1186.0:1203.0] Yes, that's true. You may not be the domain expert and you may be, you're not doing a good job at it.
+[1203.0:1225.0] Exactly. Can you elaborate on that? Okay. So, so the point is, yeah, this is a very interesting point that you might introduce bias, right? And these bias can be either explicit or this bias could be even inherent or implicit, right?
+[1225.0:1246.0] For instance, sometimes because when you are the person who are designing the machine learning model and you are the person who is labeling the data, what can happen is that you have some inherent ideas about which type of errors your classifier could make or what's the strength of your classifier.
+[1246.0:1258.0] So eventually the labeling process, you could, you could label the data in a way that you might always label it in a way that you know what the classifier is going to predict.
+[1258.0:1266.0] So you label it in that way. Again, not saying that you will deliberately try to do this, but there is some inherent bias, which you can make, right?
+[1266.0:1283.0] So to alleviate these issues, what's usually done, right? So in the older days, when you know professors used to do this is that they had access to a huge, huge amount of undergraduate students and these undergraduate students help them label the data, right?
+[1283.0:1312.0] Or they paid a lot of money to domain experts, right? And we're really talking about studies that were done in the past, like, you know, these medical diagnosis or these clinical trials, right? As in all these cases, you either would have domain experts or, you know, for some less sensitive tasks, you know, in, you know, again, I'm talking about back in 2000s or 2010s, you know, you have students who would help the professors label the data.
+[1312.0:1332.0] In the world of today, as as I was, you know, some of you might have guessed, we already have a nice way of getting this labels, which is using the crowd, right? So using the workforce that's available to us, we are different cloud sourcing platforms, which we look into in the next slide.
+[1332.0:1347.0] So the point here is that in this cloud sourcing setup, you don't have a control of what would you get because you would you can get amateurs, which is analogous with the undergraduate students in terms of labeling the data, right? And in no other way.
+[1347.0:1354.0] And then you can think about different domain experts, right? And these could also be available via such platforms.
+[1354.0:1364.0] So thinking about what kind of a platform a crowd sourcing usually offers us is that you can think of these.
+[1364.0:1374.0] The most prominent one is Amazon Mechanical Turk and there were others called crowd flower click worker. I don't even know crowd flower is still called crowd flower.
+[1374.0:1382.0] I remember last time when Bob covered this lecture, this was like the company was being renamed or even being repossessed.
+[1382.0:1394.0] So the these are different platforms that are available for us to do a crowd sourcing, but what what's how does this work, right?
+[1394.0:1401.0] So you can think of you again there as a requester who is responsible for like who has already collected the data.
+[1401.0:1407.0] And now before you can train the model, you need certain labels, right? So you you prepare a task.
+[1407.0:1420.0] So basically you actually write a description of this is the data and you explain what someone would actually need to do to label your data, right?
+[1420.0:1429.0] Then you actually define the amount of money that you are willing to offer for this specific labeling task, right?
+[1429.0:1442.0] Then once this is done, you submit this task to a crowd sourcing platform and then this gives you access to a huge crowd workforce, which is, you know, people who access these platforms on the web.
+[1442.0:1448.0] And they just want to earn some money by performing such tasks, right?
+[1448.0:1466.0] So what they will do is they'll go to these platforms, look for what all tasks are there to offer, read the descriptions, try to understand if the money is right and if the task interests them and if all this thing helps, if all this thing actually falls in place, what would happen is they would accept the task.
+[1466.0:1475.0] They would perform the labeling, then the answers are returned to this crowd sourcing platforms as we see here, right?
+[1475.0:1491.0] What had happened is that once this once this platform collects this like the responses are all in, what can happen is you as a request right now can collect all the labels that were submitted by different crowd workers.
+[1491.0:1519.0] So it's important to now see why do we why does AMT calls itself as artificial artificial intelligence, right? Because you can see something like visualize all this this pipeline that we covered today as, you know, as a black box to the requester is something like for the requester, you can think of this as already an artificial intelligence module which labels the data for you, right?
+[1519.0:1529.0] So basically, since you access this in a programmatic way, you just you already described the task, set the money and then eventually you can have an API that can collect all the responses for you.
+[1529.0:1539.0] So you can think of this as artificial artificial intelligence, right? So it's a way of, you know, just thinking about human intelligence, but in a different way.
+[1539.0:1568.0] So, as I said, we have this huge pipeline and then eventually you're able to collect the labels for your data. So in this case, it's important to identify right as in as we just discussed in this slide that with the crowdsourcing, you have access to a workforce, but you don't know whether they are amateurs or domain experts or even there are some people who would try to spam you, right?
+[1568.0:1585.0] And this is what we're trying to just give explain the broad spectrum of crowd workers that might be out there, right? So you can think of these two broad categorizations, which is people who are truthful and people who are not truthful and then we'll let's analyze the broad spectrum here, right?
+[1585.0:1600.0] So if you think about it, the domain expert is over here on the top, right? So if something like if you might have seen on the access, you have true negative rate on the x axis and on the y axis, you have the true positive rate.
+[1600.0:1615.0] So you can really see that domain expert will always get everything right and their truthful and they will get always gets everything right. So they will label negative examples as negative positive examples as positive.
+[1615.0:1629.0] So trying to think again, consider this as a binary classification task that you are trying to think about, right? Then let's think about this particular person, right? So malicious farmers, they would always they know the answer,
+[1629.0:1643.0] but they will always flip the answer, they are deliberately trying to screw you over, right? So they'll tell you that, yes, for a positive example, they'll always label it as negative and for a negative example, they'll always label it as positive, right?
+[1643.0:1653.0] So in this case, what you can think of is that you will have a true negative rate and a true positive rate in the in the bottom left and which will be close to zero, right?
+[1653.0:1674.0] Then there are these uniform spammers who basically always take one stance. So someone who will always label everything as positive, which is which will be people here, then there will be others who will always label everything as negative, right?
+[1674.0:1685.0] Another interesting class here is the random spammer will just close their eye and just randomly choose each data sample as either positive or negative, right?
+[1685.0:1698.0] So eventually they would sit in the middle of this between the expert and malicious stamps. So what would be the normal worker look like? So you should think of a normal worker, she or he would be here is because, you know,
+[1698.0:1708.0] you know, you know, think try to think about it in a way that they're trying to be truthful, but they're not experts, right? So there might be some examples that they don't get right.
+[1708.0:1722.0] And why this could happen is because either some task is inherently difficult for normal users or normal crowd workers to solve and really you need a domain expert to give the answer.
+[1722.0:1743.0] So is this spectrum clear? Okay, so with this now we'll just move to the next slide to understand how you can detect or try to identify malicious spammer so that you can remove that data set like the labels that you collected from these people from your collected data.
+[1743.0:1761.0] So there are two ways to do this is one is you think about honey parts, which is you insert some obvious examples, which are hard to get wrong, right? Or for instance, you can even think of a goal label set, which you yourself collected.
+[1761.0:1789.0] So you can think of you have 100 web pages or that you have labeled yourself and you've labeled yourself these fruitfully taken huge amount of time to label them and now you can feed them as honey parts in your task and give them to the door course to really identify if someone is deliberately trying to be untruthful while the labeling task is going on.
+[1789.0:1809.0] And there are two ways to do this, right? So you can really be hard or a very tough crowd work, you know, someone who sets up a very tough crowd working regime in a way that you would tell them in advance that if you get these questions wrong, we won't pay you.
+[1809.0:1825.0] Right, and the other way is that you can think of well, you're more worried about the quality of data that you collect, so you pay them anyway, but this gives you a way to exclude the data labels connected by such people, right?
+[1825.0:1846.0] And then you could think of some other ways like you can aggregate labels from different people. So this is this works because instead of letting one, you know, one crowd worker label each data point, you can have each data point being labeled by five or 10 crowd workers.
+[1846.0:1859.0] And in this way, you can, you know, you get multiple responses for a specific data point, although of course it becomes more expensive, but it gives you a way, you know, a power of aggregating examples over different setups.
+[1859.0:1875.0] And this is how we can do it, right? So you can think of a very simple way of deciding the, you know, how you can aggregate information, which is, let's say you have three lablers who labeled this specific web page.
+[1875.0:1888.0] And you know, two of them labeled this page as credible. So you can think of something like a majority vote where you can say that, okay, two people out of three labeled data is positive.
+[1888.0:1893.0] So it may be would be positive and this is how you aggregate it.
+[1893.0:1908.0] Then, you know, you can also think of some other ways again, I'm just trying to communicate all that's possible out there for doing this, you know, for setting up crowdsourcing task and what all can you do to make things better.
+[1908.0:1918.0] But many of these, many of these ways of collecting data is already offered as features on, you know, crowdsourcing platform like Amazon Mechanical Talk, right?
+[1918.0:1928.0] So it's important to just mention that there are some game theoretic aspects that can be used to actually design strategies, which incentivize people to be more truthful, right?
+[1928.0:1941.0] So the buzzwords here are fear prediction, prediction markets and I'll just give you a hint about what I what we mean by fear prediction is something like you would get more money if you give answers similar to your peers.
+[1941.0:1958.0] So there are like there are again, there are many research and there are papers that have shown that if strategies are designed in this way, it incentivizes people to be truthful because they get more money and it incentivizes the entire crowd to be more truthful.
+[1958.0:1971.0] So this is, you know, just to give you a high level overview of how you can collect labels and with this will move to the next part where we'll talk about discretization.
+[1971.0:1973.0] So again, a quick recap.
+[1973.0:1984.0] We have identified features. We've talked about feature engineering. We have collected the labels for the data and now we really are in the regime where we have everything to train a model.
+[1984.0:1995.0] But we'll look into some steps which are important, which could be considered as important pre processing steps for performing your engineering objective.
+[1995.0:2005.0] So we have alluded to this a bit in the in the previous slides, but it's important to know why do we even need to do discretization.
+[2005.0:2021.0] So at the first point, you can think of some classifiers want discrete features, right? So we already discussed about this that there are classifiers like decision trees that would only require discrete features to form their data splitting.
+[2021.0:2034.0] Then you can think about this nice setup where you know think about this in a way that you have a feature which is lying in the range 0 to 100 again, it's a continuous feature.
+[2034.0:2042.0] But what you do is you try to discretize this in a way that you either look at quantiles or percentiles, right?
+[2042.0:2060.0] You can think then this will really give you different buckets in the in the features space, right? But now what this could help this could help you with is this could help you learn nonlinear decision boundaries using linear models, right?
+[2060.0:2074.0] And how this can happen right because now what you have done like think about this in a way that you have a feature age and you have an outcome about for instance the insurance premiums that you pay, right?
+[2074.0:2083.0] So usually they will be correlated in a way and there will be monotonically correlated in terms of with increasing age, you will pay more and more premiums, right?
+[2083.0:2100.0] And then what you can think about is in a specific aspect is for instance when you quantize this data or you know you divide this data into buckets or discretize this data, what could happen is you now get a broader spectrum of the age right?
+[2100.0:2114.0] You don't consider this as just one continuous value, but what you get is certain buckets is that okay very low age or you know very old age people who lie in the you know in the moderate a setup, right?
+[2114.0:2121.0] And then what you can think of is when you train a linear model is that you learn a different coefficients for each of these buckets, right?
+[2121.0:2130.0] So when you have coefficients for each of these buckets, you will your model then turn to try to learn or you know try to learn how you can combine these different buckets together, right?
+[2130.0:2145.0] So it's it could be the case that you're able to identify, you know that okay people who are too young or people who are too old, maybe they pay more premiums versus people who are in the in the moderate age domain.
+[2145.0:2151.0] Young people let's say who lie adults young adults who lie in the range 20 to 40, they pay the least premium.
+[2151.0:2164.0] So these kind of things can be figured out because now you have discretized the data again what we mean by long linear decision boundaries is only in the original raw feature space and not not in the transform feature space.
+[2164.0:2180.0] Then it's also important to notice that there are certain feature selection methods which would also require discrete or even binary features right? And I mean this is very related to the classifier requiring let discrete features as well.
+[2180.0:2197.0] So we'll look into as I promise we'll look into two different ways to perform the digitization which is one being unsupervised and the other being supervised and in the unsupervised case again we can think of multiple ways to do this right.
+[2197.0:2209.0] You can think about trying to look at this range of feature this is this is a continuous feature that you can have which we have we're just looking at it as how this feature is distributed.
+[2209.0:2223.0] We're looking at the feature on the top and what you can do is divide this range into buckets of equal width right which is you right now you divide it in a bucket of like into three buckets.
+[2223.0:2232.0] Which have the equal width which have the equal like the you partition the range equally on the x axis.
+[2232.0:2251.0] It becomes immediately clear that this sort of partitioning is not good for skewed data and specifically you know you can think of heavy tail distribution power laws because what what could happen is that some areas would be more dense and some areas won't be as dense but
+[2251.0:2260.0] you're just dividing the data by partitioning the ranges equally so you could have that there are some bins which have nothing right.
+[2260.0:2277.0] So to address this what could have what could be what we could do is we can look into a equal frequency a binning which is we try to discuss the data by ensuring that each bin has a same number of data points right.
+[2277.0:2292.0] This this is relevant or this makes sense to do when you have a skewed data and you can think of this again as trying to divide data by quantiles or percentiles right because this is exactly what it does.
+[2292.0:2317.0] Last point is again you know not going too deep into this you will try to you will retake you what clustering means when we talk about unsupervised learning in the next lecture but you should try to think about this specific example in this case right of course we we had to do this and we had we wanted to follow this equal frequency discretization.
+[2317.0:2331.0] So we found partitioning in a way that each bucket has three data points but it's not so clear right that whether this data point should lie here or you know or should actually be in two different buckets right.
+[2331.0:2340.0] So you can easily think of moving this partition to this side because they these data points look more naturally grouped and this gives you this right.
+[2340.0:2360.0] So basically you can think of natural groupings in the in the data space before you try to discretize them and that can be done via clustering and this gives you a way of you know partitioning the data or disvertiling the data into buckets.
+[2360.0:2389.0] Then we look into certain supervised ways and I think this would you know we'll draw some analogies how we how we perform the splitting of decision trees to do this right so just just a basic just him out and try to see what we do here right so you can think about each data point being in its own bucket this is how we start such a method right you can think about the most extreme case the most final level of discretization.
+[2389.0:2418.0] Where each data point lies in its own bucket and now what we want to do is slowly try to merge so we we move in a bottom up way and we slowly try to merge it just in bins and how do we do that right so the way to do this is we look we perform a hypothesis testing to really identify whether to adjust intervals of feature is independent of the class or not right.
+[2418.0:2446.0] So you just think about it in a way that there are two bins and the ratio of positive and negative examples in both these buckets are equal or sort of similar in this way you you know you can say that if you even merge them together it doesn't change the class distribution when you when you bring them together
+[2446.0:2450.2] bring them together. And this is what we're trying to say that these two features can then
+[2450.2:2453.6] be merged because they're independent of the class. On the other hand, think about
+[2453.6:2459.84] another setup where one bin has a high ratio of positive to negative examples and the
+[2459.84:2466.48] other doesn't. In this case, it doesn't seem so likely that they should be merged because
+[2466.48:2474.64] then if we merge them, we are trying to lose the to lose the class proportion in different
+[2474.64:2479.3599999999997] buckets. And this class proportion could be like this like being in this bin could be
+[2479.3599999999997:2484.3199999999997] a strong signal of that that could be picked up by our classifier model, right? Because
+[2484.3199999999997:2489.8399999999997] this bin is a characteristic that with being in a specific bin, you have a high ratio of
+[2489.8399999999997:2495.44] positive to negative. So you can say that this specific bin gives you some signal about which
+[2495.44:2502.7999999999997] class should a label lion. So and this is why I said you can think of this as what you did for
+[2502.8:2507.52] decision, decision tree, right? There, of course, you did it in a reverse way, you did it in a top
+[2507.52:2513.28] down way, where you started with every data point in the leaf in the in the root and then you slowly
+[2513.28:2518.4] started to split based on information gain or other ways of splitting criterion, right? So
+[2519.36:2527.92] you can think of there is that eventually if you if you do a very, you know, a perfect decision tree,
+[2527.92:2534.48] each leaf would be pure, right? And what I mean by pure is each leaf would contain data only
+[2534.48:2541.84] from a given class, right? And you can see this also something similar is also happening here
+[2541.84:2547.6800000000003] is because you would continue to merge until and unless this hypothesis that you're trying to test
+[2547.6800000000003:2552.08] is whether the feature is independent of the class or not that's going to that's going on.
+[2552.08:2558.7999999999997] So the way to do this again, if you're not heard about chi square test, it's fine. It's just a tool
+[2558.7999999999997:2564.7999999999997] to think about how you can test independence, but the the basic idea is that you would use
+[2564.7999999999997:2572.0] a hypothesis testing to continue to merge the features recursively until and unless there is
+[2572.0:2574.96] you reach a point where you you cannot perform further merges.
+[2574.96:2585.28] So with this covered, I'll quickly so what I'll do is we are two minutes from the break,
+[2585.28:2592.2400000000002] but this lecture actually went over time last year and also the year before that. So there's a
+[2592.2400000000002:2598.4] lot of materials that we want to cover. What we'll do is is it okay if we extend up to nine of five,
+[2598.4:2603.44] take a 10 minute break and then we back because then you know we won't need to otherwise we might
+[2603.44:2608.48] have to rush later. So it's better that we take a bit more time now. Sorry about this and again,
+[2608.48:2616.16] thanks, thanks for being here. Okay, so now we've discussed about how we can perform discretization
+[2616.16:2623.76] in a different ways. We'll now move to the two other important aspects where once we have the
+[2623.76:2629.2000000000003] huge set of features, how we can remove features that are irrelevant or how we can perform
+[2629.2:2635.68] feature selection. So the key idea here is that we really want to reduce the number of features
+[2635.68:2642.24] that let's say there are n features that we have already collected, derived, after discretization,
+[2642.24:2648.3199999999997] there might be more features that you now have and what you need to now do is to reduce this
+[2648.32:2661.52] features to this best size subset of cardinality m. And this is really the most, let's say this is
+[2661.52:2666.7200000000003] the optimal subset of features that you can use for your model. So what do we mean here?
+[2668.4:2677.1200000000003] What do you mean by optimal? So what we want to say is let's say you have a machine learning model,
+[2677.12:2682.16] let's say you have a classifier and what you what I want to say is that with this subset m,
+[2682.7999999999997:2687.44] it's enough to get the best performance like you really don't need the other features that you
+[2687.44:2694.24] have already collected. And it's almost always the case that of course there is incremental gains
+[2694.24:2698.56] that you will get if you add more and more features, but again you can think of trying to cut off
+[2698.56:2703.04] at some point due to obvious advantages. And what could be these obvious advantages?
+[2703.04:2708.8] So for instance, let's think about this, if you reduce the feature space, you would improve the
+[2709.6:2714.4] training efficiency of your model, because there will be less features and you might have already
+[2714.4:2718.64] guessed this from the previous lecture when you looked into supervised learning, most of these
+[2718.64:2723.92] models have the time complexity of these models are dependent on the amount of features as well
+[2723.92:2729.92] as the amount of data. So if you reduce the feature space, you improve the time complexity and
+[2729.92:2735.6] reduce the time required to train it, then you can also decrease the danger of overfitting.
+[2737.12:2741.84] We look a bit more into this when we move to the next, when we move to the later stages of this
+[2741.84:2748.96] lecture, but this is again a basic idea to say that you would have a compact feature space,
+[2748.96:2754.96] so you could reduce overfitting. Then it also helps you increase the interpretability of your
+[2754.96:2760.0] model, because the less of the features, then you can easily say that these specific features
+[2760.64:2769.12] drive your learning objective and how do they drive it. So another important point,
+[2769.12:2776.4] I think which I missed here to show that is identifying this subset of features automatically
+[2776.96:2782.8] is a really complex task, because you can already imagine that if you have n features and you
+[2782.8:2791.84] want to find the best subset of size m from them, they are overall two to the power n possible
+[2791.84:2798.0800000000004] subsets, which is the power set of the original set of features. And to do this exhaustively will
+[2798.0800000000004:2806.0] be impossible, because really this is exponential. So what we could do here is that the idea would be
+[2806.0:2814.08] to rank features somehow, so that we are able to use some heuristics, which are almost always
+[2814.08:2819.52] not greedy heuristics, where we always choose like come up with the ranking with the feature
+[2819.52:2825.6] importance from high to low and greedily choose features or really add features to this set
+[2825.6:2832.64] and stop when we have a set of the size m that we want to, like if you know what how much
+[2832.64:2839.52] features you want to retain and you can stop once you have that cardinality. So there are two ways
+[2839.52:2847.44] to do this. One is think of this as this feature selection as a pre processing step,
+[2847.44:2852.64] which is also offline because there is no interaction with the classifier or the machine learning
+[2852.64:2860.08] model that you have. And then the other set would be iterative feature selection, which will then
+[2860.08:2866.64] be we call this online and we will see soon what do we mean by offline and online. But this iterative
+[2866.64:2871.44] feature selection as you might have guessed that this will involve the machine learning model in
+[2871.44:2877.12] some way, because we will iteratively select the features, we will look into the initial set of
+[2877.12:2881.92] features, we will train the model, then we will add more features and then we will keep on
+[2881.92:2887.12] retraining the model like this and then we will be able to identify which new features have to be
+[2887.12:2896.08] added. So that the offline feature selection or the way of thinking of it as a pre processing step
+[2896.08:2902.0] has the advantage that this is independent of the classifier, because there is no interaction
+[2902.0:2906.96] with the classifier or the machine learning model and this can be done once at the start.
+[2907.68:2914.16] But the disadvantage here is that this is, again you can think of this as independent of the
+[2914.16:2919.8399999999997] classifier also becomes as a disadvantage because it ignores any interaction with the classifier.
+[2919.8399999999997:2926.64] So maybe you're not able to drive the exact mileage that you would have if you interacted with the
+[2926.64:2932.24] classifier. Then it also assumes that the features are independent, because really the way we are
+[2932.24:2938.24] thinking about this is that we would come up with a ranking of the features and we will choose
+[2938.24:2945.52] features one by one. So it doesn't incorporate how these features could interact towards your
+[2945.52:2955.9199999999996] eventual learning objective. So I think we should just take a break and I will cover this once
+[2955.92:2969.12] we are back. Does that make sense? Cool.
+[2969.12:2990.56] So welcome back and thanks for your patience for having a shorter break. We are covering a lot of things,
+[2990.56:2997.12] but again you will realize that this is very important and very fundamental for a general knowledge
+[2997.12:3003.8399999999997] for the world of data science but also for the rest of the course. We talked about,
+[3003.8399999999997:3008.96] before we break, we talked about how we can rank features according to their individual
+[3008.96:3015.12] importance and I will give you some quick tips on how we can do that. So you can think of two
+[3015.12:3020.7999999999997] different ways to do this. Let's think about continuous features first and you can,
+[3020.7999999999997:3026.4] this becomes immediately clear, you've already seen this a bit when we talked about linear regression
+[3026.4:3031.76] or regression modeling in lecture five, but what you can do is simply think of the Pearson's
+[3031.76:3038.96] correlation coefficient as a way to identify feature importance. So what you can think of is like
+[3038.96:3045.2000000000003] you can try to see on the y axis you can think of the outcome which is your supervised
+[3046.56:3052.56] label and then on the x axis you can think of the feature value and then you can try to come
+[3052.56:3059.2799999999997] up with how correlated these two are. And then this gives you the strength of each feature
+[3059.2799999999997:3063.92] towards your classification objective. Of course some of the key observers here might have
+[3063.92:3071.04] noticed that the class label here is you know is is ordinal or you can think of this as a discrete
+[3072.0:3080.0] case and it's not a coefficient it's not a continuous value. So you can still do this
+[3080.0:3090.0] but the interpretation is not so obvious. So with this Pearson correlation coefficient you can
+[3090.0:3094.08] really rank features and what you can do is you can choose the features that are most important
+[3094.08:3100.24] for your model, right. But another important thing note here is that this will only be able to
+[3100.24:3106.16] capture the linear dependence because this is how Pearson correlation coefficient is even set up.
+[3106.16:3112.48] This is by design of the metric that you're trying to use to rank features, right. Moving beyond
+[3112.48:3120.0] this for instance if you have categorical features and also if you want to think if you want to
+[3120.0:3125.68] get away with this linear dependence assumption what you can think of is mutual information.
+[3125.68:3132.8799999999997] For people who know what mutual information is that's good but again as we talked about chi
+[3132.88:3138.7200000000003] square test just think of it as a tool to measure it but the key crux is here to get the idea,
+[3138.7200000000003:3145.12] right. And roughly speaking what you can think of mutual information is capturing the you know
+[3145.12:3151.44] the amount of bits of information that one variable has about the other variable that we are
+[3151.44:3157.76] trying to measure here, right. So you can think of your class label which you see your feature as F
+[3157.76:3163.28] and then you can just just wrote the definition here how you can measure mutual information and
+[3163.28:3170.2400000000002] this will give you again a way to understand how important a feature is towards your learning
+[3170.2400000000002:3176.48] objective which is the classification task that we are considering here, right. Then you can also
+[3176.48:3183.36] think of again the chi square method which is back here. You can again think of this hypothesis
+[3183.36:3188.6400000000003] testing way of trying to identify the importance of features, right. So you can again think about
+[3188.6400000000003:3193.92] in this way that let's say you assume the null hypothesis that the feature is independent of
+[3195.2000000000003:3202.7200000000003] the class, right. And then you can try to obtain the p value of using the chi square method
+[3202.7200000000003:3209.04] and then depending on if the p value is too low you can say that this cannot happen by chance
+[3209.04:3213.92] and then you can do you know, reject this null hypothesis alluring to the fact that your feature
+[3213.92:3220.08] is important and relevant for the classification task, right. But there is one difference between
+[3220.08:3227.84] mutual information and the chi square test here is that this doesn't give you any indication of
+[3227.84:3234.0] the strength of the feature, right. This just gives you a way of identifying whether a feature is
+[3234.0:3238.72] relevant or not based dependent on based on the significance threshold that you have. And you
+[3238.72:3244.3199999999997] just just make the decision whether this is you know whether this feature is relevant or not.
+[3245.8399999999997:3253.68] Then another important thing to you know think about here is we only looked at features in
+[3253.68:3257.7599999999998] isolation, right. When we talked about ranking the importance of features, right. So consider
+[3257.7599999999998:3265.7599999999998] this simple example that this is in 2D, right. So you have the green stars as the positive examples,
+[3265.76:3271.36] the red circles here as the negative examples and you're the methods that we just talked about
+[3271.36:3277.36] about feature selection, they just look at features in isolation, right. So consider them as trying
+[3277.36:3282.48] to you're trying to just project all these features here on the x axis if you just consider the
+[3282.48:3290.48] x1 feature and if you consider the x2 feature you are projecting everything on the x2 axis here,
+[3290.48:3297.36] right. So what can immediately happen as you can might be able to see that in isolation,
+[3298.2400000000002:3304.96] these features may appear off as irrelevant towards your learning objective, right. But if you think
+[3305.44:3311.76] if you see this particular plot it becomes immediately clear that when you consider these two
+[3311.76:3319.76] features as like as a combination, then they have the power to discriminate between the class
+[3319.76:3326.48] examples. So this is why we need to think about this online feature selection which we talked about,
+[3326.48:3333.28] right, where we interact with our machine learning model and let's try to see how we do it, right.
+[3333.28:3340.88] So the way to think of is about this is you have a machine learning model, you select a feature
+[3342.0800000000004:3348.5600000000004] which gives you the best performance, right. We'll again discuss about how you can, there are
+[3348.56:3352.88] different ways to measure performance but assume that you have a way of measuring performance for
+[3352.88:3357.36] now, right. So what you will do is if you have n features, so you will choose from them,
+[3358.56:3364.64] the feature that gives you the most mileage, right, in terms of the best performance and then you
+[3364.64:3370.7999999999997] will really keep on adding features to this model. So what you will do is select one feature which is
+[3370.7999999999997:3376.7999999999997] the best, train the model, then you will from the remaining n minus 1 features, again you will
+[3376.8:3381.76] choose the best, you will add it to your set of features, train the model and this will keep on
+[3381.76:3389.36] going on until unless you have reached either threshold performance that you want to achieve or
+[3389.84:3394.7200000000003] you have reached the maximum number of features that you want to include in your model, right.
+[3395.6000000000004:3401.1200000000003] Naturally, what comes out here is that the advantage is here is that it interacts with the model,
+[3401.1200000000003:3406.32] it tells it's basically gets away with this assumption that features are independent and you are
+[3406.32:3411.36] able to model the interaction between the features. But a big disadvantage here is that this is
+[3411.36:3415.84] very computationally intensive, right, because if you have n features, you are trying to do this
+[3415.84:3422.1600000000003] gridally, you would have to train your model, let's say if you want to have a feature set size of
+[3422.1600000000003:3426.88] m, you would really have to train your model m times, right, beginning from one feature and you
+[3426.88:3432.88] just keep on gridally adding them. So again, there is no panescia here, right, as in there is one
+[3432.88:3439.52] way where you can do things before you start training, but it has disadvantages, but the other way
+[3439.52:3444.0] where you can do it interactively, of course, it's better, but there are disadvantages, like it
+[3444.0:3449.12] will take a lot of time to train. So and then we can think of the other way around, right, as in what
+[3449.12:3454.08] you can do is instead of starting with an empty feature set, you can start with the full feature set
+[3454.08:3459.6800000000003] and then you can gridally remove features that are not so relevant or that don't,
+[3459.68:3467.3599999999997] and that not so important towards to get the most mileage of your model, right, and this is also
+[3467.3599999999997:3471.44] usually called as a belation in the machine learning literature, right, as in you can think of,
+[3471.44:3476.96] you know, I don't know if you if you try to read some papers, you will see people do a lot of
+[3476.96:3484.0] ablation analysis where basically they try to say which feature is the most important towards getting the
+[3484.0:3489.52] you know, the performance that they have, right, so there is one model which is the best and then
+[3489.52:3495.92] you always remove the features and then try to state features importance based on this particular
+[3495.92:3500.88] strategy. Again, so there's no difference, right, the only difference between these two ways is
+[3500.88:3506.08] that in the first one you start with an empty set and the other one you start with the full set
+[3506.08:3515.12] and then keep on gridally moving features. So moving on, we'll quickly cover why do we need to do
+[3515.12:3521.2799999999997] standardization or scaling at times and then we'll conclude the data collection task and we'll move on
+[3521.2799999999997:3527.84] to the model selection part. So feature normalization is important, right, and I sort of touched
+[3527.84:3533.04] this upon when we started discussing about this that the features might be on different scales,
+[3533.04:3538.96] right, so consider this particular setup where you have revenue of a company in Swiss francs,
+[3538.96:3544.88] which is in millions usually and you have the number of employees which could be
+[3546.08:3552.48] dozens or hundreds or even thousands, right, and these features are as it's not that hard to
+[3552.48:3557.04] guess that these features are in different scales, there's orders of magnitude difference between
+[3557.04:3563.04] the scales of the features, right, so this could happen that features with large values
+[3563.04:3568.16] tend to dominate like the your machine learning model will try to over parameterize on them or
+[3568.16:3575.2] focus more on them and this can cause problems, right, of course, when there is a unique solution,
+[3575.2:3581.12] you can find that numerically using different numerical solvers, but if there is no unique solution
+[3581.12:3586.72] to the problem that you are trying to find, what will happen is usually this is done,
+[3586.72:3594.16] we are gradient descent in different models and what will try to happen is that your model will
+[3594.16:3599.9199999999996] then be able not be able to find the correct solution, right, by trying to focus more on certain
+[3599.9199999999996:3608.16] features which just because they have a larger or a bigger scale on which they occur. So then
+[3608.16:3614.08] another point to notice here is that even a single feature may span many orders of magnitude,
+[3614.08:3619.68] right, so you can think of the city size in this case, right, so there will be many cities that
+[3619.68:3624.64] are small, but there are only a few cities that are big, right, as in like you can think of
+[3624.64:3631.2] Sydney or you know Beijing, these cities are huge, but then there are many cities which are
+[3632.0:3638.72] not that huge and usually they are small, right, so even a single feature can have a skewed
+[3638.72:3646.0] distribution within it, right, so with this it becomes immediately clear that we need to think
+[3646.0:3651.7599999999998] about how we can normalize different features, right, and the first one that we'll discuss about
+[3651.7599999999998:3657.2] here is logarithmic scaling, so I'll just quote Bob here, right, is in, I was trying to see
+[3657.8399999999997:3664.16] how he taught this class last year and maybe even before that and he used to say that this class
+[3664.16:3670.56] should be named as logarithms as your friends, right, because really we cover a lot of log transforms
+[3670.56:3676.64] in different aspects of the course, right, so I'll just put that as an anecdotal reference
+[3676.64:3682.3999999999996] and just to see what we do here, right, is basically we transform the feature by performing
+[3683.2799999999997:3691.2] a log transform, right, and what happens here is then we are only looking into orders of magnitude
+[3691.2:3698.3199999999997] and not the actual raw values, right, and this again you know this from the previous lectures,
+[3698.3199999999997:3705.04] but again I would like to say to here again that this is actually relevant for features that have
+[3705.04:3711.52] heavy tail distributions or for instance features that are power loss, right, an important other
+[3711.52:3719.52] way of scaling features is minmax scaling where what we do is try to you know reduce the features
+[3719.52:3727.44] in the 0 to 1 range, right, so by mapping the min value to 0 and max value to 1 and this is
+[3728.64:3734.64] the formula shown here is the way to do it and then what happens is that the new feature lies
+[3734.64:3740.8] in this interval 0 to 1, right, another way of looking at things is doing the standardization
+[3741.44:3748.32] where you know we subtract the mean from each data point and divided by the standard deviation
+[3748.32:3756.48] of that feature, right, so and I think this was already covered when we looked at regression
+[3756.48:3762.8] models in lecture five, right, but the idea here is again quite similar, what would now happen
+[3762.8:3769.76] is instead of forcing the features in the range of 0 to 1, what would you have is that you have
+[3769.76:3778.0] a case where you force the feature, the new feature has a mean of 0 and standard deviation of 1,
+[3778.0:3787.6000000000004] right, so let us discuss a bit about what are the advantages or disadvantages of different from
+[3787.6000000000004:3794.0800000000004] the scaling, right, so can anyone think of where is like what are the advantages of logarithmic
+[3794.08:3809.2] scaling and what are the disadvantages here, so any case where logarithmic scaling won't work or
+[3809.2:3818.72] won't would be problematic, yeah, sure that makes sense definitely you cannot do a transform of
+[3818.72:3846.56] negative values, anything else that can be problem, say again, sure that that's an interesting
+[3846.56:3853.12] perspective, okay, so yes there is, there are problems with logarithmic scaling, right, as in
+[3853.12:3857.68] you for instance like it's very clear a simple example is that if you have negative values it's
+[3857.68:3862.24] hard to think of how you would you perform a log transform, right, can anyone think of what could
+[3862.24:3874.16] be the issues with the with the min max scaling or standardization, okay, yes it's sensitive to
+[3874.16:3879.2] outliers because let's say if there's one large value it will be mapped to one and everything else
+[3879.2:3884.7999999999997] will be squeezed in a small range, but what say let's say we can remove outliers, right, so
+[3886.8799999999997:3890.08] where is min max scaling or standardization still tricky,
+[3898.16:3902.48] so what you can think of is that let's say you are able to remove outliers but there are certain
+[3902.48:3907.92] distributions where outliers are a feature and not a bug, right, for instance again going back
+[3907.92:3914.64] to this setup where you have heavy tail distributions, right, there are many outliers if you think of
+[3914.64:3921.52] it, right, it's by design that you will have many points that have that are rare but they're not
+[3921.52:3926.8] super rare to be called them outliers, right, and they have high values, so in these cases min max
+[3926.8:3932.32] scaling won't work well, right, and similarly just to go through this quickly what you can think of
+[3932.32:3939.52] is that even in standardization the problem is that we assume that the data comes from a Gaussian
+[3939.52:3945.04] or a standard non-abundant distribution, right, and what we are trying to just do there is that
+[3945.04:3951.84] we are using the mean and standard deviation to standardize the feature in this, you know,
+[3951.84:3960.2400000000002] in a zero normal, zero one Gaussian distribution, and this definitely is not meaningful for
+[3960.24:3967.68] a heavy tail data, right, because you know there the underlying distribution is quite different and
+[3967.68:3977.68] you cannot use a standardization method to actually perform a normalization. So an important,
+[3977.68:3982.64] yeah, so I'll just conclude here is that again just like we saw in feature selection there is no
+[3982.64:3987.7599999999998] finish here, right, there is no one, there's like there's offline, there is online each have their
+[3987.76:3994.8] advantages and disadvantages similarly the standardization or the like the normalization of features
+[3994.8:3999.76] also have different methods, but each of them have their advantages and disadvantages, so really
+[3999.76:4006.2400000000002] it depends on based on this you now know which specific features can be normalized in which way
+[4006.2400000000002:4011.6800000000003] and what you should actually do here, right, so moving on to the next part of the lecture, right,
+[4011.6800000000003:4017.6000000000004] we will talk about once we have collected the data we have looked at the huge pipeline about
+[4017.6:4023.7599999999998] identifying features, you know, collecting labels, trying to do some pre processing and feature
+[4023.7599999999998:4029.04] selection, now it's the time to train our model, right, and what all it entails, right, so at a
+[4029.04:4033.8399999999997] high level you can think about the model selection is that really choosing your machine learning model,
+[4033.8399999999997:4038.48] right, you looked into some of these last time like logistic regression decision trees random forest,
+[4038.48:4043.68] there is a gradient boosted tree as well support vector machines, deep learning and sky's
+[4043.68:4049.2] limit, right, there are so many different models that are out there and the goal here is to choose
+[4049.2:4053.04] which models are most suitable for your task, right, for instance you can think of
+[4054.16:4059.68] there are some specific cases where decision trees would work better than logistic regression,
+[4059.68:4065.7599999999998] right, and vice versa, so and specifically even in other cases where you think about these,
+[4066.96:4072.3199999999997] you know, image classification as we saw in the example paper that we, you know,
+[4072.32:4078.0800000000004] you did do in the first part of the lecture is that in some cases deep learning is much, much better
+[4079.04:4084.7200000000003] or convolutional neural nets were much, much better rather than feature engineering and a simple
+[4084.7200000000003:4090.2400000000002] classifier, right, so at a high level you need to really choose your model, but at a low level
+[4090.2400000000002:4095.44] another important factor is to think about hyper parameters, right, and hyper parameters are a
+[4095.44:4103.04] different from parameters because parameters are something which are actually fed into the model
+[4103.04:4110.08] and the model has a way of numerically finding the right way, right, but if you think about hyper
+[4110.08:4118.4800000000005] parameters it could be something like the, you know, the number of trees in the random forest or
+[4118.4800000000005:4124.4800000000005] you can think of this as the number of neighbors that we use in the K&N classifier that you saw last
+[4124.48:4128.879999999999] in the last lecture, right, you can think of another aspect like these deep learning methods used
+[4128.879999999999:4134.719999999999] great in descent a lot, so you can think of, you know, the learning rate with which your optimizer
+[4134.719999999999:4141.04] actually changes the, you know, changes the decision boundaries, so the point here is that there
+[4141.04:4148.24] are so many different aspects which are, which cannot be automatically tuned or optimized by
+[4148.24:4153.839999999999] the mathematical optimizer under the model, but these are some external parameters, so you can
+[4153.84:4158.32] think of this, like I really like the way Bob, Bob tells about this is that you can think of hyper
+[4158.32:4163.92] parameters as the outer loop and the parameters of the model as the inner loop, so the model, the
+[4163.92:4170.32] the model knows how to find the best parameters, but there are some hyper parameters which are the
+[4170.32:4179.360000000001] outer loop which we really need to choose to get the best out of a model, right, so once we have
+[4179.36:4185.759999999999] these, once we have chosen a model, once we have talked about hyper parameters, another important
+[4185.759999999999:4194.32] aspect is how would we even evaluate our model, right, so the, we need a way to assess how good
+[4194.32:4202.24] a model is, right, so one way of doing it is something like one minus accuracy, which is also
+[4202.24:4210.5599999999995] this 0, 1 loss function here, which will basically just count the number of examples where the model
+[4210.5599999999995:4216.16] actually did a bad job, right, for instance, it will just count where the model was wrong,
+[4216.16:4222.08] so where it predicted the positive as negative and negative as positive, right, and this can be
+[4222.08:4229.28] thought of as a simple error or you can, the word risks is also used in the literature and you can
+[4229.28:4233.679999999999] just think of it as one minus accuracy of the model, right, and on the other hand, if you have a
+[4233.679999999999:4239.36] real valued output, you can think of these squared errors, right, again, you see, you saw some of
+[4239.36:4244.719999999999] these integration modeling when, when this discovered, but you can think of simple, you know,
+[4245.599999999999:4252.8] so fxi gives you the prediction from the model and yi is basically the true value and then you can
+[4252.8:4259.04] just simply look at the squared error or what you can do is you can look at the absolute value of
+[4259.04:4264.56] this error for all examples and these are different ways to assess or evaluate your model.
+[4266.72:4273.36] You have now a way to even evaluate the model, right, but it's important to know which data
+[4273.36:4280.16] we can use to evaluate our model, right, so it's important to see here is that the training
+[4280.16:4285.36] threat is something which we are training the model on, right, so and think about it here,
+[4285.36:4291.04] we are talking about which model to choose or which hyper parameters to choose, right, so if
+[4291.04:4296.719999999999] we are using the training set to do the evaluation, we are not being able to, we will not be able to
+[4296.719999999999:4303.04] make a, you know, decision that generalizes to something which the model has not been trained
+[4303.04:4308.719999999999] upon, right, so it's not a good idea to use the training set to evaluate it, right, then it's
+[4308.719999999999:4314.5599999999995] definitely not a good idea to evaluate on the test set because test set is something which is,
+[4314.56:4318.8] which should be considered sacred, it's basically which is something that you should never see
+[4319.52:4325.280000000001] in this model selection phase, like test set should only be used once you have fixed your model,
+[4325.280000000001:4332.72] right, and I was just again use a cool funny example that Bob uses for this thing is that
+[4332.72:4341.68] test set is something that you should basically put it in a safe, you know, lock it and you should
+[4341.68:4346.08] just put the key away so that you cannot access it, right, and something like you put the key in a
+[4346.08:4352.4800000000005] class, put the class in a fridge, and then you cannot just touch the key, right, and then what you
+[4352.4800000000005:4360.64] can do is you can then use the training set to train the model, and once you have finalized the model,
+[4361.280000000001:4368.4800000000005] then what you do is you lock this set away in a safe and throw the key away so that you cannot
+[4368.48:4373.679999999999] access it for people who don't know how to swim, just throw it in a leg Geneva, and then you don't
+[4373.679999999999:4379.5199999999995] have access to the training set. Now you can get back the key to the safe where your test set is
+[4379.5199999999995:4386.32] kept, and then now you can evaluate the model in the test set, right, so you cannot use the training
+[4386.32:4391.839999999999] set, you cannot use the test set, there is something, you know, in machine learning literature,
+[4391.839999999999:4397.5199999999995] the one way is to do is divide the data set into three parts, which is training validation and test
+[4397.52:4404.160000000001] set, and the validation set you can see something like as a test set, but which is used to do this
+[4405.040000000001:4411.360000000001] model selection, you know, to basically select the models, and you do this hyperparameter
+[4411.360000000001:4417.120000000001] tuning, choose the classifier that you want to use, right. Now another important aspect here is that
+[4417.120000000001:4422.320000000001] what if your data, you don't have enough data, what if you just have 1000 examples, right, or
+[4422.32:4428.719999999999] which is not enough for your model to be trained, like when you divide this into three sets,
+[4429.44:4436.96] you need amount of data, right. So what if you have two little data, these sets will be small,
+[4436.96:4444.08] if you perform these splits, and then you will be at a risk of not having enough statistical power
+[4444.08:4453.04] to actually make any sense of your, you know, the outcome from the model. So you, I think this
+[4453.04:4458.72] was discussed even last time a bit about leave one out-tross validation, where it was,
+[4460.24:4465.36] you know, in the last lecture, right, it was talked about that you look into, you know,
+[4466.08:4473.36] you, what you do is take one example out, train the model on the, on the remainder, and then predict
+[4473.36:4478.5599999999995] on that, right. And now if you think about this in this leave one out-tross validation set-up,
+[4478.5599999999995:4484.0] setting, if you have end data points, you will really have end different models, right. And then
+[4484.0:4488.719999999999] you will have to do some sort of averaging on that, right. What you can instead do is you can look
+[4488.719999999999:4494.96] at this, which is called as M-fold cross validation, and M is equal to five in the above picture,
+[4494.96:4501.2] and what we are really doing is dividing the data, the training set into five different parts,
+[4501.2:4509.599999999999] and in a round robin fashion, what would happen is that each part would be considered as test,
+[4509.599999999999:4514.96] and the remainder will be considered as train, right. So now what would happen here is that
+[4515.76:4525.599999999999] given only the initial train test split, what we did is we actually divided the train set in a
+[4525.6:4533.52] way that we always train on some parts, and then evaluate the model on a specific part, which
+[4533.52:4538.160000000001] was not seen during training, right. And you can think, we call this test, but you can think of this
+[4538.160000000001:4544.96] as a validation set, that is actually carved out from your training set in each of these phases,
+[4544.96:4551.4400000000005] right. Then when you want to assess the performance of the model, what you could do is basically take
+[4551.44:4558.4] the average of the error, you remember we saw this 0, 1 loss function, which gives us an error.
+[4558.4:4566.24] So what you can do is you can look at the average performance over these M-red portions,
+[4566.96:4571.599999999999] which is basically you can look at the error that you got from each of these, and then just
+[4571.599999999999:4577.44] average them, right. And this gives you a sense of how is the model performing on a
+[4577.44:4585.04] on a portion of the data that was not used while training, and still you can test on the hidden data.
+[4585.04:4590.32] So this gives you a way of actually evaluating the model and performing model assessment, right.
+[4590.32:4596.4] So let's look at this, right. So what we want to do is select the model, and here we have the
+[4596.4:4603.2] hyper parameter. So this is a KN and classifier, and the x axis represents the value K, which is
+[4603.2:4609.2] the number of neighbors, which ranges from 1, 2, 3, 4 up to 10, and then this is the validation error.
+[4609.2:4616.48] So which particular model will we choose for this particular, like given this curve that we have.
+[4619.599999999999:4630.96] And N1, like, seems simple. Yeah. So 6 because it has the least validation error, right. So
+[4630.96:4639.12] this is how we do model selection, but this was considering a simple setup, right, where we had a
+[4639.12:4645.76] 0 1 loss function, and we varied a simple single hyper parameter, and we chose the correct model,
+[4645.76:4653.84] right. Now, let's think about different interesting ways of evaluating different models, right.
+[4653.84:4661.6] So you can think of really these confusion matrix, which actually tells us how we can carve out
+[4661.6:4666.24] different matrix that we can use to evaluate our models, right. So you can really think about
+[4666.24:4671.12] these four possible cases, right. That could happen. So first, let's try to just go through this
+[4671.12:4677.28] quickly, right. So this is the real class value, which tells these are this column represents
+[4677.28:4682.400000000001] labels that are positive, this column represents labels that are negative. Then this is what your
+[4682.4:4687.5199999999995] model will tell you, which is basically how you have classified things, and this row will tell you
+[4688.16:4693.12] the positive labels that the model outputs and the negative label that the model outputs, right.
+[4693.12:4698.0] So there can really be four different type of cases, which is true positives. The positive
+[4698.0:4703.44] examples that are classified as positive, true negatives, false positives, and false negatives,
+[4703.44:4708.4] right. And you get the idea. So there are two types of errors that any model can make when we're
+[4708.4:4713.5199999999995] looking into this binary classification, right. So two types of errors are false positives,
+[4713.5199999999995:4721.679999999999] where we classify the model classifies negative examples as positive and false negative, where
+[4721.679999999999:4729.28] the model classifies positive examples as negative, right. And using these, we will derive
+[4729.28:4735.04] interesting performance evaluation metrics that can be then used to do model selection in a better way.
+[4735.04:4744.16] So the first thing is the basic metric, right. We also looked at it when we looked at the
+[4744.8:4749.36] 0, 1 loss function, right, which is accuracy. This is 1 minus the error. You can think of this,
+[4749.36:4756.0] and clearly the what is done here is that it just looks at the true positive and the true negative,
+[4756.64:4762.0] and you just divided by the total number of data. So n here is not negative, it's the total
+[4762.0:4769.76] number of data points, right. So this metric is useful when you have, when the class proportions
+[4769.76:4776.56] are somehow similar, right. So you don't have skewed class distributions. And you can think of
+[4776.56:4782.0] the other aspect here is that this is useful when the two types of errors that we mentioned,
+[4782.0:4788.88] like the false positives and false negatives, they have the same importance, right. So let's
+[4788.88:4796.24] try to see this by an example, right. So the first example is, you know, where we have this
+[4796.24:4801.12] confusion matrix and the other example down where we have another confusion matrix. And here we
+[4801.12:4808.32] are really looking at a specific use case, which is short detection, right. So let's say, you know,
+[4808.32:4813.04] all these companies, right, you know, masterCAD, Visa, American Express, they have huge teams
+[4813.04:4816.64] that build machine learning models to detect frauds that may happen on your credit cards,
+[4816.64:4824.240000000001] or even any transactions that you made by your bank, right. So here, what we can see is that the
+[4824.240000000001:4831.4400000000005] first classifier has an accuracy of 85 percent because you just do 5 plus 80 divided by 100.
+[4831.4400000000005:4836.320000000001] Then the other classifier, which is basically, I don't know, some of you might have guessed this,
+[4836.320000000001:4844.08] that this is a dumb classifier, which always classifies everything as not fraud, right. And just by
+[4844.08:4849.76] doing that, because 90 percent of the transactions are not fraud in the true case, the class proportions
+[4849.76:4858.88] are screwed, sorry, the class proportions are skewed. What happens is, what happens is the a dumb
+[4858.88:4863.68] model, which always predicts everything as fraud, will be able to achieve a higher accuracy
+[4865.04:4871.6] than another model, which, you know, has a balanced way of the world, a balanced view of the world,
+[4871.6:4878.4800000000005] right. So can you tell me which classifier would you prefer if you want to choose based on the
+[4878.4800000000005:4890.4800000000005] confusion matrix, okay. Some of you say it should be one, that makes sense. So then let's look at
+[4890.4800000000005:4901.4400000000005] another confusion matrix and I'll just open this poll up to see, just to see which particular
+[4901.44:4919.839999999999] classifier you think as better. Let's just use a quick minute to do this.
+[4919.84:4936.8] Okay, so we have, wow, we have now 40 votes, now 50, but again, the majority of you think that
+[4936.8:4951.04] classifier B is actually better. Well, let's see, you know, let's see why is that the case and why
+[4951.04:4956.72] is, maybe why that's not the case, right. So let's say you were just looking at it without any,
+[4957.68:4960.96] you know, without any domain knowledge of what the classifier is doing, right. Maybe I think
+[4960.96:4966.72] both the answers are correct in that case, but let's say when you think of a specific use case
+[4966.72:4973.92] where the goal is to actually, you know, perform a prediction of whether a patient has cancer or not,
+[4973.92:4983.76] right. And in these cases, which classifier is better. I would say the classifier one is better in
+[4983.76:4993.2] this case because it's able to identify more people who have cancer correctly, right. So,
+[4994.56:5001.68] and this difference can be seen here, right. So basically, the point is, so cancer is a life
+[5001.68:5007.84] threatening disease, right. So and the point is if you are able to correct, correctly classify
+[5007.84:5015.360000000001] people who have cancer as having cancer, that's more important than the other part of the model,
+[5015.360000000001:5021.2] right. And that's why I would argue that this particular classifier is better than the other one.
+[5021.84:5025.92] So let's try to wrap this around in a way that how we can measure this more
+[5028.24:5035.2] two specific scenarios which and recall, which is again carved from the confusion matrix, right.
+[5035.2:5041.5199999999995] So the point here is precision actually tells us, so what fraction of positive predictions that
+[5041.5199999999995:5048.88] we actually made are truly positive. So of all the predictions that the classifier says as positive,
+[5048.88:5053.04] how many of them were actually truly positive, right. And this is the way it can be defined,
+[5053.04:5058.88] right, as as a, this is how you can define it. But then there's another metric which you can
+[5058.88:5065.52] think of is that is the recall is if you consider all the positive, all the examples which should
+[5065.52:5072.400000000001] have been predicted as positive, how many of those were predicted as positive by your classifier.
+[5072.400000000001:5077.6] Again, so the point is, if you think about it is in a confusion matrix and the type errors,
+[5077.6:5081.92] you will clearly see what's going on. So I'll just repeat once again because maybe it's a bit
+[5081.92:5088.08] confusing is that precision is of all the predictions, positive predictions made by your model.
+[5088.08:5094.5599999999995] How many of them were truly positive and recall actually tells you of all the predictions that
+[5094.5599999999995:5099.84] should have been, so sorry, not the prediction, but all the data points that should have been
+[5099.84:5105.84] labeled as positive, how many of them were predicted as positive by your model, right.
+[5105.84:5111.76] So if you go back to this cancer example, what really happens is that the first model has a
+[5111.76:5122.24] higher recall than the other, right. And what you can think of again is the, so precision and
+[5122.24:5127.76] recall are both, as you might have some of you might have guessed that precision and recall are
+[5127.76:5132.16] like a trade off, right. As if you improve the recall, it could be the case that you decrease
+[5132.16:5137.76] the precision, right. And in fact, increasing recall is very easy, right. Let's say again,
+[5137.76:5143.4400000000005] we go back to this dumb model which says everybody has cancer, right. So this will have a recall of one.
+[5143.4400000000005:5149.76] Of course, it's important that everybody now will be a bit more careful about what they eat,
+[5149.76:5156.320000000001] how they live and their lifestyle, but it's not good to scare everyone that, hey, you have cancer,
+[5156.320000000001:5162.0] right, which is again a very sensitive aspect. So the point is increasing recall is easy,
+[5162.0:5168.64] but at what cost, right. So really what we need, we are looking at things is trying to have a high recall,
+[5168.64:5176.8] but also have a high precision. And this is what drives the, the good model, right. Then we should
+[5176.8:5182.72] think about another way which combines these two metrics, right. So we have precision, we have recall,
+[5182.72:5189.2] what we can do is actually try to combine these two metrics together. And this is done using the F
+[5189.2:5194.08] score or F and score. Some of you might have already, you know, some of you might already know about
+[5194.08:5200.5599999999995] this, but the point that we're trying to make here is you can try to wrap them around in a single
+[5200.5599999999995:5206.32] metric and there are some advantages to do this, right. So first of all, you see this word called
+[5206.32:5212.96] harmonic mean, right. So just to quickly give one intuition here is why do we do harmonic mean,
+[5212.96:5219.52] is again, you can look in the slide notes and you will know an actual example, but a quick point
+[5219.52:5226.88] to state here is that harmonic mean is a preferable over arithmetic mean where the numerators are
+[5228.0:5233.84] the same. So you can think of precision recall here, the numerators are the same. So harmonic
+[5233.84:5237.84] mean is a better way to combine such models. On the other hand, you can think of an arithmetic mean
+[5237.84:5242.88] where the denominators are the same and that's a more preferred metric. Again, there is a proper
+[5242.88:5247.92] example in the slides notes. You can go through it for interest, but this is an intuition that I
+[5247.92:5252.88] would like to give you why do we do a harmonic mean and not an arithmetic mean here, right.
+[5253.84:5259.52] And another advantage of using an F score is that really in this, we can try to wait the precision
+[5259.52:5264.64] and recall in a different way. We can try to say, for instance, in the cancer example, maybe recall
+[5264.64:5269.28] is more important than having precision. So we can try to re-weight. Right now, they are
+[5269.28:5272.639999999999] where equally, but we can try to re-weight precision and recall in a different way.
+[5275.04:5282.4] So if you look at F1 scores, again, both classifiers are quite similar because again,
+[5282.4:5287.759999999999] this is a combination of precision and recall. And really, if you look at the F1 score,
+[5287.759999999999:5293.2] you would choose this model as being better, right. So in hindsight, most of you were right about
+[5293.2:5300.16] which model was better without even looking at the domain knowledge about this. So,
+[5301.28:5308.639999999999] but the another advantage of this such a method, which is F score, is that you naturally notice
+[5308.639999999999:5316.5599999999995] that a random model, which had a high accuracy or let's say a dumb model, which had a high accuracy
+[5316.56:5327.200000000001] and a high recall will have a low F1 score. So you can easily use an F1 score to actually choose
+[5327.200000000001:5336.72] which model is better when you look at different metrics. So moving on, right, to how we can think
+[5336.72:5342.320000000001] about this precision recall in a different way, right. As I said previously, that precision and
+[5342.32:5347.44] recall is like really a trade-off. So if you improve recall, what would happen is that more,
+[5347.44:5353.5199999999995] more often than not, you will decrease the precision of your model, right. And this can be
+[5353.5199999999995:5359.12] exemplified using such a curve, which is which we call it as a precision recall curve. And as you
+[5359.12:5364.639999999999] can think of the x-axis is a recall and on the y-axis, we have the precision. And what would happen
+[5364.639999999999:5371.2] is that this is extreme case where everything is positive. So the recall is one, but what would happen
+[5371.2:5379.599999999999] in this case is that the precision would also likely be close to zero, right. And just to think
+[5379.599999999999:5386.0] about it, right, if you just look at these two curves, can any of you think about which algorithm
+[5386.0:5395.28] is better if you just look at this precision recall curve, which algorithm gets the best trade-off
+[5395.28:5403.84] between precision and recall, yeah. Okay, and why do you think algorithm two is better?
+[5409.84:5417.5199999999995] Yeah, yeah, you're right. So basically, you can think about it another way. If one curve is
+[5418.639999999999:5424.5599999999995] above the other curve for most of these recall values, you can say that this dominates the other
+[5424.56:5432.080000000001] classifier and naturally, this is better, right. The other way to think about this specific
+[5432.72:5439.6] you know, performance is something called ROC curve, right. Again, really don't know how this name
+[5440.400000000001:5447.280000000001] actually was coined, but it's called a receiver operating characteristic curve. And instead of
+[5447.280000000001:5451.92] plotting precision and recall, what we do here is that we look at the false positive rate
+[5451.92:5457.4400000000005] and the true positive rate as the components that we're trying to analyze here, right. And if you
+[5457.4400000000005:5462.0] think about it, the true positive rate you already know, this is a recall, but the false positive
+[5462.0:5467.92] rate here is something like of all the examples that should have been classified as negative,
+[5467.92:5474.32] how many of them were actually classified as positive. And this will become clearer because
+[5474.32:5479.52] FP plus TN gives you everything that was negative. And false positives are those which were
+[5479.52:5486.4800000000005] classified wrongly as positive by your model. So you can again think of this as the, if you think
+[5486.4800000000005:5494.64] about the, yeah, if you think about the, you know, think about a logistic regression model, right,
+[5494.64:5500.320000000001] there you have usually a decision threshold, right. So when you, so basically it gives you a score
+[5500.320000000001:5506.88] between 0 and 1, right. And then you can say that anything with, and the threshold will tell you
+[5506.88:5513.28] that anything which is beyond 50%, you will say as positive and which is less than 50% is negative.
+[5513.28:5518.64] If you choose the decision threshold as 50%, but what you can even say that you can increase or
+[5518.64:5524.56] decrease the decision threshold. So you can think of this in a way that if you decrease your
+[5524.56:5532.56] classification threshold of any model that basically the point is if, if your model thinks that
+[5532.56:5537.04] even there is a 1% chance that this label could be positive, you call it positive. This is what
+[5537.04:5542.240000000001] I mean by decreasing the classification threshold. Then you would really have a high recall,
+[5542.8:5548.0] but at the same time, everything will be classified as positive and you will have a high false
+[5548.0:5555.360000000001] positive rate, right. So this is how an ROC curve can also be visualized. And what you can think of
+[5555.360000000001:5561.76] is another way is this a random model, right. So a random model is basically which has an equal
+[5561.76:5568.64] chance of classifying things as positive and negative. So that would be like a diagonal line
+[5568.64:5578.24] in this ROC curve. So a metric to wrap around these metrics is that you look at the area
+[5578.24:5583.360000000001] under this ROC curve, right, which should be between 0.5, which is the random line.
+[5584.16:5587.76] And because if it's here, you can always flip it because you're thinking about a binary
+[5587.76:5595.12] classification, right. But the AUC is always between 0.5 and 1. And can you can say anyone tell me
+[5595.12:5599.4400000000005] what would be ideal a perfect classifier look like on this ROC curve.
+[5605.04:5611.52] So it would be yes, so it would be basically this line, right. Yeah, because basically it would
+[5611.52:5618.080000000001] always improve the recall and never decrease the precision or never increase the false positive
+[5618.080000000001:5627.120000000001] rate the way we look at it. Okay. So this is these are ways to evaluate it. And again, sorry,
+[5627.120000000001:5633.280000000001] so I'll go five minutes over because as I said, this lecture also took last in the last two years
+[5633.280000000001:5639.040000000001] a bit more time. And I really am trying to cover it. But I would say let's let's do this and get
+[5639.04:5645.84] it done and dusted this week so that we don't have to cover it again. Okay. So I'd like to recall
+[5645.84:5650.56] the bias variance rate of that you that you looked at in the last lecture, right. So just quickly
+[5650.56:5655.84] going through this is this is the regime where you have low bias and low variance. This is a
+[5655.84:5660.08] regime where you have a high variance and a low bias. And this is basically what you're trying to
+[5660.08:5665.5199999999995] think of is that you have you took one data point out and you try to train your model with different
+[5665.52:5671.120000000001] data sets, right. And then you're trying to evaluate how your how these different models are
+[5671.120000000001:5677.280000000001] performing on that data point, right. And if on average they work well, this is a low bias setup,
+[5677.280000000001:5683.360000000001] it could be high variance or even low variance depending on how well your model generalizes.
+[5683.360000000001:5691.6] Then it could be in this regime where your model is consistently poor on average. And here is the
+[5691.6:5697.6] case where it has low variance and here is the case where it has a high variance, right. So the
+[5697.6:5703.68] reason why we talked about is that because I wanted to talk about how you should actually choose,
+[5704.88:5712.0] you know, how you actually try to come up with the model complexity of your model so that you're
+[5712.0:5716.400000000001] able to choose the right model, right. And just think about it in this way that when your
+[5716.4:5724.5599999999995] model complexity increases, your bias will decrease, right. But your variance would increase. So
+[5724.5599999999995:5729.679999999999] basically really with increasing model complexity, you are overfitting because and model complexity
+[5729.679999999999:5734.0] can be thought of as a amount of let's say amount of features that you feed into the model, right.
+[5734.0:5738.32] If you have more features, you have higher capacity, the model has higher capacity and it has
+[5739.28:5744.96] better way to fit the data, fit the training data. But then what would happen is that it might
+[5744.96:5749.84] fit the data too well and that's why we say over and that's why it's not able to generalize
+[5750.4800000000005:5756.24] to an unseen validation or an unseen test set and that's why we say the variance would increase
+[5756.24:5761.84] on unseen points but the bias would decrease. So the on average the model will become better, but
+[5763.2:5770.24] you know, specific unseen data points it could have a large variance, right. So this is usually how
+[5770.24:5776.48] the curves would look like if you also plot the training error that you would always decrease
+[5776.48:5782.96] the training error with increasing model complexity but there would be a time where the validation
+[5782.96:5788.88] error would also start to increase and really this is the optimal model complexity that you should
+[5788.88:5797.44] be using for this particular setup, right. So but this is thinking about model complexity, right.
+[5797.44:5804.08] So the another view that we would like to give you is how do you think about these, you know,
+[5804.08:5810.5599999999995] off the ways to, you know, stop without looking at the model complexity, right. And here we would
+[5810.5599999999995:5815.12] look at these learning curves where instead of looking at the model complexity where the model
+[5815.12:5820.879999999999] complexity is fixed but we will vary the size of the data, right. And this is again quite important
+[5820.88:5827.52] way to look at how to things, right. You can think of again, so the top plot again gives you a
+[5827.52:5834.64] way of varying the model complexity and the data size is fixed and you know how, you know, the curves
+[5834.64:5841.68] should look like. But another view of it is where you should think of the, you know, the size of
+[5841.68:5846.64] the data and the model complexity is fixed, right. And these two curves really give you the high
+[5846.64:5851.76] bias and the high variance regimes in this case, right. So let's try to quickly look into this,
+[5851.76:5858.08] right. What would happen is with the size of the data, if your training error also saturates
+[5858.08:5863.280000000001] and your test error also saturates, what would happen is that you really are in this situation
+[5863.280000000001:5868.72] of under fitting, right. Because you're really not with more data, you're really not able to improve
+[5868.72:5877.04] the model in any way. But if you think about this setup, right, where you can say that yes,
+[5877.04:5883.68] with more and more data, the training error actually is increasing, but your test error is also
+[5884.64:5889.280000000001] decreasing. So you will basically with more and more data, what would you have is that some,
+[5889.280000000001:5894.96] at some place they will try to start to saturate, right. And this is the clear case which shows that
+[5894.96:5900.4] you started with a setup which was already overfitting, right. You had high variance,
+[5901.12:5906.8] but with more and more data, you're trying to, you know, you're trying to reduce the variance
+[5906.8:5914.08] in a way, right. That's why your testing error is going down, correct. And this is basically the way
+[5914.08:5921.44] in which deep learning works that you already start with a huge amount of a overly parameterized
+[5921.44:5928.5599999999995] model. But you just, again, I use a connotation, Bob uses this a lot. You just feed the monkey,
+[5928.5599999999995:5933.2] right. As in you have a model and you keep on feeding it more data and the model will tend to
+[5933.2:5939.44] generalize better and better. And this is how the world operates today, right. Just a obvious
+[5939.44:5945.839999999999] conclusion to this slide is basically once you have fixed the data collection pipeline, once you
+[5945.84:5953.04] know how to select a model, you can then simply evaluate, you can just get the key from Lake Geneva
+[5953.76:5959.6] of your, sorry, you can get the key where you, of your test set, the safe in which you kept the test
+[5959.6:5966.96] set and you can then open the test set and analyze your model on it. So this is what it should be.
+[5966.96:5972.0] And yeah, this is a paper that I would like to conclude with, that you should read this.
+[5972.0:5977.04] This is a very quick read and you would know a bit more about generally doing machine learning
+[5977.04:5985.28] in this. Okay. So thanks for time and sorry for going five minutes up. Again, as usual, the feedback.
+[5985.28:6001.28] And thank you.
